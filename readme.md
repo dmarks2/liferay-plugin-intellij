@@ -1,6 +1,8 @@
 Liferay Plugin for IntelliJ
 ===========================
 
+[![Build Status](https://travis-ci.org/dmarks2/liferay-plugin-intellij.svg?branch=master)](https://travis-ci.org/dmarks2/liferay-plugin-intellij)
+
 Description
 -----------
 A plugin to help working with [Liferay](http://www.liferay.com/) in IntelliJ IDEA
@@ -59,5 +61,6 @@ Ideas
 Licence
 -------
 
-See [LICENCE.txt](LICENSE.txt).
+See [LICENSE.txt](LICENSE.txt).
 
+For third-party licenses see [LICENSE-3RD-PARTY.txt](LICENSE-3RD-PARTY.txt).
