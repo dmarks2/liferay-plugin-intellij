@@ -1,0 +1,7 @@
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- provide Liferay DTD and XSD files -->
+        <standardResourceProvider implementation="de.dm.intellij.liferay.schema.LiferayDefinitionsResourceProvider" />
+    </extensions>
+</idea-plugin>

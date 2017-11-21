@@ -1,0 +1,8 @@
+#* @vtlvariable name="device" type="com.liferay.portal.kernel.mobile.device.Device" *#
+#* @vtlvariable name="company" type="com.liferay.portal.model.Company" *#
+#* @vtlvariable name="companyId" type="java.lang.Long" *#
+#* @vtlvariable name="groupId" type="java.lang.Long" *#
+#* @vtlvariable name="viewMode" type="java.lang.String" *#
+#* @vtlvariable name="permissionChecker" type="com.liferay.portal.security.permission.PermissionChecker" *#
+#* @vtlvariable name="randomNamespace" type="java.lang.String" *#
+#* @vtlvariable name="templatesPath" type="java.lang.String" *#

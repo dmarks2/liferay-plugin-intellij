@@ -1,0 +1,346 @@
+buildscript {
+    repositories {
+        maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
+    }
+}
+
+
+plugins {
+    id "org.jetbrains.intellij" version "0.2.15"
+    id 'de.undercouch.download' version '3.2.0'
+}
+
+import de.undercouch.gradle.tasks.download.Download
+
+apply plugin: 'idea'
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'java'
+
+sourceCompatibility = 1.6
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+def generatedResources = "$buildDir/generated-resources"
+def tempDir = "$buildDir/tmp"
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+
+        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'unzipAlloyUI15', 'unzipAlloyUI20', 'unzipAlloyUI30', 'generateTaglibDefinitions', 'generateLiferayBareboneJavascriptFiles'])
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compileOnly 'org.jetbrains.plugins:maven-server-api:2016.3'
+    compile 'org.glassfish:javax.json:1.1'
+}
+
+intellij {
+    version 'IU-2016.3'
+    type 'IU'
+    pluginName 'Liferay IntelliJ Plugin'
+    plugins = ['JavaScriptLanguage', 'Tomcat', 'Velocity', 'Freemarker', 'maven', 'properties', 'css', 'sass', 'JavaEE', 'jsp', 'gradle', 'de.dm.intellij.maven-archetypes-catalog-plugin:1.2.5']
+    updateSinceUntilBuild false
+}
+
+task generateLiferayTemplateHelperFiles {
+    doLast {
+        def targetVtl = new File(generatedResources, "com/liferay/vtl");
+        def targetFtl = new File(generatedResources, "com/liferay/ftl");
+        targetVtl.mkdirs();
+        targetFtl.mkdirs();
+
+        download {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-impl/src/VM_liferay.vm'
+            dest new File(targetVtl, "VM_liferay_61.vm")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+        download {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-impl/src/VM_liferay.vm'
+            dest new File(targetVtl, "VM_liferay_62.vm")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+        download {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/foundation/portal-template/portal-template-velocity/src/main/resources/VM_liferay.vm'
+            dest new File(targetVtl, "VM_liferay_70.vm")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+        download {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-impl/src/FTL_liferay.ftl'
+            dest new File(targetFtl, "FTL_liferay_61.ftl")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+        download {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-impl/src/FTL_liferay.ftl'
+            dest new File(targetFtl, "FTL_liferay_62.ftl")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+        download {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/foundation/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
+            dest new File(targetFtl, "FTL_liferay_70.ftl")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+    }
+}
+task generateLiferayDefinitions {
+    doLast {
+        def target = new File(generatedResources, "com/liferay/definitions");
+        target.mkdirs();
+
+        download {
+            src([
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-ddm-structure_6_2_0.xsd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-ddm-structure_6_2_0.xsd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-display_6_1_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-display_6_2_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-display_7_0_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-friendly-url-routes_6_1_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-friendly-url-routes_6_2_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-friendly-url-routes_7_0_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-hook_6_1_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-hook_6_2_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-hook_7_0_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-layout-templates_6_1_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-layout-templates_6_2_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-layout-templates_7_0_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-look-and-feel_6_1_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-look-and-feel_6_2_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-look-and-feel_7_0_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-plugin-package_6_1_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-plugin-package_6_2_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-plugin-package_7_0_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-plugin-repository_6_1_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-plugin-repository_6_2_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-plugin-repository_7_0_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-portlet-app_6_1_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-portlet-app_6_2_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-portlet-app_7_0_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-portlet-app_7_1_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-resource-action-mapping_6_1_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-resource-action-mapping_6_2_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-resource-action-mapping_7_0_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-service-builder_6_1_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-service-builder_6_2_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-service-builder_7_0_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-service-builder_7_1_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-social_6_1_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-social_6_2_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-social_7_0_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-theme-loader_6_1_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-theme-loader_6_2_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-theme-loader_7_0_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-user-notification-definitions_6_2_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-user-notification-definitions_7_0_0.dtd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-workflow-definition_6_1_0.xsd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-workflow-definition_6_2_0.xsd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-workflow-definition_7_0_0.xsd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-workflow-definition_7_1_0.xsd',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/portlet-app_2_0.xsd'
+            ])
+            dest target
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+    }
+}
+
+task downloadAlloyUI30(type: Download) {
+    src 'https://github.com/liferay/alloy-ui/releases/download/3.0.1/alloy-3.0.1.zip'
+    acceptAnyCertificate true
+    overwrite true
+    onlyIfNewer true
+    dest new File(tempDir, 'alloy-3.0.1.zip')
+}
+task downloadAlloyUI20(type: Download) {
+    src 'https://github.com/liferay/alloy-ui/releases/download/2.0.0/alloy-2.0.0.zip'
+    acceptAnyCertificate true
+    overwrite true
+    onlyIfNewer true
+    dest new File(tempDir, 'alloy-2.0.0.zip')
+}
+task downloadAlloyUI15(type: Download) {
+    src 'http://cdn.alloyui.com/downloads/alloy-1.5.1.zip'
+    acceptAnyCertificate true
+    overwrite true
+    onlyIfNewer true
+    dest new File(tempDir, 'alloy-1.5.1.zip')
+}
+task unzipAlloyUI30(dependsOn: downloadAlloyUI30, type: Copy) {
+    from zipTree(downloadAlloyUI30.dest)
+    into generatedResources + '/alloy-3.0.1'
+}
+task unzipAlloyUI20(dependsOn: downloadAlloyUI20, type: Copy) {
+    from zipTree(downloadAlloyUI20.dest)
+    into generatedResources
+}
+task unzipAlloyUI15(dependsOn: downloadAlloyUI15, type: Copy) {
+    from zipTree(downloadAlloyUI15.dest)
+    into generatedResources + '/alloy-1.5.1'
+}
+
+task generateTaglibDefinitions {
+    doLast {
+        def target = new File(generatedResources, "com/liferay/tld");
+        target.mkdirs();
+
+        download {
+            src([
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/util-taglib/src/META-INF/liferay-aui.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/util-taglib/src/META-INF/liferay-portlet-ext.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/util-taglib/src/META-INF/liferay-portlet.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/util-taglib/src/META-INF/liferay-security.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/util-taglib/src/META-INF/liferay-theme.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/util-taglib/src/META-INF/liferay-ui.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/util-taglib/src/META-INF/liferay-util.tld'
+            ])
+            dest target
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+    }
+}
+
+task generateLiferayBareboneJavascriptFiles {
+    doLast {
+        def target = new File(generatedResources, "com/liferay/js");
+        target.mkdirs();
+
+        //Liferay 6.1 Barebone Javascript (as defined in portal.properties: https://github.com/liferay/liferay-portal/blob/6.1.x/portal-impl/src/portal.properties)
+        //Missing: aui/yui/yui.js,
+        //Found:
+        download {
+            src([
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/modules.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/dependency.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/events.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/language.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/liferay.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/util.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/portal.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/portlet.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/portlet_sharing.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/workflow.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/form.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/form_placeholders.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/icon.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/menu.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/notice.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/poller.js',
+            ])
+            dest new File(target, "61")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+
+        //Liferay 6.2 Barebone Javascript (as defined in portal.properties: https://github.com/liferay/liferay-portal/blob/6.2.x/portal-impl/src/portal.properties)
+        //Missing: aui/yui/yui.js,
+        download {
+            src([
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/browser_selectors.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/modules.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/aui_sandbox.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/dependency.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/events.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/language.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/liferay.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/util.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/portal.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/portlet.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/portlet_sharing.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/workflow.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/form.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/form_placeholders.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/icon.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/menu.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/notice.js',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/poller.js'
+            ])
+            dest new File(target, "62")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+        //Liferay 7.0 Barebone Javascript
+        //- Missing:
+        //  - jquery/jquery.js, lexicon/bootstrap.js, loader/loader.js, lexicon/collapsible-search.js, lexicon/side-navigation.js, jquery/fm.js, jquery/form.js, lodash/util.js, misc/svg4everybody.js
+        //- Found:
+        //  - https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/7.0.x/frontend-js-web/src/main/resources/META-INF/resources/loader/config.js
+        //  - https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/7.0.x/frontend-js-web/src/main/resources/META-INF/resources/lodash/util.js
+        download {
+            src([
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/browser_selectors.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/modules.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/aui_sandbox.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/dependency.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/dom_task_runner.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/events.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/language.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/liferay.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/util.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/portal.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/portlet.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/workflow.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/address.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/form.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/form_placeholders.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/icon.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/menu.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/notice.js',
+                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/poller.js'
+            ])
+            dest new File(target, "70")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+    }
+}
+
+//BND filetype definition from https://github.com/lpireyn
+/*task generateBndFiletypeDefinitions {
+    doLast {
+        def target = new File(generatedResources, "org/bndtools/bnd");
+        target.mkdirs();
+
+        download {
+            src 'https://raw.githubusercontent.com/lpireyn/intellij-filetypes/master/filetypes/BND%20files.xml'
+            dest new File(target, "bnd.xml")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+
+    }
+}
+*/
+
+group 'de.dm.intellij.liferay'
+version '0.0.1'

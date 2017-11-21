@@ -1,0 +1,85 @@
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin>
+    <id>de.dm.intellij.liferay</id>
+    <name>Liferay Plugin</name>
+    <category>Framework integration</category>
+    <version>0.0.1</version>
+
+    <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
+
+    <idea-version since-build="163" />
+
+    <description><![CDATA[
+        <p>This plugin adds some features for developing Liferay modules. The following topics have been improved so far</p>
+        <ul>
+            <li>Creating new Modules</li>
+            <li>Editing Liferay XML files</li>
+            <li>Editing JavaScript files</li>
+            <li>Editing Velocity and Freemarker files in Layout Templates and Themes</li>
+            <li>Editing Journal Templates and Application Display Templates</li>
+            <li>Editing CSS / SCSS files</li>
+            <li>Editing JSP files</li>
+            <li>Editing OSGi components</li>
+            <li>Editing service.xml</li>
+        </ul>
+        <p>Detailed documentation can be found at the <a href="https://github.com/dmarks2/liferay-plugin-intellij/blob/master/readme.md">GitHub Repository</a></p>
+      ]]></description>
+
+    <change-notes><![CDATA[
+        <p>Version 0.0.1</p>
+        <ul>
+            <li>Initial Version</li>
+        </ul>
+    ]]></change-notes>
+
+    <depends>org.jetbrains.idea.maven</depends>
+    <depends optional="true" config-file="javascript.xml">JavaScript</depends>
+    <depends optional="true" config-file="javaee.xml">com.intellij.javaee</depends>
+    <depends optional="true" config-file="jsp.xml">com.intellij.jsp</depends>
+    <depends optional="true" config-file="velocity.xml">com.intellij.velocity</depends>
+    <depends optional="true" config-file="freemarker.xml">com.intellij.freemarker</depends>
+    <depends optional="true" config-file="css.xml">com.intellij.css</depends>
+    <depends optional="true" config-file="scss.xml">org.jetbrains.plugins.sass</depends>
+    <depends optional="true" config-file="archetype-catalog.xml">de.dm.intellij.maven-archetypes-catalog-plugin</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Define a new filetype for "bnd.bnd" files -->
+        <fileTypeFactory implementation="de.dm.intellij.bndtools.BndFileTypeFactory"/>
+        <syntaxHighlighter factoryClass="de.dm.intellij.bndtools.BndFileTypeHighlighterProvider" />
+
+        <!-- Completion Contribution for @Component annotation -->
+        <completion.contributor language="JAVA" implementationClass="de.dm.intellij.liferay.language.osgi.ComponentPropertiesCompletionContributor"/>
+
+        <!-- Provides a Line Marker for an Entity defined in service.xml. Using the Line Marker you can jump to the Model implementation -->
+        <codeInsight.lineMarkerProvider language="XML" implementationClass="de.dm.intellij.liferay.language.service.LiferayServiceXMLLineMarkerProvider"/>
+
+        <!-- Provides a Line Marker for a Service Model Implemenation class. Using the Line Marker you can jump to the declaration in service.xml. -->
+        <codeInsight.lineMarkerProvider language="JAVA" implementationClass="de.dm.intellij.liferay.language.service.LiferayServiceJavaImplLineMarkerProvider"/>
+
+        <!-- Error Reporting in case of crashes -->
+        <errorHandler implementation="de.dm.intellij.liferay.util.PluginErrorReporter"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="org.jetbrains.idea.maven">
+        <!-- A Maven Importer which tries to find out the target Liferay Version and Parent Theme (Liferay 6.x) based on the pom.xml within your project -->
+        <importer implementation="de.dm.intellij.liferay.maven.importer.LiferayVersionMavenImporter" />
+
+        <!-- A Maven Importer which tries to find out the Parent Theme in Liferay 7.x projects based on the pom.xml within your project -->
+        <importer implementation="de.dm.intellij.liferay.maven.importer.LiferayThemeBuilderMavenImporter" />
+    </extensions>
+
+    <module-components>
+        <!-- Component to mark an IntelliJ module as being a "Liferay" Module -->
+        <component>
+            <implementation-class>de.dm.intellij.liferay.module.LiferayModuleComponent</implementation-class>
+        </component>
+    </module-components>
+
+    <project-components>
+        <!-- Component to handle Liferay specific information on project level -->
+        <component>
+            <implementation-class>de.dm.intellij.liferay.project.LiferayProjectComponent</implementation-class>
+        </component>
+    </project-components>
+
+</idea-plugin>

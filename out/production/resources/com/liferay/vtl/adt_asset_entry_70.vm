@@ -1,0 +1,14 @@
+#* @vtlvariable name="serviceLocator" type="com.liferay.portal.template.ServiceLocator" *#
+#* @vtlvariable name="assetPublisherHelper" type="com.liferay.asset.publisher.web.util.AssetPublisherHelper" *#
+#* @vtlvariable name="entries" type="java.util.List<com.liferay.asset.kernel.model.AssetEntry>" *#
+#* @vtlvariable name="entry" type="com.liferay.asset.kernel.model.AssetEntry" *#
+#* @vtlvariable name="assetEntryLocalService" type="com.liferay.asset.kernel.service.AssetEntryLocalService" *#
+#* @vtlvariable name="assetEntryService" type="com.liferay.asset.kernel.service.AssetEntryService" *#
+#* @vtlvariable name="assetVocabularyLocalService" type="com.liferay.asset.kernel.service.AssetVocabularyLocalService" *#
+#* @vtlvariable name="assetVocabularyService" type="com.liferay.asset.kernel.service.AssetVocabularyService" *#
+#* @vtlvariable name="assetCategoryLocalService" type="com.liferay.asset.kernel.service.AssetCategoryLocalService" *#
+#* @vtlvariable name="assetCategoryService" type="com.liferay.asset.kernel.service.AssetCategoryService" *#
+#* @vtlvariable name="assetTagLocalService" type="com.liferay.asset.kernel.service.AssetTagLocalService" *#
+#* @vtlvariable name="assetTagService" type="com.liferay.asset.kernel.service.AssetTagService" *#
+#* @vtlvariable name="assetTagStatsLocalService" type="com.liferay.asset.kernel.service.AssetTagStatsLocalService" *#
+#* @vtlvariable name="template_id" type="java.lang.Long" *#

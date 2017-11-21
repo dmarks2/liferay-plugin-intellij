@@ -1,0 +1,4 @@
+#* @vtlvariable name="serviceLocator" type="com.liferay.portal.template.ServiceLocator" *#
+#* @vtlvariable name="entries" type="java.util.List<com.liferay.rss.web.util.RSSFeed>" *#
+#* @vtlvariable name="rssDisplayContext" type="com.liferay.rss.web.internal.display.context.RSSDisplayContext" *#
+#* @vtlvariable name="template_id" type="java.lang.Long" *#

@@ -1,0 +1,6 @@
+#* @vtlvariable name="serviceLocator" type="com.liferay.portal.template.ServiceLocator" *#
+#* @vtlvariable name="assetPublisherHelper" type="com.liferay.portlet.assetpublisher.util.AssetPublisherHelper" *#
+#* @vtlvariable name="entries" type="java.util.List<com.liferay.portlet.blogs.model.BlogsEntry>" *#
+#* @vtlvariable name="entry" type="com.liferay.portlet.blogs.model.BlogsEntry" *#
+#* @vtlvariable name="blogsEntryLocalService" type="com.liferay.portlet.blogs.service.BlogsEntryLocalService" *#
+#* @vtlvariable name="blogsEntryService" type="com.liferay.portlet.blogs.service.BlogsEntryService" *#

@@ -1,0 +1,9 @@
+#* @vtlvariable name="serviceLocator" type="com.liferay.portal.template.ServiceLocator" *#
+#* @vtlvariable name="entry" type="com.liferay.wiki.model.WikiPage" *#
+#* @vtlvariable name="assetEntry" type="com.liferay.asset.kernel.model.AssetEntry" *#
+#* @vtlvariable name="formattedContent" type="java.lang.String" *#
+#* @vtlvariable name="wikiPageLocalService" type="com.liferay.wiki.service.WikiPageLocalService" *#
+#* @vtlvariable name="wikiPageService" type="com.liferay.wiki.service.WikiPageService" *#
+#* @vtlvariable name="wikiNodeLocalService" type="com.liferay.wiki.service.WikiNodeLocalService" *#
+#* @vtlvariable name="wikiNodeService" type="com.liferay.wiki.service.WikiNodeService" *#
+#* @vtlvariable name="template_id" type="java.lang.Long" *#

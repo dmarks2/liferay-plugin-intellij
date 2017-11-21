@@ -1,0 +1,7 @@
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin>
+    <extensions defaultExtensionNs="de.dm.intellij.maven-archetypes-catalog-plugin">
+        <!-- Provide official Liferay Maven Archetypes -->
+        <archetypeCatalogDefinition implementation="de.dm.intellij.liferay.maven.catalogs.LiferayMavenArchetypesCatalogDefinition" />
+    </extensions>
+</idea-plugin>

@@ -1,0 +1,8 @@
+#* @vtlvariable name="serviceLocator" type="com.liferay.portal.template.ServiceLocator" *#
+#* @vtlvariable name="entries" type="java.util.List<com.liferay.portal.kernel.repository.model.FileEntry>" *#
+#* @vtlvariable name="dlAppLocalService" type="com.liferay.document.library.kernel.service.DLAppLocalService" *#
+#* @vtlvariable name="dlAppService" type="com.liferay.document.library.kernel.service.DLAppService" *#
+#* @vtlvariable name="dlFileEntryTypeLocalService" type="com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService" *#
+#* @vtlvariable name="dlFileEntryTypeService" type="com.liferay.document.library.kernel.service.DLFileEntryTypeService" *#
+#* @vtlvariable name="dlUtil" type="com.liferay.document.library.kernel.util.DLUtil" *#
+#* @vtlvariable name="template_id" type="java.lang.Long" *#

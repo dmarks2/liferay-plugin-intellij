@@ -1,0 +1,7 @@
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin>
+    <extensions defaultExtensionNs="com.intellij.freemarker">
+        <!-- Provide implicit Freemarker variables and macros -->
+        <globalVariableProvider implementation="de.dm.intellij.liferay.language.freemarker.LiferayFtlVariableProvider" />
+    </extensions>
+</idea-plugin>

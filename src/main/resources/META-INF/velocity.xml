@@ -1,0 +1,13 @@
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Declare that .tpl files should be handled as Velocity files -->
+        <fileTypeFactory implementation="de.dm.intellij.liferay.language.tpl.TplFileTypeFactory"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij.velocity">
+        <!-- Provide implicit Velocity variables and macros -->
+        <globalVariableProvider implementation="de.dm.intellij.liferay.language.velocity.LiferayVtlVariableProvider" />
+        <globalMacroProvider implementation="de.dm.intellij.liferay.language.velocity.LiferayVtlMacroProvider"/>
+    </extensions>
+</idea-plugin>

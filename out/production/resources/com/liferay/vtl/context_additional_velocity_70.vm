@@ -1,0 +1,9 @@
+#* @vtlvariable name="dateTool" type="org.apache.velocity.tools.generic.DateTool" *#
+#* @vtlvariable name="escapeTool" type="org.apache.velocity.tools.generic.EscapeTool" *#
+#* @vtlvariable name="iteratorTool" type="org.apache.velocity.tools.generic.IteratorTool" *#
+#* @vtlvariable name="listTool" type="org.apache.velocity.tools.generic.ListTool" *#
+#* @vtlvariable name="mathTool" type="org.apache.velocity.tools.generic.MathTool" *#
+#* @vtlvariable name="numberTool" type="org.apache.velocity.tools.generic.NumberTool" *#
+#* @vtlvariable name="sortTool" type="org.apache.velocity.tools.generic.SortTool" *#
+#* @vtlvariable name="velocityPortletPreferences" type="com.liferay.portal.template.TemplatePortletPreferences" *#
+#* @vtlvariable name="rolePermission" type="com.liferay.portal.kernel.service.permission.RolePermission " *#

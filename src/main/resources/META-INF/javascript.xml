@@ -1,0 +1,13 @@
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Inject JavaScript language into <aui:script>-Tags -->
+        <multiHostInjector implementation="de.dm.intellij.liferay.language.AlloyUIScriptLanguageInjector"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="JavaScript">
+        <!-- Provide predefined JavaScript Libraries for AlloyUI -->
+        <predefinedLibraryProvider implementation="de.dm.intellij.liferay.language.javascript.AlloyUIPredefinedLibraryProvider"/>
+    </extensions>
+
+</idea-plugin>
