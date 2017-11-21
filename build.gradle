@@ -44,7 +44,8 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    compileOnly 'org.jetbrains.plugins:maven-server-api:2016.3'
+    //compileOnly 'org.jetbrains.plugins:maven-server-api:2016.3'
+    compileOnly 'com.github.adedayo.intellij.sdk:maven-server-api:142.1'
     compile 'org.glassfish:javax.json:1.1'
 }
 
