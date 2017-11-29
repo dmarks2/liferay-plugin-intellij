@@ -33,6 +33,7 @@
     ]]></change-notes>
 
     <depends>org.jetbrains.idea.maven</depends>
+    <depends>org.jetbrains.plugins.gradle</depends>
     <depends optional="true" config-file="javascript.xml">JavaScript</depends>
     <depends optional="true" config-file="javaee.xml">com.intellij.javaee</depends>
     <depends optional="true" config-file="jsp.xml">com.intellij.jsp</depends>
@@ -66,6 +67,11 @@
 
         <!-- A Maven Importer which tries to find out the Parent Theme in Liferay 7.x projects based on the pom.xml within your project -->
         <importer implementation="de.dm.intellij.liferay.maven.importer.LiferayThemeBuilderMavenImporter" />
+    </extensions>
+
+    <extensions defaultExtensionNs="org.jetbrains.plugins.gradle">
+        <!-- Extract parent Theme information from a gradle based project (based on the com.liferay.gradle.plugins.theme.builder configuration) -->
+        <projectResolve implementation="de.dm.intellij.liferay.gradle.LiferayThemeBuilderGradleProjectResolver" />
     </extensions>
 
     <module-components>

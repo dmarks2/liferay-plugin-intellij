@@ -31,6 +31,10 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -98,7 +102,10 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
                     httpURLConnection.setDoOutput(true);
                     httpURLConnection.setRequestMethod("POST");
                     httpURLConnection.setRequestProperty("Content-Type", "application/vnd.github.v3+json");
-                    httpURLConnection.setRequestProperty("Authorization", "token c7d5e054e8168a43a2dcf451a31321b80155fd0b");
+                    String token = getToken();
+                    if (token != null) {
+                        httpURLConnection.setRequestProperty("Authorization", "token " + token);
+                    }
 
                     StringBuilder body = new StringBuilder();
                     body.append(bean.getDescription()).append("\n\n");
@@ -159,6 +166,34 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
         }
 
         return true;
+    }
+
+    private static String getToken() {
+        InputStream inputStream = PluginErrorReporter.class.getClassLoader().getResourceAsStream("/token");
+        if (inputStream == null) {
+            return null;
+        }
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        try {
+            StringBuilder result = new StringBuilder();
+
+            String line;
+            while ( (line = bufferedReader.readLine()) != null) {
+                result.append(line);
+            }
+
+            return result.toString();
+        } catch (IOException e) {
+            //ignore
+        } finally {
+            try {
+                bufferedReader.close();
+            } catch (IOException e) {
+                //ignore
+            }
+        }
+
+        return null;
     }
 
 }

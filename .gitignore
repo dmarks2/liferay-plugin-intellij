@@ -121,3 +121,5 @@ overlays/
 ##### Gradle #####
 .gradle
 
+src/main/resources/token
+/out/
