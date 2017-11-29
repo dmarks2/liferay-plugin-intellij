@@ -1,7 +1,0 @@
-<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
-<idea-plugin>
-    <extensions defaultExtensionNs="com.intellij">
-        <!-- Reference Contributor to resolve Liferay specific placeholders in CSS / SCSS files. -->
-        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.sass.LiferaySassPlaceholderReferenceContributor"/>
-    </extensions>
-</idea-plugin>

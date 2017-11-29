@@ -1,8 +1,0 @@
-#* @vtlvariable name="serviceLocator" type="com.liferay.portal.template.ServiceLocator" *#
-#* @vtlvariable name="entries" type="java.util.List<com.liferay.portal.kernel.theme.NavItem>" *#
-#* @vtlvariable name="headerType" type="java.lang.String" *#
-#* @vtlvariable name="includedLayouts" type="java.lang.String" *#
-#* @vtlvariable name="nestedChildren" type="java.lang.String" *#
-#* @vtlvariable name="rootLayoutLevel" type="java.lang.Integer" *#
-#* @vtlvariable name="rootLayoutType" type="java.lang.String" *#
-#* @vtlvariable name="template_id" type="java.lang.Long" *#

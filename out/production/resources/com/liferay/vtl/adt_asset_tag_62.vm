@@ -1,7 +1,0 @@
-#* @vtlvariable name="serviceLocator" type="com.liferay.portal.template.ServiceLocator" *#
-#* @vtlvariable name="assetPublisherHelper" type="com.liferay.portlet.assetpublisher.util.AssetPublisherHelper" *#
-#* @vtlvariable name="entries" type="java.util.List<com.liferay.portlet.asset.model.AssetTag>" *#
-#* @vtlvariable name="entry" type="com.liferay.portlet.asset.model.AssetTag" *#
-#* @vtlvariable name="assetTagLocalService" type="com.liferay.portlet.asset.service.AssetTagLocalService" *#
-#* @vtlvariable name="assetTagService" type="com.liferay.portlet.asset.service.AssetTagService" *#
-#* @vtlvariable name="assetTagStatsLocalService" type="com.liferay.portlet.asset.service.AssetTagStatsLocalService" *#

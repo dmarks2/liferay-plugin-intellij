@@ -1,7 +1,0 @@
-<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
-<idea-plugin>
-    <extensions defaultExtensionNs="com.intellij">
-        <!-- Reference helper to provide root contexts while developing JSP hooks or Fragment Host Modules -->
-        <psi.fileReferenceHelper implementation="de.dm.intellij.liferay.language.jsp.LiferayJspHookFileReferenceHelper" />
-    </extensions>
-</idea-plugin>

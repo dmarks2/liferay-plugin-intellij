@@ -1,6 +1,0 @@
-#* @vtlvariable name="serviceLocator" type="com.liferay.portal.template.ServiceLocator" *#
-#* @vtlvariable name="entries" type="java.util.List<com.liferay.asset.kernel.model.AssetTag>" *#
-#* @vtlvariable name="assetTagLocalService" type="com.liferay.asset.kernel.service.AssetTagLocalService" *#
-#* @vtlvariable name="assetTagService" type="com.liferay.asset.kernel.service.AssetTagService" *#
-#* @vtlvariable name="assetTagStatsLocalService" type="com.liferay.asset.kernel.service.AssetTagStatsLocalService" *#
-#* @vtlvariable name="template_id" type="java.lang.Long" *#

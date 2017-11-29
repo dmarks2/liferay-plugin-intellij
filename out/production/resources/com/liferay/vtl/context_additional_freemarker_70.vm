@@ -1,4 +1,0 @@
-#* @vtlvariable name="enumUtil" type="freemarker.template.TemplateHashModel" *#
-#* @vtlvariable name="objectUtil" type="com.liferay.portal.template.freemarker.internal.LiferayObjectConstructor" *#
-#* @vtlvariable name="staticUtil" type="freemarker.template.TemplateHashModel" *#
-#* @vtlvariable name="freeMarkerPortletPreferences" type="com.liferay.portal.template.TemplatePortletPreferences" *#

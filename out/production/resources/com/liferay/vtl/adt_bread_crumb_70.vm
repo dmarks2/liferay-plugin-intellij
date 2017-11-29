@@ -1,5 +1,0 @@
-#* @vtlvariable name="serviceLocator" type="com.liferay.portal.template.ServiceLocator" *#
-#* @vtlvariable name="entries" type="java.util.List<com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry>" *#
-#* @vtlvariable name="entry" type="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry" *#
-#* @vtlvariable name="breadcrumbUtil" type="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil" *#
-#* @vtlvariable name="template_id" type="java.lang.Long" *#

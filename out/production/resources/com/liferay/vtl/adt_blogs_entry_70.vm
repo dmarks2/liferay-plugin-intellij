@@ -1,5 +1,0 @@
-#* @vtlvariable name="serviceLocator" type="com.liferay.portal.template.ServiceLocator" *#
-#* @vtlvariable name="entries" type="java.util.List<com.liferay.blogs.kernel.model.BlogsEntry>" *#
-#* @vtlvariable name="blogsEntryLocalService" type="com.liferay.blogs.kernel.service.BlogsEntryLocalService" *#
-#* @vtlvariable name="blogsEntryService" type="com.liferay.blogs.kernel.service.BlogsEntryService" *#
-#* @vtlvariable name="template_id" type="java.lang.Long" *#

@@ -1,7 +1,0 @@
-<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
-<idea-plugin>
-    <extensions defaultExtensionNs="com.intellij">
-        <!-- Reference helper to provide root contexts for SCSS files -->
-        <psi.fileReferenceHelper implementation="de.dm.intellij.liferay.language.sass.LiferaySassFileReferenceHelper" />
-    </extensions>
-</idea-plugin>
