@@ -124,7 +124,7 @@ public class LiferayFileUtil {
      */
     public static boolean isThemeTemplateFile(PsiFile psiFile) {
         final Module module = ModuleUtil.findModuleForPsiElement(psiFile);
-        if (module != null) {
+        if ( (module != null) && (psiFile.getVirtualFile() != null) ) {
             LiferayModuleComponent component = module.getComponent(LiferayModuleComponent.class);
             if (component != null) {
                 String templatesPath = component.getThemeSettings().get(LiferayLookAndFeelXmlParser.TEMPLATES_PATH);
@@ -134,7 +134,7 @@ public class LiferayFileUtil {
                     return
                             (
                                     ((webRootFile != null) && (isParent(psiFile.getVirtualFile(), webRootFile))) ||
-                                            ((sourceRootFile != null) && (isParent(psiFile.getVirtualFile(), sourceRootFile)))
+                                    ((sourceRootFile != null) && (isParent(psiFile.getVirtualFile(), sourceRootFile)))
                             );
                 }
             }
