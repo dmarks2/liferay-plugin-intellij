@@ -14,6 +14,9 @@ By this, references from the *original* JSPs can be resolved, code completion an
 In Liferay 7 / DXP the JSPs for your portlet are placed at ```META-INF/resources```. This plugin defines that folder as Web Root, so
 absolute paths (e.g. for includes) are resolved properly. 
 
+Several AUI tags provide attributes like ```cssClass``` or ```iconCssClass```. This plugins provides code completion features for this attribute, so that
+(S)CSS classes are resolved properly.
+
 ## Requirements
 
 This feature works in IntelliJ Ultimate Edition only.

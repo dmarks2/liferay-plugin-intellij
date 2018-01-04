@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class AlloyUIScriptLanguageInjector implements MultiHostInjector {
 
-    private static List<String> AUI_TAGLIB_NAMESPACES = Arrays.asList(
+    public static List<String> AUI_TAGLIB_NAMESPACES = Arrays.asList(
             "http://liferay.com/tld/aui",
             "http://alloy.liferay.com/tld/aui");
 

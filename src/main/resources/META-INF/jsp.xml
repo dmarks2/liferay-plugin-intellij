@@ -3,5 +3,8 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Reference helper to provide root contexts while developing JSP hooks or Fragment Host Modules -->
         <psi.fileReferenceHelper implementation="de.dm.intellij.liferay.language.jsp.LiferayJspHookFileReferenceHelper" />
+
+        <!-- Adds support for the attributes &quot;cssClass&quot; and &quot;iconCssClass&quot; on AlloyUI Tags, so that Code Completion for (S)CSS classes is available. -->
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.AlloyUICSSClassAttributeReferenceContributor"/>
     </extensions>
 </idea-plugin>
