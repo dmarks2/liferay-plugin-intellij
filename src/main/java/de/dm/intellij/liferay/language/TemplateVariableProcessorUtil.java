@@ -90,6 +90,8 @@ public class TemplateVariableProcessorUtil {
             String applicationDisplayTemplateFileType = LiferayFileUtil.getApplicationDisplayTemplateType(templateFile);
             if (applicationDisplayTemplateFileType != null) {
                 //type mapping see https://github.com/liferay/liferay-portal/blob/master/modules/apps/web-experience/export-import/export-import-resources-importer/src/main/java/com/liferay/exportimport/resources/importer/internal/util/FileSystemImporter.java
+                //additional variables added based on tests with dump script (see https://web.liferay.com/de/web/james.falkner/blog/-/blogs/the-magic-template-variable-dumper-script-for-liferay-7)
+
                 if ("asset_entry".equals(applicationDisplayTemplateFileType)) {
                     if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_6_1) {
                         //Liferay 6.1 does not have Application Display Templates

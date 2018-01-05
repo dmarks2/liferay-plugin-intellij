@@ -2,3 +2,17 @@
 #* @vtlvariable name="entries" type="java.util.List<com.liferay.rss.web.util.RSSFeed>" *#
 #* @vtlvariable name="rssDisplayContext" type="com.liferay.rss.web.internal.display.context.RSSDisplayContext" *#
 #* @vtlvariable name="template_id" type="java.lang.Long" *#
+#* @vtlvariable name="class_name_id" type="java.lang.Long" *#
+#* @vtlvariable name="randomNamespace" type="java.lang.String" *#
+#* @vtlvariable name="expandedEntriesPerFeed" type="java.lang.String" *#
+#* @vtlvariable name="showFeedImage" type="java.lang.String" *#
+#* @vtlvariable name="feedImageAlignment" type="java.lang.String" *#
+#* @vtlvariable name="displayStyleGroupId" type="java.lang.String" *#
+#* @vtlvariable name="displayStyle" type="java.lang.String" *#
+#* @vtlvariable name="entriesPerFeed" type="java.lang.String" *#
+#* @vtlvariable name="showFeedDescription" type="java.lang.String" *#
+#* @vtlvariable name="urls" type="java.lang.String" *#
+#* @vtlvariable name="titles" type="java.lang.String" *#
+#* @vtlvariable name="showFeedTitle" type="java.lang.String" *#
+#* @vtlvariable name="showFeedItemAuthor" type="java.lang.String" *#
+#* @vtlvariable name="showFeedPublishedDate" type="java.lang.String" *#

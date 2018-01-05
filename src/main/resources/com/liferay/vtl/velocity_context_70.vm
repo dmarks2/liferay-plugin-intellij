@@ -49,7 +49,7 @@
 #* @vtlvariable name="prefsPropsUtil" type="com.liferay.portal.kernel.util.PrefsProps" *#
 #* @vtlvariable name="propsUtil" type="com.liferay.portal.kernel.util.Props" *#
 #* @vtlvariable name="portletModeFactory" type="com.liferay.portal.kernel.portlet.PortletModeFactory_IW" *#
-#* @vtlvariable name="portletUrlFactory" type="com.liferay.portal.kernel.portlet.PortletURLFactory" *#
+#* @vtlvariable name="portletURLFactory" type="com.liferay.portal.kernel.portlet.PortletURLFactory" *#
 #* @vtlvariable name="utilLocator" type="com.liferay.portal.template.UtilLocator" *#
 #* @vtlvariable name="saxReaderUtil" type="com.liferay.portal.kernel.xml.SAXReader" *#
 #* @vtlvariable name="sortTool" type="org.apache.velocity.tools.generic.SortTool" *#
@@ -77,3 +77,5 @@
 #* @vtlvariable name="imageToken" type="com.liferay.portal.kernel.webserver.WebServerServletToken" *#
 #* @vtlvariable name="locationPermission" type="com.liferay.portal.kernel.service.permission.OrganizationPermission" *#
 #* @vtlvariable name="randomizer" type="com.liferay.portal.kernel.util.Randomizer" *#
+#* @vtlvariable name="init" type="java.lang.String" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#

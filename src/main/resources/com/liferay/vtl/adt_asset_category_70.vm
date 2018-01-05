@@ -6,3 +6,9 @@
 #* @vtlvariable name="assetCategoryService" type="com.liferay.asset.kernel.service.AssetCategoryService" *#
 #* @vtlvariable name="assetCategoriesNavigationDisplayContext" type="com.liferay.asset.categories.navigation.web.internal.display.context.AssetCategoriesNavigationDisplayContext" *#
 #* @vtlvariable name="template_id" type="java.lang.Long" *#
+#* @vtlvariable name="class_name_id" type="java.lang.Long" *#
+#* @vtlvariable name="randomNamespace" type="java.lang.String" *#
+#* @vtlvariable name="allAssetVocabularies" type="java.lang.String" *#
+#* @vtlvariable name="assetVocabularyIds" type="java.lang.String" *#
+#* @vtlvariable name="displayStyleGroupId" type="java.lang.String" *#
+#* @vtlvariable name="displayStyle" type="java.lang.String" *#

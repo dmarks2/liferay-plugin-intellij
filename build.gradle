@@ -218,7 +218,18 @@ task generateTaglibDefinitions {
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/util-taglib/src/META-INF/liferay-security.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/util-taglib/src/META-INF/liferay-theme.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/util-taglib/src/META-INF/liferay-ui.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/util-taglib/src/META-INF/liferay-util.tld'
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/util-taglib/src/META-INF/liferay-util.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/web-experience/product-navigation/product-navigation-taglib/src/main/resources/META-INF/liferay-product-navigation.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/web-experience/journal/journal-taglib/src/main/resources/META-INF/liferay-journal.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/collaboration/flags/flags-taglib/src/main/resources/META-INF/liferay-flags.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/web-experience/layout/layout-taglib/src/main/resources/META-INF/liferay-layout.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/web-experience/site-navigation/site-navigation-taglib/src/main/resources/META-INF/liferay-site-navigation.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/web-experience/asset/asset-taglib/src/main/resources/META-INF/liferay-asset.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/foundation/map/map-taglib/src/main/resources/META-INF/liferay-map.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/collaboration/item-selector/item-selector-taglib/src/main/resources/META-INF/liferay-item-selector.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/foundation/expando/expando-taglib/src/main/resources/META-INF/liferay-expando.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/foundation/frontend-taglib/frontend-taglib/src/main/resources/META-INF/liferay-frontend.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/web-experience/trash/trash-taglib/src/main/resources/META-INF/liferay-trash.tld'
             ])
             dest target
             acceptAnyCertificate true

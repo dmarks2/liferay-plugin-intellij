@@ -3,3 +3,10 @@
 #* @vtlvariable name="entry" type="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry" *#
 #* @vtlvariable name="breadcrumbUtil" type="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil" *#
 #* @vtlvariable name="template_id" type="java.lang.Long" *#
+#* @vtlvariable name="class_name_id" type="java.lang.Long" *#
+#* @vtlvariable name="showGuestGroup" type="java.lang.String" *#
+#* @vtlvariable name="showPortletBreadcrumb" type="java.lang.String" *#
+#* @vtlvariable name="displayStyleGroupId" type="java.lang.String" *#
+#* @vtlvariable name="displayStyle" type="java.lang.String" *#
+#* @vtlvariable name="showCurrentGroup" type="java.lang.String" *#
+#* @vtlvariable name="showParentGroups" type="java.lang.String" *#
