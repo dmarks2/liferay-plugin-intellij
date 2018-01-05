@@ -285,7 +285,7 @@ public class TemplateVariableProcessorUtil {
 
                         Collection<T> nestedVariables = null;
 
-                        if (subTags != null) {
+                        if ( (subTags != null) && (subTags.length > 0) ) {
                             nestedVariables = new ArrayList<T>();
                             for (XmlTag subTag : subTags) {
                                 String subName = subTag.getAttributeValue("name");

@@ -67,32 +67,26 @@ public class LiferayVtlVariableProvider extends VtlGlobalVariableProvider implem
                 }
             };
         }
+        if (nestedVariables == null) {
+            return new CustomVtlVariable(name, parent, typeText, navigationalElement);
+        } else {
+            return new CustomVtlVariable(name, parent, typeText, navigationalElement) {
 
-        return new CustomVtlVariable(name, parent, typeText, navigationalElement) {
-
-            @Override
-            public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState state, PsiElement lastParent, @NotNull PsiElement place) {
-                if (nestedVariables == null) {
-                    return super.processDeclarations(processor, state, lastParent, place);
-                } else {
+                @Override
+                public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState state, PsiElement lastParent, @NotNull PsiElement place) {
                     for (VtlVariable variable : nestedVariables) {
                         processor.execute(variable, state);
                     }
 
                     return true;
                 }
-            }
 
-            @Override
-            public PsiType getPsiType() {
-                if (nestedVariables == null) {
-                    return super.getPsiType();
-                } else {
-                    return null;
+                @Override
+                public PsiType getPsiType() {
+                     return null;
                 }
-            }
-
-        };
+            };
+        }
     }
 
     @Override
