@@ -1,13 +1,22 @@
 package de.dm.intellij.liferay.language;
 
-import com.intellij.json.psi.*;
+import com.intellij.json.psi.JsonArray;
+import com.intellij.json.psi.JsonBooleanLiteral;
+import com.intellij.json.psi.JsonFile;
+import com.intellij.json.psi.JsonObject;
+import com.intellij.json.psi.JsonProperty;
+import com.intellij.json.psi.JsonValue;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiComment;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
@@ -269,6 +278,9 @@ public class TemplateVariableProcessorUtil {
         Collection<T> result = new ArrayList<T>();
 
         PsiFile file = PsiManager.getInstance(project).findFile(journalStructureFile);
+
+        String className = "com.liferay.portal.kernel.templateparser.TemplateNode";
+
         if (file instanceof XmlFile) {
             XmlFile xmlFile = (XmlFile) file;
 
@@ -281,22 +293,25 @@ public class TemplateVariableProcessorUtil {
                     XmlAttribute xmlAttribute = xmlTag.getAttribute("name");
                     if (xmlAttribute != null) {
                         String name = xmlAttribute.getValue();
+                        boolean repeatable = false;
+                        if ( (xmlTag.getAttribute("repeatable") != null) && "true".equalsIgnoreCase(xmlTag.getAttributeValue("repeatable")) ) {
+                            repeatable = true;
+                        }
+
                         XmlTag[] subTags = xmlTag.findSubTags("dynamic-element");
 
                         Collection<T> nestedVariables = null;
 
-                        if ( (subTags != null) && (subTags.length > 0) ) {
+                        if ( (subTags != null) && (subTags.length > 0) && (! repeatable))  {
                             nestedVariables = new ArrayList<T>();
                             for (XmlTag subTag : subTags) {
                                 String subName = subTag.getAttributeValue("name");
                                 if (subName != null) {
-                                    nestedVariables.add(templateVariableProcessor.createVariable(subName, templateFile, "com.liferay.portal.kernel.templateparser.TemplateNode", subTag.getNavigationElement(), null));
+                                    nestedVariables.add(templateVariableProcessor.createVariable(subName, templateFile, className, subTag.getNavigationElement(), null));
                                 }
                             }
                         }
-                        //TODO nested-nested variables etc.
-
-                        result.add(templateVariableProcessor.createVariable(name, templateFile, "com.liferay.portal.kernel.templateparser.TemplateNode", xmlTag.getNavigationElement(), nestedVariables));
+                        result.add(templateVariableProcessor.createVariable(name, templateFile, className, xmlTag.getNavigationElement(), nestedVariables));
                     }
                 }
             }
@@ -319,9 +334,13 @@ public class TemplateVariableProcessorUtil {
                                     if (nameProperty != null) {
                                         String name = nameProperty.getValue().getText();
                                         if ((name != null) && (name.trim().length() > 0)) {
+                                            boolean repeatable = false;
+                                            if ( (jsonObject.findProperty("repeatable") != null) && (jsonObject.findProperty("repeatable").getValue() instanceof JsonBooleanLiteral) ) {
+                                                repeatable = ((JsonBooleanLiteral) jsonObject.findProperty("repeatable").getValue()).getValue();
+                                            }
 
                                             JsonProperty subproperty = jsonObject.findProperty("nestedFields");
-                                            if (subproperty != null) {
+                                            if ( (subproperty != null) && (! repeatable) ) {
                                                 nestedVariables = new ArrayList<T>();
 
                                                 JsonArray subjsonArray = (JsonArray) subproperty.getValue();
@@ -335,7 +354,7 @@ public class TemplateVariableProcessorUtil {
                                                                 if ((subname != null) && (subname.trim().length() > 0)) {
                                                                     subname = StringUtil.unquoteString(subname);
 
-                                                                    nestedVariables.add(templateVariableProcessor.createVariable(subname, templateFile, "com.liferay.portal.kernel.templateparser.TemplateNode", subnameProperty.getValue(), null));
+                                                                    nestedVariables.add(templateVariableProcessor.createVariable(subname, templateFile, className, subnameProperty.getValue(), null));
                                                                 }
                                                             }
                                                         }
@@ -344,7 +363,8 @@ public class TemplateVariableProcessorUtil {
                                             }
 
                                             name = StringUtil.unquoteString(name);
-                                            result.add(templateVariableProcessor.createVariable(name, templateFile, "com.liferay.portal.kernel.templateparser.TemplateNode", nameProperty.getValue(),nestedVariables));
+
+                                            result.add(templateVariableProcessor.createVariable(name, templateFile, className, nameProperty.getValue(),nestedVariables));
                                         }
                                     }
                                 }
