@@ -33,6 +33,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
             {"javax.portlet.supported-processing-event", "String", ""},
             {"javax.portlet.supported-publishing-event", "String", ""},
             {"javax.portlet.supported-public-render-parameter", "String", ""},
+            {"javax.portlet.supported-locale", "String", ""},
             {"com.liferay.portlet.icon", "String", ""},
             {"com.liferay.portlet.virtual-path", "String", ""},
             {"com.liferay.portlet.struts-path", "String", ""},
@@ -79,7 +80,8 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
             {"com.liferay.portlet.facebook-integration", "String", ""},
             {"com.liferay.portlet.add-default-resource", "boolean", ""},
             {"com.liferay.portlet.system", "boolean", ""},
-            {"com.liferay.portlet.active", "boolean", ""}
+            {"com.liferay.portlet.active", "boolean", ""},
+            {"com.liferay.portlet.display-category", "String", ""}
     };
 
     private List<LookupElementBuilder> KEYWORD_LOOKUPS = new ArrayList<LookupElementBuilder>();
