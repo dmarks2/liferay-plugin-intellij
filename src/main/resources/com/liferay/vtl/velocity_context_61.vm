@@ -56,3 +56,7 @@
 #* @vtlvariable name="serviceLocator" type="com.liferay.portal.velocity.ServiceLocator" *#
 #* @vtlvariable name="velocityPortletPreferences" type="com.liferay.portal.velocity.VelocityPortletPreferences" *#
 #* @vtlvariable name="utilLocator" type="com.liferay.portal.velocity.UtilLocator" *#
+#* @vtlvariable name="scopeGroupId" type="java.lang.Long" *#
+#* @vtlvariable name="locale" type="java.util.Locale" *#
+#* @vtlvariable name="permissionChecker" type="com.liferay.portal.security.permission.PermissionChecker" *#
+#* @vtlvariable name="company" type="com.liferay.portal.model.Company" *#

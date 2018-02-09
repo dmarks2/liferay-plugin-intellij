@@ -14,4 +14,7 @@
 #* @vtlvariable name="reserved-article-author-email-address" type="com.liferay.portal.kernel.templateparser.TemplateNode" *#
 #* @vtlvariable name="reserved-article-author-comments" type="com.liferay.portal.kernel.templateparser.TemplateNode" *#
 #* @vtlvariable name="reserved-article-author-job-title" type="com.liferay.portal.kernel.templateparser.TemplateNode" *#
+#* @vtlvariable name="request" type="java.util.Map" *#
+#* @vtlvariable name="articleGroupId" type="java.lang.Long" *#
+#* @vtlvariable name="xmlRequest" type="java.lang.String" *#
 

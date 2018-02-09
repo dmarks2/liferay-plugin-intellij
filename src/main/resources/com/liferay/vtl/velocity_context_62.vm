@@ -60,3 +60,7 @@
 #* @vtlvariable name="velocityPortletPreferences" type="com.liferay.portal.template.TemplatePortletPreferences" *#
 #* @vtlvariable name="utilLocator" type="com.liferay.portal.template.UtilLocator" *#
 #* @vtlvariable name="windowStateFactory" type="com.liferay.portal.kernel.portlet.WindowStateFactory_IW" *#
+#* @vtlvariable name="scopeGroupId" type="java.lang.Long" *#
+#* @vtlvariable name="locale" type="java.util.Locale" *#
+#* @vtlvariable name="permissionChecker" type="com.liferay.portal.security.permission.PermissionChecker" *#
+#* @vtlvariable name="company" type="com.liferay.portal.model.Company" *#
