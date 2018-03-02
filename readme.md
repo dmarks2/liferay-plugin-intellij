@@ -1,3 +1,9 @@
+<!--
+  Title: Liferay Plugin for IntelliJ
+  Description: A plugin for Jetbrains IntelliJ IDEA to support developing Liferay components.
+  Author: dmarks2
+  -->
+  
 Liferay Plugin for IntelliJ
 ===========================
 
@@ -5,12 +11,27 @@ Liferay Plugin for IntelliJ
 
 Description
 -----------
-A plugin to help working with [Liferay](http://www.liferay.com/) in IntelliJ IDEA
+A plugin for Jetbrains [IntelliJ IDEA](https://www.jetbrains.com/idea/) to support developing [Liferay](http://www.liferay.com/) components. 
+
+This plugin mainly focuses on code completion features. It gives IntelliJ IDEA more information about typical Liferay files and project structures. 
+By this the existing code completion features of IntelliJ can be used for Liferay specific files, too. There is no user interface
+for the plugin. Just have a look at the following topics to see which areas have been improved:
+
+* [Creating new Modules](documentation/new_modules.md) becomes easier, because this plugin provides you with the official Liferay Maven archetypes. 
+* [Editing Liferay XML files](documentation/xml_files.md) is improved, e.g. by providing the XML Schema files for mostly all Liferay specific XML files. 
+* For [JavaScript files](documentation/js_files.md) the plugin provides you with libraries for the Liferay barebone Javascript files and AlloyUI. 
+* For [Velocity and Freemarker files in Layout Templates and Themes](documentation/vtl_ftl_files.md) the plugin provides code completion for known variables and theme settings.
+* Also for [Journal Templates and Application Display Templates](documentation/structures_templates_adt.md) known variables are provided, including variables from Journal structures.
+* For [CSS / SCSS files](documentation/scss_files.md) references to the parent theme are resolved and specific placeholders like @theme_image_path@ are detected. 
+* When [editing JSP files](documentation/jsp_files.md) you have access to the original JSPs (in JSP hooks or web fragments). Additionally code completion is possible for Liferay or AUI taglibs including cssClasses and language keys.
+* Known properties for [OSGi components](documentation/osgi_components.md) are provided (e.g. Portlet properties).
+* You can jump forward and backward between the [service.xml](documentation/service_xml.md) and the implementation class.
+
 
 Supported IDEs
 --------------
-* IntelliJ 2016.3+ (Community)
-* IntelliJ 2016.3+ (Ultimate)
+* IntelliJ 2016.3 and above (Community)
+* IntelliJ 2016.3 and above (Ultimate)
 
 Supported Liferay Versions
 --------------------------
@@ -23,23 +44,6 @@ Supported Build Tools
 * Maven
 * Gradle (Liferay 7.0 / DXP only)
 * Npm 
-
-Features
---------
-
-This plugin adds some features for developing Liferay modules. The following topics have been
-improved so far:
-
-* [Creating new Modules](documentation/new_modules.md)  
-* [Editing Liferay XML files](documentation/xml_files.md)
-* [Editing JavaScript files](documentation/js_files.md)
-* [Editing Velocity and Freemarker files in Layout Templates and Themes](documentation/vtl_ftl_files.md)
-* [Editing Journal Templates and Application Display Templates](documentation/structures_templates_adt.md)
-* [Editing CSS / SCSS files](documentation/scss_files.md)
-* [Editing JSP files](documentation/jsp_files.md)
-* [Editing OSGi components](documentation/osgi_components.md)
-* [Editing service.xml](documentation/service_xml.md)
-
 
 Developers
 ----------
@@ -54,9 +58,6 @@ Known Issues
 * Indent does not work properly in ``<aui:script>``-Tags
 * ``@theme_image_path@`` reference in CSS files work, but still shown in red (SCSS works properly)
 
-Ideas
------
-* Predefinded Velocity / Freemarker variables in Theme files (like ``$init`` or ``$full_templates_path``)
 
 Licence
 -------

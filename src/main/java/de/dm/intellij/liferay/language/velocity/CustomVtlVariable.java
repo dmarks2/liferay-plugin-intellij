@@ -4,7 +4,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiType;
 import com.intellij.velocity.psi.VtlLightVariable;
 import com.intellij.velocity.psi.files.VtlFile;
+import de.dm.intellij.liferay.util.Icons;
 import org.jetbrains.annotations.NotNull;
+
+import javax.swing.*;
 
 public class CustomVtlVariable extends VtlLightVariable {
 
@@ -38,7 +41,10 @@ public class CustomVtlVariable extends VtlLightVariable {
         this.psiType = psiType;
     }
 
-
+    @Override
+    public Icon getIcon(boolean open) {
+        return Icons.LIFERAY_ICON;
+    }
 }
 
 

@@ -9,7 +9,8 @@ This plugin adds basic syntax highlighting for ```bnd.bnd``` files.
 
 ![bnd.bnd file](bnd.png "bnd.bnd file")
 
-This plugin adds basic code completions for the ```@Component``` Annonations, so that known properties for Portlets are provided.
+This plugin adds basic code completions for the ```@Component``` Annonations, so that known properties for Portlets and many other
+Liferay components are provided.
 
 ![Component annotation](component.png "Component annotation")
 

@@ -6,5 +6,8 @@
 
         <!-- Adds support for the attributes &quot;cssClass&quot; and &quot;iconCssClass&quot; on AlloyUI Tags, so that Code Completion for (S)CSS classes is available. -->
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.AlloyUICSSClassAttributeReferenceContributor"/>
+
+
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibResourceBundleReferenceContributor"/>
     </extensions>
 </idea-plugin>

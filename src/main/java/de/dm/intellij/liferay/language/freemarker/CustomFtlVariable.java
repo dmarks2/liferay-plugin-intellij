@@ -7,9 +7,12 @@ import com.intellij.freemarker.psi.variables.FtlPsiType;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.search.GlobalSearchScope;
+import de.dm.intellij.liferay.util.Icons;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import javax.swing.*;
 
 public class CustomFtlVariable extends FtlLightVariable {
 
@@ -38,4 +41,8 @@ public class CustomFtlVariable extends FtlLightVariable {
         return super.getNavigationElement();
     }
 
+    @Override
+    public Icon getIcon(boolean open) {
+        return Icons.LIFERAY_ICON;
+    }
 }

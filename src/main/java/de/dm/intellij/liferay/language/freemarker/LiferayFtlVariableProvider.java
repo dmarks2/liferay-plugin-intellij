@@ -112,6 +112,7 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
             return new CustomFtlVariable(name, parent, getThemeSettingsVariableType(parent));
         }
         if (nestedVariables == null) {
+            //TODO com.liferay.portal.kernel.templateparser.TemplateNode inherits from java.util.Map. FtlPsiType --> InheritanceUtil.isInheritor(psiClass, "java.util.Map") returns true, so no Methods of TemplateNode are resolved
             return new CustomFtlVariable(name, parent, typeText, navigationalElement);
         } else {
             return new CustomFtlVariable(name, parent, new FtlSpecialVariableType() {

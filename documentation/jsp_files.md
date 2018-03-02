@@ -14,8 +14,15 @@ By this, references from the *original* JSPs can be resolved, code completion an
 In Liferay 7 / DXP the JSPs for your portlet are placed at ```META-INF/resources```. This plugin defines that folder as Web Root, so
 absolute paths (e.g. for includes) are resolved properly. 
 
-Several AUI tags provide attributes like ```cssClass``` or ```iconCssClass```. This plugins provides code completion features for this attribute, so that
+Several Liferay or AUI tags provide attributes like ```cssClass``` or ```iconCssClass```. This plugins provides code completion features for this attribute, so that
 (S)CSS classes are resolved properly.
+
+![cssClass attribute](jsp_css_class.png "cssClass attribute")
+
+Many attributes for Liferay or AUI tags refer to keys inside language resource bundles. This plugin adds code completion features for those
+attributes. 
+
+![language keys](jsp_language_keys.png "language keys")
 
 ## Requirements
 
