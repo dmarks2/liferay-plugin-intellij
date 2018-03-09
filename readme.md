@@ -45,6 +45,11 @@ Supported Build Tools
 * Gradle (Liferay 7.0 / DXP only)
 * Npm 
 
+Releases
+--------
+
+See [Releases](https://github.com/dmarks2/liferay-plugin-intellij/releases) to download binary release versions.
+
 Developers
 ----------
 This plugin uses a [Gradle based IntelliJ Plugin development](http://www.jetbrains.org/intellij/sdk/docs/tutorials/build_system/prerequisites.html).
