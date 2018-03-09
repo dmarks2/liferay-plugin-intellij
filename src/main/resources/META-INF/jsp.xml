@@ -4,10 +4,10 @@
         <!-- Reference helper to provide root contexts while developing JSP hooks or Fragment Host Modules -->
         <psi.fileReferenceHelper implementation="de.dm.intellij.liferay.language.jsp.LiferayJspHookFileReferenceHelper" />
 
-        <!-- Adds support for the attributes &quot;cssClass&quot; and &quot;iconCssClass&quot; on AlloyUI Tags, so that Code Completion for (S)CSS classes is available. -->
-        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.AlloyUICSSClassAttributeReferenceContributor"/>
+        <!-- Adds support for attributes like &quot;cssClass&quot; and &quot;iconCssClass&quot; on Liferay and AlloyUI Tags, so that Code Completion for (S)CSS classes is available. -->
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibCSSClassAttributeReferenceContributor"/>
 
-
+        <!-- Adds code completion features for references to language kays inside Liferay or AlloyUI Taglibs -->
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibResourceBundleReferenceContributor"/>
     </extensions>
 </idea-plugin>

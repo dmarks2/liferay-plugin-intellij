@@ -8,6 +8,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
+import de.dm.intellij.liferay.util.LiferayTaglibs;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -19,8 +20,8 @@ import java.util.List;
 public class AlloyUIScriptLanguageInjector implements MultiHostInjector {
 
     public static List<String> AUI_TAGLIB_NAMESPACES = Arrays.asList(
-            "http://liferay.com/tld/aui",
-            "http://alloy.liferay.com/tld/aui");
+            LiferayTaglibs.TAGLIB_URI_AUI,
+            LiferayTaglibs.TAGLIB_URI_AUI_OLD);
 
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement context) {
         if (

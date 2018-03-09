@@ -23,6 +23,7 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.velocity.psi.files.VtlFile;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
+import de.dm.intellij.liferay.theme.LiferayThemeTemplateVariableReferenceFinder;
 import de.dm.intellij.liferay.util.LiferayFileUtil;
 import de.dm.intellij.liferay.util.LiferayVersions;
 
@@ -214,15 +215,17 @@ public class TemplateVariableProcessorUtil {
         }
 
         if (isThemeTemplateFile) {
+            TemplateVariableReferenceFinder templateVariableReferenceFinder = new LiferayThemeTemplateVariableReferenceFinder();
+
             if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_6_1) {
-                variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/theme_template_61.vm"));
+                variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/theme_template_61.vm", templateVariableReferenceFinder));
             } else if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_6_2) {
-                variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/theme_template_62.vm"));
+                variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/theme_template_62.vm", templateVariableReferenceFinder));
             } else if (
                         (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_0) ||
                         (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                     ) { //Liferay 7.0
-                variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/theme_template_70.vm"));
+                variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/theme_template_70.vm", templateVariableReferenceFinder));
             }
         }
 
@@ -381,6 +384,10 @@ public class TemplateVariableProcessorUtil {
     }
 
     private static <F extends PsiFile, T extends PsiNamedElement> Collection<T> getImplicitVariables(TemplateVariableProcessor<F, T> templateVariableProcessor, F sourceFile, String resource) {
+        return getImplicitVariables(templateVariableProcessor, sourceFile, resource, null);
+    }
+
+    private static <F extends PsiFile, T extends PsiNamedElement> Collection<T> getImplicitVariables(TemplateVariableProcessor<F, T> templateVariableProcessor, F sourceFile, String resource, TemplateVariableReferenceFinder templateVariableReferenceFinder) {
         final List<T> variables = new ArrayList<T>();
 
         URL url = TemplateVariableProcessorUtil.class.getResource(resource);
@@ -399,7 +406,12 @@ public class TemplateVariableProcessorUtil {
                                     String name = matcher.group(2);
                                     String type = matcher.group(3);
 
-                                    variables.add(templateVariableProcessor.createVariable(name, sourceFile, type, null, null));
+                                    PsiElement navigationalElement = null;
+                                    if (templateVariableReferenceFinder != null) {
+                                        navigationalElement = templateVariableReferenceFinder.getNavigationalElement(name, sourceFile);
+
+                                    }
+                                    variables.add(templateVariableProcessor.createVariable(name, sourceFile, type, navigationalElement, null));
                                 }
                             }
                         }

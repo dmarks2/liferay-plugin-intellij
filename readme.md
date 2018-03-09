@@ -58,7 +58,6 @@ Known Issues
 * Indent does not work properly in ``<aui:script>``-Tags
 * ``@theme_image_path@`` reference in CSS files work, but still shown in red (SCSS works properly)
 
-
 Licence
 -------
 

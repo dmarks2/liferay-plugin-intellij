@@ -1,1 +1,11 @@
 language: java
+deploy:
+  provider: releases
+  overwrite: true
+  skip_cleanup: true
+  file_glob: true
+  file: build/distributions/*
+  on:
+    tags: true
+  api_key:
+    secure: xmkWM1VAVL1R3GbNAYMa+zUOncV5xspcwDlh2F+VlT11XpK3RMZhwxZC1YO6TQFR1SaS1q42E+iPz7E9rmZUUDAEy53otasWPgOXeCYEzqTQtD/iphJLgHA6i7gaHZuttnanl8J3pOvPjXwlDdZ2TO6rUE61NPUbD5mzerKUv6Jf7Gvvf1fyAPHXcWd5i3yaHJXGSIwX6dBBoKQY6ClyOzt4I7BD7x2SnQ7A/ET7xrOhY7rjN0kyWB2XXWZo4j23jiz6YtLlN+0aQwqCdrEPdb1J5rYnrbjAPI1KK6ph1asZBg2HyU0cKylXZPNXYSNuDTx2emPlEkjnQ9HK2VXmWLxAHbZuCJVj80EWf93VAX6b51ZNWQ15kRM9hgrB/zM6MXPLzLt8Be8lE7HsXx+eZR98wInZ1ITuPvS4J2Nmqy8jGgnP0usNx6Ox5MaH+bEq69j9yGUG7YHsdvR6cD3Nq5ZTfHJy3gmB/CxCez8QTBH9Hi2Xf3iw0wuefzSsYIxzWlA+SYON4iIFinCJiTZx5vGB84cqLQ/W0+FJFDK+juZJUl+Kq1Bllcpa0dnIwEyCfaW3ftBFC6I+jwWgGcEkFlkP+0htonc5oRvVpPXj7P1VpKYnFVPKH4RwrW1RV/LqKpjVWabg9gN8E1gf0czb12B8yIXab/iZNpUCwcNw4tg=

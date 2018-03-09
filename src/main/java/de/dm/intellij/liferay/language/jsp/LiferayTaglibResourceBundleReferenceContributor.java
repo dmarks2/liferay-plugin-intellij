@@ -8,6 +8,7 @@ import com.intellij.psi.filters.ElementFilter;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.util.XmlUtil;
+import de.dm.intellij.liferay.util.LiferayTaglibs;
 import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,15 +19,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Adds code completion features for references to language kays inside Liferay or AlloyUI Taglibs
+ */
 public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenceContributor {
-
-    private static final String TAGLIB_URI_LIFERAY_UI = "http://liferay.com/tld/ui";
-    private static final String TAGLIB_URI_AUI = "http://liferay.com/tld/aui";
-    private static final String TAGLIB_URI_AUI_OLD = "http://alloy.liferay.com/tld/aui";
-    private static final String TAGLIB_URI_LIFERAY_ASSET = "http://liferay.com/tld/asset";
-    private static final String TAGLIB_URI_LIFERAY_EXPANDO = "http://liferay.com/tld/expando";
-    private static final String TAGLIB_URI_LIFERAY_FRONTEND = "http://liferay.com/tld/frontend";
-    private static final String TAGLIB_URI_LIFERAY_TRASH = "http://liferay.com/tld/trash";
 
     private static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTTRIBUTES = new HashMap<String, Collection<Pair<String, String>>>();
 
@@ -40,7 +36,7 @@ public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenc
     //
     // not examined yet: "liferay-portlet-ext.tld"
     static {
-        TAGLIB_ATTTRIBUTES.put(TAGLIB_URI_LIFERAY_UI, Arrays.asList(
+        TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
                 new Pair<String, String>("app-view-search-entry", "containerType"),
                 new Pair<String, String>("asset-addon-entry-selector", "title"),
                 new Pair<String, String>("asset-metadata", "metadataField"),
@@ -77,7 +73,7 @@ public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenc
                 new Pair<String, String>("tabs", "names")
         ));
 
-        TAGLIB_ATTTRIBUTES.put(TAGLIB_URI_AUI, Arrays.asList(
+        TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_AUI, Arrays.asList(
                 new Pair<String, String>("a", "title"),
                 new Pair<String, String>("a", "label"),
                 new Pair<String, String>("button", "value"),
@@ -102,26 +98,26 @@ public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenc
                 new Pair<String, String>("select", "title"),
                 new Pair<String, String>("workflow-status", "statusMessage")
         ));
-        TAGLIB_ATTTRIBUTES.put(TAGLIB_URI_AUI_OLD, TAGLIB_ATTTRIBUTES.get(TAGLIB_URI_AUI));
+        TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_AUI_OLD, TAGLIB_ATTTRIBUTES.get(LiferayTaglibs.TAGLIB_URI_AUI));
 
-        TAGLIB_ATTTRIBUTES.put(TAGLIB_URI_LIFERAY_ASSET, Arrays.asList(
+        TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_ASSET, Arrays.asList(
                 new Pair<String, String>("asset-addon-entry-selector", "title"),
                 new Pair<String, String>("asset-metadata", "metadataField"),
                 new Pair<String, String>("asset-tags-summary", "message")
         ));
 
-        TAGLIB_ATTTRIBUTES.put(TAGLIB_URI_LIFERAY_EXPANDO, Arrays.asList(
+        TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPANDO, Arrays.asList(
                 new Pair<String, String>("custom-attribute", "name")
         ));
 
-        TAGLIB_ATTTRIBUTES.put(TAGLIB_URI_LIFERAY_FRONTEND, Arrays.asList(
+        TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND, Arrays.asList(
                 new Pair<String, String>("email-notification-settings", "bodyLabel"),
                 new Pair<String, String>("email-notification-settings", "helpMessage"),
                 new Pair<String, String>("management-bar-button", "label"),
                 new Pair<String, String>("management-bar-filter", "label")
         ));
 
-        TAGLIB_ATTTRIBUTES.put(TAGLIB_URI_LIFERAY_TRASH, Arrays.asList(
+        TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_TRASH, Arrays.asList(
                 new Pair<String, String>("empty", "confirmMessage"),
                 new Pair<String, String>("empty", "emptyMessage"),
                 new Pair<String, String>("empty", "infoMessage")

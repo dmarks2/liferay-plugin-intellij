@@ -1,14 +1,14 @@
 package de.dm.intellij.liferay.language.velocity;
 
-import com.intellij.freemarker.psi.variables.FtlVariable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.progress.ProcessCanceledException;
-import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceSet;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiType;
+import com.intellij.psi.ResolveState;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.velocity.VtlGlobalVariableProvider;
@@ -16,11 +16,9 @@ import com.intellij.velocity.psi.VtlVariable;
 import com.intellij.velocity.psi.files.VtlFile;
 import de.dm.intellij.liferay.language.TemplateVariableProcessor;
 import de.dm.intellij.liferay.language.TemplateVariableProcessorUtil;
-import de.dm.intellij.liferay.language.freemarker.CustomFtlVariable;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
 import de.dm.intellij.liferay.util.LiferayVersions;
-import de.dm.intellij.liferay.util.ThemeSettingsPathFileReference;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -67,26 +65,7 @@ public class LiferayVtlVariableProvider extends VtlGlobalVariableProvider implem
                 }
             };
         }
-        if (nestedVariables == null) {
-            return new CustomVtlVariable(name, parent, typeText, navigationalElement);
-        } else {
-            return new CustomVtlVariable(name, parent, typeText, navigationalElement) {
-
-                @Override
-                public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState state, PsiElement lastParent, @NotNull PsiElement place) {
-                    for (VtlVariable variable : nestedVariables) {
-                        processor.execute(variable, state);
-                    }
-
-                    return true;
-                }
-
-                @Override
-                public PsiType getPsiType() {
-                     return null;
-                }
-            };
-        }
+        return new CustomVtlVariable(name, parent, typeText, navigationalElement, nestedVariables);
     }
 
     @Override

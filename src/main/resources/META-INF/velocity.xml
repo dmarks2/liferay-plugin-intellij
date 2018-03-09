@@ -3,6 +3,9 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Declare that .tpl files should be handled as Velocity files -->
         <fileTypeFactory implementation="de.dm.intellij.liferay.language.tpl.TplFileTypeFactory"/>
+
+        <!-- Adds file references for known template variables (Freemarker / Velocity) like ${images_folder} -->
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.TemplateVariableReferenceContributor"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij.velocity">

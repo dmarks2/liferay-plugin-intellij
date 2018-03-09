@@ -3,14 +3,20 @@ package de.dm.intellij.liferay.language.freemarker;
 import com.intellij.freemarker.psi.files.FtlFile;
 import com.intellij.freemarker.psi.files.FtlGlobalVariableProvider;
 import com.intellij.freemarker.psi.files.FtlXmlNamespaceType;
-import com.intellij.freemarker.psi.variables.*;
+import com.intellij.freemarker.psi.variables.FtlSpecialVariableType;
+import com.intellij.freemarker.psi.variables.FtlTemplateType;
+import com.intellij.freemarker.psi.variables.FtlVariable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiDirectory;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.ResolveState;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
@@ -26,7 +32,13 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implements TemplateVariableProcessor<FtlFile, FtlVariable>, TemplateMacroProcessor<FtlFile, FtlFile> {
 
@@ -63,8 +75,8 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
 
                 if (
                         (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_0) ||
-                        (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
-                ) { //Liferay 7.0
+                                (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
+                        ) { //Liferay 7.0
                     result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-product-navigation.tld", module, "liferay_product_navigation"));
                     result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-journal.tld", module, "liferay_journal"));
                     result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-flags.tld", module, "liferay_flags"));
@@ -111,21 +123,7 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
         if ("theme_settings".equals(name)) {
             return new CustomFtlVariable(name, parent, getThemeSettingsVariableType(parent));
         }
-        if (nestedVariables == null) {
-            //TODO com.liferay.portal.kernel.templateparser.TemplateNode inherits from java.util.Map. FtlPsiType --> InheritanceUtil.isInheritor(psiClass, "java.util.Map") returns true, so no Methods of TemplateNode are resolved
-            return new CustomFtlVariable(name, parent, typeText, navigationalElement);
-        } else {
-            return new CustomFtlVariable(name, parent, new FtlSpecialVariableType() {
-
-                @Override
-                public boolean processDeclarations(@NotNull PsiScopeProcessor psiScopeProcessor, @NotNull PsiElement psiElement, ResolveState resolveState) {
-                    for (FtlVariable variable : nestedVariables) {
-                        psiScopeProcessor.execute(variable, resolveState);
-                    }
-                    return true;
-                }
-            });
-        }
+        return new CustomFtlVariable(name, parent, typeText, navigationalElement, nestedVariables);
     }
 
     @Override

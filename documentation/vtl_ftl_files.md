@@ -24,6 +24,10 @@ to the declaration in the ```liferay-look-and-feel.xml```.
 
 ![Freemarker Theme Settings](freemarker_theme_settings.png "Freemarker Theme Settings")
 
+Known path variables like ```${images_folder}``` are resolved, so code completion e.g. for images in your theme works.
+
+![Freemarker Path Variables](freemarker_path_variables.png "Freemarker Path Variables")
+
 ## Requirements
 
 This feature works in IntelliJ Ultimate Edition only.
