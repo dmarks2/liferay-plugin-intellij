@@ -57,7 +57,7 @@ public class LiferayJspWebContentRootListener {
                                 for (WebFacet webFacet : webFacets) {
                                     List<WebRoot> webRoots = webFacet.getWebRoots();
                                     for (WebRoot webRoot : webRoots) {
-                                        if (webRoot.getFile().equals(resources)) {
+                                        if ( (webRoot.getFile() != null) && (webRoot.getFile().equals(resources)) ) {
                                             facetPresent = true;
                                             break outer;
                                         }
