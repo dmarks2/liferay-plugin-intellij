@@ -9,3 +9,4 @@ deploy:
   file: build/distributions/*
   on:
     repo: dmarks2/liferay-plugin-intellij
+    tags: true
