@@ -6,6 +6,12 @@
 
         <!-- Adds file references for known template variables (Freemarker / Velocity) like ${images_folder} -->
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.TemplateVariableReferenceContributor"/>
+
+        <!-- Add Template Contexts for creating Live Templates -->
+        <liveTemplateContext implementation="de.dm.intellij.liferay.language.velocity.LiferayJournalTemplateVelocityContextType"/>
+        <liveTemplateContext implementation="de.dm.intellij.liferay.language.velocity.LiferayApplicationDisplayTemplateVelocityContextType"/>
+        <liveTemplateContext implementation="de.dm.intellij.liferay.language.velocity.LiferayThemeTemplateVelocityContextType"/>
+        <liveTemplateContext implementation="de.dm.intellij.liferay.language.velocity.LiferayLayoutTemplateVelocityContextType"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij.velocity">

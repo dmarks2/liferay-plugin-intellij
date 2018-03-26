@@ -4,4 +4,11 @@
         <!-- Provide implicit Freemarker variables and macros -->
         <globalVariableProvider implementation="de.dm.intellij.liferay.language.freemarker.LiferayFtlVariableProvider" />
     </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add Template Contexts for creating Live Templates -->
+        <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayJournalTemplateFreemarkerContextType"/>
+        <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayApplicationDisplayTemplateFreemarkerContextType"/>
+        <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayThemeTemplateFreemarkerContextType"/>
+    </extensions>
 </idea-plugin>
