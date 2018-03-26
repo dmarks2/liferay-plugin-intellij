@@ -1,10 +1,13 @@
 package de.dm.intellij.liferay.language.velocity;
 
 import com.intellij.codeInsight.template.TemplateContextType;
+import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.psi.PsiFile;
 import com.intellij.velocity.psi.files.VtlFileType;
+import com.intellij.velocity.psi.files.VtlSyntaxHighlighter;
 import de.dm.intellij.liferay.util.LiferayFileUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class LiferayJournalTemplateVelocityContextType extends TemplateContextType {
 
@@ -20,4 +23,11 @@ public class LiferayJournalTemplateVelocityContextType extends TemplateContextTy
         }
         return VtlFileType.INSTANCE.equals(file.getFileType()) && LiferayFileUtil.isJournalTemplateFile(originalFile);
     }
+
+    @Nullable
+    @Override
+    public SyntaxHighlighter createHighlighter() {
+        return new VtlSyntaxHighlighter();
+    }
+
 }
