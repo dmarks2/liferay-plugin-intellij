@@ -3,7 +3,7 @@
     <id>de.dm.intellij.liferay</id>
     <name>Liferay Plugin</name>
     <category>Framework integration</category>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
@@ -26,6 +26,11 @@
       ]]></description>
 
     <change-notes><![CDATA[
+        <p>Version 0.0.2</p>
+        <ul>
+            <li>Feature: Added Compass support for Liferay 6.1 and 6.2</li>
+            <li>Feature: Added Liferay specific contexts for Live Templates</li>
+        </ul>
         <p>Version 0.0.1</p>
         <ul>
             <li>Initial Version</li>

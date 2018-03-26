@@ -5,6 +5,7 @@ import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFileSystemItem;
+import com.intellij.psi.css.CssFileType;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceHelper;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.util.LiferayFileUtil;
@@ -65,7 +66,10 @@ public class LiferaySassFileReferenceHelper extends FileReferenceHelper {
 
     @Override
     public boolean isMine(Project project, @NotNull VirtualFile file) {
-        return SCSSFileType.SCSS.equals(file.getFileType());
+        return (
+                SCSSFileType.SCSS.equals(file.getFileType()) ||
+                CssFileType.INSTANCE.equals(file.getFileType())
+        );
     }
 
 }

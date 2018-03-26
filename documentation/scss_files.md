@@ -21,6 +21,10 @@ can use references or code completion features.
 
 ![Unstyled Variables](unstyled_variables.png "Unstyled Variables")
 
+Liferay 6.1 and 6.2 use the Compass library. This plugin creates a Compass library, so that functions and mixins can be resolved.
+
+![Compass Support](compass.png "Compass Support")
+
 ## Requirements
 
 This feature works in IntelliJ Ultimate Edition only.

@@ -6,8 +6,8 @@ buildscript {
 
 
 plugins {
-    id "org.jetbrains.intellij" version "0.2.15"
-    id 'de.undercouch.download' version '3.3.0'
+    id "org.jetbrains.intellij" version "0.2.18"
+    id 'de.undercouch.download' version '3.4.2'
 }
 
 import de.undercouch.gradle.tasks.download.Download
@@ -34,7 +34,7 @@ sourceSets {
             srcDirs = ['src/main/resources']
         }
 
-        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'unzipAlloyUI15', 'unzipAlloyUI20', 'unzipAlloyUI30', 'generateTaglibDefinitions', 'generateLiferayBareboneJavascriptFiles'])
+        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'unzipAlloyUI15', 'unzipAlloyUI20', 'unzipAlloyUI30', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions', 'generateLiferayBareboneJavascriptFiles'])
     }
 }
 
@@ -53,7 +53,7 @@ intellij {
     version 'IU-2016.3'
     type 'IU'
     pluginName 'Liferay IntelliJ Plugin'
-    plugins = ['JavaScriptLanguage', 'Tomcat', 'Velocity', 'FreeMarker', 'maven', 'properties', 'java-i18n', 'CSS', 'sass', 'JavaEE', 'jsp', 'gradle', 'de.dm.intellij.maven-archetypes-catalog-plugin:1.2.5']
+    plugins = ['Osmorc','JavaScriptLanguage', 'Tomcat', 'Velocity', 'FreeMarker', 'maven', 'properties', 'java-i18n', 'CSS', 'sass', 'JavaEE', 'jsp', 'gradle', 'de.dm.intellij.maven-archetypes-catalog-plugin:1.2.5']
     updateSinceUntilBuild false
 }
 
@@ -336,6 +336,34 @@ task generateLiferayBareboneJavascriptFiles {
     }
 }
 
+task downloadCompass0122(type: Download) {
+    src 'https://github.com/Compass/compass/archive/v0.12.2.zip'
+    acceptAnyCertificate true
+    overwrite true
+    onlyIfNewer true
+    dest new File(tempDir, 'compass-0.12.2.zip')
+}
+
+task unzipCompass0122Stylesheets(dependsOn: downloadAlloyUI30, type: Copy) {
+    from zipTree(downloadCompass0122.dest)
+    include 'compass-0.12.2/frameworks/compass/stylesheets/**'
+    into generatedResources + '/compass-0.12.2/stylesheets'
+    eachFile { fcp ->
+        fcp.path = fcp.path.replaceFirst("^compass-0.12.2/frameworks/compass/stylesheets", '')
+    }
+    includeEmptyDirs false
+}
+
+task unzipCompass0122SassExtensions(dependsOn: downloadAlloyUI30, type: Copy) {
+    from zipTree(downloadCompass0122.dest)
+    include 'compass-0.12.2/lib/compass/sass_extensions/**'
+    into generatedResources + '/compass-0.12.2/sass_extensions'
+    eachFile { fcp ->
+        fcp.path = fcp.path.replaceFirst("^compass-0.12.2/lib/compass/sass_extensions", '')
+    }
+    includeEmptyDirs false
+}
+
 //BND filetype definition from https://github.com/lpireyn
 /*task generateBndFiletypeDefinitions {
     doLast {
@@ -355,4 +383,4 @@ task generateLiferayBareboneJavascriptFiles {
 */
 
 group 'de.dm.intellij.liferay'
-version '0.0.1'
+version '0.0.2'

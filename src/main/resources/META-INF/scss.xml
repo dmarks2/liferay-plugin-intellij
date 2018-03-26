@@ -4,4 +4,9 @@
         <!-- Reference helper to provide root contexts for SCSS files -->
         <psi.fileReferenceHelper implementation="de.dm.intellij.liferay.language.sass.LiferaySassFileReferenceHelper" />
     </extensions>
+
+    <extensions defaultExtensionNs="com.intellij.sass">
+        <!-- Provides Compass SASS library to (S)CSS files. Compass is used in Liferay 6.1 and 6.2 -->
+        <extension implementation="de.dm.intellij.liferay.language.sass.LiferayCompassSassExtension" />
+    </extensions>
 </idea-plugin>
