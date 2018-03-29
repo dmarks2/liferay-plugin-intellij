@@ -30,6 +30,7 @@
         <ul>
             <li>Feature: Added Compass support for Liferay 6.1 and 6.2</li>
             <li>Feature: Added Liferay specific contexts for Live Templates</li>
+            <li>Feature: Compare JSPs with original Liferay file (JSP hooks or web fragments)</li>
         </ul>
         <p>Version 0.0.1</p>
         <ul>
@@ -64,6 +65,12 @@
 
         <!-- Error Reporting in case of crashes -->
         <errorHandler implementation="de.dm.intellij.liferay.util.PluginErrorReporter"/>
+
+        <!-- Liferay Source Code library Type -->
+        <!-- TODO deveopment in progress..
+        <library.type implementation="de.dm.intellij.liferay.library.LiferayLibraryType"/>
+        -->
+
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">
@@ -92,5 +99,13 @@
             <implementation-class>de.dm.intellij.liferay.project.LiferayProjectComponent</implementation-class>
         </component>
     </project-components>
+
+    <actions>
+        <action id="de.dm.intellij.liferay.action.ShowHookFragmentDiffAction"
+                class="de.dm.intellij.liferay.action.ShowHookFragmentDiffAction" text="Compare with Liferay original file"
+                description="Compares the current file with the original file from Liferay" icon="/com/liferay/icons/liferay.png">
+            <add-to-group group-id="ProjectViewPopupMenu" relative-to-action="CompareFileWithEditor" anchor="after"/>
+        </action>
+    </actions>
 
 </idea-plugin>

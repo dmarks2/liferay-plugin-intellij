@@ -8,6 +8,7 @@ import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.util.io.FileUtil;
+import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiFile;
@@ -15,12 +16,14 @@ import com.intellij.psi.PsiFileSystemItem;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceHelper;
 import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.Processor;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -134,7 +137,7 @@ public class LiferayFileUtil {
                     return
                             (
                                     ((webRootFile != null) && (isParent(psiFile.getVirtualFile(), webRootFile))) ||
-                                    ((sourceRootFile != null) && (isParent(psiFile.getVirtualFile(), sourceRootFile)))
+                                            ((sourceRootFile != null) && (isParent(psiFile.getVirtualFile(), sourceRootFile)))
                             );
                 }
             }
@@ -237,6 +240,21 @@ public class LiferayFileUtil {
         return null;
     }
 
+    public static Collection<String> getWebRootsRelativePaths(Module module, VirtualFile virtualFile) {
+        Collection<String> result = new ArrayList<String>();
+
+        Collection<WebFacet> webFacets = WebFacet.getInstances(module);
+        for (WebFacet webFacet : webFacets) {
+            List<WebRoot> webRoots = webFacet.getWebRoots();
+            for (WebRoot webRoot : webRoots) {
+                VirtualFile webRootFile = webRoot.getFile();
+                result.add(VfsUtilCore.getRelativePath(virtualFile, webRootFile));
+            }
+        }
+
+        return result;
+    }
+
     public static VirtualFile getChild(VirtualFile parent, String name) {
         int index = name.indexOf('/');
 
@@ -314,6 +332,25 @@ public class LiferayFileUtil {
                 }
         );
 
+    }
+
+    public static String getCustomJspDir(Module module) {
+        String liferayHookXml = LiferayModuleComponent.getLiferayHookXml(module);
+        if ( (liferayHookXml != null) && (liferayHookXml.trim().length() > 0) ) {
+            VirtualFile virtualFile = VfsUtilCore.findRelativeFile(liferayHookXml, null);
+            XmlFile xmlFile = (XmlFile) PsiManager.getInstance(module.getProject()).findFile(virtualFile);
+            if ( (xmlFile != null) && (xmlFile.isValid()) ) {
+                XmlTag rootTag = xmlFile.getRootTag();
+                if ("hook".equals(rootTag.getLocalName())) {
+                    XmlTag customJspDirTag = rootTag.findFirstSubTag("custom-jsp-dir");
+                    if ((customJspDirTag != null) && (customJspDirTag.getValue() != null)) {
+                        return customJspDirTag.getValue().getTrimmedText();
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
 }

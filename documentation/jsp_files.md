@@ -20,10 +20,14 @@ Several Liferay or AUI tags provide attributes like ```cssClass``` or ```iconCss
 ![cssClass attribute](jsp_css_class.png "cssClass attribute")
 
 Many attributes for Liferay or AUI tags refer to keys inside language resource bundles. This plugin adds code completion features for those
-attributes. 
+attributes.
 
 ![language keys](jsp_language_keys.png "language keys")
 
+You can compare your JSP with the original Liferay file to see what has been changed. This works for JSP Hooks (Liferay 6.x) and OSGi fragments (Liferay 7 / DXP).
+
+![JSP compare](jsp_compare.png "JSP compare")
+ 
 ## Requirements
 
 This feature works in IntelliJ Ultimate Edition only.

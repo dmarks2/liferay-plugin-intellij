@@ -5,10 +5,7 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.LibraryOrderEntry;
-import com.intellij.openapi.roots.ModifiableModelsProvider;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.roots.OrderRootType;
+import com.intellij.openapi.roots.*;
 import com.intellij.openapi.roots.impl.OrderEntryUtil;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
@@ -16,12 +13,13 @@ import com.intellij.openapi.roots.libraries.LibraryTablesRegistrar;
 import com.intellij.openapi.startup.StartupManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.DisposeAwareRunnable;
+import com.intellij.util.Processor;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class ProjectUtils {
-
     public static void runWhenInitialized(final Project project, final Runnable runnable) {
         if (project.isDisposed()) return;
 
@@ -49,6 +47,24 @@ public class ProjectUtils {
         } else {
             DumbService.getInstance(project).runWhenSmart(DisposeAwareRunnable.create(r, project));
         }
+    }
+
+    public static Collection<Library> findLibrariesByName(final String name, Module module) {
+        final Collection<Library> result = new ArrayList<Library>();
+
+        ModuleRootManager.getInstance(module).orderEntries().forEachLibrary(
+                new Processor<Library>() {
+                    @Override
+                    public boolean process(Library library) {
+                        if (library.getName().contains(name)) {
+                            result.add(library);
+                        }
+                        return true;
+                    }
+                }
+        );
+
+        return result;
     }
 
     private static LibraryOrderEntry getLibraryIntern(String name, ModifiableRootModel model) {
@@ -149,5 +165,6 @@ public class ProjectUtils {
             );
         }
     }
+
 
 }

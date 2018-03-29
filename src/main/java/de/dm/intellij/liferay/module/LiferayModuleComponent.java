@@ -180,6 +180,25 @@ public class LiferayModuleComponent implements ModuleComponent, PersistentStateC
         return null;
     }
 
+    public static String getOsgiFragmentHostPackageName(Module module) {
+        String fragmentHostPackageName;
+
+        String fragmentHost = getOsgiFragmentHost(module);
+        if (fragmentHost != null) {
+            int index = fragmentHost.indexOf(';');
+            if (index > -1) {
+                String packageName = fragmentHost.substring(0, index);
+                fragmentHostPackageName = packageName;
+            } else {
+                fragmentHostPackageName = null;
+            }
+        } else {
+            fragmentHostPackageName = null;
+        }
+
+        return fragmentHostPackageName;
+    }
+
     public String getParentTheme() {
         return parentTheme;
     }

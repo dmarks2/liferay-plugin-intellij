@@ -27,20 +27,7 @@ public class LiferayJspHookFileReferenceHelper extends FileReferenceHelper {
     public Collection<PsiFileSystemItem> getRoots(@NotNull final Module module) {
         final Collection<PsiFileSystemItem> result = new ArrayList<PsiFileSystemItem>();
 
-        final String fragmentHostPackageName;
-
-        String fragmentHost = LiferayModuleComponent.getOsgiFragmentHost(module);
-        if (fragmentHost != null) {
-            int index = fragmentHost.indexOf(';');
-            if (index > -1) {
-                String packageName = fragmentHost.substring(0, index);
-                fragmentHostPackageName = packageName;
-            } else {
-                fragmentHostPackageName = null;
-            }
-        } else {
-            fragmentHostPackageName = null;
-        }
+        String fragmentHostPackageName = LiferayModuleComponent.getOsgiFragmentHostPackageName(module);
 
         LiferayFileUtil.addLibraryRoot(result, this, module, "com.liferay.portal:portal-web", null);
 
