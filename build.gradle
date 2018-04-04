@@ -344,7 +344,7 @@ task downloadCompass0122(type: Download) {
     dest new File(tempDir, 'compass-0.12.2.zip')
 }
 
-task unzipCompass0122Stylesheets(dependsOn: downloadAlloyUI30, type: Copy) {
+task unzipCompass0122Stylesheets(dependsOn: downloadCompass0122, type: Copy) {
     from zipTree(downloadCompass0122.dest)
     include 'compass-0.12.2/frameworks/compass/stylesheets/**'
     into generatedResources + '/compass-0.12.2/stylesheets'
@@ -354,7 +354,7 @@ task unzipCompass0122Stylesheets(dependsOn: downloadAlloyUI30, type: Copy) {
     includeEmptyDirs false
 }
 
-task unzipCompass0122SassExtensions(dependsOn: downloadAlloyUI30, type: Copy) {
+task unzipCompass0122SassExtensions(dependsOn: downloadCompass0122, type: Copy) {
     from zipTree(downloadCompass0122.dest)
     include 'compass-0.12.2/lib/compass/sass_extensions/**'
     into generatedResources + '/compass-0.12.2/sass_extensions'

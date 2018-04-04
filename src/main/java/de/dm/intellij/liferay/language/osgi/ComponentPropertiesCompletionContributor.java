@@ -529,6 +529,13 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                 new String[][]{
                         {"service.ranking", "Integer", ""},
                 });
+
+        //OSGi default commands
+        COMPONENT_PROPERTIES.put("java.lang.Object",
+                new String[][]{
+                        {"osgi.command.scope", "String", ""},
+                        {"osgi.command.function", "String", ""},
+                });
     }
     private Map<String, List<LookupElementBuilder>> KEYWORD_LOOKUPS = new HashMap<String, List<LookupElementBuilder>>();
 

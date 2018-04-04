@@ -71,9 +71,12 @@ public class LiferayLibraryType extends LibraryType<DummyLibraryProperties> {
         return null;
     }
 
+    // TODO API Change in 2016 to 2017
+    /*
     @Nullable
     @Override
     public Icon getIcon(@Nullable LibraryProperties properties) {
         return Icons.LIFERAY_ICON;
     }
+    */
 }
