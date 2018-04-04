@@ -1,13 +1,10 @@
 package de.dm.intellij.liferay.project;
 
+import com.intellij.ProjectTopics;
 import com.intellij.openapi.components.ProjectComponent;
-import com.intellij.openapi.progress.ProcessCanceledException;
-import com.intellij.openapi.progress.ProgressIndicator;
-import com.intellij.openapi.progress.util.ProgressIndicatorUtils;
-import com.intellij.openapi.progress.util.ReadTask;
-import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.FileIndexUtil;
+import com.intellij.openapi.roots.ModuleRootAdapter;
+import com.intellij.openapi.roots.ModuleRootEvent;
 import com.intellij.openapi.vfs.*;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -57,14 +54,12 @@ public class LiferayProjectComponent implements ProjectComponent {
     @Override
     public void projectOpened() {
 
-        ProjectUtils.runWhenInitialized(project, new Runnable() {
+        ProjectUtils.runWhenInitialized(project, projectFilesHandler);
+
+        project.getMessageBus().connect().subscribe(ProjectTopics.PROJECT_ROOTS, new ModuleRootAdapter() {
             @Override
-            public void run() {
-                handleProjectFiles("liferay-look-and-feel.xml");
-                handleProjectFiles("liferay-hook.xml");
-                handleProjectFiles("bnd.bnd");
-                handleProjectFiles("package.json");
-                handleProjectFiles("resources");
+            public void rootsChanged(ModuleRootEvent event) {
+                ProjectUtils.runDumbAwareLater(project, projectFilesHandler);
             }
         });
 
@@ -104,4 +99,16 @@ public class LiferayProjectComponent implements ProjectComponent {
             LiferayJspWebContentRootListener.handleChange(project, event);
         }
     }
+
+    private Runnable projectFilesHandler = new Runnable() {
+        @Override
+        public void run() {
+            handleProjectFiles("liferay-look-and-feel.xml");
+            handleProjectFiles("liferay-hook.xml");
+            handleProjectFiles("bnd.bnd");
+            handleProjectFiles("package.json");
+            handleProjectFiles("resources");
+        }
+    };
+
 }

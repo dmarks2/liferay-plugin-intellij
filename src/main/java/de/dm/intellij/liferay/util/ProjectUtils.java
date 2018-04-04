@@ -49,6 +49,14 @@ public class ProjectUtils {
         }
     }
 
+    public static void runDumbAwareLater(final Project project, final Runnable r) {
+        if (DumbService.isDumbAware(r)) {
+            ApplicationManager.getApplication().invokeLater(r);
+        } else {
+            DumbService.getInstance(project).smartInvokeLater(DisposeAwareRunnable.create(r, project));
+        }
+    }
+
     public static Collection<Library> findLibrariesByName(final String name, Module module) {
         final Collection<Library> result = new ArrayList<Library>();
 
