@@ -8,17 +8,17 @@ for JavaScript variables like ```AUI()``` or ```Liferay```.
 
 ![Liferay JavaScript](liferay_js.png "Liferay Javascript")
 
-Additionally when using the ``<aui:script>`` Tag in JSPs, the content is detected as JavaScript, so you can use all JavaScript features
-like highlighting, syntax checking and code completions.
+When using the ``<aui:script>``  or ``<aui:validator>`` tag in JSPs, the content is detected as JavaScript, so you can use all JavaScript features
+like highlighting, syntax checking and code completions. This works for several attributes of AUI or Liferay tags, too, e.g. for ``<aui:a onClick="javascript">``. 
 
 ![AUI Script Tag](aui_script.png "AUI Script Tag")
 
 ## Requirements
 
-To detect the ``<aui:script>`` Tag, the namespace ``aui`` must be declared properly, e.g.
+To detect the tags, the namespaces must be declared properly, e.g.
 
 ``` html
-    <%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui" %>
+    <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 ```
 
 This feature works in IntelliJ Ultimate Edition only.
