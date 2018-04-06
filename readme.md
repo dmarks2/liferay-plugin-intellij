@@ -60,7 +60,7 @@ Contributions are welcome.
 
 Known Issues
 ------------
-* Indent does not work properly in ``<aui:script>``-Tags
+* Indent does not work properly inside ``<aui:script>``-Tags containing other tags like ``<portlet:namespace/>``.
 * ``@theme_image_path@`` reference in CSS files work, but still shown in red (SCSS works properly)
 
 Licence

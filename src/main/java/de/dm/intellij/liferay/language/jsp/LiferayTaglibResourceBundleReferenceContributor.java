@@ -38,6 +38,7 @@ public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenc
     static {
         TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
                 new Pair<String, String>("app-view-search-entry", "containerType"),
+                new Pair<String, String>("alert", "message"),
                 new Pair<String, String>("asset-addon-entry-selector", "title"),
                 new Pair<String, String>("asset-metadata", "metadataField"),
                 new Pair<String, String>("asset-tags-summary", "message"),
@@ -48,6 +49,7 @@ public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenc
                 new Pair<String, String>("error", "message"),
                 new Pair<String, String>("form-navigator", "categoryLabels"),
                 new Pair<String, String>("form-navigator", "categorySectionLabels"),
+                new Pair<String, String>("header", "backLabel"),
                 new Pair<String, String>("header", "title"),
                 new Pair<String, String>("icon", "message"),
                 new Pair<String, String>("icon-delete", "confirmation"),
@@ -55,11 +57,14 @@ public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenc
                 new Pair<String, String>("icon-help", "message"),
                 new Pair<String, String>("icon-menu", "message"),
                 new Pair<String, String>("input-field", "placeholder"),
+                new Pair<String, String>("input-localized", "helpMessaage"),
                 new Pair<String, String>("input-localized", "placeholder"),
                 new Pair<String, String>("input-resource", "title"),
                 new Pair<String, String>("input-move-boxes", "leftTitle"),
                 new Pair<String, String>("input-move-boxes", "rightTitle"),
+                new Pair<String, String>("input-resource", "title"),
                 new Pair<String, String>("message", "key"),
+                new Pair<String, String>("panel", "helpMessage"),
                 new Pair<String, String>("panel", "title"),
                 new Pair<String, String>("progress", "message"),
                 new Pair<String, String>("quick-access-entry", "label"),
@@ -70,14 +75,17 @@ public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenc
                 new Pair<String, String>("search-container-column-text", "name"),
                 new Pair<String, String>("search-toggle", "buttonLabel"),
                 new Pair<String, String>("success", "message"),
-                new Pair<String, String>("tabs", "names")
+                new Pair<String, String>("tabs", "names"),
+                new Pair<String, String>("upload-progress", "message")
         ));
 
         TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_AUI, Arrays.asList(
                 new Pair<String, String>("a", "title"),
                 new Pair<String, String>("a", "label"),
                 new Pair<String, String>("button", "value"),
+                new Pair<String, String>("field-wrapper", "helpMessage"),
                 new Pair<String, String>("field-wrapper", "label"),
+                new Pair<String, String>("fieldset", "helpMessage"),
                 new Pair<String, String>("fieldset", "label"),
                 new Pair<String, String>("icon", "label"),
                 new Pair<String, String>("input", "helpMessage"),
@@ -90,12 +98,16 @@ public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenc
                 new Pair<String, String>("input", "suffix"),
                 new Pair<String, String>("nav-bar", "selectedItemName"),
                 new Pair<String, String>("nav-item", "label"),
+                new Pair<String, String>("nav-item", "title"),
                 new Pair<String, String>("option", "label"),
                 new Pair<String, String>("panel", "label"),
                 new Pair<String, String>("select", "label"),
+                new Pair<String, String>("select", "helpMessage"),
                 new Pair<String, String>("select", "prefix"),
                 new Pair<String, String>("select", "suffix"),
                 new Pair<String, String>("select", "title"),
+                new Pair<String, String>("validator", "errorMessage"),
+                new Pair<String, String>("workflow-status", "helpMessage"),
                 new Pair<String, String>("workflow-status", "statusMessage")
         ));
         TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_AUI_OLD, TAGLIB_ATTTRIBUTES.get(LiferayTaglibs.TAGLIB_URI_AUI));
