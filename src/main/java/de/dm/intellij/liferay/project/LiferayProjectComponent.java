@@ -56,12 +56,14 @@ public class LiferayProjectComponent implements ProjectComponent {
 
         ProjectUtils.runWhenInitialized(project, projectFilesHandler);
 
+        /*
         project.getMessageBus().connect().subscribe(ProjectTopics.PROJECT_ROOTS, new ModuleRootAdapter() {
             @Override
             public void rootsChanged(ModuleRootEvent event) {
                 ProjectUtils.runDumbAwareLater(project, projectFilesHandler);
             }
         });
+        */
 
     }
 
