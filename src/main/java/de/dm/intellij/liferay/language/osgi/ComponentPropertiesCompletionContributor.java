@@ -2,9 +2,9 @@ package de.dm.intellij.liferay.language.osgi;
 
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.lang.java.JavaLanguage;
 import com.intellij.patterns.PatternCondition;
 import com.intellij.patterns.PlatformPatterns;
+import com.intellij.patterns.PsiJavaPatterns;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ProcessingContext;
@@ -552,12 +552,10 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         extend(
                 CompletionType.BASIC,
                 PlatformPatterns
-                        .psiElement(PsiJavaToken.class)
-                        .withLanguage(JavaLanguage.INSTANCE)
-                        .withElementType(JavaTokenType.STRING_LITERAL)
-                        .with(new PatternCondition<PsiJavaToken>("pattern") {
+                        .psiElement().inside(PsiJavaPatterns.literalExpression())
+                        .with(new PatternCondition<PsiElement>("pattern") {
                             @Override
-                            public boolean accepts(@NotNull PsiJavaToken psiJavaToken, ProcessingContext context) {
+                            public boolean accepts(@NotNull PsiElement psiJavaToken, ProcessingContext context) {
                                 if (psiJavaToken.getParent() == null) {
                                     return false;
                                 }
