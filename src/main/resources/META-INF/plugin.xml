@@ -57,6 +57,11 @@
         <!-- Completion Contribution for @Component annotation -->
         <completion.contributor language="JAVA" implementationClass="de.dm.intellij.liferay.language.osgi.ComponentPropertiesCompletionContributor"/>
 
+        <!-- Inject properties language into @Component(property="") -->
+        <!-- TODO experimental
+        <multiHostInjector implementation="de.dm.intellij.liferay.language.osgi.ComponentPropertiesLanguageInjector"/>
+        -->
+
         <!-- Provides a Line Marker for an Entity defined in service.xml. Using the Line Marker you can jump to the Model implementation -->
         <codeInsight.lineMarkerProvider language="XML" implementationClass="de.dm.intellij.liferay.language.service.LiferayServiceXMLLineMarkerProvider"/>
 
@@ -67,7 +72,7 @@
         <errorHandler implementation="de.dm.intellij.liferay.util.PluginErrorReporter"/>
 
         <!-- Liferay Source Code library Type -->
-        <!-- TODO deveopment in progress..
+        <!-- TODO development in progress..
         <library.type implementation="de.dm.intellij.liferay.library.LiferayLibraryType"/>
         -->
 

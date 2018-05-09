@@ -5,5 +5,8 @@
         <standardResourceProvider implementation="de.dm.intellij.liferay.schema.LiferayDefinitionsResourceProvider" />
         <!-- Provides XML Schema files for portlet-model-hints.xml and custom-sql/default.xml -->
         <xml.schemaProvider implementation="de.dm.intellij.liferay.schema.LiferayXmlSchemaProvider" />
+
+        <!-- Reference contributor for file references in Liferay specific XML files -->
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.xml.LiferayXmlFileReferenceContributor"/>
     </extensions>
 </idea-plugin>

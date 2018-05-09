@@ -33,6 +33,7 @@
                         <xs:enumeration value="month-nullable"/>
                         <xs:enumeration value="secret"/>
                         <xs:enumeration value="show-time"/>
+                        <xs:enumeration value="type"/>
                         <xs:enumeration value="upper-case"/>
                         <xs:enumeration value="year-nullable"/>
                         <xs:enumeration value="year-range-delta"/>
