@@ -525,6 +525,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"destination.name", "String", ""},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.messaging.Destination",
+                new String[][]{
+                        {"destination.name", "String", ""},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.model.ModelListener",
                 new String[][]{
                         {"service.ranking", "Integer", ""},
