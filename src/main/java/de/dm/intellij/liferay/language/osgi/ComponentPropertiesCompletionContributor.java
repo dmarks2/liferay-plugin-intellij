@@ -561,30 +561,27 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         .with(new PatternCondition<PsiElement>("pattern") {
                             @Override
                             public boolean accepts(@NotNull PsiElement psiJavaToken, ProcessingContext context) {
-                                if (psiJavaToken.getParent() == null) {
-                                    return false;
-                                }
-                                if (psiJavaToken.getParent() instanceof PsiLiteralExpression) {
-                                    if (psiJavaToken.getParent().getParent() instanceof PsiArrayInitializerMemberValue) {
-                                        if (psiJavaToken.getParent().getParent().getParent() instanceof PsiNameValuePair) {
-                                            PsiNameValuePair nameValuePair = (PsiNameValuePair)psiJavaToken.getParent().getParent().getParent();
-                                            if (nameValuePair.getNameIdentifier() != null) {
-                                                if ("property".equals(nameValuePair.getNameIdentifier().getText())) {
-                                                    if (psiJavaToken.getParent().getParent().getParent().getParent() instanceof PsiAnnotationParameterList) {
-                                                        if (psiJavaToken.getParent().getParent().getParent().getParent().getParent() instanceof PsiAnnotation) {
-                                                            PsiAnnotation annotation = (PsiAnnotation)psiJavaToken.getParent().getParent().getParent().getParent().getParent();
-                                                            if (annotation.getNameReferenceElement() != null) {
-                                                                if ("org.osgi.service.component.annotations.Component".equals(annotation.getNameReferenceElement().getQualifiedName())) {
-                                                                    return true;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
+                                PsiArrayInitializerMemberValue psiArrayInitializerMemberValue = PsiTreeUtil.getParentOfType(psiJavaToken, PsiArrayInitializerMemberValue.class);
+
+                                if (psiArrayInitializerMemberValue != null) {
+                                    PsiNameValuePair psiNameValuePair = PsiTreeUtil.getParentOfType(psiArrayInitializerMemberValue, PsiNameValuePair.class);
+
+                                    if (psiNameValuePair != null) {
+                                        String name = psiNameValuePair.getName();
+
+                                        if ("property".equals(name)) {
+                                            PsiAnnotation psiAnnotation = PsiTreeUtil.getParentOfType(psiNameValuePair, PsiAnnotation.class);
+
+                                            if (psiAnnotation != null) {
+                                                String qualifiedName = psiAnnotation.getQualifiedName();
+                                                if ("org.osgi.service.component.annotations.Component".equals(qualifiedName)) {
+                                                    return true;
                                                 }
                                             }
                                         }
                                     }
                                 }
+
                                 return false;
                             }
                         })
@@ -607,16 +604,26 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
 
     private static String getServiceClassName(CompletionParameters parameters) {
         PsiElement originalPosition = parameters.getOriginalPosition();
+
         PsiAnnotationParameterList annotationParameterList = PsiTreeUtil.getParentOfType(originalPosition, PsiAnnotationParameterList.class);
+
         if (annotationParameterList != null) {
             for (PsiNameValuePair psiNameValuePair : PsiTreeUtil.getChildrenOfType(annotationParameterList, PsiNameValuePair.class)) {
-                if ( (psiNameValuePair.getNameIdentifier() != null) && ("service".equals(psiNameValuePair.getNameIdentifier().getText())) ) {
+                String name = psiNameValuePair.getName();
+
+                if ("service".equals(name) ) {
                     PsiAnnotationMemberValue value = psiNameValuePair.getValue();
+
                     if (value instanceof PsiClassObjectAccessExpression) {
                         PsiClassObjectAccessExpression psiClassObjectAccessExpression = (PsiClassObjectAccessExpression)value;
+
                         PsiTypeElement operand = psiClassObjectAccessExpression.getOperand();
-                        if (operand.getInnermostComponentReferenceElement() != null) {
-                            String serviceClassName = operand.getInnermostComponentReferenceElement().getQualifiedName();
+
+                        PsiJavaCodeReferenceElement innermostComponentReferenceElement = operand.getInnermostComponentReferenceElement();
+
+                        if (innermostComponentReferenceElement != null) {
+                            String serviceClassName = innermostComponentReferenceElement.getQualifiedName();
+
                             return serviceClassName;
                         }
                     }
