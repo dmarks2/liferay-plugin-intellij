@@ -55,7 +55,7 @@
         <syntaxHighlighter factoryClass="de.dm.intellij.bndtools.BndFileTypeHighlighterProvider" />
 
         <!-- Completion Contribution for @Component annotation -->
-        <completion.contributor language="JAVA" implementationClass="de.dm.intellij.liferay.language.osgi.ComponentPropertiesCompletionContributor"/>
+        <completion.contributor order="first, before propertiesCompletion" language="JAVA" implementationClass="de.dm.intellij.liferay.language.osgi.ComponentPropertiesCompletionContributor"/>
 
         <!-- Inject properties language into @Component(property="") -->
         <!-- TODO experimental
@@ -75,6 +75,7 @@
         <!-- TODO development in progress..
         <library.type implementation="de.dm.intellij.liferay.library.LiferayLibraryType"/>
         -->
+        <lang.documentationProvider language="JAVA" implementationClass="de.dm.intellij.liferay.language.osgi.ComponentPropertiesDocumentationProvider"/>
 
     </extensions>
 
