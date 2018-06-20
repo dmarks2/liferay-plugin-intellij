@@ -1,6 +1,7 @@
 package de.dm.intellij.liferay.language.osgi;
 
 import com.intellij.patterns.PatternCondition;
+import com.intellij.patterns.PlatformPatterns;
 import com.intellij.patterns.PsiElementPattern;
 import com.intellij.patterns.PsiJavaPatterns;
 import com.intellij.psi.PsiAnnotation;
@@ -11,40 +12,47 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 
-public class ComponentPropertiesPsiElementPatternCapture extends PsiElementPattern.Capture<PsiElement> {
+public class ComponentPropertiesPsiElementPatternCapture {
 
-    public static final ComponentPropertiesPsiElementPatternCapture instance = new ComponentPropertiesPsiElementPatternCapture();
+    public static PsiElementPattern.Capture<PsiElement> instance;
 
-    protected ComponentPropertiesPsiElementPatternCapture() {
-        super(PsiElement.class);
-        inside(PsiJavaPatterns.literalExpression())
-                .with(new PatternCondition<PsiElement>("pattern") {
-                          @Override
-                          public boolean accepts(@NotNull PsiElement psiJavaToken, ProcessingContext context) {
-                              PsiArrayInitializerMemberValue psiArrayInitializerMemberValue = PsiTreeUtil.getParentOfType(psiJavaToken, PsiArrayInitializerMemberValue.class);
+    static {
+        instance = PlatformPatterns.psiElement();
+        instance = instance.inside(PsiJavaPatterns.literalExpression());
+        instance = instance.with(
+                new PatternCondition<PsiElement>("pattern") {
 
-                              if (psiArrayInitializerMemberValue != null) {
-                                  PsiNameValuePair psiNameValuePair = PsiTreeUtil.getParentOfType(psiArrayInitializerMemberValue, PsiNameValuePair.class);
+                    @Override
+                    public boolean accepts(@NotNull PsiElement psiElement, ProcessingContext context) {
+                        PsiArrayInitializerMemberValue psiArrayInitializerMemberValue = PsiTreeUtil.getParentOfType(
+                                psiElement, PsiArrayInitializerMemberValue.class);
 
-                                  if (psiNameValuePair != null) {
-                                      String name = psiNameValuePair.getName();
+                        if (psiArrayInitializerMemberValue != null) {
+                            PsiNameValuePair psiNameValuePair = PsiTreeUtil.getParentOfType(
+                                    psiArrayInitializerMemberValue, PsiNameValuePair.class);
 
-                                      if ("property".equals(name)) {
-                                          PsiAnnotation psiAnnotation = PsiTreeUtil.getParentOfType(psiNameValuePair, PsiAnnotation.class);
+                            if (psiNameValuePair != null) {
+                                String name = psiNameValuePair.getName();
 
-                                          if (psiAnnotation != null) {
-                                              String qualifiedName = psiAnnotation.getQualifiedName();
-                                              if ("org.osgi.service.component.annotations.Component".equals(qualifiedName)) {
-                                                  return true;
-                                              }
-                                          }
-                                      }
-                                  }
-                              }
+                                if ("property".equals(name)) {
+                                    PsiAnnotation psiAnnotation = PsiTreeUtil.getParentOfType(
+                                            psiNameValuePair, PsiAnnotation.class);
 
-                              return false;
-                          }
-                      }
-                );
+                                    if (psiAnnotation != null) {
+                                        String qualifiedName = psiAnnotation.getQualifiedName();
+
+                                        if ("org.osgi.service.component.annotations.Component".equals(qualifiedName)) {
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        return false;
+                    }
+
+                });
     }
+
 }
