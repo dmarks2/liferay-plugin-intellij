@@ -35,6 +35,11 @@ public class LiferayJspHookFileReferenceHelper extends FileReferenceHelper {
             LiferayFileUtil.addLibraryRoot(result, this, module, "com.liferay:" + fragmentHostPackageName, "META-INF/resources");
         }
 
+        boolean hasCustomJspBags = LiferayCustomJspBagUtil.hasCustomJspBags(module);
+        if (hasCustomJspBags) {
+            LiferayFileUtil.addLibraryRoot(result, this, module, "com.liferay.portal:com.liferay.portal.web", null);
+        }
+
         return result;
     }
 
