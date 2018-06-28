@@ -13,6 +13,7 @@ import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileSystem;
+import de.dm.intellij.liferay.language.jsp.LiferayCustomJspBagUtil;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.util.LiferayFileUtil;
 import de.dm.intellij.liferay.util.ProjectUtils;
@@ -107,6 +108,9 @@ public class ShowHookFragmentDiffAction extends AnAction {
                 libraries.addAll(ProjectUtils.findLibrariesByName("com.liferay.portal:portal-web", module));
                 if (fragmentHostPackageName != null) {
                     libraries.addAll(ProjectUtils.findLibrariesByName("com.liferay:" + fragmentHostPackageName, module));
+                }
+                if (LiferayCustomJspBagUtil.hasCustomJspBags(module)) {
+                    libraries.addAll(ProjectUtils.findLibrariesByName("com.liferay.portal:com.liferay.portal.web", module));
                 }
                 for (Library library : libraries) {
                     VirtualFile[] files = library.getFiles(OrderRootType.CLASSES);
