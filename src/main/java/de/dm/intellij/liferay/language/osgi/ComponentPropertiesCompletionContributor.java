@@ -541,6 +541,126 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"service.ranking", "Integer"},
                 });
 
+        //found by searching for ServiceTrackerCollections.openSingleValueMap
+
+        COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport",
+                new String[][]{
+                        {"model.class.name", "String"},
+                        {"add.structure.action.id", "String"},
+                        {"default.model.resource.name", "boolean"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.util.DDMTemplatePermissionSupport",
+                new String[][]{
+                        {"model.class.name", "String"},
+                        {"add.structure.action.id", "String"},
+                        {"default.model.resource.name", "boolean"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.adaptive.media.image.optimizer.AMImageOptimizer",
+                new String[][]{
+                        {"adaptive.media.key", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.adaptive.media.image.counter.AMImageCounter",
+                new String[][]{
+                        {"adaptive.media.key", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.adaptive.media.handler.AMRequestHandler",
+                new String[][]{
+                        {"adaptive.media.handler.pattern", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.mentions.matcher.MentionsMatcher",
+                new String[][]{
+                        {"model.class.name", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor",
+                new String[][]{
+                        {"ddm.form.field.type.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer",
+                new String[][]{
+                        {"ddm.form.field.type.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever",
+                new String[][]{
+                        {"ddm.form.field.type.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.captcha.Captcha",
+                new String[][]{
+                        {"captcha.engine.impl", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.util.ResourceBundleLoader",
+                new String[][]{
+                        {"bundle.symbolic.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.output.stream.container.OutputStreamContainerFactory",
+                new String[][]{
+                        {"name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.knowledge.base.web.internal.selector.KBArticleSelector",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.push.notifications.sender.PushNotificationsSender",
+                new String[][]{
+                        {"platform", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("org.eclipse.osgi.service.urlconversion.URLConverter",
+                new String[][]{
+                        {"protocol", "String"},
+                });
+
+        //found by searching for ServiceTrackerCollections.openMultiValueMap
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.security.auth.AuthFailure",
+                new String[][]{
+                        {"key", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.asset.kernel.validator.AssetEntryValidatorExclusionRule",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portlet.documentlibrary.store.Store",
+                new String[][]{
+                        {"store.type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portlet.documentlibrary.store.StoreWrapper",
+                new String[][]{
+                        {"store.type", "String"},
+                });
+
+        //found by ServiceTrackerCollections.openList
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.portlet.PortletLayoutFinder",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.template.TemplateContextContributor",
+                new String[][]{
+                        {"type", "String"},
+                });
+
         //OSGi default commands
         COMPONENT_PROPERTIES.put("java.lang.Object",
                 new String[][]{
