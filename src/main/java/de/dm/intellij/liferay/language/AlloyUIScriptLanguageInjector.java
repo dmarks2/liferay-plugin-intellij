@@ -7,14 +7,22 @@ import com.intellij.lang.javascript.JavascriptLanguage;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
+import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
+import com.intellij.psi.xml.XmlToken;
+import com.intellij.psi.xml.XmlTokenType;
 import de.dm.intellij.liferay.util.LiferayTaglibs;
 import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Injects JavaScript language into Liferay specific taglibs (like <aui:script> or <aui:a onClick="">)
@@ -108,9 +116,27 @@ public class AlloyUIScriptLanguageInjector implements MultiHostInjector, JSTarge
 
     private void injectIntoXmlAttribute(MultiHostRegistrar registrar, XmlAttribute xmlAttribute) {
         if ( (xmlAttribute.getValue() != null) && (xmlAttribute.getValue().trim().length() > 0) ) {
-            registrar.startInjecting(JavascriptLanguage.INSTANCE);
-            registrar.addPlace(null, null, (PsiLanguageInjectionHost)xmlAttribute.getValueElement(), xmlAttribute.getValueTextRange());
-            registrar.doneInjecting();
+            XmlAttributeValue valueElement = xmlAttribute.getValueElement();
+            if (valueElement != null) {
+                boolean needToInject = false;
+                PsiElement[] myChildren = valueElement.getChildren();
+                for (PsiElement child : myChildren) {
+                    if (child instanceof XmlToken) {
+                        //only inject if attribute contains regular content (e.g. not for JSP expressions inside the attribute value)
+                        XmlToken xmlToken = (XmlToken)child;
+                        IElementType tokenType = xmlToken.getTokenType();
+                        if (XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN.equals(tokenType)) {
+                            needToInject = true;
+                            break;
+                        }
+                    }
+                }
+                if (needToInject) {
+                    registrar.startInjecting(JavascriptLanguage.INSTANCE);
+                    registrar.addPlace(null, null, (PsiLanguageInjectionHost) xmlAttribute.getValueElement(), xmlAttribute.getValueTextRange());
+                    registrar.doneInjecting();
+                }
+            }
         }
     }
 
