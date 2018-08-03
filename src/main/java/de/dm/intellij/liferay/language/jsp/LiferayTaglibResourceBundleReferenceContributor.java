@@ -24,7 +24,7 @@ import java.util.Set;
  */
 public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenceContributor {
 
-    private static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTTRIBUTES = new HashMap<String, Collection<Pair<String, String>>>();
+    private static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES = new HashMap<String, Collection<Pair<String, String>>>();
 
     //found by
     // * search for <liferay-ui:message key="..."
@@ -36,7 +36,7 @@ public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenc
     //
     // not examined yet: "liferay-portlet-ext.tld"
     static {
-        TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
+        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
                 new Pair<String, String>("app-view-search-entry", "containerType"),
                 new Pair<String, String>("alert", "message"),
                 new Pair<String, String>("asset-addon-entry-selector", "title"),
@@ -79,7 +79,7 @@ public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenc
                 new Pair<String, String>("upload-progress", "message")
         ));
 
-        TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_AUI, Arrays.asList(
+        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_AUI, Arrays.asList(
                 new Pair<String, String>("a", "title"),
                 new Pair<String, String>("a", "label"),
                 new Pair<String, String>("button", "value"),
@@ -110,26 +110,26 @@ public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenc
                 new Pair<String, String>("workflow-status", "helpMessage"),
                 new Pair<String, String>("workflow-status", "statusMessage")
         ));
-        TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_AUI_OLD, TAGLIB_ATTTRIBUTES.get(LiferayTaglibs.TAGLIB_URI_AUI));
+        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_AUI_OLD, TAGLIB_ATTRIBUTES.get(LiferayTaglibs.TAGLIB_URI_AUI));
 
-        TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_ASSET, Arrays.asList(
+        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_ASSET, Arrays.asList(
                 new Pair<String, String>("asset-addon-entry-selector", "title"),
                 new Pair<String, String>("asset-metadata", "metadataField"),
                 new Pair<String, String>("asset-tags-summary", "message")
         ));
 
-        TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPANDO, Arrays.asList(
+        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPANDO, Arrays.asList(
                 new Pair<String, String>("custom-attribute", "name")
         ));
 
-        TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND, Arrays.asList(
+        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND, Arrays.asList(
                 new Pair<String, String>("email-notification-settings", "bodyLabel"),
                 new Pair<String, String>("email-notification-settings", "helpMessage"),
                 new Pair<String, String>("management-bar-button", "label"),
                 new Pair<String, String>("management-bar-filter", "label")
         ));
 
-        TAGLIB_ATTTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_TRASH, Arrays.asList(
+        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_TRASH, Arrays.asList(
                 new Pair<String, String>("empty", "confirmMessage"),
                 new Pair<String, String>("empty", "emptyMessage"),
                 new Pair<String, String>("empty", "infoMessage")
@@ -140,7 +140,7 @@ public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenc
     @Override
     public void registerReferenceProviders(@NotNull PsiReferenceRegistrar registrar) {
         Set<String> attributeNames = new HashSet<String>();
-        for (Map.Entry<String, Collection<Pair<String, String>>> taglib : TAGLIB_ATTTRIBUTES.entrySet()) {
+        for (Map.Entry<String, Collection<Pair<String, String>>> taglib : TAGLIB_ATTRIBUTES.entrySet()) {
             for (Pair<String, String> entry : taglib.getValue()) {
                 attributeNames.add(entry.getValue());
             }
@@ -163,8 +163,8 @@ public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenc
                 XmlAttribute xmlAttribute = (XmlAttribute)parent;
                 XmlTag xmlTag = xmlAttribute.getParent();
 
-                if (TAGLIB_ATTTRIBUTES.containsKey(xmlTag.getNamespace())) {
-                    Collection<Pair<String, String>> entries = TAGLIB_ATTTRIBUTES.get(xmlTag.getNamespace());
+                if (TAGLIB_ATTRIBUTES.containsKey(xmlTag.getNamespace())) {
+                    Collection<Pair<String, String>> entries = TAGLIB_ATTRIBUTES.get(xmlTag.getNamespace());
                     for (Pair<String, String> entry : entries) {
                         if (
                                 (entry.getKey().equals(xmlTag.getLocalName())) &&
