@@ -43,8 +43,10 @@ public class LiferayCustomJspBagUtil {
             PsiClassType[] listTypes = psiClass.getImplementsListTypes();
             for (PsiClassType classType : listTypes) {
                 PsiClass interfaceClass = classType.resolve();
-                if (CUSTOM_JSP_BAG_CLASS_NAME.equals(interfaceClass.getQualifiedName())) {
-                    return getCustomJspDir(psiClass);
+                if (interfaceClass != null) {
+                    if (CUSTOM_JSP_BAG_CLASS_NAME.equals(interfaceClass.getQualifiedName())) {
+                        return getCustomJspDir(psiClass);
+                    }
                 }
             }
         }
