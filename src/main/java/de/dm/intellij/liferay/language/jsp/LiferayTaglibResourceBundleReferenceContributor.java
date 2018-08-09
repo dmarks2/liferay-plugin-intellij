@@ -151,7 +151,7 @@ public class LiferayTaglibResourceBundleReferenceContributor extends PsiReferenc
                 attributeNames.toArray(new String[attributeNames.size()]),
                 new LiferayTaglibFilter(),
                 false,
-                new PropertiesReferenceProvider(true)  //do not show as error if no valid language reference is used
+                new LiferayTaglibResourceBundleReferenceProvider(true)  //do not show as error if no valid language reference is used
         );
     }
 
