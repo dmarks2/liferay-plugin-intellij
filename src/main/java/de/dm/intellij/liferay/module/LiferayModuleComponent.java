@@ -21,10 +21,7 @@ import java.util.regex.Pattern;
 @State(
         name = "LiferayModuleComponent",
         storages = {
-                @Storage(
-                        id = "default",
-                        file = StoragePathMacros.MODULE_FILE
-                )
+                @Storage(StoragePathMacros.MODULE_FILE)
         }
 )
 public class LiferayModuleComponent implements ModuleComponent, PersistentStateComponent<LiferayModuleComponentStateWrapper> {

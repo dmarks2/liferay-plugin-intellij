@@ -50,7 +50,7 @@ dependencies {
 }
 
 intellij {
-    version 'IU-2016.3'
+    version "IU-2018.1.4"
     type 'IU'
     pluginName 'Liferay IntelliJ Plugin'
     plugins = [
