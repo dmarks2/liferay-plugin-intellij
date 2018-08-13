@@ -12,8 +12,15 @@ import java.util.Collection;
 public class LiferayOsgiImplicitUsageProvider implements ImplicitUsageProvider {
 
     private static final Collection<String> WRITE_ANNOTATIONS = Arrays.asList(
-        "org.osgi.service.component.annotations.Reference", "com.liferay.portal.spring.extender.service.ServiceReference",
-        "com.liferay.portal.kernel.bean.BeanReference", "com.liferay.arquillian.containter.remote.enricher.Inject"
+        "org.osgi.service.component.annotations.Reference",
+        "org.osgi.service.component.annotations.Activate",
+        "org.osgi.service.component.annotations.Deactivate",
+        "org.osgi.service.component.annotations.Modified",
+        "com.liferay.portal.spring.extender.service.ServiceReference",
+        "com.liferay.portal.kernel.bean.BeanReference",
+        "com.liferay.arquillian.containter.remote.enricher.Inject",
+        "com.liferay.arquillian.portal.annotation.PortalURL",
+        "org.jboss.arquillian.core.api.annotation.Inject"
     );
 
     @Override
