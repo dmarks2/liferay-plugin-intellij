@@ -25,6 +25,12 @@ tasks.withType(JavaCompile) {
 def generatedResources = "$buildDir/generated-resources"
 def tempDir = "$buildDir/tmp"
 
+test {
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
+
 sourceSets {
     main {
         java {
