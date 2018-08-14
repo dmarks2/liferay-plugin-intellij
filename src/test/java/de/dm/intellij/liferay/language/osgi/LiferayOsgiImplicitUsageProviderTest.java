@@ -34,7 +34,7 @@ public class LiferayOsgiImplicitUsageProviderTest extends LightCodeInsightFixtur
             final String testDataPath = PathUtil.toSystemIndependentName(new File(TEST_DATA_PATH).getAbsolutePath());
             VfsRootAccess.allowRootAccess( testDataPath );
 
-            PsiTestUtil.addLibrary(module, model, "OSGi", "/" + TEST_DATA_PATH , "osgi.jar");
+            PsiTestUtil.addLibrary(module, model, "OSGi", testDataPath, "osgi.jar");
         }
 
         @Override
