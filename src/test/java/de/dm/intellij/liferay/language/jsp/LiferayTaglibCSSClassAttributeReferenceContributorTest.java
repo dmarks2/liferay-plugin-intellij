@@ -17,8 +17,15 @@ public class LiferayTaglibCSSClassAttributeReferenceContributorTest extends Ligh
         return "testdata/de/dm/intellij/liferay/language/jsp/LiferayTaglibCSSClassAttributeReferenceContributorTest";
     }
 
-    public void testCompletion() {
+    public void testCompletionCSS() {
         myFixture.configureByFiles("view.jsp", "main.css", "liferay-aui.tld");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("foo"));
+    }
+
+    public void testCompletionSCSS() {
+        myFixture.configureByFiles("view.jsp", "custom.scss", "liferay-aui.tld");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("foo"));
