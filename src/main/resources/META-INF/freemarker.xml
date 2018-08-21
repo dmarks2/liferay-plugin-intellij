@@ -1,4 +1,3 @@
-<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin>
     <extensions defaultExtensionNs="com.intellij.freemarker">
         <!-- Provide implicit Freemarker variables and macros -->
@@ -6,9 +5,13 @@
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
+        <!-- Injects JavaScript language into Liferay specific taglibs inside Freemarker Templates -->
+        <multiHostInjector implementation="de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerJavascriptLanguageInjector"/>
+
         <!-- Add Template Contexts for creating Live Templates -->
         <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayJournalTemplateFreemarkerContextType"/>
         <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayApplicationDisplayTemplateFreemarkerContextType"/>
         <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayThemeTemplateFreemarkerContextType"/>
     </extensions>
+
 </idea-plugin>

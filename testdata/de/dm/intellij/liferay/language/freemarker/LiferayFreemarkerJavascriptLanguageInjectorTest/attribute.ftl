@@ -1,0 +1,1 @@
+<@liferay_aui.a href="" onClick="aler<caret>" />

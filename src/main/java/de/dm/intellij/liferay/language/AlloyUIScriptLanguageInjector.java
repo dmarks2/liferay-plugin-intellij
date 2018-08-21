@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public class AlloyUIScriptLanguageInjector implements MultiHostInjector, JSTargetedInjector {
 
-    private static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTTRIBUTES = new HashMap<String, Collection<Pair<String, String>>>();
+    public static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTTRIBUTES = new HashMap<String, Collection<Pair<String, String>>>();
 
     //found by
     // * search for onClick, onXXX-Attributes in TLD
@@ -72,9 +72,6 @@ public class AlloyUIScriptLanguageInjector implements MultiHostInjector, JSTarge
     }
 
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement context) {
-        if (context == null) {
-            return;
-        }
         if (! (context.isValid())) {
             return;
         }
