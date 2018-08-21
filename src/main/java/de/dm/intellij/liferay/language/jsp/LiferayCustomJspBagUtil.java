@@ -38,14 +38,16 @@ public class LiferayCustomJspBagUtil {
     }
 
     public static String getCustomJspDir(PsiJavaFile psiJavaFile) {
-        PsiClass[] classes = psiJavaFile.getClasses();
-        for (PsiClass psiClass : classes) {
-            PsiClassType[] listTypes = psiClass.getImplementsListTypes();
-            for (PsiClassType classType : listTypes) {
-                PsiClass interfaceClass = classType.resolve();
-                if (interfaceClass != null) {
-                    if (CUSTOM_JSP_BAG_CLASS_NAME.equals(interfaceClass.getQualifiedName())) {
-                        return getCustomJspDir(psiClass);
+        if (psiJavaFile.isValid()) {
+            PsiClass[] classes = psiJavaFile.getClasses();
+            for (PsiClass psiClass : classes) {
+                PsiClassType[] listTypes = psiClass.getImplementsListTypes();
+                for (PsiClassType classType : listTypes) {
+                    PsiClass interfaceClass = classType.resolve();
+                    if (interfaceClass != null) {
+                        if (CUSTOM_JSP_BAG_CLASS_NAME.equals(interfaceClass.getQualifiedName())) {
+                            return getCustomJspDir(psiClass);
+                        }
                     }
                 }
             }
