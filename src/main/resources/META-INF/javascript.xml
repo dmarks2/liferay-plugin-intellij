@@ -1,8 +1,7 @@
-<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin>
     <extensions defaultExtensionNs="com.intellij">
         <!-- Injects JavaScript language into Liferay specific taglibs (like <aui:script> or <aui:a onClick="">) -->
-        <multiHostInjector implementation="de.dm.intellij.liferay.language.AlloyUIScriptLanguageInjector"/>
+        <multiHostInjector implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibJavascriptLanguageInjector"/>
     </extensions>
 
     <extensions defaultExtensionNs="JavaScript">

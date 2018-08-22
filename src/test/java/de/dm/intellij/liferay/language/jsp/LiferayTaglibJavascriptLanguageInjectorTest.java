@@ -1,11 +1,11 @@
-package de.dm.intellij.liferay.language;
+package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 
 import java.util.List;
 
-public class AlloyUIScriptLanguageInjectorTest extends LightCodeInsightFixtureTestCase {
+public class LiferayTaglibJavascriptLanguageInjectorTest extends LightCodeInsightFixtureTestCase {
 
     @Override
     protected void setUp() throws Exception {
@@ -14,7 +14,7 @@ public class AlloyUIScriptLanguageInjectorTest extends LightCodeInsightFixtureTe
 
     @Override
     protected String getTestDataPath() {
-        return "testdata/de/dm/intellij/liferay/language/AlloyUIScriptLanguageInjectorTest";
+        return "testdata/de/dm/intellij/liferay/language/jsp/LiferayTaglibJavascriptLanguageInjectorTest";
     }
 
     public void testJavascriptAttribute() {

@@ -94,7 +94,12 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"com.liferay.portlet.add-default-resource", "boolean"},
                         {"com.liferay.portlet.system", "boolean"},
                         {"com.liferay.portlet.active", "boolean"},
-                        {"com.liferay.portlet.display-category", "String"}
+                        {"com.liferay.portlet.display-category", "String"},
+                        {"xml.doctype.declaration.allowed", "String"},
+                        {"xml.external.general.entities.allowed", "String"},
+                        {"xml.external.parameter.entities.allowed", "String"},
+                        {"xsl.secure.processing.enabled", "String"}
+
                 }
         );
 
@@ -172,6 +177,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.portlet.ConfigurationAction",
                 new String[][]{
                         {"javax.portlet.name", "String"},
+                        {"valid.url.prefixes", "String"},
                 });
 
         //see https://dev.liferay.com/de/develop/tutorials/-/knowledge_base/7-0/creating-custom-item-selector-views
@@ -226,6 +232,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.search.suggest.QuerySuggester",
                 new String[][]{
                         {"search.engine.impl", "String"},
+                        {"distance.threshold", "float"},
                 });
 
         //see https://dev.liferay.com/de/develop/tutorials/-/knowledge_base/7-0/introduction-to-liferay-search
@@ -390,6 +397,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"servlet-filter-name", "String"},
                         {"url-pattern", "String"},
                         {"init.param", "String"},
+                        {"filter.init.basic_auth", "String"},
+                        {"filter.init.filter-class", "String"},
+                        {"filter.init.portal_property_prefix", "String"},
+                        {"osgi.http.whiteboard.filter.name", "String"},
+                        {"osgi.http.whiteboard.filter.pattern", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.deploy.hot.CustomJspBag",
@@ -553,7 +565,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.util.DDMTemplatePermissionSupport",
                 new String[][]{
                         {"model.class.name", "String"},
-                        {"add.structure.action.id", "String"},
+                        {"add.template.action.id", "String"},
                         {"default.model.resource.name", "boolean"}
                 });
 
@@ -659,6 +671,107 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.template.TemplateContextContributor",
                 new String[][]{
                         {"type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.notifications.UserNotificationHandler",
+                new String[][]{
+                        {"javax.portlet.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.exportimport.resources.importer.portlet.preferences.PortletPreferencesTranslator",
+                new String[][]{
+                        {"portlet.preferences.translator.portlet.id", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.servlet.taglib.TagDynamicIdFactory",
+                new String[][]{
+                        {"tagClassName", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.security.sso.openid.OpenIdProviderRegistry",
+                new String[][]{
+                        {"open.id.ax.schema", "String"},
+                        {"open.id.ax.type", "String"},
+                        {"open.id.url", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnection",
+                new String[][]{
+                        {"operation.mode", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.frontend.image.editor.capability.ImageEditorCapability",
+                new String[][]{
+                        {"com.liferay.frontend.image.editor.capability.category", "String"},
+                        {"com.liferay.frontend.image.editor.capability.controls", "String"},
+                        {"com.liferay.frontend.image.editor.capability.icon", "String"},
+                        {"com.liferay.frontend.image.editor.capability.name", "String"},
+                        {"com.liferay.frontend.image.editor.capability.type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.servlet.taglib.DynamicInclude",
+                new String[][]{
+                        {"portal.settings.authentication.tabs.name", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.repository.RepositoryFactory",
+                new String[][]{
+                        {"repository.target.class.name", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.search.Indexer",
+                new String[][]{
+                        {"index.on.startup", "boolean"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector",
+                new String[][]{
+                        {"assignee.class.name", "String"},
+                        {"scripting.language", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.workflow.kaleo.runtime.notification.recipient.NotificationRecipientBuilder",
+                new String[][]{
+                        {"recipient.type", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.workflow.kaleo.runtime.notification.NotificationSender",
+                new String[][]{
+                        {"fromName", "String"},
+                        {"notification.type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator",
+                new String[][]{
+                        {"node.type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.workflow.WorkflowEngineManager",
+                new String[][]{
+                        {"proxy.bean", "boolean"},
+                });
+
+        COMPONENT_PROPERTIES.put("javax.management.DynamicMBean",
+                new String[][]{
+                        {"jmx.objectname", "String"},
+                        {"jmx.objectname.cache.key", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.sync.internal.jsonws.SyncDLObject",
+                new String[][]{
+                        {"json.web.service.context.name", "String"},
+                        {"json.web.service.context.path", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.security.ldap.configuration.ConfigurationProvider",
+                new String[][]{
+                        {"factoryPid", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.wiki.importer.WikiImporter",
+                new String[][]{
+                        {"importer", "String"},
+                        {"page", "String"},
                 });
 
         //OSGi default commands
