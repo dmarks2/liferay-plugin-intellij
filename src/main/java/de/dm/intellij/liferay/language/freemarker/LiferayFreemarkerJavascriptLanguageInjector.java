@@ -19,19 +19,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferayJavascriptLanguageInjector<FtlMacro, FtlNameValuePair> {
-
-    private static final Map<String, String> FTL_MACRO_PREFIXES = new HashMap<String, String>();
-
-    static {
-        FTL_MACRO_PREFIXES.put("liferay_aui", LiferayTaglibs.TAGLIB_URI_AUI);
-        FTL_MACRO_PREFIXES.put("liferay_ui", LiferayTaglibs.TAGLIB_URI_LIFERAY_UI);
-        FTL_MACRO_PREFIXES.put("liferay_frontend", LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND);
-    }
 
     @Nullable
     @Override
@@ -41,34 +31,22 @@ public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferay
 
     @Override
     protected String getNamespace(FtlMacro ftlMacro) {
-        String directiveName = ftlMacro.getDirectiveName();
-        if (directiveName.contains(".")) {
-            String[] split = directiveName.split("\\.");
-            if (split.length == 2) {
-                String prefix = split[0];
-                if (FTL_MACRO_PREFIXES.containsKey(prefix)) {
-                    return FTL_MACRO_PREFIXES.get(prefix);
-                }
-            }
-        }
-        return "";
+        return LiferayFreemarkerTaglibs.getNamespace(ftlMacro);
     }
 
     @Override
     protected String getLocalName(FtlMacro ftlMacro) {
-        String directiveName = ftlMacro.getDirectiveName();
-        if (directiveName.contains(".")) {
-            String[] split = directiveName.split("\\.");
-            if (split.length == 2) {
-                return split[1];
-            }
-        }
-        return "";
+        return LiferayFreemarkerTaglibs.getLocalName(ftlMacro);
     }
 
     @Override
     protected String getAttributeName(FtlNameValuePair ftlNameValuePair) {
         return ftlNameValuePair.getName();
+    }
+
+    @Override
+    protected boolean isContextSuitableForBodyInjection(PsiElement context) {
+        return true;
     }
 
     @NotNull

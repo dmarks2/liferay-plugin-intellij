@@ -2,6 +2,7 @@ package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.lang.javascript.JavascriptLanguage;
+import com.intellij.lang.javascript.inject.JSFormattableInjectionUtil;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
@@ -49,6 +50,11 @@ public class LiferayTaglibJavascriptLanguageInjector extends AbstractLiferayJava
     @Override
     protected String getAttributeName(XmlAttribute attribute) {
         return attribute.getLocalName();
+    }
+
+    @Override
+    protected boolean isContextSuitableForBodyInjection(PsiElement context) {
+        return context instanceof XmlTag;
     }
 
     @NotNull
@@ -117,6 +123,8 @@ public class LiferayTaglibJavascriptLanguageInjector extends AbstractLiferayJava
             }
 
             registrar.doneInjecting();
+
+            JSFormattableInjectionUtil.setReformattableInjection(xmlTag, JavascriptLanguage.INSTANCE);
         }
     }
 

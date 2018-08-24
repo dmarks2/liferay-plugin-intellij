@@ -1,4 +1,4 @@
-package de.dm.intellij.liferay.language.jsp;
+package de.dm.intellij.liferay.language.resourcebundle;
 
 import com.intellij.lang.properties.PropertiesReferenceProvider;
 import com.intellij.lang.properties.references.PropertyReference;

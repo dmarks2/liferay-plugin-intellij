@@ -31,7 +31,9 @@ public abstract class AbstractLiferayJavascriptLanguageInjector<TagType extends 
                 for (Pair<String, String> pair : taglibAttributes) {
                     if (pair.getKey().equals(localName)) {
                         if ("".equals(pair.getValue())) {
-                            injectIntoBody(registrar, tag);
+                            if (isContextSuitableForBodyInjection(context)) {
+                                injectIntoBody(registrar, tag);
+                            }
                         } else {
                             AttributeType[] attributes = getAttributes(context);
                             for (AttributeType attribute : attributes) {
@@ -59,6 +61,8 @@ public abstract class AbstractLiferayJavascriptLanguageInjector<TagType extends 
     protected abstract String getLocalName(TagType tag);
 
     protected abstract String getAttributeName(AttributeType attribute);
+
+    protected abstract boolean isContextSuitableForBodyInjection(PsiElement context);
 
     @NotNull
     protected abstract AttributeType[] getAttributes(@NotNull PsiElement psiElement);

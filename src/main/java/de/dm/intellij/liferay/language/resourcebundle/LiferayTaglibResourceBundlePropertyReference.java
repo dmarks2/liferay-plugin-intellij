@@ -1,4 +1,4 @@
-package de.dm.intellij.liferay.language.jsp;
+package de.dm.intellij.liferay.language.resourcebundle;
 
 import com.intellij.lang.properties.IProperty;
 import com.intellij.lang.properties.psi.PropertiesFile;
