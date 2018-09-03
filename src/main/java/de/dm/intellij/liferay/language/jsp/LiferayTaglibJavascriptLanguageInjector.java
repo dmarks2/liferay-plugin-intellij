@@ -2,8 +2,9 @@ package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.lang.javascript.JavascriptLanguage;
-import com.intellij.lang.javascript.inject.JSFormattableInjectionUtil;
 import com.intellij.openapi.util.TextRange;
+import com.intellij.openapi.util.Trinity;
+import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.tree.IElementType;
@@ -14,9 +15,12 @@ import com.intellij.psi.xml.XmlText;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import de.dm.intellij.liferay.language.javascript.AbstractLiferayJavascriptLanguageInjector;
+import org.intellij.plugins.intelliLang.inject.InjectedLanguage;
+import org.intellij.plugins.intelliLang.inject.InjectorUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -72,7 +76,7 @@ public class LiferayTaglibJavascriptLanguageInjector extends AbstractLiferayJava
     }
 
     @Override
-    protected void injectIntoAttribute(MultiHostRegistrar registrar, XmlAttribute xmlAttribute) {
+    protected void injectIntoAttribute(@NotNull MultiHostRegistrar registrar, XmlAttribute xmlAttribute) {
         if ( (xmlAttribute.getValue() != null) && (xmlAttribute.getValue().trim().length() > 0) ) {
             XmlAttributeValue valueElement = xmlAttribute.getValueElement();
             if (valueElement != null) {
@@ -99,32 +103,31 @@ public class LiferayTaglibJavascriptLanguageInjector extends AbstractLiferayJava
     }
 
     @Override
-    protected void injectIntoBody(MultiHostRegistrar registrar, XmlTag xmlTag) {
-        boolean needToInject = false;
+    protected void injectIntoBody(@NotNull MultiHostRegistrar registrar, XmlTag xmlTag) {
+        InjectedLanguage javascriptLanguage = InjectedLanguage.create(JavascriptLanguage.INSTANCE.getID(), "", "", true);
+
+        List<Trinity<PsiLanguageInjectionHost, InjectedLanguage, TextRange>> list = new ArrayList<Trinity<PsiLanguageInjectionHost, InjectedLanguage, TextRange>>();
 
         PsiElement[] myChildren = xmlTag.getChildren();
         for (PsiElement child : myChildren) {
             if (child instanceof XmlText) {
                 //only inject if <aui:script> contains reqular content
-                needToInject = true;
-                break;
+                list.add(
+                    Trinity.create(
+                        ((PsiLanguageInjectionHost)child),
+                        javascriptLanguage,
+                        ElementManipulators.getManipulator(child).getRangeInElement(child)
+                    )
+                );
             }
         }
-
-        if (needToInject) {
-            registrar.startInjecting(JavascriptLanguage.INSTANCE);
-
-            for (PsiElement child : myChildren) {
-                if (child instanceof XmlText) {
-                    //Inject language only for regular text inside <aui:script>. Other tags like <portlet:namespace> which can be present should not be treated as JavaScript
-                    int length = child.getTextLength();
-                    registrar.addPlace(null, null, (PsiLanguageInjectionHost) child, TextRange.create(0, length));
-                }
-            }
-
-            registrar.doneInjecting();
-
-            JSFormattableInjectionUtil.setReformattableInjection(xmlTag, JavascriptLanguage.INSTANCE);
+        if (!list.isEmpty()) {
+            InjectorUtils.registerInjection(
+                JavascriptLanguage.INSTANCE,
+                list,
+                xmlTag.getContainingFile(),
+                registrar
+            );
         }
     }
 

@@ -774,11 +774,21 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"page", "String"},
                 });
 
-        //OSGi default commands
+        COMPONENT_PROPERTIES.put("com.liferay.portal.struts.FindActionHelper",
+                new String[][]{
+                        {"model.class.name", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.asset.kernel.util.AssetEntryQueryProcessor",
+                new String[][]{
+                        {"javax.portlet.name", "String"}
+                });
+
         COMPONENT_PROPERTIES.put("java.lang.Object",
                 new String[][]{
                         {"osgi.command.scope", "String"},
                         {"osgi.command.function", "String"},
+                        {"auth.public.path", "String"}
                 });
     }
     private Map<String, List<LookupElementBuilder>> KEYWORD_LOOKUPS = new HashMap<String, List<LookupElementBuilder>>();
