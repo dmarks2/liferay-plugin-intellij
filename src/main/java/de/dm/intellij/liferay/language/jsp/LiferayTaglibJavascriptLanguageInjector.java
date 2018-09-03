@@ -15,6 +15,7 @@ import com.intellij.psi.xml.XmlText;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import de.dm.intellij.liferay.language.javascript.AbstractLiferayJavascriptLanguageInjector;
+import de.dm.intellij.liferay.util.LiferayTaglibs;
 import org.intellij.plugins.intelliLang.inject.InjectedLanguage;
 import org.intellij.plugins.intelliLang.inject.InjectorUtils;
 import org.jetbrains.annotations.NotNull;
@@ -105,6 +106,25 @@ public class LiferayTaglibJavascriptLanguageInjector extends AbstractLiferayJava
     @Override
     protected void injectIntoBody(@NotNull MultiHostRegistrar registrar, XmlTag xmlTag) {
         InjectedLanguage javascriptLanguage = InjectedLanguage.create(JavascriptLanguage.INSTANCE.getID(), "", "", true);
+
+        //special handling for aui:validator
+        String namespace = xmlTag.getNamespace();
+        String localName = xmlTag.getLocalName();
+        if (LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI.equals(namespace)) {
+            if ("validator".equals(localName)) {
+                String validatorName = xmlTag.getAttributeValue("name");
+                if (validatorName != null) {
+                    if ("custom".equals(validatorName)) {
+                        //special handling for aui:validator
+                        javascriptLanguage = InjectedLanguage.create(JavascriptLanguage.INSTANCE.getID(), "var a = ", "", true);
+                    } else {
+                        return;
+                    }
+                } else {
+                    return;
+                }
+            }
+        }
 
         List<Trinity<PsiLanguageInjectionHost, InjectedLanguage, TextRange>> list = new ArrayList<Trinity<PsiLanguageInjectionHost, InjectedLanguage, TextRange>>();
 
