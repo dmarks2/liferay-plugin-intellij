@@ -12,6 +12,8 @@ public class LiferayTaglibAttributes {
     public static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES_JAVASCRIPT = new HashMap<String, Collection<Pair<String, String>>>();
     public static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES_RESOURCEBUNDLE = new HashMap<String, Collection<Pair<String, String>>>();
     public static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES_CSS = new HashMap<String, Collection<Pair<String, String>>>();
+    public static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES_BEANS = new HashMap<String, Collection<Pair<String, String>>>();
+    public static Map<String, Collection<Pair<String, Pair<String, String>>>> TAGLIB_ATTRIBUTES_BEANS_CLASS_NAMES = new HashMap<String, Collection<Pair<String, Pair<String, String>>>>();
 
     //TAGLIB_ATTRIBUTES_JAVASCRIPT
     static {
@@ -336,6 +338,23 @@ public class LiferayTaglibAttributes {
         ));
     }
 
+    //TAGLIB_ATTRIBUTES_BEANS
+    static {
+        TAGLIB_ATTRIBUTES_BEANS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
+                new Pair<String, String>("search-container-column-text", "property"),
+                new Pair<String, String>("search-container-column-text", "name"),
+                new Pair<String, String>("search-container-column-text", "orderableProperty"),
+                new Pair<String, String>("search-container-column-date", "property"),
+                new Pair<String, String>("search-container-column-status", "property"),
+                new Pair<String, String>("search-container-column-user", "property")
+        ));
+    }
 
+    //TAGLIB_ATTRIBUTES_BEANS_CLASS_NAMES
+    static {
+        TAGLIB_ATTRIBUTES_BEANS_CLASS_NAMES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
+                new Pair<String, Pair<String, String>>("search-container-column-text", new Pair<String, String>("search-container-row", "className"))
+        ));
+    }
 
 }

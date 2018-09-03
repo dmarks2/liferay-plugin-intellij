@@ -62,6 +62,8 @@ intellij {
     plugins = [
             'JavaScriptLanguage', 'Tomcat', 'Velocity', 'FreeMarker', 'maven', 'properties', 'java-i18n', 'CSS', 'sass', 'JavaEE', 'jsp', 'gradle', 'de.dm.intellij.maven-archetypes-catalog-plugin:1.2.5',
             'IntelliLang',
+            //remove later
+            'Spring',
             //test only?
             'Groovy', 'junit', 'PersistenceSupport', 'DatabaseTools'
     ]

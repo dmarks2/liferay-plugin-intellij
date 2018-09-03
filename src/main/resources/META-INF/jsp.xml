@@ -9,5 +9,7 @@
 
         <!-- Adds code completion features for references to language kays inside Liferay or AlloyUI Taglibs -->
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibResourceBundleReferenceContributor"/>
+
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibJavaBeanReferenceContributor"/>
     </extensions>
 </idea-plugin>
