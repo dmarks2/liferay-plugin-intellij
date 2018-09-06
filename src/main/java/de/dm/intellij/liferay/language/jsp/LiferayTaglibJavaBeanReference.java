@@ -1,6 +1,5 @@
 package de.dm.intellij.liferay.language.jsp;
 
-import com.intellij.codeInsight.completion.JavaLookupElementBuilder;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.util.Iconable;
 import com.intellij.openapi.util.TextRange;

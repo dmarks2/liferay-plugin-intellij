@@ -1,4 +1,3 @@
-<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin>
     <extensions defaultExtensionNs="com.intellij">
         <!-- Reference helper to provide root contexts while developing JSP hooks or Fragment Host Modules -->
@@ -10,6 +9,7 @@
         <!-- Adds code completion features for references to language kays inside Liferay or AlloyUI Taglibs -->
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibResourceBundleReferenceContributor"/>
 
-        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibJavaBeanReferenceContributor"/>
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibModelContextJavaBeanReferenceContributor"/>
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibSearchContainerJavaBeanReferenceContributor"/>
     </extensions>
 </idea-plugin>
