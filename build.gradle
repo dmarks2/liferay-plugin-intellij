@@ -40,7 +40,7 @@ sourceSets {
             srcDirs = ['src/main/resources']
         }
 
-        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'unzipAlloyUI15', 'unzipAlloyUI20', 'unzipAlloyUI30', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions', 'generateLiferayBareboneJavascriptFiles'])
+        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'unzipAlloyUI15', 'unzipAlloyUI20', 'unzipLiferayFrontendJsWeb', 'unzipLiferayFrontendJsAuiWeb', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions', 'generateLiferayBareboneJavascriptFiles'])
     }
 }
 
@@ -184,13 +184,21 @@ task generateLiferayDefinitions {
     }
 }
 
-task downloadAlloyUI30(type: Download) {
-    src 'https://github.com/liferay/alloy-ui/releases/download/3.0.1/alloy-3.0.1.zip'
+task downloadLiferayFrontendJsAuiWeb(type: Download) {
+    src 'http://central.maven.org/maven2/com/liferay/com.liferay.frontend.js.aui.web/1.0.33/com.liferay.frontend.js.aui.web-1.0.33.jar'
     acceptAnyCertificate true
     overwrite true
     onlyIfNewer true
-    dest new File(tempDir, 'alloy-3.0.1.zip')
+    dest new File(tempDir, 'aui-web-1.0.33.jar')
 }
+task downloadLiferayFrontendJsWeb(type: Download) {
+    src 'http://central.maven.org/maven2/com/liferay/com.liferay.frontend.js.web/1.0.79/com.liferay.frontend.js.web-1.0.79.jar'
+    acceptAnyCertificate true
+    overwrite true
+    onlyIfNewer true
+    dest new File(tempDir, 'js-web-1.0.79.jar')
+}
+
 task downloadAlloyUI20(type: Download) {
     src 'https://github.com/liferay/alloy-ui/releases/download/2.0.0/alloy-2.0.0.zip'
     acceptAnyCertificate true
@@ -205,9 +213,23 @@ task downloadAlloyUI15(type: Download) {
     onlyIfNewer true
     dest new File(tempDir, 'alloy-1.5.1.zip')
 }
-task unzipAlloyUI30(dependsOn: downloadAlloyUI30, type: Copy) {
-    from zipTree(downloadAlloyUI30.dest)
-    into generatedResources + '/alloy-3.0.1'
+task unzipLiferayFrontendJsAuiWeb(dependsOn: downloadLiferayFrontendJsAuiWeb, type: Copy) {
+    from zipTree(downloadLiferayFrontendJsAuiWeb.dest)
+    into generatedResources + '/com/liferay/js/70/aui'
+    include {
+        FileTreeElement e ->
+            e.file.name.endsWith('.js') &&
+            (! ( (e.file.name.endsWith('-min.js')) || (e.file.name.endsWith('-debug.js')) || (e.file.name.endsWith('-coverage.js')) ) )
+    }
+}
+task unzipLiferayFrontendJsWeb(dependsOn: downloadLiferayFrontendJsWeb, type: Copy) {
+    from zipTree(downloadLiferayFrontendJsWeb.dest)
+    into generatedResources + '/com/liferay/js/70/frontend'
+    include {
+        FileTreeElement e ->
+            e.file.name.endsWith('.js') &&
+            (! ( (e.file.name.endsWith('-min.js')) || (e.file.name.endsWith('-debug.js')) || (e.file.name.endsWith('-coverage.js')) ) )
+    }
 }
 task unzipAlloyUI20(dependsOn: downloadAlloyUI20, type: Copy) {
     from zipTree(downloadAlloyUI20.dest)
@@ -309,39 +331,6 @@ task generateLiferayBareboneJavascriptFiles {
                     'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/poller.js'
             ])
             dest new File(target, "62")
-            acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
-        }
-        //Liferay 7.0 Barebone Javascript
-        //- Missing:
-        //  - jquery/jquery.js, lexicon/bootstrap.js, loader/loader.js, lexicon/collapsible-search.js, lexicon/side-navigation.js, jquery/fm.js, jquery/form.js, lodash/util.js, misc/svg4everybody.js
-        //- Found:
-        //  - https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/7.0.x/frontend-js-web/src/main/resources/META-INF/resources/loader/config.js
-        //  - https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/7.0.x/frontend-js-web/src/main/resources/META-INF/resources/lodash/util.js
-        download {
-            src([
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/browser_selectors.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/modules.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/aui_sandbox.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/dependency.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/dom_task_runner.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/events.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/language.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/liferay.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/util.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/portal.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/portlet.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/workflow.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/address.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/form.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/form_placeholders.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/icon.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/menu.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/notice.js',
-                    'https://raw.githubusercontent.com/liferay/com-liferay-frontend-js/com.liferay.frontend.js.web-1.0.50/frontend-js-web/src/main/resources/META-INF/resources/liferay/poller.js'
-            ])
-            dest new File(target, "70")
             acceptAnyCertificate true
             overwrite true
             onlyIfNewer true
