@@ -248,7 +248,12 @@ public class LiferayFileUtil {
             List<WebRoot> webRoots = webFacet.getWebRoots();
             for (WebRoot webRoot : webRoots) {
                 VirtualFile webRootFile = webRoot.getFile();
-                result.add(VfsUtilCore.getRelativePath(virtualFile, webRootFile));
+                if ( (webRootFile != null) && (webRootFile.isValid()) ) {
+                    String relativePath = VfsUtilCore.getRelativePath(virtualFile, webRootFile);
+                    if (relativePath != null) {
+                        result.add(relativePath);
+                    }
+                }
             }
         }
 
