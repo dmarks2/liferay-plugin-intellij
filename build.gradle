@@ -25,6 +25,11 @@ tasks.withType(JavaCompile) {
 def generatedResources = "$buildDir/generated-resources"
 def tempDir = "$buildDir/tmp"
 
+def liferay70FrontendJsWebURL = "http://central.maven.org/maven2/com/liferay/com.liferay.frontend.js.web/1.0.71/com.liferay.frontend.js.web-1.0.71.jar";
+def liferay70FrontendAuiJsWebURL = "http://central.maven.org/maven2/com/liferay/com.liferay.frontend.js.aui.web/1.0.24/com.liferay.frontend.js.aui.web-1.0.24.jar";
+def liferay71FrontendJsWebURL = "http://central.maven.org/maven2/com/liferay/com.liferay.frontend.js.web/2.0.6/com.liferay.frontend.js.web-2.0.6.jar";
+def liferay71FrontendAuiJsWebURL = "http://central.maven.org/maven2/com/liferay/com.liferay.frontend.js.aui.web/2.0.2/com.liferay.frontend.js.aui.web-2.0.2.jar";
+
 test {
     testLogging {
         exceptionFormat = 'full'
@@ -185,18 +190,18 @@ task generateLiferayDefinitions {
 }
 
 task downloadLiferayFrontendJsAuiWeb(type: Download) {
-    src 'http://central.maven.org/maven2/com/liferay/com.liferay.frontend.js.aui.web/1.0.33/com.liferay.frontend.js.aui.web-1.0.33.jar'
+    src liferay70FrontendAuiJsWebURL
     acceptAnyCertificate true
     overwrite true
     onlyIfNewer true
-    dest new File(tempDir, 'aui-web-1.0.33.jar')
+    dest new File(tempDir, 'com.liferay.frontend.js.aui.web')
 }
 task downloadLiferayFrontendJsWeb(type: Download) {
-    src 'http://central.maven.org/maven2/com/liferay/com.liferay.frontend.js.web/1.0.79/com.liferay.frontend.js.web-1.0.79.jar'
+    src liferay70FrontendJsWebURL
     acceptAnyCertificate true
     overwrite true
     onlyIfNewer true
-    dest new File(tempDir, 'js-web-1.0.79.jar')
+    dest new File(tempDir, 'com.liferay.frontend.js.web.jar')
 }
 
 task downloadAlloyUI20(type: Download) {

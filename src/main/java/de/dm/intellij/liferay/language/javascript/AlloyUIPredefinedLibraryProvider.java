@@ -48,15 +48,11 @@ public class AlloyUIPredefinedLibraryProvider extends JSPredefinedLibraryProvide
                     (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                 ) {
 
-            Set<VirtualFile> frontendJsFiles = new HashSet<VirtualFile>();
-            addJavascriptFilesFromDirectory(VfsUtil.findFileByURL(AlloyUIPredefinedLibraryProvider.class.getResource("/com/liferay/js/70/frontend")), frontendJsFiles);
-
-            Set<VirtualFile> frontendJsAuiFiles = new HashSet<VirtualFile>();
-            addJavascriptFilesFromDirectory(VfsUtil.findFileByURL(AlloyUIPredefinedLibraryProvider.class.getResource("/com/liferay/js/70/aui")), frontendJsAuiFiles);
+            Set<VirtualFile> javascriptFiles = new HashSet<VirtualFile>();
+            addJavascriptFilesFromDirectory(VfsUtil.findFileByURL(AlloyUIPredefinedLibraryProvider.class.getResource("/com/liferay/js/70")), javascriptFiles);
 
             return new ScriptingLibraryModel[] {
-                ScriptingLibraryModel.createPredefinedLibrary("Liferay Frontend JS Web 1.0.79", frontendJsFiles.toArray(new VirtualFile[frontendJsFiles.size()]), true),
-                ScriptingLibraryModel.createPredefinedLibrary("Liferay Frontend JS AUI Web 1.0.33", frontendJsAuiFiles.toArray(new VirtualFile[frontendJsAuiFiles.size()]), true)
+                ScriptingLibraryModel.createPredefinedLibrary("Liferay 7.0 Scripts", javascriptFiles.toArray(new VirtualFile[javascriptFiles.size()]), true),
             };
         }
 
@@ -68,20 +64,15 @@ public class AlloyUIPredefinedLibraryProvider extends JSPredefinedLibraryProvide
             new VirtualFileVisitor() {
                 @Override
                 public boolean visitFile(@NotNull VirtualFile file) {
+
                     if (file.isDirectory()) {
                         return true;
                     }
 
                     String extension = file.getExtension();
+
                     if ("js".equals(extension)) {
-                        String nameWithoutExtension = file.getNameWithoutExtension();
-                        if (! (
-                            (nameWithoutExtension.endsWith("-min")) ||
-                            (nameWithoutExtension.endsWith("-debug")) ||
-                            (nameWithoutExtension.endsWith("-coverage"))
-                        )) {
-                            result.add(file);
-                        }
+                        result.add(file);
                     }
 
                     return true;
