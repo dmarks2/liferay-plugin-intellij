@@ -2,6 +2,7 @@ package de.dm.intellij.liferay.util;
 
 import com.intellij.javaee.web.WebRoot;
 import com.intellij.javaee.web.facet.WebFacet;
+import com.intellij.json.psi.JsonFile;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.roots.ModuleRootManager;
@@ -61,8 +62,8 @@ public class LiferayFileUtil {
     }
 
     public static boolean isJournalStructureFile(PsiFile psiFile) {
-        //Journal Structure files in a resource importer directory structure is detected in a path like "/journal/structures/Structure.xml"
-        if (psiFile instanceof XmlFile) {
+        //Journal Structure files in a resource importer directory structure is detected in a path like "/journal/structures/Structure.xml" or "/journal/structures/Structure.json"
+        if ( (psiFile instanceof XmlFile) || (psiFile instanceof JsonFile) ) {
             if (psiFile.getParent() != null) {
                 VirtualFile parent = psiFile.getVirtualFile().getParent();
                 if (parent != null) {

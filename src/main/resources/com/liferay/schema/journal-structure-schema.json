@@ -1,0 +1,137 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/journal-structure.schema.json",
+  "title": "Liferay Journal Structure",
+  "type": "object",
+  "properties": {
+    "availableLanguageIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "defaultLanguageId": {
+      "type": "string"
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/field"
+      }
+    }
+  },
+  "required": [
+    "availableLanguageIds",
+    "defaultLanguageId"
+  ],
+  "definitions": {
+    "field": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "object",
+          "description": "Enter a descriptive field label that guides users to enter the information you want.",
+          "additionalProperties": { "type": "string" }
+        },
+        "predefinedValue": {
+          "type": "object",
+          "description": "Enter a default value that is submitted if no other value is entered."
+        },
+        "style": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "description": "CSS Styles for the ddm-paragraph field."
+        },
+        "tip": {
+          "type": "object",
+          "description": "Add a comment to help users understand the field label.",
+          "additionalProperties": { "type": "string" }
+        },
+        "dataType": {
+          "type": "string",
+          "enum": [ "boolean", "date", "ddm-options", "ddm-validation", "document-library", "double", "float", "geolocation", "html", "image", "integer", "journal-article", "link-to-page", "long", "number", "short", "string"]
+        },
+        "fieldNamespace": {
+          "type": "string"
+        },
+        "indexType": {
+          "type": "string",
+          "enum": [ "", "keyword", "text" ]
+        },
+        "localizable": {
+          "type": "boolean",
+          "description": "Define whether the field input can be localized."
+        },
+        "multiple": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "(\\w|\\-)+",
+          "description": "Define the name to access the value in Journal Templates."
+        },
+        "options": {
+          "type": "array",
+          "description": "Define a list of available options for radio buttons or select boxes.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "label": {
+                "type": "object",
+                "additionalProperties": { "type": "string"}
+              }
+            }
+          }
+        },
+        "readOnly": {
+          "type": "boolean",
+          "description": "Define if the field can be read only."
+        },
+        "repeatable": {
+          "type": "boolean",
+          "description": "Define whether the input field can be repeated, i.e. multiple values can be entered."
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Define if the input field is required."
+        },
+        "showLabel": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string",
+          "enum": [ "checkbox", "ddm-date", "ddm-decimal", "ddm-documentlibrary", "ddm-geolocation", "ddm-image", "ddm-integer", "ddm-journal-article", "ddm-link-to-page", "ddm-number", "ddm-paragraph", "ddm-separator", "ddm-text-html", "fieldset", "option", "radio", "select", "text", "textarea"],
+          "pattern": "(\\w|\\-)+"
+        },
+        "validation": {
+          "type": "object",
+          "properties": {
+            "errorMessage": {
+              "type": "string"
+            },
+            "expression": {
+              "type": "string"
+            }
+          }
+        },
+        "visibilityExpression": {
+          "type": "string",
+          "description": "Write a conditional expression to control whether this field is displayed"
+        },
+        "nestedFields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/field"
+          }
+        }
+      },
+      "required": [
+        "name", "type"
+      ]
+    }
+  }
+}
