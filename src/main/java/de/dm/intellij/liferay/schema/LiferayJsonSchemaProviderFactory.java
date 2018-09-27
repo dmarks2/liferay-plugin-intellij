@@ -5,7 +5,7 @@ import com.jetbrains.jsonSchema.extension.JsonSchemaFileProvider;
 import com.jetbrains.jsonSchema.extension.JsonSchemaProviderFactory;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 public class LiferayJsonSchemaProviderFactory implements JsonSchemaProviderFactory {
@@ -13,6 +13,10 @@ public class LiferayJsonSchemaProviderFactory implements JsonSchemaProviderFacto
     @NotNull
     @Override
     public List<JsonSchemaFileProvider> getProviders(@NotNull Project project) {
-        return Collections.singletonList(new LiferayJournalStructureJsonSchemaFileProvider(project));
+        return Arrays.asList(
+            new LiferayJournalStructureJsonSchemaFileProvider(project),
+            new LiferayAssetsJsonSchemaFileProvider(project),
+            new LiferaySitemapJsonSchemaFileProvider(project)
+        );
     }
 }

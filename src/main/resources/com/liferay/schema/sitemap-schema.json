@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/sitemap-schema.json",
+  "title": "Liferay Sitemap",
+  "type": "object",
+  "properties": {
+    "layoutTemplateId": {
+      "type": "string"
+    },
+    "themeId": {
+      "type": "string"
+    },
+    "layouts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/layout"
+      }
+    },
+    "privatePages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/layout"
+      }
+    },
+    "publicPages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/layout"
+      }
+    }
+  },
+  "definitions": {
+    "column": {
+      "type": "object",
+      "properties": {
+        "portletId": {
+          "type": "string"
+        },
+        "portletPreferences": {
+          "type": "object",
+          "properties": {
+            "columns": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/column"
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "portletId"
+      ]
+    },
+    "layout": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "typeSettings": {
+          "type": "string"
+        },
+        "hidden": {
+          "type": "boolean"
+        },
+        "themeId": {
+          "type": "string"
+        },
+        "layoutCss": {
+          "type": "string"
+        },
+        "colorSchemeId": {
+          "type": "string"
+        },
+        "friendlyURL": {
+          "type": "string"
+        },
+        "layoutPrototypeName": {
+          "type": "string"
+        },
+        "layoutPrototypeUuid": {
+          "type": "string"
+        },
+        "layoutPrototypeLinkEnabled": {
+          "type": "boolean"
+        },
+        "layoutTemplateId": {
+          "type": "string"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/column"
+          }
+        },
+        "layouts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/layout"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "title"
+      ]
+    }
+  }
+}

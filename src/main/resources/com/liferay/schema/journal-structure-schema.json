@@ -50,7 +50,7 @@
         },
         "dataType": {
           "type": "string",
-          "enum": [ "boolean", "date", "ddm-options", "ddm-validation", "document-library", "double", "float", "geolocation", "html", "image", "integer", "journal-article", "link-to-page", "long", "number", "short", "string"]
+          "enum": [ "", "boolean", "date", "ddm-options", "ddm-validation", "document-library", "double", "float", "geolocation", "html", "image", "integer", "journal-article", "link-to-page", "long", "number", "short", "string"]
         },
         "fieldNamespace": {
           "type": "string"
