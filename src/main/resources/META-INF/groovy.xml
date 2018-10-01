@@ -1,0 +1,6 @@
+<idea-plugin>
+    <extensions defaultExtensionNs="org.intellij.groovy">
+        <!-- Implicit Groovy variables -->
+        <membersContributor implementation="de.dm.intellij.liferay.language.groovy.GroovyScriptingImplicitMembersContributor" />
+    </extensions>
+</idea-plugin>
