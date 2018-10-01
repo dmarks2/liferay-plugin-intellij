@@ -107,7 +107,7 @@ public class ShowHookFragmentDiffAction extends AnAction {
                 Collection<Library> libraries = new ArrayList<Library>();
                 libraries.addAll(ProjectUtils.findLibrariesByName("com.liferay.portal:portal-web", module));
                 if (fragmentHostPackageName != null) {
-                    libraries.addAll(ProjectUtils.findLibrariesByName("com.liferay:" + fragmentHostPackageName, module));
+                    libraries.addAll(ProjectUtils.findLibrariesByName(/*"com.liferay:" +*/ fragmentHostPackageName, module));
                 }
                 if (LiferayCustomJspBagUtil.hasCustomJspBags(module)) {
                     libraries.addAll(ProjectUtils.findLibrariesByName("com.liferay.portal:com.liferay.portal.web", module));

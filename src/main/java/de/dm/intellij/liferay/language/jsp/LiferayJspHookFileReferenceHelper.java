@@ -32,7 +32,7 @@ public class LiferayJspHookFileReferenceHelper extends FileReferenceHelper {
         LiferayFileUtil.addLibraryRoot(result, this, module, "com.liferay.portal:portal-web", null);
 
         if (fragmentHostPackageName != null) {
-            LiferayFileUtil.addLibraryRoot(result, this, module, "com.liferay:" + fragmentHostPackageName, "META-INF/resources");
+            LiferayFileUtil.addLibraryRoot(result, this, module, /*"com.liferay:" +*/ fragmentHostPackageName, "META-INF/resources");
         }
 
         boolean hasCustomJspBags = LiferayCustomJspBagUtil.hasCustomJspBags(module);
