@@ -86,11 +86,17 @@
 
         <!-- A Maven Importer which tries to find out the Parent Theme in Liferay 7.x projects based on the pom.xml within your project -->
         <importer implementation="de.dm.intellij.liferay.maven.importer.LiferayThemeBuilderMavenImporter" />
+
+        <!-- A Maven Importer which resolves the Liferay Home directory if the bundle-support plugin is present and will "exclude" the bundles folder from indexing in IntelliJ IDEA -->
+        <importer implementation="de.dm.intellij.liferay.maven.importer.LiferayBundleSupportMavenImporter" />
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.plugins.gradle">
         <!-- Extract parent Theme information from a gradle based project (based on the com.liferay.gradle.plugins.theme.builder configuration) -->
         <projectResolve implementation="de.dm.intellij.liferay.gradle.LiferayThemeBuilderGradleProjectResolver" />
+
+        <!-- A gradle project resolver which resolves the Liferay Home directory if the bundle-support plugin is present and will "exclude" the bundles folder from indexing in IntelliJ IDEA -->
+        <projectResolve implementation="de.dm.intellij.liferay.gradle.LiferayBundleSupportGradleProjectResolver" />
     </extensions>
 
     <module-components>
