@@ -323,6 +323,24 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"service.ranking", "Integer"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.portlet.PreviewPortletProvider",
+                new String[][]{
+                        {"model.class.name", "String"},
+                        {"service.ranking", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.portlet.ManagePortletProvider",
+                new String[][]{
+                        {"model.class.name", "String"},
+                        {"service.ranking", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.portlet.BrowsePortletProvider",
+                new String[][]{
+                        {"model.class.name", "String"},
+                        {"service.ranking", "Integer"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.portal.language.LanguageResources",
                 new String[][]{
                         {"language.id", "String"},
