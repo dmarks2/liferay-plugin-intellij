@@ -406,22 +406,6 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"javax.portlet.name", "String"},
                 });
 
-        COMPONENT_PROPERTIES.put("javax.servlet.Filter",
-                new String[][]{
-                        {"after-filter", "String"},
-                        {"before-filter", "String"},
-                        {"dispatcher", "String"},
-                        {"servlet-context-name", "String"},
-                        {"servlet-filter-name", "String"},
-                        {"url-pattern", "String"},
-                        {"init.param", "String"},
-                        {"filter.init.basic_auth", "String"},
-                        {"filter.init.filter-class", "String"},
-                        {"filter.init.portal_property_prefix", "String"},
-                        {"osgi.http.whiteboard.filter.name", "String"},
-                        {"osgi.http.whiteboard.filter.pattern", "String"},
-                });
-
         COMPONENT_PROPERTIES.put("com.liferay.portal.deploy.hot.CustomJspBag",
                 new String[][]{
                         {"context.id", "String"},
@@ -808,6 +792,63 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"osgi.command.function", "String"},
                         {"auth.public.path", "String"}
                 });
+
+        //OSGi http whiteboard specification, see https://osgi.org/specification/osgi.cmpn/7.0.0/service.http.whiteboard.html
+        COMPONENT_PROPERTIES.put("org.osgi.service.http.context.ServletContextHelper",
+                new String[][]{
+                        {"osgi.http.whiteboard.context.name", "String"},
+                        {"osgi.http.whiteboard.context.path", "String"},
+                        {"context.init.", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("javax.servlet.Servlet",
+                new String[][]{
+                        {"osgi.http.whiteboard.context.name", "String"},
+                        {"osgi.http.whiteboard.target", "String"},
+                        {"osgi.http.whiteboard.servlet.asyncSupported", "boolean"},
+                        {"osgi.http.whiteboard.servlet.errorPage", "String"},
+                        {"osgi.http.whiteboard.servlet.name", "String"},
+                        {"osgi.http.whiteboard.servlet.pattern", "String"},
+                        {"osgi.http.whiteboard.servlet.multipart.enabled", "boolean"},
+                        {"osgi.http.whiteboard.servlet.multipart.fileSizeThreshold", "int"},
+                        {"osgi.http.whiteboard.servlet.multipart.location", "String"},
+                        {"osgi.http.whiteboard.servlet.multipart.maxFileSize", "long"},
+                        {"osgi.http.whiteboard.servlet.multipart.maxRequestSize", "long"},
+                        {"servlet.init.", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("javax.servlet.Filter",
+                new String[][]{
+                        {"osgi.http.whiteboard.context.name", "String"},
+                        {"osgi.http.whiteboard.target", "String"},
+                        {"osgi.http.whiteboard.filter.asyncSupported", "boolean"},
+                        {"osgi.http.whiteboard.filter.dispatcher", "String"},
+                        {"osgi.http.whiteboard.filter.name", "String"},
+                        {"osgi.http.whiteboard.filter.pattern", "String"},
+                        {"osgi.http.whiteboard.filter.regex", "String"},
+                        {"osgi.http.whiteboard.filter.servlet", "String"},
+                        {"filter.init.", "String"},
+                        //additional Liferay specific properties
+                        {"after-filter", "String"},
+                        {"before-filter", "String"},
+                        {"dispatcher", "String"},
+                        {"servlet-context-name", "String"},
+                        {"servlet-filter-name", "String"},
+                        {"url-pattern", "String"},
+                        {"init.param", "String"},
+                        {"filter.init.basic_auth", "String"},
+                        {"filter.init.filter-class", "String"},
+                        {"filter.init.portal_property_prefix", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("org.osgi.service.http.whiteboard.Preprocessor",
+                new String[][]{
+                        {"osgi.http.whiteboard.context.name", "String"},
+                        {"osgi.http.whiteboard.target", "String"},
+                        {"preprocessor.init.", "String"}
+                });
+
+
     }
     private Map<String, List<LookupElementBuilder>> KEYWORD_LOOKUPS = new HashMap<String, List<LookupElementBuilder>>();
 
