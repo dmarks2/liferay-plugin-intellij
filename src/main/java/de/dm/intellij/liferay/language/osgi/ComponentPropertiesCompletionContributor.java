@@ -804,6 +804,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("javax.servlet.Servlet",
                 new String[][]{
                         {"osgi.http.whiteboard.context.name", "String"},
+                        {"osgi.http.whiteboard.context.path", "String"},
                         {"osgi.http.whiteboard.target", "String"},
                         {"osgi.http.whiteboard.servlet.asyncSupported", "boolean"},
                         {"osgi.http.whiteboard.servlet.errorPage", "String"},
@@ -820,6 +821,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("javax.servlet.Filter",
                 new String[][]{
                         {"osgi.http.whiteboard.context.name", "String"},
+                        {"osgi.http.whiteboard.context.path", "String"},
                         {"osgi.http.whiteboard.target", "String"},
                         {"osgi.http.whiteboard.filter.asyncSupported", "boolean"},
                         {"osgi.http.whiteboard.filter.dispatcher", "String"},
