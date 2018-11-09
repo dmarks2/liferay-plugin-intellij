@@ -37,7 +37,7 @@ public class LiferayVtlVariableProvider extends VtlGlobalVariableProvider implem
         }
     }
 
-    public VtlVariable createVariable(final String name, final VtlFile parent, String typeText, PsiElement navigationalElement, final Collection<VtlVariable> nestedVariables) {
+    public VtlVariable createVariable(final String name, final VtlFile parent, String typeText, PsiElement navigationalElement, final Collection<VtlVariable> nestedVariables, boolean repeatable) {
         if ("theme_settings".equals(name)) {
             return new CustomVtlVariable(name, parent, typeText, navigationalElement) {
                 @Override
@@ -65,7 +65,7 @@ public class LiferayVtlVariableProvider extends VtlGlobalVariableProvider implem
                 }
             };
         }
-        return new CustomVtlVariable(name, parent, typeText, navigationalElement, nestedVariables);
+        return new CustomVtlVariable(name, parent, typeText, navigationalElement, nestedVariables, false);
     }
 
     @Override

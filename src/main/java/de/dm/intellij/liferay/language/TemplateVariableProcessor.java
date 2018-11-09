@@ -9,7 +9,7 @@ import java.util.Collection;
 
 public interface TemplateVariableProcessor<F extends PsiFile, T extends PsiNamedElement> {
 
-    T createVariable(String name, F parent, String typeText, PsiElement navigationalElement, Collection<T> nestedVariables);
+    T createVariable(String name, F parent, String typeText, PsiElement navigationalElement, Collection<T> nestedVariables, boolean repeatable);
 
     String[] getAdditionalLanguageSpecificResources(float liferayVersion);
 

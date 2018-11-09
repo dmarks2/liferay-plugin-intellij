@@ -1,9 +1,11 @@
 package de.dm.intellij.liferay.language.freemarker;
 
+import com.intellij.freemarker.psi.FtlCollectionType;
 import com.intellij.freemarker.psi.FtlType;
 import com.intellij.freemarker.psi.FtlVariantsProcessor;
 import com.intellij.freemarker.psi.variables.FtlLightVariable;
 import com.intellij.freemarker.psi.variables.FtlPsiType;
+import com.intellij.freemarker.psi.variables.FtlSpecialVariableType;
 import com.intellij.freemarker.psi.variables.FtlVariable;
 import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiClass;
@@ -26,6 +28,7 @@ import java.util.Collection;
 public class CustomFtlVariable extends FtlLightVariable {
 
     private PsiElement navigationElement;
+    private FtlVariable siblingsVariable;
     private Collection<FtlVariable> nestedVariables;
 
     public CustomFtlVariable(@NotNull String name, @NotNull PsiElement parent, @Nullable FtlType type) {
@@ -38,13 +41,28 @@ public class CustomFtlVariable extends FtlLightVariable {
     }
 
     public CustomFtlVariable(@NotNull String name, @NotNull PsiElement parent, @NotNull String typeText, PsiElement navigationElement) {
-        this(name, parent, typeText, navigationElement, null);
+        this(name, parent, typeText, navigationElement, null, false);
     }
 
-    public CustomFtlVariable(@NotNull String name, @NotNull PsiElement parent, @NotNull String typeText, PsiElement navigationElement, Collection<FtlVariable> nestedVariables) {
+    public CustomFtlVariable(@NotNull String name, @NotNull PsiElement parent, @NotNull String typeText, PsiElement navigationElement, Collection<FtlVariable> nestedVariables, boolean repeatable) {
         super(name, parent, typeText);
         this.navigationElement = navigationElement;
-        this.nestedVariables = nestedVariables;
+        if (repeatable)  {
+            this.siblingsVariable = new CustomFtlVariable("siblings", this, new FtlCollectionType(new FtlSpecialVariableType() {
+                @Override
+                public boolean processDeclarations(@NotNull PsiScopeProcessor psiScopeProcessor, @NotNull PsiElement psiElement, ResolveState resolveState) {
+                    if (nestedVariables != null) {
+                        for (FtlVariable variable : nestedVariables) {
+                            psiScopeProcessor.execute(variable, resolveState);
+                        }
+                    }
+
+                    return false;
+                }
+            }));
+        } else {
+            this.nestedVariables = nestedVariables;
+        }
     }
 
     @NotNull
@@ -72,6 +90,10 @@ public class CustomFtlVariable extends FtlLightVariable {
             className = classType.getCanonicalText();
         }
 
+        if (siblingsVariable != null)  {
+            processor.execute(siblingsVariable, state);
+            return false;
+        }
         if (nestedVariables != null) {
             for (FtlVariable variable : nestedVariables) {
                 processor.execute(variable, state);

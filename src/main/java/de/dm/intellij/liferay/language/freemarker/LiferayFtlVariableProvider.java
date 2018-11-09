@@ -119,11 +119,11 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
         }
     }
 
-    public FtlVariable createVariable(String name, FtlFile parent, String typeText, PsiElement navigationalElement, final Collection<FtlVariable> nestedVariables) {
+    public FtlVariable createVariable(String name, FtlFile parent, String typeText, PsiElement navigationalElement, final Collection<FtlVariable> nestedVariables, boolean repeatable) {
         if ("theme_settings".equals(name)) {
             return new CustomFtlVariable(name, parent, getThemeSettingsVariableType(parent));
         }
-        return new CustomFtlVariable(name, parent, typeText, navigationalElement, nestedVariables);
+        return new CustomFtlVariable(name, parent, typeText, navigationalElement, nestedVariables, repeatable);
     }
 
     @Override

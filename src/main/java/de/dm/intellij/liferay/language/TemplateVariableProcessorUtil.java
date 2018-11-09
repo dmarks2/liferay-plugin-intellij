@@ -307,16 +307,16 @@ public class TemplateVariableProcessorUtil {
 
                         Collection<T> nestedVariables = null;
 
-                        if ( (subTags != null) && (subTags.length > 0) && (! repeatable))  {
+                        if ( (subTags != null) && (subTags.length > 0))  {
                             nestedVariables = new ArrayList<T>();
                             for (XmlTag subTag : subTags) {
                                 String subName = subTag.getAttributeValue("name");
                                 if (subName != null) {
-                                    nestedVariables.add(templateVariableProcessor.createVariable(subName, templateFile, className, subTag.getNavigationElement(), null));
+                                    nestedVariables.add(templateVariableProcessor.createVariable(subName, templateFile, className, subTag.getNavigationElement(), null, false));
                                 }
                             }
                         }
-                        result.add(templateVariableProcessor.createVariable(name, templateFile, className, xmlTag.getNavigationElement(), nestedVariables));
+                        result.add(templateVariableProcessor.createVariable(name, templateFile, className, xmlTag.getNavigationElement(), nestedVariables, repeatable));
                     }
                 }
             }
@@ -345,7 +345,7 @@ public class TemplateVariableProcessorUtil {
                                             }
 
                                             JsonProperty subproperty = jsonObject.findProperty("nestedFields");
-                                            if ( (subproperty != null) && (! repeatable) ) {
+                                            if ( (subproperty != null) ) {
                                                 nestedVariables = new ArrayList<T>();
 
                                                 JsonArray subjsonArray = (JsonArray) subproperty.getValue();
@@ -359,7 +359,7 @@ public class TemplateVariableProcessorUtil {
                                                                 if ((subname != null) && (subname.trim().length() > 0)) {
                                                                     subname = StringUtil.unquoteString(subname);
 
-                                                                    nestedVariables.add(templateVariableProcessor.createVariable(subname, templateFile, className, subnameProperty.getValue(), null));
+                                                                    nestedVariables.add(templateVariableProcessor.createVariable(subname, templateFile, className, subnameProperty.getValue(), null, false));
                                                                 }
                                                             }
                                                         }
@@ -369,7 +369,7 @@ public class TemplateVariableProcessorUtil {
 
                                             name = StringUtil.unquoteString(name);
 
-                                            result.add(templateVariableProcessor.createVariable(name, templateFile, className, nameProperty.getValue(),nestedVariables));
+                                            result.add(templateVariableProcessor.createVariable(name, templateFile, className, nameProperty.getValue(),nestedVariables, repeatable));
                                         }
                                     }
                                 }
@@ -411,7 +411,7 @@ public class TemplateVariableProcessorUtil {
                                         navigationalElement = templateVariableReferenceFinder.getNavigationalElement(name, sourceFile);
 
                                     }
-                                    variables.add(templateVariableProcessor.createVariable(name, sourceFile, type, navigationalElement, null));
+                                    variables.add(templateVariableProcessor.createVariable(name, sourceFile, type, navigationalElement, null, false));
                                 }
                             }
                         }

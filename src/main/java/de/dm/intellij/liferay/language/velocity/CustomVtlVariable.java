@@ -17,6 +17,7 @@ import java.util.Collection;
 public class CustomVtlVariable extends VtlLightVariable {
 
     private PsiElement navigationElement;
+    private VtlVariable siblingsVariable;
     private Collection<VtlVariable> nestedVariables;
 
     public CustomVtlVariable(@NotNull String name, @NotNull VtlFile parent, @NotNull String typeText) {
@@ -24,13 +25,18 @@ public class CustomVtlVariable extends VtlLightVariable {
     }
 
     public CustomVtlVariable(@NotNull String name, @NotNull VtlFile parent, @NotNull String typeText, PsiElement navigationElement) {
-        this(name, parent, typeText, navigationElement, null);
+        this(name, parent, typeText, navigationElement, null, false);
     }
 
-    public CustomVtlVariable(@NotNull String name, @NotNull VtlFile parent, @NotNull String typeText, PsiElement navigationElement, Collection<VtlVariable> nestedVariables) {
+    public CustomVtlVariable(@NotNull String name, @NotNull VtlFile parent, @NotNull String typeText, PsiElement navigationElement, Collection<VtlVariable> nestedVariables, boolean repeatable) {
         super(name, parent, typeText);
         this.navigationElement = navigationElement;
-        this.nestedVariables = nestedVariables;
+        if (repeatable) {
+            //TODO how to create collection type vtl variable ??
+            //this.siblingsVariable = new CustomVtlVariable("siblings", this, )
+        } else {
+            this.nestedVariables = nestedVariables;
+        }
     }
 
     @NotNull

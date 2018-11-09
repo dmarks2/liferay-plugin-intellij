@@ -1,1 +1,1 @@
-${<caret>}
+${repeatable.<caret>}
