@@ -57,6 +57,19 @@ public class CustomFtlVariable extends FtlLightVariable {
                         }
                     }
 
+                    FtlType ftlType = getType();
+                    FtlPsiType ftlPsiType = (ftlType instanceof FtlPsiType ? (FtlPsiType)ftlType : null);
+                    PsiClassType classType = null;
+                    String className = null;
+                    if ( (ftlPsiType != null) && (ftlPsiType.getPsiType() instanceof PsiClassType) ) {
+                        classType = (PsiClassType)ftlPsiType.getPsiType();
+                        className = classType.getCanonicalText();
+                    }
+
+                    if ("com.liferay.portal.kernel.templateparser.TemplateNode".equals(className)) {
+                       return processTemplateNode(psiScopeProcessor, resolveState, psiElement, classType);
+                    }
+
                     return false;
                 }
             }));
@@ -100,37 +113,41 @@ public class CustomFtlVariable extends FtlLightVariable {
             }
             return false;
         } else if ("com.liferay.portal.kernel.templateparser.TemplateNode".equals(className)) {
-            //default implementation of FtlPsiType does not resolve members for classes which inherit from java.util.Map (TemplateNode inherits from Map)
-            //so resolve members of com.liferay.portal.kernel.templateparser.TemplateNode manually
-
-            if (classType != null) {
-                PsiClassType.ClassResolveResult resolveResult = classType.resolveGenerics();
-                PsiClass psiClass = resolveResult.getElement();
-                if (psiClass == null) {
-                    return true;
-                }
-
-                ResolveState newState = state.put(PsiSubstitutor.KEY, resolveResult.getSubstitutor());
-                String hint = processor instanceof FtlVariantsProcessor ? ((FtlVariantsProcessor) processor).getReferenceName() : null;
-                if (!psiClass.processDeclarations(new PsiMemberProcessor(processor, hint), newState, (PsiElement) null, place)) {
-                    return false;
-                }
-
-                if (hint != null && !((FtlVariantsProcessor) processor).isMethodCall()) {
-                    String isAccessor = PropertyUtil.suggestGetterName(hint, PsiType.BOOLEAN);
-                    if (!psiClass.processDeclarations(new PsiMemberProcessor(processor, isAccessor), newState, (PsiElement) null, place)) {
-                        return false;
-                    }
-
-                    String getAccessor = PropertyUtil.suggestGetterName(hint, PsiType.INT);
-                    if (!psiClass.processDeclarations(new PsiMemberProcessor(processor, getAccessor), newState, (PsiElement) null, place)) {
-                        return false;
-                    }
-                }
-            }
+            return processTemplateNode(processor, state, place, classType);
         }
 
         return super.processDeclarations(processor, state, lastParent, place);
+    }
+
+    private boolean processTemplateNode(@NotNull PsiScopeProcessor processor, @NotNull ResolveState state, @NotNull PsiElement place, PsiClassType classType) {
+        //default implementation of FtlPsiType does not resolve members for classes which inherit from java.util.Map (TemplateNode inherits from Map)
+        //so resolve members of com.liferay.portal.kernel.templateparser.TemplateNode manually
+
+        PsiClassType.ClassResolveResult resolveResult = classType.resolveGenerics();
+        PsiClass psiClass = resolveResult.getElement();
+        if (psiClass == null) {
+            return true;
+        }
+
+        ResolveState newState = state.put(PsiSubstitutor.KEY, resolveResult.getSubstitutor());
+        String hint = processor instanceof FtlVariantsProcessor ? ((FtlVariantsProcessor) processor).getReferenceName() : null;
+        if (!psiClass.processDeclarations(new PsiMemberProcessor(processor, hint), newState, (PsiElement) null, place)) {
+            return false;
+        }
+
+        if (hint != null && !((FtlVariantsProcessor) processor).isMethodCall()) {
+            String isAccessor = PropertyUtil.suggestGetterName(hint, PsiType.BOOLEAN);
+            if (!psiClass.processDeclarations(new PsiMemberProcessor(processor, isAccessor), newState, (PsiElement) null, place)) {
+                return false;
+            }
+
+            String getAccessor = PropertyUtil.suggestGetterName(hint, PsiType.INT);
+            if (!psiClass.processDeclarations(new PsiMemberProcessor(processor, getAccessor), newState, (PsiElement) null, place)) {
+                return false;
+            }
+        }
+
+        return false;
     }
 
 
