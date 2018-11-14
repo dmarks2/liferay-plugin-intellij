@@ -68,6 +68,9 @@
         <!-- Provides a Line Marker for a Service Model Implemenation class. Using the Line Marker you can jump to the declaration in service.xml. -->
         <codeInsight.lineMarkerProvider language="JAVA" implementationClass="de.dm.intellij.liferay.language.service.LiferayServiceJavaImplLineMarkerProvider"/>
 
+        <!-- inspections -->
+        <inspectionToolProvider implementation="de.dm.intellij.liferay.language.service.LiferayServiceXMLInspectionToolProvider"/>
+
         <!-- Error Reporting in case of crashes -->
         <errorHandler implementation="de.dm.intellij.liferay.util.PluginErrorReporter"/>
 
