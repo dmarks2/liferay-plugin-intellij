@@ -3,14 +3,18 @@ package de.dm.intellij.liferay.language.freemarker;
 import com.intellij.freemarker.psi.FtlCollectionType;
 import com.intellij.freemarker.psi.FtlType;
 import com.intellij.freemarker.psi.FtlVariantsProcessor;
+import com.intellij.freemarker.psi.variables.FtlDynamicMember;
 import com.intellij.freemarker.psi.variables.FtlLightVariable;
+import com.intellij.freemarker.psi.variables.FtlMethodType;
 import com.intellij.freemarker.psi.variables.FtlPsiType;
 import com.intellij.freemarker.psi.variables.FtlSpecialVariableType;
 import com.intellij.freemarker.psi.variables.FtlVariable;
 import com.intellij.openapi.util.Key;
+import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiClassType;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiSubstitutor;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.ResolveState;
@@ -18,17 +22,19 @@ import com.intellij.psi.scope.BaseScopeProcessor;
 import com.intellij.psi.scope.NameHint;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.util.PropertyUtil;
+import com.intellij.psi.util.PsiClassUtil;
 import de.dm.intellij.liferay.util.Icons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class CustomFtlVariable extends FtlLightVariable {
 
     private PsiElement navigationElement;
-    private FtlVariable siblingsVariable;
+    private Collection<FtlVariable> siblingsVariables;
     private Collection<FtlVariable> nestedVariables;
 
     public CustomFtlVariable(@NotNull String name, @NotNull PsiElement parent, @Nullable FtlType type) {
@@ -48,7 +54,7 @@ public class CustomFtlVariable extends FtlLightVariable {
         super(name, parent, typeText);
         this.navigationElement = navigationElement;
         if (repeatable)  {
-            this.siblingsVariable = new CustomFtlVariable("siblings", this, new FtlCollectionType(new FtlSpecialVariableType() {
+            final FtlCollectionType collectionType = new FtlCollectionType(new FtlSpecialVariableType() {
                 @Override
                 public boolean processDeclarations(@NotNull PsiScopeProcessor psiScopeProcessor, @NotNull PsiElement psiElement, ResolveState resolveState) {
                     if (nestedVariables != null) {
@@ -58,21 +64,54 @@ public class CustomFtlVariable extends FtlLightVariable {
                     }
 
                     FtlType ftlType = getType();
-                    FtlPsiType ftlPsiType = (ftlType instanceof FtlPsiType ? (FtlPsiType)ftlType : null);
+                    FtlPsiType ftlPsiType = (ftlType instanceof FtlPsiType ? (FtlPsiType) ftlType : null);
                     PsiClassType classType = null;
                     String className = null;
-                    if ( (ftlPsiType != null) && (ftlPsiType.getPsiType() instanceof PsiClassType) ) {
-                        classType = (PsiClassType)ftlPsiType.getPsiType();
+                    if ((ftlPsiType != null) && (ftlPsiType.getPsiType() instanceof PsiClassType)) {
+                        classType = (PsiClassType) ftlPsiType.getPsiType();
                         className = classType.getCanonicalText();
                     }
 
                     if ("com.liferay.portal.kernel.templateparser.TemplateNode".equals(className)) {
-                       return processTemplateNode(psiScopeProcessor, resolveState, psiElement, classType);
+                        return processTemplateNode(psiScopeProcessor, resolveState, psiElement, classType);
                     }
 
                     return false;
                 }
-            }));
+            });
+            this.siblingsVariables = new ArrayList<>();
+
+            boolean getSiblingsMethodFound = false;
+
+            PsiType psiType = JavaPsiFacade.getInstance(parent.getProject()).getElementFactory().createTypeFromText("com.liferay.portal.kernel.templateparser.TemplateNode", parent);
+            if (psiType instanceof PsiClassType) {
+                PsiClassType psiClassType = (PsiClassType)psiType;
+                PsiClass psiClass = psiClassType.resolve();
+                if (psiClass != null) {
+                    for (PsiMethod psiMethod : psiClass.getMethods()) {
+                        if ( ("getSiblings".equals(psiMethod.getName()) && (psiMethod.getParameterList().isEmpty())) ) {
+                            getSiblingsMethodFound = true;
+
+                            FtlMethodType ftlMethodType = new FtlMethodType(psiMethod, PsiSubstitutor.EMPTY) {
+                                @Override
+                                public FtlType getResultType() {
+                                    return collectionType;
+                                }
+                            };
+
+
+                            this.siblingsVariables.add(new FtlDynamicMember("siblings", psiMethod, collectionType));
+                            this.siblingsVariables.add(new FtlDynamicMember("getSiblings", psiMethod, ftlMethodType));
+                            break;
+                        }
+                    }
+                }
+            }
+            if (! (getSiblingsMethodFound) ) {
+                //no reference to com.liferay.portal.kernel.templateparser.TemplateNode
+                this.siblingsVariables.add(new CustomFtlVariable("siblings", this, collectionType));
+            }
+
         } else {
             this.nestedVariables = nestedVariables;
         }
@@ -103,8 +142,10 @@ public class CustomFtlVariable extends FtlLightVariable {
             className = classType.getCanonicalText();
         }
 
-        if (siblingsVariable != null)  {
-            processor.execute(siblingsVariable, state);
+        if (siblingsVariables != null) {
+            for (FtlVariable variable : siblingsVariables) {
+                processor.execute(variable, state);
+            }
             return false;
         }
         if (nestedVariables != null) {
