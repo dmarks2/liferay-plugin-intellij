@@ -8,8 +8,10 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
+import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class LiferayServiceXMLExceptionNameInspection extends XmlSuppressableInspectionTool {
 
@@ -22,14 +24,29 @@ public class LiferayServiceXMLExceptionNameInspection extends XmlSuppressableIns
     @NotNull
     @Override
     public String getDisplayName() {
-        return "Check for unneccessary Exception suffix at service.xml exception entries.";
+        return "unneccessary service.xml exception suffix";
     }
 
     @Nls
     @NotNull
     @Override
     public String getGroupDisplayName() {
-        return GroupNames.NAMING_CONVENTIONS_GROUP_NAME
+        return LiferayInspectionsGroupNames.LIFERAY_GROUP_NAME;
+    }
+
+    @NotNull
+    @Override
+    public String[] getGroupPath() {
+        return new String[] {
+            getGroupDisplayName(),
+            LiferayInspectionsGroupNames.SERVICE_XML_GROUP_NAME
+        };
+    }
+
+    @Nullable
+    @Override
+    public String getStaticDescription() {
+        return "Check for unneccessary Exception suffix at service.xml exception entries.";
     }
 
     @NotNull
