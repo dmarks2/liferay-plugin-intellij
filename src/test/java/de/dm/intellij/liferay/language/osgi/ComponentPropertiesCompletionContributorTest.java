@@ -57,7 +57,7 @@ public class ComponentPropertiesCompletionContributorTest extends LightCodeInsig
         return TEST_DATA_PATH;
     }
 
-    public void testOsgiImplicitUsage() {
+    public void testComponentPropertiesCompletion() {
         myFixture.configureByFile("MyComponent.java");
 
         myFixture.complete(CompletionType.BASIC, 1);
