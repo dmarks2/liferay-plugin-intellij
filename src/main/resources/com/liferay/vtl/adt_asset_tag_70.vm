@@ -11,3 +11,4 @@
 #* @vtlvariable name="maxAssetTags" type="java.lang.String" *#
 #* @vtlvariable name="showAssetCount" type="java.lang.String" *#
 #* @vtlvariable name="showZeroAssetCount" type="java.lang.String" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#

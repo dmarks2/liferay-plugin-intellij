@@ -13,3 +13,4 @@
 #* @vtlvariable name="preview" type="java.lang.Boolean" *#
 #* @vtlvariable name="displayDepth" type="java.lang.Long" *#
 #* @vtlvariable name="rootLayoutUuid" type="java.lang.String" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#

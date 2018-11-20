@@ -10,3 +10,4 @@
 #* @vtlvariable name="displayStyle" type="java.lang.String" *#
 #* @vtlvariable name="showCurrentGroup" type="java.lang.String" *#
 #* @vtlvariable name="showParentGroups" type="java.lang.String" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#

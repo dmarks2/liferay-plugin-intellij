@@ -117,3 +117,4 @@
 #* @vtlvariable name="date" type="com.liferay.portal.kernel.util.DateUtil_IW" *#
 #* @vtlvariable name="current_time" type="java.util.Date" *#
 #* @vtlvariable name="the_year" type="java.lang.String" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#

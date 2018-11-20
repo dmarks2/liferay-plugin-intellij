@@ -16,3 +16,4 @@
 #* @vtlvariable name="showFeedTitle" type="java.lang.String" *#
 #* @vtlvariable name="showFeedItemAuthor" type="java.lang.String" *#
 #* @vtlvariable name="showFeedPublishedDate" type="java.lang.String" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#

@@ -13,3 +13,4 @@
 #* @vtlvariable name="displayStyle" type="java.lang.String" *#
 #* @vtlvariable name="rootFolderId" type="java.lang.String" *#
 #* @vtlvariable name="dlPortletInstanceSettings" type="com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#

@@ -6,3 +6,4 @@
 #* @vtlvariable name="blogsPortletInstanceConfiguration" type="com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration" *#
 #* @vtlvariable name="blogsPortletInstanceSettingsHelper" type="com.liferay.blogs.web.internal.display.context.BlogsPortletInstanceSettingsHelper" *#
 #* @vtlvariable name="class_name_id" type="java.lang.Long" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#

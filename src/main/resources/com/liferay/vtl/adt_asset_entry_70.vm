@@ -67,3 +67,4 @@
 #* @vtlvariable name="enablePrint" type="java.lang.String" *#
 #* @vtlvariable name="ddmStructureFieldValue" type="java.lang.String" *#
 #* @vtlvariable name="ddmStructureDisplayFieldValue" type="java.lang.String" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#

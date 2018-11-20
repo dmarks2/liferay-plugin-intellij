@@ -78,4 +78,4 @@
 #* @vtlvariable name="locationPermission" type="com.liferay.portal.kernel.service.permission.OrganizationPermission" *#
 #* @vtlvariable name="randomizer" type="com.liferay.portal.kernel.util.Randomizer" *#
 #* @vtlvariable name="init" type="java.lang.String" *#
-#* @vtlvariable name="currentURL" type="java.lang.String" *#
+

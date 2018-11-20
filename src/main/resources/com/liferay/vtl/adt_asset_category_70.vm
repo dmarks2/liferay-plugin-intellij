@@ -12,3 +12,4 @@
 #* @vtlvariable name="assetVocabularyIds" type="java.lang.String" *#
 #* @vtlvariable name="displayStyleGroupId" type="java.lang.String" *#
 #* @vtlvariable name="displayStyle" type="java.lang.String" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#

@@ -11,3 +11,4 @@
 #* @vtlvariable name="name" type="java.lang.String" *#
 #* @vtlvariable name="formAction" type="java.lang.String" *#
 #* @vtlvariable name="namespace" type="java.lang.String" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#

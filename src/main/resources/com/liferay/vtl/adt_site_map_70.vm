@@ -12,3 +12,4 @@
 #* @vtlvariable name="displayDepth" type="java.lang.String" *#
 #* @vtlvariable name="rootLayoutUuid" type="java.lang.String" *#
 #* @vtlvariable name="useHtmlTitle" type="java.lang.String" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#
