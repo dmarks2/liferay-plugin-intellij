@@ -81,13 +81,4 @@ public class LiferayVtlVariableProviderTest extends LightCodeInsightFixtureTestC
         assertTrue(strings.contains("child"));
     }
 
-    @Ignore
-    public void testStructureVariablesRepeatable() {
-        myFixture.configureByFiles("journal/templates/test/repeatable.vm", "journal/structures/test.json");
-        myFixture.complete(CompletionType.BASIC, 1);
-        List<String> strings = myFixture.getLookupElementStrings();
-        assertTrue(strings.contains("siblings"));
-    }
-
-
 }

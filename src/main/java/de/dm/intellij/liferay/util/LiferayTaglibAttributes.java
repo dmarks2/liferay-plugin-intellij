@@ -12,6 +12,7 @@ public class LiferayTaglibAttributes {
     public static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES_JAVASCRIPT = new HashMap<String, Collection<Pair<String, String>>>();
     public static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES_RESOURCEBUNDLE = new HashMap<String, Collection<Pair<String, String>>>();
     public static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES_CSS = new HashMap<String, Collection<Pair<String, String>>>();
+    public static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES_CLASS_NAME = new HashMap<String, Collection<Pair<String, String>>>();
 
     //TAGLIB_ATTRIBUTES_JAVASCRIPT
     static {
@@ -333,6 +334,52 @@ public class LiferayTaglibAttributes {
                 new Pair<String, String>("stripe", "elementClasses"),
                 new Pair<String, String>("user-card", "elementClasses"),
                 new Pair<String, String>("user-card", "icon")
+        ));
+    }
+
+    //TAGLIB_ATTRIBUTES_CLASS_NAME
+    static {
+        TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI, Arrays.asList(
+            new Pair<>("model-context", "model"),
+            new Pair<>("input", "model"),
+            new Pair<>("select", "model"),
+            new Pair<>("workflow-status", "model")
+        ));
+        TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPANDO, Arrays.asList(
+            new Pair<>("custom-attribute", "className"),
+            new Pair<>("custom-attribute-list", "className"),
+            new Pair<>("custom-attributes-available", "className")
+        ));
+        TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FLAGS, Arrays.asList(
+            new Pair<>("flags", "className")
+        ));
+        TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET, Arrays.asList(
+            new Pair<>("runtime", "portletProviderClassName")
+        ));
+        TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_SECURITY, Arrays.asList(
+            new Pair<>("permissionsURL", "modelResource")
+        ));
+        TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
+            new Pair<>("app-view-entry", "assetCategoryClassName"),
+            new Pair<>("app-view-entry", "assetTagClassName"),
+            new Pair<>("asset-categories-available", "className"),
+            new Pair<>("asset-categories-selector", "className"),
+            new Pair<>("asset-categories-summary", "className"),
+            new Pair<>("asset-display", "className"),
+            new Pair<>("asset-links", "className"),
+            new Pair<>("asset-metadata", "className"),
+            new Pair<>("asset-tags-available", "className"),
+            new Pair<>("asset-tags-selector", "className"),
+            new Pair<>("asset-tags-summary", "className"),
+            new Pair<>("discussion", "className"),
+            new Pair<>("error", "exception"),  //extends Exception?
+            new Pair<>("input-asset-links", "className"),
+            new Pair<>("input-field", "model"),
+            new Pair<>("input-permissions", "modelName"),
+            new Pair<>("input-permissions-params", "modelName"),
+            new Pair<>("ratings", "className"),
+            new Pair<>("search-container-row", "className"),
+            new Pair<>("social-activities", "className")
         ));
     }
 

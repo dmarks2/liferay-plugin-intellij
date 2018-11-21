@@ -8,7 +8,7 @@ import javafx.util.Pair;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class LiferayTaglibSearchContainerJavaBeanReferenceContributor extends AbstractLiferayTaglibJavaBeanReferenceContributor {
+public class LiferayTaglibSearchContainerJavaBeanReferenceContributor extends AbstractLiferayTaglibReferenceContributor {
 
     private static final Collection<Pair<String, String>> ATTRIBUTES = Arrays.asList(
         new Pair<String, String>("search-container-column-text", "property"),
@@ -22,7 +22,7 @@ public class LiferayTaglibSearchContainerJavaBeanReferenceContributor extends Ab
     );
 
     @Override
-    protected AbstractLiferayTaglibJavaBeanReferenceProvider getLiferayTaglibJavaBeanReferenceProvider() {
+    protected AbstractLiferayTaglibJavaBeanReferenceProvider getReferenceProvider() {
         return new LiferayTaglibSearchContainerJavaBeanReferenceProvider();
     }
 

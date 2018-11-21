@@ -22,8 +22,10 @@ public class LiferayTaglibs {
     public static final String TAGLIB_URI_LIFERAY_ITEM_SELECTOR = "http://liferay.com/tld/item-selector";
     public static final String TAGLIB_URI_LIFERAY_JOURNAL = "http://liferay.com/tld/journal";
     public static final String TAGLIB_URI_LIFERAY_MAP = "http://liferay.com/tld/map";
+    public static final String TAGLIB_URI_LIFERAY_PORTLET = "http://liferay.com/tld/portlet";
     public static final String TAGLIB_URI_LIFERAY_READING_TIME = "http://liferay.com/tld/reading-time";
     public static final String TAGLIB_URI_LIFERAY_RSS = "http://liferay.com/tld/rss";
+    public static final String TAGLIB_URI_LIFERAY_SECURITY = "http://liferay.com/tld/security";
     public static final String TAGLIB_URI_LIFERAY_SITE = "http://liferay.com/tld/site";
     public static final String TAGLIB_URI_LIFERAY_SITE_NAVIGATION = "http://liferay.com/tld/site-navigation";
     public static final String TAGLIB_URI_LIFERAY_SOCIAL_ACTIVITIES = "http://liferay.com/tld/social-activities";

@@ -25,6 +25,10 @@
       ]]></description>
 
     <change-notes><![CDATA[
+        <p>Version 0.0.3</p>
+        <ul>
+            <li>Feature: Added taglib code completion for class names</li>
+        </ul>
         <p>Version 0.0.2</p>
         <ul>
             <li>Feature: Added Compass support for Liferay 6.1 and 6.2</li>

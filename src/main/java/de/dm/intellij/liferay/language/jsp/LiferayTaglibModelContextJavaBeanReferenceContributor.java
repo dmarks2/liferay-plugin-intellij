@@ -8,7 +8,7 @@ import javafx.util.Pair;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class LiferayTaglibModelContextJavaBeanReferenceContributor extends AbstractLiferayTaglibJavaBeanReferenceContributor {
+public class LiferayTaglibModelContextJavaBeanReferenceContributor extends AbstractLiferayTaglibReferenceContributor {
 
     private static final Collection<Pair<String, String>> ATTRIBUTES_LIFERAY_AUI = Arrays.asList(
             new Pair<String, String>("input", "field"),
@@ -22,7 +22,7 @@ public class LiferayTaglibModelContextJavaBeanReferenceContributor extends Abstr
     );
 
     @Override
-    protected AbstractLiferayTaglibJavaBeanReferenceProvider getLiferayTaglibJavaBeanReferenceProvider() {
+    protected AbstractLiferayTaglibJavaBeanReferenceProvider getReferenceProvider() {
         return new LiferayTaglibModelContextJavaBeanReferenceProvider();
     }
 
