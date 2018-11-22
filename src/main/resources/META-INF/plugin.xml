@@ -2,7 +2,7 @@
     <id>de.dm.intellij.liferay</id>
     <name>Liferay Plugin</name>
     <category>Framework integration</category>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
@@ -27,6 +27,21 @@
     <change-notes><![CDATA[
         <p>Version 0.0.3</p>
         <ul>
+            <li>Feature: Javascript injection for aui:validator and many onXXX attributes</li>
+            <li>Feature: File References in several Liferay XML files</li>
+            <li>Bugfix: Code completion for OSGi properties did not work when using Java Constants</li>
+            <li>Feature: Quick documentation for several OSGi properties</li>
+            <li>Feature: Support for core JSP hooks</li>
+            <li>Feature: Detect implicit usage for OSGi annotations like (at)Reference etc.</li>
+            <li>Feature: Javascript injection into Freemarker templates</li>
+            <li>Feature: JavaBean property references in JSP Taglibs</li>
+            <li>Feature: JSON Schema for Journal Structures and other resources importer files</li>
+            <li>Feature: Support for OSGi fragments for non-Liferay modules</li>
+            <li>Feature: Implicit groovy variables</li>
+            <li>Feature: Automatically exclude the "bundles" directory</li>
+            <li>Feature: Liferay target version support</li>
+            <li>Feature: Improved support for getSiblings() in Freemarker templates</li>
+            <li>Feature: Inspections for service.xml</li>
             <li>Feature: Added taglib code completion for class names</li>
         </ul>
         <p>Version 0.0.2</p>
