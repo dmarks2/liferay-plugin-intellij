@@ -82,7 +82,7 @@ public class LiferayFreemarkerClassNameCompletionContributor extends CompletionC
     private static void addClassInheritorsLookup(PsiClass baseClass, CompletionResultSet result, Module module) {
         if (baseClass != null) {
             SearchScope scope = GlobalSearchScope.allScope(module.getProject());
-            Query<PsiClass> query = ClassInheritorsSearch.search(baseClass, scope, true);
+            Query<PsiClass> query = ClassInheritorsSearch.search(baseClass, scope, false);
 
             query.forEach(psiClass -> {
                 String qualifiedName = psiClass.getQualifiedName();
