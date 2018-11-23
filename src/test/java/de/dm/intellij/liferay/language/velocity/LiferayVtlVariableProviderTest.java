@@ -15,6 +15,7 @@ import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
 import de.dm.intellij.liferay.language.freemarker.LiferayFtlVariableProviderTest;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
+import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Ignore;
 
@@ -33,6 +34,8 @@ public class LiferayVtlVariableProviderTest extends LightCodeInsightFixtureTestC
                 extension.setLanguageLevel(LanguageLevel.JDK_1_8);
             }
             LiferayModuleComponent.getInstance(module).setLiferayVersion("7.0.6");
+            LiferayModuleComponent.getInstance(module).getThemeSettings().put(LiferayLookAndFeelXmlParser.TEMPLATES_PATH, "/templates");
+            LiferayModuleComponent.getInstance(module).getThemeSettings().put(LiferayLookAndFeelXmlParser.TEMPLATE_EXTENSION, "vm");
 
             URL resource = LiferayFtlVariableProviderTest.class.getResource("/com/liferay/vtl/VM_liferay_70.vm");
             String resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
@@ -68,17 +71,55 @@ public class LiferayVtlVariableProviderTest extends LightCodeInsightFixtureTestC
     }
 
     public void testStructureVariablesSimple() {
-        myFixture.configureByFiles("journal/templates/test/simple.vm", "journal/structures/test.json");
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/simple.vm", "WEB-INF/src/resources-importer/journal/structures/test.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("simple"));
     }
 
     public void testStructureVariablesNested() {
-        myFixture.configureByFiles("journal/templates/test/parent.vm", "journal/structures/test.json");
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/parent.vm", "WEB-INF/src/resources-importer/journal/structures/test.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("child"));
     }
+
+    //TODO repeatable and nested repeatable structure variables?
+
+    public void testJournalReservedVariables() {
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/journal-reserved-variables.vm", "WEB-INF/src/resources-importer/journal/structures/test.json");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("reserved-article-id"));
+    }
+
+    public void testADTAssetEntryVariables() {
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/templates/application_display/asset_entry/asset-entry-template.vm");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("assetPublisherHelper"));
+    }
+
+    public void testThemeTemplateVariables() {
+        myFixture.configureByFiles("templates/portal_normal.vm");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("company_name"));
+    }
+
+    public void testLayoutTemplateVariables() {
+        myFixture.configureByFiles("layouttpl/custom/my_liferay_layout_template.tpl");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("processor"));
+    }
+
+    public void testThemeSettingsVariables() {
+        myFixture.configureByFiles("templates/theme_settings.vm", "WEB-INF/liferay-look-and-feel.xml");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("mysetting"));
+    }
+
 
 }

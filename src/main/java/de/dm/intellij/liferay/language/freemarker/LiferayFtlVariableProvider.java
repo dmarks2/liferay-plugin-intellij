@@ -9,6 +9,7 @@ import com.intellij.freemarker.psi.variables.FtlVariable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.progress.ProcessCanceledException;
+import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -122,6 +123,9 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
     public FtlVariable createVariable(String name, FtlFile parent, String typeText, PsiElement navigationalElement, final Collection<FtlVariable> nestedVariables, boolean repeatable) {
         if ("theme_settings".equals(name)) {
             return new CustomFtlVariable(name, parent, getThemeSettingsVariableType(parent));
+        } else if ("serviceLocator".equals(name)) {
+            //TODO differ between LR 6.1 and 6.2/7.0?
+            return new ServiceLocatorFtlVariable(ServiceLocatorFtlVariable.SERVICE_LOCATOR_CLASS_NAME_6_2_7_0, parent);
         }
         return new CustomFtlVariable(name, parent, typeText, navigationalElement, nestedVariables, repeatable);
     }
@@ -201,14 +205,30 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
                 final Module module = ModuleUtil.findModuleForPsiElement(parent);
                 String liferayLookAndFeelXml = LiferayModuleComponent.getLiferayLookAndFeelXml(module);
                 if ( (liferayLookAndFeelXml != null) && (liferayLookAndFeelXml.trim().length() > 0) ) {
-                    VirtualFile virtualFile = VfsUtilCore.findRelativeFile(liferayLookAndFeelXml, null);
-                    XmlFile xmlFile = (XmlFile) PsiManager.getInstance(module.getProject()).findFile(virtualFile);
-                    Collection<LiferayLookAndFeelXmlParser.Setting> settings = LiferayLookAndFeelXmlParser.parseSettings(xmlFile);
-                    for (LiferayLookAndFeelXmlParser.Setting setting : settings) {
-                        String type = ("checkbox".equals(setting.type) ? "java.lang.Boolean" : "java.lang.String");
+                    ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
+                    VirtualFile[] contentRoots = moduleRootManager.getContentRoots();
+                    for (VirtualFile contentRoot : contentRoots) {
+                        String relativeFileUrl = liferayLookAndFeelXml;
 
-                        FtlVariable variable = new CustomFtlVariable(setting.key, place, type, setting.psiElement);
-                        processor.execute(variable, state);
+                        String contentRootUrl = contentRoot.getUrl();
+
+                        if (relativeFileUrl.startsWith(contentRootUrl)) {
+                            relativeFileUrl = relativeFileUrl.substring(contentRootUrl.length());
+                        }
+
+                        VirtualFile virtualFile = VfsUtilCore.findRelativeFile(relativeFileUrl, contentRoot);
+                        if (virtualFile != null) {
+
+                            XmlFile xmlFile = (XmlFile) PsiManager.getInstance(module.getProject()).findFile(virtualFile);
+                            Collection<LiferayLookAndFeelXmlParser.Setting> settings = LiferayLookAndFeelXmlParser.parseSettings(xmlFile);
+                            for (LiferayLookAndFeelXmlParser.Setting setting : settings) {
+                                String type = ("checkbox".equals(setting.type) ? "java.lang.Boolean" : "java.lang.String");
+
+                                FtlVariable variable = new CustomFtlVariable(setting.key, place, type, setting.psiElement);
+                                processor.execute(variable, state);
+                            }
+                        }
+                        break;
                     }
                 }
 

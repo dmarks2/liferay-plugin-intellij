@@ -33,7 +33,7 @@ public class LiferayLookAndFeelXmlParser {
             if (module != null) {
                 LiferayModuleComponent component = module.getComponent(LiferayModuleComponent.class);
                 if (component != null) {
-                    component.setLiferayLookAndFeelXml(virtualFile.getPath());
+                    component.setLiferayLookAndFeelXml(virtualFile.getUrl());
 
                     XmlFile xmlFile = (XmlFile) PsiManager.getInstance(module.getProject()).findFile(virtualFile);
 
