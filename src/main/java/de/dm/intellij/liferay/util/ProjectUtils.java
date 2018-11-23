@@ -14,6 +14,11 @@ import com.intellij.openapi.roots.libraries.LibraryTablesRegistrar;
 import com.intellij.openapi.startup.StartupManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.WindowManager;
+import com.intellij.psi.JavaPsiFacade;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiClassType;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiType;
 import com.intellij.util.DisposeAwareRunnable;
 import com.intellij.util.Processor;
 import org.jetbrains.annotations.NotNull;
@@ -187,6 +192,19 @@ public class ProjectUtils {
             }
         }
         return activeProject;
+    }
+
+    public static PsiClass getClassByName(Project project, String className, PsiElement context) {
+        PsiType psiType = JavaPsiFacade.getInstance(project).getElementFactory().createTypeFromText(className, context);
+
+        if (psiType instanceof PsiClassType) {
+            PsiClassType psiClassType = (PsiClassType) psiType;
+            PsiClass psiClass = psiClassType.resolve();
+
+            return psiClass;
+        }
+
+        return null;
     }
 
 }

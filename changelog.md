@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Improved support for getSiblings() in Freemarker templates
 - Feature: Inspections for service.xml
 - Feature: Added taglib code completion for class names
+- Feature: Class Name completion inside serviceLocator.findService() in Freemarker templates
 - Feature: Implicit resolve of serviceLocator instructions in Freemarker templates
 
 ## 0.0.2

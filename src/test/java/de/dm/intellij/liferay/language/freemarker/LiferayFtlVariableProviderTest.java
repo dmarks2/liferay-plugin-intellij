@@ -136,5 +136,18 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
         assertTrue(strings.contains("toString"));
     }
 
+    public void testServiceLocatorClassNameLookup() {
+        myFixture.configureByFiles(
+            "WEB-INF/src/resources-importer/journal/templates/test/service-locator-classname.ftl",
+            "WEB-INF/src/resources-importer/journal/structures/test.json",
+            "com/liferay/portal/template/ServiceLocator.java",
+            "com/liferay/portal/kernel/service/BaseLocalService.java",
+            "com/liferay/portal/kernel/service/MyCustomService.java"
+        );
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("com.liferay.portal.kernel.service.MyCustomService"));
+    }
+
 
 }
