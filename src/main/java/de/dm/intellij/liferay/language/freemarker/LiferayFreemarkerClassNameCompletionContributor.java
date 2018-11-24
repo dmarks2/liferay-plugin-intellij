@@ -7,7 +7,9 @@ import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.freemarker.psi.FtlArgumentList;
+import com.intellij.freemarker.psi.FtlIndexExpression;
 import com.intellij.freemarker.psi.FtlMethodCallExpression;
+import com.intellij.freemarker.psi.FtlReferenceQualifier;
 import com.intellij.freemarker.psi.FtlStringLiteral;
 import com.intellij.freemarker.psi.variables.FtlCallableType;
 import com.intellij.freemarker.psi.variables.FtlMethodType;
@@ -39,6 +41,13 @@ public class LiferayFreemarkerClassNameCompletionContributor extends CompletionC
             ServiceLocatorFtlVariable.SERVICE_LOCATOR_CLASS_NAME_6_2_7_0 + ".findService"
     );
 
+    private static final Collection<String> ENUM_UTIL_VARIABLE_NAMES = Arrays.asList(
+            "enumUtil"
+    );
+    private static final Collection<String> STATIC_UTIL_VARIABLE_NAMES = Arrays.asList(
+            "staticUtil"
+    );
+
     public LiferayFreemarkerClassNameCompletionContributor() {
 
         PsiElementPattern.Capture<PsiElement> elementFilter =
@@ -66,13 +75,29 @@ public class LiferayFreemarkerClassNameCompletionContributor extends CompletionC
 
                             Module module = ModuleUtil.findModuleForFile(psiFile);
 
-                            PsiClass baseLocalServiceClass = ProjectUtils.getClassByName(originalPosition.getProject(), "com.liferay.portal.kernel.service.BaseLocalService", originalPosition);
-                            PsiClass baseServiceClass = ProjectUtils.getClassByName(originalPosition.getProject(), "com.liferay.portal.kernel.service.BaseService", originalPosition);
+                            if (isServiceLocatorCall(originalPosition)) {
+                                PsiClass baseLocalServiceClass = ProjectUtils.getClassByName(originalPosition.getProject(), "com.liferay.portal.kernel.service.BaseLocalService", originalPosition);
+                                PsiClass baseServiceClass = ProjectUtils.getClassByName(originalPosition.getProject(), "com.liferay.portal.kernel.service.BaseService", originalPosition);
 
-                            addClassInheritorsLookup(baseLocalServiceClass, result, module);
-                            addClassInheritorsLookup(baseServiceClass, result, module);
+                                addClassInheritorsLookup(baseLocalServiceClass, result, module);
+                                addClassInheritorsLookup(baseServiceClass, result, module);
 
-                            result.stopHere();
+                                result.stopHere();
+                            } else if (isEnumUtilCall(originalPosition)) {
+                                PsiClass enumClass = ProjectUtils.getClassByName(originalPosition.getProject(), "java.lang.Enum", originalPosition);
+
+                                addClassInheritorsLookup(enumClass, result, module);
+
+                                result.stopHere();
+                            } else if (isStaticUtilCall(originalPosition)) {
+                                //TODO filter by classes having static methods
+                                PsiClass objectClass = ProjectUtils.getClassByName(originalPosition.getProject(), "java.lang.Object", originalPosition);
+
+                                addClassInheritorsLookup(objectClass, result, module);
+
+                                result.stopHere();
+                            }
+
                         }
                     }
                 }
@@ -86,8 +111,10 @@ public class LiferayFreemarkerClassNameCompletionContributor extends CompletionC
 
             query.forEach(psiClass -> {
                 String qualifiedName = psiClass.getQualifiedName();
-                if (! (qualifiedName.endsWith("Wrapper")) ) {
-                    result.addElement(LookupElementBuilder.create(qualifiedName).withIcon(Icons.LIFERAY_ICON));
+                if (qualifiedName != null) {
+                    if (!(qualifiedName.endsWith("Wrapper"))) {
+                        result.addElement(LookupElementBuilder.create(qualifiedName).withIcon(Icons.LIFERAY_ICON));
+                    }
                 }
             });
         }
@@ -98,6 +125,44 @@ public class LiferayFreemarkerClassNameCompletionContributor extends CompletionC
             return false;
         }
 
+        if (isServiceLocatorCall(element)) return true;
+
+        if (isEnumUtilCall(element)) return true;
+
+        if (isStaticUtilCall(element)) return true;
+
+        return false;
+    }
+
+    private static boolean isEnumUtilCall(PsiElement element) {
+        FtlIndexExpression indexExpression = PsiTreeUtil.getParentOfType(element, FtlIndexExpression.class);
+        if (indexExpression != null) {
+            FtlReferenceQualifier referenceQualifier = indexExpression.getReferenceQualifier();
+            if (referenceQualifier != null) {
+                String text = referenceQualifier.getText();
+                if (ENUM_UTIL_VARIABLE_NAMES.contains(text)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean isStaticUtilCall(PsiElement element) {
+        FtlIndexExpression indexExpression = PsiTreeUtil.getParentOfType(element, FtlIndexExpression.class);
+        if (indexExpression != null) {
+            FtlReferenceQualifier referenceQualifier = indexExpression.getReferenceQualifier();
+            if (referenceQualifier != null) {
+                String text = referenceQualifier.getText();
+                if (STATIC_UTIL_VARIABLE_NAMES.contains(text)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean isServiceLocatorCall(PsiElement element) {
         FtlArgumentList ftlArgumentList = PsiTreeUtil.getParentOfType(element, FtlArgumentList.class);
         if (ftlArgumentList != null) {
             FtlMethodCallExpression ftlMethodCallExpression = PsiTreeUtil.getParentOfType(ftlArgumentList, FtlMethodCallExpression.class);
@@ -125,9 +190,7 @@ public class LiferayFreemarkerClassNameCompletionContributor extends CompletionC
                     }
                 }
             }
-
         }
-
         return false;
     }
 

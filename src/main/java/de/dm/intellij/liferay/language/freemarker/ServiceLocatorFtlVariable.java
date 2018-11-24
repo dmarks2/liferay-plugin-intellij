@@ -97,7 +97,6 @@ public class ServiceLocatorFtlVariable extends FtlLightVariable {
 
                                             } catch (IncorrectOperationException e) {
                                                 //unable to resolve type
-                                                e.printStackTrace();
                                             }
                                         }
                                     }

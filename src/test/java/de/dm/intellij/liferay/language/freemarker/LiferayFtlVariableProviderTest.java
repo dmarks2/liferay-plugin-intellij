@@ -149,5 +149,34 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
         assertTrue(strings.contains("com.liferay.portal.kernel.service.MyCustomService"));
     }
 
+    public void testEnumUtil() {
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/enum-util.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "de/dm/MyEnum.java");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("FOO"));
+    }
+
+    public void testEnumUtilLookup() {
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/enum-util-lookup.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "de/dm/MyEnum.java");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("de.dm.MyEnum"));
+    }
+
+    public void testStaticUtil() {
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/static-util.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "de/dm/MyUtil.java");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("sayHello"));
+    }
+
+    public void testStaticUtilLookup() {
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/static-util-lookup.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "de/dm/MyUtil.java");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("de.dm.MyUtil"));
+    }
+
+
 
 }

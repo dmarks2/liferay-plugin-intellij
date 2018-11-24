@@ -1,8 +1,11 @@
 package de.dm.intellij.liferay.language.freemarker;
 
+import com.intellij.freemarker.psi.FtlIndexExpression;
+import com.intellij.freemarker.psi.FtlQualifiedReference;
 import com.intellij.freemarker.psi.files.FtlFile;
 import com.intellij.freemarker.psi.files.FtlGlobalVariableProvider;
 import com.intellij.freemarker.psi.files.FtlXmlNamespaceType;
+import com.intellij.freemarker.psi.variables.FtlPsiType;
 import com.intellij.freemarker.psi.variables.FtlSpecialVariableType;
 import com.intellij.freemarker.psi.variables.FtlTemplateType;
 import com.intellij.freemarker.psi.variables.FtlVariable;
@@ -13,14 +16,16 @@ import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiDirectory;
+import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiType;
 import com.intellij.psi.ResolveState;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
+import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlNSDescriptor;
 import de.dm.intellij.liferay.language.TemplateMacroProcessor;
 import de.dm.intellij.liferay.language.TemplateMacroProcessorUtil;
@@ -126,8 +131,39 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
         } else if ("serviceLocator".equals(name)) {
             //TODO differ between LR 6.1 and 6.2/7.0?
             return new ServiceLocatorFtlVariable(ServiceLocatorFtlVariable.SERVICE_LOCATOR_CLASS_NAME_6_2_7_0, parent);
+        } else if ( ("enumUtil".equals(name)) || ("staticUtil".equals(name)) ){
+            return new CustomFtlVariable(name, parent, getEnumStaticUtilVariableType(parent));
         }
         return new CustomFtlVariable(name, parent, typeText, navigationalElement, nestedVariables, repeatable);
+    }
+
+    private FtlSpecialVariableType getEnumStaticUtilVariableType(final FtlFile parent) {
+        return new FtlSpecialVariableType() {
+            public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull PsiElement place, ResolveState state) {
+                if (place instanceof FtlIndexExpression) {
+                    FtlIndexExpression ftlIndexExpression = (FtlIndexExpression)place;
+
+                    FtlQualifiedReference qualifiedReference = ftlIndexExpression.getQualifiedReference();
+
+                    if (qualifiedReference != null) {
+                        String referenceName = qualifiedReference.getReferenceName();
+                        if (referenceName != null) {
+                            try {
+                                final PsiType targetType = JavaPsiFacade.getInstance(parent.getProject()).getElementFactory().createTypeFromText(referenceName, parent);
+
+                                FtlVariable variable = new CustomFtlVariable(referenceName, place, FtlPsiType.wrap(targetType));
+                                processor.execute(variable, state);
+                            } catch (IncorrectOperationException e) {
+                                //unable to create type from text
+                            }
+
+                        }
+                    }
+                }
+
+                return true;
+            }
+        };
     }
 
     @Override

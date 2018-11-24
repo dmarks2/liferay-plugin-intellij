@@ -20,8 +20,8 @@ All notable changes to this project will be documented in this file.
 - Feature: Improved support for getSiblings() in Freemarker templates
 - Feature: Inspections for service.xml
 - Feature: Added taglib code completion for class names
-- Feature: Class Name completion inside serviceLocator.findService() in Freemarker templates
-- Feature: Implicit resolve of serviceLocator instructions in Freemarker templates
+- Feature: Class Name completion for serviceLocator.findService(), enumUtil and staticUtil in Freemarker templates
+- Feature: Implicit resolve of serviceLocator, enumUtil and staticUtil instructions in Freemarker templates
 
 ## 0.0.2
 - Feature: Added Compass Support for Liferay 6.1 and 6.2
