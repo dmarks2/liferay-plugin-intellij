@@ -16,7 +16,6 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiSubstitutor;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.ResolveState;
-import com.intellij.psi.scope.BaseScopeProcessor;
 import com.intellij.psi.scope.NameHint;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.util.PropertyUtil;
@@ -163,7 +162,7 @@ public class StructureFtlVariable extends FtlLightVariable {
         return false;
     }
 
-    private class PsiMemberProcessor extends BaseScopeProcessor implements NameHint {
+    private class PsiMemberProcessor implements PsiScopeProcessor, NameHint {
         private final PsiScopeProcessor myDelegate;
         private final String myNameHint;
 
