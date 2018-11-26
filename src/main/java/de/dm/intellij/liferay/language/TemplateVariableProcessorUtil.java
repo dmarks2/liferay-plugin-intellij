@@ -287,6 +287,14 @@ public class TemplateVariableProcessorUtil {
         String className = "com.liferay.portal.kernel.templateparser.TemplateNode";
 
         if (file instanceof XmlFile) {
+            TemplateVariableParser<XmlFile> templateVariableParser = new TemplateVariableXMLParser();
+            List<TemplateVariable> templateVariables = templateVariableParser.getTemplateVariables((XmlFile) file, templateFile);
+
+            for (TemplateVariable templateVariable : templateVariables) {
+                result.add(templateVariableProcessor.createStructureVariable(templateVariable));
+            }
+
+            /*
             XmlFile xmlFile = (XmlFile) file;
 
             XmlDocument xmlDocument = xmlFile.getDocument();
@@ -320,7 +328,16 @@ public class TemplateVariableProcessorUtil {
                     }
                 }
             }
+            */
         } else if (file instanceof JsonFile) {
+            TemplateVariableParser<JsonFile> templateVariableParser = new TemplateVariableJsonParser();
+            List<TemplateVariable> templateVariables = templateVariableParser.getTemplateVariables((JsonFile) file, templateFile);
+
+            for (TemplateVariable templateVariable : templateVariables) {
+                result.add(templateVariableProcessor.createStructureVariable(templateVariable));
+            }
+
+            /*
             JsonFile jsonFile = (JsonFile)file;
             JsonValue root = jsonFile.getTopLevelValue();
             for (PsiElement value : root.getChildren()) {
@@ -378,6 +395,7 @@ public class TemplateVariableProcessorUtil {
                     }
                 }
             }
+            */
         }
 
         return result;

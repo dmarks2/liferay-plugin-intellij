@@ -28,6 +28,7 @@ import com.intellij.psi.search.searches.ClassInheritorsSearch;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.Query;
+import de.dm.intellij.liferay.language.freemarker.servicelocator.ServiceLocatorFtlVariable;
 import de.dm.intellij.liferay.util.Icons;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +39,7 @@ import java.util.Collection;
 public class LiferayFreemarkerClassNameCompletionContributor extends CompletionContributor {
 
     private static final Collection<String> CLASS_NAME_SIGNATURES = Arrays.asList(
-            ServiceLocatorFtlVariable.SERVICE_LOCATOR_CLASS_NAME_6_2_7_0 + ".findService"
+            ServiceLocatorFtlVariable.SERVICE_LOCATOR_CLASS_NAME + ".findService"
     );
 
     private static final Collection<String> ENUM_UTIL_VARIABLE_NAMES = Arrays.asList(

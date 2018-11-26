@@ -70,15 +70,29 @@ public class LiferayVtlVariableProviderTest extends LightCodeInsightFixtureTestC
         return "testdata/de/dm/intellij/liferay/language/velocity/LiferayVtlVariableProviderTest";
     }
 
-    public void testStructureVariablesSimple() {
+    public void testStructureVariablesSimpleJson() {
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/simple.vm", "WEB-INF/src/resources-importer/journal/structures/test.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("simple"));
     }
 
-    public void testStructureVariablesNested() {
+    public void testStructureVariablesNestedJson() {
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/parent.vm", "WEB-INF/src/resources-importer/journal/structures/test.json");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("child"));
+    }
+
+    public void testStructureVariablesSimpleXml() {
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/simple.vm", "WEB-INF/src/resources-importer/journal/structures/test.xml");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("simple"));
+    }
+
+    public void testStructureVariablesNestedXml() {
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/parent.vm", "WEB-INF/src/resources-importer/journal/structures/test.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("child"));

@@ -39,6 +39,26 @@
           "type": "text"
         }
       ]
+    },
+    {
+      "name": "nestedRepeatableParent",
+      "dataType": "string",
+      "type": "text",
+      "repeatable": true,
+      "nestedFields": [
+        {
+          "name": "nestedRepeatableChild",
+          "dataType": "string",
+          "type": "text",
+          "nestedFields": [
+            {
+              "name": "nested",
+              "dataType": "string",
+              "type": "text"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

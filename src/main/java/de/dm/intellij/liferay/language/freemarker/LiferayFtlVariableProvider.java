@@ -5,6 +5,7 @@ import com.intellij.freemarker.psi.FtlQualifiedReference;
 import com.intellij.freemarker.psi.files.FtlFile;
 import com.intellij.freemarker.psi.files.FtlGlobalVariableProvider;
 import com.intellij.freemarker.psi.files.FtlXmlNamespaceType;
+import com.intellij.freemarker.psi.variables.FtlLightVariable;
 import com.intellij.freemarker.psi.variables.FtlPsiType;
 import com.intellij.freemarker.psi.variables.FtlSpecialVariableType;
 import com.intellij.freemarker.psi.variables.FtlTemplateType;
@@ -12,9 +13,7 @@ import com.intellij.freemarker.psi.variables.FtlVariable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.progress.ProcessCanceledException;
-import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.vfs.VfsUtil;
-import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiElement;
@@ -29,14 +28,21 @@ import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlNSDescriptor;
 import de.dm.intellij.liferay.language.TemplateMacroProcessor;
 import de.dm.intellij.liferay.language.TemplateMacroProcessorUtil;
+import de.dm.intellij.liferay.language.TemplateVariable;
 import de.dm.intellij.liferay.language.TemplateVariableProcessor;
 import de.dm.intellij.liferay.language.TemplateVariableProcessorUtil;
+import de.dm.intellij.liferay.language.freemarker.enumutil.EnumUtilFtlVariable;
+import de.dm.intellij.liferay.language.freemarker.servicelocator.ServiceLocatorFtlVariable;
+import de.dm.intellij.liferay.language.freemarker.staticutil.StaticUtilFtlVariable;
+import de.dm.intellij.liferay.language.freemarker.structure.StructureFtlVariable;
+import de.dm.intellij.liferay.language.freemarker.themesettings.ThemeSettingsFtlVariable;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
-import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
 import de.dm.intellij.liferay.util.LiferayVersions;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +53,14 @@ import java.util.List;
 import java.util.Map;
 
 public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implements TemplateVariableProcessor<FtlFile, FtlVariable>, TemplateMacroProcessor<FtlFile, FtlFile> {
+
+    private static final Map<String, Class<? extends FtlLightVariable>> TYPE_MAPPING = new HashMap<>();
+    static {
+        TYPE_MAPPING.put(ThemeSettingsFtlVariable.VARIABLE_NAME, ThemeSettingsFtlVariable.class);
+        TYPE_MAPPING.put(ServiceLocatorFtlVariable.VARIABLE_NAME, ServiceLocatorFtlVariable.class);
+        TYPE_MAPPING.put(EnumUtilFtlVariable.VARIABLE_NAME, EnumUtilFtlVariable.class);
+        TYPE_MAPPING.put(StaticUtilFtlVariable.VARIABLE_NAME, StaticUtilFtlVariable.class);
+    }
 
     @NotNull
     public List<? extends FtlVariable> getGlobalVariables(FtlFile file) {
@@ -124,47 +138,28 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
             return Collections.emptyMap();
         }
     }
+    public FtlVariable createVariable(String name, FtlFile parent, String typeText, PsiElement navigationalElement) {
+        return createVariable(name, parent, typeText, navigationalElement, null, false);
+    }
 
     public FtlVariable createVariable(String name, FtlFile parent, String typeText, PsiElement navigationalElement, final Collection<FtlVariable> nestedVariables, boolean repeatable) {
-        if ("theme_settings".equals(name)) {
-            return new CustomFtlVariable(name, parent, getThemeSettingsVariableType(parent));
-        } else if ("serviceLocator".equals(name)) {
-            //TODO differ between LR 6.1 and 6.2/7.0?
-            return new ServiceLocatorFtlVariable(ServiceLocatorFtlVariable.SERVICE_LOCATOR_CLASS_NAME_6_2_7_0, parent);
-        } else if ( ("enumUtil".equals(name)) || ("staticUtil".equals(name)) ){
-            return new CustomFtlVariable(name, parent, getEnumStaticUtilVariableType(parent));
+        if (TYPE_MAPPING.containsKey(name)) {
+            Class<? extends FtlLightVariable> clazz = TYPE_MAPPING.get(name);
+            try {
+                Constructor<? extends FtlLightVariable> constructor = clazz.getConstructor(PsiElement.class);
+
+                return constructor.newInstance(parent);
+            } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
         }
         return new CustomFtlVariable(name, parent, typeText, navigationalElement, nestedVariables, repeatable);
     }
 
-    private FtlSpecialVariableType getEnumStaticUtilVariableType(final FtlFile parent) {
-        return new FtlSpecialVariableType() {
-            public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull PsiElement place, ResolveState state) {
-                if (place instanceof FtlIndexExpression) {
-                    FtlIndexExpression ftlIndexExpression = (FtlIndexExpression)place;
-
-                    FtlQualifiedReference qualifiedReference = ftlIndexExpression.getQualifiedReference();
-
-                    if (qualifiedReference != null) {
-                        String referenceName = qualifiedReference.getReferenceName();
-                        if (referenceName != null) {
-                            try {
-                                final PsiType targetType = JavaPsiFacade.getInstance(parent.getProject()).getElementFactory().createTypeFromText(referenceName, parent);
-
-                                FtlVariable variable = new CustomFtlVariable(referenceName, place, FtlPsiType.wrap(targetType));
-                                processor.execute(variable, state);
-                            } catch (IncorrectOperationException e) {
-                                //unable to create type from text
-                            }
-
-                        }
-                    }
-                }
-
-                return true;
-            }
-        };
+    public FtlVariable createStructureVariable(TemplateVariable templateVariable) {
+        return new StructureFtlVariable(templateVariable);
     }
+
 
     @Override
     public String[] getAdditionalLanguageSpecificResources(float liferayVersion) {
@@ -234,44 +229,5 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
 
         return Arrays.asList(new CustomFtlVariable(taglibPrefix, ftlFile, new FtlTemplateType(ftlFile)));
     }
-
-    private static FtlSpecialVariableType getThemeSettingsVariableType(final FtlFile parent) {
-        return new FtlSpecialVariableType() {
-            public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull PsiElement place, ResolveState state) {
-                final Module module = ModuleUtil.findModuleForPsiElement(parent);
-                String liferayLookAndFeelXml = LiferayModuleComponent.getLiferayLookAndFeelXml(module);
-                if ( (liferayLookAndFeelXml != null) && (liferayLookAndFeelXml.trim().length() > 0) ) {
-                    ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
-                    VirtualFile[] contentRoots = moduleRootManager.getContentRoots();
-                    for (VirtualFile contentRoot : contentRoots) {
-                        String relativeFileUrl = liferayLookAndFeelXml;
-
-                        String contentRootUrl = contentRoot.getUrl();
-
-                        if (relativeFileUrl.startsWith(contentRootUrl)) {
-                            relativeFileUrl = relativeFileUrl.substring(contentRootUrl.length());
-                        }
-
-                        VirtualFile virtualFile = VfsUtilCore.findRelativeFile(relativeFileUrl, contentRoot);
-                        if (virtualFile != null) {
-
-                            XmlFile xmlFile = (XmlFile) PsiManager.getInstance(module.getProject()).findFile(virtualFile);
-                            Collection<LiferayLookAndFeelXmlParser.Setting> settings = LiferayLookAndFeelXmlParser.parseSettings(xmlFile);
-                            for (LiferayLookAndFeelXmlParser.Setting setting : settings) {
-                                String type = ("checkbox".equals(setting.type) ? "java.lang.Boolean" : "java.lang.String");
-
-                                FtlVariable variable = new CustomFtlVariable(setting.key, place, type, setting.psiElement);
-                                processor.execute(variable, state);
-                            }
-                        }
-                        break;
-                    }
-                }
-
-                return true;
-            }
-        };
-    }
-
 
 }

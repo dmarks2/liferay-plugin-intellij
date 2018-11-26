@@ -1,5 +1,8 @@
 package de.dm.intellij.liferay.language.velocity;
 
+import com.intellij.freemarker.psi.files.FtlFile;
+import com.intellij.freemarker.psi.variables.FtlLightVariable;
+import com.intellij.freemarker.psi.variables.FtlVariable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.progress.ProcessCanceledException;
@@ -13,19 +16,38 @@ import com.intellij.psi.ResolveState;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.velocity.VtlGlobalVariableProvider;
+import com.intellij.velocity.psi.VtlLightVariable;
 import com.intellij.velocity.psi.VtlVariable;
 import com.intellij.velocity.psi.files.VtlFile;
+import de.dm.intellij.liferay.language.TemplateVariable;
 import de.dm.intellij.liferay.language.TemplateVariableProcessor;
 import de.dm.intellij.liferay.language.TemplateVariableProcessorUtil;
+import de.dm.intellij.liferay.language.freemarker.enumutil.EnumUtilFtlVariable;
+import de.dm.intellij.liferay.language.freemarker.servicelocator.ServiceLocatorFtlVariable;
+import de.dm.intellij.liferay.language.freemarker.staticutil.StaticUtilFtlVariable;
+import de.dm.intellij.liferay.language.freemarker.structure.StructureFtlVariable;
+import de.dm.intellij.liferay.language.freemarker.themesettings.ThemeSettingsFtlVariable;
+import de.dm.intellij.liferay.language.velocity.structure.StructureVtlVariable;
+import de.dm.intellij.liferay.language.velocity.themesettings.ThemeSettingsVtlVariable;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
 import de.dm.intellij.liferay.util.LiferayVersions;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LiferayVtlVariableProvider extends VtlGlobalVariableProvider implements TemplateVariableProcessor<VtlFile, VtlVariable> {
+
+    private static final Map<String, Class<? extends VtlLightVariable>> TYPE_MAPPING = new HashMap<>();
+    static {
+        TYPE_MAPPING.put(ThemeSettingsVtlVariable.VARIABLE_NAME, ThemeSettingsVtlVariable.class);
+    }
+
 
     @NotNull
     public Collection<VtlVariable> getGlobalVariables(@NotNull VtlFile vtlFile) {
@@ -38,52 +60,29 @@ public class LiferayVtlVariableProvider extends VtlGlobalVariableProvider implem
         }
     }
 
+    public VtlVariable createVariable(final String name, final VtlFile parent, String typeText, PsiElement navigationalElement) {
+        return createVariable(name, parent, typeText, navigationalElement, null, false);
+    }
+
     public VtlVariable createVariable(final String name, final VtlFile parent, String typeText, PsiElement navigationalElement, final Collection<VtlVariable> nestedVariables, boolean repeatable) {
-        if ("theme_settings".equals(name)) {
-            return new CustomVtlVariable(name, parent, typeText, navigationalElement) {
-                @Override
-                public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState state, PsiElement lastParent, @NotNull PsiElement place) {
-                    final Module module = ModuleUtil.findModuleForPsiElement(parent);
-                    String liferayLookAndFeelXml = LiferayModuleComponent.getLiferayLookAndFeelXml(module);
-                    if ( (liferayLookAndFeelXml != null) && (liferayLookAndFeelXml.trim().length() > 0) ) {
-                        ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
-                        VirtualFile[] contentRoots = moduleRootManager.getContentRoots();
-                        for (VirtualFile contentRoot : contentRoots) {
-                            String relativeFileUrl = liferayLookAndFeelXml;
+        if (TYPE_MAPPING.containsKey(name)) {
+            Class<? extends VtlLightVariable> clazz = TYPE_MAPPING.get(name);
+            try {
+                Constructor<? extends VtlLightVariable> constructor = clazz.getConstructor(VtlFile.class);
 
-                            String contentRootUrl = contentRoot.getUrl();
-
-                            if (relativeFileUrl.startsWith(contentRootUrl)) {
-                                relativeFileUrl = relativeFileUrl.substring(contentRootUrl.length());
-                            }
-
-                            VirtualFile virtualFile = VfsUtilCore.findRelativeFile(relativeFileUrl, contentRoot);
-                            if (virtualFile != null) {
-                                XmlFile xmlFile = (XmlFile) PsiManager.getInstance(module.getProject()).findFile(virtualFile);
-                                Collection<LiferayLookAndFeelXmlParser.Setting> settings = LiferayLookAndFeelXmlParser.parseSettings(xmlFile);
-                                for (LiferayLookAndFeelXmlParser.Setting setting : settings) {
-                                    String type = ("checkbox".equals(setting.type) ? "java.lang.Boolean" : "java.lang.String");
-
-                                    VtlVariable variable = new CustomVtlVariable(setting.key, parent, type, setting.psiElement);
-                                    processor.execute(variable, state);
-                                }
-
-                                break;
-                            }
-                        }
-                    }
-
-                    return true;
-                }
-
-                @Override
-                public PsiType getPsiType() {
-                    return null;
-                }
-            };
+                return constructor.newInstance(parent);
+            } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
         }
+
         return new CustomVtlVariable(name, parent, typeText, navigationalElement, nestedVariables, false);
     }
+
+    public VtlVariable createStructureVariable(TemplateVariable templateVariable) {
+        return new StructureVtlVariable(templateVariable);
+    }
+
 
     @Override
     public String[] getAdditionalLanguageSpecificResources(float liferayVersion) {

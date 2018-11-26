@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<root available-locales="de_DE" default-locale="de_DE">
+    <dynamic-element dataType="string" name="simple" type="text" />
+
+    <dynamic-element dataType="string" name="repeatable" type="text" repeatable="true"/>
+
+    <dynamic-element dataType="string" name="parent" type="text">
+        <dynamic-element dataType="string" name="child" type="text" />
+    </dynamic-element>
+
+    <dynamic-element dataType="string" name="repeatableParent" type="text" repeatable="true">
+        <dynamic-element dataType="string" name="repeatableChild" type="text" />
+    </dynamic-element>
+
+    <dynamic-element dataType="string" name="nestedRepeatableParent" type="text" repeatable="true">
+        <dynamic-element dataType="string" name="nestedRepeatableChild" type="text">
+            <dynamic-element dataType="string" name="nested" type="text" />
+        </dynamic-element>
+    </dynamic-element>
+
+</root>
