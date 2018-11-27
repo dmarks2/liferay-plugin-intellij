@@ -15,7 +15,7 @@ import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferen
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceSet;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.util.ProcessingContext;
-import de.dm.intellij.liferay.theme.LiferayThemeTemplateVariableReferenceFinder;
+import de.dm.intellij.liferay.theme.LiferayThemeTemplateVariables;
 import de.dm.intellij.liferay.util.ThemeSettingsPathFileReference;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -51,7 +51,7 @@ public class TemplateVariableReferenceContributor extends PsiReferenceContributo
                     @Override
                     public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
                         String text = StringUtil.unquoteString(element.getText());
-                        for (Map.Entry<String, String> entry : LiferayThemeTemplateVariableReferenceFinder.THEME_TEMPLATE_VARIABLE_DIRECTORY_REFERENCES.entrySet()) {
+                        for (Map.Entry<String, String> entry : LiferayThemeTemplateVariables.THEME_TEMPLATE_VARIABLE_DIRECTORY_REFERENCES.entrySet()) {
                             final String variableText = "${" + entry.getKey() + "}";
                             final String themeSetting = entry.getValue();
 

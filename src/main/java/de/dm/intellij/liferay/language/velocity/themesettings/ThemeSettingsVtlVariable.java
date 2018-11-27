@@ -17,8 +17,10 @@ import com.intellij.velocity.psi.files.VtlFile;
 import de.dm.intellij.liferay.language.velocity.CustomVtlVariable;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
+import de.dm.intellij.liferay.util.Icons;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
 import java.util.Collection;
 
 public class ThemeSettingsVtlVariable extends VtlLightVariable {
@@ -27,6 +29,11 @@ public class ThemeSettingsVtlVariable extends VtlLightVariable {
 
     public ThemeSettingsVtlVariable(@NotNull VtlFile parent) {
         super(VARIABLE_NAME, parent, "java.util.Properties");
+    }
+
+    @Override
+    public Icon getIcon(boolean open) {
+        return Icons.LIFERAY_ICON;
     }
 
     @Override

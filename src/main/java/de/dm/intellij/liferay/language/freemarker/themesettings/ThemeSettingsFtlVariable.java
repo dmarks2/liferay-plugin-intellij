@@ -13,11 +13,13 @@ import com.intellij.psi.PsiManager;
 import com.intellij.psi.ResolveState;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.xml.XmlFile;
-import de.dm.intellij.liferay.language.freemarker.CustomFtlVariable;
+import de.dm.intellij.liferay.language.freemarker.custom.CustomFtlVariable;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
+import de.dm.intellij.liferay.util.Icons;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
 import java.util.Collection;
 
 public class ThemeSettingsFtlVariable extends FtlLightVariable {
@@ -28,6 +30,10 @@ public class ThemeSettingsFtlVariable extends FtlLightVariable {
         super(VARIABLE_NAME, parent, getThemeSettingsVariableType(parent));
     }
 
+    @Override
+    public Icon getIcon(boolean open) {
+        return Icons.LIFERAY_ICON;
+    }
 
     private static FtlSpecialVariableType getThemeSettingsVariableType(final PsiElement parent) {
         return new FtlSpecialVariableType() {

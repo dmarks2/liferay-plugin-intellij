@@ -2,7 +2,6 @@ package de.dm.intellij.liferay.language.freemarker;
 
 import com.intellij.freemarker.psi.FtlIndexExpression;
 import com.intellij.freemarker.psi.FtlQualifiedReference;
-import com.intellij.freemarker.psi.files.FtlFile;
 import com.intellij.freemarker.psi.variables.FtlLightVariable;
 import com.intellij.freemarker.psi.variables.FtlPsiType;
 import com.intellij.freemarker.psi.variables.FtlSpecialVariableType;
@@ -13,6 +12,7 @@ import com.intellij.psi.PsiType;
 import com.intellij.psi.ResolveState;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.util.IncorrectOperationException;
+import de.dm.intellij.liferay.language.freemarker.custom.CustomFtlVariable;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractTemplateNodeClassNameFtlVariable extends FtlLightVariable {

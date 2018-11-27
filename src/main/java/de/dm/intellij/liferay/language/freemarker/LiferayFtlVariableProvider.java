@@ -1,13 +1,9 @@
 package de.dm.intellij.liferay.language.freemarker;
 
-import com.intellij.freemarker.psi.FtlIndexExpression;
-import com.intellij.freemarker.psi.FtlQualifiedReference;
 import com.intellij.freemarker.psi.files.FtlFile;
 import com.intellij.freemarker.psi.files.FtlGlobalVariableProvider;
 import com.intellij.freemarker.psi.files.FtlXmlNamespaceType;
 import com.intellij.freemarker.psi.variables.FtlLightVariable;
-import com.intellij.freemarker.psi.variables.FtlPsiType;
-import com.intellij.freemarker.psi.variables.FtlSpecialVariableType;
 import com.intellij.freemarker.psi.variables.FtlTemplateType;
 import com.intellij.freemarker.psi.variables.FtlVariable;
 import com.intellij.openapi.module.Module;
@@ -15,28 +11,26 @@ import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiType;
-import com.intellij.psi.ResolveState;
-import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.IncorrectOperationException;
 import com.intellij.xml.XmlNSDescriptor;
 import de.dm.intellij.liferay.language.TemplateMacroProcessor;
 import de.dm.intellij.liferay.language.TemplateMacroProcessorUtil;
 import de.dm.intellij.liferay.language.TemplateVariable;
 import de.dm.intellij.liferay.language.TemplateVariableProcessor;
 import de.dm.intellij.liferay.language.TemplateVariableProcessorUtil;
+import de.dm.intellij.liferay.language.freemarker.custom.CustomFtlVariable;
 import de.dm.intellij.liferay.language.freemarker.enumutil.EnumUtilFtlVariable;
 import de.dm.intellij.liferay.language.freemarker.servicelocator.ServiceLocatorFtlVariable;
 import de.dm.intellij.liferay.language.freemarker.staticutil.StaticUtilFtlVariable;
 import de.dm.intellij.liferay.language.freemarker.structure.StructureFtlVariable;
+import de.dm.intellij.liferay.language.freemarker.themereference.ThemeReferenceFtlVariable;
 import de.dm.intellij.liferay.language.freemarker.themesettings.ThemeSettingsFtlVariable;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
+import de.dm.intellij.liferay.theme.LiferayThemeTemplateVariables;
 import de.dm.intellij.liferay.util.LiferayVersions;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -60,6 +54,9 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
         TYPE_MAPPING.put(ServiceLocatorFtlVariable.VARIABLE_NAME, ServiceLocatorFtlVariable.class);
         TYPE_MAPPING.put(EnumUtilFtlVariable.VARIABLE_NAME, EnumUtilFtlVariable.class);
         TYPE_MAPPING.put(StaticUtilFtlVariable.VARIABLE_NAME, StaticUtilFtlVariable.class);
+        for (String key : LiferayThemeTemplateVariables.THEME_TEMPLATE_VARIABLE_DIRECTORY_REFERENCES.keySet()) {
+            TYPE_MAPPING.put(key, ThemeReferenceFtlVariable.class);
+        }
     }
 
     @NotNull
@@ -138,22 +135,25 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
             return Collections.emptyMap();
         }
     }
-    public FtlVariable createVariable(String name, FtlFile parent, String typeText, PsiElement navigationalElement) {
-        return createVariable(name, parent, typeText, navigationalElement, null, false);
-    }
 
-    public FtlVariable createVariable(String name, FtlFile parent, String typeText, PsiElement navigationalElement, final Collection<FtlVariable> nestedVariables, boolean repeatable) {
+    public FtlVariable createVariable(String name, FtlFile parent, String typeText) {
         if (TYPE_MAPPING.containsKey(name)) {
             Class<? extends FtlLightVariable> clazz = TYPE_MAPPING.get(name);
             try {
-                Constructor<? extends FtlLightVariable> constructor = clazz.getConstructor(PsiElement.class);
+                Constructor<? extends FtlLightVariable> constructor = clazz.getConstructor(String.class, PsiElement.class);
 
-                return constructor.newInstance(parent);
+                return constructor.newInstance(name, parent);
             } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-                e.printStackTrace();
+                try {
+                    Constructor<? extends FtlLightVariable> constructor = clazz.getConstructor(PsiElement.class);
+
+                    return constructor.newInstance(parent);
+                } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e2) {
+                    e2.printStackTrace();
+                }
             }
         }
-        return new CustomFtlVariable(name, parent, typeText, navigationalElement, nestedVariables, repeatable);
+        return new CustomFtlVariable(name, parent, typeText);
     }
 
     public FtlVariable createStructureVariable(TemplateVariable templateVariable) {

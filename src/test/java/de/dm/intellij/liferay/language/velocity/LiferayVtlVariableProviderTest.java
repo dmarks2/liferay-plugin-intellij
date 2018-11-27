@@ -6,8 +6,11 @@ import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.LanguageLevelModuleExtension;
 import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
 import com.intellij.pom.java.LanguageLevel;
+import com.intellij.psi.PsiDirectory;
+import com.intellij.psi.PsiElement;
 import com.intellij.testFramework.IdeaTestUtil;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
@@ -133,6 +136,24 @@ public class LiferayVtlVariableProviderTest extends LightCodeInsightFixtureTestC
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("mysetting"));
+    }
+
+    public void testThemeSettingsReferenceVariables() {
+        myFixture.configureByFiles("templates/theme_reference.vm", "WEB-INF/liferay-look-and-feel.xml");
+
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement resolve = element.getReferences()[0].resolve();
+
+        assertTrue(resolve != null);
+
+        PsiElement navigationElement = resolve.getNavigationElement();
+
+        assertTrue(navigationElement != null);
+        assertTrue(navigationElement instanceof PsiDirectory);
+
+        VirtualFile virtualFile = ((PsiDirectory) resolve.getNavigationElement()).getVirtualFile();
+        assertTrue(virtualFile != null);
+        assertTrue(virtualFile.exists());
     }
 
 

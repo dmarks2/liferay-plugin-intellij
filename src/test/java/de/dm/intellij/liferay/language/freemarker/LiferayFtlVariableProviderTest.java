@@ -7,8 +7,11 @@ import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
 import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.LanguageLevelModuleExtension;
 import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
 import com.intellij.pom.java.LanguageLevel;
+import com.intellij.psi.PsiDirectory;
+import com.intellij.psi.PsiElement;
 import com.intellij.testFramework.IdeaTestUtil;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
@@ -186,6 +189,24 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
         assertTrue(strings.contains("mysetting"));
     }
 
+    public void testThemeSettingsReferenceVariables() {
+        myFixture.configureByFiles("templates/theme_reference.ftl", "WEB-INF/liferay-look-and-feel.xml");
+
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement resolve = element.getReferences()[0].resolve();
+
+        assertTrue(resolve != null);
+
+        PsiElement navigationElement = resolve.getNavigationElement();
+
+        assertTrue(navigationElement != null);
+        assertTrue(navigationElement instanceof PsiDirectory);
+
+        VirtualFile virtualFile = ((PsiDirectory) resolve.getNavigationElement()).getVirtualFile();
+        assertTrue(virtualFile != null);
+        assertTrue(virtualFile.exists());
+    }
+
     public void testServiceLocator() {
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/service-locator.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "com/liferay/portal/template/ServiceLocator.java");
         myFixture.complete(CompletionType.BASIC, 1);
@@ -233,6 +254,7 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("de.dm.MyUtil"));
     }
+
 
 
 
