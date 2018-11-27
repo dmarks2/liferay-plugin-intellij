@@ -31,7 +31,10 @@ public class LiferayXmlSchemaProvider extends XmlSchemaProvider {
             psiFile = baseFile.getOriginalFile();
         }
 
-        if (psiFile.getName().equals("portlet-model-hints.xml")) {
+        if (
+                (psiFile.getName().equals("portlet-model-hints.xml")) ||
+                (psiFile.getName().equals("portlet-model-hints-ext.xml"))
+        ) {
             targetFileUrl = LiferayXmlSchemaProvider.class.getResource("/com/liferay/xsd/liferay-portlet-model-hints_7_0_0.xsd");
         } else if (
                 (psiFile.getName().equals("default.xml")) &&
@@ -70,7 +73,10 @@ public class LiferayXmlSchemaProvider extends XmlSchemaProvider {
         if (psiFile.getFileType() != XmlFileType.INSTANCE) {
             return false;
         }
-        if (psiFile.getName().equals("portlet-model-hints.xml")) {
+        if (
+                (psiFile.getName().equals("portlet-model-hints.xml")) ||
+                (psiFile.getName().equals("portlet-model-hints-ext.xml"))
+        ){
             return true;
         }
         if (psiFile.getName().equals("default.xml")) {
