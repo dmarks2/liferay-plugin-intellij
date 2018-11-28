@@ -32,6 +32,8 @@ public class LiferayXmlSchemaProvider extends XmlSchemaProvider {
         }
 
         if (
+                (psiFile.getName().equals("portal-model-hints.xml")) ||
+                (psiFile.getName().equals("ext-model-hints.xml")) ||
                 (psiFile.getName().equals("portlet-model-hints.xml")) ||
                 (psiFile.getName().equals("portlet-model-hints-ext.xml"))
         ) {
@@ -74,6 +76,8 @@ public class LiferayXmlSchemaProvider extends XmlSchemaProvider {
             return false;
         }
         if (
+                (psiFile.getName().equals("portal-model-hints.xml")) ||
+                (psiFile.getName().equals("ext-model-hints.xml")) ||
                 (psiFile.getName().equals("portlet-model-hints.xml")) ||
                 (psiFile.getName().equals("portlet-model-hints-ext.xml"))
         ){
