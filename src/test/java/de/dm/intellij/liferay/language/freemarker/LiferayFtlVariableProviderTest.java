@@ -1,6 +1,7 @@
 package de.dm.intellij.liferay.language.freemarker;
 
 import com.intellij.codeInsight.completion.CompletionType;
+import com.intellij.codeInsight.navigation.actions.GotoDeclarationAction;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
@@ -10,6 +11,7 @@ import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
 import com.intellij.pom.java.LanguageLevel;
+import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.testFramework.IdeaTestUtil;
@@ -227,6 +229,25 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
         assertTrue(strings.contains("com.liferay.portal.kernel.service.MyCustomService"));
     }
 
+    public void testServiceLocatorGotoDeclaration() {
+        myFixture.configureByFiles(
+            "WEB-INF/src/resources-importer/journal/templates/test/service-locator-goto-declaration.ftl",
+            "WEB-INF/src/resources-importer/journal/structures/test.json",
+            "com/liferay/portal/template/ServiceLocator.java",
+            "com/liferay/portal/kernel/service/BaseLocalService.java",
+            "com/liferay/portal/kernel/service/MyCustomService.java"
+        );
+        int caretOffset = myFixture.getCaretOffset();
+        PsiElement targetElement = GotoDeclarationAction.findTargetElement(getProject(), myFixture.getEditor(), caretOffset);
+
+        assertTrue(targetElement != null);
+
+        assertTrue(targetElement instanceof PsiClass);
+
+        assertTrue("com.liferay.portal.kernel.service.MyCustomService".equals(((PsiClass)targetElement).getQualifiedName()));
+    }
+
+
     public void testEnumUtil() {
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/enum-util.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "de/dm/MyEnum.java");
         myFixture.complete(CompletionType.BASIC, 1);
@@ -245,7 +266,9 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/static-util.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "de/dm/MyUtil.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
-        assertTrue(strings.contains("sayHello"));
+        assertTrue("Static method should be available", strings.contains("sayHello"));
+        //TODO instance methods...
+        //assertFalse("Instance method should not be available", strings.contains("helloInternal"));
     }
 
     public void testStaticUtilLookup() {
