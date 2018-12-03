@@ -24,6 +24,10 @@ attributes.
 
 ![language keys](jsp_language_keys.png "language keys")
 
+Additionally you can search for classnames and java bean properties in specific tags like `<aui:model-context>` or `<aui:input>`.
+
+![classnames](jsp_classname.gif "classnames")
+ 
 You can compare your JSP with the original Liferay file to see what has been changed. This works for JSP Hooks (Liferay 6.x) and OSGi fragments (Liferay 7 / DXP).
 
 ![JSP compare](jsp_compare.png "JSP compare")
