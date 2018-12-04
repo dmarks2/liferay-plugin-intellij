@@ -1,10 +1,11 @@
-package de.dm.intellij.liferay.language.freemarker.servicelocator;
+package de.dm.intellij.liferay.language.freemarker.staticfieldgetter;
 
 import com.intellij.codeInsight.completion.CompletionContributor;
 import com.intellij.codeInsight.completion.CompletionParameters;
 import com.intellij.codeInsight.completion.CompletionProvider;
 import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.completion.CompletionType;
+import com.intellij.freemarker.psi.FtlExpression;
 import com.intellij.freemarker.psi.FtlMethodCallExpression;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -17,14 +18,14 @@ import de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerUtil;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 
-public class ServiceLocatorClassNameCompletionContributor extends CompletionContributor {
+public class StaticFieldGetterClassNameCompletionContributor extends CompletionContributor {
 
     private static final PsiElementPattern.Capture<PsiElement> ELEMENT_FILTER =
             LiferayFreemarkerUtil.getFtlStringLiteralFilter(
-                    ServiceLocatorClassNameCompletionContributor::isServiceLocatorCall
+                    StaticFieldGetterClassNameCompletionContributor::isStaticFieldGetterCall
             );
 
-    public ServiceLocatorClassNameCompletionContributor() {
+    public StaticFieldGetterClassNameCompletionContributor() {
         extend(
                 CompletionType.BASIC,
                 ELEMENT_FILTER,
@@ -38,31 +39,35 @@ public class ServiceLocatorClassNameCompletionContributor extends CompletionCont
 
                             Module module = ModuleUtil.findModuleForFile(psiFile);
 
-                            if (isServiceLocatorCall(originalPosition)) {
-                                PsiClass baseLocalServiceClass = ProjectUtils.getClassByName(originalPosition.getProject(), "com.liferay.portal.kernel.service.BaseLocalService", originalPosition);
-                                PsiClass baseServiceClass = ProjectUtils.getClassByName(originalPosition.getProject(), "com.liferay.portal.kernel.service.BaseService", originalPosition);
+                            if (isStaticFieldGetterCall(originalPosition)) {
+                                //TODO filter by classes having static methods
+                                PsiClass objectClass = ProjectUtils.getClassByName(originalPosition.getProject(), "java.lang.Object", originalPosition);
 
-                                LiferayFreemarkerUtil.addClassInheritorsLookup(baseLocalServiceClass, result, module, qualifiedName -> !qualifiedName.endsWith("Wrapper"));
-                                LiferayFreemarkerUtil.addClassInheritorsLookup(baseServiceClass, result, module, qualifiedName -> !qualifiedName.endsWith("Wrapper"));
+                                LiferayFreemarkerUtil.addClassInheritorsLookup(objectClass, result, module);
 
                                 result.stopHere();
                             }
+
                         }
                     }
                 }
         );
+
     }
 
-    public static boolean isServiceLocatorCall(PsiElement element) {
-        FtlMethodCallExpression ftlMethodCallExpression = LiferayFreemarkerUtil.getMethodCallExpression(element);
-        if (ftlMethodCallExpression != null) {
+    public static boolean isStaticFieldGetterCall(PsiElement element) {
+        FtlExpression[] positionalArguments = LiferayFreemarkerUtil.getPositionalArguments(element);
+        int positionalArgumentIndex = LiferayFreemarkerUtil.getPositionalArgumentsIndex(positionalArguments, element);
+
+        if ( positionalArgumentIndex == 0 ) {
+            FtlMethodCallExpression ftlMethodCallExpression = LiferayFreemarkerUtil.getMethodCallExpression(element);
+
             String signature = LiferayFreemarkerUtil.getMethodSignature(ftlMethodCallExpression);
 
-            if ( (ServiceLocatorFtlVariable.SERVICE_LOCATOR_CLASS_NAME + ".findService").equals(signature)) {
+            if ("com.liferay.portal.kernel.util.StaticFieldGetter.getFieldValue".equals(signature)) {
                 return true;
             }
         }
         return false;
     }
-
 }

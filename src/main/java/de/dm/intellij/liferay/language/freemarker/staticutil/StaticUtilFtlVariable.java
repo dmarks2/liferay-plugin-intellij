@@ -1,7 +1,6 @@
 package de.dm.intellij.liferay.language.freemarker.staticutil;
 
 import com.intellij.freemarker.psi.FtlIndexExpression;
-import com.intellij.freemarker.psi.FtlQualifiedReference;
 import com.intellij.freemarker.psi.variables.FtlLightVariable;
 import com.intellij.freemarker.psi.variables.FtlPsiType;
 import com.intellij.freemarker.psi.variables.FtlSpecialVariableType;
@@ -13,11 +12,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiSubstitutor;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.ResolveState;
-import com.intellij.psi.impl.PsiClassImplUtil;
 import com.intellij.psi.impl.source.PsiImmediateClassType;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.util.IncorrectOperationException;
-import de.dm.intellij.liferay.language.freemarker.AbstractTemplateNodeClassNameFtlVariable;
+import de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerUtil;
 import de.dm.intellij.liferay.language.freemarker.custom.CustomFtlVariable;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,29 +33,25 @@ public class StaticUtilFtlVariable extends FtlLightVariable {
                 if (place instanceof FtlIndexExpression) {
                     FtlIndexExpression ftlIndexExpression = (FtlIndexExpression)place;
 
-                    FtlQualifiedReference qualifiedReference = ftlIndexExpression.getQualifiedReference();
+                    String referenceName = LiferayFreemarkerUtil.getIndexExpressionQualifiedReferenceName(ftlIndexExpression);
+                    if (referenceName != null) {
+                        try {
+                            final PsiType targetType = JavaPsiFacade.getInstance(parent.getProject()).getElementFactory().createTypeFromText(referenceName, parent);
+                            if (targetType instanceof PsiClassType) {
+                                PsiClassType psiClassType = (PsiClassType)targetType;
+                                PsiClass psiClass = psiClassType.resolve();
+                                if (psiClass != null) {
+                                    PsiType immediateClassType = new PsiImmediateClassType(psiClass, PsiSubstitutor.EMPTY);
 
-                    if (qualifiedReference != null) {
-                        String referenceName = qualifiedReference.getReferenceName();
-                        if (referenceName != null) {
-                            try {
-                                final PsiType targetType = JavaPsiFacade.getInstance(parent.getProject()).getElementFactory().createTypeFromText(referenceName, parent);
-                                if (targetType instanceof PsiClassType) {
-                                    PsiClassType psiClassType = (PsiClassType)targetType;
-                                    PsiClass psiClass = psiClassType.resolve();
-                                    if (psiClass != null) {
-                                        PsiType immediateClassType = new PsiImmediateClassType(psiClass, PsiSubstitutor.EMPTY);
+                                    FtlVariable variable = new CustomFtlVariable(referenceName, place, FtlPsiType.wrap(immediateClassType));
 
-                                        FtlVariable variable = new CustomFtlVariable(referenceName, place, FtlPsiType.wrap(immediateClassType));
-
-                                        processor.execute(variable, state);
-                                    }
+                                    processor.execute(variable, state);
                                 }
-                            } catch (IncorrectOperationException e) {
-                                //unable to create type from text
                             }
-
+                        } catch (IncorrectOperationException e) {
+                            //unable to create type from text
                         }
+
                     }
                 }
 

@@ -1,8 +1,6 @@
 package de.dm.intellij.liferay.language.freemarker.servicelocator;
 
 import com.intellij.freemarker.psi.FtlArgumentList;
-import com.intellij.freemarker.psi.FtlQualifiedReference;
-import com.intellij.freemarker.psi.FtlStringLiteral;
 import com.intellij.freemarker.psi.variables.FtlCallableType;
 import com.intellij.freemarker.psi.variables.FtlDynamicMember;
 import com.intellij.freemarker.psi.variables.FtlLightVariable;
@@ -13,11 +11,11 @@ import com.intellij.psi.PsiClassType;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.ResolveState;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.util.IncorrectOperationException;
+import de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerUtil;
 import de.dm.intellij.liferay.util.Icons;
 import org.jetbrains.annotations.NotNull;
 
@@ -63,43 +61,29 @@ public class ServiceLocatorFtlVariable extends FtlLightVariable {
         if (serviceLocatorClass != null) {
             for (PsiMethod psiMethod : serviceLocatorClass.getMethods()) {
                 if (("findService".equals(psiMethod.getName()) && (psiMethod.getParameterList().getParametersCount() == 1))) {
-                    PsiReference reference = place.getReference();
-                    if (reference instanceof FtlQualifiedReference) {
-                        FtlQualifiedReference ftlQualifiedReference =(FtlQualifiedReference)reference;
-                        PsiElement expressionParent = ftlQualifiedReference.getExpressionParent();
-                        if (expressionParent != null) {
-                            PsiElement[] children = expressionParent.getChildren();
-                            for (PsiElement child : children) {
-                                if (child instanceof FtlArgumentList) {
-                                    FtlArgumentList argumentList = (FtlArgumentList)child;
-                                    PsiElement[] arguments = argumentList.getChildren();
-                                    if ( (arguments.length == 1) && (arguments[0] instanceof FtlStringLiteral) ) {
-                                        FtlStringLiteral stringLiteral = (FtlStringLiteral)arguments[0];
-                                        String valueText = stringLiteral.getValueText();
+                    FtlArgumentList argumentList = LiferayFreemarkerUtil.getQualifiedReferenceArgumentList(place);
 
-                                        try {
-                                            PsiFile psiFile = parent.getContainingFile();
-                                            if (psiFile.getOriginalFile() != null) {
-                                                psiFile = psiFile.getOriginalFile();
-                                            }
-                                            final PsiType targetType = JavaPsiFacade.getInstance(parent.getProject()).getElementFactory().createTypeFromText(valueText, parent);
-                                            FtlPsiType stringType = FtlPsiType.wrap(PsiType.getJavaLangString(psiFile.getManager(), psiFile.getResolveScope()));
+                    String valueText = LiferayFreemarkerUtil.getArgumentListEntryValue(argumentList, 0);
 
-                                            FtlCallableType findServiceType = FtlCallableType.createLightFunctionType(psiMethod, FtlPsiType.wrap(targetType), "serviceName", stringType);
-
-                                            //TODO findService is shown as "variable" instead of "method".
-                                            FtlDynamicMember findService = new FtlDynamicMember("findService", psiMethod, findServiceType);
-
-                                            processor.execute(findService, state);
-
-                                        } catch (IncorrectOperationException e) {
-                                            //unable to resolve type
-                                        }
-                                    }
-                                }
-                            }
+                    try {
+                        PsiFile psiFile = parent.getContainingFile();
+                        if (psiFile.getOriginalFile() != null) {
+                            psiFile = psiFile.getOriginalFile();
                         }
+                        final PsiType targetType = JavaPsiFacade.getInstance(parent.getProject()).getElementFactory().createTypeFromText(valueText, parent);
+                        FtlPsiType stringType = FtlPsiType.wrap(PsiType.getJavaLangString(psiFile.getManager(), psiFile.getResolveScope()));
+
+                        FtlCallableType findServiceType = FtlCallableType.createLightFunctionType(psiMethod, FtlPsiType.wrap(targetType), "serviceName", stringType);
+
+                        //TODO findService is shown as "variable" instead of "method".
+                        FtlDynamicMember findService = new FtlDynamicMember("findService", psiMethod, findServiceType);
+
+                        processor.execute(findService, state);
+
+                    } catch (IncorrectOperationException e) {
+                        //unable to resolve type
                     }
+
                 }
             }
         }

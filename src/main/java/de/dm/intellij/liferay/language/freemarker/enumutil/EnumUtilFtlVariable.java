@@ -1,7 +1,6 @@
 package de.dm.intellij.liferay.language.freemarker.enumutil;
 
 import com.intellij.freemarker.psi.FtlIndexExpression;
-import com.intellij.freemarker.psi.FtlQualifiedReference;
 import com.intellij.freemarker.psi.variables.FtlLightVariable;
 import com.intellij.freemarker.psi.variables.FtlPsiType;
 import com.intellij.freemarker.psi.variables.FtlSpecialVariableType;
@@ -12,7 +11,7 @@ import com.intellij.psi.PsiType;
 import com.intellij.psi.ResolveState;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.util.IncorrectOperationException;
-import de.dm.intellij.liferay.language.freemarker.AbstractTemplateNodeClassNameFtlVariable;
+import de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerUtil;
 import de.dm.intellij.liferay.language.freemarker.custom.CustomFtlVariable;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,23 +27,21 @@ public class EnumUtilFtlVariable extends FtlLightVariable {
         return new FtlSpecialVariableType() {
             public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull PsiElement place, ResolveState state) {
                 if (place instanceof FtlIndexExpression) {
-                    FtlIndexExpression ftlIndexExpression = (FtlIndexExpression)place;
+                    FtlIndexExpression ftlIndexExpression = (FtlIndexExpression) place;
 
-                    FtlQualifiedReference qualifiedReference = ftlIndexExpression.getQualifiedReference();
+                    String referenceName = LiferayFreemarkerUtil.getIndexExpressionQualifiedReferenceName(ftlIndexExpression);
 
-                    if (qualifiedReference != null) {
-                        String referenceName = qualifiedReference.getReferenceName();
-                        if (referenceName != null) {
-                            try {
-                                final PsiType targetType = JavaPsiFacade.getInstance(parent.getProject()).getElementFactory().createTypeFromText(referenceName, parent);
+                    if (referenceName != null) {
+                        try {
+                            final PsiType targetType = JavaPsiFacade.getInstance(parent.getProject()).getElementFactory().createTypeFromText(referenceName, parent);
 
-                                FtlVariable variable = new CustomFtlVariable(referenceName, place, FtlPsiType.wrap(targetType));
-                                processor.execute(variable, state);
-                            } catch (IncorrectOperationException e) {
-                                //unable to create type from text
-                            }
+                            FtlVariable variable = new CustomFtlVariable(referenceName, place, FtlPsiType.wrap(targetType));
 
+                            processor.execute(variable, state);
+                        } catch (IncorrectOperationException e) {
+                            //unable to create type from text
                         }
+
                     }
                 }
 

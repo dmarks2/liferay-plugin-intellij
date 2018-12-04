@@ -3,7 +3,6 @@ package de.dm.intellij.liferay.language.freemarker.custom;
 import com.intellij.freemarker.psi.FtlType;
 import com.intellij.freemarker.psi.FtlVariantsProcessor;
 import com.intellij.freemarker.psi.variables.FtlLightVariable;
-import com.intellij.freemarker.psi.variables.FtlPsiType;
 import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiClassType;
@@ -15,6 +14,7 @@ import com.intellij.psi.scope.BaseScopeProcessor;
 import com.intellij.psi.scope.NameHint;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.util.PropertyUtil;
+import de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerUtil;
 import de.dm.intellij.liferay.util.Icons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -55,16 +55,14 @@ public class CustomFtlVariable extends FtlLightVariable {
     @Override
     public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState state, PsiElement lastParent, @NotNull PsiElement place) {
         FtlType ftlType = getType();
-        FtlPsiType ftlPsiType = (ftlType instanceof FtlPsiType ? (FtlPsiType)ftlType : null);
-        PsiClassType classType = null;
-        String className = null;
-        if ( (ftlPsiType != null) && (ftlPsiType.getPsiType() instanceof PsiClassType) ) {
-            classType = (PsiClassType)ftlPsiType.getPsiType();
-            className = classType.getCanonicalText();
-        }
 
-        if ("com.liferay.portal.kernel.templateparser.TemplateNode".equals(className)) {
-            return processTemplateNode(processor, state, place, classType);
+        PsiClassType classType = LiferayFreemarkerUtil.getClassType(ftlType);
+        if (classType != null) {
+            String className = classType.getCanonicalText();
+
+            if ("com.liferay.portal.kernel.templateparser.TemplateNode".equals(className)) {
+                return processTemplateNode(processor, state, place, classType);
+            }
         }
 
         return super.processDeclarations(processor, state, lastParent, place);
