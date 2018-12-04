@@ -20,7 +20,10 @@ import com.intellij.patterns.PsiElementPattern;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiClassType;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiModifier;
+import com.intellij.psi.PsiModifierList;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -180,7 +183,7 @@ public class LiferayFreemarkerUtil {
     }
 
     @Nullable
-    public static String getArgumentListEntryValue(FtlArgumentList ftlArgumentList, int index) {
+    public static String getArgumentListEntryValue(@Nullable FtlArgumentList ftlArgumentList, int index) {
         if (ftlArgumentList != null) {
             PsiElement[] arguments = ftlArgumentList.getChildren();
             if (index < arguments.length) {
@@ -213,6 +216,22 @@ public class LiferayFreemarkerUtil {
                     }
                 }
             });
+        }
+    }
+
+    public static void addClassPublicStaticFieldsLookup(@Nullable PsiClass psiClass, CompletionResultSet result, Module module) {
+        if (psiClass != null) {
+            for (PsiField psiField : psiClass.getFields()) {
+                PsiModifierList modifierList = psiField.getModifierList();
+                if (
+                        modifierList.hasModifierProperty(PsiModifier.PUBLIC) &&
+                        modifierList.hasModifierProperty(PsiModifier.STATIC)
+                ) {
+                    String name = psiField.getName();
+
+                    result.addElement(LookupElementBuilder.create(name).withPsiElement(psiField).withIcon(Icons.LIFERAY_ICON));
+                }
+            }
         }
     }
 }

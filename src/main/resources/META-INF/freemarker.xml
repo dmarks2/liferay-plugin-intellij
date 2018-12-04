@@ -12,6 +12,7 @@
         <completion.contributor order="first, before propertiesCompletion" language="FTL" implementationClass="de.dm.intellij.liferay.language.freemarker.enumutil.EnumUtilClassNameCompletionContributor"/>
         <completion.contributor order="first, before propertiesCompletion" language="FTL" implementationClass="de.dm.intellij.liferay.language.freemarker.staticutil.StaticUtilClassNameCompletionContributor"/>
         <completion.contributor order="first, before propertiesCompletion" language="FTL" implementationClass="de.dm.intellij.liferay.language.freemarker.staticfieldgetter.StaticFieldGetterClassNameCompletionContributor"/>
+        <completion.contributor order="first, before propertiesCompletion" language="FTL" implementationClass="de.dm.intellij.liferay.language.freemarker.staticfieldgetter.StaticFieldGetterFieldNameCompletionContributor"/>
 
         <gotoDeclarationHandler implementation="de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerClassNameGotoDeclarationHandler" />
 

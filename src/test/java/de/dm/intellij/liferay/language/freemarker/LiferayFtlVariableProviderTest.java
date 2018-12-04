@@ -278,6 +278,30 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
         assertTrue(strings.contains("de.dm.MyUtil"));
     }
 
+    public void testStaticFieldGetterClassNameUtilLookup() {
+        myFixture.configureByFiles(
+            "WEB-INF/src/resources-importer/journal/templates/test/static-field-getter-class-name-lookup.ftl",
+            "WEB-INF/src/resources-importer/journal/structures/test.json",
+            "com/liferay/portal/kernel/util/StaticFieldGetter.java",
+            "com/liferay/portal/kernel/util/PortletKeys.java"
+        );
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("com.liferay.portal.kernel.util.PortletKeys"));
+    }
+
+    public void testStaticFieldGetterFieldNameUtilLookup() {
+        myFixture.configureByFiles(
+            "WEB-INF/src/resources-importer/journal/templates/test/static-field-getter-field-name-lookup.ftl",
+            "WEB-INF/src/resources-importer/journal/structures/test.json",
+            "com/liferay/portal/kernel/util/StaticFieldGetter.java",
+            "com/liferay/portal/kernel/util/PortletKeys.java"
+        );
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("ADMIN_PLUGINS"));
+    }
+
 
 
 
