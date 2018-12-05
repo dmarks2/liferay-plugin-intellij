@@ -34,10 +34,12 @@ import com.intellij.util.ProcessingContext;
 import com.intellij.util.Query;
 import de.dm.intellij.liferay.language.freemarker.servicelocator.ServiceLocatorFtlVariable;
 import de.dm.intellij.liferay.util.Icons;
+import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -212,7 +214,7 @@ public class LiferayFreemarkerUtil {
                 String qualifiedName = psiClass.getQualifiedName();
                 if (qualifiedName != null) {
                     if (qualifiedNameFilter.test(qualifiedName)) {
-                        result.addElement(LookupElementBuilder.create(qualifiedName).withIcon(Icons.LIFERAY_ICON));
+                        result.addElement(LookupElementBuilder.create(qualifiedName).withPsiElement(psiClass).withIcon(Icons.LIFERAY_ICON));
                     }
                 }
             });
@@ -220,17 +222,12 @@ public class LiferayFreemarkerUtil {
     }
 
     public static void addClassPublicStaticFieldsLookup(@Nullable PsiClass psiClass, CompletionResultSet result, Module module) {
-        if (psiClass != null) {
-            for (PsiField psiField : psiClass.getFields()) {
-                PsiModifierList modifierList = psiField.getModifierList();
-                if (
-                        modifierList.hasModifierProperty(PsiModifier.PUBLIC) &&
-                        modifierList.hasModifierProperty(PsiModifier.STATIC)
-                ) {
-                    String name = psiField.getName();
+        Collection<PsiField> publicStaticFields = ProjectUtils.getClassPublicStaticFields(psiClass);
 
-                    result.addElement(LookupElementBuilder.create(name).withPsiElement(psiField).withIcon(Icons.LIFERAY_ICON));
-                }
+        for (PsiField psiField : publicStaticFields) {
+            String name = psiField.getName();
+            if (name != null) {
+                result.addElement(LookupElementBuilder.create(name).withPsiElement(psiField).withIcon(Icons.LIFERAY_ICON));
             }
         }
     }

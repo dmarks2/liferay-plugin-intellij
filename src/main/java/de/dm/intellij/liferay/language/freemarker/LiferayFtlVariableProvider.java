@@ -25,6 +25,7 @@ import de.dm.intellij.liferay.language.TemplateVariableProcessorUtil;
 import de.dm.intellij.liferay.language.freemarker.custom.CustomFtlVariable;
 import de.dm.intellij.liferay.language.freemarker.enumutil.EnumUtilFtlVariable;
 import de.dm.intellij.liferay.language.freemarker.servicelocator.ServiceLocatorFtlVariable;
+import de.dm.intellij.liferay.language.freemarker.staticfieldgetter.StaticFieldGetterFtlVariable;
 import de.dm.intellij.liferay.language.freemarker.staticutil.StaticUtilFtlVariable;
 import de.dm.intellij.liferay.language.freemarker.structure.StructureFtlVariable;
 import de.dm.intellij.liferay.language.freemarker.themereference.ThemeReferenceFtlVariable;
@@ -54,6 +55,7 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
         TYPE_MAPPING.put(ServiceLocatorFtlVariable.VARIABLE_NAME, ServiceLocatorFtlVariable.class);
         TYPE_MAPPING.put(EnumUtilFtlVariable.VARIABLE_NAME, EnumUtilFtlVariable.class);
         TYPE_MAPPING.put(StaticUtilFtlVariable.VARIABLE_NAME, StaticUtilFtlVariable.class);
+        TYPE_MAPPING.put(StaticFieldGetterFtlVariable.VARIABLE_NAME, StaticFieldGetterFtlVariable.class);
         for (String key : LiferayThemeTemplateVariables.THEME_TEMPLATE_VARIABLE_DIRECTORY_REFERENCES.keySet()) {
             TYPE_MAPPING.put(key, ThemeReferenceFtlVariable.class);
         }

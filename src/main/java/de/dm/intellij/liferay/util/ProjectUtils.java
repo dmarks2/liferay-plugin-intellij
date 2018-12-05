@@ -1,5 +1,7 @@
 package de.dm.intellij.liferay.util;
 
+import com.intellij.codeInsight.completion.CompletionResultSet;
+import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
@@ -18,10 +20,14 @@ import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiClassType;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiField;
+import com.intellij.psi.PsiModifier;
+import com.intellij.psi.PsiModifierList;
 import com.intellij.psi.PsiType;
 import com.intellij.util.DisposeAwareRunnable;
 import com.intellij.util.Processor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -205,6 +211,27 @@ public class ProjectUtils {
         }
 
         return null;
+    }
+
+    @NotNull
+    public static Collection<PsiField> getClassPublicStaticFields(@Nullable PsiClass psiClass) {
+        Collection<PsiField> result = new ArrayList<>();
+
+        if (psiClass != null) {
+            for (PsiField psiField : psiClass.getFields()) {
+                PsiModifierList modifierList = psiField.getModifierList();
+                if (modifierList != null) {
+                    if (
+                            modifierList.hasModifierProperty(PsiModifier.PUBLIC) &&
+                            modifierList.hasModifierProperty(PsiModifier.STATIC)
+                    ) {
+                        result.add(psiField);
+                    }
+                }
+            }
+        }
+
+        return result;
     }
 
 }

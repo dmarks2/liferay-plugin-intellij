@@ -7,7 +7,6 @@ import com.intellij.freemarker.psi.variables.FtlLightVariable;
 import com.intellij.freemarker.psi.variables.FtlPsiType;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiClassType;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiMethod;
@@ -17,6 +16,7 @@ import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.util.IncorrectOperationException;
 import de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerUtil;
 import de.dm.intellij.liferay.util.Icons;
+import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -31,15 +31,7 @@ public class ServiceLocatorFtlVariable extends FtlLightVariable {
     public ServiceLocatorFtlVariable(@NotNull PsiElement parent) {
         super(VARIABLE_NAME, parent, SERVICE_LOCATOR_CLASS_NAME);
 
-        PsiType psiType = JavaPsiFacade.getInstance(parent.getProject()).getElementFactory().createTypeFromText(SERVICE_LOCATOR_CLASS_NAME, parent);
-
-        if (psiType instanceof PsiClassType) {
-            PsiClassType psiClassType = (PsiClassType) psiType;
-            PsiClass psiClass = psiClassType.resolve();
-            if (psiClass != null) {
-                serviceLocatorClass = psiClass;
-            }
-        }
+        serviceLocatorClass = ProjectUtils.getClassByName(parent.getProject(), SERVICE_LOCATOR_CLASS_NAME, parent);
     }
 
     @NotNull

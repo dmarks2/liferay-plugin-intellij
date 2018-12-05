@@ -14,6 +14,7 @@ import com.intellij.pom.java.LanguageLevel;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiField;
 import com.intellij.testFramework.IdeaTestUtil;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
@@ -240,11 +241,11 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
         int caretOffset = myFixture.getCaretOffset();
         PsiElement targetElement = GotoDeclarationAction.findTargetElement(getProject(), myFixture.getEditor(), caretOffset);
 
-        assertTrue(targetElement != null);
+        assertNotNull(targetElement);
 
         assertTrue(targetElement instanceof PsiClass);
 
-        assertTrue("com.liferay.portal.kernel.service.MyCustomService".equals(((PsiClass)targetElement).getQualifiedName()));
+        assertEquals("com.liferay.portal.kernel.service.MyCustomService", ((PsiClass) targetElement).getQualifiedName());
     }
 
 
@@ -276,6 +277,36 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("de.dm.MyUtil"));
+    }
+
+    public void testStaticFieldGetter() {
+        myFixture.configureByFiles(
+                "WEB-INF/src/resources-importer/journal/templates/test/static-field-getter.ftl",
+                "WEB-INF/src/resources-importer/journal/structures/test.json",
+                "com/liferay/portal/kernel/util/StaticFieldGetter.java",
+                "com/liferay/portal/kernel/util/PortletKeys.java"
+        );
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("length"));
+    }
+
+    public void testStaticFieldGetterGotoDeclaration() {
+        myFixture.configureByFiles(
+                "WEB-INF/src/resources-importer/journal/templates/test/static-field-getter-goto-declaration.ftl",
+                "WEB-INF/src/resources-importer/journal/structures/test.json",
+                "com/liferay/portal/kernel/util/StaticFieldGetter.java",
+                "com/liferay/portal/kernel/util/PortletKeys.java"
+        );
+
+        int caretOffset = myFixture.getCaretOffset();
+        PsiElement targetElement = GotoDeclarationAction.findTargetElement(getProject(), myFixture.getEditor(), caretOffset);
+
+        assertNotNull(targetElement);
+
+        assertTrue(targetElement instanceof PsiField);
+
+        assertEquals("ADMIN_PLUGINS", ((PsiField) targetElement).getName());
     }
 
     public void testStaticFieldGetterClassNameUtilLookup() {
