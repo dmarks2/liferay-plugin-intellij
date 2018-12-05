@@ -24,28 +24,26 @@ import java.util.List;
 public class LiferayTaglibCSSClassAttributeReferenceContributor extends PsiReferenceContributor {
 
     private static final List<String> ATTRIBUTE_NAMES = Arrays.asList(
-            "icon",
+            "anchorCssClass",
+            "checkboxCSSClass",
             "class",
             "cssClass",
+            "descriptionCSSClass",
+            "draggableImage",
+            "elementClasses",
+            "emptyResultsMessageCssClass",
+            "helpTextCssClass",
+            "icon",
             "iconCssClass",
             "imageCssClass",
             "imageCSSClass",
-            "linkCssClass",
-            "triggerCssClass",
-            "elementClasses",
-            "draggableImage",
-            "emptyResultsMessageCssClass",
-            "userIconCssClass",
-            "helpTextCssClass",
-            "wrapperCssClass",
-            "anchorCssClass",
-            "userIconCssClass",
-            "checkboxCSSClass",
-            "descriptionCSSClass",
             "labelCSSClass",
+            "linkCssClass",
             "linkClass",
             "symbol",
-            "triggerCssClasses"
+            "triggerCssClass",
+            "userIconCssClass",
+            "wrapperCssClass"
     );
 
     public void registerReferenceProviders(@NotNull PsiReferenceRegistrar registrar) {
