@@ -106,6 +106,7 @@ public class LiferayFreemarkerUtil {
                 .map(ftlArgumentList -> PsiTreeUtil.getParentOfType(ftlArgumentList, FtlArgumentList.class, false))
                 .filter(Objects::nonNull)
                 .map(ftlMethodCallExpression -> PsiTreeUtil.getParentOfType(ftlMethodCallExpression, FtlMethodCallExpression.class))
+                .filter(Objects::nonNull)
                 .findFirst().orElse(null);
     }
 
