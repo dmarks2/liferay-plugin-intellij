@@ -49,6 +49,85 @@ public class LiferayTaglibAttributes {
 
     //TAGLIB_ATTRIBUTES_RESOURCEBUNDLE
     static {
+        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_ASSET, Arrays.asList(
+                new Pair<String, String>("asset-addon-entry-selector", "title"),
+                new Pair<String, String>("asset-metadata", "metadataField"),
+                new Pair<String, String>("asset-tags-summary", "message")
+        ));
+
+        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI, Arrays.asList(
+                new Pair<String, String>("a", "title"),
+                new Pair<String, String>("a", "label"),
+                new Pair<String, String>("button", "value"),
+                new Pair<String, String>("field-wrapper", "helpMessage"),
+                new Pair<String, String>("field-wrapper", "label"),
+                new Pair<String, String>("fieldset", "helpMessage"),
+                new Pair<String, String>("fieldset", "label"),
+                new Pair<String, String>("icon", "label"),
+                new Pair<String, String>("input", "helpMessage"),
+                new Pair<String, String>("input", "label"),
+                new Pair<String, String>("input", "labelOff"),
+                new Pair<String, String>("input", "labelOn"),
+                new Pair<String, String>("input", "title"),
+                new Pair<String, String>("input", "placeholder"),
+                new Pair<String, String>("input", "prefix"),
+                new Pair<String, String>("input", "suffix"),
+                new Pair<String, String>("nav-bar", "selectedItemName"),
+                new Pair<String, String>("nav-item", "label"),
+                new Pair<String, String>("nav-item", "title"),
+                new Pair<String, String>("option", "label"),
+                new Pair<String, String>("panel", "label"),
+                new Pair<String, String>("select", "label"),
+                new Pair<String, String>("select", "helpMessage"),
+                new Pair<String, String>("select", "prefix"),
+                new Pair<String, String>("select", "suffix"),
+                new Pair<String, String>("select", "title"),
+                new Pair<String, String>("validator", "errorMessage"),
+                new Pair<String, String>("workflow-status", "helpMessage"),
+                new Pair<String, String>("workflow-status", "statusMessage")
+        ));
+        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI_OLD, LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.get(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI));
+
+        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_DDM, Arrays.asList(
+                new Pair<String, String>("template-selector", "label")
+        ));
+
+        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPANDO, Arrays.asList(
+                new Pair<String, String>("custom-attribute", "name")
+        ));
+
+        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND, Arrays.asList(
+                new Pair<String, String>("email-notification-settings", "bodyLabel"),
+                new Pair<String, String>("email-notification-settings", "helpMessage"),
+                new Pair<String, String>("management-bar-button", "label"),
+                new Pair<String, String>("management-bar-filter", "label")
+        ));
+
+        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_SITE, Arrays.asList(
+                new Pair<String, String>("site-browser", "emptyResultsMessage")
+        ));
+
+        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_STAGING, Arrays.asList(
+                new Pair<String, String>("checkbox", "description"),
+                new Pair<String, String>("checkbox", "label"),
+                new Pair<String, String>("checkbox", "popover"),
+                new Pair<String, String>("checkbox", "suggestion"),
+                new Pair<String, String>("checkbox", "warning"),
+                new Pair<String, String>("popover", "text"),
+                new Pair<String, String>("popover", "title"),
+                new Pair<String, String>("process-date", "labelKey"),
+                new Pair<String, String>("process-list", "emptyResultsMessage"),
+                new Pair<String, String>("radio", "description"),
+                new Pair<String, String>("radio", "label"),
+                new Pair<String, String>("radio", "popover")
+        ));
+
+        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_TRASH, Arrays.asList(
+                new Pair<String, String>("empty", "confirmMessage"),
+                new Pair<String, String>("empty", "emptyMessage"),
+                new Pair<String, String>("empty", "infoMessage")
+        ));
+
         TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
                 new Pair<String, String>("app-view-search-entry", "containerType"),
                 new Pair<String, String>("alert", "message"),
@@ -92,89 +171,14 @@ public class LiferayTaglibAttributes {
                 new Pair<String, String>("upload-progress", "message")
         ));
 
-        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI, Arrays.asList(
-                new Pair<String, String>("a", "title"),
-                new Pair<String, String>("a", "label"),
-                new Pair<String, String>("button", "value"),
-                new Pair<String, String>("field-wrapper", "helpMessage"),
-                new Pair<String, String>("field-wrapper", "label"),
-                new Pair<String, String>("fieldset", "helpMessage"),
-                new Pair<String, String>("fieldset", "label"),
-                new Pair<String, String>("icon", "label"),
-                new Pair<String, String>("input", "helpMessage"),
-                new Pair<String, String>("input", "label"),
-                new Pair<String, String>("input", "labelOff"),
-                new Pair<String, String>("input", "labelOn"),
-                new Pair<String, String>("input", "title"),
-                new Pair<String, String>("input", "placeholder"),
-                new Pair<String, String>("input", "prefix"),
-                new Pair<String, String>("input", "suffix"),
-                new Pair<String, String>("nav-bar", "selectedItemName"),
-                new Pair<String, String>("nav-item", "label"),
-                new Pair<String, String>("nav-item", "title"),
-                new Pair<String, String>("option", "label"),
-                new Pair<String, String>("panel", "label"),
-                new Pair<String, String>("select", "label"),
-                new Pair<String, String>("select", "helpMessage"),
-                new Pair<String, String>("select", "prefix"),
-                new Pair<String, String>("select", "suffix"),
-                new Pair<String, String>("select", "title"),
-                new Pair<String, String>("validator", "errorMessage"),
-                new Pair<String, String>("workflow-status", "helpMessage"),
-                new Pair<String, String>("workflow-status", "statusMessage")
-        ));
-        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI_OLD, LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.get(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI));
-
-        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_ASSET, Arrays.asList(
-                new Pair<String, String>("asset-addon-entry-selector", "title"),
-                new Pair<String, String>("asset-metadata", "metadataField"),
-                new Pair<String, String>("asset-tags-summary", "message")
-        ));
-
-        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPANDO, Arrays.asList(
-                new Pair<String, String>("custom-attribute", "name")
-        ));
-
-        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND, Arrays.asList(
-                new Pair<String, String>("email-notification-settings", "bodyLabel"),
-                new Pair<String, String>("email-notification-settings", "helpMessage"),
-                new Pair<String, String>("management-bar-button", "label"),
-                new Pair<String, String>("management-bar-filter", "label")
-        ));
-
-        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_TRASH, Arrays.asList(
-                new Pair<String, String>("empty", "confirmMessage"),
-                new Pair<String, String>("empty", "emptyMessage"),
-                new Pair<String, String>("empty", "infoMessage")
-        ));
-
-        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_DDM, Arrays.asList(
-                new Pair<String, String>("template-selector", "label")
-        ));
-
-        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_SITE, Arrays.asList(
-                new Pair<String, String>("site-browser", "emptyResultsMessage")
-        ));
-
-        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_STAGING, Arrays.asList(
-                new Pair<String, String>("checkbox", "description"),
-                new Pair<String, String>("checkbox", "label"),
-                new Pair<String, String>("checkbox", "popover"),
-                new Pair<String, String>("checkbox", "suggestion"),
-                new Pair<String, String>("checkbox", "warning"),
-                new Pair<String, String>("popover", "text"),
-                new Pair<String, String>("popover", "title"),
-                new Pair<String, String>("process-date", "labelKey"),
-                new Pair<String, String>("process-list", "emptyResultsMessage"),
-                new Pair<String, String>("radio", "description"),
-                new Pair<String, String>("radio", "label"),
-                new Pair<String, String>("radio", "popover")
-        ));
-
     }
 
     //TAGLIB_ATTRIBUTES_CSS
     static {
+        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_ADAPTIVE_MEDIA_IMAGE, Arrays.asList(
+                new Pair<String, String>("img", "class")
+        ));
+
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI, Arrays.asList(
                 new Pair<String, String>("a", "cssClass"),
                 new Pair<String, String>("a", "iconCssClass"),
@@ -203,6 +207,85 @@ public class LiferayTaglibAttributes {
         ));
 
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI_OLD, TAGLIB_ATTRIBUTES_CSS.get(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI));
+
+        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_CLAY, Arrays.asList(
+                new Pair<String, String>("alert", "elementClasses"),
+                new Pair<String, String>("badge", "elementClasses"),
+                new Pair<String, String>("button", "elementClasses"),
+                new Pair<String, String>("button", "icon"),
+                new Pair<String, String>("checkbox", "elementClasses"),
+                new Pair<String, String>("dropdown-actions", "elementClasses"),
+                new Pair<String, String>("dropdown-actions", "triggerCssClasses"),
+                new Pair<String, String>("dropdown-menu", "elementClasses"),
+                new Pair<String, String>("dropdown-menu", "icon"),
+                new Pair<String, String>("dropdown-menu", "triggerCssClasses"),
+                new Pair<String, String>("file-card", "elementClasses"),
+                new Pair<String, String>("file-card", "icon"),
+                new Pair<String, String>("horizontal-card", "elementClasses"),
+                new Pair<String, String>("horizontal-card", "icon"),
+                new Pair<String, String>("icon", "elementClasses"),
+                new Pair<String, String>("icon", "symbol"),
+                new Pair<String, String>("image-card", "elementClasses"),
+                new Pair<String, String>("image-card", "icon"),
+                new Pair<String, String>("label", "elementClasses"),
+                new Pair<String, String>("link", "elementClasses"),
+                new Pair<String, String>("link", "icon"),
+                new Pair<String, String>("management-toolbar", "elementClasses"),
+                new Pair<String, String>("navigation-bar", "elementClasses"),
+                new Pair<String, String>("progressbar", "elementClasses"),
+                new Pair<String, String>("radio", "elementClasses"),
+                new Pair<String, String>("select", "elementClasses"),
+                new Pair<String, String>("sticker", "elementClasses"),
+                new Pair<String, String>("sticker", "icon"),
+                new Pair<String, String>("stripe", "elementClasses"),
+                new Pair<String, String>("user-card", "elementClasses"),
+                new Pair<String, String>("user-card", "icon")
+        ));
+
+        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_DDM, Arrays.asList(
+                new Pair<String, String>("template-selector", "icon")
+        ));
+
+        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_EDITOR, Arrays.asList(
+                new Pair<String, String>("editor", "cssClass")
+        ));
+
+        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND, Arrays.asList(
+                new Pair<String, String>("horizontal-card", "checkboxCSSClass"),
+                new Pair<String, String>("horizontal-card", "cssClass"),
+                new Pair<String, String>("icon-vertical-card", "checkboxCSSClass"),
+                new Pair<String, String>("icon-vertical-card", "cssClass"),
+                new Pair<String, String>("image-card", "cssClass"),
+                new Pair<String, String>("image-card", "imageCssClass"),
+                new Pair<String, String>("info-bar-button", "cssClass"),
+                new Pair<String, String>("info-bar-button", "iconCssClass"),
+                new Pair<String, String>("info-bar-sidenav-toggler-button", "cssClass"),
+                new Pair<String, String>("info-bar-sidenav-toggler-button", "iconCssClass"),
+                new Pair<String, String>("management-bar-button", "cssClass"),
+                new Pair<String, String>("management-bar-button", "iconCssClass"),
+                new Pair<String, String>("management-bar-sidenav-toggler-button", "cssClass"),
+                new Pair<String, String>("management-bar-sidenav-toggler-button", "iconCssClass"),
+                new Pair<String, String>("translation-manager", "cssClass"),
+                new Pair<String, String>("user-vertical-card", "checkboxCSSClass"),
+                new Pair<String, String>("user-vertical-card", "cssClass"),
+                new Pair<String, String>("vertical-card", "checkboxCSSClass"),
+                new Pair<String, String>("vertical-card", "cssClass"),
+                new Pair<String, String>("vertical-card", "imageCSSClass"),
+                new Pair<String, String>("vertical-card-small-image", "cssClass")
+        ));
+
+        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_ITEM_SELECTOR, Arrays.asList(
+                new Pair<String, String>("image-selector", "draggableImage")
+        ));
+
+        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_STAGING, Arrays.asList(
+                new Pair<String, String>("menu", "cssClass"),
+                new Pair<String, String>("permissions", "descriptionCSSClass"),
+                new Pair<String, String>("permissions", "labelCSSClass"),
+                new Pair<String, String>("process-message-task-details", "linkClass"),
+                new Pair<String, String>("process-status", "linkClass"),
+                new Pair<String, String>("status", "cssClass")
+        ));
 
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
                 new Pair<String, String>("alert", "cssClass"),
@@ -251,89 +334,6 @@ public class LiferayTaglibAttributes {
                 new Pair<String, String>("user-display", "userIconCssClass"),
                 new Pair<String, String>("user-portrait", "cssClass"),
                 new Pair<String, String>("user-portrait", "imageCssClass")
-        ));
-
-        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND, Arrays.asList(
-                new Pair<String, String>("horizontal-card", "checkboxCSSClass"),
-                new Pair<String, String>("horizontal-card", "cssClass"),
-                new Pair<String, String>("icon-vertical-card", "checkboxCSSClass"),
-                new Pair<String, String>("icon-vertical-card", "cssClass"),
-                new Pair<String, String>("image-card", "cssClass"),
-                new Pair<String, String>("image-card", "imageCssClass"),
-                new Pair<String, String>("info-bar-button", "cssClass"),
-                new Pair<String, String>("info-bar-button", "iconCssClass"),
-                new Pair<String, String>("info-bar-sidenav-toggler-button", "cssClass"),
-                new Pair<String, String>("info-bar-sidenav-toggler-button", "iconCssClass"),
-                new Pair<String, String>("management-bar-button", "cssClass"),
-                new Pair<String, String>("management-bar-button", "iconCssClass"),
-                new Pair<String, String>("management-bar-sidenav-toggler-button", "cssClass"),
-                new Pair<String, String>("management-bar-sidenav-toggler-button", "iconCssClass"),
-                new Pair<String, String>("translation-manager", "cssClass"),
-                new Pair<String, String>("user-vertical-card", "checkboxCSSClass"),
-                new Pair<String, String>("user-vertical-card", "cssClass"),
-                new Pair<String, String>("vertical-card", "checkboxCSSClass"),
-                new Pair<String, String>("vertical-card", "cssClass"),
-                new Pair<String, String>("vertical-card", "imageCSSClass"),
-                new Pair<String, String>("vertical-card-small-image", "cssClass")
-        ));
-
-        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_ITEM_SELECTOR, Arrays.asList(
-                new Pair<String, String>("image-selector", "draggableImage")
-        ));
-
-        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_EDITOR, Arrays.asList(
-                new Pair<String, String>("editor", "cssClass")
-        ));
-
-        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_ADAPTIVE_MEDIA_IMAGE, Arrays.asList(
-                new Pair<String, String>("img", "class")
-        ));
-
-        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_DDM, Arrays.asList(
-                new Pair<String, String>("template-selector", "icon")
-        ));
-
-        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_STAGING, Arrays.asList(
-                new Pair<String, String>("menu", "cssClass"),
-                new Pair<String, String>("permissions", "descriptionCSSClass"),
-                new Pair<String, String>("permissions", "labelCSSClass"),
-                new Pair<String, String>("process-message-task-details", "linkClass"),
-                new Pair<String, String>("process-status", "linkClass"),
-                new Pair<String, String>("status", "cssClass")
-        ));
-
-        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_CLAY, Arrays.asList(
-                new Pair<String, String>("alert", "elementClasses"),
-                new Pair<String, String>("badge", "elementClasses"),
-                new Pair<String, String>("button", "elementClasses"),
-                new Pair<String, String>("button", "icon"),
-                new Pair<String, String>("checkbox", "elementClasses"),
-                new Pair<String, String>("dropdown-actions", "elementClasses"),
-                new Pair<String, String>("dropdown-actions", "triggerCssClasses"),
-                new Pair<String, String>("dropdown-menu", "elementClasses"),
-                new Pair<String, String>("dropdown-menu", "icon"),
-                new Pair<String, String>("dropdown-menu", "triggerCssClasses"),
-                new Pair<String, String>("file-card", "elementClasses"),
-                new Pair<String, String>("file-card", "icon"),
-                new Pair<String, String>("horizontal-card", "elementClasses"),
-                new Pair<String, String>("horizontal-card", "icon"),
-                new Pair<String, String>("icon", "elementClasses"),
-                new Pair<String, String>("icon", "symbol"),
-                new Pair<String, String>("image-card", "elementClasses"),
-                new Pair<String, String>("image-card", "icon"),
-                new Pair<String, String>("label", "elementClasses"),
-                new Pair<String, String>("link", "elementClasses"),
-                new Pair<String, String>("link", "icon"),
-                new Pair<String, String>("management-toolbar", "elementClasses"),
-                new Pair<String, String>("navigation-bar", "elementClasses"),
-                new Pair<String, String>("progressbar", "elementClasses"),
-                new Pair<String, String>("radio", "elementClasses"),
-                new Pair<String, String>("select", "elementClasses"),
-                new Pair<String, String>("sticker", "elementClasses"),
-                new Pair<String, String>("sticker", "icon"),
-                new Pair<String, String>("stripe", "elementClasses"),
-                new Pair<String, String>("user-card", "elementClasses"),
-                new Pair<String, String>("user-card", "icon")
         ));
     }
 
