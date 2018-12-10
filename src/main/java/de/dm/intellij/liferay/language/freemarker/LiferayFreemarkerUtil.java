@@ -22,17 +22,12 @@ import com.intellij.psi.PsiClassType;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiModifier;
-import com.intellij.psi.PsiModifierList;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiType;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.SearchScope;
 import com.intellij.psi.search.searches.ClassInheritorsSearch;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.Query;
-import de.dm.intellij.liferay.language.freemarker.servicelocator.ServiceLocatorFtlVariable;
 import de.dm.intellij.liferay.util.Icons;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
@@ -41,7 +36,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -82,6 +76,7 @@ public class LiferayFreemarkerUtil {
                 .map(ftlIndexExpression -> PsiTreeUtil.getParentOfType(ftlIndexExpression, FtlIndexExpression.class, false))
                 .filter(Objects::nonNull)
                 .map(FtlIndexExpression::getReferenceQualifier)
+                .filter(Objects::nonNull)
                 .findFirst().orElse(null);
     }
 
@@ -98,6 +93,7 @@ public class LiferayFreemarkerUtil {
                 .map(FtlIndexExpression::getQualifiedReference)
                 .filter(Objects::nonNull)
                 .map(FtlQualifiedReference::getReferenceName)
+                .filter(Objects::nonNull)
                 .findFirst().orElse(null);
     }
 
@@ -128,6 +124,7 @@ public class LiferayFreemarkerUtil {
                     .filter(ftlCallableType -> ftlCallableType instanceof FtlMethodType)
                     .map(ftlMethodType -> (FtlMethodType) ftlMethodType)
                     .map(FtlMethodType::getMethod)
+                    .filter(Objects::nonNull)
                     .findFirst().orElse(null);
 
             if (psiMethod != null) {
