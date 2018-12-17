@@ -31,6 +31,12 @@ Additionally you can search for classnames and java bean properties in specific 
 You can compare your JSP with the original Liferay file to see what has been changed. This works for JSP Hooks (Liferay 6.x) and OSGi fragments (Liferay 7 / DXP).
 
 ![JSP compare](jsp_compare.png "JSP compare")
+
+Using double quotes inside taglib attributes are not permitted. A configurable inspection is provided
+which checks for this case and offers a quick fix to use single quotes instead.
+
+![JSP inspections](jsp_inspections.gif "JSP inspection")
+
  
 ## Requirements
 

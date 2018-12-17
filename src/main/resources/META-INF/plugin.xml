@@ -45,6 +45,7 @@
             <li>Feature: Added taglib code completion for class names</li>
             <li>Feature: Class Name completion inside serviceLocator.findService(), enumUtil, staticUtil and staticFieldGetter in Freemarker templates</li>
             <li>Feature: Implicit resolve of serviceLocator, enumUtil and staticUtil instructions in Freemarker templates</li>
+            <li>Feature: Inpsections for JSP files</li>
         </ul>
         <p>Version 0.0.2</p>
         <ul>
