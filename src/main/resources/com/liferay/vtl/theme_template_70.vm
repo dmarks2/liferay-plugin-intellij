@@ -6,7 +6,7 @@
 #* @vtlvariable name="fullTemplatesPath" type="java.lang.String" *#
 #* @vtlvariable name="init" type="java.lang.String" *#
 #* @vtlvariable name="enumUtil" type="freemarker.template.TemplateHashModel" *#
-#* @vtlvariable name="objectUtil" type="com.liferay.portal.template.freemarker.LiferayObjectConstructor" *#
+#* @vtlvariable name="objectUtil" type="com.liferay.portal.template.freemarker.internal.LiferayObjectConstructor" *#
 #* @vtlvariable name="freeMarkerPortletPreferences" type="com.liferay.portal.template.TemplatePortletPreferences" *#
 #* @vtlvariable name="staticUtil" type="freemarker.template.TemplateHashModel" *#
 #* @vtlvariable name="theme_display" type="com.liferay.portal.kernel.theme.ThemeDisplay" *#
