@@ -87,7 +87,7 @@ public class LiferayTaglibStrictQuoteEscapingInspection extends XmlSuppressableI
                                                 if (containsUnescapedQuotes(text)) {
                                                     holder.registerProblem(attribute.getValueElement(),
                                                         "Attribute value is quoted with \" which must be escaped when used within the value",
-                                                        ProblemHighlightType.WEAK_WARNING,
+                                                        ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
                                                         new UseSingleQuotesFix()
                                                     );
                                                 }
