@@ -9,7 +9,8 @@ public class LiferayTaglibInspectionToolProvider implements InspectionToolProvid
     @Override
     public Class[] getInspectionClasses() {
         return new Class[] {
-                LiferayTaglibStrictQuoteEscapingInspection.class
+                LiferayTaglibStrictQuoteEscapingInspection.class,
+                LiferayTaglibStringConcatInspection.class
         };
     }
 }

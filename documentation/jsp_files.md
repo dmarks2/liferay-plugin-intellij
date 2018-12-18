@@ -37,6 +37,12 @@ which checks for this case and offers a quick fix to use single quotes instead.
 
 ![JSP inspections](jsp_inspections.gif "JSP inspection")
 
+The same applies to string concatenation inside taglib attributes. Concatenation with
+JSP expressions do not work. An inspection shows this problem and offers a quick fix to wrap the whole
+attribute inside a JSP expression.
+
+![JSP inspections](jsp_inspections_2.gif "JSP inspection")
+
  
 ## Requirements
 
