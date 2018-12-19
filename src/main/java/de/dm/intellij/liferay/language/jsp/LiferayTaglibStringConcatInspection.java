@@ -6,6 +6,7 @@ import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
 import com.intellij.jsp.impl.CustomTagDescriptorBase;
+import com.intellij.jsp.impl.CustomTagDescriptorBaseImpl;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
@@ -29,6 +30,10 @@ import com.intellij.xml.XmlElementDescriptor;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
+
+import javax.servlet.jsp.tagext.TagAttributeInfo;
+import java.lang.reflect.Field;
+import java.util.List;
 
 public class LiferayTaglibStringConcatInspection extends XmlSuppressableInspectionTool {
 
@@ -76,12 +81,15 @@ public class LiferayTaglibStringConcatInspection extends XmlSuppressableInspecti
                     if (xmlTag != null) {
                         XmlElementDescriptor descriptor = xmlTag.getDescriptor();
                         if (descriptor instanceof CustomTagDescriptorBase) {
-                            if (containsTextAndJspExpressions(attribute.getValueElement())) {
-                                holder.registerProblem(attribute.getValueElement(),
-                                        "JSP expessions and string values cannot be concatenated inside the attribute",
-                                        ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-                                        new WrapInJSpExpression()
-                                );
+                            CustomTagDescriptorBase customTagDescriptorBase = (CustomTagDescriptorBase)descriptor;
+                            if (isRuntimeExpressionAttribute(customTagDescriptorBase, attribute.getName())) {
+                                if (containsTextAndJspExpressions(attribute.getValueElement())) {
+                                    holder.registerProblem(attribute.getValueElement(),
+                                            "JSP expessions and string values cannot be concatenated inside the attribute",
+                                            ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
+                                            new WrapInJSpExpression()
+                                    );
+                                }
                             }
                         }
                     }
@@ -106,6 +114,26 @@ public class LiferayTaglibStringConcatInspection extends XmlSuppressableInspecti
 
         return (hasValueToken && jspExpression != null);
     }
+
+    private static boolean isRuntimeExpressionAttribute(CustomTagDescriptorBase customTagDescriptorBase, String name) {
+        try {
+            Field myTLDAttributes = CustomTagDescriptorBaseImpl.class.getDeclaredField("myTLDAttributes");
+            myTLDAttributes.setAccessible(true);
+
+            List<TagAttributeInfo> tagAttributeInfos = (List<TagAttributeInfo>)myTLDAttributes.get(customTagDescriptorBase);
+
+            for (TagAttributeInfo tagAttributeInfo : tagAttributeInfos) {
+                if (name.equals(tagAttributeInfo.getName())) {
+                    return tagAttributeInfo.canBeRequestTime();
+                }
+            }
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
 
     private static class WrapInJSpExpression implements LocalQuickFix {
         @Nls(capitalization = Nls.Capitalization.Sentence)
