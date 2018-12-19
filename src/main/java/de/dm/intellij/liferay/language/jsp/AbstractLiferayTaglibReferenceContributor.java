@@ -28,7 +28,7 @@ public abstract class AbstractLiferayTaglibReferenceContributor extends PsiRefer
 
     protected abstract boolean isSuitableAttribute(XmlAttribute xmlAttribute);
 
-    class LiferayTaglibFilter implements ElementFilter {
+    private class LiferayTaglibFilter implements ElementFilter {
         public boolean isAcceptable(Object element, PsiElement context) {
             PsiElement psiElement = (PsiElement)element;
 
