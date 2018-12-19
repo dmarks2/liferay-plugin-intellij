@@ -4,15 +4,25 @@ import com.intellij.lang.javascript.library.JSPredefinedLibraryProvider;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.OrderRootType;
+import com.intellij.openapi.roots.ProjectRootManager;
+import com.intellij.openapi.roots.libraries.Library;
+import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileSystem;
 import com.intellij.openapi.vfs.VirtualFileVisitor;
+import com.intellij.psi.PsiDirectory;
+import com.intellij.psi.PsiManager;
 import com.intellij.webcore.libraries.ScriptingLibraryModel;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.util.LiferayVersions;
+import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +30,9 @@ import java.util.Set;
  * Provides a predefined JavaScript Library for AlloyUI 1.5, 2.0 and 3.0 and Liferay Barebone JS files
  */
 public class AlloyUIPredefinedLibraryProvider extends JSPredefinedLibraryProvider {
+
+    private static final String FRONTEND_JS_WEB = "com.liferay:com.liferay.frontend.js.web";
+    private static final String FRONTEND_JS_AUI_WEB = "com.liferay:com.liferay.frontend.js.aui.web";
 
     @NotNull
     @Override
@@ -48,15 +61,54 @@ public class AlloyUIPredefinedLibraryProvider extends JSPredefinedLibraryProvide
                     (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                 ) {
 
-            Set<VirtualFile> javascriptFiles = new HashSet<VirtualFile>();
-            addJavascriptFilesFromDirectory(VfsUtil.findFileByURL(AlloyUIPredefinedLibraryProvider.class.getResource("/com/liferay/js/70")), javascriptFiles);
+            //TODO how to re-run import when maven project is refreshed?
 
-            return new ScriptingLibraryModel[] {
-                ScriptingLibraryModel.createPredefinedLibrary("Liferay 7.0 Scripts", javascriptFiles.toArray(new VirtualFile[javascriptFiles.size()]), true),
-            };
+            Collection<ScriptingLibraryModel> result = new ArrayList<>();
+
+            Collection<Library> frontendJsWebLibraries = ProjectUtils.findLibrariesByName(FRONTEND_JS_WEB, project);
+            Collection<Library> frontendJsAuiWebLibraries = ProjectUtils.findLibrariesByName(FRONTEND_JS_AUI_WEB, project);
+
+            Set<VirtualFile> frontendJsWebJavascriptFiles = new HashSet<VirtualFile>();
+            for (Library frontendJsWebLibrary : frontendJsWebLibraries) {
+                addJavascriptFilesFromLibrary(frontendJsWebLibrary, frontendJsWebJavascriptFiles);
+            }
+            if (! (frontendJsWebJavascriptFiles.isEmpty()) ) {
+                result.add(ScriptingLibraryModel.createPredefinedLibrary("Liferay Frontend JS Web Scripts", frontendJsWebJavascriptFiles.toArray(new VirtualFile[frontendJsWebJavascriptFiles.size()]), true));
+            }
+
+            Set<VirtualFile> frontendJsAuiWebJavascriptFiles = new HashSet<VirtualFile>();
+            for (Library frontendJsAuiWebLibrary : frontendJsAuiWebLibraries) {
+                addJavascriptFilesFromLibrary(frontendJsAuiWebLibrary, frontendJsAuiWebJavascriptFiles);
+            }
+            if (! (frontendJsAuiWebJavascriptFiles.isEmpty()) ) {
+                result.add(ScriptingLibraryModel.createPredefinedLibrary("Liferay Frontend JS AUI Web Scripts", frontendJsAuiWebJavascriptFiles.toArray(new VirtualFile[frontendJsAuiWebJavascriptFiles.size()]), true));
+            }
+
+            return result.toArray(new ScriptingLibraryModel[result.size()]);
         }
 
         return new ScriptingLibraryModel[0];
+    }
+
+    private void addJavascriptFilesFromLibrary(Library library, final Set<VirtualFile> result) {
+        VirtualFile[] files = library.getFiles(OrderRootType.CLASSES);
+        for (VirtualFile file : files) {
+            VirtualFileSystem virtualFileSystem = file.getFileSystem();
+            if (virtualFileSystem instanceof JarFileSystem) {
+                JarFileSystem jarFileSystem = (JarFileSystem) virtualFileSystem;
+
+                VirtualFile root = jarFileSystem.getRootByEntry(file);
+
+                if (root != null) {
+                    VirtualFile[] children = root.getChildren();
+                    for (VirtualFile child : children) {
+                        if (child.isDirectory()) {
+                            addJavascriptFilesFromDirectory(child, result);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void addJavascriptFilesFromDirectory(VirtualFile directory, final Set<VirtualFile> result) {

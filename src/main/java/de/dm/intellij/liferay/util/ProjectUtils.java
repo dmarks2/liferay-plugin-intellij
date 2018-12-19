@@ -71,6 +71,24 @@ public class ProjectUtils {
         }
     }
 
+    public static Collection<Library> findLibrariesByName(final String name, Project project) {
+        final Collection<Library> result = new ArrayList<Library>();
+
+        ProjectRootManager.getInstance(project).orderEntries().forEachLibrary(
+                new Processor<Library>() {
+                    @Override
+                    public boolean process(Library library) {
+                        if (library.getName().contains(name)) {
+                            result.add(library);
+                        }
+                        return true;
+                    }
+                }
+        );
+
+        return result;
+    }
+
     public static Collection<Library> findLibrariesByName(final String name, Module module) {
         final Collection<Library> result = new ArrayList<Library>();
 
