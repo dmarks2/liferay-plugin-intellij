@@ -13,15 +13,17 @@ public class LiferayTaglibModelContextJavaBeanReferenceProvider extends Abstract
     protected String getClassName(PsiElement element) {
         XmlTag xmlTag = PsiTreeUtil.getParentOfType(element, XmlTag.class);
 
-        String modelAttributeValue = xmlTag.getAttributeValue("model");
-        if (modelAttributeValue != null) {
-            return modelAttributeValue;
-        }
-
-        xmlTag = (XmlTag) getPrevSiblingOrParent(element, LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI, "model-context");
-
         if (xmlTag != null) {
-            return xmlTag.getAttributeValue("model");
+            String modelAttributeValue = xmlTag.getAttributeValue("model");
+            if (modelAttributeValue != null) {
+                return modelAttributeValue;
+            }
+
+            XmlTag modelContextTag = (XmlTag)getPrevSiblingOrParent(element, LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI, "model-context");
+
+            if (modelContextTag != null) {
+                return modelContextTag.getAttributeValue("model");
+            }
         }
 
         return null;
@@ -29,7 +31,7 @@ public class LiferayTaglibModelContextJavaBeanReferenceProvider extends Abstract
 
     private static PsiElement getPrevSiblingOrParent(PsiElement element, String classNameElementNamespace, String classNameElementLocalName) {
         PsiElement sibling = element.getPrevSibling();
-        while ( sibling != null) {
+        while (sibling != null) {
             if (sibling instanceof XmlTag) {
                 XmlTag xmlTag = (XmlTag)sibling;
                 String namespace = xmlTag.getNamespace();

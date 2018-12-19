@@ -7,6 +7,7 @@ import javafx.util.Pair;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Stream;
 
 public class LiferayTaglibSearchContainerJavaBeanReferenceContributor extends AbstractLiferayTaglibReferenceContributor {
 
@@ -47,14 +48,16 @@ public class LiferayTaglibSearchContainerJavaBeanReferenceContributor extends Ab
             String attributeName = xmlAttribute.getLocalName();
 
             if (LiferayTaglibs.TAGLIB_URI_LIFERAY_UI.equals(namespace)) {
-                for (Pair<String, String> entry : ATTRIBUTES) {
-                    if (
-                            (entry.getKey().equals(localName)) &&
-                            (entry.getValue().equals(attributeName))
-                    ) {
-                        return true;
+                Stream<Pair<String, String>> entriesStream = ATTRIBUTES.stream();
+
+                return entriesStream.anyMatch(
+                    entry -> {
+                        String key = entry.getKey();
+                        String value = entry.getValue();
+
+                        return key.equals(localName) && value.equals(attributeName);
                     }
-                }
+                );
             }
         }
         return false;

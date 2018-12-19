@@ -76,4 +76,16 @@ public class LiferayTaglibModelContextJavaBeanReferenceProviderTest extends Ligh
         assertTrue(strings.contains("description"));
     }
 
+    public void testJavaBeanReferenceLookupModelAttributeOrder() {
+        myFixture.configureByFiles(
+            "model-attribute-precedence.jsp",
+            "liferay-aui.tld",
+            "de/dm/model/MyModel.java",
+            "de/dm/model/MySecondModel.java"
+        );
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue("model attribute should take precedence before model-context tag", strings.contains("secondaryDescription"));
+    }
+
 }

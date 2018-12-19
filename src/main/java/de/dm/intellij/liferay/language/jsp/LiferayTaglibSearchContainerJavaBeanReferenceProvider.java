@@ -1,6 +1,5 @@
 package de.dm.intellij.liferay.language.jsp;
 
-import com.intellij.openapi.util.Condition;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlTag;
@@ -12,21 +11,18 @@ public class LiferayTaglibSearchContainerJavaBeanReferenceProvider extends Abstr
     @Nullable
     @Override
     protected String getClassName(PsiElement element) {
-        PsiElement classNameElement = PsiTreeUtil.findFirstParent(element, new Condition<PsiElement>() {
-            @Override
-            public boolean value(PsiElement psiElement) {
-                if (psiElement instanceof XmlTag) {
-                    XmlTag xmlTag = (XmlTag)psiElement;
-                    String namespace = xmlTag.getNamespace();
-                    String localName = xmlTag.getLocalName();
-                    if (LiferayTaglibs.TAGLIB_URI_LIFERAY_UI.equals(namespace)) {
-                        if ("search-container-row".equals(localName)) {
-                            return true;
-                        }
+        PsiElement classNameElement = PsiTreeUtil.findFirstParent(element, psiElement -> {
+            if (psiElement instanceof XmlTag) {
+                XmlTag xmlTag = (XmlTag)psiElement;
+                String namespace = xmlTag.getNamespace();
+                String localName = xmlTag.getLocalName();
+                if (LiferayTaglibs.TAGLIB_URI_LIFERAY_UI.equals(namespace)) {
+                    if ("search-container-row".equals(localName)) {
+                        return true;
                     }
                 }
-                return false;
             }
+            return false;
         });
 
         if (classNameElement != null) {
