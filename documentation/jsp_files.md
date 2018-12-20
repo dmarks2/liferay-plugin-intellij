@@ -12,7 +12,7 @@ By this, references from the *original* JSPs can be resolved, code completion an
 ![Reference to login-web](login_web.png "Reference to login-web")
 
 In Liferay 7 / DXP the JSPs for your portlet are placed at ```META-INF/resources```. This plugin defines that folder as Web Root, so
-absolute paths (e.g. for includes) are resolved properly. 
+absolute paths (e.g. for includes) are resolved properly. The same applies for core JSP hooks (Liferay 7).
 
 Several Liferay or AUI tags provide attributes like ```cssClass``` or ```iconCssClass```. This plugins provides code completion features for this attribute, so that
 (S)CSS classes are resolved properly.

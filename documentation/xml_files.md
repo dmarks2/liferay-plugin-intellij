@@ -9,6 +9,9 @@ The plugin provides known XML-Schema and DTD files for Liferay 6.1, 6.2 and 7.0.
 
 Additionally the plugin provides XML-Schemas for ```portlet-model-hints.xml``` and ```custom-sql/default.xml```. 
 
+In several XML tags you can provide a file name or path. This plugin is able to resolve those paths and link to
+the appropriate files. 
+
 ## Requirements
 
 Should work without any special requirements

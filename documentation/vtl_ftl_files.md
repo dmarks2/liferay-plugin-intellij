@@ -17,6 +17,8 @@ Code Completion works.
 
 Additionally basic Velocity and Freemarker macros are available. For Freemarker, known Liferay Taglibs are available as additional namespaces (Liferay 7 / DXP only).
 
+If you are using ```<@aui:script>``` tags etc. the content is detected as Javascript, too.
+
 ![Freemarker Taglibs](freemarker_taglibs.png "Freemarker Taglibs")
 
 If you have defined custom theme settings in your ```liferay-look-and-feel.xml``` those are are provided for code completion, too. You can jump
@@ -26,7 +28,12 @@ to the declaration in the ```liferay-look-and-feel.xml```.
 
 Known path variables like ```${images_folder}``` are resolved, so code completion e.g. for images in your theme works.
 
+Specific variables like ```serviceLocator``` are detected, so that code completion for the classnames work and the assigned
+variable is treated as an object of the given classname.
+
 ![Freemarker Path Variables](freemarker_path_variables.png "Freemarker Path Variables")
+
+For Liferay 7.x this plugin provides JSON schemas for journal structure files.
 
 ## Requirements
 
