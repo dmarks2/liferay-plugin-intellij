@@ -6,7 +6,7 @@
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
-    <idea-version since-build="163" />
+    <idea-version since-build="181" />
 
     <description><![CDATA[
         <p>This plugin adds some features for developing Liferay modules. The following topics have been improved so far</p>

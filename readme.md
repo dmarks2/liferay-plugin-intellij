@@ -30,19 +30,19 @@ for the plugin. Just have a look at the following topics to see which areas have
 
 Supported IDEs
 --------------
-* IntelliJ 2016.3 and above (Community)
-* IntelliJ 2016.3 and above (Ultimate)
+* IntelliJ 2018.1 and above (Community)
+* IntelliJ 2018.1 and above (Ultimate)
 
 Supported Liferay Versions
 --------------------------
 * Liferay 6.1 CE / EE
 * Liferay 6.2 CE / EE
-* Liferay 7.0 / DXP
+* Liferay 7.0, 7.1 / DXP
 
 Supported Build Tools
 ---------------------
 * Maven
-* Gradle (Liferay 7.0 / DXP only)
+* Gradle (Liferay 7.0, 7.1 / DXP only)
 * Npm 
 
 Releases
