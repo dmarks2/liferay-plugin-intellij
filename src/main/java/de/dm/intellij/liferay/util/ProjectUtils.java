@@ -78,7 +78,7 @@ public class ProjectUtils {
                 new Processor<Library>() {
                     @Override
                     public boolean process(Library library) {
-                        if (library.getName().contains(name)) {
+                        if (library.getName() != null && library.getName().contains(name)) {
                             result.add(library);
                         }
                         return true;
@@ -96,7 +96,7 @@ public class ProjectUtils {
                 new Processor<Library>() {
                     @Override
                     public boolean process(Library library) {
-                        if (library.getName().contains(name)) {
+                        if (library.getName() != null && library.getName().contains(name)) {
                             result.add(library);
                         }
                         return true;

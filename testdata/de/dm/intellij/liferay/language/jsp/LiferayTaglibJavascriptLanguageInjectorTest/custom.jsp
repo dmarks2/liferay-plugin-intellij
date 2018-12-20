@@ -1,5 +1,5 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 
 <aui:script>
-    aler<caret>
+    a<caret>
 </aui:script>

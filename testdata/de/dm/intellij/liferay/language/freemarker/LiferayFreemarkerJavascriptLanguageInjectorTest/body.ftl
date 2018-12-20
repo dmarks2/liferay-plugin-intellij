@@ -1,3 +1,3 @@
 <@liferay_aui.script>
-    aler<caret>
+    a<caret>
 </@>

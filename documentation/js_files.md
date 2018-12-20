@@ -15,6 +15,9 @@ like highlighting, syntax checking and code completions. This works for several 
 
 ## Requirements
 
+To lookup AlloyUI or Liferay Javascript files you need to add a dependency to ```portal-web``` (Liferay 6.x) or to 
+```com.liferay.frontend.js.web``` and ```com.liferay.frontend.js.aui.web``` (Liferay 7.x) somewhere in your project.
+
 To detect the tags, the namespaces must be declared properly, e.g.
 
 ``` html

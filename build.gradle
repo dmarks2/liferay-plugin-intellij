@@ -25,11 +25,6 @@ tasks.withType(JavaCompile) {
 def generatedResources = "$buildDir/generated-resources"
 def tempDir = "$buildDir/tmp"
 
-def liferay70FrontendJsWebURL = "http://central.maven.org/maven2/com/liferay/com.liferay.frontend.js.web/1.0.71/com.liferay.frontend.js.web-1.0.71.jar";
-def liferay70FrontendAuiJsWebURL = "http://central.maven.org/maven2/com/liferay/com.liferay.frontend.js.aui.web/1.0.24/com.liferay.frontend.js.aui.web-1.0.24.jar";
-def liferay71FrontendJsWebURL = "http://central.maven.org/maven2/com/liferay/com.liferay.frontend.js.web/2.0.6/com.liferay.frontend.js.web-2.0.6.jar";
-def liferay71FrontendAuiJsWebURL = "http://central.maven.org/maven2/com/liferay/com.liferay.frontend.js.aui.web/2.0.2/com.liferay.frontend.js.aui.web-2.0.2.jar";
-
 test {
     testLogging {
         exceptionFormat = 'full'
@@ -45,7 +40,7 @@ sourceSets {
             srcDirs = ['src/main/resources']
         }
 
-        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'unzipAlloyUI15', 'unzipAlloyUI20', 'unzipLiferayFrontendJsWeb', 'unzipLiferayFrontendJsAuiWeb', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions', 'generateLiferayBareboneJavascriptFiles'])
+        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions'])
     }
 }
 
@@ -187,62 +182,6 @@ task generateLiferayDefinitions {
     }
 }
 
-task downloadLiferayFrontendJsAuiWeb(type: Download) {
-    src liferay70FrontendAuiJsWebURL
-    acceptAnyCertificate true
-    overwrite true
-    onlyIfNewer true
-    dest new File(tempDir, 'com.liferay.frontend.js.aui.web')
-}
-task downloadLiferayFrontendJsWeb(type: Download) {
-    src liferay70FrontendJsWebURL
-    acceptAnyCertificate true
-    overwrite true
-    onlyIfNewer true
-    dest new File(tempDir, 'com.liferay.frontend.js.web.jar')
-}
-
-task downloadAlloyUI20(type: Download) {
-    src 'https://github.com/liferay/alloy-ui/releases/download/2.0.0/alloy-2.0.0.zip'
-    acceptAnyCertificate true
-    overwrite true
-    onlyIfNewer true
-    dest new File(tempDir, 'alloy-2.0.0.zip')
-}
-task downloadAlloyUI15(type: Download) {
-    src 'http://cdn.alloyui.com/downloads/alloy-1.5.1.zip'
-    acceptAnyCertificate true
-    overwrite true
-    onlyIfNewer true
-    dest new File(tempDir, 'alloy-1.5.1.zip')
-}
-task unzipLiferayFrontendJsAuiWeb(dependsOn: downloadLiferayFrontendJsAuiWeb, type: Copy) {
-    from zipTree(downloadLiferayFrontendJsAuiWeb.dest)
-    into generatedResources + '/com/liferay/js/70/aui'
-    include {
-        FileTreeElement e ->
-            e.file.name.endsWith('.js') &&
-            (! ( (e.file.name.endsWith('-min.js')) || (e.file.name.endsWith('-debug.js')) || (e.file.name.endsWith('-coverage.js')) ) )
-    }
-}
-task unzipLiferayFrontendJsWeb(dependsOn: downloadLiferayFrontendJsWeb, type: Copy) {
-    from zipTree(downloadLiferayFrontendJsWeb.dest)
-    into generatedResources + '/com/liferay/js/70/frontend'
-    include {
-        FileTreeElement e ->
-            e.file.name.endsWith('.js') &&
-            (! ( (e.file.name.endsWith('-min.js')) || (e.file.name.endsWith('-debug.js')) || (e.file.name.endsWith('-coverage.js')) ) )
-    }
-}
-task unzipAlloyUI20(dependsOn: downloadAlloyUI20, type: Copy) {
-    from zipTree(downloadAlloyUI20.dest)
-    into generatedResources
-}
-task unzipAlloyUI15(dependsOn: downloadAlloyUI15, type: Copy) {
-    from zipTree(downloadAlloyUI15.dest)
-    into generatedResources + '/alloy-1.5.1'
-}
-
 task generateTaglibDefinitions {
     doLast {
         def target = new File(generatedResources, "com/liferay/tld");
@@ -270,70 +209,6 @@ task generateTaglibDefinitions {
                     'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/trash/trash-taglib/src/main/resources/META-INF/liferay-trash.tld'
             ])
             dest target
-            acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
-        }
-    }
-}
-
-task generateLiferayBareboneJavascriptFiles {
-    doLast {
-        def target = new File(generatedResources, "com/liferay/js");
-        target.mkdirs();
-
-        //Liferay 6.1 Barebone Javascript (as defined in portal.properties: https://github.com/liferay/liferay-portal/blob/6.1.x/portal-impl/src/portal.properties)
-        //Missing: aui/yui/yui.js,
-        //Found:
-        download {
-            src([
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/modules.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/dependency.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/events.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/language.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/liferay.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/util.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/portal.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/portlet.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/portlet_sharing.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/workflow.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/form.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/form_placeholders.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/icon.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/menu.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/notice.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-web/docroot/html/js/liferay/poller.js',
-            ])
-            dest new File(target, "61")
-            acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
-        }
-
-        //Liferay 6.2 Barebone Javascript (as defined in portal.properties: https://github.com/liferay/liferay-portal/blob/6.2.x/portal-impl/src/portal.properties)
-        //Missing: aui/yui/yui.js,
-        download {
-            src([
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/browser_selectors.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/modules.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/aui_sandbox.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/dependency.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/events.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/language.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/liferay.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/util.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/portal.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/portlet.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/portlet_sharing.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/workflow.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/form.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/form_placeholders.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/icon.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/menu.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/notice.js',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-web/docroot/html/js/liferay/poller.js'
-            ])
-            dest new File(target, "62")
             acceptAnyCertificate true
             overwrite true
             onlyIfNewer true

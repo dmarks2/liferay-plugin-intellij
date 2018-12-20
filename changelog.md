@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Class Name completion for serviceLocator.findService(), enumUtil, staticUtil and staticFieldGetter in Freemarker templates
 - Feature: Implicit resolve of serviceLocator, enumUtil and staticUtil instructions in Freemarker templates
 - Feature: Inpsections for JSP files 
+- Change: do not include AlloyUI and Liferay Javascript in the plugin, use project dependencies instead
 
 ## 0.0.2
 - Feature: Added Compass Support for Liferay 6.1 and 6.2

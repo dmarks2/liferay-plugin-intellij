@@ -1,1 +1,1 @@
-<@liferay_aui.a href="" onClick="aler<caret>" />
+<@liferay_aui.a href="" onClick="a<caret>" />
