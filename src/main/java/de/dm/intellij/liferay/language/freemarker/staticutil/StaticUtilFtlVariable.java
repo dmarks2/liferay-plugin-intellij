@@ -42,8 +42,8 @@ public class StaticUtilFtlVariable extends FtlLightVariable {
                                 PsiClass psiClass = psiClassType.resolve();
                                 if (psiClass != null) {
                                     PsiType immediateClassType = new PsiImmediateClassType(psiClass, PsiSubstitutor.EMPTY);
-
-                                    FtlVariable variable = new CustomFtlVariable(referenceName, place, FtlPsiType.wrap(immediateClassType));
+                                    FtlPsiType ftlPsiType = new FtlPsiType(immediateClassType, true);
+                                    FtlVariable variable = new CustomFtlVariable(referenceName, place, ftlPsiType);
 
                                     processor.execute(variable, state);
                                 }
