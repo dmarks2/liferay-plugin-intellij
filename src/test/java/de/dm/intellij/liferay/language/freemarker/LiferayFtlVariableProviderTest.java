@@ -268,9 +268,7 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue("Static method should be available", strings.contains("sayHello"));
-        //TODO instance methods...
-        //assertFalse("Instance method should not be available", strings.contains("helloInternal"));
-    }
+   }
 
     public void testStaticUtilLookup() {
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/static-util-lookup.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "de/dm/MyUtil.java");

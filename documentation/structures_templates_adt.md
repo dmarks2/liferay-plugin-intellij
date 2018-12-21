@@ -14,6 +14,14 @@ You can jump to the declaration in the structure file.
 
 ![Journal Template Structure Fields](journal_template_structure_fields.png "Journal Template Structure Fields")
 
+In Liferay 7.x Journal structures are saved as JSON files. This plugin provides a JSON schema for those files, so that
+the files are validated and code completion is available. This applies to:
+* Journal Structure Files
+* assets.json
+* sitemap.json
+
+![JSON Schema](json_schema.png "JSON Schema")
+
 **Application Display Templates** can use Velocity or Freemarker, too. This plugin defines implicit variables
 depending on the type of the ADT, e.g. ```entry``` with the type of an ```AssetEntry``` for Asset Publisher ADTs.
 
