@@ -137,18 +137,24 @@ public class AlloyUIPredefinedLibraryProvider extends JSPredefinedLibraryProvide
     private void addJavascriptFilesFromLibrary(Library library, final Set<VirtualFile> result, Predicate<VirtualFile> includeFile) {
         VirtualFile[] files = library.getFiles(OrderRootType.CLASSES);
         for (VirtualFile file : files) {
+
+            VirtualFile root;
+
             VirtualFileSystem virtualFileSystem = file.getFileSystem();
+
             if (virtualFileSystem instanceof JarFileSystem) {
                 JarFileSystem jarFileSystem = (JarFileSystem) virtualFileSystem;
 
-                VirtualFile root = jarFileSystem.getRootByEntry(file);
+                root = jarFileSystem.getRootByEntry(file);
+            } else {
+                root = JarFileSystem.getInstance().getJarRootForLocalFile(file);
+            }
 
-                if (root != null) {
-                    VirtualFile[] children = root.getChildren();
-                    for (VirtualFile child : children) {
-                        if (child.isDirectory()) {
-                            addJavascriptFilesFromDirectory(child, result, includeFile);
-                        }
+            if (root != null) {
+                VirtualFile[] children = root.getChildren();
+                for (VirtualFile child : children) {
+                    if (child.isDirectory()) {
+                        addJavascriptFilesFromDirectory(child, result, includeFile);
                     }
                 }
             }
