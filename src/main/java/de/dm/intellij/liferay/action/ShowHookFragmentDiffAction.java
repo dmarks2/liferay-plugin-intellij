@@ -2,9 +2,13 @@ package de.dm.intellij.liferay.action;
 
 import com.intellij.diff.DiffManager;
 import com.intellij.diff.DiffRequestFactory;
+import com.intellij.diff.actions.CompareFilesAction;
 import com.intellij.diff.requests.DiffRequest;
 import com.intellij.ide.highlighter.NewJspFileType;
-import com.intellij.openapi.actionSystem.*;
+import com.intellij.openapi.actionSystem.ActionPlaces;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
@@ -23,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ShowHookFragmentDiffAction extends AnAction {
+public class ShowHookFragmentDiffAction extends CompareFilesAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
@@ -48,7 +52,8 @@ public class ShowHookFragmentDiffAction extends AnAction {
         }
     }
 
-    private DiffRequest getDiffRequest(@NotNull AnActionEvent e) {
+    @Override
+    protected DiffRequest getDiffRequest(@NotNull AnActionEvent e) {
         Project project = e.getProject();
 
         VirtualFile selectedFile = getSelectedFile(e);
@@ -61,19 +66,19 @@ public class ShowHookFragmentDiffAction extends AnAction {
         return null;
     }
 
-    private boolean isAvailable(AnActionEvent e) {
+    @Override
+    protected boolean isAvailable(AnActionEvent e) {
         VirtualFile selectedFile = getSelectedFile(e);
         if (selectedFile == null) {
             return false;
         }
         if (NewJspFileType.INSTANCE.equals(selectedFile.getFileType())) {
             VirtualFile originalFile = getOriginalFile(e);
-            if (originalFile == null) {
-                return false;
-            }
+
+            return originalFile != null;
         }
 
-        return true;
+        return false;
     }
 
     @Nullable

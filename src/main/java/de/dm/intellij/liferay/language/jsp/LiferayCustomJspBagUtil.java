@@ -7,6 +7,7 @@ import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiClassType;
 import com.intellij.psi.PsiCodeBlock;
+import com.intellij.psi.PsiConstantEvaluationHelper;
 import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiLiteralExpression;
@@ -63,16 +64,24 @@ public class LiferayCustomJspBagUtil {
             if ("getCustomJspDir".equals(method.getName())) {
                 if (PsiUtil.getAccessLevel(method.getModifierList()) == PsiUtil.ACCESS_LEVEL_PUBLIC) {
                     PsiCodeBlock body = method.getBody();
-                    PsiStatement[] statements = body.getStatements();
-                    for (PsiStatement statement : statements) {
-                        if (statement instanceof PsiReturnStatement) {
-                            PsiReturnStatement returnStatement = (PsiReturnStatement)statement;
-                            PsiExpression returnValue = returnStatement.getReturnValue();
-                            if (returnValue instanceof PsiLiteralExpression) {
-                                PsiLiteralExpression literalExpression = (PsiLiteralExpression) returnValue;
-                                String text = literalExpression.getText();
-                                text = StringUtil.unquoteString(text);
-                                return text;
+                    if (body != null) {
+                        PsiStatement[] statements = body.getStatements();
+                        for (PsiStatement statement : statements) {
+                            if (statement instanceof PsiReturnStatement) {
+                                PsiReturnStatement returnStatement = (PsiReturnStatement) statement;
+                                PsiExpression returnValue = returnStatement.getReturnValue();
+
+                                PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(psiClass.getProject()).getConstantEvaluationHelper();
+
+                                Object constantExpression = constantEvaluationHelper.computeConstantExpression(returnValue);
+
+                                if (constantExpression instanceof String) {
+                                    String text = (String)constantExpression;
+
+                                    text = StringUtil.unquoteString(text);
+
+                                    return text;
+                                }
                             }
                         }
                     }

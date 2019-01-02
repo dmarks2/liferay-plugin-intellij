@@ -8,10 +8,10 @@ import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
-import com.intellij.openapi.util.io.FileUtil;
+import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiDirectory;
+import com.intellij.openapi.vfs.VirtualFileSystem;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileSystemItem;
 import com.intellij.psi.PsiManager;
@@ -23,7 +23,6 @@ import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -315,29 +314,47 @@ public class LiferayFileUtil {
     public static void addLibraryRoot(final Collection<PsiFileSystemItem> result, final FileReferenceHelper fileReferenceHelper, final Module module, final String libraryName, final String path) {
 
         ModuleRootManager.getInstance(module).orderEntries().forEachLibrary(
-                new Processor<Library>() {
-                    @Override
-                    public boolean process(Library library) {
+            library -> {
 
-                        if (library.getName().contains(libraryName)) {
-                            VirtualFile[] files = library.getFiles(OrderRootType.CLASSES);
-                            for (VirtualFile file : files) {
-                                if ( (path == null) || (path.trim().length() == 0) ) {
-                                    result.add(fileReferenceHelper.getPsiFileSystemItem(module.getProject(), file));
-                                } else {
-                                    VirtualFile child = getChild(file, path);
-                                    if (child != null) {
-                                        result.add(fileReferenceHelper.getPsiFileSystemItem(module.getProject(), child));
-                                    }
+                if (library.getName() != null && library.getName().contains(libraryName)) {
+                    VirtualFile[] files = library.getFiles(OrderRootType.CLASSES);
+                    for (VirtualFile file : files) {
+
+                        VirtualFile root = getJarRoot(file);
+
+                        if (root != null) {
+                            if ((path == null) || (path.trim().length() == 0)) {
+                                result.add(fileReferenceHelper.getPsiFileSystemItem(module.getProject(), root));
+                            } else {
+                                VirtualFile child = getChild(root, path);
+                                if (child != null) {
+                                    result.add(fileReferenceHelper.getPsiFileSystemItem(module.getProject(), child));
                                 }
                             }
                         }
-
-                        return true;
                     }
                 }
+
+                return true;
+            }
         );
 
+    }
+
+    public static VirtualFile getJarRoot(VirtualFile file) {
+        VirtualFile root;
+
+        VirtualFileSystem virtualFileSystem = file.getFileSystem();
+
+        if (virtualFileSystem instanceof JarFileSystem) {
+            JarFileSystem jarFileSystem = (JarFileSystem) virtualFileSystem;
+
+            root = jarFileSystem.getRootByEntry(file);
+        } else {
+            root = JarFileSystem.getInstance().getJarRootForLocalFile(file);
+        }
+
+        return root;
     }
 
     public static String getCustomJspDir(Module module) {

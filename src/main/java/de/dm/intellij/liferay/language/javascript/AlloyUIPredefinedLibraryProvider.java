@@ -8,12 +8,11 @@ import com.intellij.openapi.roots.ModuleRootEvent;
 import com.intellij.openapi.roots.ModuleRootListener;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
-import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileSystem;
 import com.intellij.openapi.vfs.VirtualFileVisitor;
 import com.intellij.webcore.libraries.ScriptingLibraryModel;
+import de.dm.intellij.liferay.util.LiferayFileUtil;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -138,17 +137,7 @@ public class AlloyUIPredefinedLibraryProvider extends JSPredefinedLibraryProvide
         VirtualFile[] files = library.getFiles(OrderRootType.CLASSES);
         for (VirtualFile file : files) {
 
-            VirtualFile root;
-
-            VirtualFileSystem virtualFileSystem = file.getFileSystem();
-
-            if (virtualFileSystem instanceof JarFileSystem) {
-                JarFileSystem jarFileSystem = (JarFileSystem) virtualFileSystem;
-
-                root = jarFileSystem.getRootByEntry(file);
-            } else {
-                root = JarFileSystem.getInstance().getJarRootForLocalFile(file);
-            }
+            VirtualFile root = LiferayFileUtil.getJarRoot(file);
 
             if (root != null) {
                 VirtualFile[] children = root.getChildren();
