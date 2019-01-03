@@ -24,13 +24,14 @@ public class LiferaySassPlaceholderReferenceProvider extends PsiReferenceProvide
     @Override
     public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
         if (
-                (
-                        //Parsed CSS file
-                        (element.getParent() instanceof CssUri) ||
-                        //Parsed SCSS file
-                        ( (element.getParent() instanceof CssTerm) && ("URI".equals( ((CssTerm)element.getParent()).getTermType().toString() ) ) )
-                ) &&
-                (element.getText() != null) ) {
+            (
+                //Parsed CSS file
+                (element.getParent() instanceof CssUri) ||
+                //Parsed SCSS file
+                ( (element.getParent() instanceof CssTerm) && ("URI".equals( ((CssTerm)element.getParent()).getTermType().toString() ) ) )
+            ) &&
+            (element.getText() != null)
+        ) {
             String text = StringUtil.unquoteString(element.getText());
             if (text.contains("@theme_image_path@")) {
                 final TextRange textRange = ElementManipulators.getValueTextRange(element);

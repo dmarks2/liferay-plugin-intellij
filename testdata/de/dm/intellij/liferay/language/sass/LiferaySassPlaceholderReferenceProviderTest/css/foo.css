@@ -1,0 +1,3 @@
+body {
+    background-image: url("@theme_image_path@/<caret>");
+}
