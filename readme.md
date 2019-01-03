@@ -26,7 +26,7 @@ for the plugin. Just have a look at the following topics to see which areas have
 * When [editing JSP files](documentation/jsp_files.md) you have access to the original JSPs (in JSP hooks or web fragments). Additionally code completion is possible for Liferay or AUI taglibs including cssClasses and language keys.
 * Known properties for [OSGi components](documentation/osgi_components.md) are provided (e.g. Portlet properties).
 * You can jump forward and backward between the [service.xml](documentation/service_xml.md) and the implementation class.
-
+* Support for [groovy scripts](documentation/groovy.md) (Liferay admin console).
 
 Supported IDEs
 --------------
