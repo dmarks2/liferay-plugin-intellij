@@ -272,8 +272,6 @@ public class TemplateVariableProcessorUtil {
 
         PsiFile file = PsiManager.getInstance(project).findFile(journalStructureFile);
 
-        String className = "com.liferay.portal.kernel.templateparser.TemplateNode";
-
         if (file instanceof XmlFile) {
             TemplateVariableParser<XmlFile> templateVariableParser = new TemplateVariableXMLParser();
             List<TemplateVariable> templateVariables = templateVariableParser.getTemplateVariables((XmlFile) file, templateFile);
@@ -281,42 +279,6 @@ public class TemplateVariableProcessorUtil {
             for (TemplateVariable templateVariable : templateVariables) {
                 result.add(templateVariableProcessor.createStructureVariable(templateVariable));
             }
-
-            /*
-            XmlFile xmlFile = (XmlFile) file;
-
-            XmlDocument xmlDocument = xmlFile.getDocument();
-
-            XmlTag rootTag = xmlDocument.getRootTag();
-
-            for (XmlTag xmlTag : rootTag.getSubTags()) {
-                if ("dynamic-element".equals(xmlTag.getLocalName())) {
-                    XmlAttribute xmlAttribute = xmlTag.getAttribute("name");
-                    if (xmlAttribute != null) {
-                        String name = xmlAttribute.getValue();
-                        boolean repeatable = false;
-                        if ( (xmlTag.getAttribute("repeatable") != null) && "true".equalsIgnoreCase(xmlTag.getAttributeValue("repeatable")) ) {
-                            repeatable = true;
-                        }
-
-                        XmlTag[] subTags = xmlTag.findSubTags("dynamic-element");
-
-                        Collection<T> nestedVariables = null;
-
-                        if ( (subTags != null) && (subTags.length > 0))  {
-                            nestedVariables = new ArrayList<T>();
-                            for (XmlTag subTag : subTags) {
-                                String subName = subTag.getAttributeValue("name");
-                                if (subName != null) {
-                                    nestedVariables.add(templateVariableProcessor.createVariable(subName, templateFile, className, subTag.getNavigationElement(), null, false));
-                                }
-                            }
-                        }
-                        result.add(templateVariableProcessor.createVariable(name, templateFile, className, xmlTag.getNavigationElement(), nestedVariables, repeatable));
-                    }
-                }
-            }
-            */
         } else if (file instanceof JsonFile) {
             TemplateVariableParser<JsonFile> templateVariableParser = new TemplateVariableJsonParser();
             List<TemplateVariable> templateVariables = templateVariableParser.getTemplateVariables((JsonFile) file, templateFile);
@@ -324,66 +286,6 @@ public class TemplateVariableProcessorUtil {
             for (TemplateVariable templateVariable : templateVariables) {
                 result.add(templateVariableProcessor.createStructureVariable(templateVariable));
             }
-
-            /*
-            JsonFile jsonFile = (JsonFile)file;
-            JsonValue root = jsonFile.getTopLevelValue();
-            for (PsiElement value : root.getChildren()) {
-                if (value instanceof JsonProperty) {
-                    JsonProperty property = (JsonProperty)value;
-                    if ("fields".equals(property.getName())) {
-                        JsonArray jsonArray = (JsonArray)property.getValue();
-                        if (jsonArray != null) {
-                            for (JsonValue jsonValue : jsonArray.getValueList()) {
-                                if (jsonValue instanceof JsonObject) {
-                                    JsonObject jsonObject = (JsonObject)jsonValue;
-
-                                    Collection<T> nestedVariables = null;
-
-                                    JsonProperty nameProperty = jsonObject.findProperty("name");
-                                    if (nameProperty != null) {
-                                        String name = nameProperty.getValue().getText();
-                                        if ((name != null) && (name.trim().length() > 0)) {
-                                            boolean repeatable = false;
-                                            if ( (jsonObject.findProperty("repeatable") != null) && (jsonObject.findProperty("repeatable").getValue() instanceof JsonBooleanLiteral) ) {
-                                                repeatable = ((JsonBooleanLiteral) jsonObject.findProperty("repeatable").getValue()).getValue();
-                                            }
-
-                                            JsonProperty subproperty = jsonObject.findProperty("nestedFields");
-                                            if ( (subproperty != null) ) {
-                                                nestedVariables = new ArrayList<T>();
-
-                                                JsonArray subjsonArray = (JsonArray) subproperty.getValue();
-                                                if (subjsonArray != null) {
-                                                    for (JsonValue subjsonValue : subjsonArray.getValueList()) {
-                                                        if (subjsonValue instanceof JsonObject) {
-                                                            JsonObject subjsonObject = (JsonObject) subjsonValue;
-                                                            JsonProperty subnameProperty = subjsonObject.findProperty("name");
-                                                            if (subnameProperty != null) {
-                                                                String subname = subnameProperty.getValue().getText();
-                                                                if ((subname != null) && (subname.trim().length() > 0)) {
-                                                                    subname = StringUtil.unquoteString(subname);
-
-                                                                    nestedVariables.add(templateVariableProcessor.createVariable(subname, templateFile, className, subnameProperty.getValue(), null, false));
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-
-                                            name = StringUtil.unquoteString(name);
-
-                                            result.add(templateVariableProcessor.createVariable(name, templateFile, className, nameProperty.getValue(),nestedVariables, repeatable));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            */
         }
 
         return result;
