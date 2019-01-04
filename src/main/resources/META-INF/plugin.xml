@@ -1,6 +1,6 @@
-<idea-plugin>
+<idea-plugin url="https://github.com/dmarks2/liferay-plugin-intellij">
     <id>de.dm.intellij.liferay</id>
-    <name>Liferay Plugin</name>
+    <name>Liferay</name>
     <category>Framework integration</category>
     <version>0.0.3</version>
 
