@@ -50,6 +50,10 @@ Releases
 
 See [Releases](https://github.com/dmarks2/liferay-plugin-intellij/releases) to download binary release versions.
 
+For automatic updates configure the following URL as custom repository in IntelliJ IDEA:
+
+    https://raw.githubusercontent.com/dmarks2/liferay-plugin-intellij/master/
+
 Developers
 ----------
 This plugin uses a [Gradle based IntelliJ Plugin development](http://www.jetbrains.org/intellij/sdk/docs/tutorials/build_system/prerequisites.html).

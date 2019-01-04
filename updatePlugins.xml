@@ -1,0 +1,3 @@
+<plugins>
+    <plugin id="de.dm.intellij.liferay" url="https://github.com/dmarks2/liferay-plugin-intellij/releases/download/liferay-plugin-intellij-0.0.3/Liferay.IntelliJ.Plugin-0.0.3.zip" version="0.0.3" />
+</plugins>
