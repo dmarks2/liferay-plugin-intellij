@@ -40,6 +40,8 @@ public class LiferayVersionMavenImporter extends MavenImporter {
     public static final String PROPERTY_LIFERAY_VERSION = "liferay.version";
 
     public static Collection<String> LIFERAY_BOMS = Arrays.asList(
+            "com.liferay.ce.portal.bom",
+            "com.liferay.ce.portal.compile.only",
             "release.dxp.bom",
             "release.dxp.bom.compile.only",
             "release.dxp.distro",
@@ -119,7 +121,10 @@ public class LiferayVersionMavenImporter extends MavenImporter {
                                             if (
                                                     "import".equals(scope) &&
                                                             "pom".equals(type) &&
-                                                            "com.liferay.portal".equals(groupId) &&
+                                                            (
+                                                                "com.liferay".equals(groupId) ||
+                                                                "com.liferay.portal".equals(groupId)
+                                                            ) &&
                                                             artifactId != null &&
                                                             LIFERAY_BOMS.contains(artifactId) &&
                                                             version != null
