@@ -52,7 +52,7 @@ See [Releases](https://github.com/dmarks2/liferay-plugin-intellij/releases) to d
 
 For automatic updates configure the following URL as custom repository in IntelliJ IDEA:
 
-    https://raw.githubusercontent.com/dmarks2/liferay-plugin-intellij/master/
+    https://raw.githubusercontent.com/dmarks2/liferay-plugin-intellij/master/updatePlugins.xml
 
 Developers
 ----------
