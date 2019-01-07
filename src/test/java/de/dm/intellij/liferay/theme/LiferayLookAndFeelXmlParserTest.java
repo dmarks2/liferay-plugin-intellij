@@ -10,12 +10,8 @@ public class LiferayLookAndFeelXmlParserTest extends LightCodeInsightFixtureTest
         return "testdata/de/dm/intellij/liferay/theme/LiferayLookAndFeelXmlParserTest";
     }
 
-    public void testCompletion() {
+    public void testLookAndFeelXmlParser() {
         myFixture.configureByFiles("liferay-look-and-feel.xml");
-
-        //workaround?
-        String text = myFixture.getFile().getText();
-        myFixture.saveText(myFixture.getFile().getVirtualFile(), text);
 
         LiferayModuleComponent liferayModuleComponent = LiferayModuleComponent.getInstance(myFixture.getModule());
 

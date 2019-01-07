@@ -13,10 +13,6 @@ public class OsgiBndFileParserTest extends LightCodeInsightFixtureTestCase {
     public void testOsgiBndFileParser() {
         myFixture.configureByFiles("bnd.bnd");
 
-        //workaround?
-        String text = myFixture.getFile().getText();
-        myFixture.saveText(myFixture.getFile().getVirtualFile(), text);
-
         assertEquals("com.liferay.dynamic.data.lists.form.web", LiferayModuleComponent.getOsgiFragmentHostPackageName(myFixture.getModule()));
     }
 

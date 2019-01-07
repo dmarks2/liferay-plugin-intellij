@@ -9,8 +9,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import com.intellij.util.xml.NanoXmlUtil;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -35,34 +38,42 @@ public class LiferayLookAndFeelXmlParser {
                 if (component != null) {
                     component.setLiferayLookAndFeelXml(virtualFile.getUrl());
 
-                    XmlFile xmlFile = (XmlFile) PsiManager.getInstance(module.getProject()).findFile(virtualFile);
+                    if (virtualFile.getLength() > 0) {
+                        try {
+                            NanoXmlUtil.parse(virtualFile.getInputStream(), new NanoXmlUtil.BaseXmlBuilder() {
+                                @Override
+                                public void addPCData(Reader reader, String systemID, int lineNr) throws Exception {
+                                    String location = getLocation();
 
-                    component.getThemeSettings().put(TEMPLATE_EXTENSION, parseThemeSetting(xmlFile, TEMPLATE_EXTENSION, "ftl"));
-                    component.getThemeSettings().put(ROOT_PATH, parseThemeSetting(xmlFile, ROOT_PATH, "/"));
-                    component.getThemeSettings().put(CSS_PATH, parseThemeSetting(xmlFile, CSS_PATH, "/css"));
-                    component.getThemeSettings().put(IMAGES_PATH, parseThemeSetting(xmlFile, IMAGES_PATH, "/images"));
-                    component.getThemeSettings().put(JAVASCRIPT_PATH, parseThemeSetting(xmlFile, JAVASCRIPT_PATH, "/js"));
-                    component.getThemeSettings().put(TEMPLATES_PATH, parseThemeSetting(xmlFile, TEMPLATES_PATH, "/templates"));
-
-                }
-            }
-        }
-    }
-
-    public static String parseThemeSetting(XmlFile xmlFile, String setting, String defaultValue) {
-        if (xmlFile != null) {
-            if (xmlFile.isValid()) {
-                XmlTag rootTag = xmlFile.getRootTag();
-                if ("look-and-feel".equals(rootTag.getLocalName())) {
-                    XmlTag themeTag = rootTag.findFirstSubTag("theme");
-                    if (themeTag != null) {
-                        return getTagValue(themeTag, setting, defaultValue);
+                                    switch (location) {
+                                        case ".look-and-feel.theme." + ROOT_PATH:
+                                            component.getThemeSettings().put(ROOT_PATH, readText(reader).trim());
+                                            break;
+                                        case ".look-and-feel.theme." + TEMPLATE_EXTENSION:
+                                            component.getThemeSettings().put(TEMPLATE_EXTENSION, readText(reader).trim());
+                                            break;
+                                        case ".look-and-feel.theme." + CSS_PATH:
+                                            component.getThemeSettings().put(CSS_PATH, readText(reader).trim());
+                                            break;
+                                        case ".look-and-feel.theme." + IMAGES_PATH:
+                                            component.getThemeSettings().put(IMAGES_PATH, readText(reader).trim());
+                                            break;
+                                        case ".look-and-feel.theme." + JAVASCRIPT_PATH:
+                                            component.getThemeSettings().put(JAVASCRIPT_PATH, readText(reader).trim());
+                                            break;
+                                        case ".look-and-feel.theme." + TEMPLATES_PATH:
+                                            component.getThemeSettings().put(TEMPLATES_PATH, readText(reader).trim());
+                                            break;
+                                    }
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
         }
-
-        return defaultValue;
     }
 
     public static Collection<Setting> parseSettings(XmlFile xmlFile) {

@@ -1,0 +1,12 @@
+{
+  "name": "my-theme",
+  "version": "1.0.0",
+  "main": "package.json",
+  "liferayTheme": {
+    "baseTheme": "styled",
+    "screenshot": "",
+    "rubySass": false,
+    "templateLanguage": "ftl",
+    "version": "7.0"
+  }
+}
