@@ -2,7 +2,7 @@
     <id>de.dm.intellij.liferay</id>
     <name>Liferay</name>
     <category>Framework integration</category>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
@@ -25,6 +25,10 @@
       ]]></description>
 
     <change-notes><![CDATA[
+        <p>Version 0.0.4</p>
+        <ul>
+            <li>Bugfix: Fixed parsing liferay-look-and-feel.xml when creating that file for the first time</li>
+        </ul>
         <p>Version 0.0.3</p>
         <ul>
             <li>Feature: Javascript injection for aui:validator and many onXXX attributes</li>

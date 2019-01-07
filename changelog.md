@@ -3,6 +3,9 @@ Liferay Plugin for IntelliJ
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.4
+- Bugfix: Fixed parsing liferay-look-and-feel.xml when creating that file for the first time
+
 ## 0.0.3
 - Feature: Javascript injection for aui:validator and many onXXX attributes<
 - Feature: File References in several Liferay XML files
