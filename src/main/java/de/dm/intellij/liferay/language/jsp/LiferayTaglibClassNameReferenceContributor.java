@@ -4,13 +4,13 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReferenceProvider;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.JavaClassReferenceProvider;
 import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import de.dm.intellij.liferay.util.LiferayTaglibAttributes;
 import javafx.util.Pair;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -42,27 +42,15 @@ public class LiferayTaglibClassNameReferenceContributor extends AbstractLiferayT
     @Override
     protected boolean isSuitableAttribute(XmlAttribute xmlAttribute) {
         if (containsTextOnly(xmlAttribute)) {
-            XmlTag xmlTag = xmlAttribute.getParent();
-            if (xmlTag != null) {
-                if (LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_CLASS_NAME.containsKey(xmlTag.getNamespace())) {
-                    Collection<Pair<String, String>> entries = LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_CLASS_NAME.get(xmlTag.getNamespace());
-
-                    Stream<Pair<String, String>> entriesStream = entries.stream();
-
-                    return entriesStream.anyMatch(
-                        entry -> {
-                            String key = entry.getKey();
-                            String value = entry.getValue();
-
-                            return key.equals(xmlTag.getLocalName()) && value.equals(xmlAttribute.getLocalName());
-
-                        }
-                    );
-                }
-            }
+            return super.isSuitableAttribute(xmlAttribute);
         }
         return false;
 
+    }
+
+    @Override
+    protected Map<String, Collection<Pair<String, String>>> getTaglibMap() {
+        return LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_CLASS_NAME;
     }
 
     private boolean containsTextOnly(XmlAttribute xmlAttribute) {
