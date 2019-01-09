@@ -5,9 +5,10 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.4
 - Bugfix: Fixed parsing liferay-look-and-feel.xml when creating that file for the first time
+- Bugfix: Correctly detect locale strings in JSON schema for journal structure files
 
 ## 0.0.3
-- Feature: Javascript injection for aui:validator and many onXXX attributes<
+- Feature: Javascript injection for aui:validator and many onXXX attributes
 - Feature: File References in several Liferay XML files
 - Bugfix: Code completion for OSGi properties did not work when using Java Constants
 - Feature: Quick documentation for several OSGi properties

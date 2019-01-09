@@ -7,18 +7,21 @@
     "availableLanguageIds": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^([a-z]{2})([_-]{1}[A-Z]{2})?$"
       },
       "uniqueItems": true
     },
     "defaultLanguageId": {
-      "type": "string"
+      "type": "string",
+      "pattern": "^([a-z]{2})([_-]{1}[A-Z]{2})?$"
     },
     "fields": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/field"
-      }
+      },
+      "minItems": 1
     }
   },
   "required": [
@@ -32,21 +35,42 @@
         "label": {
           "type": "object",
           "description": "Enter a descriptive field label that guides users to enter the information you want.",
-          "additionalProperties": { "type": "string" }
+          "patternProperties": {
+            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
         },
         "predefinedValue": {
           "type": "object",
-          "description": "Enter a default value that is submitted if no other value is entered."
+          "description": "Enter a default value that is submitted if no other value is entered.",
+          "patternProperties": {
+            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+              "type": ["array","string","boolean","integer","number","object"]
+            }
+          },
+          "additionalProperties": false
         },
         "style": {
           "type": "object",
-          "additionalProperties": { "type": "string" },
-          "description": "CSS Styles for the ddm-paragraph field."
+          "description": "CSS Styles for the ddm-paragraph field.",
+          "patternProperties": {
+            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
         },
         "tip": {
           "type": "object",
           "description": "Add a comment to help users understand the field label.",
-          "additionalProperties": { "type": "string" }
+          "patternProperties": {
+            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
         },
         "dataType": {
           "type": "string",
@@ -82,7 +106,12 @@
               },
               "label": {
                 "type": "object",
-                "additionalProperties": { "type": "string"}
+                "patternProperties": {
+                  "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
               }
             }
           }
@@ -105,7 +134,7 @@
         "type": {
           "type": "string",
           "enum": [ "checkbox", "ddm-date", "ddm-decimal", "ddm-documentlibrary", "ddm-geolocation", "ddm-image", "ddm-integer", "ddm-journal-article", "ddm-link-to-page", "ddm-number", "ddm-paragraph", "ddm-separator", "ddm-text-html", "fieldset", "option", "radio", "select", "text", "textarea"],
-          "pattern": "(\\w|\\-)+"
+          "pattern": "(\\w|-)+"
         },
         "validation": {
           "type": "object",
