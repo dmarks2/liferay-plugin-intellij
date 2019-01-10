@@ -69,65 +69,70 @@ public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferay
 
         if (valueElement instanceof FtlStringLiteral) {
             FtlStringLiteral ftlStringLiteral = (FtlStringLiteral)valueElement;
-            List<TextRange> ranges = new SmartList<TextRange>();
-            PsiElement[] children = ftlStringLiteral.getChildren();
-            ranges.add(ftlStringLiteral.getValueRange());
 
-            int startOffset = ftlStringLiteral.getTextRange().getStartOffset();
+            if (ftlStringLiteral.isValidHost()) {
+                List<TextRange> ranges = new SmartList<TextRange>();
+                PsiElement[] children = ftlStringLiteral.getChildren();
+                ranges.add(ftlStringLiteral.getValueRange());
 
-            for (PsiElement child : children) {
-                TextRange textRange = child.getTextRange();
-                TextRange rangeInElement = textRange.shiftLeft(startOffset);
+                int startOffset = ftlStringLiteral.getTextRange().getStartOffset();
 
-                TextRange lastRange = ranges.remove(ranges.size() - 1);
-                TextRange leftRange = new TextRange(lastRange.getStartOffset(), rangeInElement.getStartOffset());
-                if (leftRange.getLength() > 0) {
-                    ranges.add(leftRange);
+                for (PsiElement child : children) {
+                    TextRange textRange = child.getTextRange();
+                    TextRange rangeInElement = textRange.shiftLeft(startOffset);
+
+                    TextRange lastRange = ranges.remove(ranges.size() - 1);
+                    TextRange leftRange = new TextRange(lastRange.getStartOffset(), rangeInElement.getStartOffset());
+                    if (leftRange.getLength() > 0) {
+                        ranges.add(leftRange);
+                    }
+
+                    TextRange rightRange = new TextRange(rangeInElement.getEndOffset(), lastRange.getEndOffset());
+                    if (rightRange.getLength() > 0) {
+                        ranges.add(rightRange);
+                    }
                 }
 
-                TextRange rightRange = new TextRange(rangeInElement.getEndOffset(), lastRange.getEndOffset());
-                if (rightRange.getLength() > 0) {
-                    ranges.add(rightRange);
+                if (!(ranges.isEmpty())) {
+                    registrar.startInjecting(JavascriptLanguage.INSTANCE);
+                    for (TextRange textRange : ranges) {
+                        registrar.addPlace(null, null, ftlStringLiteral, textRange);
+                    }
+                    registrar.doneInjecting();
                 }
-            }
-
-            if (! (ranges.isEmpty()) ) {
-                registrar.startInjecting(JavascriptLanguage.INSTANCE);
-                for (TextRange textRange : ranges) {
-                    registrar.addPlace(null, null, ftlStringLiteral, textRange);
-                }
-                registrar.doneInjecting();
             }
         }
     }
 
     @Override
     protected void injectIntoBody(@NotNull MultiHostRegistrar registrar, FtlMacro ftlMacro) {
-        TextRange injectionRange = ftlMacro.getInjectionRange();
-        if (injectionRange != null) {
-            if (! (injectionRange.isEmpty())) {
-                registrar.startInjecting(JavascriptLanguage.INSTANCE);
-                registrar.addPlace(null, null, (PsiLanguageInjectionHost) ftlMacro, injectionRange);
-                registrar.doneInjecting();
-            }
-        } else {
-            int startOffset = ftlMacro.getTextRange().getStartOffset();
-            List<TextRange> ranges = new SmartList<TextRange>();
-
-            ASTNode node = ftlMacro.getNode();
-            ASTNode[] children = node.getChildren(TokenSet.create(FtlElementTypes.TEMPLATE_TEXT));
-            for (ASTNode child : children) {
-                TextRange textRange = child.getTextRange();
-                TextRange rangeInElement = textRange.shiftLeft(startOffset);
-                ranges.add(rangeInElement);
-            }
-
-            if (! (ranges.isEmpty()) ) {
-                registrar.startInjecting(JavascriptLanguage.INSTANCE);
-                for (TextRange textRange : ranges) {
-                    registrar.addPlace(null, null, ftlMacro, textRange);
+        if (ftlMacro.isValidHost()) {
+            TextRange injectionRange = ftlMacro.getInjectionRange();
+            if (injectionRange != null) {
+                if (!(injectionRange.isEmpty())) {
+                    registrar.startInjecting(JavascriptLanguage.INSTANCE);
+                    registrar.addPlace(null, null, (PsiLanguageInjectionHost) ftlMacro, injectionRange);
+                    registrar.doneInjecting();
                 }
-                registrar.doneInjecting();
+            } else {
+                int startOffset = ftlMacro.getTextRange().getStartOffset();
+                List<TextRange> ranges = new SmartList<TextRange>();
+
+                ASTNode node = ftlMacro.getNode();
+                ASTNode[] children = node.getChildren(TokenSet.create(FtlElementTypes.TEMPLATE_TEXT));
+                for (ASTNode child : children) {
+                    TextRange textRange = child.getTextRange();
+                    TextRange rangeInElement = textRange.shiftLeft(startOffset);
+                    ranges.add(rangeInElement);
+                }
+
+                if (!(ranges.isEmpty())) {
+                    registrar.startInjecting(JavascriptLanguage.INSTANCE);
+                    for (TextRange textRange : ranges) {
+                        registrar.addPlace(null, null, ftlMacro, textRange);
+                    }
+                    registrar.doneInjecting();
+                }
             }
         }
     }

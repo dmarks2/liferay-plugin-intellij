@@ -10,7 +10,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiSubstitutor;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.ResolveState;
-import com.intellij.psi.scope.BaseScopeProcessor;
 import com.intellij.psi.scope.NameHint;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.util.PropertyUtil;
@@ -100,7 +99,7 @@ public class CustomFtlVariable extends FtlLightVariable {
     }
 
 
-    private class PsiMemberProcessor extends BaseScopeProcessor implements NameHint {
+    private class PsiMemberProcessor implements NameHint, PsiScopeProcessor {
         private final PsiScopeProcessor myDelegate;
         private final String myNameHint;
 
@@ -113,6 +112,7 @@ public class CustomFtlVariable extends FtlLightVariable {
             return this.myDelegate.execute(element, state);
         }
 
+        @SuppressWarnings("unchecked")
         public <T> T getHint(@NotNull Key<T> hintKey) {
             return hintKey == NameHint.KEY && this.myNameHint != null ? (T) this : null;
         }

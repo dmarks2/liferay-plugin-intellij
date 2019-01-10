@@ -81,23 +81,25 @@ public class LiferayTaglibJavascriptLanguageInjector extends AbstractLiferayJava
         if ( (xmlAttribute.getValue() != null) && (xmlAttribute.getValue().trim().length() > 0) ) {
             XmlAttributeValue valueElement = xmlAttribute.getValueElement();
             if (valueElement != null) {
-                boolean needToInject = false;
-                PsiElement[] myChildren = valueElement.getChildren();
-                for (PsiElement child : myChildren) {
-                    if (child instanceof XmlToken) {
-                        //only inject if attribute contains regular content (e.g. not for JSP expressions inside the attribute value)
-                        XmlToken xmlToken = (XmlToken)child;
-                        IElementType tokenType = xmlToken.getTokenType();
-                        if (XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN.equals(tokenType)) {
-                            needToInject = true;
-                            break;
+                if (((PsiLanguageInjectionHost)valueElement).isValidHost()) {
+                    boolean needToInject = false;
+                    PsiElement[] myChildren = valueElement.getChildren();
+                    for (PsiElement child : myChildren) {
+                        if (child instanceof XmlToken) {
+                            //only inject if attribute contains regular content (e.g. not for JSP expressions inside the attribute value)
+                            XmlToken xmlToken = (XmlToken) child;
+                            IElementType tokenType = xmlToken.getTokenType();
+                            if (XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN.equals(tokenType)) {
+                                needToInject = true;
+                                break;
+                            }
                         }
                     }
-                }
-                if (needToInject) {
-                    registrar.startInjecting(JavascriptLanguage.INSTANCE);
-                    registrar.addPlace(null, null, (PsiLanguageInjectionHost) xmlAttribute.getValueElement(), xmlAttribute.getValueTextRange());
-                    registrar.doneInjecting();
+                    if (needToInject) {
+                        registrar.startInjecting(JavascriptLanguage.INSTANCE);
+                        registrar.addPlace(null, null, (PsiLanguageInjectionHost) xmlAttribute.getValueElement(), xmlAttribute.getValueTextRange());
+                        registrar.doneInjecting();
+                    }
                 }
             }
         }
@@ -131,14 +133,16 @@ public class LiferayTaglibJavascriptLanguageInjector extends AbstractLiferayJava
         PsiElement[] myChildren = xmlTag.getChildren();
         for (PsiElement child : myChildren) {
             if (child instanceof XmlText) {
-                //only inject if <aui:script> contains reqular content
-                list.add(
-                    Trinity.create(
-                        ((PsiLanguageInjectionHost)child),
-                        javascriptLanguage,
-                        ElementManipulators.getManipulator(child).getRangeInElement(child)
-                    )
-                );
+                if (((PsiLanguageInjectionHost)child).isValidHost()) {
+                    //only inject if <aui:script> contains reqular content
+                    list.add(
+                            Trinity.create(
+                                    ((PsiLanguageInjectionHost) child),
+                                    javascriptLanguage,
+                                    ElementManipulators.getManipulator(child).getRangeInElement(child)
+                            )
+                    );
+                }
             }
         }
         if (!list.isEmpty()) {

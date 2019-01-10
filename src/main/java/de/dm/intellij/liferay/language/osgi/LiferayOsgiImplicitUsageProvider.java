@@ -39,7 +39,7 @@ public class LiferayOsgiImplicitUsageProvider implements ImplicitUsageProvider {
             PsiModifierListOwner modifierListOwner = (PsiModifierListOwner)element;
             PsiModifierList modifierList = modifierListOwner.getModifierList();
             if ( (modifierList != null) && (modifierList.getAnnotations().length > 0)) {
-                return AnnotationUtil.isAnnotated(modifierListOwner, WRITE_ANNOTATIONS);
+                return AnnotationUtil.isAnnotated(modifierListOwner, WRITE_ANNOTATIONS, AnnotationUtil.CHECK_TYPE);
             }
         }
 

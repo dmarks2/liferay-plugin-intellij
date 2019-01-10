@@ -28,6 +28,8 @@
         <p>Version 0.0.4</p>
         <ul>
             <li>Bugfix: Fixed parsing liferay-look-and-feel.xml when creating that file for the first time</li>
+            <li>Bugfix: Correctly detect locale strings in JSON schema for journal structure files</li>
+            <li>Bugfix: Fixed compatibility with IntelliJ 2018.3 when injecting javascript into freemarker taglibs</li>
         </ul>
         <p>Version 0.0.3</p>
         <ul>

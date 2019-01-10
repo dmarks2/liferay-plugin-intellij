@@ -22,8 +22,8 @@ import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.SystemInfo;
 import com.intellij.util.Consumer;
-import com.intellij.util.SystemProperties;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -112,9 +112,9 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
                     body.append(bean.getStackTrace()).append("\n\n");
                     body.append(bean.getMessage()).append("\n\n");
 
-                    body.append("os.name: " + SystemProperties.getOsName()).append("\n");
-                    body.append("java.version: " + SystemProperties.getJavaVendor()).append("\n");
-                    body.append("java.vm.vendor: " + SystemProperties.getJavaVmVendor()).append("\n\n");
+                    body.append("os.name: " + SystemInfo.OS_NAME).append("\n");
+                    body.append("java.version: " + SystemInfo.JAVA_VERSION).append("\n");
+                    body.append("java.vm.vendor: " + SystemInfo.JAVA_VENDOR).append("\n\n");
 
                     ApplicationInfoEx appInfo = ApplicationInfoEx.getInstanceEx();
                     ApplicationNamesInfo namesInfo = ApplicationNamesInfo.getInstance();

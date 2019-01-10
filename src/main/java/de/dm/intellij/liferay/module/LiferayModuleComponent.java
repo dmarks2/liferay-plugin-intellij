@@ -62,13 +62,6 @@ public class LiferayModuleComponent implements ModuleComponent, PersistentStateC
         this.parentTheme = state.parentTheme;
     }
 
-    public void projectOpened() {
-    }
-
-    public void projectClosed() {
-
-    }
-
     public void moduleAdded() {
 
     }
