@@ -30,6 +30,7 @@
             <li>Bugfix: Fixed parsing liferay-look-and-feel.xml when creating that file for the first time</li>
             <li>Bugfix: Correctly detect locale strings in JSON schema for journal structure files</li>
             <li>Bugfix: Fixed compatibility with IntelliJ 2018.3 when injecting javascript into freemarker taglibs</li>
+            <li>Feature: Code completion for portlet names in JSP taglibs</li>
         </ul>
         <p>Version 0.0.3</p>
         <ul>
@@ -109,6 +110,9 @@
         <lang.documentationProvider language="JAVA" implementationClass="de.dm.intellij.liferay.language.osgi.ComponentPropertiesDocumentationProvider"/>
 
         <implicitUsageProvider order="last" implementation="de.dm.intellij.liferay.language.osgi.LiferayOsgiImplicitUsageProvider" />
+
+        <!-- FileBasedIndexer to quickly find all portlet names -->
+        <fileBasedIndex implementation="de.dm.intellij.liferay.index.PortletIndex" />
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">

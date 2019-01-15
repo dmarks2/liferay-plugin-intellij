@@ -17,6 +17,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ProcessingContext;
 import de.dm.intellij.liferay.util.Icons;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -870,24 +871,32 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
     public static String getServiceClassName(PsiElement originalPsiElement) {
         PsiAnnotationParameterList annotationParameterList = PsiTreeUtil.getParentOfType(originalPsiElement, PsiAnnotationParameterList.class);
 
+        return getServiceClassName(annotationParameterList);
+    }
+
+    @Nullable
+    public static String getServiceClassName(PsiAnnotationParameterList annotationParameterList) {
         if (annotationParameterList != null) {
-            for (PsiNameValuePair psiNameValuePair : PsiTreeUtil.getChildrenOfType(annotationParameterList, PsiNameValuePair.class)) {
-                String name = psiNameValuePair.getName();
+            PsiNameValuePair[] psiNameValuePairs = PsiTreeUtil.getChildrenOfType(annotationParameterList, PsiNameValuePair.class);
+            if (psiNameValuePairs != null) {
+                for (PsiNameValuePair psiNameValuePair : psiNameValuePairs) {
+                    String name = psiNameValuePair.getName();
 
-                if ("service".equals(name) ) {
-                    PsiAnnotationMemberValue value = psiNameValuePair.getValue();
+                    if ("service".equals(name)) {
+                        PsiAnnotationMemberValue value = psiNameValuePair.getValue();
 
-                    if (value instanceof PsiClassObjectAccessExpression) {
-                        PsiClassObjectAccessExpression psiClassObjectAccessExpression = (PsiClassObjectAccessExpression)value;
+                        if (value instanceof PsiClassObjectAccessExpression) {
+                            PsiClassObjectAccessExpression psiClassObjectAccessExpression = (PsiClassObjectAccessExpression) value;
 
-                        PsiTypeElement operand = psiClassObjectAccessExpression.getOperand();
+                            PsiTypeElement operand = psiClassObjectAccessExpression.getOperand();
 
-                        PsiJavaCodeReferenceElement innermostComponentReferenceElement = operand.getInnermostComponentReferenceElement();
+                            PsiJavaCodeReferenceElement innermostComponentReferenceElement = operand.getInnermostComponentReferenceElement();
 
-                        if (innermostComponentReferenceElement != null) {
-                            String serviceClassName = innermostComponentReferenceElement.getQualifiedName();
+                            if (innermostComponentReferenceElement != null) {
+                                String serviceClassName = innermostComponentReferenceElement.getQualifiedName();
 
-                            return serviceClassName;
+                                return serviceClassName;
+                            }
                         }
                     }
                 }

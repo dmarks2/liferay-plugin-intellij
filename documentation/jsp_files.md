@@ -65,6 +65,10 @@ Additionally you can search for classnames and java bean properties in specific 
 
 ![classnames](jsp_classname.gif "classnames")
 
+For some taglibs you can auto-complete defined Portlet Names. Those are fetched from the `javax.portlet.name` property in your portlet classes.
+
+![portlet_names](jsp_portlet_name.png "portlet names")
+
 The following tag libraries are supported:
  
     <aui:>

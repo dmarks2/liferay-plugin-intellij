@@ -16,6 +16,9 @@
         <!-- reference contributor for Classnames in Liferay Taglibs -->
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibClassNameReferenceContributor"/>
 
+        <!-- Reference completion for portletName taglib attributes -->
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibPortletNameReferenceContributor"/>
+
         <!-- inspections -->
         <inspectionToolProvider implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibInspectionToolProvider"/>
     </extensions>
