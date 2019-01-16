@@ -25,6 +25,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Reference completion for portletName taglib attributes
@@ -81,7 +83,10 @@ public class LiferayTaglibPortletNameReferenceContributor extends AbstractLifera
 
                                         List<String> portletNames = PortletIndex.getPortletNames(project, GlobalSearchScope.allScope(project));
 
-                                        for (String portletName : portletNames) {
+                                        Set<String> distinctPortletNames = new TreeSet<>();
+                                        distinctPortletNames.addAll(portletNames);
+
+                                        for (String portletName : distinctPortletNames) {
                                             List<PsiFile> portletClasses = PortletIndex.getPortletClasses(project, portletName, GlobalSearchScope.allScope(project));
                                             if (portletClasses.size() > 0) {
                                                 result.add(

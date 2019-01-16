@@ -6,7 +6,7 @@ import javax.portlet.Portlet;
 @Component(
     property = {
         "javax.portlet.display-name=My Portlet",
-        "javax.portlet.name=de_dm_portlet_MyPortlet"
+        "javax.portlet.name=de_dm_portlet_MyPortletName"
     },
     service = Portlet.class
 )

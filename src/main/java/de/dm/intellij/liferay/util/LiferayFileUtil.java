@@ -376,4 +376,38 @@ public class LiferayFileUtil {
         return null;
     }
 
+    public static String getJSSafeName(String name) {
+        if (name == null) {
+            return null;
+        }
+
+        StringBuilder sb = null;
+
+        int index = 0;
+
+        for (int i = 0; i < name.length(); i++) {
+            char c = name.charAt(i);
+
+            if (
+                    (c == '-') ||
+                    (c == '.') ||
+                    (c == ' ')
+            ) {
+                if (sb == null) {
+                    sb = new StringBuilder(name.length() - 1);
+
+                    sb.append(name, index, i);
+                }
+            } else if (sb != null) {
+                sb.append(c);
+            }
+        }
+
+        if (sb == null) {
+            return name;
+        } else {
+            return sb.toString();
+        }
+    }
+
 }

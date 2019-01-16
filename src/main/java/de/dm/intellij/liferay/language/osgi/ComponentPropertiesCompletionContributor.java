@@ -8,21 +8,27 @@ import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.psi.PsiAnnotationMemberValue;
 import com.intellij.psi.PsiAnnotationParameterList;
+import com.intellij.psi.PsiArrayInitializerMemberValue;
 import com.intellij.psi.PsiClassObjectAccessExpression;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiNameValuePair;
+import com.intellij.psi.PsiType;
 import com.intellij.psi.PsiTypeElement;
+import com.intellij.psi.impl.compiled.ClsElementImpl;
+import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ProcessingContext;
 import de.dm.intellij.liferay.util.Icons;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class ComponentPropertiesCompletionContributor extends CompletionContributor {
 
@@ -853,14 +859,20 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                 new CompletionProvider<CompletionParameters>() {
                     @Override
                     protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result) {
-                        String serviceClassName = getServiceClassName(parameters.getOriginalPosition());
-                        if (serviceClassName != null) {
-                            List<LookupElementBuilder> lookups = KEYWORD_LOOKUPS.get(serviceClassName);
-                            if (lookups != null) {
-                                result.addAllElements(lookups);
+                        List<String> serviceClassNames = getServiceClassNames(parameters.getOriginalPosition());
 
-                                result.stopHere();
+                        if (! (serviceClassNames.isEmpty()) ) {
+                            Set<LookupElementBuilder> lookups = new TreeSet<>(Comparator.comparing(LookupElementBuilder::getLookupString));
+
+                            for (String serviceClassName : serviceClassNames) {
+                                List<LookupElementBuilder> elements = KEYWORD_LOOKUPS.get(serviceClassName);
+                                if (elements != null) {
+                                    lookups.addAll(elements);
+                                }
                             }
+
+                            result.addAllElements(lookups);
+                            result.stopHere();
                         }
                     }
                 }
@@ -868,14 +880,17 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         );
     }
 
-    public static String getServiceClassName(PsiElement originalPsiElement) {
+    @NotNull
+    public static List<String> getServiceClassNames(PsiElement originalPsiElement) {
         PsiAnnotationParameterList annotationParameterList = PsiTreeUtil.getParentOfType(originalPsiElement, PsiAnnotationParameterList.class);
 
-        return getServiceClassName(annotationParameterList);
+        return getServiceClassNames(annotationParameterList);
     }
 
-    @Nullable
-    public static String getServiceClassName(PsiAnnotationParameterList annotationParameterList) {
+    @NotNull
+    public static List<String> getServiceClassNames(PsiAnnotationParameterList annotationParameterList) {
+        List<String> result = new ArrayList<>();
+
         if (annotationParameterList != null) {
             PsiNameValuePair[] psiNameValuePairs = PsiTreeUtil.getChildrenOfType(annotationParameterList, PsiNameValuePair.class);
             if (psiNameValuePairs != null) {
@@ -885,22 +900,56 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                     if ("service".equals(name)) {
                         PsiAnnotationMemberValue value = psiNameValuePair.getValue();
 
-                        if (value instanceof PsiClassObjectAccessExpression) {
-                            PsiClassObjectAccessExpression psiClassObjectAccessExpression = (PsiClassObjectAccessExpression) value;
+                        if (value instanceof PsiArrayInitializerMemberValue) {
+                            PsiArrayInitializerMemberValue psiArrayInitializerMemberValue = (PsiArrayInitializerMemberValue)value;
 
-                            PsiTypeElement operand = psiClassObjectAccessExpression.getOperand();
+                            PsiAnnotationMemberValue[] initializers = psiArrayInitializerMemberValue.getInitializers();
 
-                            PsiJavaCodeReferenceElement innermostComponentReferenceElement = operand.getInnermostComponentReferenceElement();
-
-                            if (innermostComponentReferenceElement != null) {
-                                String serviceClassName = innermostComponentReferenceElement.getQualifiedName();
-
-                                return serviceClassName;
+                            for (PsiAnnotationMemberValue initializer : initializers) {
+                                processInitializer(result, initializer);
                             }
+                        } else {
+                            processInitializer(result, value);
                         }
                     }
                 }
             }
+        }
+
+        return result;
+    }
+
+    private static void processInitializer(List<String> result, PsiAnnotationMemberValue initializer) {
+        if (initializer instanceof PsiClassObjectAccessExpression) {
+            PsiClassObjectAccessExpression psiClassObjectAccessExpression = (PsiClassObjectAccessExpression) initializer;
+
+            String serviceClassName = getServiceClassName(psiClassObjectAccessExpression);
+            if (serviceClassName != null) {
+                result.add(serviceClassName);
+            }
+        }
+    }
+
+    private static String getServiceClassName(PsiClassObjectAccessExpression psiClassObjectAccessExpression) {
+        PsiTypeElement operand = psiClassObjectAccessExpression.getOperand();
+
+        PsiJavaCodeReferenceElement referenceElement = null;
+
+        if (operand instanceof ClsElementImpl) {
+            PsiType psiType = operand.getType();
+            if (psiType instanceof PsiClassReferenceType) {
+                PsiClassReferenceType psiClassReferenceType = (PsiClassReferenceType)psiType;
+
+                referenceElement = psiClassReferenceType.getReference();
+            }
+        } else {
+            referenceElement = operand.getInnermostComponentReferenceElement();
+        }
+
+        if (referenceElement != null) {
+            String serviceClassName = referenceElement.getQualifiedName();
+
+            return serviceClassName;
         }
 
         return null;

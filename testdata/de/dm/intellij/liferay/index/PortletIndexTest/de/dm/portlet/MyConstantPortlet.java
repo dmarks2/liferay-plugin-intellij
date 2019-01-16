@@ -12,6 +12,6 @@ import javax.portlet.Portlet;
 )
 public class MyConstantPortlet implements Portlet {
 
-    public static final String MY_PORTLET_NAME = "de_dm_portlet_MyConstantPortlet";
+    public static final String MY_PORTLET_NAME = "de_dm_portlet_MyConstantPortletName";
 
 }

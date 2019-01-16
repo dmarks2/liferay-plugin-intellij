@@ -1,7 +1,7 @@
 package de.dm.intellij.liferay.index;
 
+import com.intellij.ide.highlighter.JavaClassFileType;
 import com.intellij.ide.highlighter.JavaFileType;
-import com.intellij.openapi.actionSystem.ex.ActionUtil;
 import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.IndexNotReadyException;
@@ -36,10 +36,12 @@ import com.intellij.util.io.EnumeratorStringDescriptor;
 import com.intellij.util.io.KeyDescriptor;
 import com.intellij.util.io.VoidDataExternalizer;
 import de.dm.intellij.liferay.language.osgi.ComponentPropertiesCompletionContributor;
+import de.dm.intellij.liferay.util.LiferayFileUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -88,7 +90,7 @@ public class PortletIndex extends FileBasedIndexExtension<String, Void> implemen
     @NotNull
     @Override
     public FileBasedIndex.InputFilter getInputFilter() {
-        return new DefaultFileTypeSpecificInputFilter(JavaFileType.INSTANCE);
+        return new DefaultFileTypeSpecificInputFilter(JavaFileType.INSTANCE, JavaClassFileType.INSTANCE);
     }
 
     @NotNull
@@ -180,29 +182,48 @@ public class PortletIndex extends FileBasedIndexExtension<String, Void> implemen
                             if ("org.osgi.service.component.annotations.Component".equals(psiAnnotation.getQualifiedName())) {
                                 PsiAnnotationParameterList psiAnnotationParameterList = psiAnnotation.getParameterList();
 
-                                String serviceClassName = ComponentPropertiesCompletionContributor.getServiceClassName(psiAnnotationParameterList);
-                                if ("javax.portlet.Portlet".equals(serviceClassName)) {
-                                    for (PsiNameValuePair psiNameValuePair : psiAnnotationParameterList.getAttributes()) {
-                                        if ("property".equals(psiNameValuePair.getName())) {
-                                            PsiAnnotationMemberValue psiNameValuePairValue = psiNameValuePair.getValue();
+                                List<String> serviceClassNames = ComponentPropertiesCompletionContributor.getServiceClassNames(psiAnnotationParameterList);
+                                if (!(serviceClassNames.isEmpty())) {
+                                    for (String serviceClassName : serviceClassNames) {
+                                        if ("javax.portlet.Portlet".equals(serviceClassName)) {
+                                            String portletName = null;
 
-                                            if (psiNameValuePairValue instanceof PsiArrayInitializerMemberValue) {
-                                                PsiArrayInitializerMemberValue psiArrayInitializerMemberValue = (PsiArrayInitializerMemberValue) psiNameValuePairValue;
+                                            outer:
+                                            for (PsiNameValuePair psiNameValuePair : psiAnnotationParameterList.getAttributes()) {
+                                                if ("property".equals(psiNameValuePair.getName())) {
+                                                    PsiAnnotationMemberValue psiNameValuePairValue = psiNameValuePair.getValue();
 
-                                                PsiAnnotationMemberValue[] initializers = psiArrayInitializerMemberValue.getInitializers();
-                                                for (PsiAnnotationMemberValue initializer : initializers) {
-                                                    if (initializer instanceof PsiLiteralExpression) {
-                                                        String portletName = getPortletName((PsiLiteralExpression) initializer);
-                                                        if (portletName != null) {
-                                                            map.put(portletName, null);
-                                                        }
-                                                    } else if (initializer instanceof PsiBinaryExpression) {
-                                                        String portletName = getPortletName((PsiBinaryExpression) initializer);
-                                                        if (portletName != null) {
-                                                            map.put(portletName, null);
+                                                    if (psiNameValuePairValue instanceof PsiArrayInitializerMemberValue) {
+                                                        PsiArrayInitializerMemberValue psiArrayInitializerMemberValue = (PsiArrayInitializerMemberValue) psiNameValuePairValue;
+
+                                                        PsiAnnotationMemberValue[] initializers = psiArrayInitializerMemberValue.getInitializers();
+                                                        for (PsiAnnotationMemberValue initializer : initializers) {
+                                                            if (initializer instanceof PsiLiteralExpression) {
+                                                                portletName = getPortletName((PsiLiteralExpression) initializer);
+                                                                if (portletName != null) {
+                                                                    break outer;
+                                                                }
+                                                            } else if (initializer instanceof PsiBinaryExpression) {
+                                                                portletName = getPortletName((PsiBinaryExpression) initializer);
+                                                                if (portletName != null) {
+                                                                    break outer;
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
+                                            }
+
+                                            if (portletName == null) {
+                                                portletName = psiClass.getQualifiedName();
+                                            }
+
+                                            if (portletName != null) {
+                                                //from PortletTracker.addingService()
+                                                String portletId = StringUtil.replace(portletName, Arrays.asList(".", "$"), Arrays.asList("_", "_"));
+                                                portletId = LiferayFileUtil.getJSSafeName(portletId);
+
+                                                map.put(portletId, null);
                                             }
                                         }
                                     }
@@ -211,6 +232,8 @@ public class PortletIndex extends FileBasedIndexExtension<String, Void> implemen
                         }
                     }
                 }
+            } catch (Exception e) {
+                //ignore?
             } finally {
                 dumbService.setAlternativeResolveEnabled(false);
             }

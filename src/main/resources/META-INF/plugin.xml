@@ -31,6 +31,7 @@
             <li>Bugfix: Correctly detect locale strings in JSON schema for journal structure files</li>
             <li>Bugfix: Fixed compatibility with IntelliJ 2018.3 when injecting javascript into freemarker taglibs</li>
             <li>Feature: Code completion for portlet names in JSP taglibs</li>
+            <li>Feature: Support for multiple OSGi service definitions in a @Component annotation</li>
         </ul>
         <p>Version 0.0.3</p>
         <ul>

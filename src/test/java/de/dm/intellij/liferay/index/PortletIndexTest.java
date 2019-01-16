@@ -14,6 +14,7 @@ import com.intellij.testFramework.PsiTestUtil;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
+import com.intellij.util.indexing.FileBasedIndex;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -60,9 +61,11 @@ public class PortletIndexTest extends LightCodeInsightFixtureTestCase {
             "javax/portlet/Portlet.java"
         );
 
+        FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
+
         List<String> portletNames = PortletIndex.getPortletNames(myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
 
-        assertTrue(portletNames.contains("de_dm_portlet_MyPortlet"));
+        assertTrue(portletNames.contains("de_dm_portlet_MyPortletName"));
     }
 
     public void testPortletNameConstant() {
@@ -71,9 +74,24 @@ public class PortletIndexTest extends LightCodeInsightFixtureTestCase {
             "javax/portlet/Portlet.java"
         );
 
+        FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
+
         List<String> portletNames = PortletIndex.getPortletNames(myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
 
-        assertTrue(portletNames.contains("de_dm_portlet_MyConstantPortlet"));
+        assertTrue(portletNames.contains("de_dm_portlet_MyConstantPortletName"));
+    }
+
+    public void testUnnamedPortlet() {
+        myFixture.configureByFiles(
+            "de/dm/portlet/UnnamedPortlet.java",
+            "javax/portlet/Portlet.java"
+        );
+
+        FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
+
+        List<String> portletNames = PortletIndex.getPortletNames(myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
+
+        assertTrue(portletNames.contains("de_dm_portlet_UnnamedPortlet"));
     }
 
 
