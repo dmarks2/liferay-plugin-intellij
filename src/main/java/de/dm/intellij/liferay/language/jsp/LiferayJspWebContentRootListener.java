@@ -58,6 +58,7 @@ public class LiferayJspWebContentRootListener {
                         @Override
                         public void run() {
                             if (virtualFile.isValid()) {
+                                //TODO psiFile is empty on "contentsChanged". Need to be refreshed once...
                                 PsiFile psiFile = PsiManager.getInstance(project).findFile(virtualFile);
                                 if (psiFile instanceof PsiJavaFile) {
                                     PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
