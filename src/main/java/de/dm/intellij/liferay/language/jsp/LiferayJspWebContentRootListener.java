@@ -54,33 +54,28 @@ public class LiferayJspWebContentRootListener {
                         }
                     }
                 } else {
-                    Runnable runnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            if (virtualFile.isValid()) {
-                                //TODO psiFile is empty on "contentsChanged". Need to be refreshed once...
-                                PsiFile psiFile = PsiManager.getInstance(project).findFile(virtualFile);
-                                if (psiFile instanceof PsiJavaFile) {
-                                    PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
-                                    String customJspDir = LiferayCustomJspBagUtil.getCustomJspDir(psiJavaFile);
-                                    if (customJspDir != null) {
-                                        ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
 
-                                        for (VirtualFile sourceRoot : moduleRootManager.getSourceRoots()) {
-                                            VirtualFile relativePath = sourceRoot.findFileByRelativePath(customJspDir);
-                                            if (relativePath != null) {
-                                                if (LiferayFileUtil.isParent(relativePath, sourceRoot)) {
-                                                    addWebFacet(relativePath, sourceRoot, module);
-                                                }
-                                            }
+                    if (virtualFile.isValid()) {
+                        //TODO psiFile is empty on "contentsChanged". Need to be refreshed once...
+                        PsiFile psiFile = PsiManager.getInstance(project).findFile(virtualFile);
+                        if (psiFile instanceof PsiJavaFile) {
+                            PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
+                            String customJspDir = LiferayCustomJspBagUtil.getCustomJspDir(psiJavaFile);
+                            if (customJspDir != null) {
+                                ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
+
+                                for (VirtualFile sourceRoot : moduleRootManager.getSourceRoots()) {
+                                    VirtualFile relativePath = sourceRoot.findFileByRelativePath(customJspDir);
+                                    if (relativePath != null) {
+                                        if (LiferayFileUtil.isParent(relativePath, sourceRoot)) {
+                                            addWebFacet(relativePath, sourceRoot, module);
                                         }
                                     }
                                 }
                             }
                         }
-                    };
+                    }
 
-                    ProjectUtils.runDumbAwareLater(project, runnable);
                 }
             }
         }

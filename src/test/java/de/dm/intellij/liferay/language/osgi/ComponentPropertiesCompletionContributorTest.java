@@ -67,15 +67,15 @@ public class ComponentPropertiesCompletionContributorTest extends LightCodeInsig
 
     public void testMultiServiceComponentPropertiesCompletion() {
         myFixture.configureByFiles(
-            "MultiServiceComponent.java",
-            "com/liferay/portal/kernel/portlet/bridges/mvc/MVCActionCommand.java",
-            "com/liferay/portal/kernel/search/IndexerPostProcessor.java"
+                "MultiServiceComponent.java",
+                "com/liferay/portal/kernel/portlet/bridges/mvc/MVCActionCommand.java",
+                "com/liferay/portal/kernel/search/IndexerPostProcessor.java"
         );
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue("should contain properties from IndexerPostProcessor", strings.contains("indexer.class.name"));
-        assertTrue("should contain properties from IndexerPostProcessor", strings.contains("mvc.command.name"));
+        assertTrue("should contain properties from MVCActionCommand", strings.contains("mvc.command.name"));
     }
 
 }
