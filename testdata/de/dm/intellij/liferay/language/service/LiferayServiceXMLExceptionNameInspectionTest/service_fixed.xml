@@ -7,6 +7,6 @@
 
     <exceptions>
         <exception>AccountName</exception>
-        <exception><warning descr="Do not add Exception at the end of the name">AddressCityException</warning></exception>
+        <exception>AddressCity</exception>
     </exceptions>
 </service-builder>

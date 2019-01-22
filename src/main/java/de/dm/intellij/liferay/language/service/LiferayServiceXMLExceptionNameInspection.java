@@ -1,10 +1,17 @@
 package de.dm.intellij.liferay.language.service;
 
-import com.intellij.codeInsight.daemon.GroupNames;
+import com.intellij.codeInspection.LocalQuickFix;
+import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.TextRange;
+import com.intellij.psi.PsiDocumentManager;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
@@ -63,10 +70,10 @@ public class LiferayServiceXMLExceptionNameInspection extends XmlSuppressableIns
                         if ( (xmlTag != null) && ("service-builder".equals(xmlTag.getLocalName())) ) {
                             if ( (text.getText() != null) && (text.getText().endsWith("Exception")) ) {
                                 holder.registerProblem(text,
-                                        "Do not add Exception at the end of the name",
-                                        ProblemHighlightType.WEAK_WARNING
+                                    "Do not add Exception at the end of the name",
+                                    ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
+                                    new RemoveExceptionSuffixFix()
                                 );
-                                //TODO offer a QuickFix
                             }
                         }
                     }
@@ -75,4 +82,34 @@ public class LiferayServiceXMLExceptionNameInspection extends XmlSuppressableIns
             }
         };
     }
+
+    private static class RemoveExceptionSuffixFix implements LocalQuickFix {
+
+        @Nls(capitalization = Nls.Capitalization.Sentence)
+        @NotNull
+        @Override
+        public String getFamilyName() {
+            return "Remove Exception suffix";
+        }
+
+        @Override
+        public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+            PsiElement element = descriptor.getPsiElement();
+
+            PsiFile containingFile = element.getContainingFile();
+
+            XmlText xmlText = (XmlText)element;
+
+            TextRange range = element.getTextRange();
+            Document document = PsiDocumentManager.getInstance(project).getDocument(containingFile);
+            PsiDocumentManager.getInstance(project).doPostponedOperationsAndUnblockDocument(document);
+
+            String oldText = xmlText.getText();
+            String newText = oldText.substring(0, oldText.length() - "Exception".length());
+
+            document.replaceString(range.getStartOffset(), range.getEndOffset(), newText);
+            PsiDocumentManager.getInstance(project).commitDocument(document);
+        }
+    }
+
 }
