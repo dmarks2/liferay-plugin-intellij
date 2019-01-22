@@ -93,53 +93,5 @@ public class LiferayServiceXMLLineMarkerProvider extends RelatedItemLineMarkerPr
 
             }
         }
-
-        /*
-        if (element instanceof XmlToken) {
-            XmlToken xmlToken = (XmlToken) element;
-
-            IElementType tokenType = xmlToken.getTokenType();
-
-            if (tokenType == XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN) {
-                XmlAttribute xmlAttribute = PsiTreeUtil.getParentOfType(element, XmlAttribute.class);
-                if (xmlAttribute != null) {
-                    String attributeName = xmlAttribute.getLocalName();
-                    if ("name".equals(attributeName)) {
-                        XmlTag xmlTag = PsiTreeUtil.getParentOfType(xmlAttribute, XmlTag.class);
-                        if (xmlTag != null) {
-                            String name = xmlTag.getLocalName();
-                            if ("entity".equals(name)) {
-                                if (xmlTag.getParent() instanceof XmlTag) {
-                                    XmlTag parent = (XmlTag) xmlTag.getParent();
-                                    if ("service-builder".equals(parent.getName())) {
-                                        String packagePath = parent.getAttributeValue("package-path");
-                                        if (packagePath != null) {
-                                            String entityName = xmlTag.getAttributeValue("name");
-                                            if (entityName != null) {
-                                                Project project = element.getProject();
-
-                                                String targetClassName = packagePath + ".model.impl." + entityName + "Impl";
-
-                                                PsiClass psiClass = JavaPsiFacade.getInstance(project).findClass(targetClassName, GlobalSearchScope.allScope(project));
-
-                                                if (psiClass != null) {
-                                                    NavigationGutterIconBuilder<PsiElement> builder =
-                                                            NavigationGutterIconBuilder.create(AllIcons.Gutter.ImplementedMethod).
-                                                                    setTargets(Collections.singletonList(psiClass)).
-                                                                    setTooltipText("Navigate to Implementation");
-
-                                                    result.add(builder.createLineMarkerInfo(element));
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        */
     }
 }
