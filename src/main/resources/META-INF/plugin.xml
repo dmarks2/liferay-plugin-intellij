@@ -32,6 +32,7 @@
             <li>Bugfix: Fixed compatibility with IntelliJ 2018.3 when injecting javascript into freemarker taglibs</li>
             <li>Feature: Code completion for portlet names in JSP taglibs</li>
             <li>Feature: Support for multiple OSGi service definitions in a @Component annotation</li>
+            <li>Feature: Inspections for service.xml</li>
         </ul>
         <p>Version 0.0.3</p>
         <ul>
@@ -49,7 +50,6 @@
             <li>Feature: Automatically exclude the "bundles" directory</li>
             <li>Feature: Liferay target version support</li>
             <li>Feature: Improved support for getSiblings() in Freemarker templates</li>
-            <li>Feature: Inspections for service.xml</li>
             <li>Feature: Added taglib code completion for class names</li>
             <li>Feature: Class Name completion inside serviceLocator.findService(), enumUtil, staticUtil and staticFieldGetter in Freemarker templates</li>
             <li>Feature: Implicit resolve of serviceLocator, enumUtil and staticUtil instructions in Freemarker templates</li>

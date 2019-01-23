@@ -8,7 +8,8 @@ public class LiferayServiceXMLInspectionToolProvider implements InspectionToolPr
     @Override
     public Class[] getInspectionClasses() {
         return new Class[] {
-                LiferayServiceXMLExceptionNameInspection.class
+            LiferayServiceXMLExceptionNameInspection.class,
+            LiferayServiceXMLNamespaceInspection.class
         };
     }
 }

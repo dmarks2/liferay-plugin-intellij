@@ -2,6 +2,7 @@ Service XML
 ===========
 
 1. [Line Marker for service.xml](#line-marker-for-servicexml)
+2. [Inspections for service.xml](#inspections-for-servicexml)
 
 Line Marker for service.xml
 ---------------------------
@@ -14,4 +15,14 @@ the generated Model Implementation Java class.
 Within the Java class you can jump back to the declaration in the ```service.xml```.
 
 ![Foo Model Impl](foo_impl.png "Foo Model Impl")
+
+Inspections for service.xml
+---------------------------
+
+Some inspections are provided to check for common mistakes in the ```service.xml```.
+
+Those are:
+
+* Check for valid ```<namespace>``` expressions
+* Check for valid ```<exception>``` names
 

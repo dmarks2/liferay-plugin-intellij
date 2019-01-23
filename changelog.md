@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Bugfix: Fixed compatibility with IntelliJ 2018.3 when injecting javascript into freemarker taglibs
 - Feature: Code completion for portlet names in JSP taglibs
 - Feature: Support for multiple OSGi service definitions in a @Component annotation
+- Feature: Inspections for service.xml
 
 ## 0.0.3
 - Feature: Javascript injection for aui:validator and many onXXX attributes
@@ -25,7 +26,6 @@ All notable changes to this project will be documented in this file.
 - Feature: Automatically exclude the "bundles" directory
 - Feature: Liferay target version support
 - Feature: Improved support for getSiblings() in Freemarker templates
-- Feature: Inspections for service.xml
 - Feature: Added taglib code completion for class names
 - Feature: Class Name completion for serviceLocator.findService(), enumUtil, staticUtil and staticFieldGetter in Freemarker templates
 - Feature: Implicit resolve of serviceLocator, enumUtil and staticUtil instructions in Freemarker templates
