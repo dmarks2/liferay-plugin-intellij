@@ -13,7 +13,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import org.jetbrains.annotations.Nls;
@@ -61,21 +60,14 @@ public class LiferayServiceXMLExceptionNameInspection extends XmlSuppressableIns
     public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             @Override
-            public void visitXmlText(XmlText text) {
-                XmlTag xmlTag = text.getParentTag();
-                if ( (xmlTag != null) && ("exception".equals(xmlTag.getLocalName())) ) {
-                    xmlTag = xmlTag.getParentTag();
-                    if ( (xmlTag != null) && ("exceptions".equals(xmlTag.getLocalName())) ) {
-                        xmlTag = xmlTag.getParentTag();
-                        if ( (xmlTag != null) && ("service-builder".equals(xmlTag.getLocalName())) ) {
-                            if ( (text.getText() != null) && (text.getText().endsWith("Exception")) ) {
-                                holder.registerProblem(text,
-                                    "Do not add Exception at the end of the name",
-                                    ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-                                    new RemoveExceptionSuffixFix()
-                                );
-                            }
-                        }
+            public void visitXmlText(XmlText xmlText) {
+                if (LiferayServiceXMLUtil.isExceptionTag(xmlText)) {
+                    if ( (xmlText.getText() != null) && (xmlText.getText().endsWith("Exception")) ) {
+                        holder.registerProblem(xmlText,
+                            "Do not add Exception at the end of the name",
+                            ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
+                            new RemoveExceptionSuffixFix()
+                        );
                     }
                 }
 

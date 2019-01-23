@@ -25,4 +25,7 @@ Those are:
 
 * Check for valid ```<namespace>``` expressions
 * Check for valid ```<exception>``` names
-
+* Check for duplicate ```<entity>``` 
+* Check for duplicate ```<exception>``` 
+* Check for duplicate ```<finder>``` 
+* Check for duplicate ```<column>``` inside an entity 

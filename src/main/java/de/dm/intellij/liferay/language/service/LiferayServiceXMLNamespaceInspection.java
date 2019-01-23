@@ -5,17 +5,14 @@ import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.xml.XmlTagChild;
 import com.intellij.psi.xml.XmlText;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 public class LiferayServiceXMLNamespaceInspection extends XmlSuppressableInspectionTool {
 
@@ -61,24 +58,7 @@ public class LiferayServiceXMLNamespaceInspection extends XmlSuppressableInspect
         return new XmlElementVisitor() {
             @Override
             public void visitXmlText(XmlText xmlText) {
-                boolean isNamespaceTag =
-                        Stream.of(
-                            xmlText
-                        ).map(
-                            XmlTagChild::getParentTag
-                        ).filter(
-                            Objects::nonNull
-                        ).filter(
-                            parentTag -> "namespace".equals(parentTag.getLocalName())
-                        ).map(
-                            XmlTagChild::getParentTag
-                        ).filter(
-                            Objects::nonNull
-                        ).anyMatch(
-                            grandParentTag -> "service-builder".equals(grandParentTag.getLocalName())
-                        );
-
-                if (isNamespaceTag) {
+               if (LiferayServiceXMLUtil.isNamespaceTag(xmlText)) {
                     String text = xmlText.getText();
                     if (text != null) {
                         Matcher matcher = VALID_NAMESPACE_EXPRESSION.matcher(text);
