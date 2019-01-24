@@ -47,7 +47,7 @@ public class LiferayServiceXMLLineMarkerProvider extends RelatedItemLineMarkerPr
             xmlAttribute -> "name".equals(xmlAttribute.getLocalName())
         ).findFirst(
         ).orElse(
-                null
+            null
         );
 
         if (nameXmlAttribute != null) {
@@ -90,7 +90,6 @@ public class LiferayServiceXMLLineMarkerProvider extends RelatedItemLineMarkerPr
                         result.add(builder.createLineMarkerInfo(element));
                     }
                 }
-
             }
         }
     }

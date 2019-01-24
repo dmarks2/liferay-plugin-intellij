@@ -119,16 +119,18 @@ public class LiferayProjectComponent extends AbstractProjectComponent {
     }
 
     private void handleModuleFiles(Module module, String filenamePattern) {
-        Collection<VirtualFile> virtualFilesByName = FilenameIndex.getVirtualFilesByName(myProject, filenamePattern, GlobalSearchScope.moduleScope(module));
-        for (VirtualFile virtualFile : virtualFilesByName) {
+        if (!module.isDisposed()) {
+            Collection<VirtualFile> virtualFilesByName = FilenameIndex.getVirtualFilesByName(myProject, filenamePattern, GlobalSearchScope.moduleScope(module));
+            for (VirtualFile virtualFile : virtualFilesByName) {
 
-            VirtualFileEvent event = new VirtualFileEvent(null, virtualFile, filenamePattern, null);
+                VirtualFileEvent event = new VirtualFileEvent(null, virtualFile, filenamePattern, null);
 
-            LiferayLookAndFeelXmlParser.handleChange(myProject, event);
-            LiferayHookXmlParser.handleChange(myProject, event);
-            OsgiBndFileParser.handleChange(myProject, event);
-            LiferayPackageJSONParser.handleChange(myProject, event);
-            LiferayJspWebContentRootListener.handleChange(myProject, event);
+                LiferayLookAndFeelXmlParser.handleChange(myProject, event);
+                LiferayHookXmlParser.handleChange(myProject, event);
+                OsgiBndFileParser.handleChange(myProject, event);
+                LiferayPackageJSONParser.handleChange(myProject, event);
+                LiferayJspWebContentRootListener.handleChange(myProject, event);
+            }
         }
     }
 
