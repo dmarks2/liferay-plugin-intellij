@@ -19,6 +19,9 @@
         <!-- Reference completion for portletName taglib attributes -->
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibPortletNameReferenceContributor"/>
 
+        <!-- Reference completion for action command names -->
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibActionCommandNameReferenceContributor"/>
+
         <!-- inspections -->
         <inspectionToolProvider implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibInspectionToolProvider"/>
     </extensions>

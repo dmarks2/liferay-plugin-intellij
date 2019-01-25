@@ -36,4 +36,6 @@ public class LiferayTaglibs {
     public static final String TAGLIB_URI_LIFERAY_TRASH = "http://liferay.com/tld/trash";
     public static final String TAGLIB_URI_LIFERAY_UI = "http://liferay.com/tld/ui";
 
+    public static final String TAGLIB_URI_JAVAX_PORTLET = "http://java.sun.com/portlet";
+
 }

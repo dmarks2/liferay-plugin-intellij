@@ -26,6 +26,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,48 +59,11 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
                 for (PsiElement child : children) {
                     if (child instanceof PsiClass) {
                         PsiClass psiClass = (PsiClass)child;
-                        for (PsiAnnotation psiAnnotation : psiClass.getAnnotations()) {
-                            if ("org.osgi.service.component.annotations.Component".equals(psiAnnotation.getQualifiedName())) {
-                                PsiAnnotationParameterList psiAnnotationParameterList = psiAnnotation.getParameterList();
 
-                                List<String> serviceClassNames = ComponentPropertiesCompletionContributor.getServiceClassNames(psiAnnotationParameterList);
-                                if (!(serviceClassNames.isEmpty())) {
-                                    for (String serviceClassName : serviceClassNames) {
-                                        if (getServiceClassName().equals(serviceClassName)) {
-                                            for (PsiNameValuePair psiNameValuePair : psiAnnotationParameterList.getAttributes()) {
-                                                if ("property".equals(psiNameValuePair.getName())) {
-                                                    PsiAnnotationMemberValue psiNameValuePairValue = psiNameValuePair.getValue();
+                        Map<String, Collection<String>> componentProperties = getComponentProperties(psiClass, getServiceClassName());
 
-                                                    if (psiNameValuePairValue instanceof PsiArrayInitializerMemberValue) {
-                                                        PsiArrayInitializerMemberValue psiArrayInitializerMemberValue = (PsiArrayInitializerMemberValue) psiNameValuePairValue;
+                        processProperties(map, componentProperties, psiClass);
 
-                                                        PsiAnnotationMemberValue[] initializers = psiArrayInitializerMemberValue.getInitializers();
-
-                                                        Map<String, String> properties = new HashMap<>();
-
-                                                        for (PsiAnnotationMemberValue initializer : initializers) {
-                                                            if (initializer instanceof PsiLiteralExpression) {
-                                                                AbstractMap.SimpleImmutableEntry<String, String> property = getProperty((PsiLiteralExpression) initializer);
-                                                                if (property != null) {
-                                                                    properties.put(property.getKey(), property.getValue());
-                                                                }
-                                                            } else if (initializer instanceof PsiBinaryExpression) {
-                                                                AbstractMap.SimpleImmutableEntry<String, String> property = getProperty((PsiBinaryExpression) initializer);
-                                                                if (property != null) {
-                                                                    properties.put(property.getKey(), property.getValue());
-                                                                }
-                                                            }
-                                                        }
-
-                                                        processProperties(map, properties, psiClass);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
                     }
                 }
             }
@@ -115,7 +80,54 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
     @NotNull
     protected abstract String getServiceClassName();
 
-    protected abstract void processProperties(@NotNull Map<Key, Void> map, @NotNull Map<String, String> properties, @NotNull PsiClass psiClass);
+    protected abstract void processProperties(@NotNull Map<Key, Void> map, @NotNull Map<String, Collection<String>> properties, @NotNull PsiClass psiClass);
+
+    protected Map<String, Collection<String>> getComponentProperties(PsiClass psiClass, String requiredServiceClassName) {
+        Map<String, Collection<String>> properties = new HashMap<>();
+
+        for (PsiAnnotation psiAnnotation : psiClass.getAnnotations()) {
+            if ("org.osgi.service.component.annotations.Component".equals(psiAnnotation.getQualifiedName())) {
+                PsiAnnotationParameterList psiAnnotationParameterList = psiAnnotation.getParameterList();
+
+                List<String> serviceClassNames = ComponentPropertiesCompletionContributor.getServiceClassNames(psiAnnotationParameterList);
+                if (!(serviceClassNames.isEmpty())) {
+                    for (String serviceClassName : serviceClassNames) {
+                        if (requiredServiceClassName.equals(serviceClassName)) {
+                            for (PsiNameValuePair psiNameValuePair : psiAnnotationParameterList.getAttributes()) {
+                                if ("property".equals(psiNameValuePair.getName())) {
+                                    PsiAnnotationMemberValue psiNameValuePairValue = psiNameValuePair.getValue();
+
+                                    if (psiNameValuePairValue instanceof PsiArrayInitializerMemberValue) {
+                                        PsiArrayInitializerMemberValue psiArrayInitializerMemberValue = (PsiArrayInitializerMemberValue) psiNameValuePairValue;
+
+                                        PsiAnnotationMemberValue[] initializers = psiArrayInitializerMemberValue.getInitializers();
+
+                                        for (PsiAnnotationMemberValue initializer : initializers) {
+                                            if (initializer instanceof PsiLiteralExpression) {
+                                                AbstractMap.SimpleImmutableEntry<String, String> property = getProperty((PsiLiteralExpression) initializer);
+                                                if (property != null) {
+                                                    Collection<String> values = properties.computeIfAbsent(property.getKey(), k -> new ArrayList<>());
+                                                    values.add(property.getValue());
+                                                }
+                                            } else if (initializer instanceof PsiBinaryExpression) {
+                                                AbstractMap.SimpleImmutableEntry<String, String> property = getProperty((PsiBinaryExpression) initializer);
+                                                if (property != null) {
+                                                    Collection<String> values = properties.computeIfAbsent(property.getKey(), k -> new ArrayList<>());
+                                                    values.add(property.getValue());
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return properties;
+    }
 
     @Nullable
     protected AbstractMap.SimpleImmutableEntry<String, String> getProperty(@NotNull PsiLiteralExpression psiLiteralExpression) {

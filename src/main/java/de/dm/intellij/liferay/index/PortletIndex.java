@@ -29,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -150,14 +151,14 @@ public class PortletIndex extends FileBasedIndexExtension<String, Void> implemen
         }
 
         @Override
-        protected void processProperties(@NotNull Map<String, Void> map, @NotNull Map<String, String> properties, @NotNull PsiClass psiClass) {
-            String portletName = properties.get(PORTLET_NAME_PROPERTY);
+        protected void processProperties(@NotNull Map<String, Void> map, @NotNull Map<String, Collection<String>> properties, @NotNull PsiClass psiClass) {
+            Collection<String> portletNames = properties.get(PORTLET_NAME_PROPERTY);
 
-            if (portletName == null) {
-                portletName = psiClass.getQualifiedName();
+            if (portletNames == null) {
+                portletNames = Collections.singletonList(psiClass.getQualifiedName());
             }
 
-            if (portletName != null) {
+            for (String portletName : portletNames) {
                 //from PortletTracker.addingService()
                 String portletId = StringUtil.replace(portletName, Arrays.asList(".", "$"), Arrays.asList("_", "_"));
                 portletId = LiferayFileUtil.getJSSafeName(portletId);
