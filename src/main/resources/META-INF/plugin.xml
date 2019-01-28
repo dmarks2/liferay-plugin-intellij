@@ -117,6 +117,9 @@
 
         <!-- FileBasedIndexer to quickly find all action commands names -->
         <fileBasedIndex implementation="de.dm.intellij.liferay.index.ActionCommandIndex" />
+
+        <!-- File Based Index for finding the portlet name for JSPs -->
+        <fileBasedIndex implementation="de.dm.intellij.liferay.index.PortletJspIndex" />
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">

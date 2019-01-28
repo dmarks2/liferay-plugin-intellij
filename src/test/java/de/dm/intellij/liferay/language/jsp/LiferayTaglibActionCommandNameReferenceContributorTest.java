@@ -94,4 +94,18 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
         assertTrue(strings.contains("/my/portletaction"));
     }
 
+    public void testByJspPath() {
+        myFixture.configureByFiles(
+            "META-INF/resources/html/view.jsp",
+            "liferay-portlet-ext.tld",
+            "de/dm/portlet/MyJspPortlet.java",
+            "javax/portlet/Portlet.java",
+            "javax/portlet/ProcessAction.java"
+        );
+
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("/my/jspaction"));
+    }
+
 }

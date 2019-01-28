@@ -62,7 +62,10 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
 
                         Map<String, Collection<String>> componentProperties = getComponentProperties(psiClass, getServiceClassName());
 
-                        processProperties(map, componentProperties, psiClass);
+                        //ok?
+                        if (!componentProperties.isEmpty()) {
+                            processProperties(map, componentProperties, psiClass);
+                        }
 
                     }
                 }
