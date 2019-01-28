@@ -110,4 +110,19 @@ public class ActionCommandIndexTest extends LightCodeInsightFixtureTestCase {
         assertTrue(actionCommands.contains("/my/action"));
     }
 
+    public void testProcessActionByMethodName() {
+        myFixture.configureByFiles(
+            "de/dm/portlet/MyActionMethodPortlet.java",
+            "javax/portlet/Portlet.java",
+            "javax/portlet/ActionRequest.java",
+            "javax/portlet/ActionResponse.java"
+        );
+
+        FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
+
+        List<String> actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MyActionMethodPortletName", GlobalSearchScope.moduleScope(myFixture.getModule()));
+
+        assertTrue(actionCommands.contains("actionMethod"));
+    }
+
 }

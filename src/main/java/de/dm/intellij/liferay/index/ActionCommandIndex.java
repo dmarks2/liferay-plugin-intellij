@@ -20,9 +20,14 @@ import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiModifierList;
 import com.intellij.psi.PsiNameValuePair;
+import com.intellij.psi.PsiParameter;
+import com.intellij.psi.PsiParameterList;
 import com.intellij.psi.PsiReferenceExpression;
+import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.util.PsiUtil;
 import com.intellij.util.indexing.DataIndexer;
 import com.intellij.util.indexing.DefaultFileTypeSpecificInputFilter;
 import com.intellij.util.indexing.FileBasedIndex;
@@ -57,6 +62,11 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
     public static final ID<CommandKey, Void> NAME = ID.create("ActionCommandIndex");
 
     private final ActionCommandIndexer actionCommandIndexer = new ActionCommandIndexer();
+
+    private static final Collection<String> ACTION_NAME_EXCEPTIONS = Arrays.asList(
+        "callActionMethod",
+        "processAction"
+    );
 
     @NotNull
     @Override
@@ -254,6 +264,41 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
                                                 }
                                             }
                                         }
+                                    }
+                                }
+
+                                PsiModifierList modifierList = psiMethod.getModifierList();
+                                if (PsiUtil.getAccessLevel(modifierList) == PsiUtil.ACCESS_LEVEL_PUBLIC) {
+                                    PsiParameterList parameterList = psiMethod.getParameterList();
+                                    if (parameterList.getParametersCount() == 2) {
+                                        String methodName = psiMethod.getName();
+                                        if (! ACTION_NAME_EXCEPTIONS.contains(methodName)) {
+                                            PsiParameter firstParameter = parameterList.getParameters()[0];
+                                            PsiParameter secondParameter = parameterList.getParameters()[1];
+
+                                            String firstParameterQualifiedName = null;
+                                            String secondParameterQualifiedName = null;
+
+                                            if (firstParameter.getType() instanceof PsiClassReferenceType) {
+                                                PsiClassReferenceType psiClassReferenceType = (PsiClassReferenceType)firstParameter.getType();
+
+                                                firstParameterQualifiedName = psiClassReferenceType.getReference().getQualifiedName();
+                                            }
+                                            if (secondParameter.getType() instanceof PsiClassReferenceType) {
+                                                PsiClassReferenceType psiClassReferenceType = (PsiClassReferenceType)secondParameter.getType();
+
+                                                secondParameterQualifiedName = psiClassReferenceType.getReference().getQualifiedName();
+                                            }
+
+                                            if ( ("javax.portlet.ActionRequest".equals(firstParameterQualifiedName)) && ("javax.portlet.ActionResponse".equals(secondParameterQualifiedName)) ) {
+                                                Collection<String> portletNames = getPortletNames(psiClass);
+
+                                                for (String portletName : portletNames) {
+                                                    map.put(new CommandKey(portletName, methodName), null);
+                                                }
+                                            }
+                                        }
+
                                     }
                                 }
                             }
