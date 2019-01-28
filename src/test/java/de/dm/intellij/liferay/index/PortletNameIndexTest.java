@@ -20,9 +20,9 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.List;
 
-public class PortletIndexTest extends LightCodeInsightFixtureTestCase {
+public class PortletNameIndexTest extends LightCodeInsightFixtureTestCase {
 
-    private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/index/PortletIndexTest";
+    private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/index/PortletNameIndexTest";
 
     private static final LightProjectDescriptor JAVA_OSGI_LIB_DESCRIPTOR = new DefaultLightProjectDescriptor() {
 
@@ -63,7 +63,7 @@ public class PortletIndexTest extends LightCodeInsightFixtureTestCase {
 
         FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
 
-        List<String> portletNames = PortletIndex.getPortletNames(myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
+        List<String> portletNames = PortletNameIndex.getPortletNames(myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
 
         assertTrue(portletNames.contains("de_dm_portlet_MyPortletName"));
     }
@@ -76,7 +76,7 @@ public class PortletIndexTest extends LightCodeInsightFixtureTestCase {
 
         FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
 
-        List<String> portletNames = PortletIndex.getPortletNames(myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
+        List<String> portletNames = PortletNameIndex.getPortletNames(myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
 
         assertTrue(portletNames.contains("de_dm_portlet_MyConstantPortletName"));
     }
@@ -89,7 +89,7 @@ public class PortletIndexTest extends LightCodeInsightFixtureTestCase {
 
         FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
 
-        List<String> portletNames = PortletIndex.getPortletNames(myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
+        List<String> portletNames = PortletNameIndex.getPortletNames(myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
 
         assertTrue(portletNames.contains("de_dm_portlet_UnnamedPortlet"));
     }

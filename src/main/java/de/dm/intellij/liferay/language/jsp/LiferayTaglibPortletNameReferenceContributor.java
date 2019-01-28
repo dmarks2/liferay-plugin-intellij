@@ -13,7 +13,7 @@ import com.intellij.psi.ResolveResult;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.util.ProcessingContext;
-import de.dm.intellij.liferay.index.PortletIndex;
+import de.dm.intellij.liferay.index.PortletNameIndex;
 import de.dm.intellij.liferay.util.Icons;
 import de.dm.intellij.liferay.util.LiferayTaglibs;
 import javafx.util.Pair;
@@ -67,7 +67,7 @@ public class LiferayTaglibPortletNameReferenceContributor extends AbstractLifera
 
                                         String value = getElement().getValue();
                                         if (value != null) {
-                                            List<PsiFile> portletClasses = PortletIndex.getPortletClasses(project, value, GlobalSearchScope.allScope(project));
+                                            List<PsiFile> portletClasses = PortletNameIndex.getPortletClasses(project, value, GlobalSearchScope.allScope(project));
 
                                             return PsiElementResolveResult.createResults(portletClasses);
                                         }
@@ -81,13 +81,13 @@ public class LiferayTaglibPortletNameReferenceContributor extends AbstractLifera
 
                                         Project project = getElement().getProject();
 
-                                        List<String> portletNames = PortletIndex.getPortletNames(project, GlobalSearchScope.allScope(project));
+                                        List<String> portletNames = PortletNameIndex.getPortletNames(project, GlobalSearchScope.allScope(project));
 
                                         Set<String> distinctPortletNames = new TreeSet<>();
                                         distinctPortletNames.addAll(portletNames);
 
                                         for (String portletName : distinctPortletNames) {
-                                            List<PsiFile> portletClasses = PortletIndex.getPortletClasses(project, portletName, GlobalSearchScope.allScope(project));
+                                            List<PsiFile> portletClasses = PortletNameIndex.getPortletClasses(project, portletName, GlobalSearchScope.allScope(project));
                                             if (portletClasses.size() > 0) {
                                                 result.add(
                                                     LookupElementBuilder.create(portletName).

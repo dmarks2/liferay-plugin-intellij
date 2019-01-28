@@ -113,7 +113,7 @@
         <implicitUsageProvider order="last" implementation="de.dm.intellij.liferay.language.osgi.LiferayOsgiImplicitUsageProvider" />
 
         <!-- FileBasedIndexer to quickly find all portlet names -->
-        <fileBasedIndex implementation="de.dm.intellij.liferay.index.PortletIndex" />
+        <fileBasedIndex implementation="de.dm.intellij.liferay.index.PortletNameIndex" />
 
         <!-- FileBasedIndexer to quickly find all action commands names -->
         <fileBasedIndex implementation="de.dm.intellij.liferay.index.ActionCommandIndex" />

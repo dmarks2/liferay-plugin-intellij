@@ -36,10 +36,10 @@ import java.util.Map;
 /**
  * FileBasedIndexer to quickly find all portlet names
  */
-public class PortletIndex extends FileBasedIndexExtension<String, Void> implements PsiDependentIndex {
+public class PortletNameIndex extends FileBasedIndexExtension<String, Void> implements PsiDependentIndex {
 
     @NonNls
-    public static final ID<String, Void> NAME = ID.create("PortletIndex");
+    public static final ID<String, Void> NAME = ID.create("PortletNameIndex");
 
     private static final String PORTLET_NAME_PROPERTY = "javax.portlet.name";
 
