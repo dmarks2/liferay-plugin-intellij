@@ -5,8 +5,18 @@ import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.project.IndexNotReadyException;
 import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiConstantEvaluationHelper;
+import com.intellij.psi.PsiExpression;
+import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiModifierList;
+import com.intellij.psi.PsiParameter;
+import com.intellij.psi.PsiParameterList;
+import com.intellij.psi.PsiReturnStatement;
+import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.util.PsiUtil;
 import com.intellij.util.indexing.DataIndexer;
 import com.intellij.util.indexing.DefaultFileTypeSpecificInputFilter;
 import com.intellij.util.indexing.FileBasedIndex;
@@ -149,28 +159,82 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> imple
 
         @NotNull
         @Override
-        protected String getServiceClassName() {
-            return "javax.portlet.Portlet";
+        protected String[] getServiceClassNames() {
+            return new String[]{"javax.portlet.Portlet", "com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand"};
         }
 
         @Override
-        protected void processProperties(@NotNull Map<JspKey, Void> map, @NotNull Map<String, Collection<String>> properties, @NotNull PsiClass psiClass) {
+        protected void processProperties(@NotNull Map<JspKey, Void> map, @NotNull Map<String, Collection<String>> properties, @NotNull PsiClass psiClass, String serviceClassName) {
             Collection<String> portletNames = properties.get(PORTLET_NAME_PROPERTY);
 
             if (portletNames == null) {
                 portletNames = Collections.singletonList(psiClass.getQualifiedName());
             }
 
-            for (String jspInitParam : PORTLET_JSP_INIT_PARAMS) {
-                Collection<String> initParamValues = properties.get(jspInitParam);
-                if (initParamValues != null) {
-                    for (String initParamValue : initParamValues) {
-                        for (String portletName : portletNames) {
-                            //from PortletTracker.addingService()
-                            String portletId = StringUtil.replace(portletName, Arrays.asList(".", "$"), Arrays.asList("_", "_"));
-                            portletId = LiferayFileUtil.getJSSafeName(portletId);
+            if ("javax.portlet.Portlet".equals(serviceClassName)) {
+                for (String jspInitParam : PORTLET_JSP_INIT_PARAMS) {
+                    Collection<String> initParamValues = properties.get(jspInitParam);
+                    if (initParamValues != null) {
+                        for (String initParamValue : initParamValues) {
+                            for (String portletName : portletNames) {
+                                //from PortletTracker.addingService()
+                                String portletId = StringUtil.replace(portletName, Arrays.asList(".", "$"), Arrays.asList("_", "_"));
+                                portletId = LiferayFileUtil.getJSSafeName(portletId);
 
-                            map.put(new JspKey(portletId, initParamValue), null);
+                                map.put(new JspKey(portletId, initParamValue), null);
+                            }
+                        }
+                    }
+                }
+            } else if ("com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand".equals(serviceClassName)) {
+                for (PsiMethod psiMethod : psiClass.getMethods()) {
+                    if ("render".equals(psiMethod.getName())) {
+                        PsiModifierList modifierList = psiMethod.getModifierList();
+                        if (PsiUtil.getAccessLevel(modifierList) == PsiUtil.ACCESS_LEVEL_PUBLIC) {
+                            PsiParameterList parameterList = psiMethod.getParameterList();
+                            if (parameterList.getParametersCount() == 2) {
+                                PsiParameter firstParameter = parameterList.getParameters()[0];
+                                PsiParameter secondParameter = parameterList.getParameters()[1];
+
+                                String firstParameterQualifiedName = null;
+                                String secondParameterQualifiedName = null;
+
+                                if (firstParameter.getType() instanceof PsiClassReferenceType) {
+                                    PsiClassReferenceType psiClassReferenceType = (PsiClassReferenceType)firstParameter.getType();
+
+                                    firstParameterQualifiedName = psiClassReferenceType.getReference().getQualifiedName();
+                                }
+                                if (secondParameter.getType() instanceof PsiClassReferenceType) {
+                                    PsiClassReferenceType psiClassReferenceType = (PsiClassReferenceType)secondParameter.getType();
+
+                                    secondParameterQualifiedName = psiClassReferenceType.getReference().getQualifiedName();
+                                }
+
+                                if ( ("javax.portlet.RenderRequest".equals(firstParameterQualifiedName)) && ("javax.portlet.RenderResponse".equals(secondParameterQualifiedName)) ) {
+                                    PsiReturnStatement[] returnStatements = PsiUtil.findReturnStatements(psiMethod);
+                                    for (PsiReturnStatement returnStatement : returnStatements) {
+                                        PsiExpression returnValue = returnStatement.getReturnValue();
+
+                                        PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(psiClass.getProject()).getConstantEvaluationHelper();
+
+                                        Object constantExpression = constantEvaluationHelper.computeConstantExpression(returnValue);
+
+                                        if (constantExpression instanceof String) {
+                                            String text = (String)constantExpression;
+
+                                            text = StringUtil.unquoteString(text);
+
+                                            for (String portletName : portletNames) {
+                                                //from PortletTracker.addingService()
+                                                String portletId = StringUtil.replace(portletName, Arrays.asList(".", "$"), Arrays.asList("_", "_"));
+                                                portletId = LiferayFileUtil.getJSSafeName(portletId);
+
+                                                map.put(new JspKey(portletId, text), null);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

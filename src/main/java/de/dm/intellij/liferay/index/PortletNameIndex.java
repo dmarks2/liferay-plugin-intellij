@@ -146,12 +146,12 @@ public class PortletNameIndex extends FileBasedIndexExtension<String, Void> impl
 
         @NotNull
         @Override
-        protected String getServiceClassName() {
-            return "javax.portlet.Portlet";
+        protected String[] getServiceClassNames() {
+            return new String[]{"javax.portlet.Portlet"};
         }
 
         @Override
-        protected void processProperties(@NotNull Map<String, Void> map, @NotNull Map<String, Collection<String>> properties, @NotNull PsiClass psiClass) {
+        protected void processProperties(@NotNull Map<String, Void> map, @NotNull Map<String, Collection<String>> properties, @NotNull PsiClass psiClass, String serviceClassName) {
             Collection<String> portletNames = properties.get(PORTLET_NAME_PROPERTY);
 
             if (portletNames == null) {

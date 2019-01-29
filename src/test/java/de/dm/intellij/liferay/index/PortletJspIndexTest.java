@@ -68,4 +68,19 @@ public class PortletJspIndexTest extends LightCodeInsightFixtureTestCase {
         assertTrue(portletNames.contains("de_dm_portlet_MyPortletName"));
     }
 
+    public void testJspPathByMVCRenderCommand() {
+        myFixture.configureByFiles(
+            "de/dm/portlet/MyMVCRenderCommand.java",
+            "javax/portlet/RenderRequest.java",
+            "javax/portlet/RenderResponse.java",
+            "com/liferay/portal/kernel/portlet/bridges/mvc/MVCRenderCommand.java"
+        );
+
+        FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
+
+        List<String> portletNames = PortletJspIndex.getPortletNames("/html/render.jsp", GlobalSearchScope.moduleScope(myFixture.getModule()));
+
+        assertTrue(portletNames.contains("de_dm_portlet_MyRenderPortlet"));
+    }
+
 }

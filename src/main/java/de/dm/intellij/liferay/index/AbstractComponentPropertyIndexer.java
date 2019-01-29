@@ -60,11 +60,13 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
                     if (child instanceof PsiClass) {
                         PsiClass psiClass = (PsiClass)child;
 
-                        Map<String, Collection<String>> componentProperties = getComponentProperties(psiClass, getServiceClassName());
+                        for (String serviceClassName : getServiceClassNames()) {
+                            Map<String, Collection<String>> componentProperties = getComponentProperties(psiClass, serviceClassName);
 
-                        //ok?
-                        if (!componentProperties.isEmpty()) {
-                            processProperties(map, componentProperties, psiClass);
+                            //ok?
+                            if (!componentProperties.isEmpty()) {
+                                processProperties(map, componentProperties, psiClass, serviceClassName);
+                            }
                         }
 
                     }
@@ -81,9 +83,9 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
     }
 
     @NotNull
-    protected abstract String getServiceClassName();
+    protected abstract String[] getServiceClassNames();
 
-    protected abstract void processProperties(@NotNull Map<Key, Void> map, @NotNull Map<String, Collection<String>> properties, @NotNull PsiClass psiClass);
+    protected abstract void processProperties(@NotNull Map<Key, Void> map, @NotNull Map<String, Collection<String>> properties, @NotNull PsiClass psiClass, String serviceClassName);
 
     protected Map<String, Collection<String>> getComponentProperties(PsiClass psiClass, String requiredServiceClassName) {
         Map<String, Collection<String>> properties = new HashMap<>();

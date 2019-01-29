@@ -191,12 +191,12 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
 
         @NotNull
         @Override
-        protected String getServiceClassName() {
-            return "com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand";
+        protected String[] getServiceClassNames() {
+            return new String[] {"com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand"};
         }
 
         @Override
-        protected void processProperties(@NotNull Map<CommandKey, Void> map, @NotNull Map<String, Collection<String>> properties, @NotNull PsiClass psiClass) {
+        protected void processProperties(@NotNull Map<CommandKey, Void> map, @NotNull Map<String, Collection<String>> properties, @NotNull PsiClass psiClass, String serviceClassName) {
             Collection<String> mvcCommandNames = properties.get("mvc.command.name");
             Collection<String> portletNames = properties.get("javax.portlet.name");
 

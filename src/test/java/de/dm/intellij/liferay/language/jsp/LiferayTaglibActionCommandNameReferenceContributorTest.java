@@ -14,7 +14,12 @@ import com.intellij.testFramework.PsiTestUtil;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
+import com.intellij.util.indexing.FileBasedIndex;
+import de.dm.intellij.liferay.index.ActionCommandIndex;
+import de.dm.intellij.liferay.index.PortletJspIndex;
+import de.dm.intellij.liferay.index.PortletNameIndex;
 import org.jetbrains.annotations.NotNull;
+import org.junit.Ignore;
 
 import java.io.File;
 import java.util.List;
@@ -103,9 +108,39 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
             "javax/portlet/ProcessAction.java"
         );
 
+
+        FileBasedIndex.getInstance().requestRebuild(PortletNameIndex.NAME);
+        FileBasedIndex.getInstance().requestRebuild(ActionCommandIndex.NAME);
+        FileBasedIndex.getInstance().requestRebuild(PortletJspIndex.NAME);
+
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("/my/jspaction"));
     }
+
+    /*
+    public void testByMVCRenderCommand() {
+        myFixture.configureByFiles(
+            "META-INF/resources/html/render.jsp",
+            "liferay-portlet-ext.tld",
+            "de/dm/portlet/MyMVCRenderCommand.java",
+            "de/dm/portlet/MyJspPortlet.java",
+            "javax/portlet/Portlet.java",
+            "javax/portlet/ProcessAction.java",
+            "javax/portlet/RenderRequest.java",
+            "javax/portlet/RenderResponse.java",
+            "com/liferay/portal/kernel/portlet/bridges/mvc/MVCRenderCommand.java"
+        );
+
+
+        FileBasedIndex.getInstance().requestRebuild(PortletNameIndex.NAME);
+        FileBasedIndex.getInstance().requestRebuild(ActionCommandIndex.NAME);
+        FileBasedIndex.getInstance().requestRebuild(PortletJspIndex.NAME);
+
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("/my/jspaction"));
+    }
+    */
 
 }
