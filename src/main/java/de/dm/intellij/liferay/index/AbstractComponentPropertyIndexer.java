@@ -1,5 +1,8 @@
 package de.dm.intellij.liferay.index;
 
+import com.intellij.lang.LighterAST;
+import com.intellij.lang.LighterASTNode;
+import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -18,9 +21,14 @@ import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiNameValuePair;
 import com.intellij.psi.PsiReferenceExpression;
+import com.intellij.psi.impl.source.FileLocalResolver;
+import com.intellij.psi.impl.source.tree.JavaElementType;
+import com.intellij.psi.impl.source.tree.LightTreeUtil;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.indexing.DataIndexer;
 import com.intellij.util.indexing.FileContent;
+import com.intellij.util.indexing.FileContentImpl;
+import com.intellij.util.indexing.PsiDependentIndex;
 import de.dm.intellij.liferay.language.osgi.ComponentPropertiesCompletionContributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -32,7 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndexer<Key, Void, FileContent> {
+public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndexer<Key, Void, FileContent>, PsiDependentIndex {
 
     @NotNull
     @Override
@@ -44,6 +52,13 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
         PsiManager psiManager = PsiManager.getInstance(fileContent.getProject());
 
         PsiFile psiFile = psiManager.findFile(virtualFile);
+
+        FileType fileType = fileContent.getFileType();
+        if (! fileType.isBinary()) {
+            LighterASTJavaFileHelper lighterASTJavaFileHelper = new LighterASTJavaFileHelper(fileContent);
+
+            System.out.println(lighterASTJavaFileHelper.getClassQualifiedName());
+        }
 
         DumbService dumbService = DumbService.getInstance(fileContent.getProject());
 
