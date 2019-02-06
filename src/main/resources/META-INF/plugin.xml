@@ -30,6 +30,7 @@
             <li>Bugfix: Fixed parsing liferay-look-and-feel.xml when creating that file for the first time</li>
             <li>Bugfix: Correctly detect locale strings in JSON schema for journal structure files</li>
             <li>Bugfix: Fixed compatibility with IntelliJ 2018.3 when injecting javascript into freemarker taglibs</li>
+            <li>Bugfix: ServiceLocator lookup in Application Display Templates was not working properly</li>
             <li>Feature: Code completion for portlet names in JSP taglibs</li>
             <li>Feature: Support for multiple OSGi service definitions in a @Component annotation</li>
             <li>Feature: Inspections for service.xml</li>

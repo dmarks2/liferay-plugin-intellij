@@ -210,11 +210,22 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
         assertTrue(virtualFile.exists());
     }
 
-    public void testServiceLocator() {
-        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/service-locator.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "com/liferay/portal/template/ServiceLocator.java");
+    public void testServiceLocatorInJournalTemplate() {
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/service-locator.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "com/liferay/portal/template/ServiceLocator.java", "de/dm/MyService.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
-        assertTrue(strings.contains("toString"));
+        assertTrue(strings.contains("helloService"));
+    }
+
+    public void testServiceLocatorInApplicationDisplayTemplate() {
+        myFixture.configureByFiles(
+            "WEB-INF/src/resources-importer/templates/application_display/asset_category/adt-service-locator.ftl",
+             "com/liferay/portal/template/ServiceLocator.java",
+            "de/dm/MyService.java"
+        );
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("helloService"));
     }
 
     public void testServiceLocatorClassNameLookup() {
