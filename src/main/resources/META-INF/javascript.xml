@@ -5,9 +5,6 @@
     </extensions>
 
     <extensions defaultExtensionNs="JavaScript">
-        <!-- Provide predefined JavaScript Libraries for AlloyUI -->
-        <predefinedLibraryProvider implementation="de.dm.intellij.liferay.language.javascript.AlloyUIPredefinedLibraryProvider"/>
-
         <!-- JSON Schema Provider for Liferay specific JSON files -->
         <JsonSchema.ProviderFactory implementation="de.dm.intellij.liferay.schema.LiferayJsonSchemaProviderFactory"/>
 
