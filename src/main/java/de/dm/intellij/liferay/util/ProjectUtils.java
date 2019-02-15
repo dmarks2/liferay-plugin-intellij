@@ -1,19 +1,23 @@
 package de.dm.intellij.liferay.util;
 
-import com.intellij.codeInsight.completion.CompletionResultSet;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
-import com.intellij.openapi.roots.*;
+import com.intellij.openapi.roots.LibraryOrderEntry;
+import com.intellij.openapi.roots.ModifiableModelsProvider;
+import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.roots.ModuleRootManager;
+import com.intellij.openapi.roots.OrderRootType;
+import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.roots.impl.OrderEntryUtil;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
 import com.intellij.openapi.roots.libraries.LibraryTablesRegistrar;
 import com.intellij.openapi.startup.StartupManager;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.JavaPsiFacade;
@@ -21,9 +25,19 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiClassType;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiField;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiImportList;
+import com.intellij.psi.PsiImportStatement;
+import com.intellij.psi.PsiJavaCodeReferenceElement;
+import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
+import com.intellij.psi.PsiParameter;
+import com.intellij.psi.PsiParameterList;
 import com.intellij.psi.PsiType;
+import com.intellij.psi.impl.source.PsiClassReferenceType;
+import com.intellij.psi.impl.source.tree.JavaSourceUtil;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.DisposeAwareRunnable;
 import com.intellij.util.Processor;
 import org.jetbrains.annotations.NotNull;
@@ -32,6 +46,7 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class ProjectUtils {
     public static void runWhenInitialized(final Project project, final Runnable runnable) {
@@ -52,7 +67,7 @@ public class ProjectUtils {
 
     public static boolean isNoBackgroundMode() {
         return (ApplicationManager.getApplication().isUnitTestMode()
-                || ApplicationManager.getApplication().isHeadlessEnvironment());
+            || ApplicationManager.getApplication().isHeadlessEnvironment());
     }
 
     public static void runDumbAware(final Project project, final Runnable r) {
@@ -75,15 +90,15 @@ public class ProjectUtils {
         final Collection<Library> result = new ArrayList<Library>();
 
         ProjectRootManager.getInstance(project).orderEntries().forEachLibrary(
-                new Processor<Library>() {
-                    @Override
-                    public boolean process(Library library) {
-                        if (library.getName() != null && library.getName().contains(name)) {
-                            result.add(library);
-                        }
-                        return true;
+            new Processor<Library>() {
+                @Override
+                public boolean process(Library library) {
+                    if (library.getName() != null && library.getName().contains(name)) {
+                        result.add(library);
                     }
+                    return true;
                 }
+            }
         );
 
         return result;
@@ -93,15 +108,15 @@ public class ProjectUtils {
         final Collection<Library> result = new ArrayList<Library>();
 
         ModuleRootManager.getInstance(module).orderEntries().forEachLibrary(
-                new Processor<Library>() {
-                    @Override
-                    public boolean process(Library library) {
-                        if (library.getName() != null && library.getName().contains(name)) {
-                            result.add(library);
-                        }
-                        return true;
+            new Processor<Library>() {
+                @Override
+                public boolean process(Library library) {
+                    if (library.getName() != null && library.getName().contains(name)) {
+                        result.add(library);
                     }
+                    return true;
                 }
+            }
         );
 
         return result;
@@ -129,31 +144,31 @@ public class ProjectUtils {
 
             if (libraryEntry != null) {
                 ApplicationManager.getApplication().runWriteAction(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                Library library = libraryEntry.getLibrary();
-                                if (library != null) {
-                                    LibraryTable table = library.getTable();
-                                    if (table != null) {
-                                        table.removeLibrary(library);
-                                        model.removeOrderEntry(libraryEntry);
-                                        modelsProvider.commitModuleModifiableModel(model);
-                                    }
-                                } else {
-                                    modelsProvider.disposeModuleModifiableModel(model);
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            Library library = libraryEntry.getLibrary();
+                            if (library != null) {
+                                LibraryTable table = library.getTable();
+                                if (table != null) {
+                                    table.removeLibrary(library);
+                                    model.removeOrderEntry(libraryEntry);
+                                    modelsProvider.commitModuleModifiableModel(model);
                                 }
-                            }
-                        }
-                );
-            } else {
-                ApplicationManager.getApplication().runWriteAction(
-                        new Runnable() {
-                            @Override
-                            public void run() {
+                            } else {
                                 modelsProvider.disposeModuleModifiableModel(model);
                             }
                         }
+                    }
+                );
+            } else {
+                ApplicationManager.getApplication().runWriteAction(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            modelsProvider.disposeModuleModifiableModel(model);
+                        }
+                    }
                 );
             }
         }
@@ -181,27 +196,27 @@ public class ProjectUtils {
             final ModifiableRootModel model = modelsProvider.getModuleModifiableModel(module);
             final LibraryOrderEntry libraryEntry = getLibraryIntern(name, model);
             ApplicationManager.getApplication().runWriteAction(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            if (libraryEntry != null) {
-                                Library library = libraryEntry.getLibrary();
-                                if (library != null) {
-                                    fillLibraryIntern(module, library, importRoots);
-                                } else {
-                                    model.removeOrderEntry(libraryEntry);
-                                    library = createLibraryIntern(module.getProject(), name);
-                                    fillLibraryIntern(module, library, importRoots);
-                                }
-                            } else {
-                                Library library = createLibraryIntern(module.getProject(), name);
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        if (libraryEntry != null) {
+                            Library library = libraryEntry.getLibrary();
+                            if (library != null) {
                                 fillLibraryIntern(module, library, importRoots);
-                                model.addLibraryEntry(library);
+                            } else {
+                                model.removeOrderEntry(libraryEntry);
+                                library = createLibraryIntern(module.getProject(), name);
+                                fillLibraryIntern(module, library, importRoots);
                             }
-
-                            modelsProvider.commitModuleModifiableModel(model);
+                        } else {
+                            Library library = createLibraryIntern(module.getProject(), name);
+                            fillLibraryIntern(module, library, importRoots);
+                            model.addLibraryEntry(library);
                         }
+
+                        modelsProvider.commitModuleModifiableModel(model);
                     }
+                }
             );
         }
     }
@@ -240,7 +255,7 @@ public class ProjectUtils {
                 PsiModifierList modifierList = psiField.getModifierList();
                 if (modifierList != null) {
                     if (
-                            modifierList.hasModifierProperty(PsiModifier.PUBLIC) &&
+                        modifierList.hasModifierProperty(PsiModifier.PUBLIC) &&
                             modifierList.hasModifierProperty(PsiModifier.STATIC)
                     ) {
                         result.add(psiField);
@@ -250,6 +265,58 @@ public class ProjectUtils {
         }
 
         return result;
+    }
+
+    public static List<String> getMethodParameterQualifiedNames(@NotNull PsiMethod psiMethod) {
+        List<String> result = new ArrayList<>();
+
+        PsiParameterList parameterList = psiMethod.getParameterList();
+
+        for (PsiParameter psiParameter : parameterList.getParameters()) {
+            PsiType psiType = psiParameter.getType();
+
+            if (psiType instanceof PsiClassReferenceType) {
+                PsiClassReferenceType psiClassReferenceType = (PsiClassReferenceType)psiType;
+
+                PsiJavaCodeReferenceElement psiJavaCodeReferenceElement = psiClassReferenceType.getReference();
+
+                String qualifiedName = getQualifiedNameWithoutResolve(psiJavaCodeReferenceElement);
+
+                result.add(qualifiedName);
+            }
+        }
+
+        return result;
+    }
+
+
+    @NotNull
+    public static String getMatchFromImports(@NotNull PsiFile psiFile, @NotNull String className) {
+        PsiImportList psiImportList = PsiTreeUtil.getChildOfType(psiFile, PsiImportList.class);
+        if (psiImportList != null) {
+            PsiImportStatement[] psiImportStatements = PsiTreeUtil.getChildrenOfType(psiImportList, PsiImportStatement.class);
+            if (psiImportStatements != null) {
+                for (PsiImportStatement psiImportStatement : psiImportStatements) {
+                    String qualifiedName = psiImportStatement.getQualifiedName();
+                    if (qualifiedName != null) {
+                        if (className.equals(StringUtil.getShortName(qualifiedName))) {
+                            return qualifiedName;
+                        }
+                    }
+                }
+            }
+        }
+
+        return className;
+    }
+
+    @NotNull
+    public static String getQualifiedNameWithoutResolve(@NotNull PsiJavaCodeReferenceElement psiJavaCodeReferenceElement) {
+        String referenceText = JavaSourceUtil.getReferenceText(psiJavaCodeReferenceElement);
+
+        String qualifiedName = ProjectUtils.getMatchFromImports(psiJavaCodeReferenceElement.getContainingFile(), referenceText);
+
+        return qualifiedName;
     }
 
 }

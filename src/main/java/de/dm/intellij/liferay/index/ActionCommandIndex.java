@@ -3,7 +3,6 @@ package de.dm.intellij.liferay.index;
 import com.intellij.ide.highlighter.JavaClassFileType;
 import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.application.ReadAction;
-import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.IndexNotReadyException;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
@@ -14,19 +13,17 @@ import com.intellij.psi.PsiAnnotationMemberValue;
 import com.intellij.psi.PsiAnnotationParameterList;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiConstantEvaluationHelper;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifierList;
 import com.intellij.psi.PsiNameValuePair;
-import com.intellij.psi.PsiParameter;
-import com.intellij.psi.PsiParameterList;
 import com.intellij.psi.PsiReferenceExpression;
-import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtil;
 import com.intellij.util.indexing.DataIndexer;
 import com.intellij.util.indexing.DefaultFileTypeSpecificInputFilter;
@@ -40,6 +37,7 @@ import com.intellij.util.io.EnumeratorStringDescriptor;
 import com.intellij.util.io.KeyDescriptor;
 import com.intellij.util.io.VoidDataExternalizer;
 import de.dm.intellij.liferay.util.LiferayFileUtil;
+import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
@@ -197,13 +195,15 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
 
         @Override
         protected void processProperties(@NotNull Map<CommandKey, Void> map, @NotNull Map<String, Collection<String>> properties, @NotNull PsiClass psiClass, String serviceClassName) {
-            Collection<String> mvcCommandNames = properties.get("mvc.command.name");
-            Collection<String> portletNames = properties.get("javax.portlet.name");
+            if (! properties.isEmpty()) {
+                Collection<String> mvcCommandNames = properties.get("mvc.command.name");
+                Collection<String> portletNames = properties.get("javax.portlet.name");
 
-            if ( (mvcCommandNames != null) && (portletNames != null) ) {
-                for (String mvcCommandName : mvcCommandNames) {
-                    for (String portletName : portletNames) {
-                        map.put(new CommandKey(portletName, mvcCommandName), null);
+                if ((mvcCommandNames != null) && (portletNames != null)) {
+                    for (String mvcCommandName : mvcCommandNames) {
+                        for (String portletName : portletNames) {
+                            map.put(new CommandKey(portletName, mvcCommandName), null);
+                        }
                     }
                 }
             }
@@ -214,121 +214,106 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
         public Map<CommandKey, Void> map(@NotNull FileContent fileContent) {
             Map<CommandKey, Void> map = super.map(fileContent);
 
-            VirtualFile virtualFile = fileContent.getFile();
+            PsiJavaFile psiJavaFile = getPsiJavaFileForPsiDependentIndex(fileContent);
 
-            PsiManager psiManager = PsiManager.getInstance(fileContent.getProject());
+            if (psiJavaFile == null) {
+                return map;
+            }
 
-            PsiFile psiFile = psiManager.findFile(virtualFile);
+            PsiClass[] psiClasses = PsiTreeUtil.getChildrenOfType(psiJavaFile, PsiClass.class);
 
-            DumbService dumbService = DumbService.getInstance(fileContent.getProject());
+            if (psiClasses != null) {
 
-            try {
-                dumbService.setAlternativeResolveEnabled(true);
+                for (PsiClass psiClass : psiClasses) {
 
-                if (psiFile instanceof PsiJavaFile) {
-                    PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
-                    PsiElement[] children = psiJavaFile.getChildren();
+                    for (PsiMethod psiMethod : psiClass.getMethods()) {
 
-                    for (PsiElement child : children) {
-                        if (child instanceof PsiClass) {
-                            PsiClass psiClass = (PsiClass) child;
+                        for (PsiAnnotation psiAnnotation : psiMethod.getAnnotations()) {
+                            PsiJavaCodeReferenceElement nameReferenceElement = psiAnnotation.getNameReferenceElement();
 
-                            for (PsiMethod psiMethod : psiClass.getMethods()) {
-                                for (PsiAnnotation psiAnnotation : psiMethod.getAnnotations()) {
-                                    if ("javax.portlet.ProcessAction".equals(psiAnnotation.getQualifiedName())) {
-                                        PsiAnnotationParameterList psiAnnotationParameterList = psiAnnotation.getParameterList();
-                                        for (PsiNameValuePair psiNameValuePair : psiAnnotationParameterList.getAttributes()) {
-                                            if ("name".equals(psiNameValuePair.getName())) {
-                                                PsiAnnotationMemberValue psiNameValuePairValue = psiNameValuePair.getValue();
+                            if (nameReferenceElement != null) {
+                                String qualifiedName = ProjectUtils.getQualifiedNameWithoutResolve(nameReferenceElement);
 
-                                                String actionCommand = null;
-                                                if (psiNameValuePairValue instanceof PsiLiteralExpression) {
-                                                    actionCommand = psiNameValuePairValue.getText();
-                                                    if (actionCommand != null) {
-                                                        actionCommand = StringUtil.unquoteString(actionCommand);
-                                                    }
-                                                } else if (psiNameValuePairValue instanceof PsiReferenceExpression) {
-                                                    PsiReferenceExpression psiReferenceExpression = (PsiReferenceExpression)psiNameValuePairValue;
+                                if ("javax.portlet.ProcessAction".equals(qualifiedName)) {
+                                    PsiAnnotationParameterList psiAnnotationParameterList = psiAnnotation.getParameterList();
 
-                                                    PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(psiReferenceExpression.getProject()).getConstantEvaluationHelper();
+                                    for (PsiNameValuePair psiNameValuePair : psiAnnotationParameterList.getAttributes()) {
+                                        if ("name".equals(psiNameValuePair.getName())) {
+                                            PsiAnnotationMemberValue psiNameValuePairValue = psiNameValuePair.getValue();
 
-                                                    actionCommand = (String)constantEvaluationHelper.computeConstantExpression(psiReferenceExpression);
-                                                }
+                                            String actionCommand = null;
+                                            if (psiNameValuePairValue instanceof PsiLiteralExpression) {
+                                                actionCommand = psiNameValuePairValue.getText();
 
                                                 if (actionCommand != null) {
-                                                    Collection<String> portletNames = getPortletNames(psiClass);
-
-                                                    for (String portletName : portletNames) {
-                                                        map.put(new CommandKey(portletName, actionCommand), null);
-                                                    }
+                                                    actionCommand = StringUtil.unquoteString(actionCommand);
                                                 }
-                                            }
-                                        }
-                                    }
-                                }
+                                            } else if (psiNameValuePairValue instanceof PsiReferenceExpression) {
+                                                PsiReferenceExpression psiReferenceExpression = (PsiReferenceExpression) psiNameValuePairValue;
 
-                                PsiModifierList modifierList = psiMethod.getModifierList();
-                                if (PsiUtil.getAccessLevel(modifierList) == PsiUtil.ACCESS_LEVEL_PUBLIC) {
-                                    PsiParameterList parameterList = psiMethod.getParameterList();
-                                    if (parameterList.getParametersCount() == 2) {
-                                        String methodName = psiMethod.getName();
-                                        if (! ACTION_NAME_EXCEPTIONS.contains(methodName)) {
-                                            PsiParameter firstParameter = parameterList.getParameters()[0];
-                                            PsiParameter secondParameter = parameterList.getParameters()[1];
+                                                PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(psiReferenceExpression.getProject()).getConstantEvaluationHelper();
 
-                                            String firstParameterQualifiedName = null;
-                                            String secondParameterQualifiedName = null;
-
-                                            if (firstParameter.getType() instanceof PsiClassReferenceType) {
-                                                PsiClassReferenceType psiClassReferenceType = (PsiClassReferenceType)firstParameter.getType();
-
-                                                firstParameterQualifiedName = psiClassReferenceType.getReference().getQualifiedName();
-                                            }
-                                            if (secondParameter.getType() instanceof PsiClassReferenceType) {
-                                                PsiClassReferenceType psiClassReferenceType = (PsiClassReferenceType)secondParameter.getType();
-
-                                                secondParameterQualifiedName = psiClassReferenceType.getReference().getQualifiedName();
+                                                actionCommand = (String) constantEvaluationHelper.computeConstantExpression(psiReferenceExpression);
                                             }
 
-                                            if ( ("javax.portlet.ActionRequest".equals(firstParameterQualifiedName)) && ("javax.portlet.ActionResponse".equals(secondParameterQualifiedName)) ) {
+                                            if (actionCommand != null) {
                                                 Collection<String> portletNames = getPortletNames(psiClass);
 
                                                 for (String portletName : portletNames) {
-                                                    map.put(new CommandKey(portletName, methodName), null);
+                                                    map.put(new CommandKey(portletName, actionCommand), null);
                                                 }
                                             }
                                         }
-
                                     }
                                 }
                             }
+                        }
 
+                        PsiModifierList modifierList = psiMethod.getModifierList();
+                        if (PsiUtil.getAccessLevel(modifierList) == PsiUtil.ACCESS_LEVEL_PUBLIC) {
+                            List<String> methodParameterQualifiedNames = ProjectUtils.getMethodParameterQualifiedNames(psiMethod);
+                            if (methodParameterQualifiedNames.size() == 2) {
+                                String methodName = psiMethod.getName();
+                                if (! ACTION_NAME_EXCEPTIONS.contains(methodName)) {
+                                    String firstParameterQualifiedName = methodParameterQualifiedNames.get(0);
+                                    String secondParameterQualifiedName = methodParameterQualifiedNames.get(1);
+
+                                    if ( ("javax.portlet.ActionRequest".equals(firstParameterQualifiedName)) && ("javax.portlet.ActionResponse".equals(secondParameterQualifiedName)) ) {
+                                        Collection<String> portletNames = getPortletNames(psiClass);
+
+                                        for (String portletName : portletNames) {
+                                            map.put(new CommandKey(portletName, methodName), null);
+                                        }
+                                    }
+                                }
+
+                            }
                         }
                     }
+
                 }
-            } catch (Exception e) {
-                //ignore?
-            } finally {
-                dumbService.setAlternativeResolveEnabled(false);
             }
 
             return map;
         }
 
         private Collection<String> getPortletNames(PsiClass psiClass) {
-            Map<String, Collection<String>> componentProperties = getComponentProperties(psiClass, "javax.portlet.Portlet");
-
-            Collection<String> portletNames = componentProperties.get("javax.portlet.name");
-            if (portletNames == null) {
-                portletNames = Collections.singletonList(psiClass.getQualifiedName());
-            }
-
             Collection<String> result = new ArrayList<>();
 
-            for (String portletName : portletNames) {
-                String portletId = StringUtil.replace(portletName, Arrays.asList(".", "$"), Arrays.asList("_", "_"));
-                portletId = LiferayFileUtil.getJSSafeName(portletId);
-                result.add(portletId);
+            Map<String, Collection<String>> componentProperties = getComponentProperties(psiClass, "javax.portlet.Portlet");
+
+            if (componentProperties != null) {
+
+                Collection<String> portletNames = componentProperties.get("javax.portlet.name");
+                if (portletNames == null) {
+                    portletNames = Collections.singletonList(psiClass.getQualifiedName());
+                }
+
+                for (String portletName : portletNames) {
+                    String portletId = LiferayFileUtil.getPortletId(portletName);
+
+                    result.add(portletId);
+                }
             }
 
             return result;

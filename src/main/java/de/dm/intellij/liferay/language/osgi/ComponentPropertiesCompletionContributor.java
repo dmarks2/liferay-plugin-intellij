@@ -20,6 +20,7 @@ import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ProcessingContext;
 import de.dm.intellij.liferay.util.Icons;
+import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -947,11 +948,12 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         }
 
         if (referenceElement != null) {
-            String serviceClassName = referenceElement.getQualifiedName();
+            String serviceClassName = ProjectUtils.getQualifiedNameWithoutResolve(referenceElement);
 
             return serviceClassName;
         }
 
         return null;
     }
+
 }

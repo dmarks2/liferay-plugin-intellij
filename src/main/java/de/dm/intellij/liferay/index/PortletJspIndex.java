@@ -5,16 +5,12 @@ import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.project.IndexNotReadyException;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiConstantEvaluationHelper;
 import com.intellij.psi.PsiExpression;
+import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifierList;
-import com.intellij.psi.PsiParameter;
-import com.intellij.psi.PsiParameterList;
 import com.intellij.psi.PsiReturnStatement;
-import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiUtil;
 import com.intellij.util.indexing.DataIndexer;
@@ -36,11 +32,12 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import static de.dm.intellij.liferay.util.ProjectUtils.getMethodParameterQualifiedNames;
 
 /**
  * File Based Index for finding the portlet name for JSPs
@@ -177,9 +174,7 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> imple
                     if (initParamValues != null) {
                         for (String initParamValue : initParamValues) {
                             for (String portletName : portletNames) {
-                                //from PortletTracker.addingService()
-                                String portletId = StringUtil.replace(portletName, Arrays.asList(".", "$"), Arrays.asList("_", "_"));
-                                portletId = LiferayFileUtil.getJSSafeName(portletId);
+                                String portletId = LiferayFileUtil.getPortletId(portletName);
 
                                 map.put(new JspKey(portletId, initParamValue), null);
                             }
@@ -191,33 +186,27 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> imple
                     if ("render".equals(psiMethod.getName())) {
                         PsiModifierList modifierList = psiMethod.getModifierList();
                         if (PsiUtil.getAccessLevel(modifierList) == PsiUtil.ACCESS_LEVEL_PUBLIC) {
-                            PsiParameterList parameterList = psiMethod.getParameterList();
-                            if (parameterList.getParametersCount() == 2) {
-                                PsiParameter firstParameter = parameterList.getParameters()[0];
-                                PsiParameter secondParameter = parameterList.getParameters()[1];
-
-                                String firstParameterQualifiedName = null;
-                                String secondParameterQualifiedName = null;
-
-                                if (firstParameter.getType() instanceof PsiClassReferenceType) {
-                                    PsiClassReferenceType psiClassReferenceType = (PsiClassReferenceType)firstParameter.getType();
-
-                                    firstParameterQualifiedName = psiClassReferenceType.getReference().getQualifiedName();
-                                }
-                                if (secondParameter.getType() instanceof PsiClassReferenceType) {
-                                    PsiClassReferenceType psiClassReferenceType = (PsiClassReferenceType)secondParameter.getType();
-
-                                    secondParameterQualifiedName = psiClassReferenceType.getReference().getQualifiedName();
-                                }
+                            List<String> methodParameterQualifiedNames = getMethodParameterQualifiedNames(psiMethod);
+                            if (methodParameterQualifiedNames.size() == 2) {
+                                String firstParameterQualifiedName = methodParameterQualifiedNames.get(0);
+                                String secondParameterQualifiedName = methodParameterQualifiedNames.get(1);
 
                                 if ( ("javax.portlet.RenderRequest".equals(firstParameterQualifiedName)) && ("javax.portlet.RenderResponse".equals(secondParameterQualifiedName)) ) {
                                     PsiReturnStatement[] returnStatements = PsiUtil.findReturnStatements(psiMethod);
                                     for (PsiReturnStatement returnStatement : returnStatements) {
                                         PsiExpression returnValue = returnStatement.getReturnValue();
 
+                                        //TODO you cannot use PsiConstantEvaluationHelper during indexing. How to handle?
+                                        /*
                                         PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(psiClass.getProject()).getConstantEvaluationHelper();
 
                                         Object constantExpression = constantEvaluationHelper.computeConstantExpression(returnValue);
+                                        */
+                                        Object constantExpression = null;
+
+                                        if (returnValue instanceof PsiLiteralExpression) {
+                                            constantExpression = ((PsiLiteralExpression)returnValue).getValue();
+                                        }
 
                                         if (constantExpression instanceof String) {
                                             String text = (String)constantExpression;
@@ -225,9 +214,7 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> imple
                                             text = StringUtil.unquoteString(text);
 
                                             for (String portletName : portletNames) {
-                                                //from PortletTracker.addingService()
-                                                String portletId = StringUtil.replace(portletName, Arrays.asList(".", "$"), Arrays.asList("_", "_"));
-                                                portletId = LiferayFileUtil.getJSSafeName(portletId);
+                                                String portletId = LiferayFileUtil.getPortletId(portletName);
 
                                                 map.put(new JspKey(portletId, text), null);
                                             }

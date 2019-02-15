@@ -118,7 +118,6 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
         assertTrue(strings.contains("/my/jspaction"));
     }
 
-    /*
     public void testByMVCRenderCommand() {
         myFixture.configureByFiles(
             "META-INF/resources/html/render.jsp",
@@ -141,6 +140,5 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("/my/jspaction"));
     }
-    */
 
 }

@@ -114,19 +114,13 @@
         <implicitUsageProvider order="last" implementation="de.dm.intellij.liferay.language.osgi.LiferayOsgiImplicitUsageProvider" />
 
         <!-- FileBasedIndexer to quickly find all portlet names -->
-        <!-- TODO development in progress...
         <fileBasedIndex implementation="de.dm.intellij.liferay.index.PortletNameIndex" />
-        -->
 
         <!-- FileBasedIndexer to quickly find all action commands names -->
-        <!-- TODO development in progress...
         <fileBasedIndex implementation="de.dm.intellij.liferay.index.ActionCommandIndex" />
-        -->
 
         <!-- File Based Index for finding the portlet name for JSPs -->
-        <!-- TODO development in progress...
         <fileBasedIndex implementation="de.dm.intellij.liferay.index.PortletJspIndex" />
-        -->
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">

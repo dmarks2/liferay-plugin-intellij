@@ -8,6 +8,7 @@ import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -24,6 +25,7 @@ import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -408,6 +410,15 @@ public class LiferayFileUtil {
         } else {
             return sb.toString();
         }
+    }
+
+    public static String getPortletId(String portletName) {
+        //from PortletTracker.addingService()
+        String portletId = StringUtil.replace(portletName, Arrays.asList(".", "$"), Arrays.asList("_", "_"));
+
+        portletId = getJSSafeName(portletId);
+
+        return portletId;
     }
 
 }

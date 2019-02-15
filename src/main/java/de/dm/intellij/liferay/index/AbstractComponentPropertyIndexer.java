@@ -1,9 +1,5 @@
 package de.dm.intellij.liferay.index;
 
-import com.intellij.lang.LighterAST;
-import com.intellij.lang.LighterASTNode;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.JavaPsiFacade;
@@ -14,22 +10,20 @@ import com.intellij.psi.PsiArrayInitializerMemberValue;
 import com.intellij.psi.PsiBinaryExpression;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiConstantEvaluationHelper;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiLiteralExpression;
-import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiNameValuePair;
 import com.intellij.psi.PsiReferenceExpression;
-import com.intellij.psi.impl.source.FileLocalResolver;
-import com.intellij.psi.impl.source.tree.JavaElementType;
-import com.intellij.psi.impl.source.tree.LightTreeUtil;
+import com.intellij.psi.impl.java.stubs.JavaStubElementTypes;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.indexing.DataIndexer;
 import com.intellij.util.indexing.FileContent;
 import com.intellij.util.indexing.FileContentImpl;
 import com.intellij.util.indexing.PsiDependentIndex;
 import de.dm.intellij.liferay.language.osgi.ComponentPropertiesCompletionContributor;
+import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,54 +41,48 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
     public Map<Key, Void> map(@NotNull FileContent fileContent) {
         Map<Key, Void> map = new HashMap<>();
 
-        VirtualFile virtualFile = fileContent.getFile();
+        PsiJavaFile psiJavaFile = getPsiJavaFileForPsiDependentIndex(fileContent);
 
-        PsiManager psiManager = PsiManager.getInstance(fileContent.getProject());
-
-        PsiFile psiFile = psiManager.findFile(virtualFile);
-
-        FileType fileType = fileContent.getFileType();
-        if (! fileType.isBinary()) {
-            LighterASTJavaFileHelper lighterASTJavaFileHelper = new LighterASTJavaFileHelper(fileContent);
-
-            System.out.println(lighterASTJavaFileHelper.getClassQualifiedName());
+        if (psiJavaFile == null) {
+            return map;
         }
 
-        DumbService dumbService = DumbService.getInstance(fileContent.getProject());
+        PsiClass[] psiClasses = PsiTreeUtil.getChildrenOfType(psiJavaFile, PsiClass.class);
 
-        try {
-            dumbService.setAlternativeResolveEnabled(true);
+        if (psiClasses != null) {
+            for (PsiClass psiClass : psiClasses) {
+                for (String serviceClassName : getServiceClassNames()) {
+                    Map<String, Collection<String>> componentProperties = getComponentProperties(psiClass, serviceClassName);
 
-            //TODO how to handle changes in dependant file?
-
-            if (psiFile instanceof PsiJavaFile) {
-                PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
-                PsiElement[] children = psiJavaFile.getChildren();
-
-                for (PsiElement child : children) {
-                    if (child instanceof PsiClass) {
-                        PsiClass psiClass = (PsiClass)child;
-
-                        for (String serviceClassName : getServiceClassNames()) {
-                            Map<String, Collection<String>> componentProperties = getComponentProperties(psiClass, serviceClassName);
-
-                            //ok?
-                            if (!componentProperties.isEmpty()) {
-                                processProperties(map, componentProperties, psiClass, serviceClassName);
-                            }
-                        }
-
+                    if (componentProperties != null) {
+                        processProperties(map, componentProperties, psiClass, serviceClassName);
                     }
                 }
             }
-
-        } catch (Exception e) {
-            //ignore?
-        } finally {
-            dumbService.setAlternativeResolveEnabled(false);
         }
 
         return map;
+    }
+
+    @Nullable
+    protected PsiJavaFile getPsiJavaFileForPsiDependentIndex(@NotNull FileContent fileContent) {
+        VirtualFile virtualFile = fileContent.getFile();
+
+        boolean shouldBuildStubFor = JavaStubElementTypes.JAVA_FILE.shouldBuildStubFor(virtualFile);
+        if (! shouldBuildStubFor) {
+            return null;
+        }
+
+        FileContentImpl fileContentImpl = (FileContentImpl)fileContent;
+        PsiFile psiFile = fileContentImpl.getPsiFileForPsiDependentIndex();
+
+        if (! (psiFile instanceof PsiJavaFile)) {
+            return null;
+        }
+
+        PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
+
+        return psiJavaFile;
     }
 
     @NotNull
@@ -102,43 +90,55 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
 
     protected abstract void processProperties(@NotNull Map<Key, Void> map, @NotNull Map<String, Collection<String>> properties, @NotNull PsiClass psiClass, String serviceClassName);
 
+    @Nullable
     protected Map<String, Collection<String>> getComponentProperties(PsiClass psiClass, String requiredServiceClassName) {
-        Map<String, Collection<String>> properties = new HashMap<>();
-
         for (PsiAnnotation psiAnnotation : psiClass.getAnnotations()) {
-            if ("org.osgi.service.component.annotations.Component".equals(psiAnnotation.getQualifiedName())) {
-                PsiAnnotationParameterList psiAnnotationParameterList = psiAnnotation.getParameterList();
+            PsiJavaCodeReferenceElement nameReferenceElement = psiAnnotation.getNameReferenceElement();
 
-                List<String> serviceClassNames = ComponentPropertiesCompletionContributor.getServiceClassNames(psiAnnotationParameterList);
-                if (!(serviceClassNames.isEmpty())) {
-                    for (String serviceClassName : serviceClassNames) {
-                        if (requiredServiceClassName.equals(serviceClassName)) {
-                            for (PsiNameValuePair psiNameValuePair : psiAnnotationParameterList.getAttributes()) {
-                                if ("property".equals(psiNameValuePair.getName())) {
-                                    PsiAnnotationMemberValue psiNameValuePairValue = psiNameValuePair.getValue();
+            if (nameReferenceElement != null) {
+                String qualifiedName = ProjectUtils.getQualifiedNameWithoutResolve(nameReferenceElement);
 
-                                    if (psiNameValuePairValue instanceof PsiArrayInitializerMemberValue) {
-                                        PsiArrayInitializerMemberValue psiArrayInitializerMemberValue = (PsiArrayInitializerMemberValue) psiNameValuePairValue;
+                if ("org.osgi.service.component.annotations.Component".equals(qualifiedName)) {
+                    PsiAnnotationParameterList psiAnnotationParameterList = psiAnnotation.getParameterList();
 
-                                        PsiAnnotationMemberValue[] initializers = psiArrayInitializerMemberValue.getInitializers();
+                    List<String> serviceClassNames = ComponentPropertiesCompletionContributor.getServiceClassNames(psiAnnotationParameterList);
+                    if (!(serviceClassNames.isEmpty())) {
+                        for (String serviceClassName : serviceClassNames) {
+                            if (requiredServiceClassName.equals(serviceClassName)) {
+                                Map<String, Collection<String>> properties = new HashMap<>();
 
-                                        for (PsiAnnotationMemberValue initializer : initializers) {
-                                            if (initializer instanceof PsiLiteralExpression) {
-                                                AbstractMap.SimpleImmutableEntry<String, String> property = getProperty((PsiLiteralExpression) initializer);
-                                                if (property != null) {
-                                                    Collection<String> values = properties.computeIfAbsent(property.getKey(), k -> new ArrayList<>());
-                                                    values.add(property.getValue());
+                                for (PsiNameValuePair psiNameValuePair : psiAnnotationParameterList.getAttributes()) {
+                                    if ("property".equals(psiNameValuePair.getName())) {
+                                        PsiAnnotationMemberValue psiNameValuePairValue = psiNameValuePair.getValue();
+
+                                        if (psiNameValuePairValue instanceof PsiArrayInitializerMemberValue) {
+                                            PsiArrayInitializerMemberValue psiArrayInitializerMemberValue = (PsiArrayInitializerMemberValue) psiNameValuePairValue;
+
+                                            PsiAnnotationMemberValue[] initializers = psiArrayInitializerMemberValue.getInitializers();
+
+                                            for (PsiAnnotationMemberValue initializer : initializers) {
+                                                if (initializer instanceof PsiLiteralExpression) {
+                                                    AbstractMap.SimpleImmutableEntry<String, String> property = getProperty((PsiLiteralExpression) initializer);
+                                                    if (property != null) {
+                                                        Collection<String> values = properties.computeIfAbsent(property.getKey(), k -> new ArrayList<>());
+                                                        values.add(property.getValue());
+                                                    }
                                                 }
-                                            } else if (initializer instanceof PsiBinaryExpression) {
-                                                AbstractMap.SimpleImmutableEntry<String, String> property = getProperty((PsiBinaryExpression) initializer);
-                                                if (property != null) {
-                                                    Collection<String> values = properties.computeIfAbsent(property.getKey(), k -> new ArrayList<>());
-                                                    values.add(property.getValue());
-                                                }
+                                                //TODO you cannot use PsiConstantEvaluationHelper during indexing. How to handle?
+                                                /*
+                                                else if (initializer instanceof PsiBinaryExpression) {
+                                                    AbstractMap.SimpleImmutableEntry<String, String> property = getProperty((PsiBinaryExpression) initializer);
+                                                    if (property != null) {
+                                                        Collection<String> values = properties.computeIfAbsent(property.getKey(), k -> new ArrayList<>());
+                                                        values.add(property.getValue());
+                                                    }
+                                                }*/
                                             }
                                         }
                                     }
                                 }
+
+                                return properties;
                             }
                         }
                     }
@@ -146,7 +146,7 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
             }
         }
 
-        return properties;
+        return null;
     }
 
     @Nullable
