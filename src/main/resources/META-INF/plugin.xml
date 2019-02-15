@@ -119,6 +119,12 @@
         <!-- FileBasedIndexer to quickly find all action commands names -->
         <fileBasedIndex implementation="de.dm.intellij.liferay.index.ActionCommandIndex" />
 
+        <!-- FileBasedIndexer to quickly find all render commands names -->
+        <fileBasedIndex implementation="de.dm.intellij.liferay.index.RenderCommandIndex" />
+
+        <!-- FileBasedIndexer to quickly find all resource commands names -->
+        <fileBasedIndex implementation="de.dm.intellij.liferay.index.ResourceCommandIndex" />
+
         <!-- File Based Index for finding the portlet name for JSPs -->
         <fileBasedIndex implementation="de.dm.intellij.liferay.index.PortletJspIndex" />
     </extensions>

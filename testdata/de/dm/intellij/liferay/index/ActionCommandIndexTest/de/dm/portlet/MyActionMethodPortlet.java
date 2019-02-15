@@ -12,7 +12,7 @@ import javax.portlet.ActionResponse;
     },
     service = Portlet.class
 )
-public class MyPortlet implements Portlet {
+public class MyActionMethodPortlet implements Portlet {
 
     public void actionMethod(ActionRequest actionRequest, ActionResponse actionResponse) {
 

@@ -22,6 +22,12 @@
         <!-- Reference completion for action command names -->
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibActionCommandNameReferenceContributor"/>
 
+        <!-- Reference completion for render command names -->
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibRenderCommandNameReferenceContributor"/>
+
+        <!-- Reference completion for resource command names -->
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibResourceCommandNameReferenceContributor"/>
+
         <!-- inspections -->
         <inspectionToolProvider implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibInspectionToolProvider"/>
     </extensions>

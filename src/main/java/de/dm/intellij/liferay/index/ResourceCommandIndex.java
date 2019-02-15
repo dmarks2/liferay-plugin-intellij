@@ -3,21 +3,11 @@ package de.dm.intellij.liferay.index;
 import com.intellij.ide.highlighter.JavaClassFileType;
 import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiAnnotation;
-import com.intellij.psi.PsiAnnotationMemberValue;
-import com.intellij.psi.PsiAnnotationParameterList;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiConstantEvaluationHelper;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiJavaFile;
-import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifierList;
-import com.intellij.psi.PsiNameValuePair;
-import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtil;
@@ -44,19 +34,20 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * FileBasedIndexer to quickly find all action commands names
+ * FileBasedIndexer to quickly find all resource commands names
  */
-public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void> implements PsiDependentIndex {
+public class ResourceCommandIndex extends FileBasedIndexExtension<CommandKey, Void> implements PsiDependentIndex {
 
     @NonNls
-    public static final ID<CommandKey, Void> NAME = ID.create("ActionCommandIndex");
+    public static final ID<CommandKey, Void> NAME = ID.create("ResourceCommandIndex");
 
-    private final ActionCommandIndexer actionCommandIndexer = new ActionCommandIndexer();
-
-    private static final Collection<String> ACTION_NAME_EXCEPTIONS = Arrays.asList(
-        "callActionMethod",
-        "processAction"
+    private static final Collection<String> RESOURCE_NAME_EXCEPTIONS = Arrays.asList(
+        "callResourceMethod",
+        "serveResource"
     );
+
+
+    private final ResourceCommandIndexer resourceCommandIndexer = new ResourceCommandIndexer();
 
     @NotNull
     @Override
@@ -67,7 +58,7 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
     @NotNull
     @Override
     public DataIndexer<CommandKey, Void, FileContent> getIndexer() {
-        return actionCommandIndexer;
+        return resourceCommandIndexer;
     }
 
     @NotNull
@@ -98,7 +89,7 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
         return true;
     }
 
-    public static List<String> getActionCommands(@NotNull String portletName, GlobalSearchScope scope) {
+    public static List<String> getResourceCommands(@NotNull String portletName, GlobalSearchScope scope) {
         return AbstractCommandKeyIndexer.getCommands(NAME, portletName, scope);
     }
 
@@ -106,12 +97,12 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
         return AbstractCommandKeyIndexer.getPortletClasses(NAME, project, portletName, commandName, scope);
     }
 
-    private class ActionCommandIndexer extends AbstractCommandKeyIndexer{
+    private class ResourceCommandIndexer extends AbstractCommandKeyIndexer {
 
         @NotNull
         @Override
         protected String[] getServiceClassNames() {
-            return new String[] {"com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand"};
+            return new String[]{"com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand"};
         }
 
         @NotNull
@@ -133,57 +124,16 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
 
                     for (PsiMethod psiMethod : psiClass.getMethods()) {
 
-                        for (PsiAnnotation psiAnnotation : psiMethod.getAnnotations()) {
-                            PsiJavaCodeReferenceElement nameReferenceElement = psiAnnotation.getNameReferenceElement();
-
-                            if (nameReferenceElement != null) {
-                                String qualifiedName = ProjectUtils.getQualifiedNameWithoutResolve(nameReferenceElement);
-
-                                if ("javax.portlet.ProcessAction".equals(qualifiedName)) {
-                                    PsiAnnotationParameterList psiAnnotationParameterList = psiAnnotation.getParameterList();
-
-                                    for (PsiNameValuePair psiNameValuePair : psiAnnotationParameterList.getAttributes()) {
-                                        if ("name".equals(psiNameValuePair.getName())) {
-                                            PsiAnnotationMemberValue psiNameValuePairValue = psiNameValuePair.getValue();
-
-                                            String actionCommand = null;
-                                            if (psiNameValuePairValue instanceof PsiLiteralExpression) {
-                                                actionCommand = psiNameValuePairValue.getText();
-
-                                                if (actionCommand != null) {
-                                                    actionCommand = StringUtil.unquoteString(actionCommand);
-                                                }
-                                            } else if (psiNameValuePairValue instanceof PsiReferenceExpression) {
-                                                PsiReferenceExpression psiReferenceExpression = (PsiReferenceExpression) psiNameValuePairValue;
-
-                                                PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(psiReferenceExpression.getProject()).getConstantEvaluationHelper();
-
-                                                actionCommand = (String) constantEvaluationHelper.computeConstantExpression(psiReferenceExpression);
-                                            }
-
-                                            if (actionCommand != null) {
-                                                Collection<String> portletNames = getPortletNames(psiClass);
-
-                                                for (String portletName : portletNames) {
-                                                    map.put(new CommandKey(portletName, actionCommand), null);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
                         PsiModifierList modifierList = psiMethod.getModifierList();
                         if (PsiUtil.getAccessLevel(modifierList) == PsiUtil.ACCESS_LEVEL_PUBLIC) {
                             List<String> methodParameterQualifiedNames = ProjectUtils.getMethodParameterQualifiedNames(psiMethod);
                             if (methodParameterQualifiedNames.size() == 2) {
                                 String methodName = psiMethod.getName();
-                                if (! ACTION_NAME_EXCEPTIONS.contains(methodName)) {
+                                if (! RESOURCE_NAME_EXCEPTIONS.contains(methodName)) {
                                     String firstParameterQualifiedName = methodParameterQualifiedNames.get(0);
                                     String secondParameterQualifiedName = methodParameterQualifiedNames.get(1);
 
-                                    if ( ("javax.portlet.ActionRequest".equals(firstParameterQualifiedName)) && ("javax.portlet.ActionResponse".equals(secondParameterQualifiedName)) ) {
+                                    if ( ("javax.portlet.ResourceRequest".equals(firstParameterQualifiedName)) && ("javax.portlet.ResourceResponse".equals(secondParameterQualifiedName)) ) {
                                         Collection<String> portletNames = getPortletNames(psiClass);
 
                                         for (String portletName : portletNames) {
@@ -195,7 +145,6 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
                             }
                         }
                     }
-
                 }
             }
 

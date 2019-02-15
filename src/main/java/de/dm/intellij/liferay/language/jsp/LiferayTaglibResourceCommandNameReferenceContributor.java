@@ -15,7 +15,8 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ProcessingContext;
-import de.dm.intellij.liferay.index.ActionCommandIndex;
+import de.dm.intellij.liferay.index.RenderCommandIndex;
+import de.dm.intellij.liferay.index.ResourceCommandIndex;
 import de.dm.intellij.liferay.util.Icons;
 import de.dm.intellij.liferay.util.LiferayTaglibs;
 import javafx.util.Pair;
@@ -32,30 +33,26 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Reference completion for action command names
+ * Reference completion for resource command names
  */
-public class LiferayTaglibActionCommandNameReferenceContributor extends AbstractLiferayTaglibCommandNameReferenceContributor {
+public class LiferayTaglibResourceCommandNameReferenceContributor extends AbstractLiferayTaglibCommandNameReferenceContributor {
 
     private static final Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES = new HashMap<String, Collection<Pair<String, String>>>();
 
-    private static final String ACTION_NAME = "javax.portlet.action";
-
     static {
         TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_JAVAX_PORTLET, Arrays.asList(
-            new Pair<>("actionURL", "name"),
-            new Pair<>("param", "value")
+            new Pair<>("resourceURL", "id")
         ));
 
         TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET, Arrays.asList(
-            new Pair<>("actionURL", "name"),
-            new Pair<>("param", "value")
+            new Pair<>("resourceURL", "id")
         ));
     }
 
     @NotNull
     @Override
     protected String getURLTagLocalName() {
-        return "actionURL";
+        return "resourceURL";
     }
 
     @Override
@@ -80,17 +77,11 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
                                     if (parentTag != null) {
                                         String localName = parentTag.getLocalName();
 
-                                        String actionName = null;
+                                        String resourceCommandName = null;
                                         Collection<String> portletNames = Collections.emptyList();
 
-                                        if ("param".equals(localName)) {
-                                            String paramName = parentTag.getAttributeValue("name");
-                                            if (ACTION_NAME.equals(paramName)) {
-                                                actionName = getElement().getValue();
-                                                portletNames = getPortletNamesFromParentTag(parentTag);
-                                            }
-                                        } else if ("actionURL".equals(localName)) {
-                                            actionName = getElement().getValue();
+                                        if (getURLTagLocalName().equals(localName)) {
+                                            resourceCommandName = getElement().getValue();
                                             portletNames = getPortletNameFromURLTag(parentTag);
 
                                             if (portletNames.isEmpty()) {
@@ -98,11 +89,11 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
                                             }
                                         }
 
-                                        if (actionName != null && (! (portletNames.isEmpty()) ) ) {
+                                        if (resourceCommandName != null && (! (portletNames.isEmpty()) ) ) {
                                             List<PsiFile> portletClasses = new ArrayList<>();
 
                                             for (String portletName : portletNames) {
-                                                portletClasses.addAll(ActionCommandIndex.getPortletClasses(project, portletName, actionName, GlobalSearchScope.allScope(project)));
+                                                portletClasses.addAll(ResourceCommandIndex.getPortletClasses(project, portletName, resourceCommandName, GlobalSearchScope.allScope(project)));
                                             }
 
                                             return PsiElementResolveResult.createResults(portletClasses);
@@ -125,26 +116,24 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
 
                                         Collection<String> portletNames = Collections.emptyList();
 
-                                        if ("param".equals(localName)) {
-                                            portletNames = getPortletNamesFromParentTag(parentTag);
-                                        } else if ("actionURL".equals(localName)) {
+                                        if (getURLTagLocalName().equals(localName)) {
                                             portletNames = getPortletNameFromURLTag(parentTag);
 
                                             if (portletNames.isEmpty()) {
-                                                portletNames = getPortletNameFromJspPath(parentTag);
+                                            portletNames = getPortletNameFromJspPath(parentTag);
                                             }
                                         }
 
                                         if (! (portletNames.isEmpty()) ) {
                                             for (String portletName : portletNames) {
-                                                List<String> actionCommands = ActionCommandIndex.getActionCommands(portletName, GlobalSearchScope.allScope(project));
-                                                Set<String> distinctActionCommands = new TreeSet<>(actionCommands);
+                                                List<String> resourceCommands = ResourceCommandIndex.getResourceCommands(portletName, GlobalSearchScope.allScope(project));
+                                                Set<String> distinctResourceCommands = new TreeSet<>(resourceCommands);
 
-                                                for (String actionCommand : distinctActionCommands) {
-                                                    List<PsiFile> portletClasses = ActionCommandIndex.getPortletClasses(project, portletName, actionCommand, GlobalSearchScope.allScope(project));
+                                                for (String resourceCommand : distinctResourceCommands) {
+                                                    List<PsiFile> portletClasses = ResourceCommandIndex.getPortletClasses(project, portletName, resourceCommand, GlobalSearchScope.allScope(project));
                                                     if (portletClasses.size() > 0) {
                                                         result.add(
-                                                            LookupElementBuilder.create(actionCommand).
+                                                            LookupElementBuilder.create(resourceCommand).
                                                                 withIcon(Icons.LIFERAY_ICON)
                                                         );
 
@@ -168,7 +157,7 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
     @Override
     protected String[] getAttributeNames() {
         return new String[] {
-            "name", "value"
+            "id"
         };
     }
 
@@ -176,5 +165,4 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
     protected Map<String, Collection<Pair<String, String>>> getTaglibMap() {
         return TAGLIB_ATTRIBUTES;
     }
-
 }
