@@ -8,6 +8,7 @@ import com.intellij.codeInspection.XmlSuppressableInspectionTool;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiFile;
@@ -83,22 +84,24 @@ public abstract class AbstractLiferayServiceXMLDuplicateEntryInspection extends 
                 if (isSuitableXmlAttributeValue(xmlAttributeValue)) {
                     String text = xmlAttributeValue.getValue();
 
-                    XmlAttribute xmlAttribute = PsiTreeUtil.getParentOfType(xmlAttributeValue, XmlAttribute.class);
+                    if (StringUtil.isNotEmpty(text)) {
+                        XmlAttribute xmlAttribute = PsiTreeUtil.getParentOfType(xmlAttributeValue, XmlAttribute.class);
 
-                    if (xmlAttribute != null) {
-                        XmlTag xmlTag = PsiTreeUtil.getParentOfType(xmlAttribute, XmlTag.class);
+                        if (xmlAttribute != null) {
+                            XmlTag xmlTag = PsiTreeUtil.getParentOfType(xmlAttribute, XmlTag.class);
 
-                        if (xmlTag != null) {
-                            XmlTag parentTag = PsiTreeUtil.getParentOfType(xmlTag, XmlTag.class);
+                            if (xmlTag != null) {
+                                XmlTag parentTag = PsiTreeUtil.getParentOfType(xmlTag, XmlTag.class);
 
-                            if (parentTag != null) {
-                                List<XmlTag> subTags = findSubTagsWithAttributeValue(parentTag, xmlTag.getLocalName(), xmlAttribute.getName(), text);
-                                if (subTags.size() > 1) {
-                                    holder.registerProblem(xmlAttributeValue,
-                                        "Duplicate entry",
-                                        ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-                                        new RemoveXmlTagFix()
-                                    );
+                                if (parentTag != null) {
+                                    List<XmlTag> subTags = findSubTagsWithAttributeValue(parentTag, xmlTag.getLocalName(), xmlAttribute.getName(), text);
+                                    if (subTags.size() > 1) {
+                                        holder.registerProblem(xmlAttributeValue,
+                                            "Duplicate entry",
+                                            ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
+                                            new RemoveXmlTagFix()
+                                        );
+                                    }
                                 }
                             }
                         }
