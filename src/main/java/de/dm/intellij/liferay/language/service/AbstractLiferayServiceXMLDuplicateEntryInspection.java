@@ -163,6 +163,7 @@ public abstract class AbstractLiferayServiceXMLDuplicateEntryInspection extends 
             XmlTag xmlTag = PsiTreeUtil.getParentOfType(element, XmlTag.class);
 
             if (xmlTag != null) {
+                XmlText spacerText = PsiTreeUtil.getPrevSiblingOfType(xmlTag, XmlText.class);
                 XmlTag parentTag = PsiTreeUtil.getParentOfType(xmlTag, XmlTag.class);
                 if (parentTag != null) {
 
@@ -170,6 +171,9 @@ public abstract class AbstractLiferayServiceXMLDuplicateEntryInspection extends 
                         @Override
                         protected void run(@NotNull Result result) {
                             parentTag.getNode().removeChild(xmlTag.getNode());
+                            if (spacerText != null) {
+                                parentTag.getNode().removeChild(spacerText.getNode());
+                            }
                         }
                     }.execute();
                 }

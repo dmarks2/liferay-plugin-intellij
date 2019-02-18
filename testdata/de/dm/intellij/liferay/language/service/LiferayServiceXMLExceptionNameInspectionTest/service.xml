@@ -4,7 +4,6 @@
 
 <service-builder auto-import-default-references="false" mvcc-enabled="true" package-path="com.liferay.portal">
     <namespace>Portal</namespace>
-
     <exceptions>
         <exception>AccountName</exception>
         <exception><warning descr="Do not add Exception at the end of the name">AddressCityException</warning></exception>

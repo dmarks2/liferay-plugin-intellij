@@ -4,9 +4,7 @@
 
 <service-builder auto-import-default-references="false" mvcc-enabled="true" package-path="com.liferay.portal">
     <namespace>Portal</namespace>
-
     <exceptions>
-
         <exception>AccountName</exception>
     </exceptions>
 </service-builder>

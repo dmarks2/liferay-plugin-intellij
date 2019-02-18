@@ -6,7 +6,6 @@
     <namespace>Portal</namespace>
 
     <entity name="MyModel">
-
         <column name="myModelId" type="long" primary="true" />
     </entity>
 </service-builder>
