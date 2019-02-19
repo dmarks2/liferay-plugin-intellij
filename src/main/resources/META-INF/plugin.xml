@@ -79,6 +79,7 @@
     <depends optional="true" config-file="scss.xml">org.jetbrains.plugins.sass</depends>
     <depends optional="true" config-file="archetype-catalog.xml">de.dm.intellij.maven-archetypes-catalog-plugin</depends>
     <depends optional="true" config-file="groovy.xml">org.intellij.groovy</depends>
+    <depends optional="true" config-file="uml.xml">com.intellij.diagram</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Define a new filetype for "bnd.bnd" files -->
