@@ -63,9 +63,22 @@ public class PortletJspIndexTest extends LightCodeInsightFixtureTestCase {
 
         FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
 
-        List<String> portletNames = PortletJspIndex.getPortletNames("/html/view.jsp", GlobalSearchScope.moduleScope(myFixture.getModule()));
+        List<String> portletNames = PortletJspIndex.getPortletNames("/html/view.jsp", myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
 
         assertTrue(portletNames.contains("de_dm_portlet_MyPortletName"));
+    }
+
+    public void testJspPathByConstantPortlet() {
+        myFixture.configureByFiles(
+            "de/dm/portlet/MyConstantPortlet.java",
+            "javax/portlet/Portlet.java"
+        );
+
+        FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
+
+        List<String> portletNames = PortletJspIndex.getPortletNames("/html/constant.jsp", myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
+
+        assertTrue(portletNames.contains("de_dm_portlet_MyConstantPortletName"));
     }
 
     public void testJspPathByMVCRenderCommand() {
@@ -78,7 +91,7 @@ public class PortletJspIndexTest extends LightCodeInsightFixtureTestCase {
 
         FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
 
-        List<String> portletNames = PortletJspIndex.getPortletNames("/html/render.jsp", GlobalSearchScope.moduleScope(myFixture.getModule()));
+        List<String> portletNames = PortletJspIndex.getPortletNames("/html/render.jsp", myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
 
         assertTrue(portletNames.contains("de_dm_portlet_MyRenderPortlet"));
     }

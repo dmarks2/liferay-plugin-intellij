@@ -23,6 +23,7 @@ import com.intellij.util.io.EnumeratorStringDescriptor;
 import com.intellij.util.io.KeyDescriptor;
 import com.intellij.util.io.VoidDataExternalizer;
 import de.dm.intellij.liferay.util.LiferayFileUtil;
+import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
@@ -87,57 +88,71 @@ public class PortletNameIndex extends FileBasedIndexExtension<String, Void> impl
 
     public static List<String> getPortletNames(Project project, GlobalSearchScope scope) {
         return ReadAction.compute(
-                () -> {
-                    final List<String> result = new ArrayList<>();
+            () -> {
+                final List<String> result = new ArrayList<>();
 
-                    try {
-                        FileBasedIndex.getInstance().processAllKeys(
-                                NAME,
-                                name -> {
-                                    result.add(name);
-                                    return true;
-                                },
-                                scope,
-                                null
-                        );
+                try {
+                    FileBasedIndex.getInstance().processAllKeys(
+                        NAME,
+                        name -> {
+                            result.add(
+                                resolvePortletName(name, project, scope)
+                            );
+                            return true;
+                        },
+                        scope,
+                        null
+                    );
 
-                    } catch (IndexNotReadyException e) {
-                        //ignore
-                    }
-
-                    return result;
+                } catch (IndexNotReadyException e) {
+                    //ignore
                 }
+
+                return result;
+            }
         );
+    }
+
+    public static String resolvePortletName(String portletName, Project project, GlobalSearchScope scope) {
+        if (portletName.startsWith(AbstractComponentPropertyIndexer.REFERENCE_PLACEHOLDER)) {
+            String reference = portletName.substring(1);
+            String propertyValue = ProjectUtils.getConstantFieldValue(reference, project, scope);
+            if (propertyValue != null) {
+                return propertyValue;
+            }
+        }
+
+        return portletName;
     }
 
     public static List<PsiFile> getPortletClasses(Project project, String portletName, GlobalSearchScope scope) {
         return ReadAction.compute(
-                () -> {
-                    List<PsiFile> result = new ArrayList<>();
+            () -> {
+                List<PsiFile> result = new ArrayList<>();
 
-                    try {
-                        Collection<VirtualFile> containingFiles = FileBasedIndex.getInstance().getContainingFiles(NAME, portletName, scope);
+                try {
+                    Collection<VirtualFile> containingFiles = FileBasedIndex.getInstance().getContainingFiles(NAME, portletName, scope);
 
-                        PsiManager psiManager = PsiManager.getInstance(project);
+                    PsiManager psiManager = PsiManager.getInstance(project);
 
-                        for (VirtualFile virtualFile : containingFiles) {
-                            if (! virtualFile.isValid()) {
-                                continue;
-                            }
-
-                            PsiFile psiFile = psiManager.findFile(virtualFile);
-
-                            if (psiFile != null) {
-                                result.add(psiFile);
-                            }
-
+                    for (VirtualFile virtualFile : containingFiles) {
+                        if (! virtualFile.isValid()) {
+                            continue;
                         }
-                    } catch (IndexNotReadyException e) {
-                        //ignore
-                    }
 
-                    return result;
+                        PsiFile psiFile = psiManager.findFile(virtualFile);
+
+                        if (psiFile != null) {
+                            result.add(psiFile);
+                        }
+
+                    }
+                } catch (IndexNotReadyException e) {
+                    //ignore
                 }
+
+                return result;
+            }
         );
     }
 
@@ -159,14 +174,14 @@ public class PortletNameIndex extends FileBasedIndexExtension<String, Void> impl
             }
 
             for (String portletName : portletNames) {
-                //from PortletTracker.addingService()
-                String portletId = StringUtil.replace(portletName, Arrays.asList(".", "$"), Arrays.asList("_", "_"));
-                portletId = LiferayFileUtil.getJSSafeName(portletId);
-
+                String portletId = portletName;
+                if (!portletName.startsWith(AbstractComponentPropertyIndexer.REFERENCE_PLACEHOLDER)) {
+                    //from PortletTracker.addingService()
+                    portletId = StringUtil.replace(portletName, Arrays.asList(".", "$"), Arrays.asList("_", "_"));
+                    portletId = LiferayFileUtil.getJSSafeName(portletId);
+                }
                 map.put(portletId, null);
             }
-
         }
-
     }
 }

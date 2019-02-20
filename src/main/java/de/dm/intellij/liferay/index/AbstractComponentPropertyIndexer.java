@@ -36,6 +36,8 @@ import java.util.Map;
 
 public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndexer<Key, Void, FileContent>, PsiDependentIndex {
 
+    protected static final String REFERENCE_PLACEHOLDER = "+";
+
     @NotNull
     @Override
     public Map<Key, Void> map(@NotNull FileContent fileContent) {
@@ -96,7 +98,7 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
             PsiJavaCodeReferenceElement nameReferenceElement = psiAnnotation.getNameReferenceElement();
 
             if (nameReferenceElement != null) {
-                String qualifiedName = ProjectUtils.getQualifiedNameWithoutResolve(nameReferenceElement);
+                String qualifiedName = ProjectUtils.getQualifiedNameWithoutResolve(nameReferenceElement, false);
 
                 if ("org.osgi.service.component.annotations.Component".equals(qualifiedName)) {
                     PsiAnnotationParameterList psiAnnotationParameterList = psiAnnotation.getParameterList();
@@ -124,15 +126,13 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
                                                         values.add(property.getValue());
                                                     }
                                                 }
-                                                //TODO you cannot use PsiConstantEvaluationHelper during indexing. How to handle?
-                                                /*
                                                 else if (initializer instanceof PsiBinaryExpression) {
                                                     AbstractMap.SimpleImmutableEntry<String, String> property = getProperty((PsiBinaryExpression) initializer);
                                                     if (property != null) {
                                                         Collection<String> values = properties.computeIfAbsent(property.getKey(), k -> new ArrayList<>());
                                                         values.add(property.getValue());
                                                     }
-                                                }*/
+                                                }
                                             }
                                         }
                                     }
@@ -175,11 +175,9 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
 
                 PsiReferenceExpression psiReferenceExpression = PsiTreeUtil.getChildOfType(psiBinaryExpression, PsiReferenceExpression.class);
                 if (psiReferenceExpression != null) {
-                    PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(psiBinaryExpression.getProject()).getConstantEvaluationHelper();
+                    String qualifiedName = ProjectUtils.getQualifiedNameWithoutResolve(psiReferenceExpression, true);
 
-                    String propertyValue = (String)constantEvaluationHelper.computeConstantExpression(psiReferenceExpression);
-
-                    return new AbstractMap.SimpleImmutableEntry<>(parts[0], propertyValue);
+                    return new AbstractMap.SimpleImmutableEntry<>(parts[0], REFERENCE_PLACEHOLDER + qualifiedName);
                 }
             }
         }

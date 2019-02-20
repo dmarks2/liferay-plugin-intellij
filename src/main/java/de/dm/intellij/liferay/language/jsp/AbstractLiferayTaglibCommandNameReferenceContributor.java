@@ -82,7 +82,7 @@ public abstract class AbstractLiferayTaglibCommandNameReferenceContributor exten
                                 relativePath = "/" + relativePath;
                             }
 
-                            List<String> portletNames = PortletJspIndex.getPortletNames(relativePath, GlobalSearchScope.moduleScope(module));
+                            List<String> portletNames = PortletJspIndex.getPortletNames(relativePath, xmlTag.getProject(), GlobalSearchScope.moduleScope(module));
 
                             result.addAll(portletNames);
                         }

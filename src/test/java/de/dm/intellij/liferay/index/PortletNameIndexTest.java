@@ -42,8 +42,6 @@ public class PortletNameIndexTest extends LightCodeInsightFixtureTestCase {
         }
     };
 
-
-
     @NotNull
     @Override
     protected LightProjectDescriptor getProjectDescriptor() {
@@ -68,8 +66,6 @@ public class PortletNameIndexTest extends LightCodeInsightFixtureTestCase {
         assertTrue(portletNames.contains("de_dm_portlet_MyPortletName"));
     }
 
-    //TODO you cannot use PsiConstantEvaluationHelper during indexing. How to handle?
-    /*
     public void testPortletNameConstant() {
         myFixture.configureByFiles(
             "de/dm/portlet/MyConstantPortlet.java",
@@ -82,7 +78,20 @@ public class PortletNameIndexTest extends LightCodeInsightFixtureTestCase {
 
         assertTrue(portletNames.contains("de_dm_portlet_MyConstantPortletName"));
     }
-    */
+
+    public void testPortletNameStaticImportConstant() {
+        myFixture.configureByFiles(
+            "de/dm/portlet/MyStaticImportConstantPortlet.java",
+            "de/dm/portlet/PortletKeys.java",
+            "javax/portlet/Portlet.java"
+        );
+
+        FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
+
+        List<String> portletNames = PortletNameIndex.getPortletNames(myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
+
+        assertTrue(portletNames.contains("de_dm_portlet_MyPortletKey"));
+    }
 
     public void testUnnamedPortlet() {
         myFixture.configureByFiles(

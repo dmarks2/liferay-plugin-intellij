@@ -67,9 +67,10 @@ public class LiferayTaglibPortletNameReferenceContributorTest extends LightCodeI
         assertTrue(strings.contains("de_dm_portlet_MyPortlet"));
     }
 
-    //TODO you cannot use PsiConstantEvaluationHelper during indexing. How to handle?
-    /*
-    public void testPortletNameConstant() {
+    /**
+     * TODO resolve constants
+     */
+    public void ignoreTestPortletNameConstant() {
         myFixture.configureByFiles(
                 "portletName.jsp",
                 "liferay-portlet-ext.tld",
@@ -81,6 +82,5 @@ public class LiferayTaglibPortletNameReferenceContributorTest extends LightCodeI
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("de_dm_portlet_MyConstantPortlet"));
     }
-    */
 
 }

@@ -28,15 +28,20 @@ import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiImportList;
 import com.intellij.psi.PsiImportStatement;
+import com.intellij.psi.PsiImportStaticStatement;
 import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
+import com.intellij.psi.PsiPackageStatement;
 import com.intellij.psi.PsiParameter;
 import com.intellij.psi.PsiParameterList;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
+import com.intellij.psi.impl.source.PsiFieldImpl;
+import com.intellij.psi.impl.source.PsiImportStaticStatementImpl;
 import com.intellij.psi.impl.source.tree.JavaSourceUtil;
+import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.DisposeAwareRunnable;
 import com.intellij.util.Processor;
@@ -267,6 +272,19 @@ public class ProjectUtils {
         return result;
     }
 
+
+    @Nullable
+    public static PsiField getClassPublicStaticField(@Nullable PsiClass psiClass, @NotNull String fieldName) {
+        Collection<PsiField> fields = getClassPublicStaticFields(psiClass);
+        for (PsiField field : fields) {
+            if (fieldName.equals(field.getName())) {
+                return field;
+            }
+        }
+
+        return null;
+    }
+
     public static List<String> getMethodParameterQualifiedNames(@NotNull PsiMethod psiMethod) {
         List<String> result = new ArrayList<>();
 
@@ -280,7 +298,7 @@ public class ProjectUtils {
 
                 PsiJavaCodeReferenceElement psiJavaCodeReferenceElement = psiClassReferenceType.getReference();
 
-                String qualifiedName = getQualifiedNameWithoutResolve(psiJavaCodeReferenceElement);
+                String qualifiedName = getQualifiedNameWithoutResolve(psiJavaCodeReferenceElement, false);
 
                 result.add(qualifiedName);
             }
@@ -291,7 +309,19 @@ public class ProjectUtils {
 
 
     @NotNull
-    public static String getMatchFromImports(@NotNull PsiFile psiFile, @NotNull String className) {
+    public static String getMatchFromPackageStatementOrImports(@NotNull PsiFile psiFile, @NotNull String className) {
+        PsiPackageStatement packageStatement = PsiTreeUtil.getChildOfType(psiFile, PsiPackageStatement.class);
+        if (packageStatement != null) {
+            PsiClass[] psiClasses = PsiTreeUtil.getChildrenOfType(psiFile, PsiClass.class);
+            if (psiClasses != null) {
+                for (PsiClass psiClass : psiClasses) {
+                    if (className.equals(psiClass.getName())) {
+                        return StringUtil.getQualifiedName(packageStatement.getPackageName(), className);
+                    }
+                }
+            }
+        }
+
         PsiImportList psiImportList = PsiTreeUtil.getChildOfType(psiFile, PsiImportList.class);
         if (psiImportList != null) {
             PsiImportStatement[] psiImportStatements = PsiTreeUtil.getChildrenOfType(psiImportList, PsiImportStatement.class);
@@ -311,12 +341,79 @@ public class ProjectUtils {
     }
 
     @NotNull
-    public static String getQualifiedNameWithoutResolve(@NotNull PsiJavaCodeReferenceElement psiJavaCodeReferenceElement) {
+    public static String getMatchFromStaticImports(@NotNull PsiFile psiFile, @NotNull String memberName) {
+        PsiImportList psiImportList = PsiTreeUtil.getChildOfType(psiFile, PsiImportList.class);
+        if (psiImportList != null) {
+            PsiImportStaticStatement[] psiImportStaticStatements = PsiTreeUtil.getChildrenOfType(psiImportList, PsiImportStaticStatement.class);
+            if (psiImportStaticStatements != null) {
+                for (PsiImportStaticStatement psiImportStaticStatement : psiImportStaticStatements) {
+                    PsiJavaCodeReferenceElement importReference = psiImportStaticStatement.getImportReference();
+                    if (importReference != null) {
+                        String qualifiedName = importReference.getQualifiedName();
+                        if (qualifiedName != null) {
+                            String importMemberName = StringUtil.getShortName(qualifiedName);
+                            if (importMemberName.equals(memberName)) {
+                                return qualifiedName;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return memberName;
+    }
+
+    @NotNull
+    public static String getQualifiedNameWithoutResolve(@NotNull PsiJavaCodeReferenceElement psiJavaCodeReferenceElement, boolean stripMember) {
         String referenceText = JavaSourceUtil.getReferenceText(psiJavaCodeReferenceElement);
 
-        String qualifiedName = ProjectUtils.getMatchFromImports(psiJavaCodeReferenceElement.getContainingFile(), referenceText);
+        String memberText = null;
+
+        boolean resolvedFromStaticImports = false;
+
+        String qualifiedName = referenceText;
+
+        if (stripMember) {
+            if (StringUtil.contains(referenceText, ".")) {
+                memberText = StringUtil.getShortName(referenceText);
+                referenceText = StringUtil.getPackageName(referenceText);
+            } else {
+                qualifiedName = getMatchFromStaticImports(psiJavaCodeReferenceElement.getContainingFile(), referenceText);
+                resolvedFromStaticImports = true;
+            }
+        }
+
+        if (!resolvedFromStaticImports) {
+            qualifiedName = ProjectUtils.getMatchFromPackageStatementOrImports(psiJavaCodeReferenceElement.getContainingFile(), referenceText);
+
+            if (stripMember) {
+                qualifiedName = StringUtil.getQualifiedName(qualifiedName, memberText);
+            }
+        }
 
         return qualifiedName;
+    }
+
+    @Nullable
+    public static String getConstantFieldValue(String fullQualifiedReference, Project project, GlobalSearchScope scope) {
+        String className = StringUtil.getPackageName(fullQualifiedReference);
+        String fieldMemberName = StringUtil.getShortName(fullQualifiedReference);
+
+        PsiClass psiClass = JavaPsiFacade.getInstance(project).findClass(className, scope);
+        if (psiClass != null) {
+            PsiField psiField = ProjectUtils.getClassPublicStaticField(psiClass, fieldMemberName);
+            if (psiField != null) {
+
+                Object value = ((PsiFieldImpl) psiField).computeConstantValue(null);
+
+                if (value instanceof String) {
+                    return (String)value;
+                }
+            }
+        }
+
+        return null;
     }
 
 }

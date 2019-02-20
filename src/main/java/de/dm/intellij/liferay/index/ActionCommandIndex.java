@@ -137,7 +137,7 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
                             PsiJavaCodeReferenceElement nameReferenceElement = psiAnnotation.getNameReferenceElement();
 
                             if (nameReferenceElement != null) {
-                                String qualifiedName = ProjectUtils.getQualifiedNameWithoutResolve(nameReferenceElement);
+                                String qualifiedName = ProjectUtils.getQualifiedNameWithoutResolve(nameReferenceElement, false);
 
                                 if ("javax.portlet.ProcessAction".equals(qualifiedName)) {
                                     PsiAnnotationParameterList psiAnnotationParameterList = psiAnnotation.getParameterList();

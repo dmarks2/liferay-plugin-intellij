@@ -948,7 +948,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         }
 
         if (referenceElement != null) {
-            String serviceClassName = ProjectUtils.getQualifiedNameWithoutResolve(referenceElement);
+            String serviceClassName = ProjectUtils.getQualifiedNameWithoutResolve(referenceElement, false);
 
             return serviceClassName;
         }

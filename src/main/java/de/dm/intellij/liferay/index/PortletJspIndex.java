@@ -4,6 +4,7 @@ import com.intellij.ide.highlighter.JavaClassFileType;
 import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.project.IndexNotReadyException;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiExpression;
@@ -124,7 +125,7 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> imple
         return true;
     }
 
-    public static List<String> getPortletNames(@NotNull String jspPath, GlobalSearchScope scope) {
+    public static List<String> getPortletNames(@NotNull String jspPath, Project project, GlobalSearchScope scope) {
         return ReadAction.compute(
             () -> {
                 final List<String> result = new ArrayList<>();
@@ -134,7 +135,7 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> imple
                         NAME,
                         jspKey -> {
                             if (jspPath.equals(jspKey.getJspPath())) {
-                                result.add(jspKey.getPortletName());
+                                result.add(PortletNameIndex.resolvePortletName(jspKey.getPortletName(), project, scope));
                             }
                             return true;
                         },
@@ -174,7 +175,10 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> imple
                     if (initParamValues != null) {
                         for (String initParamValue : initParamValues) {
                             for (String portletName : portletNames) {
-                                String portletId = LiferayFileUtil.getPortletId(portletName);
+                                String portletId = portletName;
+                                if (! portletName.startsWith(AbstractComponentPropertyIndexer.REFERENCE_PLACEHOLDER)) {
+                                    portletId = LiferayFileUtil.getPortletId(portletName);
+                                }
 
                                 map.put(new JspKey(portletId, initParamValue), null);
                             }
