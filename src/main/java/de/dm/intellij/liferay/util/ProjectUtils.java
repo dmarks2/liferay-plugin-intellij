@@ -39,7 +39,6 @@ import com.intellij.psi.PsiParameterList;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.impl.source.PsiFieldImpl;
-import com.intellij.psi.impl.source.PsiImportStaticStatementImpl;
 import com.intellij.psi.impl.source.tree.JavaSourceUtil;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -54,6 +53,9 @@ import java.util.Collection;
 import java.util.List;
 
 public class ProjectUtils {
+
+    public static final String REFERENCE_PLACEHOLDER = "+";
+
     public static void runWhenInitialized(final Project project, final Runnable runnable) {
         if (project.isDisposed()) return;
 
@@ -414,6 +416,18 @@ public class ProjectUtils {
         }
 
         return null;
+    }
+
+    public static String resolveReferencePlaceholder(String referencePlaceholder, Project project, GlobalSearchScope scope) {
+        if (referencePlaceholder.startsWith(REFERENCE_PLACEHOLDER)) {
+            String reference = referencePlaceholder.substring(1);
+            String propertyValue = ProjectUtils.getConstantFieldValue(reference, project, scope);
+            if (propertyValue != null) {
+                return propertyValue;
+            }
+        }
+
+        return referencePlaceholder;
     }
 
 }

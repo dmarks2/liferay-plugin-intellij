@@ -70,7 +70,7 @@ public class LiferayTaglibPortletNameReferenceContributorTest extends LightCodeI
     /**
      * TODO resolve constants
      */
-    public void ignoreTestPortletNameConstant() {
+    public void testPortletNameConstant() {
         myFixture.configureByFiles(
                 "portletName.jsp",
                 "liferay-portlet-ext.tld",

@@ -72,6 +72,20 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
         assertTrue(strings.contains("/my/action"));
     }
 
+    public void testByActionKeyReferenceConstantURLName() {
+        myFixture.configureByFiles(
+                "actionUrl.jsp",
+                "liferay-portlet-ext.tld",
+                "de/dm/action/MyActionKeyMVCActionCommand.java",
+                "de/dm/action/ActionKeys.java",
+                "com/liferay/portal/kernel/portlet/bridges/mvc/MVCActionCommand.java"
+        );
+
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("/my/actionkey"));
+    }
+
     public void testByParamName() {
         myFixture.configureByFiles(
             "paramActionUrl.jsp",

@@ -62,7 +62,7 @@ public class ResourceCommandIndexTest extends LightCodeInsightFixtureTestCase {
 
         FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
 
-        List<String> resourceCommands = ResourceCommandIndex.getResourceCommands("de_dm_portlet_MyPortletName", GlobalSearchScope.moduleScope(myFixture.getModule()));
+        List<String> resourceCommands = ResourceCommandIndex.getResourceCommands("de_dm_portlet_MyPortletName", myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
 
         assertTrue(resourceCommands.contains("/my/resource"));
     }
@@ -77,7 +77,7 @@ public class ResourceCommandIndexTest extends LightCodeInsightFixtureTestCase {
 
         FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
 
-        List<String> resourceCommands = ResourceCommandIndex.getResourceCommands("de_dm_portlet_MyResourceMethodPortletName", GlobalSearchScope.moduleScope(myFixture.getModule()));
+        List<String> resourceCommands = ResourceCommandIndex.getResourceCommands("de_dm_portlet_MyResourceMethodPortletName", myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
 
         assertTrue(resourceCommands.contains("resourceMethod"));
     }

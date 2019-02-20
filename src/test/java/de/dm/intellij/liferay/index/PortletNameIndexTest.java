@@ -79,6 +79,20 @@ public class PortletNameIndexTest extends LightCodeInsightFixtureTestCase {
         assertTrue(portletNames.contains("de_dm_portlet_MyConstantPortletName"));
     }
 
+    public void testPortletNameReferenceConstant() {
+        myFixture.configureByFiles(
+            "de/dm/portlet/MyReferenceConstantPortlet.java",
+            "de/dm/portlet/PortletKeys.java",
+            "javax/portlet/Portlet.java"
+        );
+
+        FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
+
+        List<String> portletNames = PortletNameIndex.getPortletNames(myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
+
+        assertTrue(portletNames.contains("de_dm_portlet_MyReferencePortletKey"));
+    }
+
     public void testPortletNameStaticImportConstant() {
         myFixture.configureByFiles(
             "de/dm/portlet/MyStaticImportConstantPortlet.java",

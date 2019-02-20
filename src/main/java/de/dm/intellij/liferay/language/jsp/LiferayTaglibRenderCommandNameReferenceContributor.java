@@ -122,7 +122,7 @@ public class LiferayTaglibRenderCommandNameReferenceContributor extends Abstract
 
                                         if (! (portletNames.isEmpty()) ) {
                                             for (String portletName : portletNames) {
-                                                List<String> renderCommands = RenderCommandIndex.getRenderCommands(portletName, GlobalSearchScope.allScope(project));
+                                                List<String> renderCommands = RenderCommandIndex.getRenderCommands(portletName, project, GlobalSearchScope.allScope(project));
                                                 Set<String> distinctRenderCommands = new TreeSet<>(renderCommands);
 
                                                 for (String renderCommand : distinctRenderCommands) {

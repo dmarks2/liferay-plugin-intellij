@@ -137,7 +137,7 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
 
                                         if (! (portletNames.isEmpty()) ) {
                                             for (String portletName : portletNames) {
-                                                List<String> actionCommands = ActionCommandIndex.getActionCommands(portletName, GlobalSearchScope.allScope(project));
+                                                List<String> actionCommands = ActionCommandIndex.getActionCommands(portletName, project, GlobalSearchScope.allScope(project));
                                                 Set<String> distinctActionCommands = new TreeSet<>(actionCommands);
 
                                                 for (String actionCommand : distinctActionCommands) {

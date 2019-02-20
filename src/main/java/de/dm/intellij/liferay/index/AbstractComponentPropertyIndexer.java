@@ -2,14 +2,12 @@ package de.dm.intellij.liferay.index;
 
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiAnnotationMemberValue;
 import com.intellij.psi.PsiAnnotationParameterList;
 import com.intellij.psi.PsiArrayInitializerMemberValue;
 import com.intellij.psi.PsiBinaryExpression;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiConstantEvaluationHelper;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiJavaFile;
@@ -35,8 +33,6 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndexer<Key, Void, FileContent>, PsiDependentIndex {
-
-    protected static final String REFERENCE_PLACEHOLDER = "+";
 
     @NotNull
     @Override
@@ -177,7 +173,7 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
                 if (psiReferenceExpression != null) {
                     String qualifiedName = ProjectUtils.getQualifiedNameWithoutResolve(psiReferenceExpression, true);
 
-                    return new AbstractMap.SimpleImmutableEntry<>(parts[0], REFERENCE_PLACEHOLDER + qualifiedName);
+                    return new AbstractMap.SimpleImmutableEntry<>(parts[0], ProjectUtils.REFERENCE_PLACEHOLDER + qualifiedName);
                 }
             }
         }

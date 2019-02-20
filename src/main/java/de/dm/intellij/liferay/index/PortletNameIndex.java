@@ -11,13 +11,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.util.indexing.DataIndexer;
-import com.intellij.util.indexing.DefaultFileTypeSpecificInputFilter;
-import com.intellij.util.indexing.FileBasedIndex;
-import com.intellij.util.indexing.FileBasedIndexExtension;
-import com.intellij.util.indexing.FileContent;
-import com.intellij.util.indexing.ID;
-import com.intellij.util.indexing.PsiDependentIndex;
+import com.intellij.util.indexing.*;
 import com.intellij.util.io.DataExternalizer;
 import com.intellij.util.io.EnumeratorStringDescriptor;
 import com.intellij.util.io.KeyDescriptor;
@@ -27,12 +21,7 @@ import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * FileBasedIndexer to quickly find all portlet names
@@ -96,7 +85,7 @@ public class PortletNameIndex extends FileBasedIndexExtension<String, Void> impl
                         NAME,
                         name -> {
                             result.add(
-                                resolvePortletName(name, project, scope)
+                                ProjectUtils.resolveReferencePlaceholder(name, project, scope)
                             );
                             return true;
                         },
@@ -113,25 +102,48 @@ public class PortletNameIndex extends FileBasedIndexExtension<String, Void> impl
         );
     }
 
-    public static String resolvePortletName(String portletName, Project project, GlobalSearchScope scope) {
-        if (portletName.startsWith(AbstractComponentPropertyIndexer.REFERENCE_PLACEHOLDER)) {
-            String reference = portletName.substring(1);
-            String propertyValue = ProjectUtils.getConstantFieldValue(reference, project, scope);
-            if (propertyValue != null) {
-                return propertyValue;
-            }
-        }
+    @NotNull
+    public static List<String> getPortletReferencePlaceholders(String portletName, Project project, GlobalSearchScope scope) {
+        return ReadAction.compute(
+                () -> {
+                    final List<String> result = new ArrayList<>();
 
-        return portletName;
+                    try {
+                        FileBasedIndex.getInstance().processAllKeys(
+                                NAME,
+                                name -> {
+                                    if (name.startsWith(ProjectUtils.REFERENCE_PLACEHOLDER)) {
+                                        String resolvedPortletName = ProjectUtils.resolveReferencePlaceholder(name, project, scope);
+                                        if (portletName.equals(resolvedPortletName)) {
+                                            result.add(name);
+                                        }
+                                    }
+                                    return true;
+                                },
+                                scope,
+                                null
+                        );
+
+                    } catch (IndexNotReadyException e) {
+                        //ignore
+                    }
+
+                    return result;
+                }
+        );
     }
 
     public static List<PsiFile> getPortletClasses(Project project, String portletName, GlobalSearchScope scope) {
+        List<String> portletReferencePlaceholders = getPortletReferencePlaceholders(portletName, project, scope);
         return ReadAction.compute(
             () -> {
                 List<PsiFile> result = new ArrayList<>();
 
                 try {
                     Collection<VirtualFile> containingFiles = FileBasedIndex.getInstance().getContainingFiles(NAME, portletName, scope);
+                    for (String portletReferencePlaceholder : portletReferencePlaceholders) {
+                        containingFiles.addAll(FileBasedIndex.getInstance().getContainingFiles(NAME, portletReferencePlaceholder, scope));
+                    }
 
                     PsiManager psiManager = PsiManager.getInstance(project);
 
@@ -175,7 +187,7 @@ public class PortletNameIndex extends FileBasedIndexExtension<String, Void> impl
 
             for (String portletName : portletNames) {
                 String portletId = portletName;
-                if (!portletName.startsWith(AbstractComponentPropertyIndexer.REFERENCE_PLACEHOLDER)) {
+                if (!portletName.startsWith(ProjectUtils.REFERENCE_PLACEHOLDER)) {
                     //from PortletTracker.addingService()
                     portletId = StringUtil.replace(portletName, Arrays.asList(".", "$"), Arrays.asList("_", "_"));
                     portletId = LiferayFileUtil.getJSSafeName(portletId);

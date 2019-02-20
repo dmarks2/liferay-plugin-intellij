@@ -126,7 +126,7 @@ public class LiferayTaglibResourceCommandNameReferenceContributor extends Abstra
 
                                         if (! (portletNames.isEmpty()) ) {
                                             for (String portletName : portletNames) {
-                                                List<String> resourceCommands = ResourceCommandIndex.getResourceCommands(portletName, GlobalSearchScope.allScope(project));
+                                                List<String> resourceCommands = ResourceCommandIndex.getResourceCommands(portletName, project, GlobalSearchScope.allScope(project));
                                                 Set<String> distinctResourceCommands = new TreeSet<>(resourceCommands);
 
                                                 for (String resourceCommand : distinctResourceCommands) {

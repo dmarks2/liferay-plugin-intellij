@@ -70,8 +70,8 @@ public class RenderCommandIndex extends FileBasedIndexExtension<CommandKey, Void
         return true;
     }
 
-    public static List<String> getRenderCommands(@NotNull String portletName, GlobalSearchScope scope) {
-        return AbstractCommandKeyIndexer.getCommands(NAME, portletName, scope);
+    public static List<String> getRenderCommands(@NotNull String portletName, Project project, GlobalSearchScope scope) {
+        return AbstractCommandKeyIndexer.getCommands(NAME, portletName, project, scope);
     }
 
     public static List<PsiFile> getPortletClasses(Project project, String portletName, String commandName, GlobalSearchScope scope) {

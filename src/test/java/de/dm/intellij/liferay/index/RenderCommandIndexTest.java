@@ -62,7 +62,7 @@ public class RenderCommandIndexTest extends LightCodeInsightFixtureTestCase {
 
         FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
 
-        List<String> renderCommands = RenderCommandIndex.getRenderCommands("de_dm_portlet_MyPortletName", GlobalSearchScope.moduleScope(myFixture.getModule()));
+        List<String> renderCommands = RenderCommandIndex.getRenderCommands("de_dm_portlet_MyPortletName", myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
 
         assertTrue(renderCommands.contains("/my/render"));
     }

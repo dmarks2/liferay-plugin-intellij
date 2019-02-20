@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Bugfix: Fixed compatibility with IntelliJ 2018.3 when injecting javascript into freemarker taglibs
 - Bugfix: ServiceLocator lookup in Application Display Templates was not working properly
 - Feature: Code completion for portlet names in JSP taglibs
+- Feature: Code completion for action/render/resource commands in JSP taglibs
 - Feature: Support for multiple OSGi service definitions in a @Component annotation
 - Feature: Inspections for service.xml
 

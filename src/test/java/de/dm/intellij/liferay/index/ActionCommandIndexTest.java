@@ -62,9 +62,52 @@ public class ActionCommandIndexTest extends LightCodeInsightFixtureTestCase {
 
         FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
 
-        List<String> actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MyPortletName", GlobalSearchScope.moduleScope(myFixture.getModule()));
+        List<String> actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MyPortletName", myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
 
         assertTrue(actionCommands.contains("/my/action"));
+    }
+
+    public void testActionCommandByActionKeyReferenceConstant() {
+        myFixture.configureByFiles(
+                "de/dm/action/MyActionKeyReferenceMVCAction.java",
+                "de/dm/action/ActionKeys.java",
+                "com/liferay/portal/kernel/portlet/bridges/mvc/MVCActionCommand.java"
+        );
+
+        FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
+
+        List<String> actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MyPortletName", myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
+
+        assertTrue(actionCommands.contains("/my/actionkey"));
+    }
+
+    public void testActionCommandByStringWithPortletKeyReferenceConstant() {
+        myFixture.configureByFiles(
+                "de/dm/action/MyPortletReferenceMVCAction.java",
+                "de/dm/portlet/PortletKeys.java",
+                "com/liferay/portal/kernel/portlet/bridges/mvc/MVCActionCommand.java"
+        );
+
+        FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
+
+        List<String> actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MyPortletKey", myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
+
+        assertTrue(actionCommands.contains("/my/portletref/action"));
+    }
+
+    public void testActionCommandByActionKeyWithPortletKeyReferenceConstant() {
+        myFixture.configureByFiles(
+                "de/dm/action/MyPortletReferenceActionKeyReferenceMVCAction.java",
+                "de/dm/action/ActionKeys.java",
+                "de/dm/portlet/PortletKeys.java",
+                "com/liferay/portal/kernel/portlet/bridges/mvc/MVCActionCommand.java"
+        );
+
+        FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
+
+        List<String> actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MySecondPortletKey", myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
+
+        assertTrue(actionCommands.contains("/my/secondkey"));
     }
 
     public void testMultiplePortletsActionCommandByString() {
@@ -75,10 +118,10 @@ public class ActionCommandIndexTest extends LightCodeInsightFixtureTestCase {
 
         FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
 
-        List<String> actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MyPortletName", GlobalSearchScope.moduleScope(myFixture.getModule()));
+        List<String> actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MyPortletName", myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
         assertTrue(actionCommands.contains("/my/action"));
 
-        actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MyOtherPortletName", GlobalSearchScope.moduleScope(myFixture.getModule()));
+        actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MyOtherPortletName", myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
         assertTrue(actionCommands.contains("/my/action"));
     }
 
@@ -91,13 +134,11 @@ public class ActionCommandIndexTest extends LightCodeInsightFixtureTestCase {
 
         FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
 
-        List<String> actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MyPortletName", GlobalSearchScope.moduleScope(myFixture.getModule()));
+        List<String> actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MyPortletName", myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
 
         assertTrue(actionCommands.contains("/my/action"));
     }
 
-    //TODO you cannot use PsiConstantEvaluationHelper during indexing. How to handle?
-    /*
     public void testProcessActionAnnotationByConstant() {
         myFixture.configureByFiles(
             "de/dm/portlet/MyConstantPortlet.java",
@@ -107,10 +148,10 @@ public class ActionCommandIndexTest extends LightCodeInsightFixtureTestCase {
 
         FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
 
-        List<String> actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MyPortletName", GlobalSearchScope.moduleScope(myFixture.getModule()));
+        List<String> actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MyPortletName", myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
 
         assertTrue(actionCommands.contains("/my/action"));
-    }*/
+    }
 
     public void testProcessActionByMethodName() {
         myFixture.configureByFiles(
@@ -122,7 +163,7 @@ public class ActionCommandIndexTest extends LightCodeInsightFixtureTestCase {
 
         FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
 
-        List<String> actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MyActionMethodPortletName", GlobalSearchScope.moduleScope(myFixture.getModule()));
+        List<String> actionCommands = ActionCommandIndex.getActionCommands("de_dm_portlet_MyActionMethodPortletName", myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
 
         assertTrue(actionCommands.contains("actionMethod"));
     }

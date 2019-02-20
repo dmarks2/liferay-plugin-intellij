@@ -10,6 +10,7 @@ import com.intellij.psi.PsiManager;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.indexing.FileBasedIndex;
 import com.intellij.util.indexing.ID;
+import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 public abstract class AbstractCommandKeyIndexer extends AbstractComponentPropertyIndexer<CommandKey> {
 
-    public static List<String> getCommands(@NotNull ID<CommandKey, Void> name, @NotNull String portletName, GlobalSearchScope scope) {
+    public static List<String> getCommands(@NotNull ID<CommandKey, Void> name, @NotNull String portletName, Project project, GlobalSearchScope scope) {
         return ReadAction.compute(
             () -> {
                 final List<String> result = new ArrayList<>();
@@ -28,8 +29,14 @@ public abstract class AbstractCommandKeyIndexer extends AbstractComponentPropert
                     FileBasedIndex.getInstance().processAllKeys(
                         name,
                         commandKey -> {
-                            if (portletName.equals(commandKey.getPortletName())) {
-                                result.add(commandKey.getCommandName());
+                            String commandKeyPortletName = commandKey.getPortletName();
+                            commandKeyPortletName = ProjectUtils.resolveReferencePlaceholder(commandKeyPortletName, project, scope);
+
+                            if (portletName.equals(commandKeyPortletName)) {
+                                String commandName = commandKey.getCommandName();
+                                commandName = ProjectUtils.resolveReferencePlaceholder(commandName, project, scope);
+
+                                result.add(commandName);
                             }
                             return true;
                         },
@@ -46,13 +53,60 @@ public abstract class AbstractCommandKeyIndexer extends AbstractComponentPropert
         );
     }
 
+    @NotNull
+    public static List<String> getCommandReferencePlaceholders(@NotNull ID<CommandKey, Void> name, String commandName, Project project, GlobalSearchScope scope) {
+        return ReadAction.compute(
+                () -> {
+                    final List<String> result = new ArrayList<>();
+
+                    try {
+                        FileBasedIndex.getInstance().processAllKeys(
+                                name,
+                                commandKey -> {
+                                    if (commandKey.getCommandName().startsWith(ProjectUtils.REFERENCE_PLACEHOLDER)) {
+                                        String resolvedCommandName = ProjectUtils.resolveReferencePlaceholder(commandKey.getCommandName(), project, scope);
+                                        if (commandName.equals(resolvedCommandName)) {
+                                            result.add(commandKey.getCommandName());
+                                        }
+                                    }
+                                    return true;
+                                },
+                                scope,
+                                null
+                        );
+
+                    } catch (IndexNotReadyException e) {
+                        //ignore
+                    }
+
+                    return result;
+                }
+        );
+    }
+
+
     public static List<PsiFile> getPortletClasses(@NotNull ID<CommandKey, Void> name, Project project, String portletName, String commandName, GlobalSearchScope scope) {
+        List<String> portletReferencePlaceholders = PortletNameIndex.getPortletReferencePlaceholders(portletName, project, scope);
+        List<String> commandKeyPlaceholders = getCommandReferencePlaceholders(name, commandName, project, scope);
+
         return ReadAction.compute(
             () -> {
                 List<PsiFile> result = new ArrayList<>();
 
                 try {
                     Collection<VirtualFile> containingFiles = FileBasedIndex.getInstance().getContainingFiles(name, new CommandKey(portletName, commandName), scope);
+                    for (String portletReferencePlaceholder : portletReferencePlaceholders) {
+                        containingFiles.addAll(FileBasedIndex.getInstance().getContainingFiles(name, new CommandKey(portletReferencePlaceholder, commandName), scope));
+                    }
+                    for (String commandKeyPlaceholder : commandKeyPlaceholders) {
+                        containingFiles.addAll(FileBasedIndex.getInstance().getContainingFiles(name, new CommandKey(portletName, commandKeyPlaceholder), scope));
+                    }
+
+                    for (String portletReferencePlaceholder : portletReferencePlaceholders) {
+                        for (String commandKeyPlaceholder : commandKeyPlaceholders) {
+                            containingFiles.addAll(FileBasedIndex.getInstance().getContainingFiles(name, new CommandKey(portletReferencePlaceholder, commandKeyPlaceholder), scope));
+                        }
+                    }
 
                     PsiManager psiManager = PsiManager.getInstance(project);
 
