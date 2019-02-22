@@ -69,10 +69,16 @@ For some taglibs you can auto-complete defined Portlet Names. Those are fetched 
 
 ![portlet_names](jsp_portlet_name.png "portlet names")
 
+Additionally you can auto-complete action commands, render command and resource commands to
+`<portlet:actionURL>`, `<portlet:renderURL>` and `<portlet:resourceURL>`.   
+
+![action_commands](actioncommands.png "action commands")
+
 The following tag libraries are supported:
  
     <aui:>
     <clay:>
+    <portlet:>
     <liferay-adaptive-media:>
     <liferay-asset:>  
     <liferay-ddm:>
