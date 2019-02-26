@@ -35,6 +35,7 @@ public class LiferayFileUtil {
     private static final String JOURNAL = "journal";
     private static final String STRUCTURES = "structures";
     private static final String APPLICATION_DISPLAY = "application_display";
+    private static final String LAYOUTTPL = "layouttpl";
 
     public static boolean isJournalTemplateFile(PsiFile psiFile) {
         //Journal Template files in a resource importer directory structure is detected in a path like "/journal/templates/StructureName/TemplateName" or "/journal/templates/TemplateName"
@@ -151,14 +152,23 @@ public class LiferayFileUtil {
     /**
      * Check if given file is a layout template file.
      *
-     * A layout template file is detected by the extension ".tpl"
+     * A layout template file is detected by the extension ".tpl" or if the file is present in a subdirectory of "layouttpl"
      *
      * @param psiFile
      * @return
      */
     public static boolean isLayoutTemplateFile(PsiFile psiFile) {
-        if (psiFile.getVirtualFile() != null) {
-            return "tpl".equals(psiFile.getVirtualFile().getExtension());
+        VirtualFile virtualFile = psiFile.getVirtualFile();
+
+        if (virtualFile != null) {
+            if ("tpl".equals(virtualFile.getExtension())) {
+                return true;
+            }
+
+            VirtualFile layouttplVirtualFile = getParent(virtualFile, LAYOUTTPL);
+            if (layouttplVirtualFile != null) {
+                return true;
+            }
         }
 
         return false;

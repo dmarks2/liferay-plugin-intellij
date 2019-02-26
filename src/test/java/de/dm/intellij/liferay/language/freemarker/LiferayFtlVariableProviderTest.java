@@ -185,6 +185,13 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
         assertTrue(strings.contains("company_name"));
     }
 
+    public void testLayoutTemplateVariables() {
+        myFixture.configureByFiles("layouttpl/custom/my_freemarker_layout_template.ftl");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("processor"));
+    }
+
     public void testThemeSettingsVariables() {
         myFixture.configureByFiles("templates/theme_settings.ftl", "WEB-INF/liferay-look-and-feel.xml");
         myFixture.complete(CompletionType.BASIC, 1);

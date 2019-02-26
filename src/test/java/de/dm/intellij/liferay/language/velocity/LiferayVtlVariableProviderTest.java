@@ -124,8 +124,15 @@ public class LiferayVtlVariableProviderTest extends LightCodeInsightFixtureTestC
         assertTrue(strings.contains("company_name"));
     }
 
-    public void testLayoutTemplateVariables() {
+    public void testLayoutTemplateVariablesTpl() {
         myFixture.configureByFiles("layouttpl/custom/my_liferay_layout_template.tpl");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("processor"));
+    }
+
+    public void testLayoutTemplateVariablesVm() {
+        myFixture.configureByFiles("layouttpl/custom/my_velocity_layout_template.vm");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("processor"));
