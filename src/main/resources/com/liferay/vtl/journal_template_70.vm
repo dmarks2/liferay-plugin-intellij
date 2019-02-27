@@ -1,1 +1,2 @@
 #* @vtlvariable name="journalContent" type="com.liferay.journal.util.JournalContent" *#
+#* @vtlvariable name="journalContentUtil" type="com.liferay.journal.util.JournalContent" *#

@@ -1,4 +1,1 @@
 #* @vtlvariable name="processor" type="com.liferay.portal.layoutconfiguration.util.velocity.ColumnProcessor" *#
-#* @vtlvariable name="taglibLiferay" type="com.liferay.taglib.util.VelocityTaglib" *#
-#* @vtlvariable name="theme" type="com.liferay.taglib.util.VelocityTaglib" *#
-#* @vtlvariable name="currentURL" type="java.lang.String" *#

@@ -1,0 +1,4 @@
+#* @vtlvariable name="renderRequest" type="javax.portlet.RenderRequest" *#
+#* @vtlvariable name="renderResponse" type="javax.portlet.RenderResponse" *#
+#* @vtlvariable name="commonPermission" type="com.liferay.portal.kernel.service.permission.CommonPermission" *#
+

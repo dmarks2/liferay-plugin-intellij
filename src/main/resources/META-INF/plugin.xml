@@ -35,6 +35,7 @@
             <li>Feature: Code completion for action/render/resource commands in JSP taglibs</li>
             <li>Feature: Support for multiple OSGi service definitions in a @Component annotation</li>
             <li>Feature: Inspections for service.xml</li>
+            <li>Feature: Class Name completion for objectUtil in Freemarker templates</li>
         </ul>
         <p>Version 0.0.3</p>
         <ul>

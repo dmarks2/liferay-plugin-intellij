@@ -62,6 +62,8 @@ public class TemplateVariableProcessorUtil {
 
         boolean isStandardVelocityContextFile = isJournalTemplateFile || isThemeTemplateFile || isLayoutTemplateFile || isApplicationDisplayTemplateFile;
 
+        boolean isRequestBasedContextFile = isThemeTemplateFile || isLayoutTemplateFile || isApplicationDisplayTemplateFile;
+
         if (isJournalTemplateFile) {
             variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/journal_template.vm"));
 
@@ -245,7 +247,19 @@ public class TemplateVariableProcessorUtil {
             for (String additionalLanguageResource : templateVariableProcessor.getAdditionalLanguageSpecificResources(portalMajorVersion)) {
                 variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, additionalLanguageResource));
             }
+        }
 
+        if (isRequestBasedContextFile) {
+            if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_6_1) {
+                variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/velocity_request_61.vm"));
+            } else if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_6_2) {
+                variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/velocity_request_62.vm"));
+            } else if (
+                (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_0) ||
+                    (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
+            ) { //Liferay 7.0
+                variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/velocity_request_70.vm"));
+            }
         }
 
         if (isBaseDDMTemplateFile) {

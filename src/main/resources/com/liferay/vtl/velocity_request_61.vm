@@ -5,4 +5,6 @@
 #* @vtlvariable name="mathTool" type="org.apache.velocity.tools.generic.MathTool" *#
 #* @vtlvariable name="numberTool" type="org.apache.velocity.tools.generic.NumberTool" *#
 #* @vtlvariable name="sortTool" type="org.apache.velocity.tools.generic.SortTool" *#
-#* @vtlvariable name="velocityPortletPreferences" type="com.liferay.portal.template.TemplatePortletPreferences" *#
+#* @vtlvariable name="velocityTaglib_layoutIcon" type="java.lang.reflect.Method" *#
+#* @vtlvariable name="commonPermission" type="com.liferay.portal.service.permission.CommonPermission" *#
+#* @vtlvariable name="velocityPortletPreferences" type="com.liferay.portal.velocity.VelocityPortletPreferences" *#

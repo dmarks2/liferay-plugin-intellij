@@ -281,6 +281,18 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
         assertTrue(strings.contains("de.dm.MyEnum"));
     }
 
+    public void testObjectUtilLookup() {
+        myFixture.configureByFiles(
+            "WEB-INF/src/resources-importer/journal/templates/test/object-util-lookup.ftl",
+            "WEB-INF/src/resources-importer/journal/structures/test.json",
+            "com/liferay/portal/template/freemarker/internal/LiferayObjectConstructor.java",
+            "de/dm/MyObject.java"
+        );
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("de.dm.MyObject"));
+    }
+
     public void testStaticUtil() {
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/static-util.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "de/dm/MyUtil.java");
         myFixture.complete(CompletionType.BASIC, 1);

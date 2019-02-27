@@ -2,7 +2,6 @@
 #* @vtlvariable name="rssDisplayContext" type="com.liferay.rss.web.internal.display.context.RSSDisplayContext" *#
 #* @vtlvariable name="template_id" type="java.lang.Long" *#
 #* @vtlvariable name="class_name_id" type="java.lang.Long" *#
-#* @vtlvariable name="randomNamespace" type="java.lang.String" *#
 #* @vtlvariable name="expandedEntriesPerFeed" type="java.lang.String" *#
 #* @vtlvariable name="showFeedImage" type="java.lang.String" *#
 #* @vtlvariable name="feedImageAlignment" type="java.lang.String" *#
