@@ -5,7 +5,6 @@
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Injects JavaScript language into Liferay specific taglibs inside Freemarker Templates -->
         <multiHostInjector implementation="de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerJavascriptLanguageInjector"/>
 
         <completion.contributor order="first, before propertiesCompletion" language="FTL" implementationClass="de.dm.intellij.liferay.language.freemarker.servicelocator.ServiceLocatorClassNameCompletionContributor"/>
@@ -22,6 +21,8 @@
         <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayJournalTemplateFreemarkerContextType"/>
         <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayApplicationDisplayTemplateFreemarkerContextType"/>
         <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayThemeTemplateFreemarkerContextType"/>
+
+        <lang.documentationProvider language="FTL" implementationClass="de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerDocumentationProvider"/>
     </extensions>
 
 </idea-plugin>

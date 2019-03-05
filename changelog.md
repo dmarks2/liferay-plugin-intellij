@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Support for multiple OSGi service definitions in a @Component annotation
 - Feature: Inspections for service.xml
 - Feature: Class Name completion for objectUtil in Freemarker templates
+- Feature: Quick Documentation lookup for Journal Structure variables in Freemarker templates
 
 ## 0.0.3
 - Feature: Javascript injection for aui:validator and many onXXX attributes

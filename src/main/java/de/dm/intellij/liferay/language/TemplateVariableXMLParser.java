@@ -20,10 +20,12 @@ public class TemplateVariableXMLParser implements TemplateVariableParser<XmlFile
 
         XmlTag rootTag = xmlDocument.getRootTag();
 
+        String defaultLanguageId = rootTag.getAttributeValue("default-locale");
+
         XmlTag[] subTags = rootTag.findSubTags("dynamic-element");
 
         for (XmlTag tag : subTags) {
-            TemplateVariable templateVariable = getTemplateVariable(templateFile, tag);
+            TemplateVariable templateVariable = getTemplateVariable(templateFile, xmlFile, tag, defaultLanguageId);
             if (templateVariable != null) {
                 result.add(templateVariable);
             }
@@ -33,7 +35,7 @@ public class TemplateVariableXMLParser implements TemplateVariableParser<XmlFile
     }
 
     @Nullable
-    private TemplateVariable getTemplateVariable(PsiFile templateFile, XmlTag xmlTag) {
+    private TemplateVariable getTemplateVariable(PsiFile templateFile, PsiFile originalFile, XmlTag xmlTag, String defaultLanguageId) {
         XmlAttribute xmlAttribute = xmlTag.getAttribute("name");
         if (xmlAttribute != null) {
             TemplateVariable templateVariable = new TemplateVariable();
@@ -47,13 +49,31 @@ public class TemplateVariableXMLParser implements TemplateVariableParser<XmlFile
                 repeatable = true;
             }
 
+            String type = xmlTag.getAttributeValue("type");
+
+            XmlTag[] metaDataTags = xmlTag.findSubTags("meta-data");
+            for (XmlTag metaDataTag : metaDataTags) {
+                String locale = metaDataTag.getAttributeValue("locale");
+                String label = metaDataTag.getSubTagText("label");
+                String tip = metaDataTag.getSubTagText("tip");
+                if (label != null) {
+                    templateVariable.getLabels().put(locale, label);
+                }
+                if (tip != null) {
+                    templateVariable.getTips().put(locale, tip);
+                }
+            }
+
             templateVariable.setRepeatable(repeatable);
             templateVariable.setNavigationalElement(xmlTag.getNavigationElement());
             templateVariable.setParentFile(templateFile);
+            templateVariable.setOriginalFile(originalFile);
+            templateVariable.setDefaultLanguageId(defaultLanguageId);
+            templateVariable.setType(type);
 
             XmlTag[] subTags = xmlTag.findSubTags("dynamic-element");
             for (XmlTag subTag : subTags) {
-                TemplateVariable nestedVariable = getTemplateVariable(templateFile, subTag);
+                TemplateVariable nestedVariable = getTemplateVariable(templateFile, originalFile, subTag, defaultLanguageId);
                 if (nestedVariable != null) {
                     templateVariable.addNestedVariable(nestedVariable);
                 }

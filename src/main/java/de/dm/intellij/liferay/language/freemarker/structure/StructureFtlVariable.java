@@ -183,7 +183,9 @@ public class StructureFtlVariable extends FtlLightVariable {
         public String getName(@NotNull ResolveState state) {
             return this.myNameHint;
         }
-
     }
 
+    public TemplateVariable getTemplateVariable() {
+        return templateVariable;
+    }
 }
