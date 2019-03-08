@@ -37,6 +37,7 @@ import com.intellij.psi.PsiPackageStatement;
 import com.intellij.psi.PsiParameter;
 import com.intellij.psi.PsiParameterList;
 import com.intellij.psi.PsiType;
+import com.intellij.psi.impl.compiled.ClsFieldImpl;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.impl.source.PsiFieldImpl;
 import com.intellij.psi.impl.source.tree.JavaSourceUtil;
@@ -407,7 +408,12 @@ public class ProjectUtils {
             PsiField psiField = ProjectUtils.getClassPublicStaticField(psiClass, fieldMemberName);
             if (psiField != null) {
 
-                Object value = ((PsiFieldImpl) psiField).computeConstantValue(null);
+                Object value = null;
+                if (psiField instanceof PsiFieldImpl) {
+                    value = ((PsiFieldImpl) psiField).computeConstantValue(null);
+                } else if (psiField instanceof ClsFieldImpl) {
+                    value = ((ClsFieldImpl)psiField).computeConstantValue(null);
+                }
 
                 if (value instanceof String) {
                     return (String)value;
