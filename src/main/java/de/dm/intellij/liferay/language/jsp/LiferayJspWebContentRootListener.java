@@ -9,13 +9,11 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModuleRootManager;
-import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileEvent;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
-import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.util.LiferayFileUtil;
 import de.dm.intellij.liferay.util.ProjectUtils;
 
@@ -55,33 +53,6 @@ public class LiferayJspWebContentRootListener {
                             addWebFacet(resources, parent, module);
                         }
                     }
-                } else if (LiferayModuleComponent.getOsgiFragmentHostPackageName(module) != null) {
-                    String fragmentHostPackageName = LiferayModuleComponent.getOsgiFragmentHostPackageName(module);
-
-                    ModuleRootManager.getInstance(module).orderEntries().forEachLibrary(
-                        library -> {
-
-                            if (library.getName() != null && library.getName().contains(fragmentHostPackageName)) {
-                                VirtualFile[] files = library.getFiles(OrderRootType.CLASSES);
-                                for (VirtualFile file : files) {
-                                    VirtualFile root = LiferayFileUtil.getJarRoot(file);
-                                    if (root != null) {
-                                        VirtualFile child = LiferayFileUtil.getChild(root, "META-INF/resources");
-                                        if (child != null) {
-                                            ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
-
-                                            if (moduleRootManager.getSourceRoots().length > 0) {
-                                                VirtualFile sourceRoot = moduleRootManager.getSourceRoots()[0];
-
-                                                addWebFacet(child, sourceRoot, module);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            return true;
-                        }
-                    );
                 } else {
                     ProjectUtils.runDumbAwareLater(project, () -> {
                         if (virtualFile.isValid()) {
