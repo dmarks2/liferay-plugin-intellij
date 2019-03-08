@@ -39,6 +39,7 @@ The following variables are supported:
     serviceLocator
     staticFieldGetter
     staticUtil
+    objectUtil
 
 *This feature works in IntelliJ Ultimate Edition only.*
 

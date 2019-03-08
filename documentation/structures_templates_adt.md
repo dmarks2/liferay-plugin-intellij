@@ -19,8 +19,10 @@ Journal Templates can use Velocity or Freemarker. This plugin defines implicit v
 Implicit Journal Structure variables
 ------------------------------------
 
-Variables defined in the corresponding structure are available. Structure files in XML (Liferay 6.x) and JSON (Liferay 7 /DXP) are supported.
-You can access nested structure variables and even access variables from a loop variable (Freemarker only). 
+Variables defined in the corresponding structure are available. Structure files in XML (Liferay 6.x) and JSON (Liferay 7 / DXP) are supported.
+You can access nested structure variables and even access variables from a loop variable (Freemarker only).
+
+A quick documentation popup is available which shows the name, the type, the label and the tip from the structure.
 
 ![Journal Template Structure Fields](journal_template_structure_fields.png "Journal Template Structure Fields")
 
