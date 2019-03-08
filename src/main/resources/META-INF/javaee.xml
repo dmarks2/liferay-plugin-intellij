@@ -8,5 +8,7 @@
 
         <!-- Reference contributor for file references in Liferay specific XML files -->
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.xml.LiferayXmlFileReferenceContributor"/>
+
+        <debugger.positionManagerFactory id="liferayPositionManager" implementation="de.dm.intellij.liferay.language.jsp.LiferayJspDebuggerPositionManagerFactory" />
     </extensions>
 </idea-plugin>

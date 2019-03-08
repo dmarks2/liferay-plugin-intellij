@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Inspections for service.xml
 - Feature: Class Name completion for objectUtil in Freemarker templates
 - Feature: Quick Documentation lookup for Journal Structure variables in Freemarker templates
+- Feature: Experimental support to debug JSPs (in own modules and in dependencies)
 
 ## 0.0.3
 - Feature: Javascript injection for aui:validator and many onXXX attributes

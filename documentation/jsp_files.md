@@ -6,6 +6,7 @@ JSP files
 3. [Detecting META-INF/resources as web content roots](#detecting-meta-infresources-as-web-content-roots)
 4. [Code completions for Liferay taglibs](#code-completions-for-liferay-taglibs)
 5. [JSP inspections](#jsp-inspections)
+6. [Debugger support for JSPs](#debugger-support-for-jsps) 
 
 Resolve includes to JSPs inside JSP Hooks
 -----------------------------------------
@@ -110,3 +111,16 @@ attribute inside a JSP expression.
 ![JSP inspections](jsp_inspections_2.gif "JSP inspection")
 
  
+Debugger support for JSPs
+-------------------------
+
+This plugin adds (experimental) support to debug JSPs. 
+
+It does not matter if you run a "Tomcat" Run Configuration or if you start Tomcat externally and
+attach a remote debugger. 
+
+This works for JSPs in your own modules and even for JSPs inside any Liferay dependency you are using.
+
+![Debugging in your own module](jsp_debug_own_module.png "Debugging in your own module") 
+
+![Debugging in Liferay dependency](jsp_debug_dependency.png "Debugging in Liferay dependency")

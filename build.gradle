@@ -53,6 +53,7 @@ dependencies {
     //compileOnly 'org.jetbrains.plugins:maven-server-api:2016.3'
     compileOnly 'com.github.adedayo.intellij.sdk:maven-server-api:142.1'
     compile 'org.glassfish:javax.json:1.1'
+    compile files(org.gradle.internal.jvm.Jvm.current().toolsJar)
 }
 
 intellij {
