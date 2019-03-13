@@ -40,6 +40,14 @@ public class LiferayLookAndFeelXmlParser {
 
                     if (virtualFile.getLength() > 0) {
                         try {
+                            //set defaults
+                            component.getThemeSettings().put(TEMPLATE_EXTENSION, "ftl");
+                            component.getThemeSettings().put(ROOT_PATH, "/");
+                            component.getThemeSettings().put(CSS_PATH, "/css");
+                            component.getThemeSettings().put(IMAGES_PATH, "/images");
+                            component.getThemeSettings().put(JAVASCRIPT_PATH, "/js");
+                            component.getThemeSettings().put(TEMPLATES_PATH, "/templates");
+
                             NanoXmlUtil.parse(virtualFile.getInputStream(), new NanoXmlUtil.BaseXmlBuilder() {
                                 @Override
                                 public void addPCData(Reader reader, String systemID, int lineNr) throws Exception {

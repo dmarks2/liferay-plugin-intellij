@@ -10,8 +10,8 @@ public class LiferayLookAndFeelXmlParserTest extends LightCodeInsightFixtureTest
         return "testdata/de/dm/intellij/liferay/theme/LiferayLookAndFeelXmlParserTest";
     }
 
-    public void testLookAndFeelXmlParser() {
-        myFixture.configureByFiles("liferay-look-and-feel.xml");
+    public void testLookAndFeelXmlParserCustom() {
+        myFixture.configureByFiles("custom/liferay-look-and-feel.xml");
 
         LiferayModuleComponent liferayModuleComponent = LiferayModuleComponent.getInstance(myFixture.getModule());
 
@@ -21,6 +21,19 @@ public class LiferayLookAndFeelXmlParserTest extends LightCodeInsightFixtureTest
         assertEquals("/my_js", liferayModuleComponent.getThemeSettings().get(LiferayLookAndFeelXmlParser.JAVASCRIPT_PATH));
         assertEquals("/my_templates", liferayModuleComponent.getThemeSettings().get(LiferayLookAndFeelXmlParser.TEMPLATES_PATH));
         assertEquals("vtl", liferayModuleComponent.getThemeSettings().get(LiferayLookAndFeelXmlParser.TEMPLATE_EXTENSION));
+    }
+
+    public void testLookAndFeelXmlParserDefault() {
+        myFixture.configureByFiles("default/liferay-look-and-feel.xml");
+
+        LiferayModuleComponent liferayModuleComponent = LiferayModuleComponent.getInstance(myFixture.getModule());
+
+        assertEquals("/", liferayModuleComponent.getThemeSettings().get(LiferayLookAndFeelXmlParser.ROOT_PATH));
+        assertEquals("/css", liferayModuleComponent.getThemeSettings().get(LiferayLookAndFeelXmlParser.CSS_PATH));
+        assertEquals("/images", liferayModuleComponent.getThemeSettings().get(LiferayLookAndFeelXmlParser.IMAGES_PATH));
+        assertEquals("/js", liferayModuleComponent.getThemeSettings().get(LiferayLookAndFeelXmlParser.JAVASCRIPT_PATH));
+        assertEquals("/templates", liferayModuleComponent.getThemeSettings().get(LiferayLookAndFeelXmlParser.TEMPLATES_PATH));
+        assertEquals("ftl", liferayModuleComponent.getThemeSettings().get(LiferayLookAndFeelXmlParser.TEMPLATE_EXTENSION));
     }
 
 }
