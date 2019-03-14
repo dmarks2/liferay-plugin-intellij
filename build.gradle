@@ -54,6 +54,7 @@ dependencies {
     compileOnly 'com.github.adedayo.intellij.sdk:maven-server-api:142.1'
     compile 'org.glassfish:javax.json:1.1'
     compile files(org.gradle.internal.jvm.Jvm.current().toolsJar)
+    compile 'org.freemarker:freemarker:2.3.28'
 }
 
 intellij {
@@ -270,4 +271,4 @@ task unzipCompass0122SassExtensions(dependsOn: downloadCompass0122, type: Copy) 
 */
 
 group 'de.dm.intellij.liferay'
-version '0.0.4'
+version '0.0.5'

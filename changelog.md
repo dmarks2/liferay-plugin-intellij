@@ -3,6 +3,9 @@ Liferay Plugin for IntelliJ
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.5
+- Feature: Experimental Freemarker debugger
+
 ## 0.0.4
 - Bugfix: Fixed parsing liferay-look-and-feel.xml when creating that file for the first time
 - Bugfix: Correctly detect locale strings in JSON schema for journal structure files
@@ -34,7 +37,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Added taglib code completion for class names
 - Feature: Class Name completion for serviceLocator.findService(), enumUtil, staticUtil and staticFieldGetter in Freemarker templates
 - Feature: Implicit resolve of serviceLocator, enumUtil and staticUtil instructions in Freemarker templates
-- Feature: Inpsections for JSP files 
+- Feature: Inspections for JSP files 
 - Change: do not include AlloyUI and Liferay Javascript in the plugin, use project dependencies instead
 - Change: dropped support for IntelliJ 2016 and 2017, now requires 2018.1 and above
 
