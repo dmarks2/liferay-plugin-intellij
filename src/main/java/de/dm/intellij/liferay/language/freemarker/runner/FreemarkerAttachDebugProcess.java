@@ -137,21 +137,29 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
     @Override
     public void startStepOver(@Nullable XSuspendContext context) {
         //not supported
+
+        resume(context);
     }
 
     @Override
     public void startStepInto(@Nullable XSuspendContext context) {
         //not supported
+
+        resume(context);
     }
 
     @Override
     public void startStepOut(@Nullable XSuspendContext context) {
         //not supported
+
+        resume(context);
     }
 
     @Override
     public void runToPosition(@NotNull XSourcePosition position, @Nullable XSuspendContext context) {
         //not supported
+
+        resume(context);
     }
 
     private VirtualFile getVirtualFileFromTemplateName(String templateName) {
