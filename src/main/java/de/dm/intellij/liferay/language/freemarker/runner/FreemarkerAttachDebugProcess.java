@@ -2,11 +2,7 @@ package de.dm.intellij.liferay.language.freemarker.runner;
 
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.execution.ui.ExecutionConsole;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ModuleRootManager;
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.xdebugger.XDebugProcess;
 import com.intellij.xdebugger.XDebugSession;
@@ -16,7 +12,6 @@ import com.intellij.xdebugger.breakpoints.XBreakpointHandler;
 import com.intellij.xdebugger.breakpoints.XLineBreakpoint;
 import com.intellij.xdebugger.evaluation.XDebuggerEditorsProvider;
 import com.intellij.xdebugger.frame.XSuspendContext;
-import de.dm.intellij.liferay.util.LiferayFileUtil;
 import freemarker.debug.DebuggedEnvironment;
 import freemarker.debug.Debugger;
 import freemarker.debug.DebuggerClient;
@@ -27,7 +22,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.rmi.RemoteException;
 import java.util.Collection;
-import java.util.List;
 
 public class FreemarkerAttachDebugProcess extends XDebugProcess {
 
@@ -165,6 +159,11 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
     private VirtualFile getVirtualFileFromTemplateName(String templateName) {
         Project project = getSession().getProject();
 
+        VirtualFile virtualFile = freemarkerAttachBreakpointHandler.getVirtualFileByTemplateName(templateName);
+
+        return virtualFile;
+
+        /*
         //TODO for themes and layout templates only
         int index = templateName.indexOf(FreemarkerAttachBreakpointHandler.SERVLET_CONTEXT);
         if (index > -1) {
@@ -188,6 +187,10 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
         }
 
         return null;
+        */
     }
 
+    public FreemarkerAttachDebugConfiguration getFreemarkerAttachDebugConfiguration() {
+        return freemarkerAttachDebugConfiguration;
+    }
 }

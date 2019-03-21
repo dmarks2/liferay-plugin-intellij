@@ -27,11 +27,13 @@ public class FreemarkerAttachBreakpointType extends XLineBreakpointType<Freemark
         boolean isFtl = FtlFileType.INSTANCE.equals(file.getFileType());
         if (isFtl) {
             PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
-            //TODO how to handle resources importer templates?
+
             if (psiFile != null) {
                 if (
                     (LiferayFileUtil.isThemeTemplateFile(psiFile)) ||
-                    (LiferayFileUtil.isLayoutTemplateFile(psiFile))
+                    (LiferayFileUtil.isLayoutTemplateFile(psiFile)) ||
+                    (LiferayFileUtil.isJournalTemplateFile(psiFile)) ||
+                    (LiferayFileUtil.isApplicationDisplayTemplateFile(psiFile))
                 ) {
                     return true;
                 }

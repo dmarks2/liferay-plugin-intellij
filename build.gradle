@@ -55,6 +55,13 @@ dependencies {
     compile 'org.glassfish:javax.json:1.1'
     compile files(org.gradle.internal.jvm.Jvm.current().toolsJar)
     compile 'org.freemarker:freemarker:2.3.28'
+
+    compile 'org.glassfish.jersey.core:jersey-client:2.26'
+    compile 'org.glassfish.jersey.media:jersey-media-multipart:2.26'
+    compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.26'
+    compile 'org.glassfish.jersey.inject:jersey-hk2:2.26'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.9.0'
+    compile 'org.json:json:20171018'
 }
 
 intellij {

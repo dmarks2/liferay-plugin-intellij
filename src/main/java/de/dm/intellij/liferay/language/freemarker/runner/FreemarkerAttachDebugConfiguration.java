@@ -27,6 +27,10 @@ public class FreemarkerAttachDebugConfiguration extends LocatableConfigurationBa
     private int port;
     private String password;
 
+    private String liferayURL = "http://localhost:8080";
+    private String liferayUsername = "test@liferay.com";
+    private String liferayPassword = "test";
+
     protected FreemarkerAttachDebugConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory, @Nullable String name) {
         super(project, factory, name);
     }
@@ -98,4 +102,27 @@ public class FreemarkerAttachDebugConfiguration extends LocatableConfigurationBa
         XmlSerializer.serializeInto(this, element);
     }
 
+    public String getLiferayURL() {
+        return liferayURL;
+    }
+
+    public void setLiferayURL(String liferayURL) {
+        this.liferayURL = liferayURL;
+    }
+
+    public String getLiferayUsername() {
+        return liferayUsername;
+    }
+
+    public void setLiferayUsername(String liferayUsername) {
+        this.liferayUsername = liferayUsername;
+    }
+
+    public String getLiferayPassword() {
+        return liferayPassword;
+    }
+
+    public void setLiferayPassword(String liferayPassword) {
+        this.liferayPassword = liferayPassword;
+    }
 }
