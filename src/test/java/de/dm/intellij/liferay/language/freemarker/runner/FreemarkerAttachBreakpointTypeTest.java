@@ -17,7 +17,7 @@ public class FreemarkerAttachBreakpointTypeTest extends LightCodeInsightFixtureT
         return "testdata/de/dm/intellij/liferay/language/freemarker/runner/FreemarkerAttachBreakpointTypeTest";
     }
 
-    public void testCanPutBreakpoint() {
+    public void testCanPutBreakpointInTheme() {
         myFixture.configureByFiles("templates/portal_normal.ftl", "WEB-INF/liferay-look-and-feel.xml");
 
         VirtualFile virtualFile = myFixture.getFile().getVirtualFile();
@@ -29,10 +29,4 @@ public class FreemarkerAttachBreakpointTypeTest extends LightCodeInsightFixtureT
         assertTrue("Should be able to set a breakpoint in portal_normal.ftl", canPutBreakpointAt);
     }
 
-    public void testService() throws URISyntaxException, IOException {
-        URI uri = new URI("http://localhost:8080" + Constants.ENDPOINT_JSONWS);
-        LiferayServicesUtil liferayServicesUtil = new LiferayServicesUtil(uri, "test@liferay.com", "test");
-
-        System.out.println(liferayServicesUtil.getFreemarkerTemplateName("Event", "Event"));
-    }
 }

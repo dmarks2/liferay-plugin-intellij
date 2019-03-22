@@ -2,7 +2,9 @@ package de.dm.intellij.liferay.language.freemarker.runner;
 
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.execution.ui.ExecutionConsole;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.xdebugger.XDebugProcess;
 import com.intellij.xdebugger.XDebugSession;
@@ -24,9 +26,6 @@ import java.rmi.RemoteException;
 import java.util.Collection;
 
 public class FreemarkerAttachDebugProcess extends XDebugProcess {
-
-    //20115#20151#STANDARD-TEASER
-    //-Dfreemarker.debug.password=secret -Djava.rmi.server.hostname=192.168.31.6 (or Windows Host name?)
 
     private FreemarkerAttachDebugConfiguration freemarkerAttachDebugConfiguration;
     private Debugger debugger;
@@ -55,6 +54,7 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
         this.debuggerListenerId = this.debugger.addDebuggerListener(e -> {
             DebuggedEnvironment debuggedEnvironment = e.getEnvironment();
 
+
             String templateName = e.getName();
             int line = e.getLine();
 
@@ -65,8 +65,16 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
 
                 boolean suspendProcess = getSession().breakpointReached(xlineBreakpoint, null, freemarkerAttachSuspendContext);
 
-                if (! suspendProcess) {
-                    debuggedEnvironment.resume();
+                if (!suspendProcess) {
+                    ApplicationManager.getApplication().invokeLater(
+                        () -> {
+                            try {
+                                debuggedEnvironment.resume();
+                            } catch (RemoteException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    );
                 }
             } else {
                 VirtualFile virtualFile = getVirtualFileFromTemplateName(templateName);
@@ -99,12 +107,12 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
     @NotNull
     @Override
     public XBreakpointHandler<?>[] getBreakpointHandlers() {
-        return new XBreakpointHandler[] { freemarkerAttachBreakpointHandler };
+        return new XBreakpointHandler[]{freemarkerAttachBreakpointHandler};
     }
 
     @Override
     public void resume(@Nullable XSuspendContext context) {
-        FreemarkerAttachSuspendContext freemarkerAttachSuspendContext = (FreemarkerAttachSuspendContext)context;
+        FreemarkerAttachSuspendContext freemarkerAttachSuspendContext = (FreemarkerAttachSuspendContext) context;
 
         try {
             freemarkerAttachSuspendContext.getDebuggedEnvironment().resume();
@@ -116,7 +124,7 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
     @Override
     public void stop() {
         try {
-            Collection<DebuggedEnvironment> suspendedEnvironments = (Collection<DebuggedEnvironment>)this.debugger.getSuspendedEnvironments();
+            Collection<DebuggedEnvironment> suspendedEnvironments = (Collection<DebuggedEnvironment>) this.debugger.getSuspendedEnvironments();
             for (DebuggedEnvironment debuggedEnvironment : suspendedEnvironments) {
                 debuggedEnvironment.resume();
             }
@@ -157,40 +165,28 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
     }
 
     private VirtualFile getVirtualFileFromTemplateName(String templateName) {
-        Project project = getSession().getProject();
-
         VirtualFile virtualFile = freemarkerAttachBreakpointHandler.getVirtualFileByTemplateName(templateName);
 
         return virtualFile;
-
-        /*
-        //TODO for themes and layout templates only
-        int index = templateName.indexOf(FreemarkerAttachBreakpointHandler.SERVLET_CONTEXT);
-        if (index > -1) {
-            List<String> parts = StringUtil.split(templateName, FreemarkerAttachBreakpointHandler.SERVLET_CONTEXT + "/");
-
-            String moduleName = parts.get(0);
-            String fileName = parts.get(1);
-
-            ModuleManager moduleManager = ModuleManager.getInstance(project);
-            Module module = moduleManager.findModuleByName(moduleName);
-
-            if (module != null) {
-                ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
-                for (VirtualFile sourceRoot : moduleRootManager.getSourceRoots()) {
-                    VirtualFile result = LiferayFileUtil.getChild(sourceRoot, fileName);
-                    if (result != null) {
-                        return result;
-                    }
-                }
-            }
-        }
-
-        return null;
-        */
     }
 
     public FreemarkerAttachDebugConfiguration getFreemarkerAttachDebugConfiguration() {
         return freemarkerAttachDebugConfiguration;
     }
+
+    @Override
+    public String getCurrentStateMessage() {
+        try {
+            Collection suspendedEnvironments = debugger.getSuspendedEnvironments();
+
+            if (suspendedEnvironments.size() == 0) {
+                return "Connected to Freemarker debugger at " + freemarkerAttachDebugConfiguration.getHost() + ":" + freemarkerAttachDebugConfiguration.getPort();
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        return super.getCurrentStateMessage();
+    }
+
 }

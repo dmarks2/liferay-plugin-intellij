@@ -45,11 +45,11 @@ public class FreemarkerAttachExecutionStackFrame extends XStackFrame {
     public void computeChildren(@NotNull XCompositeNode node) {
         XValueChildrenList xValueChildrenList = new XValueChildrenList();
 
-        addVariable(xValueChildrenList, "currentNamespace", FreemarkerAttachValue.class);
-        addVariable(xValueChildrenList, "dataModel", FreemarkerAttachValue.class);
-        addVariable(xValueChildrenList, "globalNamespace", FreemarkerAttachValue.class);
-        addVariable(xValueChildrenList, "knownVariables", FreemarkerAttachValue.class);
-        addVariable(xValueChildrenList, "mainNamespace", FreemarkerAttachValue.class);
+        addVariable(xValueChildrenList, "currentNamespace", FreemarkerAttachBaseValue.class);
+        addVariable(xValueChildrenList, "dataModel", FreemarkerAttachBaseValue.class);
+        addVariable(xValueChildrenList, "globalNamespace", FreemarkerAttachBaseValue.class);
+        addVariable(xValueChildrenList, "knownVariables", FreemarkerAttachBaseValue.class);
+        addVariable(xValueChildrenList, "mainNamespace", FreemarkerAttachBaseValue.class);
         addVariable(xValueChildrenList, "template", FreemarkerAttachTemplateValue.class);
 
         node.addChildren(xValueChildrenList, true);

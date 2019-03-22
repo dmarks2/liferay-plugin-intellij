@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class FreemarkerAttachTemplateValue extends FreemarkerAttachValue {
+public class FreemarkerAttachTemplateValue extends FreemarkerAttachBaseValue {
 
     public FreemarkerAttachTemplateValue(DebugModel debugModel) {
         super(debugModel);

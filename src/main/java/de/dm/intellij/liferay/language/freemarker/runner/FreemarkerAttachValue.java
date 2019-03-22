@@ -28,7 +28,7 @@ public class FreemarkerAttachValue extends XValue {
         String type = getTypeString();
 
         node.setPresentation(
-            PlatformIcons.VARIABLE_ICON,
+            PlatformIcons.PROPERTY_ICON,
             type,
             value,
             hasChildren()

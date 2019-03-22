@@ -23,6 +23,8 @@ public class FreemarkerAttachValueFactory {
                 return new FreemarkerAttachTemplateValue(value);
             } else if (FreemarkerAttachConfigurationValue.class.equals(type)) {
                 return new FreemarkerAttachConfigurationValue(value);
+            } else if (FreemarkerAttachBaseValue.class.equals(type)) {
+                return new FreemarkerAttachBaseValue(value);
             } else {
                 return new FreemarkerAttachValue(value);
             }

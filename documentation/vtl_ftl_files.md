@@ -7,6 +7,7 @@ Velocity and Freemarker
 4. [Freemarker taglibs](#freemarker-taglibs)
 5. [Implicit Theme Settings variables](#implicit-theme-settings-variables)
 6. [Implicit Theme Path variables](#implicit-theme-path-variables)
+7. [Freemarker Debugger](#freemarker-debugger)
 
 Liferay Layout Templates
 ------------------------
@@ -102,3 +103,33 @@ The following theme path variables are available:
     full_templates_path
 
 *This feature works in IntelliJ Ultimate Edition only.*
+
+Freemarker Debugger
+-------------------
+
+It is possible to set breakpoints inside Freemarker templates. By this the execution can be stopped
+at those breakpoints and the available variables can be examined.
+
+To create a Freemarker debugger, create a new Run Configuration of the type "Freemarker Debug":
+
+![Freemarker Debug Run Configuration](freemarker_debug.png "Freemarker Debug Run Configuration")
+
+In the Run Configuration for your Liferay server you have to add the shown arguments to enable the Freemarker debugger.
+
+To be able to debug Freemarker templates for Journal Templates and Application Display Templates you need
+to provide the URL to the local Liferay and credentials for a user who is allowed to read those templates from the portal.
+
+Debugging is available for
+* Themes
+* Layout Templates
+* Journal Templates (Global scope only)
+* Application Display Templates (Global scope only)
+
+Note that the functionality of the Freemarker debugger is limited. So it does not support operations like
+step over, step into, step out or pause. Additionally you can only set breakpoints at lines which 
+contain Freemarker instructions and not at "normal" HTML fragments.
+
+*The plugin expects Journal Templates and Application Display Templates to be present in the same structure as it would be required for the Resource Importer.*
+
+*This feature works in IntelliJ Ultimate Edition only.*
+
