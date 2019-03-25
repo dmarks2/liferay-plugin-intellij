@@ -4,7 +4,6 @@ import com.intellij.execution.ui.ConsoleView;
 import com.intellij.execution.ui.ExecutionConsole;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.xdebugger.XDebugProcess;
 import com.intellij.xdebugger.XDebugSession;
@@ -14,6 +13,7 @@ import com.intellij.xdebugger.breakpoints.XBreakpointHandler;
 import com.intellij.xdebugger.breakpoints.XLineBreakpoint;
 import com.intellij.xdebugger.evaluation.XDebuggerEditorsProvider;
 import com.intellij.xdebugger.frame.XSuspendContext;
+import freemarker.debug.Breakpoint;
 import freemarker.debug.DebuggedEnvironment;
 import freemarker.debug.Debugger;
 import freemarker.debug.DebuggerClient;
@@ -37,6 +37,8 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
 
     private XDebuggerEditorsProvider editorsProvider = new FreemarkerAttachDebugEditorsProvider();
 
+    private Breakpoint steppingBreakpoint;
+
     public FreemarkerAttachDebugProcess(XDebugSession session, FreemarkerAttachExecutionResult freemarkerAttachExecutionResult) throws IOException {
         super(session);
 
@@ -53,7 +55,6 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
 
         this.debuggerListenerId = this.debugger.addDebuggerListener(e -> {
             DebuggedEnvironment debuggedEnvironment = e.getEnvironment();
-
 
             String templateName = e.getName();
             int line = e.getLine();
@@ -79,14 +80,31 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
             } else {
                 VirtualFile virtualFile = getVirtualFileFromTemplateName(templateName);
                 if (virtualFile != null) {
-                    XSourcePosition sourcePosition = XDebuggerUtil.getInstance().createPosition(virtualFile, line);
+                    if (steppingBreakpoint != null) {
+                        debugger.removeBreakpoint(steppingBreakpoint);
+                        steppingBreakpoint = null;
+                    }
+
+                    XSourcePosition sourcePosition = XDebuggerUtil.getInstance().createPosition(virtualFile, (line - 1));
 
                     FreemarkerAttachSuspendContext freemarkerAttachSuspendContext = new FreemarkerAttachSuspendContext(debuggedEnvironment, sourcePosition);
 
                     getSession().positionReached(freemarkerAttachSuspendContext);
                 } else {
-                    //stopped at an unregistered breakpoint?? or stepping forward??
-                    debuggedEnvironment.resume();
+                    if (steppingBreakpoint != null) {
+                        debugger.removeBreakpoint(steppingBreakpoint);
+                        steppingBreakpoint = null;
+                    }
+
+                    ApplicationManager.getApplication().invokeLater(
+                        () -> {
+                            try {
+                                debuggedEnvironment.resume();
+                            } catch (RemoteException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    );
                 }
             }
         });
@@ -115,7 +133,15 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
         FreemarkerAttachSuspendContext freemarkerAttachSuspendContext = (FreemarkerAttachSuspendContext) context;
 
         try {
-            freemarkerAttachSuspendContext.getDebuggedEnvironment().resume();
+            DebuggedEnvironment debuggedEnvironment = freemarkerAttachSuspendContext.getDebuggedEnvironment();
+
+            if (steppingBreakpoint != null) {
+                debugger.removeBreakpoint(steppingBreakpoint);
+
+                steppingBreakpoint = null;
+            }
+
+            debuggedEnvironment.resume();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -138,28 +164,114 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
 
     @Override
     public void startStepOver(@Nullable XSuspendContext context) {
-        //not supported
+        FreemarkerAttachSuspendContext freemarkerAttachSuspendContext = (FreemarkerAttachSuspendContext) context;
 
-        resume(context);
+        XSourcePosition sourcePosition = freemarkerAttachSuspendContext.getSourcePosition();
+        VirtualFile virtualFile = sourcePosition.getFile();
+        int line = (sourcePosition.getLine() + 1);
+
+        Project project = getSession().getProject();
+
+        String templateName = freemarkerAttachBreakpointHandler.getTemplateName(virtualFile);
+
+        if (steppingBreakpoint != null) {
+            try {
+                debugger.removeBreakpoint(steppingBreakpoint);
+
+                steppingBreakpoint = null;
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        if (templateName != null) {
+
+            try {
+                line++;
+
+                boolean isValidFreemarkerLocation = freemarkerAttachBreakpointHandler.isValidFreemarkerLocation(project, virtualFile, line);
+
+                while (!isValidFreemarkerLocation) {
+                    line++;
+
+                    isValidFreemarkerLocation = freemarkerAttachBreakpointHandler.isValidFreemarkerLocation(project, virtualFile, line);
+                }
+
+                XLineBreakpoint<FreemarkerAttachBreakpointProperties> xlineBreakpoint = freemarkerAttachBreakpointHandler.findXlineBreakpoint(templateName, line);
+
+                if (xlineBreakpoint == null) {
+                    steppingBreakpoint = new Breakpoint(templateName, line);
+
+                    debugger.addBreakpoint(steppingBreakpoint);
+
+                    DebuggedEnvironment debuggedEnvironment = freemarkerAttachSuspendContext.getDebuggedEnvironment();
+
+                    debuggedEnvironment.resume();
+                }
+            } catch (IndexOutOfBoundsException e) {
+                //line after document end
+
+                resume(context);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+
+                resume(context);
+            }
+        } else {
+            resume(context);
+        }
     }
 
     @Override
     public void startStepInto(@Nullable XSuspendContext context) {
-        //not supported
-
-        resume(context);
+        startStepOver(context);
     }
 
     @Override
     public void startStepOut(@Nullable XSuspendContext context) {
-        //not supported
-
         resume(context);
     }
 
     @Override
     public void runToPosition(@NotNull XSourcePosition position, @Nullable XSuspendContext context) {
-        //not supported
+        FreemarkerAttachSuspendContext freemarkerAttachSuspendContext = (FreemarkerAttachSuspendContext)context;
+
+        try {
+            if (steppingBreakpoint != null) {
+                debugger.removeBreakpoint(steppingBreakpoint);
+
+                steppingBreakpoint = null;
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        VirtualFile virtualFile = position.getFile();
+        int line = (position.getLine() + 1);
+
+        Project project = getSession().getProject();
+
+        String templateName = freemarkerAttachBreakpointHandler.getTemplateName(virtualFile);
+
+        boolean isValidFreemarkerLocation = freemarkerAttachBreakpointHandler.isValidFreemarkerLocation(project, virtualFile, line);
+
+        if (templateName != null) {
+            if (isValidFreemarkerLocation) {
+                steppingBreakpoint = new Breakpoint(templateName, line);
+
+                try {
+                    debugger.addBreakpoint(steppingBreakpoint);
+
+                    DebuggedEnvironment debuggedEnvironment = freemarkerAttachSuspendContext.getDebuggedEnvironment();
+
+                    debuggedEnvironment.resume();
+
+                } catch (RemoteException e) {
+                    resume(context);
+                }
+            }
+        }
 
         resume(context);
     }

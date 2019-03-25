@@ -24,8 +24,8 @@ import org.jetbrains.annotations.Nullable;
 public class FreemarkerAttachDebugConfiguration extends LocatableConfigurationBase implements RunConfigurationWithSuppressedDefaultRunAction {
 
     private String host;
-    private int port;
-    private String password;
+    private int port = 7011;
+    private String password = "secret";
 
     private String liferayURL = "http://localhost:8080";
     private String liferayUsername = "test@liferay.com";

@@ -1,6 +1,6 @@
 package de.dm.intellij.liferay.language.freemarker.runner;
 
-import com.intellij.freemarker.psi.FtlTokenType;
+import com.intellij.freemarker.psi.FtlElementTypes;
 import com.intellij.icons.AllIcons;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.editor.Document;
@@ -68,38 +68,19 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
 
         if (sourcePosition != null) {
             VirtualFile virtualFile = sourcePosition.getFile();
+            Project project = debugProcess.getSession().getProject();
+            int line = (sourcePosition.getLine() + 1);
 
-            boolean isValidFreemarkerLocation = false;
-
-            PsiFile psiFile = PsiManager.getInstance(debugProcess.getSession().getProject()).findFile(virtualFile);
-            if (psiFile != null) {
-                Document document = PsiDocumentManager.getInstance(psiFile.getProject()).getDocument(psiFile);
-                if (document != null) {
-                    TextRange lineTextRange = DocumentUtil.getLineTextRange(document, sourcePosition.getLine());
-                    for (int i = lineTextRange.getStartOffset(); i < lineTextRange.getEndOffset(); i++) {
-                        PsiElement psiElement = psiFile.findElementAt(i);
-                        if (psiElement != null) {
-                            ASTNode astNode = psiElement.getNode();
-                            IElementType elementType = astNode.getElementType();
-                            if (elementType instanceof FtlTokenType) {
-                                isValidFreemarkerLocation = true;
-
-                                break;
-                            }
-                        }
-                    }
-
-                }
-            }
+            boolean isValidFreemarkerLocation = isValidFreemarkerLocation(project, virtualFile, line);
 
             if (isValidFreemarkerLocation) {
 
                 String templateName = getTemplateName(virtualFile);
 
                 if (templateName != null) {
-                    Breakpoint registeredBreakpoint = new Breakpoint(templateName, sourcePosition.getLine());
+                    Breakpoint registeredBreakpoint = new Breakpoint(templateName, line);
 
-                    AbstractMap.SimpleImmutableEntry<String, Integer> key = new AbstractMap.SimpleImmutableEntry<>(templateName, sourcePosition.getLine());
+                    AbstractMap.SimpleImmutableEntry<String, Integer> key = new AbstractMap.SimpleImmutableEntry<>(templateName, line);
 
                     breakpoints.put(key, registeredBreakpoint);
                     xlineBreakpoints.put(key, breakpoint);
@@ -146,7 +127,9 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
         String templateName = getTemplateName(virtualFile);
 
         if (templateName != null) {
-            AbstractMap.SimpleImmutableEntry<String, Integer> key = new AbstractMap.SimpleImmutableEntry<>(templateName, sourcePosition.getLine());
+            int line = (sourcePosition.getLine() + 1);
+
+            AbstractMap.SimpleImmutableEntry<String, Integer> key = new AbstractMap.SimpleImmutableEntry<>(templateName, line);
 
             Breakpoint registeredBreakpoint = breakpoints.get(key);
             if (registeredBreakpoint != null) {
@@ -171,8 +154,8 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
     public VirtualFile getVirtualFileByTemplateName(String templateName) {
         Map.Entry<AbstractMap.SimpleImmutableEntry<String, Integer>, XLineBreakpoint<FreemarkerAttachBreakpointProperties>> entry =
             xlineBreakpoints.entrySet().stream().
-            filter(e -> templateName.equals(e.getKey().getKey())).
-            findFirst().orElse(null);
+                filter(e -> templateName.equals(e.getKey().getKey())).
+                findFirst().orElse(null);
 
         if (entry != null) {
             XLineBreakpoint<FreemarkerAttachBreakpointProperties> xLineBreakpoint = entry.getValue();
@@ -185,12 +168,12 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
         return null;
     }
 
-    private String getTemplateName(VirtualFile virtualFile) {
+    public String getTemplateName(VirtualFile virtualFile) {
         PsiFile psiFile = PsiManager.getInstance(debugProcess.getSession().getProject()).findFile(virtualFile);
         if (psiFile != null) {
             if (
                 (LiferayFileUtil.isLayoutTemplateFile(psiFile)) ||
-                (LiferayFileUtil.isThemeTemplateFile(psiFile))
+                    (LiferayFileUtil.isThemeTemplateFile(psiFile))
             ) {
                 return getServletContextTemplateName(virtualFile);
             } else if (LiferayFileUtil.isJournalTemplateFile(psiFile)) {
@@ -242,5 +225,37 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
         }
 
         return null;
+    }
+
+    public boolean isValidFreemarkerLocation(Project project, VirtualFile virtualFile, int line) {
+        boolean isValidFreemarkerLocation = false;
+
+        PsiFile psiFile = PsiManager.getInstance(project).findFile(virtualFile);
+
+        if (psiFile != null) {
+            Document document = PsiDocumentManager.getInstance(psiFile.getProject()).getDocument(psiFile);
+            if (document != null) {
+                TextRange lineTextRange = DocumentUtil.getLineTextRange(document, (line-1));
+                for (int i = lineTextRange.getStartOffset(); i < lineTextRange.getEndOffset(); i++) {
+                    PsiElement psiElement = psiFile.findElementAt(i);
+                    if (psiElement != null) {
+                        ASTNode astNode = psiElement.getNode();
+                        IElementType elementType = astNode.getElementType();
+                        if (
+                            (elementType.equals(FtlElementTypes.START_DIRECTIVE_START)) ||
+                            (elementType.equals(FtlElementTypes.START_MACRO_START)) ||
+                            (elementType.equals(FtlElementTypes.EL_START))
+                        ) {
+                            isValidFreemarkerLocation = true;
+
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
+
+        return isValidFreemarkerLocation;
     }
 }

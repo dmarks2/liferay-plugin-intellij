@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 public class FreemarkerAttachSuspendContext extends XSuspendContext {
 
     private DebuggedEnvironment debuggedEnvironment;
+    private XSourcePosition sourcePosition;
 
     private FreemarkerAttachExecutionStack executionStack;
 
@@ -18,14 +19,20 @@ public class FreemarkerAttachSuspendContext extends XSuspendContext {
         this(debuggedEnvironment, xLineBreakpoint.getSourcePosition());
     }
 
-    public FreemarkerAttachSuspendContext(@NotNull DebuggedEnvironment debuggedEnvironment, XSourcePosition xSourcePosition) {
+    public FreemarkerAttachSuspendContext(@NotNull DebuggedEnvironment debuggedEnvironment, XSourcePosition sourcePosition) {
         this.debuggedEnvironment = debuggedEnvironment;
 
-        this.executionStack = new FreemarkerAttachExecutionStack(debuggedEnvironment, xSourcePosition);
+        this.executionStack = new FreemarkerAttachExecutionStack(debuggedEnvironment, sourcePosition);
+        this.sourcePosition = sourcePosition;
     }
 
+    @NotNull
     public DebuggedEnvironment getDebuggedEnvironment() {
         return debuggedEnvironment;
+    }
+
+    public XSourcePosition getSourcePosition() {
+        return sourcePosition;
     }
 
     @Nullable
