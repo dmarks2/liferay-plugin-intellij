@@ -1,7 +1,6 @@
 package de.dm.intellij.liferay.language.freemarker.runner;
 
 import com.intellij.xdebugger.XSourcePosition;
-import com.intellij.xdebugger.evaluation.XDebuggerEvaluator;
 import com.intellij.xdebugger.frame.XCompositeNode;
 import com.intellij.xdebugger.frame.XStackFrame;
 import com.intellij.xdebugger.frame.XValueChildrenList;
@@ -26,13 +25,6 @@ public class FreemarkerAttachExecutionStackFrame extends XStackFrame {
     @Override
     public Object getEqualityObject() {
         return FreemarkerAttachExecutionStackFrame.class;
-    }
-
-    @Nullable
-    @Override
-    public XDebuggerEvaluator getEvaluator() {
-        //TODO
-        return super.getEvaluator();
     }
 
     @Nullable

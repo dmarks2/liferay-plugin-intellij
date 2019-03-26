@@ -9,12 +9,10 @@ public class FreemarkerAttachBreakpointProperties extends XBreakpointProperties 
     @Nullable
     @Override
     public Object getState() {
-        //TODO?
         return null;
     }
 
     @Override
     public void loadState(@NotNull Object state) {
-        //TODO?
     }
 }

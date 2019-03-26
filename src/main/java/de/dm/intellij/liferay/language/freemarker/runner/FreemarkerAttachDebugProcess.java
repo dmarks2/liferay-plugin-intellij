@@ -22,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.URISyntaxException;
 import java.rmi.RemoteException;
 import java.util.Collection;
 
@@ -39,7 +40,7 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
 
     private Breakpoint steppingBreakpoint;
 
-    public FreemarkerAttachDebugProcess(XDebugSession session, FreemarkerAttachExecutionResult freemarkerAttachExecutionResult) throws IOException {
+    public FreemarkerAttachDebugProcess(XDebugSession session, FreemarkerAttachExecutionResult freemarkerAttachExecutionResult) throws IOException, URISyntaxException {
         super(session);
 
         this.freemarkerAttachDebugConfiguration = freemarkerAttachExecutionResult.getFreemarkerAttachDebugConfiguration();

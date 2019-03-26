@@ -85,6 +85,11 @@ public class FreemarkerAttachDebugConfiguration extends LocatableConfigurationBa
         configuration.host = this.host;
         configuration.port = this.port;
         configuration.password = this.password;
+
+        configuration.liferayURL = this.liferayURL;
+        configuration.liferayUsername = this.liferayUsername;
+        configuration.liferayPassword = this.liferayPassword;
+        
         return configuration;
     }
 

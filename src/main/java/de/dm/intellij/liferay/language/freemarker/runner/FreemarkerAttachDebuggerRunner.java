@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
+import java.net.URISyntaxException;
 
 public class FreemarkerAttachDebuggerRunner extends GenericDebuggerRunner {
 
@@ -47,7 +47,7 @@ public class FreemarkerAttachDebuggerRunner extends GenericDebuggerRunner {
 
                     try {
                         return new FreemarkerAttachDebugProcess(session, freemarkerAttachExecutionResult);
-                    } catch (IOException e) {
+                    } catch (IOException | URISyntaxException e) {
                         throw new ExecutionException(e.getMessage(), e);
                     }
                 }

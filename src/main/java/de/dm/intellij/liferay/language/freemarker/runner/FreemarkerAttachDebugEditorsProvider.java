@@ -17,14 +17,12 @@ public class FreemarkerAttachDebugEditorsProvider extends XDebuggerEditorsProvid
     @NotNull
     @Override
     public FileType getFileType() {
-        //TODO??
         return FileTypes.UNKNOWN;
     }
 
     @NotNull
     @Override
     public Document createDocument(@NotNull Project project, @NotNull XExpression expression, @Nullable XSourcePosition sourcePosition, @NotNull EvaluationMode mode) {
-        //TODO
         return EditorFactory.getInstance().createDocument(expression.getExpression());
     }
 }

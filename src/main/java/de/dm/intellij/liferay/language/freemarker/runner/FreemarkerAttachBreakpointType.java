@@ -29,14 +29,10 @@ public class FreemarkerAttachBreakpointType extends XLineBreakpointType<Freemark
             PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
 
             if (psiFile != null) {
-                if (
-                    (LiferayFileUtil.isThemeTemplateFile(psiFile)) ||
+                return (LiferayFileUtil.isThemeTemplateFile(psiFile)) ||
                     (LiferayFileUtil.isLayoutTemplateFile(psiFile)) ||
                     (LiferayFileUtil.isJournalTemplateFile(psiFile)) ||
-                    (LiferayFileUtil.isApplicationDisplayTemplateFile(psiFile))
-                ) {
-                    return true;
-                }
+                    (LiferayFileUtil.isApplicationDisplayTemplateFile(psiFile));
             }
         }
 
