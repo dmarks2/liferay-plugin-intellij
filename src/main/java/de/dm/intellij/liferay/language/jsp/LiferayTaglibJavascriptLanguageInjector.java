@@ -116,7 +116,10 @@ public class LiferayTaglibJavascriptLanguageInjector extends AbstractLiferayJava
             if ("validator".equals(localName)) {
                 String validatorName = xmlTag.getAttributeValue("name");
                 if (validatorName != null) {
-                    if ("custom".equals(validatorName)) {
+                    if (
+                        ("custom".equals(validatorName)) ||
+                        ("required".equals(validatorName))
+                    )  {
                         //special handling for aui:validator
                         javascriptLanguage = InjectedLanguage.create(JavascriptLanguage.INSTANCE.getID(), "(", ")();", true);
                     } else {
