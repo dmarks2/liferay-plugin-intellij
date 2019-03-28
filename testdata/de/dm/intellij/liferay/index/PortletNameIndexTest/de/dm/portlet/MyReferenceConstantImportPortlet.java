@@ -2,14 +2,15 @@ package de.dm.portlet;
 
 import org.osgi.service.component.annotations.Component;
 import javax.portlet.Portlet;
+import de.dm.util.MyPortletKeys;
 
 @Component(
     property = {
         "javax.portlet.display-name=My Portlet",
-        "javax.portlet.name=" + PortletKeys.MY_REFERENCE_PORTLET_KEY
+        "javax.portlet.name=" + MyPortletKeys.MY_PORTLET_KEY
     },
     service = Portlet.class
 )
-public class MyReferenceConstantPortlet implements Portlet {
+public class MyReferenceConstantImportPortlet implements Portlet {
 
 }

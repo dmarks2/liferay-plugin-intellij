@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 ## 0.0.5
 - Feature: Experimental Freemarker debugger
 - Bugfix: JavaScript Support for aui:validator of type "required"
+- Bugfix: Resolve Portlet Names from constant in a class from the same package as the portlet class 
 
 ## 0.0.4
 - Bugfix: Fixed parsing liferay-look-and-feel.xml when creating that file for the first time

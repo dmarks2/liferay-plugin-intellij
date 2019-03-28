@@ -90,7 +90,21 @@ public class PortletNameIndexTest extends LightCodeInsightFixtureTestCase {
 
         List<String> portletNames = PortletNameIndex.getPortletNames(myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
 
-        assertTrue(portletNames.contains("de_dm_portlet_MyReferencePortletKey"));
+        assertTrue("Portlet Name should be resolved from de.dm.portlet.PortletKeys, because it is in the same package", portletNames.contains("de_dm_portlet_MyReferencePortletKey"));
+    }
+
+    public void testPortletNameReferenceImportConstant() {
+        myFixture.configureByFiles(
+            "de/dm/portlet/MyReferenceConstantImportPortlet.java",
+            "de/dm/util/MyPortletKeys.java",
+            "javax/portlet/Portlet.java"
+        );
+
+        FileBasedIndex.getInstance().requestReindex(myFixture.getFile().getVirtualFile());
+
+        List<String> portletNames = PortletNameIndex.getPortletNames(myFixture.getProject(), GlobalSearchScope.moduleScope(myFixture.getModule()));
+
+        assertTrue("Portlet Name should be resolved from import de.dm.util.MyPortletKeys", portletNames.contains("de_dm_util_MyPortletKey"));
     }
 
     public void testPortletNameStaticImportConstant() {

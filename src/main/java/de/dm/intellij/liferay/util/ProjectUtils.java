@@ -315,6 +315,7 @@ public class ProjectUtils {
     public static String getMatchFromPackageStatementOrImports(@NotNull PsiFile psiFile, @NotNull String className) {
         PsiPackageStatement packageStatement = PsiTreeUtil.getChildOfType(psiFile, PsiPackageStatement.class);
         if (packageStatement != null) {
+            //search for own class and all inner classes
             PsiClass[] psiClasses = PsiTreeUtil.getChildrenOfType(psiFile, PsiClass.class);
             if (psiClasses != null) {
                 for (PsiClass psiClass : psiClasses) {
@@ -327,6 +328,7 @@ public class ProjectUtils {
 
         PsiImportList psiImportList = PsiTreeUtil.getChildOfType(psiFile, PsiImportList.class);
         if (psiImportList != null) {
+            //search for import statements
             PsiImportStatement[] psiImportStatements = PsiTreeUtil.getChildrenOfType(psiImportList, PsiImportStatement.class);
             if (psiImportStatements != null) {
                 for (PsiImportStatement psiImportStatement : psiImportStatements) {
@@ -338,6 +340,11 @@ public class ProjectUtils {
                     }
                 }
             }
+        }
+
+        //if not found in import statements and not found in own class and not found in inner classes, it is probably a class in the same package (and implicitly imported)
+        if (packageStatement != null) {
+            return StringUtil.getQualifiedName(packageStatement.getPackageName(), className);
         }
 
         return className;

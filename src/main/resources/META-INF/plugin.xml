@@ -29,6 +29,7 @@
         <ul>
             <li>Feature: Experimental Freemarker debugger</li>
             <li>Bugfix: JavaScript Support for aui:validator of type "required"</li>
+            <li>Bugfix: Resolve Portlet Names from constant in a class from the same package as the portlet class</li>
         </ul>
         <p>Version 0.0.4</p>
         <ul>
