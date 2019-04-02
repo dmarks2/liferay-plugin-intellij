@@ -8,6 +8,7 @@ buildscript {
 plugins {
     id "org.jetbrains.intellij" version "0.3.12"
     id 'de.undercouch.download' version '3.4.3'
+    id "com.ewerk.gradle.plugins.jaxb2" version "1.0.9"
 }
 
 import de.undercouch.gradle.tasks.download.Download
@@ -24,6 +25,7 @@ tasks.withType(JavaCompile) {
 
 def generatedResources = "$buildDir/generated-resources"
 def tempDir = "$buildDir/tmp"
+def jaxb_version = "2.2.11"
 
 test {
     testLogging {
@@ -44,6 +46,26 @@ sourceSets {
     }
 }
 
+idea {
+    module {
+        generatedSourceDirs += file('src/generated/java')
+    }
+}
+
+jaxb2 {
+    def target = new File(generatedResources, "com/liferay/definitions")
+
+    xjc {
+        'request-classes' {
+            basePackage = 'com.liferay.service.builder'
+            schema = new File(target, "liferay-service-builder_7_0_0.dtd")
+            encoding = 'UTF-8'
+            additionalArgs = '-dtd'
+        }
+    }
+}
+
+
 repositories {
     mavenCentral()
 }
@@ -62,6 +84,11 @@ dependencies {
     compile 'org.glassfish.jersey.inject:jersey-hk2:2.26'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.9.0'
     compile 'org.json:json:20171018'
+
+    compile 'javax.xml.bind:jaxb-api:' + jaxb_version
+    compile 'com.sun.xml.bind:jaxb-core:' + jaxb_version
+    compile 'com.sun.xml.bind:jaxb-impl:' + jaxb_version
+    compile 'javax.activation:activation:1.1.1'
 }
 
 intellij {

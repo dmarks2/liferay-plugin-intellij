@@ -4,6 +4,14 @@
         <!-- experimental, work in progress...
         <diagram.Provider implementation="de.dm.intellij.liferay.workflow.LiferayWorkflowDiagramProvider"/>
         -->
+        <diagram.Provider implementation="de.dm.intellij.liferay.language.service.LiferayServiceBuilderDiagramProvider"/>
+
     </extensions>
+
+    <application-components>
+        <component>
+            <implementation-class>de.dm.intellij.liferay.language.service.LiferayServiceBuilderApplicationComponent</implementation-class>
+        </component>
+    </application-components>
 
 </idea-plugin>
