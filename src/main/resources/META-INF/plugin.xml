@@ -28,6 +28,7 @@
         <p>Version 0.0.5</p>
         <ul>
             <li>Feature: Experimental Freemarker debugger</li>
+            <li>Feature: Additional service.xml inspections (primary key, uuid)</li>
             <li>Bugfix: JavaScript Support for aui:validator of type "required"</li>
             <li>Bugfix: Resolve Portlet Names from constant in a class from the same package as the portlet class</li>
         </ul>

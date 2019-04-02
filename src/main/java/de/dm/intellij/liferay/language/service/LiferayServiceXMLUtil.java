@@ -43,6 +43,38 @@ public class LiferayServiceXMLUtil {
         );
     }
 
+    public static boolean isColumnPrimaryAttribute(@NotNull XmlAttributeValue xmlAttributeValue) {
+        return Stream.of(
+            xmlAttributeValue
+        ).map(
+            XmlAttributeValue::getParent
+        ).filter(
+            parent -> parent instanceof XmlAttribute
+        ).map(
+            xmlAttribute -> (XmlAttribute)xmlAttribute
+        ).filter(
+            xmlAttribute -> "primary".equals(xmlAttribute.getLocalName())
+        ).map(
+            XmlAttribute::getParent
+        ).filter(
+            Objects::nonNull
+        ).filter(
+            parentTag -> "column".equals(parentTag.getLocalName())
+        ).map(
+            XmlTagChild::getParentTag
+        ).filter(
+            Objects::nonNull
+        ).filter(
+            grandParentTag -> "entity".equals(grandParentTag.getLocalName())
+        ).map(
+            XmlTagChild::getParentTag
+        ).filter(
+            Objects::nonNull
+        ).anyMatch(
+            grandParentTag -> "service-builder".equals(grandParentTag.getLocalName())
+        );
+    }
+
     public static boolean isFinderNameAttribute(@NotNull XmlAttributeValue xmlAttributeValue) {
         return Stream.of(
             xmlAttributeValue
@@ -86,6 +118,32 @@ public class LiferayServiceXMLUtil {
             xmlAttribute -> (XmlAttribute)xmlAttribute
         ).filter(
             xmlAttribute -> "name".equals(xmlAttribute.getLocalName())
+        ).map(
+            XmlAttribute::getParent
+        ).filter(
+            Objects::nonNull
+        ).filter(
+            parentTag -> "entity".equals(parentTag.getLocalName())
+        ).map(
+            XmlTagChild::getParentTag
+        ).filter(
+            Objects::nonNull
+        ).anyMatch(
+            grandParentTag -> "service-builder".equals(grandParentTag.getLocalName())
+        );
+    }
+
+    public static boolean isEntityUuidAttribute(@NotNull XmlAttributeValue xmlAttributeValue) {
+        return Stream.of(
+            xmlAttributeValue
+        ).map(
+            XmlAttributeValue::getParent
+        ).filter(
+            parent -> parent instanceof XmlAttribute
+        ).map(
+            xmlAttribute -> (XmlAttribute)xmlAttribute
+        ).filter(
+            xmlAttribute -> "uuid".equals(xmlAttribute.getLocalName())
         ).map(
             XmlAttribute::getParent
         ).filter(
