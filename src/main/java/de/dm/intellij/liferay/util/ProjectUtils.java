@@ -334,7 +334,10 @@ public class ProjectUtils {
                 for (PsiImportStatement psiImportStatement : psiImportStatements) {
                     String qualifiedName = psiImportStatement.getQualifiedName();
                     if (qualifiedName != null) {
-                        if (className.equals(StringUtil.getShortName(qualifiedName))) {
+                        if (
+                            (className.equals(qualifiedName)) ||
+                            (className.equals(StringUtil.getShortName(qualifiedName)))
+                        ) {
                             return qualifiedName;
                         }
                     }
