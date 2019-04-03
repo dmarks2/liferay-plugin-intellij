@@ -125,8 +125,9 @@ Debugging is available for
 * Journal Templates (Global scope only)
 * Application Display Templates (Global scope only)
 
-Note that the functionality of the Freemarker debugger is limited. So it does not support operations like
-step over, step into, step out or pause. Additionally you can only set breakpoints at lines which 
+Note that the functionality of the Freemarker debugger is limited. It does not support operations like
+step into, step out or pause. A step over is available, but only for "sequential" instructions. That means that
+stepping over a conditional expression or a loop is not possible. You can only set breakpoints at lines which 
 contain Freemarker instructions and not at "normal" HTML fragments.
 
 *The plugin expects Journal Templates and Application Display Templates to be present in the same structure as it would be required for the Resource Importer.*

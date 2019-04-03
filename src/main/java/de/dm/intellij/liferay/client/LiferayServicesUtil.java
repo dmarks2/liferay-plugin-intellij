@@ -68,18 +68,15 @@ public class LiferayServicesUtil {
         return globalGroupId;
     }
 
-    public long fetchClassNameId(String clazz) throws JSONException, IOException {
-        JSONObject params = new JSONObject();
-        params.put("clazz", clazz);
-
-        return serviceInvoker.invoke("/classname/fetch-class-name-id", params, Long.class);
-    }
-
     public JSONObject fetchClassName(String value) throws JSONException, IOException {
         JSONObject params = new JSONObject();
         params.put("value", value);
 
         return serviceInvoker.invoke("/classname/fetch-class-name", params, JSONObject.class);
+    }
+
+    public String getVersion() throws IOException {
+        return serviceInvoker.invoke("/portal/get-version", new JSONObject(), String.class);
     }
 
     public long getClassNameId(String className) throws IOException {
@@ -231,7 +228,6 @@ public class LiferayServicesUtil {
 
         return null;
     }
-//20115#20151#192555
     public String getFreemarkerApplicationDisplayTemplateName(String type, String templateName) throws IOException {
         String className = Constants.APPLICATION_DISPLAY_TEMPLATE_TYPES_7_0.get(type);
         if (className != null) {

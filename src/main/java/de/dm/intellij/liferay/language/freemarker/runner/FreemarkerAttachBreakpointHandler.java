@@ -47,7 +47,7 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
     private Map<AbstractMap.SimpleImmutableEntry<String, Integer>, Breakpoint> breakpoints = new HashMap<>();
     private Map<AbstractMap.SimpleImmutableEntry<String, Integer>, XLineBreakpoint<FreemarkerAttachBreakpointProperties>> xlineBreakpoints = new HashMap<>();
 
-    public FreemarkerAttachBreakpointHandler(Debugger debugger, FreemarkerAttachDebugProcess debugProcess) throws URISyntaxException {
+    public FreemarkerAttachBreakpointHandler(Debugger debugger, FreemarkerAttachDebugProcess debugProcess) throws URISyntaxException, IOException {
         super(FreemarkerAttachBreakpointType.class);
 
         this.debugger = debugger;
@@ -56,6 +56,13 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
         URI uri = new URI(debugProcess.getFreemarkerAttachDebugConfiguration().getLiferayURL() + Constants.ENDPOINT_JSONWS);
         liferayServicesUtil = new LiferayServicesUtil(uri, debugProcess.getFreemarkerAttachDebugConfiguration().getLiferayUsername(), debugProcess.getFreemarkerAttachDebugConfiguration().getLiferayPassword());
 
+        String result = liferayServicesUtil.getVersion();
+
+        if (result != null) {
+            if (result.contains("\"exception\"")) {
+                throw new IOException(result);
+            }
+        }
     }
 
     @Override
