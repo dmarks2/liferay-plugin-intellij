@@ -4,7 +4,6 @@ import com.intellij.diagnostic.logging.LogConfigurationPanel;
 import com.intellij.execution.ExecutionBundle;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
-import com.intellij.execution.configuration.EmptyRunProfileState;
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.LocatableConfigurationBase;
 import com.intellij.execution.configurations.RunConfiguration;
@@ -25,7 +24,7 @@ public class FreemarkerAttachDebugConfiguration extends LocatableConfigurationBa
 
     private String host;
     private int port = 7011;
-    private String password = "secret";
+    private String secret = "secret";
 
     private String liferayURL = "http://localhost:8080";
     private String liferayUsername = "test@liferay.com";
@@ -51,12 +50,12 @@ public class FreemarkerAttachDebugConfiguration extends LocatableConfigurationBa
         this.port = port;
     }
 
-    public String getPassword() {
-        return password;
+    public String getSecret() {
+        return secret;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setSecret(String secret) {
+        this.secret = secret;
     }
 
     @NotNull
@@ -84,7 +83,7 @@ public class FreemarkerAttachDebugConfiguration extends LocatableConfigurationBa
         FreemarkerAttachDebugConfiguration configuration = (FreemarkerAttachDebugConfiguration)super.clone();
         configuration.host = this.host;
         configuration.port = this.port;
-        configuration.password = this.password;
+        configuration.secret = this.secret;
 
         configuration.liferayURL = this.liferayURL;
         configuration.liferayUsername = this.liferayUsername;

@@ -48,7 +48,7 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
 
         InetAddress inetAddress = InetAddress.getByName(freemarkerAttachDebugConfiguration.getHost());
 
-        this.debugger = DebuggerClient.getDebugger(inetAddress, freemarkerAttachDebugConfiguration.getPort(), freemarkerAttachDebugConfiguration.getPassword());
+        this.debugger = DebuggerClient.getDebugger(inetAddress, freemarkerAttachDebugConfiguration.getPort(), freemarkerAttachDebugConfiguration.getSecret());
 
         this.freemarkerAttachBreakpointHandler = new FreemarkerAttachBreakpointHandler(debugger, this);
 

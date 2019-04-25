@@ -21,7 +21,7 @@ public class FreemarkerAttachDebugConfigurationSettingsEditor extends SettingsEd
 
     private final JTextField hostField;
     private final PortField portField;
-    private final JTextField passwordField;
+    private final JTextField secretField;
 
     private final JTextField liferayURLField;
     private final JTextField liferayUsernameField;
@@ -32,14 +32,14 @@ public class FreemarkerAttachDebugConfigurationSettingsEditor extends SettingsEd
     public FreemarkerAttachDebugConfigurationSettingsEditor() {
         this.hostField = GuiUtils.createUndoableTextField();
         this.portField = new PortField(7011, 1024);
-        this.passwordField = GuiUtils.createUndoableTextField();
+        this.secretField = GuiUtils.createUndoableTextField();
 
         this.liferayURLField = GuiUtils.createUndoableTextField();
         this.liferayUsernameField = GuiUtils.createUndoableTextField();
         this.liferayPasswordField = GuiUtils.createUndoableTextField();
 
         this.portField.addChangeListener(l -> updateArgsText());
-        this.passwordField.getDocument().addDocumentListener(new DocumentAdapter() {
+        this.secretField.getDocument().addDocumentListener(new DocumentAdapter() {
             @Override
             protected void textChanged(@NotNull DocumentEvent e) {
                 updateArgsText();
@@ -67,8 +67,8 @@ public class FreemarkerAttachDebugConfigurationSettingsEditor extends SettingsEd
         if (portField.getNumber() != 7011) {
             text = text + "-Dfreemarker.debug.port=" + String.valueOf(portField.getNumber()) + " ";
         }
-        if ( (passwordField.getText() != null) && (passwordField.getText().length() > 0)) {
-            text = text + "-Dfreemarker.debug.password=" + passwordField.getText() + " ";
+        if ( (secretField.getText() != null) && (secretField.getText().length() > 0)) {
+            text = text + "-Dfreemarker.debug.password=" + secretField.getText() + " ";
         }
 
         try {
@@ -85,7 +85,7 @@ public class FreemarkerAttachDebugConfigurationSettingsEditor extends SettingsEd
     protected void resetEditorFrom(@NotNull FreemarkerAttachDebugConfiguration configuration) {
         hostField.setText(StringUtil.notNullize(configuration.getHost(), "localhost"));
         portField.setNumber(configuration.getPort());
-        passwordField.setText(configuration.getPassword());
+        secretField.setText(configuration.getSecret());
         liferayURLField.setText(configuration.getLiferayURL());
         liferayUsernameField.setText(configuration.getLiferayUsername());
         liferayPasswordField.setText(configuration.getLiferayPassword());
@@ -95,7 +95,7 @@ public class FreemarkerAttachDebugConfigurationSettingsEditor extends SettingsEd
     protected void applyEditorTo(@NotNull FreemarkerAttachDebugConfiguration configuration) {
         configuration.setHost(hostField.getText());
         configuration.setPort(portField.getNumber());
-        configuration.setPassword(passwordField.getText());
+        configuration.setSecret(secretField.getText());
         configuration.setLiferayURL(liferayURLField.getText());
         configuration.setLiferayUsername(liferayUsernameField.getText());
         configuration.setLiferayPassword(liferayPasswordField.getText());
@@ -108,7 +108,7 @@ public class FreemarkerAttachDebugConfigurationSettingsEditor extends SettingsEd
             .createFormBuilder()
             .addLabeledComponent("&Host:", hostField)
             .addLabeledComponent("Port:", portField)
-            .addLabeledComponent("&Password:", passwordField)
+            .addLabeledComponent("&Secret:", secretField)
             .addLabeledComponent("&Command line arguments for remote JVM:", argsArea, true)
             .addSeparator()
             .addLabeledComponent("Liferay URL:", liferayURLField)
