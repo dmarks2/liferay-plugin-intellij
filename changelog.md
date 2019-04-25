@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Additional service.xml inspections (primary key, uuid)
 - Bugfix: JavaScript Support for aui:validator of type "required"
 - Bugfix: Resolve Portlet Names from constant in a class from the same package as the portlet class 
+- Bugfix: Fixed compatibility with IntelliJ 2019.1.x
 
 ## 0.0.4
 - Bugfix: Fixed parsing liferay-look-and-feel.xml when creating that file for the first time

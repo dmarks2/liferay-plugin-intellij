@@ -79,7 +79,6 @@ public class LiferayCompassSassExtension extends SassExtension {
         return result;
     }
 
-    @Override
     protected void startActivity(@NotNull Module module) {
         if (!module.isDisposed()) {
             float liferayVersion = LiferayModuleComponent.getPortalMajorVersion(module);
@@ -94,7 +93,6 @@ public class LiferayCompassSassExtension extends SassExtension {
         }
     }
 
-    @Override
     protected void stopActivity(@NotNull final Module module) {
         ApplicationManager.getApplication().invokeLater(
             new Runnable() {
