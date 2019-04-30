@@ -8,6 +8,7 @@ import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
 import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.LanguageLevelModuleExtension;
 import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
 import com.intellij.pom.java.LanguageLevel;
@@ -48,11 +49,11 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
 
             URL resource = LiferayFtlVariableProviderTest.class.getResource("/com/liferay/ftl");
             String resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( resourcePath );
+            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePath );
 
             resource = LiferayFtlVariableProviderTest.class.getResource("/com/liferay/tld");
             resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( resourcePath );
+            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePath );
 
         }
 

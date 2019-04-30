@@ -50,4 +50,13 @@ public class GroovyScriptingImplicitMembersContributorTest extends LightCodeInsi
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("userInfo"));
     }
+
+    public void testGroovyImplicitVariableMemberCodeCompletions() {
+        myFixture.configureByFiles("member.groovy");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue("Code completion should offer out.close()", strings.contains("close"));
+        assertFalse("Code completion should not offer implicit variables as members (like out.out)", strings.contains("out"));
+    }
+
 }

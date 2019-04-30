@@ -2,13 +2,14 @@ package de.dm.intellij.liferay.language.groovy;
 
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.ResolveState;
+import com.intellij.psi.impl.light.LightFieldBuilder;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.plugins.groovy.lang.psi.impl.synthetic.GrLightVariable;
+import org.jetbrains.plugins.groovy.lang.psi.impl.synthetic.GroovyScriptClass;
 import org.jetbrains.plugins.groovy.lang.resolve.NonCodeMembersContributor;
+import org.jetbrains.plugins.groovy.lang.resolve.ResolveUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,11 +29,25 @@ public class GroovyScriptingImplicitMembersContributor extends NonCodeMembersCon
 
     @Override
     public void processDynamicElements(@NotNull PsiType qualifierType, PsiClass aClass, @NotNull PsiScopeProcessor processor, @NotNull PsiElement place, @NotNull ResolveState state) {
-        PsiManager manager = place.getManager();
+        String name = ResolveUtil.getNameHint(processor);
 
-        for (Map.Entry<String, String> implicitVariable : IMPLICIT_VARIABLES.entrySet()) {
-            GrLightVariable grLightVariable = new GrLightVariable(manager, implicitVariable.getKey(), implicitVariable.getValue(), place);
-            processor.execute(grLightVariable, state);
+        if (aClass instanceof GroovyScriptClass) {
+            if (name == null) {
+
+                for (Map.Entry<String, String> implicitVariable : IMPLICIT_VARIABLES.entrySet()) {
+                    LightFieldBuilder lightField = new LightFieldBuilder(implicitVariable.getKey(), implicitVariable.getValue(), place);
+
+                    processor.execute(lightField, state);
+                }
+            } else {
+                if (IMPLICIT_VARIABLES.containsKey(name)) {
+                    String type = IMPLICIT_VARIABLES.get(name);
+
+                    LightFieldBuilder lightField = new LightFieldBuilder(name, type, place);
+
+                    processor.execute(lightField, state);
+                }
+            }
         }
     }
 }

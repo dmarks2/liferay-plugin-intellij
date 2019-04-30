@@ -7,6 +7,7 @@ import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
 import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.LanguageLevelModuleExtension;
 import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
 import com.intellij.pom.java.LanguageLevel;
 import com.intellij.testFramework.LightProjectDescriptor;
@@ -35,9 +36,9 @@ public class LiferayTaglibPortletNameReferenceContributorTest extends LightCodeI
             model.setSdk(jdk);
 
             final String testDataPath = PathUtil.toSystemIndependentName(new File(TEST_DATA_PATH).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( testDataPath );
+            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), testDataPath );
 
-            PsiTestUtil.addLibrary(module, model, "OSGi", testDataPath, "osgi.jar");
+            PsiTestUtil.addLibrary(model, "OSGi", testDataPath, "osgi.jar");
         }
     };
 

@@ -10,6 +10,7 @@ import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
 import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.LanguageLevelModuleExtension;
 import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
 import com.intellij.pom.java.LanguageLevel;
@@ -40,9 +41,9 @@ public class ShowHookFragmentDiffActionTestFragment extends LightCodeInsightFixt
             model.setSdk(jdk);
 
             final String testDataPath = PathUtil.toSystemIndependentName(new File(TEST_DATA_PATH).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( testDataPath );
+            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), testDataPath );
 
-            PsiTestUtil.addLibrary(module, model, "com.liferay:com.liferay.login.web", testDataPath, "com.liferay.login.web.jar");
+            PsiTestUtil.addLibrary(model, "com.liferay:com.liferay.login.web", testDataPath, "com.liferay.login.web.jar");
         }
     };
 

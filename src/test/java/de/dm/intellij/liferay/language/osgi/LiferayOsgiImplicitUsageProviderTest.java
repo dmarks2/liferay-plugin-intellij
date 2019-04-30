@@ -6,6 +6,7 @@ import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.LanguageLevelModuleExtension;
 import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
 import com.intellij.pom.java.LanguageLevel;
 import com.intellij.testFramework.IdeaTestUtil;
@@ -32,9 +33,10 @@ public class LiferayOsgiImplicitUsageProviderTest extends LightCodeInsightFixtur
             }
 
             final String testDataPath = PathUtil.toSystemIndependentName(new File(TEST_DATA_PATH).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( testDataPath );
 
-            PsiTestUtil.addLibrary(module, model, "OSGi", testDataPath, "osgi.jar");
+            VfsRootAccess.allowRootAccess(Disposer.newDisposable(), testDataPath );
+
+            PsiTestUtil.addLibrary(model, "OSGi", testDataPath, "osgi.jar");
         }
 
         @Override
