@@ -1,21 +1,28 @@
 package de.dm.intellij.liferay.language.freemarker;
 
 import com.intellij.freemarker.psi.files.FtlFile;
+import com.intellij.freemarker.psi.files.FtlFileType;
 import com.intellij.freemarker.psi.files.FtlGlobalVariableProvider;
 import com.intellij.freemarker.psi.files.FtlXmlNamespaceType;
 import com.intellij.freemarker.psi.variables.FtlLightVariable;
 import com.intellij.freemarker.psi.variables.FtlTemplateType;
 import com.intellij.freemarker.psi.variables.FtlVariable;
+import com.intellij.javaee.web.WebRoot;
+import com.intellij.javaee.web.facet.WebFacet;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.progress.ProcessCanceledException;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VfsUtil;
+import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
+import com.intellij.util.Processor;
 import com.intellij.xml.XmlNSDescriptor;
 import de.dm.intellij.liferay.language.TemplateMacroProcessor;
 import de.dm.intellij.liferay.language.TemplateMacroProcessorUtil;
@@ -129,6 +136,45 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
             Map<String, FtlFile> result = new HashMap<String, FtlFile>();
             for (FtlFile macro : macros) {
                 result.put("FTL_liferay.ftl", macro);
+            }
+
+            Project project = file.getProject();
+            ModuleManager moduleManager = ModuleManager.getInstance(project);
+            Module[] modules = moduleManager.getModules();
+
+            for (Module module : modules) {
+                String servletContextName = module.getName() + "_SERVLET_CONTEXT_";
+
+                Collection<WebFacet> webFacets = WebFacet.getInstances(module);
+
+                for (WebFacet webFacet : webFacets) {
+
+                    List<WebRoot> webRoots = webFacet.getWebRoots();
+
+                    for (WebRoot webRoot : webRoots) {
+                        if ("/".equals(webRoot.getRelativePath())) {
+
+                            if (webRoot.getFile() != null) {
+                                VirtualFile webRootFile = webRoot.getFile();
+
+                                VfsUtilCore.processFilesRecursively(webRootFile, virtualFile -> {
+                                    if (FtlFileType.INSTANCE.equals(virtualFile.getFileType())) {
+
+                                        FtlFile webContextFtlFile = (FtlFile)PsiManager.getInstance(module.getProject()).findFile(virtualFile);
+
+                                        String relativePath = VfsUtilCore.getRelativePath(virtualFile, webRootFile);
+
+                                        String filePath = "/" + servletContextName + "/" + relativePath;
+
+                                        result.put(filePath, webContextFtlFile);
+                                    }
+
+                                    return true;
+                                });
+                            }
+                        }
+                    }
+                }
             }
 
             return result;

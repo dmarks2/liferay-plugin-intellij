@@ -8,6 +8,7 @@ Velocity and Freemarker
 5. [Implicit Theme Settings variables](#implicit-theme-settings-variables)
 6. [Implicit Theme Path variables](#implicit-theme-path-variables)
 7. [Freemarker Debugger](#freemarker-debugger)
+8. [Freemarker Imports](#freemarker-imports)
 
 Liferay Layout Templates
 ------------------------
@@ -134,3 +135,12 @@ contain Freemarker instructions and not at "normal" HTML fragments.
 
 *This feature works in IntelliJ Ultimate Edition only.*
 
+Freemarker Imports
+------------------
+
+It is possible to import commonly used macros from Freemarker files placed in the web context root of
+a module. This plugin in able to resolve those files when they are included with the following syntax.
+
+```ftl>
+    <#import "/<your-module-name>_SERVLET_CONTEXT_/my_macros.ftl" as mymacros/>
+```

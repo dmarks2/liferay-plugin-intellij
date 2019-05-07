@@ -29,6 +29,7 @@
         <ul>
             <li>Feature: Experimental Freemarker debugger</li>
             <li>Feature: Additional service.xml inspections (primary key, uuid)</li>
+            <li>Feature: resolve _SERVLET_CONTEXT_ based imports in Freemarker templates</li>
             <li>Bugfix: JavaScript Support for aui:validator of type "required"</li>
             <li>Bugfix: Resolve Portlet Names from constant in a class from the same package as the portlet class</li>
             <li>Bugfix: Fixed compatibility with IntelliJ 2019.1.x</li>

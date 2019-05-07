@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 ## 0.0.5
 - Feature: Experimental Freemarker debugger
 - Feature: Additional service.xml inspections (primary key, uuid)
+- Feature: resolve \_SERVLET_CONTEXT\_ based imports in Freemarker templates
 - Bugfix: JavaScript Support for aui:validator of type "required"
 - Bugfix: Resolve Portlet Names from constant in a class from the same package as the portlet class 
 - Bugfix: Fixed compatibility with IntelliJ 2019.1.x
