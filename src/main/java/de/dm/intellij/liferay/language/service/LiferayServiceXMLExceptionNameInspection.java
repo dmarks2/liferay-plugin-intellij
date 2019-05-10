@@ -62,7 +62,9 @@ public class LiferayServiceXMLExceptionNameInspection extends XmlSuppressableIns
             @Override
             public void visitXmlText(XmlText xmlText) {
                 if (LiferayServiceXMLUtil.isExceptionTag(xmlText)) {
-                    if ( (xmlText.getText() != null) && (xmlText.getText().endsWith("Exception")) ) {
+                    String text = xmlText.getText();
+
+                    if ( (text != null) && (text.endsWith("Exception")) ) {
                         holder.registerProblem(xmlText,
                             "Do not add Exception at the end of the name",
                             ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
@@ -93,14 +95,16 @@ public class LiferayServiceXMLExceptionNameInspection extends XmlSuppressableIns
             XmlText xmlText = (XmlText)element;
 
             TextRange range = element.getTextRange();
-            Document document = PsiDocumentManager.getInstance(project).getDocument(containingFile);
-            PsiDocumentManager.getInstance(project).doPostponedOperationsAndUnblockDocument(document);
+            PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
+
+            Document document = psiDocumentManager.getDocument(containingFile);
+            psiDocumentManager.doPostponedOperationsAndUnblockDocument(document);
 
             String oldText = xmlText.getText();
             String newText = oldText.substring(0, oldText.length() - "Exception".length());
 
             document.replaceString(range.getStartOffset(), range.getEndOffset(), newText);
-            PsiDocumentManager.getInstance(project).commitDocument(document);
+            psiDocumentManager.commitDocument(document);
         }
     }
 

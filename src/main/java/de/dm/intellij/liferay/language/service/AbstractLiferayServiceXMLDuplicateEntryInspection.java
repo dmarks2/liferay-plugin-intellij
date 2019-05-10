@@ -5,7 +5,6 @@ import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
-import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
@@ -66,7 +65,7 @@ public abstract class AbstractLiferayServiceXMLDuplicateEntryInspection extends 
                     if (xmlTag != null) {
                         XmlTag parentTag = PsiTreeUtil.getParentOfType(xmlTag, XmlTag.class);
                         if (parentTag != null) {
-                            List<XmlTag> subTags = findSubTagsWithText(parentTag, xmlTag.getLocalName(), text);
+                            List<XmlTag> subTags = getSubTagsWithText(parentTag, xmlTag.getLocalName(), text);
                             if (subTags.size() > 1) {
                                 holder.registerProblem(xmlText,
                                     "Duplicate entry",
@@ -94,7 +93,7 @@ public abstract class AbstractLiferayServiceXMLDuplicateEntryInspection extends 
                                 XmlTag parentTag = PsiTreeUtil.getParentOfType(xmlTag, XmlTag.class);
 
                                 if (parentTag != null) {
-                                    List<XmlTag> subTags = findSubTagsWithAttributeValue(parentTag, xmlTag.getLocalName(), xmlAttribute.getName(), text);
+                                    List<XmlTag> subTags = getSubTagsWithAttributeValue(parentTag, xmlTag.getLocalName(), xmlAttribute.getName(), text);
                                     if (subTags.size() > 1) {
                                         holder.registerProblem(xmlAttributeValue,
                                             "Duplicate entry",
@@ -111,7 +110,7 @@ public abstract class AbstractLiferayServiceXMLDuplicateEntryInspection extends 
         };
     }
 
-    private List<XmlTag> findSubTagsWithText(XmlTag parentTag, String localName, String text) {
+    private List<XmlTag> getSubTagsWithText(XmlTag parentTag, String localName, String text) {
         List<XmlTag> result = new ArrayList<>();
 
         for (XmlTag xmlTag : parentTag.getSubTags()) {
@@ -127,7 +126,7 @@ public abstract class AbstractLiferayServiceXMLDuplicateEntryInspection extends 
         return result;
     }
 
-    private List<XmlTag> findSubTagsWithAttributeValue(XmlTag parentTag, String localName, String attributeName, String attributeValue) {
+    private List<XmlTag> getSubTagsWithAttributeValue(XmlTag parentTag, String localName, String attributeName, String attributeValue) {
         List<XmlTag> result = new ArrayList<>();
 
         for (XmlTag xmlTag : parentTag.getSubTags()) {
@@ -167,15 +166,14 @@ public abstract class AbstractLiferayServiceXMLDuplicateEntryInspection extends 
                 XmlTag parentTag = PsiTreeUtil.getParentOfType(xmlTag, XmlTag.class);
                 if (parentTag != null) {
 
-                    new WriteCommandAction(project, containingFile) {
-                        @Override
-                        protected void run(@NotNull Result result) {
-                            parentTag.getNode().removeChild(xmlTag.getNode());
-                            if (spacerText != null) {
-                                parentTag.getNode().removeChild(spacerText.getNode());
-                            }
+                    WriteCommandAction.Builder writeCommandActionBuilder = WriteCommandAction.writeCommandAction(project, containingFile);
+
+                    writeCommandActionBuilder.run(() -> {
+                        parentTag.getNode().removeChild(xmlTag.getNode());
+                        if (spacerText != null) {
+                            parentTag.getNode().removeChild(spacerText.getNode());
                         }
-                    }.execute();
+                    });
                 }
             }
         }

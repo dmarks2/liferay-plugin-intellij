@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,15 +62,14 @@ public class LiferayServiceXMLPrimaryKeyColumnInspection extends XmlSuppressable
             public void visitXmlAttributeValue(XmlAttributeValue value) {
                 if (LiferayServiceXMLUtil.isColumnPrimaryAttribute(value)) {
                     String text = value.getValue();
+
                     if ("true".equals(text)) {
                         XmlTag xmlTag = PsiTreeUtil.getParentOfType(value, XmlTag.class);
                         if (xmlTag != null) {
                             String type = xmlTag.getAttributeValue("type");
                             if (type != null) {
                                 if (!(
-                                    "int".equals(type) ||
-                                    "long".equals(type) ||
-                                    "String".equals(type)
+                                    Arrays.asList("int", "long", "String").contains(type)
                                 )
                                 ) {
                                     String columnName = xmlTag.getAttributeValue("name");

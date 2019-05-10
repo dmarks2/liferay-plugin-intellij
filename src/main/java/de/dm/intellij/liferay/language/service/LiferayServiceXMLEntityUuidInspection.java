@@ -13,6 +13,9 @@ import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 public class LiferayServiceXMLEntityUuidInspection extends XmlSuppressableInspectionTool {
 
     @Override
@@ -65,17 +68,17 @@ public class LiferayServiceXMLEntityUuidInspection extends XmlSuppressableInspec
                             boolean hasPrimaryColumn = false;
 
                             if (childrenOfType != null) {
-                                for (XmlTag child : childrenOfType) {
-                                    String tagName = child.getName();
-                                    if ("column".equals(tagName)) {
-                                        String primary = child.getAttributeValue("primary");
-                                        if ("true".equals(primary)) {
-                                            hasPrimaryColumn = true;
 
-                                            break;
-                                        }
-                                    }
-                                }
+                                hasPrimaryColumn = Arrays.stream(
+                                    childrenOfType
+                                ).filter(
+                                    child -> "column".equals(child.getName())
+                                ).map(
+                                    primary -> primary.getAttributeValue("primary")
+                                ).anyMatch(
+                                    "true"::equals
+                                );
+
                             }
 
                             if (! hasPrimaryColumn) {
