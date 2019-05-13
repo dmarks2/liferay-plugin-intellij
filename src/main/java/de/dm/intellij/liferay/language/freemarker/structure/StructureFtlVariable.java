@@ -89,7 +89,7 @@ public class StructureFtlVariable extends FtlLightVariable {
 
     @Override
     public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState state, PsiElement lastParent, @NotNull PsiElement place) {
-        if ( (! templateVariable.getNestedVariables().isEmpty()) || (templateVariable.isRepeatable()) ){
+        if ( (! templateVariable.getNestedVariables().isEmpty()) || (templateVariable.isRepeatable()) ) {
             if (templateVariable.isRepeatable()) {
                 if (templateNodeClass != null) {
                     for (PsiMethod psiMethod : templateNodeClass.getMethods()) {
@@ -120,7 +120,8 @@ public class StructureFtlVariable extends FtlLightVariable {
                     StructureFtlVariable nestedStructureFtlVariable = new StructureFtlVariable(nestedVariable);
                     processor.execute(nestedStructureFtlVariable, state);
                 }
-                return false;
+
+                return processTemplateNode(processor, state, place, templateNodeClassType);
             }
         } else {
             if (templateNodeClassType != null) {

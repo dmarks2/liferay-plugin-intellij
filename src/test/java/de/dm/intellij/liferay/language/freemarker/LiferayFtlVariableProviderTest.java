@@ -87,6 +87,13 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
         assertTrue(strings.contains("simple"));
     }
 
+    public void testStructureVariablesSimpleJsonTemplateNode() {
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/simple-data.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "com/liferay/portal/kernel/templateparser/TemplateNode.java");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue("Should offer 'simple.getData()' for structure field", strings.contains("data"));
+    }
+
     public void testStructureVariablesRepeatableJson() {
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/repeatable.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json");
         myFixture.complete(CompletionType.BASIC, 1);
@@ -102,24 +109,27 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
     }
 
     public void testStructureVariablesNestedJson() {
-        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/parent.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json");
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/parent.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "com/liferay/portal/kernel/templateparser/TemplateNode.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
-        assertTrue(strings.contains("child"));
+        assertTrue("Should offer nested field 'child'", strings.contains("child"));
+        assertTrue("Should offer 'parent.getData()' for parent field", strings.contains("data"));
     }
 
     public void testStructureVariablesRepeatableParentJson() {
-        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/repeatableParent.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json");
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/repeatableParent.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "com/liferay/portal/kernel/templateparser/TemplateNode.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
-        assertTrue(strings.contains("repeatableChild"));
+        assertTrue("Should offer nested field 'repeatableChild' while iterating over the siblings of the parent field", strings.contains("repeatableChild"));
+        assertTrue("Should offer 'repeatableChild.getData() while iterating over the siblings of the parent field", strings.contains("data"));
     }
 
     public void testStructureVariablesNestedRepeatableParentJson() {
-        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/nestedRepeatableParent.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json");
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/nestedRepeatableParent.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "com/liferay/portal/kernel/templateparser/TemplateNode.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
-        assertTrue(strings.contains("nested"));
+        assertTrue("Should offer deeply nested field 'nested' while iterating over the siblings of the parent field", strings.contains("nested"));
+        assertTrue("Should offer 'repeatableChild.nestedRepeatableChild.data' while iterating over the siblings of the parent field", strings.contains("data"));
     }
 
     public void testStructureVariablesSimpleXml() {

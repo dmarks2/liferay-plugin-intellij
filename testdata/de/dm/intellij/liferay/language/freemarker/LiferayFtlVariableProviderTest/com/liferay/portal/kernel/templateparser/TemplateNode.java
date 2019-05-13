@@ -9,4 +9,6 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
         return null;
     }
 
+    public String getData();
+
 }

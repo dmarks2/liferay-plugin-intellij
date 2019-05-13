@@ -34,6 +34,7 @@
             <li>Bugfix: Resolve Portlet Names from constant in a class from the same package as the portlet class</li>
             <li>Bugfix: Fixed compatibility with IntelliJ 2019.1.x</li>
             <li>Bugfix: Fixed code completion for implicit Groovy variables</li>
+            <li>Bugfix: TemplateNode properties (e.g. .getData()) were not offered for nested structure variables in Freemarker templates</li>
         </ul>
         <p>Version 0.0.4</p>
         <ul>
