@@ -19,6 +19,7 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.impl.source.jsp.jspXml.JspExpression;
 import com.intellij.psi.impl.source.jsp.jspXml.JspXmlText;
+import com.intellij.psi.impl.source.tree.CompositeElement;
 import com.intellij.psi.jsp.JspFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
@@ -28,6 +29,9 @@ import com.intellij.xml.XmlElementDescriptor;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
+import java.util.Objects;
 
 public class LiferayTaglibStrictQuoteEscapingInspection extends XmlSuppressableInspectionTool {
 
@@ -59,8 +63,8 @@ public class LiferayTaglibStrictQuoteEscapingInspection extends XmlSuppressableI
     @Override
     public String[] getGroupPath() {
         return new String[] {
-                getGroupDisplayName(),
-                LiferayInspectionsGroupNames.JSP_GROUP_NAME
+            getGroupDisplayName(),
+            LiferayInspectionsGroupNames.JSP_GROUP_NAME
         };
     }
 
@@ -79,21 +83,23 @@ public class LiferayTaglibStrictQuoteEscapingInspection extends XmlSuppressableI
                             if (descriptor instanceof CustomTagDescriptorBase) {
                                 JspExpression[] jspExpressions = PsiTreeUtil.getChildrenOfType(attribute.getValueElement(), JspExpression.class);
                                 if (jspExpressions != null) {
-                                    for (JspExpression jspExpression : jspExpressions) {
-                                        JspXmlText[] jspXmlTexts = PsiTreeUtil.getChildrenOfType(jspExpression, JspXmlText.class);
-                                        if (jspXmlTexts != null) {
-                                            for (JspXmlText jspXmlText : jspXmlTexts) {
-                                                String text = jspXmlText.getText();
-                                                if (containsUnescapedQuotes(text)) {
-                                                    holder.registerProblem(attribute.getValueElement(),
-                                                        "Attribute value is quoted with \" which must be escaped when used within the value",
-                                                        ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-                                                        new UseSingleQuotesFix()
-                                                    );
-                                                }
-                                            }
-                                        }
-                                    }
+
+                                    Arrays.stream(jspExpressions).map(
+                                        jspExpression -> PsiTreeUtil.getChildrenOfType(jspExpression, JspXmlText.class)
+                                    ).filter(
+                                        Objects::nonNull
+                                    ).forEach(
+                                        jspXmlTexts -> Arrays.stream(jspXmlTexts).map(
+                                            CompositeElement::getText
+                                        ).filter(
+                                            LiferayTaglibStrictQuoteEscapingInspection::containsUnescapedQuotes
+                                        ).forEach(
+                                            text -> holder.registerProblem(attribute.getValueElement(),
+                                                "Attribute value is quoted with \" which must be escaped when used within the value",
+                                                ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
+                                                new UseSingleQuotesFix()
+                                            ))
+                                    );
                                 }
                             }
                         }
@@ -134,17 +140,24 @@ public class LiferayTaglibStrictQuoteEscapingInspection extends XmlSuppressableI
 
             JspFile jsp = JspPsiUtil.getJspFile(element);
 
-            XmlAttributeValue xmlAttributeValue = (XmlAttributeValue)element;
+            if (jsp != null) {
+                XmlAttributeValue xmlAttributeValue = (XmlAttributeValue) element;
 
-            TextRange range = element.getTextRange();
-            Document document = PsiDocumentManager.getInstance(project).getDocument(jsp);
-            PsiDocumentManager.getInstance(project).doPostponedOperationsAndUnblockDocument(document);
+                TextRange range = element.getTextRange();
+                PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
 
-            String oldText = xmlAttributeValue.getText();
-            String newText = "\'" + StringUtil.unquoteString(oldText, '\"') + "\'";
+                Document document = psiDocumentManager.getDocument(jsp);
 
-            document.replaceString(range.getStartOffset(), range.getEndOffset(), newText);
-            PsiDocumentManager.getInstance(project).commitDocument(document);
+                if (document != null) {
+                    psiDocumentManager.doPostponedOperationsAndUnblockDocument(document);
+
+                    String oldText = xmlAttributeValue.getText();
+                    String newText = "\'" + StringUtil.unquoteString(oldText, '\"') + "\'";
+
+                    document.replaceString(range.getStartOffset(), range.getEndOffset(), newText);
+                    psiDocumentManager.commitDocument(document);
+                }
+            }
         }
     }
 

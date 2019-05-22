@@ -33,6 +33,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.servlet.jsp.tagext.TagAttributeInfo;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
 
 public class LiferayTaglibStringConcatInspection extends XmlSuppressableInspectionTool {
@@ -82,7 +83,9 @@ public class LiferayTaglibStringConcatInspection extends XmlSuppressableInspecti
                         XmlElementDescriptor descriptor = xmlTag.getDescriptor();
                         if (descriptor instanceof CustomTagDescriptorBase) {
                             CustomTagDescriptorBase customTagDescriptorBase = (CustomTagDescriptorBase)descriptor;
+
                             if (isRuntimeExpressionAttribute(customTagDescriptorBase, attribute.getName())) {
+
                                 if (containsTextAndJspExpressions(attribute.getValueElement())) {
                                     holder.registerProblem(attribute.getValueElement(),
                                             "JSP expessions and string values cannot be concatenated inside the attribute",
@@ -90,6 +93,7 @@ public class LiferayTaglibStringConcatInspection extends XmlSuppressableInspecti
                                             new WrapInJSpExpression()
                                     );
                                 }
+
                             }
                         }
                     }
@@ -103,12 +107,9 @@ public class LiferayTaglibStringConcatInspection extends XmlSuppressableInspecti
 
         XmlToken[] xmlTokens = PsiTreeUtil.getChildrenOfType(valueElement, XmlToken.class);
         if (xmlTokens != null) {
-            for (XmlToken xmlToken : xmlTokens) {
-                if (XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN.equals(xmlToken.getTokenType())) {
-                    hasValueToken = true;
-                    break;
-                }
-            }
+            hasValueToken = Arrays.stream(xmlTokens).anyMatch(
+                xmlToken -> XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN.equals(xmlToken.getTokenType())
+            );
         }
         JspExpression jspExpression = PsiTreeUtil.getChildOfType(valueElement, JspExpression.class);
 
@@ -149,49 +150,57 @@ public class LiferayTaglibStringConcatInspection extends XmlSuppressableInspecti
 
             JspFile jsp = JspPsiUtil.getJspFile(element);
 
-            XmlAttributeValue xmlAttributeValue = (XmlAttributeValue)element;
+            if (jsp != null) {
+                XmlAttributeValue xmlAttributeValue = (XmlAttributeValue) element;
 
-            TextRange range = element.getTextRange();
-            Document document = PsiDocumentManager.getInstance(project).getDocument(jsp);
-            PsiDocumentManager.getInstance(project).doPostponedOperationsAndUnblockDocument(document);
+                TextRange range = element.getTextRange();
+                PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
 
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("'<%=");
+                Document document = psiDocumentManager.getDocument(jsp);
 
-            boolean firstChild = true;
-            for (PsiElement child : xmlAttributeValue.getChildren()) {
-                if (child instanceof XmlToken) {
-                    XmlToken xmlToken = (XmlToken)child;
-                    if (XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN.equals(xmlToken.getTokenType())) {
-                        String text = xmlToken.getText();
-                        if (!firstChild) {
-                            stringBuilder.append(" + ");
+                if (document != null) {
+                    psiDocumentManager.doPostponedOperationsAndUnblockDocument(document);
+
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append("'<%=");
+
+                    boolean firstChild = true;
+
+                    for (PsiElement child : xmlAttributeValue.getChildren()) {
+                        if (child instanceof XmlToken) {
+                            XmlToken xmlToken = (XmlToken) child;
+                            if (XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN.equals(xmlToken.getTokenType())) {
+                                String text = xmlToken.getText();
+                                if (!firstChild) {
+                                    stringBuilder.append(" + ");
+                                }
+                                stringBuilder.append("\"").append(text).append("\"");
+
+                                firstChild = false;
+                            }
+                        } else if (child instanceof JspExpression) {
+                            JspExpression jspExpression = (JspExpression) child;
+
+                            JspXmlText jspXmlText = PsiTreeUtil.getChildOfType(jspExpression, JspXmlText.class);
+
+                            if (jspXmlText != null) {
+                                if (!firstChild) {
+                                    stringBuilder.append(" + ");
+                                }
+
+                                stringBuilder.append("(").append(jspXmlText.getText()).append(")");
+
+                                firstChild = false;
+
+                            }
                         }
-                        stringBuilder.append("\"").append(text).append("\"");
-
-                        firstChild = false;
                     }
-                } else if (child instanceof JspExpression) {
-                    JspExpression jspExpression = (JspExpression)child;
+                    stringBuilder.append("%>'");
 
-                    JspXmlText jspXmlText = PsiTreeUtil.getChildOfType(jspExpression, JspXmlText.class);
-
-                    if (jspXmlText != null) {
-                        if (!firstChild) {
-                            stringBuilder.append(" + ");
-                        }
-
-                        stringBuilder.append("(").append(jspXmlText.getText()).append(")");
-
-                        firstChild = false;
-
-                    }
+                    document.replaceString(range.getStartOffset(), range.getEndOffset(), stringBuilder.toString());
+                    PsiDocumentManager.getInstance(project).commitDocument(document);
                 }
             }
-            stringBuilder.append("%>'");
-
-            document.replaceString(range.getStartOffset(), range.getEndOffset(), stringBuilder.toString());
-            PsiDocumentManager.getInstance(project).commitDocument(document);
         }
     }
 
