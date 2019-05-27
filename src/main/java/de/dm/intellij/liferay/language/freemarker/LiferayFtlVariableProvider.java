@@ -101,7 +101,8 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
 
                 if (
                         (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_0) ||
-                                (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
+                        (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
+                        (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                         ) { //Liferay 7.0
                     result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-product-navigation.tld", module, "liferay_product_navigation"));
                     result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-journal.tld", module, "liferay_journal"));
@@ -213,7 +214,8 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
     public String[] getAdditionalLanguageSpecificResources(float liferayVersion) {
         if (
                 (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_0) ||
-                        (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
+                (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
+                (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                 ) { //Liferay 7.0
             return new String[] {
                     "/com/liferay/vtl/context_additional_freemarker_70.vm"
@@ -235,9 +237,11 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
         } else if
                 (
                 (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_0) ||
-                        (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
+                (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                 ) {
             return "/com/liferay/ftl/FTL_liferay_70.ftl";
+        } else if (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_1) {
+            return "/com/liferay/ftl/FTL_liferay_71.ftl";
         }
 
         return null;
