@@ -5,12 +5,9 @@ import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
-import com.intellij.jsp.impl.CustomTagDescriptorBase;
-import com.intellij.jsp.impl.CustomTagDescriptorBaseImpl;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.JspPsiUtil;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
@@ -23,7 +20,6 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlText;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.XmlElementDescriptor;
@@ -31,10 +27,7 @@ import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
-import javax.servlet.jsp.tagext.TagAttributeInfo;
-import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.List;
 
 public class LiferayTaglibStringConcatInspection extends XmlSuppressableInspectionTool {
 
@@ -81,10 +74,8 @@ public class LiferayTaglibStringConcatInspection extends XmlSuppressableInspecti
                     XmlTag xmlTag = PsiTreeUtil.getParentOfType(attribute, XmlTag.class);
                     if (xmlTag != null) {
                         XmlElementDescriptor descriptor = xmlTag.getDescriptor();
-                        if (descriptor instanceof CustomTagDescriptorBase) {
-                            CustomTagDescriptorBase customTagDescriptorBase = (CustomTagDescriptorBase)descriptor;
-
-                            if (isRuntimeExpressionAttribute(customTagDescriptorBase, attribute.getName())) {
+                        if (descriptor != null) {
+                            if (isRuntimeExpressionAttribute(descriptor, attribute.getName())) {
 
                                 if (containsTextAndJspExpressions(attribute.getValueElement())) {
                                     holder.registerProblem(attribute.getValueElement(),
@@ -116,25 +107,25 @@ public class LiferayTaglibStringConcatInspection extends XmlSuppressableInspecti
         return (hasValueToken && jspExpression != null);
     }
 
-    private static boolean isRuntimeExpressionAttribute(CustomTagDescriptorBase customTagDescriptorBase, String name) {
-        try {
-            Field myTLDAttributes = CustomTagDescriptorBaseImpl.class.getDeclaredField("myTLDAttributes");
-            myTLDAttributes.setAccessible(true);
+    private static boolean isRuntimeExpressionAttribute(XmlElementDescriptor xmlElementDescriptor, String name) {
+        XmlTag declaration = (XmlTag)xmlElementDescriptor.getDeclaration();
 
-            List<TagAttributeInfo> tagAttributeInfos = (List<TagAttributeInfo>)myTLDAttributes.get(customTagDescriptorBase);
+        if (declaration != null) {
+            XmlTag[] attributes = declaration.findSubTags("attribute");
 
-            for (TagAttributeInfo tagAttributeInfo : tagAttributeInfos) {
-                if (name.equals(tagAttributeInfo.getName())) {
-                    return tagAttributeInfo.canBeRequestTime();
+            for (XmlTag attribute : attributes) {
+                String attributeName = attribute.getSubTagText("name");
+
+                if (name.equals(attributeName)) {
+                    String rtexprvalue = attribute.getSubTagText("rtexprvalue");
+
+                    return "true".equals(rtexprvalue);
                 }
             }
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
         }
 
         return false;
     }
-
 
     private static class WrapInJSpExpression implements LocalQuickFix {
         @Nls(capitalization = Nls.Capitalization.Sentence)
