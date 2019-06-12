@@ -14,12 +14,12 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.impl.source.jsp.jspXml.JspExpression;
-import com.intellij.psi.impl.source.jsp.jspXml.JspXmlText;
 import com.intellij.psi.jsp.JspFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.XmlText;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.xml.XmlElementDescriptor;
@@ -172,14 +172,14 @@ public class LiferayTaglibStringConcatInspection extends XmlSuppressableInspecti
                         } else if (child instanceof JspExpression) {
                             JspExpression jspExpression = (JspExpression) child;
 
-                            JspXmlText jspXmlText = PsiTreeUtil.getChildOfType(jspExpression, JspXmlText.class);
+                            XmlText xmlText = PsiTreeUtil.getChildOfType(jspExpression, XmlText.class);
 
-                            if (jspXmlText != null) {
+                            if (xmlText != null) {
                                 if (!firstChild) {
                                     stringBuilder.append(" + ");
                                 }
 
-                                stringBuilder.append("(").append(jspXmlText.getText()).append(")");
+                                stringBuilder.append("(").append(xmlText.getText()).append(")");
 
                                 firstChild = false;
 

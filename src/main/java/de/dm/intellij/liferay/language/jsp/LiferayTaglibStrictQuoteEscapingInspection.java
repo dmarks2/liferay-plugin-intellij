@@ -6,25 +6,22 @@ import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
 import com.intellij.jsp.impl.CustomTagDescriptorBase;
-import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.JspPsiUtil;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.impl.source.jsp.jspXml.JspExpression;
-import com.intellij.psi.impl.source.jsp.jspXml.JspXmlText;
-import com.intellij.psi.impl.source.tree.CompositeElement;
 import com.intellij.psi.jsp.JspFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.XmlText;
 import com.intellij.xml.XmlElementDescriptor;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import org.jetbrains.annotations.Nls;
@@ -85,12 +82,12 @@ public class LiferayTaglibStrictQuoteEscapingInspection extends XmlSuppressableI
                                 if (jspExpressions != null) {
 
                                     Arrays.stream(jspExpressions).map(
-                                        jspExpression -> PsiTreeUtil.getChildrenOfType(jspExpression, JspXmlText.class)
+                                        jspExpression -> PsiTreeUtil.getChildrenOfType(jspExpression, XmlText.class)
                                     ).filter(
                                         Objects::nonNull
                                     ).forEach(
-                                        jspXmlTexts -> Arrays.stream(jspXmlTexts).map(
-                                            CompositeElement::getText
+                                        xmlTexts -> Arrays.stream(xmlTexts).map(
+                                            XmlText::getText
                                         ).filter(
                                             LiferayTaglibStrictQuoteEscapingInspection::containsUnescapedQuotes
                                         ).forEach(
