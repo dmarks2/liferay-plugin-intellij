@@ -62,6 +62,8 @@ dependencies {
     compile 'org.glassfish.jersey.inject:jersey-hk2:2.26'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.9.0'
     compile 'org.json:json:20171018'
+
+    compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 }
 
 intellij {

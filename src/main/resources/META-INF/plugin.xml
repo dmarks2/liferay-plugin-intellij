@@ -28,6 +28,7 @@
         <p>Version 0.0.6</p>
         <ul>
             <li>Feature: File References for portlet.properties files</li>
+            <li>Feature: Improved bnd.bnd editor</li>
         </ul>
         <p>Version 0.0.5</p>
         <ul>
@@ -105,7 +106,9 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Define a new filetype for "bnd.bnd" files -->
         <fileTypeFactory implementation="de.dm.intellij.bndtools.BndFileTypeFactory"/>
-        <syntaxHighlighter factoryClass="de.dm.intellij.bndtools.BndFileTypeHighlighterProvider" />
+        <annotator language="Manifest" implementationClass="de.dm.intellij.bndtools.OsgiManifestHighlightingAnnotator"/>
+        <manifest.parser.provider implementation="de.dm.intellij.bndtools.parser.OsgiManifestHeaderParsers"/>
+        <completion.contributor language="Manifest" implementationClass="de.dm.intellij.bndtools.completion.OsgiManifestCompletionContributor"/>
 
         <!-- Completion Contribution for @Component annotation -->
         <completion.contributor order="first, before propertiesCompletion" language="JAVA" implementationClass="de.dm.intellij.liferay.language.osgi.ComponentPropertiesCompletionContributor"/>

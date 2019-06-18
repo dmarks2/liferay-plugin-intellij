@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.6
 - Feature: File References for portlet.properties files
+- Feature: Improved bnd.bnd editor
 
 ## 0.0.5
 - Feature: Experimental Freemarker debugger
