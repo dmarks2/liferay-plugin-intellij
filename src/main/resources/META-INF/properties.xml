@@ -1,0 +1,5 @@
+<idea-plugin>
+    <extensions defaultExtensionNs="com.intellij">
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.properties.LiferayPropertiesFileReferenceContributor"/>
+    </extensions>
+</idea-plugin>

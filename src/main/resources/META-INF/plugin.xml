@@ -2,7 +2,7 @@
     <id>de.dm.intellij.liferay</id>
     <name>Liferay</name>
     <category>Framework integration</category>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
@@ -25,6 +25,10 @@
       ]]></description>
 
     <change-notes><![CDATA[
+        <p>Version 0.0.6</p>
+        <ul>
+            <li>Feature: File References for portlet.properties files</li>
+        </ul>
         <p>Version 0.0.5</p>
         <ul>
             <li>Feature: Experimental Freemarker debugger</li>
@@ -96,6 +100,7 @@
     <depends optional="true" config-file="archetype-catalog.xml">de.dm.intellij.maven-archetypes-catalog-plugin</depends>
     <depends optional="true" config-file="groovy.xml">org.intellij.groovy</depends>
     <depends optional="true" config-file="uml.xml">com.intellij.diagram</depends>
+    <depends optional="true" config-file="properties.xml">com.intellij.properties</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Define a new filetype for "bnd.bnd" files -->

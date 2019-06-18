@@ -3,6 +3,9 @@ Liferay Plugin for IntelliJ
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.6
+- Feature: File References for portlet.properties files
+
 ## 0.0.5
 - Feature: Experimental Freemarker debugger
 - Feature: Additional service.xml inspections (primary key, uuid)

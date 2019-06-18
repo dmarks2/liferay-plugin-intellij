@@ -297,4 +297,4 @@ task unzipCompass0122SassExtensions(dependsOn: downloadCompass0122, type: Copy) 
 */
 
 group 'de.dm.intellij.liferay'
-version '0.0.5'
+version '0.0.6'
