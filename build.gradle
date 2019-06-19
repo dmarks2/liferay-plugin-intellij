@@ -77,6 +77,7 @@ intellij {
             'JavaScriptLanguage', 'Tomcat', 'Velocity', 'FreeMarker', 'maven', 'properties', 'java-i18n', 'CSS', 'sass', 'JavaEE', 'jsp', 'gradle', 'de.dm.intellij.maven-archetypes-catalog-plugin:1.2.5',
             'IntelliLang', 'uml',
             //test only?
+            'osmorc',
             'Groovy', 'junit', 'PersistenceSupport', 'DatabaseTools'
     ]
     updateSinceUntilBuild false

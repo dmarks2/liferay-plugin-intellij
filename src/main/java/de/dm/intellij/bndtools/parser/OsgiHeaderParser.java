@@ -102,6 +102,20 @@ public class OsgiHeaderParser extends StandardHeaderParser {
         while (!psiBuilder.eof()) {
             IElementType tokenType = psiBuilder.getTokenType();
 
+            String tokenText = psiBuilder.getTokenText();
+            if (tokenText != null) {
+                tokenText = tokenText.trim();
+
+                //do not parse single backslashes as clause
+                if ("\\".equals(tokenText)) {
+                    psiBuilder.advanceLexer();
+
+                    marker.drop();
+
+                    return result;
+                }
+            }
+
             if (_subclauseEndTokens.contains(tokenType)) {
                 break;
             }

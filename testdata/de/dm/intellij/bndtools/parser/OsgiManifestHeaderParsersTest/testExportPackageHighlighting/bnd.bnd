@@ -1,0 +1,1 @@
+Export-Package: de.dm;uses:="<error descr="Cannot resolve package de.dm.non.existing">de.dm.non.existing</error>"

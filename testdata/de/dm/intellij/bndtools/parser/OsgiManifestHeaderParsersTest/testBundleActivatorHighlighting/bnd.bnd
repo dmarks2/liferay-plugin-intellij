@@ -1,0 +1,1 @@
+Bundle-Activator: <error descr="Activator class does not inherit from BundleActivator">de.dm.Foo</error>
