@@ -29,6 +29,7 @@
         <ul>
             <li>Feature: File References for portlet.properties files</li>
             <li>Feature: Improved bnd.bnd editor</li>
+            <li>Feature: Improved code completions to support Portlet 3.0 Specification</li>
         </ul>
         <p>Version 0.0.5</p>
         <ul>

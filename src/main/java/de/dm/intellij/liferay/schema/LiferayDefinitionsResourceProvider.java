@@ -65,6 +65,7 @@ public class LiferayDefinitionsResourceProvider implements StandardResourceProvi
     public static final String XML_NAMESPACE_LIFERAY_WORKFLOW_DEFINITION_7_0_0 = "http://www.liferay.com/dtd/liferay-workflow-definition_7_0_0.xsd";
     public static final String XML_NAMESPACE_LIFERAY_WORKFLOW_DEFINITION_7_1_0 = "http://www.liferay.com/dtd/liferay-workflow-definition_7_1_0.xsd";
     public static final String XML_NAMESPACE_SUN_PORTLET_APP_2_0 = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd";
+    public static final String XML_NAMESPACE_JCP_PORTLET_APP_3_0 = "http://xmlns.jcp.org/xml/ns/portlet";
 
     public void registerResources(ResourceRegistrar resourceRegistrar) {
         resourceRegistrar.addStdResource(XML_NAMESPACE_LIFERAY_DDM_STRUCTURE_6_2_0, "/com/liferay/definitions/liferay-ddm-structure_6_2_0.xsd", LiferayDefinitionsResourceProvider.class);
@@ -124,5 +125,6 @@ public class LiferayDefinitionsResourceProvider implements StandardResourceProvi
         resourceRegistrar.addStdResource(XML_NAMESPACE_LIFERAY_WORKFLOW_DEFINITION_7_0_0, "/com/liferay/definitions/liferay-workflow-definition_7_0_0.xsd", LiferayDefinitionsResourceProvider.class);
         resourceRegistrar.addStdResource(XML_NAMESPACE_LIFERAY_WORKFLOW_DEFINITION_7_1_0, "/com/liferay/definitions/liferay-workflow-definition_7_1_0.xsd", LiferayDefinitionsResourceProvider.class);
         resourceRegistrar.addStdResource(XML_NAMESPACE_SUN_PORTLET_APP_2_0, "/com/liferay/definitions/portlet-app_2_0.xsd", LiferayDefinitionsResourceProvider.class);
+        resourceRegistrar.addStdResource(XML_NAMESPACE_JCP_PORTLET_APP_3_0, "/com/liferay/definitions/portlet-app_3_0.xsd", LiferayDefinitionsResourceProvider.class);
     }
 }
