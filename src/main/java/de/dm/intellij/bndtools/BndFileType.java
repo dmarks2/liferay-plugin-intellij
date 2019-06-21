@@ -14,7 +14,7 @@ public class BndFileType extends LanguageFileType {
     public static final BndFileType INSTANCE = new BndFileType();
 
     public BndFileType() {
-        super(ManifestLanguage.INSTANCE);
+        super(BndLanguage.INSTANCE);
     }
 
     @NotNull
