@@ -111,6 +111,7 @@
         <annotator language="bnd" implementationClass="de.dm.intellij.bndtools.OsgiManifestHighlightingAnnotator"/>
         <manifest.parser.provider implementation="de.dm.intellij.bndtools.parser.OsgiManifestHeaderParsers"/>
         <completion.contributor language="bnd" implementationClass="de.dm.intellij.bndtools.completion.OsgiManifestCompletionContributor"/>
+        <enterHandlerDelegate implementation="de.dm.intellij.bndtools.actions.EnterInBndFileHandler"/>
 
         <!-- Completion Contribution for @Component annotation -->
         <completion.contributor order="first, before propertiesCompletion" language="JAVA" implementationClass="de.dm.intellij.liferay.language.osgi.ComponentPropertiesCompletionContributor"/>

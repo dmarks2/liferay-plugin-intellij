@@ -6,15 +6,15 @@ import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.util.PsiTreeUtil;
 import de.dm.intellij.bndtools.BndFileType;
 import de.dm.intellij.bndtools.BndLanguage;
+import de.dm.intellij.bndtools.psi.BndFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.lang.manifest.psi.Header;
-import org.jetbrains.lang.manifest.psi.ManifestFile;
 import org.jetbrains.lang.manifest.psi.Section;
 
 import java.util.List;
 
-public class BndFileImpl extends PsiFileBase implements ManifestFile {
+public class BndFileImpl extends PsiFileBase implements BndFile {
 
     public BndFileImpl(FileViewProvider viewProvider) {
         super(viewProvider, BndLanguage.INSTANCE);
