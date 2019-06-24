@@ -1,13 +1,26 @@
 package de.dm.intellij.bndtools.completion;
 
 import com.intellij.codeInsight.completion.CompletionContributor;
+import com.intellij.codeInsight.completion.CompletionParameters;
+import com.intellij.codeInsight.completion.CompletionProvider;
+import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.completion.CompletionType;
+import com.intellij.codeInsight.completion.InsertHandler;
+import com.intellij.codeInsight.completion.InsertionContext;
+import com.intellij.codeInsight.lookup.LookupElement;
+import com.intellij.codeInsight.lookup.LookupElementBuilder;
+import com.intellij.openapi.editor.EditorModificationUtil;
 import com.intellij.patterns.ElementPattern;
+import com.intellij.patterns.PlatformPatterns;
 import com.intellij.patterns.PsiElementPattern;
 import com.intellij.psi.PsiElement;
+import com.intellij.util.ProcessingContext;
+import de.dm.intellij.bndtools.BndLanguage;
+import de.dm.intellij.bndtools.psi.BndHeader;
+import de.dm.intellij.bndtools.psi.BndTokenType;
 import de.dm.intellij.bndtools.psi.Directive;
-import org.jetbrains.lang.manifest.psi.Header;
-import org.jetbrains.lang.manifest.psi.ManifestTokenType;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.lang.manifest.header.HeaderParserRepository;
 import org.osgi.framework.Constants;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
@@ -26,10 +39,25 @@ public class OsgiManifestCompletionContributor extends CompletionContributor {
         extend(
             CompletionType.BASIC, _directive(Constants.RESOLUTION_DIRECTIVE),
             new SimpleProvider(Constants.RESOLUTION_MANDATORY, Constants.RESOLUTION_OPTIONAL));
+
+        extend(CompletionType.BASIC,
+            PlatformPatterns.psiElement(BndTokenType.HEADER_NAME).withLanguage(BndLanguage.INSTANCE),
+            new CompletionProvider<CompletionParameters>() {
+                @Override
+                public void addCompletions(@NotNull CompletionParameters parameters,
+                                           @NotNull ProcessingContext context,
+                                           @NotNull CompletionResultSet resultSet) {
+                    for (String header : HeaderParserRepository.getInstance().getAllHeaderNames()) {
+                        resultSet.addElement(LookupElementBuilder.create(header).withInsertHandler(HEADER_INSERT_HANDLER));
+                    }
+                }
+            }
+        );
+
     }
 
     private static ElementPattern<PsiElement> _directive(String name) {
-        PsiElementPattern.Capture<PsiElement> element = psiElement(ManifestTokenType.HEADER_VALUE_PART);
+        PsiElementPattern.Capture<PsiElement> element = psiElement(BndTokenType.HEADER_VALUE_PART);
 
         PsiElementPattern.Capture<Directive> directiveElement = psiElement(Directive.class);
 
@@ -37,13 +65,23 @@ public class OsgiManifestCompletionContributor extends CompletionContributor {
     }
 
     private static ElementPattern<PsiElement> _header(String name) {
-        PsiElementPattern.Capture<PsiElement> psiElementCapture = psiElement(ManifestTokenType.HEADER_VALUE_PART);
+        PsiElementPattern.Capture<PsiElement> psiElementCapture = psiElement(BndTokenType.HEADER_VALUE_PART);
 
         psiElementCapture.afterLeaf(";");
 
-        PsiElementPattern.Capture<Header> headerElement = psiElement(Header.class);
+        PsiElementPattern.Capture<BndHeader> headerElement = psiElement(BndHeader.class);
 
         return psiElementCapture.withSuperParent(3, headerElement.withName(name));
     }
+
+    private static final InsertHandler<LookupElement> HEADER_INSERT_HANDLER = new InsertHandler<LookupElement>() {
+        @Override
+        public void handleInsert(@NotNull InsertionContext context, @NotNull LookupElement item) {
+            context.setAddCompletionChar(false);
+            EditorModificationUtil.insertStringAtCaret(context.getEditor(), ": ");
+            context.commitDocument();
+        }
+    };
+
 
 }

@@ -5,10 +5,10 @@ import org.jetbrains.lang.manifest.psi.HeaderValuePart;
 
 public interface AssignmentExpression extends PsiNamedElement {
 
-    HeaderValuePart getNameElement();
+    BndHeaderValuePart getNameElement();
 
     String getValue();
 
-    HeaderValuePart getValueElement();
+    BndHeaderValuePart getValueElement();
 
 }

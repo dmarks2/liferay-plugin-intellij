@@ -5,7 +5,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import de.dm.intellij.liferay.util.Icons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.lang.manifest.ManifestLanguage;
 
 import javax.swing.*;
 

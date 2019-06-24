@@ -7,13 +7,13 @@ import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.psi.PsiElement;
 import de.dm.intellij.bndtools.psi.AssignmentExpression;
 import de.dm.intellij.bndtools.psi.Attribute;
+import de.dm.intellij.bndtools.psi.BndToken;
+import de.dm.intellij.bndtools.psi.BndTokenType;
 import de.dm.intellij.bndtools.psi.Clause;
 import de.dm.intellij.bndtools.psi.Directive;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.lang.manifest.psi.Header;
 import org.jetbrains.lang.manifest.psi.HeaderValuePart;
-import org.jetbrains.lang.manifest.psi.ManifestToken;
-import org.jetbrains.lang.manifest.psi.ManifestTokenType;
 
 public class OsgiManifestHighlightingAnnotator implements Annotator {
 
@@ -45,23 +45,23 @@ public class OsgiManifestHighlightingAnnotator implements Annotator {
                 }
             }
         }
-        else if (psiElement instanceof ManifestToken) {
-            ManifestToken manifestToken = (ManifestToken)psiElement;
+        else if (psiElement instanceof BndToken) {
+            BndToken manifestToken = (BndToken)psiElement;
 
-            ManifestTokenType type = manifestToken.getTokenType();
+            BndTokenType type = manifestToken.getTokenType();
 
-            if ((psiElement.getParent() instanceof Attribute) && (type == ManifestTokenType.EQUALS)) {
+            if ((psiElement.getParent() instanceof Attribute) && (type == BndTokenType.EQUALS)) {
                 _annotate(psiElement, OsgiManifestColorsAndFonts.ATTRIBUTE_ASSIGNMENT_KEY, annotationHolder);
             }
             else if ((psiElement.getParent() instanceof Directive) &&
-                ((type == ManifestTokenType.COLON) || (type == ManifestTokenType.EQUALS))) {
+                ((type == BndTokenType.COLON) || (type == BndTokenType.EQUALS))) {
 
                 _annotate(psiElement, OsgiManifestColorsAndFonts.DIRECTIVE_ASSIGNMENT_KEY, annotationHolder);
             }
-            else if ((psiElement.getParent() instanceof Clause) && (type == ManifestTokenType.SEMICOLON)) {
+            else if ((psiElement.getParent() instanceof Clause) && (type == BndTokenType.SEMICOLON)) {
                 _annotate(psiElement, OsgiManifestColorsAndFonts.PARAMETER_SEPARATOR_KEY, annotationHolder);
             }
-            else if ((psiElement.getParent() instanceof Header) && (type == ManifestTokenType.COMMA)) {
+            else if ((psiElement.getParent() instanceof Header) && (type == BndTokenType.COMMA)) {
                 _annotate(psiElement, OsgiManifestColorsAndFonts.CLAUSE_SEPARATOR_KEY, annotationHolder);
             }
         }

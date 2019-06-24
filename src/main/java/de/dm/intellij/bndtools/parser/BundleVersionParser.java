@@ -11,7 +11,7 @@ import org.jetbrains.lang.manifest.psi.HeaderValue;
 import org.jetbrains.lang.manifest.psi.HeaderValuePart;
 import org.osgi.framework.Version;
 
-public class BundleVersionParser extends StandardHeaderParser {
+public class BundleVersionParser extends OsgiHeaderParser {
 
     public static final HeaderParser INSTANCE = new BundleVersionParser();
 

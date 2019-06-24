@@ -5,17 +5,20 @@ import com.intellij.lang.PsiBuilder;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.ObjectUtils;
+import de.dm.intellij.bndtools.psi.BndTokenType;
+import de.dm.intellij.bndtools.psi.OsgiManifestElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.lang.manifest.ManifestBundle;
 import org.jetbrains.lang.manifest.header.HeaderParser;
 import org.jetbrains.lang.manifest.header.HeaderParserRepository;
 import org.jetbrains.lang.manifest.header.impl.StandardHeaderParser;
 import org.jetbrains.lang.manifest.parser.ManifestParser;
-import org.jetbrains.lang.manifest.psi.ManifestElementType;
-import org.jetbrains.lang.manifest.psi.ManifestTokenType;
 
 public class BndParser extends ManifestParser {
+
+    public static final TokenSet HEADER_END_TOKENS = TokenSet.create(BndTokenType.SECTION_END, BndTokenType.HEADER_NAME);
 
     private final HeaderParserRepository myRepository;
 
@@ -42,10 +45,10 @@ public class BndParser extends ManifestParser {
 
         while (!builder.eof()) {
             IElementType tokenType = builder.getTokenType();
-            if (tokenType == ManifestTokenType.HEADER_NAME) {
+            if (tokenType == BndTokenType.HEADER_NAME) {
                 parseHeader(builder);
             }
-            else if (tokenType == ManifestTokenType.SECTION_END) {
+            else if (tokenType == BndTokenType.SECTION_END) {
                 builder.advanceLexer();
                 break;
             }
@@ -56,7 +59,7 @@ public class BndParser extends ManifestParser {
             }
         }
 
-        section.done(ManifestElementType.SECTION);
+        section.done(OsgiManifestElementType.SECTION);
     }
 
     private void parseHeader(PsiBuilder builder) {
@@ -65,7 +68,7 @@ public class BndParser extends ManifestParser {
         assert headerName != null : "[" + builder.getOriginalText() + "]@" + builder.getCurrentOffset();
         builder.advanceLexer();
 
-        if (builder.getTokenType() == ManifestTokenType.COLON) {
+        if (builder.getTokenType() == BndTokenType.COLON) {
             builder.advanceLexer();
 
 /*            if (!expect(builder, ManifestTokenType.SIGNIFICANT_SPACE)) {
@@ -82,7 +85,7 @@ public class BndParser extends ManifestParser {
             marker.error(ManifestBundle.message("manifest.colon.expected"));
         }
 
-        header.done(ManifestElementType.HEADER);
+        header.done(OsgiManifestElementType.HEADER);
     }
 
     private static void consumeHeaderValue(PsiBuilder builder) {

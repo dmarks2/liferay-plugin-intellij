@@ -23,7 +23,7 @@ public class OsgiManifestHeaderParsers implements HeaderParserProvider {
         _parsers.put(Constants.EXPORT_PACKAGE, ExportPackageParser.INSTANCE);
 
         for (String header : LiferayBndConstants.CLASS_REFERENCE_PROPERTIES) {
-            _parsers.put(header, ClassReferenceParser.INSTANCE);
+            _parsers.put(header, BndClassReferenceParser.INSTANCE);
         }
 
         for (String header : LiferayBndConstants.FILE_REFERENCE_PROPERTIES) {

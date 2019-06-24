@@ -13,8 +13,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IElementType;
 import de.dm.intellij.bndtools.psi.BndFile;
+import de.dm.intellij.bndtools.psi.BndTokenType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.lang.manifest.psi.ManifestTokenType;
 
 public class EnterInBndFileHandler extends EnterHandlerDelegateAdapter {
 
@@ -46,7 +46,7 @@ public class EnterInBndFileHandler extends EnterHandlerDelegateAdapter {
 
         IElementType elementType = psiAtOffset == null ? null : psiAtOffset.getNode().getElementType();
 
-        if (elementType == ManifestTokenType.HEADER_VALUE_PART) {
+        if (elementType == BndTokenType.HEADER_VALUE_PART) {
             toInsert = "\\\n    ";
         } else {
             toInsert = "\n";

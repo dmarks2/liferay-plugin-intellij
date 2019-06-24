@@ -15,7 +15,6 @@ import com.intellij.psi.PsiFileSystemItem;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiPackage;
 import com.intellij.psi.PsiReference;
-import com.intellij.psi.impl.file.PsiFileImplUtil;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceSet;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.PackageReferenceSet;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.PsiPackageReference;
@@ -83,16 +82,20 @@ public class BndPsiUtil {
                 }
 
                 packageName = packageName.replaceAll("\\s+", "");
-                if (packageName.charAt(0) == '!') {
-                    packageName = packageName.substring(1);
+                if (packageName.length() > 0) {
+                    if (packageName.charAt(0) == '!') {
+                        packageName = packageName.substring(1);
+                    }
+
+                    final String unwrappedPackageName = packageName;
+
+                    return ContainerUtil.filter(
+                        context.getSubPackages(getResolveScope()),
+                        psiPackage -> unwrappedPackageName.equalsIgnoreCase(psiPackage.getName())
+                    );
                 }
 
-                final String unwrappedPackageName = packageName;
-
-                return ContainerUtil.filter(
-                    context.getSubPackages(getResolveScope()),
-                    psiPackage -> unwrappedPackageName.equalsIgnoreCase(psiPackage.getName())
-                );
+                return Collections.emptyList();
             }
         };
 

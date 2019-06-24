@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.lang.manifest.header.impl.ClassReferenceParser;
 import org.jetbrains.lang.manifest.psi.HeaderValuePart;
 
-public class BundleActivatorParser extends ClassReferenceParser {
+public class BundleActivatorParser extends BndClassReferenceParser {
 
     public static final BundleActivatorParser INSTANCE = new BundleActivatorParser();
 

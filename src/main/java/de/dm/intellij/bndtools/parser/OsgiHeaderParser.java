@@ -3,13 +3,11 @@ package de.dm.intellij.bndtools.parser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
+import de.dm.intellij.bndtools.psi.BndTokenType;
 import de.dm.intellij.bndtools.psi.OsgiManifestElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.lang.manifest.header.HeaderParser;
 import org.jetbrains.lang.manifest.header.impl.StandardHeaderParser;
-import org.jetbrains.lang.manifest.parser.ManifestParser;
-import org.jetbrains.lang.manifest.psi.ManifestElementType;
-import org.jetbrains.lang.manifest.psi.ManifestTokenType;
 
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
@@ -26,10 +24,10 @@ public class OsgiHeaderParser extends StandardHeaderParser {
 
             IElementType tokenType = psiBuilder.getTokenType();
 
-            if (ManifestParser.HEADER_END_TOKENS.contains(tokenType)) {
+            if (BndParser.HEADER_END_TOKENS.contains(tokenType)) {
                 break;
             }
-            else if (tokenType == ManifestTokenType.COMMA) {
+            else if (tokenType == BndTokenType.COMMA) {
                 psiBuilder.advanceLexer();
             }
         }
@@ -61,7 +59,7 @@ public class OsgiHeaderParser extends StandardHeaderParser {
             if (_clauseEndTokens.contains(tokenType)) {
                 break;
             }
-            else if (tokenType == ManifestTokenType.SEMICOLON) {
+            else if (tokenType == BndTokenType.SEMICOLON) {
                 psiBuilder.advanceLexer();
             }
         }
@@ -74,11 +72,11 @@ public class OsgiHeaderParser extends StandardHeaderParser {
     private static boolean _parseDirective(PsiBuilder psiBuilder, PsiBuilder.Marker marker) {
         psiBuilder.advanceLexer();
 
-        if (expect(psiBuilder, ManifestTokenType.NEWLINE)) {
-            expect(psiBuilder, ManifestTokenType.SIGNIFICANT_SPACE);
+        if (expect(psiBuilder, BndTokenType.NEWLINE)) {
+            expect(psiBuilder, BndTokenType.SIGNIFICANT_SPACE);
         }
 
-        expect(psiBuilder, ManifestTokenType.EQUALS);
+        expect(psiBuilder, BndTokenType.EQUALS);
 
         boolean result = _parsesubClause(psiBuilder, true);
 
@@ -91,8 +89,8 @@ public class OsgiHeaderParser extends StandardHeaderParser {
         do {
             psiBuilder.advanceLexer();
         }
-        while (!psiBuilder.eof() && !ManifestParser.HEADER_END_TOKENS.contains(psiBuilder.getTokenType()) &&
-            !expect(psiBuilder, ManifestTokenType.QUOTE));
+        while (!psiBuilder.eof() && !BndParser.HEADER_END_TOKENS.contains(psiBuilder.getTokenType()) &&
+            !expect(psiBuilder, BndTokenType.QUOTE));
     }
 
     private static boolean _parsesubClause(PsiBuilder psiBuilder, boolean assignment) {
@@ -119,16 +117,16 @@ public class OsgiHeaderParser extends StandardHeaderParser {
             if (_subclauseEndTokens.contains(tokenType)) {
                 break;
             }
-            else if (tokenType == ManifestTokenType.QUOTE) {
+            else if (tokenType == BndTokenType.QUOTE) {
                 _parseQuotedString(psiBuilder);
             }
-            else if (!assignment && (tokenType == ManifestTokenType.EQUALS)) {
-                marker.done(ManifestElementType.HEADER_VALUE_PART);
+            else if (!assignment && (tokenType == BndTokenType.EQUALS)) {
+                marker.done(OsgiManifestElementType.HEADER_VALUE_PART);
 
                 return _parseAttribute(psiBuilder, marker.precede());
             }
-            else if (!assignment && (tokenType == ManifestTokenType.COLON)) {
-                marker.done(ManifestElementType.HEADER_VALUE_PART);
+            else if (!assignment && (tokenType == BndTokenType.COLON)) {
+                marker.done(OsgiManifestElementType.HEADER_VALUE_PART);
 
                 return _parseDirective(psiBuilder, marker.precede());
             }
@@ -136,8 +134,8 @@ public class OsgiHeaderParser extends StandardHeaderParser {
                 IElementType lastToken = psiBuilder.getTokenType();
                 psiBuilder.advanceLexer();
 
-                if ((lastToken == ManifestTokenType.NEWLINE) &&
-                    (psiBuilder.getTokenType() != ManifestTokenType.SIGNIFICANT_SPACE)) {
+                if ((lastToken == BndTokenType.NEWLINE) &&
+                    (psiBuilder.getTokenType() != BndTokenType.SIGNIFICANT_SPACE)) {
 
                     result = false;
 
@@ -146,14 +144,14 @@ public class OsgiHeaderParser extends StandardHeaderParser {
             }
         }
 
-        marker.done(ManifestElementType.HEADER_VALUE_PART);
+        marker.done(OsgiManifestElementType.HEADER_VALUE_PART);
 
         return result;
     }
 
     private static final TokenSet _clauseEndTokens = TokenSet.orSet(
-        ManifestParser.HEADER_END_TOKENS, TokenSet.create(ManifestTokenType.COMMA));
+        BndParser.HEADER_END_TOKENS, TokenSet.create(BndTokenType.COMMA));
     private static final TokenSet _subclauseEndTokens = TokenSet.orSet(
-        _clauseEndTokens, TokenSet.create(ManifestTokenType.SEMICOLON));
+        _clauseEndTokens, TokenSet.create(BndTokenType.SEMICOLON));
 
 }

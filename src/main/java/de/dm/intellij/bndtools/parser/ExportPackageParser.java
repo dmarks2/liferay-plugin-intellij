@@ -11,6 +11,8 @@ import com.intellij.psi.PsiReference;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.containers.ContainerUtil;
 import de.dm.intellij.bndtools.psi.Attribute;
+import de.dm.intellij.bndtools.psi.BndToken;
+import de.dm.intellij.bndtools.psi.BndTokenType;
 import de.dm.intellij.bndtools.psi.Clause;
 import de.dm.intellij.bndtools.psi.Directive;
 import de.dm.intellij.bndtools.psi.util.BndPsiUtil;
@@ -18,8 +20,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.lang.manifest.psi.Header;
 import org.jetbrains.lang.manifest.psi.HeaderValue;
 import org.jetbrains.lang.manifest.psi.HeaderValuePart;
-import org.jetbrains.lang.manifest.psi.ManifestToken;
-import org.jetbrains.lang.manifest.psi.ManifestTokenType;
 import org.osgi.framework.Constants;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class ExportPackageParser extends BasePackageParser {
 
     public static final ExportPackageParser INSTANCE = new ExportPackageParser();
 
-    private static final TokenSet TOKEN_SET = TokenSet.create(ManifestTokenType.HEADER_VALUE_PART);
+    private static final TokenSet TOKEN_SET = TokenSet.create(BndTokenType.HEADER_VALUE_PART);
 
     @NotNull
     @Override
@@ -41,8 +41,8 @@ public class ExportPackageParser extends BasePackageParser {
             PsiElement prevSibling = originalElement.getPrevSibling();
 
             if (
-                ! (prevSibling instanceof ManifestToken) ||
-                ((ManifestToken)prevSibling).getTokenType() != ManifestTokenType.SEMICOLON
+                ! (prevSibling instanceof BndToken) ||
+                ((BndToken)prevSibling).getTokenType() != BndTokenType.SEMICOLON
             ) {
                 return BndPsiUtil.getPackageReferences(headerValuePart);
             }
@@ -56,10 +56,10 @@ public class ExportPackageParser extends BasePackageParser {
                 ASTNode[] childNodes = headerValuePartNode.getChildren(TOKEN_SET);
 
                 for (ASTNode astNode : childNodes) {
-                    if (astNode instanceof ManifestToken) {
-                        ManifestToken manifestToken = (ManifestToken)astNode;
+                    if (astNode instanceof BndToken) {
+                        BndToken bndToken = (BndToken)astNode;
 
-                        ContainerUtil.addAll(psiReferences, BndPsiUtil.getPackageReferences(manifestToken));
+                        ContainerUtil.addAll(psiReferences, BndPsiUtil.getPackageReferences(bndToken));
                     }
                 }
 
