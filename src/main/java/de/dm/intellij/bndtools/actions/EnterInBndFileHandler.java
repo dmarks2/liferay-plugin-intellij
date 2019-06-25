@@ -44,9 +44,13 @@ public class EnterInBndFileHandler extends EnterHandlerDelegateAdapter {
     private void handleEnterInBndFile(Editor editor, Document document, PsiElement psiAtOffset, int caretOffset) {
         String toInsert;
 
+        String text = document.getText();
+        String line = text.substring(0, caretOffset);
+        line = line.trim();
+
         IElementType elementType = psiAtOffset == null ? null : psiAtOffset.getNode().getElementType();
 
-        if (elementType == BndTokenType.HEADER_VALUE_PART) {
+        if (!line.endsWith("\\") && elementType == BndTokenType.HEADER_VALUE_PART) {
             toInsert = "\\\n    ";
         } else {
             toInsert = "\n";
