@@ -1,21 +1,24 @@
 package de.dm.intellij.bndtools.parser;
 
 import com.intellij.lang.PsiBuilder;
+import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.psi.PsiReference;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
+import de.dm.intellij.bndtools.psi.BndHeader;
+import de.dm.intellij.bndtools.psi.BndHeaderValue;
+import de.dm.intellij.bndtools.psi.BndHeaderValuePart;
 import de.dm.intellij.bndtools.psi.BndTokenType;
 import de.dm.intellij.bndtools.psi.OsgiManifestElementType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.lang.manifest.header.HeaderParser;
-import org.jetbrains.lang.manifest.header.impl.StandardHeaderParser;
+import org.jetbrains.annotations.Nullable;
 
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
-public class OsgiHeaderParser extends StandardHeaderParser {
+public class OsgiHeaderParser {
 
-    public static final HeaderParser INSTANCE = new OsgiHeaderParser();
+    public static final OsgiHeaderParser INSTANCE = new OsgiHeaderParser();
 
-    @Override
     public void parse(@NotNull PsiBuilder psiBuilder) {
         while (!psiBuilder.eof()) {
             if (!_parseClause(psiBuilder)) {
@@ -32,6 +35,22 @@ public class OsgiHeaderParser extends StandardHeaderParser {
             }
         }
     }
+
+    public boolean annotate(@NotNull BndHeader bndHeader, @NotNull AnnotationHolder holder) {
+        return false;
+    }
+
+    @Nullable
+    public Object getConvertedValue(@NotNull BndHeader bndHeader) {
+        BndHeaderValue value = bndHeader.getBndHeaderValue();
+        return value != null ? value.getUnwrappedText() : null;
+    }
+
+    @NotNull
+    public PsiReference[] getReferences(@NotNull BndHeaderValuePart bndHeaderValuePart) {
+        return PsiReference.EMPTY_ARRAY;
+    }
+
 
     private static boolean _parseAttribute(PsiBuilder psiBuilder, PsiBuilder.Marker marker) {
         psiBuilder.advanceLexer();
@@ -135,7 +154,8 @@ public class OsgiHeaderParser extends StandardHeaderParser {
                 psiBuilder.advanceLexer();
 
                 if ((lastToken == BndTokenType.NEWLINE) &&
-                    (psiBuilder.getTokenType() != BndTokenType.SIGNIFICANT_SPACE)) {
+                    (! "\\".equals(tokenText)) ) {
+                    //psiBuilder.getTokenType() != BndTokenType.SIGNIFICANT_SPACE)) {
 
                     result = false;
 

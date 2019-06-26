@@ -1,30 +1,25 @@
 package de.dm.intellij.bndtools.psi.impl;
 
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiTreeUtil;
 import de.dm.intellij.bndtools.parser.OsgiHeaderParser;
+import de.dm.intellij.bndtools.parser.OsgiManifestHeaderParsers;
 import de.dm.intellij.bndtools.psi.BndHeader;
 import de.dm.intellij.bndtools.psi.BndHeaderValuePart;
 import de.dm.intellij.bndtools.psi.BndToken;
 import de.dm.intellij.bndtools.psi.BndTokenType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.lang.manifest.header.HeaderParser;
-import org.jetbrains.lang.manifest.header.HeaderParserRepository;
-import org.jetbrains.lang.manifest.psi.impl.HeaderValuePartImpl;
 
-public class BndHeaderValuePartImpl extends HeaderValuePartImpl implements BndHeaderValuePart {
+public class BndHeaderValuePartImpl extends ASTWrapperPsiElement implements BndHeaderValuePart {
     private static final TokenSet SPACES = TokenSet.create(BndTokenType.SIGNIFICANT_SPACE, BndTokenType.NEWLINE);
-
-    private final HeaderParserRepository myRepository;
 
     public BndHeaderValuePartImpl(ASTNode node) {
         super(node);
-        myRepository = ServiceManager.getService(HeaderParserRepository.class);
     }
 
     @NotNull
@@ -36,14 +31,27 @@ public class BndHeaderValuePartImpl extends HeaderValuePartImpl implements BndHe
 
         BndHeader bndHeader = PsiTreeUtil.getParentOfType(this, BndHeader.class);
         if (bndHeader != null) {
-            HeaderParser headerParser = myRepository.getHeaderParser(bndHeader.getName());
-            if (headerParser instanceof OsgiHeaderParser) {
-                OsgiHeaderParser osgiHeaderParser = (OsgiHeaderParser)headerParser;
+            OsgiHeaderParser osgiHeaderParser = OsgiManifestHeaderParsers.PARSERS.get(bndHeader.getName());
+            if (osgiHeaderParser != null) {
                 return osgiHeaderParser.getReferences(this);
             }
         }
 
         return PsiReference.EMPTY_ARRAY;
+    }
+
+    @NotNull
+    @Override
+    public String getUnwrappedText() {
+        StringBuilder builder = new StringBuilder();
+
+        for (PsiElement element = getFirstChild(); element != null; element = element.getNextSibling()) {
+            if (!(isSpace(element))) {
+                builder.append(element.getText());
+            }
+        }
+
+        return builder.toString().trim();
     }
 
     @NotNull

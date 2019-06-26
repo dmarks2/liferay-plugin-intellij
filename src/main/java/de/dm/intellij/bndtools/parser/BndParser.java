@@ -2,8 +2,8 @@ package de.dm.intellij.bndtools.parser;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiBuilder;
+import com.intellij.lang.PsiParser;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.ObjectUtils;
@@ -11,20 +11,10 @@ import de.dm.intellij.bndtools.psi.BndTokenType;
 import de.dm.intellij.bndtools.psi.OsgiManifestElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.lang.manifest.ManifestBundle;
-import org.jetbrains.lang.manifest.header.HeaderParser;
-import org.jetbrains.lang.manifest.header.HeaderParserRepository;
-import org.jetbrains.lang.manifest.header.impl.StandardHeaderParser;
-import org.jetbrains.lang.manifest.parser.ManifestParser;
 
-public class BndParser extends ManifestParser {
+public class BndParser implements PsiParser /*extends ManifestParser*/ {
 
     public static final TokenSet HEADER_END_TOKENS = TokenSet.create(BndTokenType.SECTION_END, BndTokenType.HEADER_NAME);
-
-    private final HeaderParserRepository myRepository;
-
-    public BndParser() {
-        myRepository = ServiceManager.getService(HeaderParserRepository.class);
-    }
 
     @NotNull
     @Override
@@ -76,8 +66,8 @@ public class BndParser extends ManifestParser {
             }
  */
 
-            HeaderParser headerParser = ObjectUtils.notNull(myRepository.getHeaderParser(headerName), StandardHeaderParser.INSTANCE);
-            headerParser.parse(builder);
+            OsgiHeaderParser osgiHeaderParser = ObjectUtils.notNull(OsgiManifestHeaderParsers.PARSERS.get(headerName), OsgiHeaderParser.INSTANCE);
+            osgiHeaderParser.parse(builder);
         }
         else {
             PsiBuilder.Marker marker = builder.mark();

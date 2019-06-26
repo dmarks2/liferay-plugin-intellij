@@ -7,16 +7,16 @@ import de.dm.intellij.bndtools.BndLanguage;
 import de.dm.intellij.bndtools.psi.impl.AttributeImpl;
 import de.dm.intellij.bndtools.psi.impl.BndHeaderImpl;
 import de.dm.intellij.bndtools.psi.impl.BndHeaderValuePartImpl;
+import de.dm.intellij.bndtools.psi.impl.BndSectionImpl;
 import de.dm.intellij.bndtools.psi.impl.ClauseImpl;
 import de.dm.intellij.bndtools.psi.impl.DirectiveImpl;
-import org.jetbrains.lang.manifest.psi.impl.SectionImpl;
 
 public abstract class OsgiManifestElementType extends IElementType {
 
     public static final IElementType SECTION = new OsgiManifestElementType("SECTION") {
         @Override
         public PsiElement createPsi(ASTNode node) {
-            return new SectionImpl(node);
+            return new BndSectionImpl(node);
         }
     };
 

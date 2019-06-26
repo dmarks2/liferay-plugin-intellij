@@ -16,11 +16,11 @@ import com.intellij.patterns.PsiElementPattern;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.ProcessingContext;
 import de.dm.intellij.bndtools.BndLanguage;
+import de.dm.intellij.bndtools.parser.OsgiManifestHeaderParsers;
 import de.dm.intellij.bndtools.psi.BndHeader;
 import de.dm.intellij.bndtools.psi.BndTokenType;
 import de.dm.intellij.bndtools.psi.Directive;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.lang.manifest.header.HeaderParserRepository;
 import org.osgi.framework.Constants;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
@@ -47,7 +47,7 @@ public class OsgiManifestCompletionContributor extends CompletionContributor {
                 public void addCompletions(@NotNull CompletionParameters parameters,
                                            @NotNull ProcessingContext context,
                                            @NotNull CompletionResultSet resultSet) {
-                    for (String header : HeaderParserRepository.getInstance().getAllHeaderNames()) {
+                    for (String header : OsgiManifestHeaderParsers.PARSERS.keySet()) {
                         resultSet.addElement(LookupElementBuilder.create(header).withInsertHandler(HEADER_INSERT_HANDLER));
                     }
                 }

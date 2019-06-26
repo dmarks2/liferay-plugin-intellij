@@ -2,31 +2,29 @@ package de.dm.intellij.bndtools.parser;
 
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.openapi.util.TextRange;
+import de.dm.intellij.bndtools.psi.BndHeader;
+import de.dm.intellij.bndtools.psi.BndHeaderValue;
+import de.dm.intellij.bndtools.psi.BndHeaderValuePart;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.lang.manifest.header.HeaderParser;
-import org.jetbrains.lang.manifest.header.impl.StandardHeaderParser;
-import org.jetbrains.lang.manifest.psi.Header;
-import org.jetbrains.lang.manifest.psi.HeaderValue;
-import org.jetbrains.lang.manifest.psi.HeaderValuePart;
 import org.osgi.framework.Version;
 
 public class BundleVersionParser extends OsgiHeaderParser {
 
-    public static final HeaderParser INSTANCE = new BundleVersionParser();
+    public static final BundleVersionParser INSTANCE = new BundleVersionParser();
 
     @Override
-    public boolean annotate(@NotNull Header header, @NotNull AnnotationHolder annotationHolder) {
-        HeaderValue value = header.getHeaderValue();
+    public boolean annotate(@NotNull BndHeader bndHeader, @NotNull AnnotationHolder annotationHolder) {
+        BndHeaderValue value = bndHeader.getBndHeaderValue();
 
-        if (value instanceof HeaderValuePart) {
+        if (value instanceof BndHeaderValuePart) {
             try {
                 new Version(value.getUnwrappedText());
             }
             catch (IllegalArgumentException iae) {
-                HeaderValuePart headerValuePart = (HeaderValuePart)value;
+                BndHeaderValuePart bndHeaderValuePart = (BndHeaderValuePart)value;
 
-                TextRange range = headerValuePart.getHighlightingRange();
+                TextRange range = bndHeaderValuePart.getHighlightingRange();
 
                 annotationHolder.createErrorAnnotation(range, iae.getMessage());
 
@@ -39,10 +37,10 @@ public class BundleVersionParser extends OsgiHeaderParser {
 
     @Nullable
     @Override
-    public Object getConvertedValue(@NotNull Header header) {
-        HeaderValue value = header.getHeaderValue();
+    public Object getConvertedValue(@NotNull BndHeader bndHeader) {
+        BndHeaderValue value = bndHeader.getBndHeaderValue();
 
-        if (value instanceof HeaderValuePart) {
+        if (value instanceof BndHeaderValuePart) {
             try {
                 return new Version(value.getUnwrappedText());
             }

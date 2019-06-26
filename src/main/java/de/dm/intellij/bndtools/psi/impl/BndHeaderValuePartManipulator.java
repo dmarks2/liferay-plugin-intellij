@@ -7,9 +7,9 @@ import com.intellij.psi.PsiFileFactory;
 import com.intellij.util.IncorrectOperationException;
 import de.dm.intellij.bndtools.BndFileType;
 import de.dm.intellij.bndtools.psi.BndFile;
+import de.dm.intellij.bndtools.psi.BndHeaderValue;
 import de.dm.intellij.bndtools.psi.BndHeaderValuePart;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.lang.manifest.psi.HeaderValue;
 
 public class BndHeaderValuePartManipulator extends AbstractElementManipulator<BndHeaderValuePart> {
 
@@ -19,7 +19,7 @@ public class BndHeaderValuePartManipulator extends AbstractElementManipulator<Bn
 
         PsiFile file = PsiFileFactory.getInstance(element.getProject()).createFileFromText("bnd.bnd", BndFileType.INSTANCE, text);
 
-        HeaderValue value = ((BndFile)file).getHeaders().get(0).getHeaderValue();
+        BndHeaderValue value = ((BndFile)file).getHeaders().get(0).getBndHeaderValue();
 
         return (BndHeaderValuePart)element.replace(value);
     }

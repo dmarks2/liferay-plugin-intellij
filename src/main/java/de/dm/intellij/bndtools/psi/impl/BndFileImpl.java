@@ -7,10 +7,10 @@ import com.intellij.psi.util.PsiTreeUtil;
 import de.dm.intellij.bndtools.BndFileType;
 import de.dm.intellij.bndtools.BndLanguage;
 import de.dm.intellij.bndtools.psi.BndFile;
+import de.dm.intellij.bndtools.psi.BndHeader;
+import de.dm.intellij.bndtools.psi.BndSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.lang.manifest.psi.Header;
-import org.jetbrains.lang.manifest.psi.Section;
 
 import java.util.List;
 
@@ -28,31 +28,31 @@ public class BndFileImpl extends PsiFileBase implements BndFile {
 
     @NotNull
     @Override
-    public List<Section> getSections() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(this, Section.class);
+    public List<BndSection> getSections() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(this, BndSection.class);
     }
 
     @Nullable
     @Override
-    public Section getMainSection() {
-        return findChildByClass(Section.class);
+    public BndSection getMainSection() {
+        return findChildByClass(BndSection.class);
     }
 
     @NotNull
     @Override
-    public List<Header> getHeaders() {
-        return PsiTreeUtil.getChildrenOfTypeAsList(getFirstChild(), Header.class);
+    public List<BndHeader> getHeaders() {
+        return PsiTreeUtil.getChildrenOfTypeAsList(getFirstChild(), BndHeader.class);
     }
 
     @Nullable
     @Override
-    public Header getHeader(@NotNull String name) {
-        Header child = PsiTreeUtil.findChildOfType(getFirstChild(), Header.class);
+    public BndHeader getHeader(@NotNull String name) {
+        BndHeader child = PsiTreeUtil.findChildOfType(getFirstChild(), BndHeader.class);
         while (child != null) {
             if (name.equals(child.getName())) {
                 return child;
             }
-            child = PsiTreeUtil.getNextSiblingOfType(child, Header.class);
+            child = PsiTreeUtil.getNextSiblingOfType(child, BndHeader.class);
         }
         return null;
     }

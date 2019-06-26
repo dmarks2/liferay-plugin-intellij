@@ -5,27 +5,36 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.psi.PsiElement;
+import de.dm.intellij.bndtools.parser.OsgiHeaderParser;
+import de.dm.intellij.bndtools.parser.OsgiManifestHeaderParsers;
 import de.dm.intellij.bndtools.psi.AssignmentExpression;
 import de.dm.intellij.bndtools.psi.Attribute;
+import de.dm.intellij.bndtools.psi.BndHeader;
+import de.dm.intellij.bndtools.psi.BndHeaderValuePart;
 import de.dm.intellij.bndtools.psi.BndToken;
 import de.dm.intellij.bndtools.psi.BndTokenType;
 import de.dm.intellij.bndtools.psi.Clause;
 import de.dm.intellij.bndtools.psi.Directive;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.lang.manifest.psi.Header;
-import org.jetbrains.lang.manifest.psi.HeaderValuePart;
 
 public class OsgiManifestHighlightingAnnotator implements Annotator {
 
     @Override
     public void annotate(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
-        if (psiElement instanceof HeaderValuePart) {
+        if (psiElement instanceof BndHeader) {
+            BndHeader bndHeader = (BndHeader)psiElement;
+            String name = bndHeader.getName();
+            OsgiHeaderParser osgiHeaderParser = OsgiManifestHeaderParsers.PARSERS.get(name);
+            if (osgiHeaderParser != null) {
+                osgiHeaderParser.annotate(bndHeader, annotationHolder);
+            }
+        } else if (psiElement instanceof BndHeaderValuePart) {
             PsiElement parentPsiElement = psiElement.getParent();
 
             if (parentPsiElement instanceof AssignmentExpression) {
                 AssignmentExpression assignmentExpression = (AssignmentExpression)parentPsiElement;
 
-                HeaderValuePart nameElement = assignmentExpression.getNameElement();
+                BndHeaderValuePart nameElement = assignmentExpression.getNameElement();
 
                 if (parentPsiElement instanceof Attribute) {
                     if (psiElement == nameElement) {
@@ -61,7 +70,7 @@ public class OsgiManifestHighlightingAnnotator implements Annotator {
             else if ((psiElement.getParent() instanceof Clause) && (type == BndTokenType.SEMICOLON)) {
                 _annotate(psiElement, OsgiManifestColorsAndFonts.PARAMETER_SEPARATOR_KEY, annotationHolder);
             }
-            else if ((psiElement.getParent() instanceof Header) && (type == BndTokenType.COMMA)) {
+            else if ((psiElement.getParent() instanceof BndHeader) && (type == BndTokenType.COMMA)) {
                 _annotate(psiElement, OsgiManifestColorsAndFonts.CLAUSE_SEPARATOR_KEY, annotationHolder);
             }
         }

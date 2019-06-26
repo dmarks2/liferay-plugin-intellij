@@ -5,13 +5,13 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiReference;
+import de.dm.intellij.bndtools.psi.BndHeader;
+import de.dm.intellij.bndtools.psi.BndHeaderValue;
+import de.dm.intellij.bndtools.psi.BndHeaderValuePart;
 import de.dm.intellij.bndtools.psi.Clause;
 import de.dm.intellij.bndtools.psi.util.BndPsiUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.lang.manifest.psi.Header;
-import org.jetbrains.lang.manifest.psi.HeaderValue;
-import org.jetbrains.lang.manifest.psi.HeaderValuePart;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,32 +22,32 @@ public class BasePackageParser extends OsgiHeaderParser {
 
     @NotNull
     @Override
-    public PsiReference[] getReferences(@NotNull HeaderValuePart headerValuePart) {
-        if (headerValuePart.getParent() instanceof Clause) {
-            return BndPsiUtil.getPackageReferences(headerValuePart);
+    public PsiReference[] getReferences(@NotNull BndHeaderValuePart bndHeaderValuePart) {
+        if (bndHeaderValuePart.getParent() instanceof Clause) {
+            return BndPsiUtil.getPackageReferences(bndHeaderValuePart);
         }
 
         return PsiReference.EMPTY_ARRAY;
     }
 
     @Override
-    public boolean annotate(@NotNull Header header, @NotNull AnnotationHolder holder) {
+    public boolean annotate(@NotNull BndHeader bndHeader, @NotNull AnnotationHolder holder) {
         boolean annotated = false;
 
-        for (HeaderValue headerValue : header.getHeaderValues()) {
-            if (headerValue instanceof Clause) {
-                Clause clause = (Clause)headerValue;
+        for (BndHeaderValue bndHeaderValue : bndHeader.getBndHeaderValues()) {
+            if (bndHeaderValue instanceof Clause) {
+                Clause clause = (Clause)bndHeaderValue;
 
-                HeaderValuePart headerValuePart = clause.getValue();
+                BndHeaderValuePart bndHeaderValuePart = clause.getValue();
 
-                if (headerValuePart != null) {
-                    String packageName = headerValuePart.getUnwrappedText();
+                if (bndHeaderValuePart != null) {
+                    String packageName = bndHeaderValuePart.getUnwrappedText();
 
                     packageName = StringUtil.trimEnd(packageName, ".*");
 
                     if (StringUtil.isEmptyOrSpaces(packageName)) {
                         holder.createErrorAnnotation(
-                            headerValuePart.getHighlightingRange(),
+                            bndHeaderValuePart.getHighlightingRange(),
                             "Invalid reference"
                         );
 
@@ -62,11 +62,11 @@ public class BasePackageParser extends OsgiHeaderParser {
                     }
 
                     if (! "*".equals(packageName)) {
-                        PsiDirectory[] psiDirectories = BndPsiUtil.resolvePackage(header, packageName);
+                        PsiDirectory[] psiDirectories = BndPsiUtil.resolvePackage(bndHeader, packageName);
 
                         if (psiDirectories.length == 0) {
                             holder.createErrorAnnotation(
-                                headerValuePart.getHighlightingRange(),
+                                bndHeaderValuePart.getHighlightingRange(),
                                 JavaErrorMessages.message("cannot.resolve.package", packageName)
                             );
                             annotated = true;
@@ -81,20 +81,20 @@ public class BasePackageParser extends OsgiHeaderParser {
 
     @Nullable
     @Override
-    public Object getConvertedValue(@NotNull Header header) {
-        List<HeaderValue> headerValues = header.getHeaderValues();
+    public Object getConvertedValue(@NotNull BndHeader bndHeader) {
+        List<BndHeaderValue> bndHeaderValues = bndHeader.getBndHeaderValues();
 
-        if (! headerValues.isEmpty()) {
+        if (! bndHeaderValues.isEmpty()) {
             List<String> packages = new ArrayList<>();
 
-            for (HeaderValue headerValue : headerValues) {
-                if (headerValue instanceof Clause) {
-                    Clause clause = (Clause) headerValue;
+            for (BndHeaderValue bndHeaderValue : bndHeaderValues) {
+                if (bndHeaderValue instanceof Clause) {
+                    Clause clause = (Clause) bndHeaderValue;
 
-                    HeaderValuePart headerValuePart = clause.getValue();
+                    BndHeaderValuePart bndHeaderValuePart = clause.getValue();
 
-                    if (headerValuePart != null) {
-                        String packageName = headerValuePart.getText();
+                    if (bndHeaderValuePart != null) {
+                        String packageName = bndHeaderValuePart.getText();
 
                         packageName = packageName.replaceAll("\\s+", "");
 

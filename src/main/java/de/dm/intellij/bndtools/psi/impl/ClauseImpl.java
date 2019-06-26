@@ -4,11 +4,11 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.util.PsiTreeUtil;
 import de.dm.intellij.bndtools.psi.Attribute;
+import de.dm.intellij.bndtools.psi.BndHeaderValuePart;
 import de.dm.intellij.bndtools.psi.Clause;
 import de.dm.intellij.bndtools.psi.Directive;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.lang.manifest.psi.HeaderValuePart;
 
 import java.util.List;
 
@@ -66,8 +66,8 @@ public class ClauseImpl extends ASTWrapperPsiElement implements Clause {
     }
 
     @Override
-    public HeaderValuePart getValue() {
-        return findChildByClass(HeaderValuePart.class);
+    public BndHeaderValuePart getValue() {
+        return findChildByClass(BndHeaderValuePart.class);
     }
 
     @Override
