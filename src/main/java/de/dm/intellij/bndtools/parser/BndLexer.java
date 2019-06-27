@@ -23,6 +23,7 @@ public class BndLexer extends LexerBase {
         SPECIAL_CHARACTERS_TOKEN_MAPPING.put('[', BndTokenType.OPENING_BRACKET_TOKEN);
         SPECIAL_CHARACTERS_TOKEN_MAPPING.put(']', BndTokenType.CLOSING_BRACKET_TOKEN);
         SPECIAL_CHARACTERS_TOKEN_MAPPING.put('\"', BndTokenType.QUOTE);
+        SPECIAL_CHARACTERS_TOKEN_MAPPING.put('\\', BndTokenType.BACKSLASH_TOKEN);
     }
 
     private CharSequence myBuffer;
@@ -89,6 +90,15 @@ public class BndLexer extends LexerBase {
 
         boolean atLineStart = myTokenStart == 0 || myBuffer.charAt(myTokenStart - 1) == '\n';
         char c = myBuffer.charAt(myTokenStart);
+
+        if (myTokenStart > 1) {
+            int c1 = myBuffer.charAt(myTokenStart - 2);
+            int c2 = myBuffer.charAt(myTokenStart - 1);
+
+            if (c1 == '\\' && c2 == '\n') {
+                atLineStart = false;
+            }
+        }
 
         if (atLineStart) {
             myDefaultState = true;

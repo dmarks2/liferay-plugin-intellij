@@ -153,11 +153,8 @@ public class OsgiHeaderParser {
                 IElementType lastToken = psiBuilder.getTokenType();
                 psiBuilder.advanceLexer();
 
-                if ((lastToken == BndTokenType.NEWLINE) &&
-                    (! "\\".equals(tokenText)) ) {
-                    //psiBuilder.getTokenType() != BndTokenType.SIGNIFICANT_SPACE)) {
-
-                    result = false;
+                if ((psiBuilder.getTokenType() == BndTokenType.NEWLINE) &&
+                    (! (lastToken == BndTokenType.BACKSLASH_TOKEN)) ) {
 
                     break;
                 }

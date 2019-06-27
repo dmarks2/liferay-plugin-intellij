@@ -24,6 +24,7 @@ public class BndTokenType extends IElementType implements ILeafElementType {
     public static final BndTokenType CLOSING_PARENTHESIS_TOKEN = new BndTokenType("CLOSING_PARENTHESIS_TOKEN");
     public static final BndTokenType OPENING_BRACKET_TOKEN = new BndTokenType("OPENING_BRACKET_TOKEN");
     public static final BndTokenType CLOSING_BRACKET_TOKEN = new BndTokenType("CLOSING_BRACKET_TOKEN");
+    public static final BndTokenType BACKSLASH_TOKEN = new BndTokenType("BACKSLASH_TOKEN");
 
     private BndTokenType(@NotNull @NonNls String debugName) {
         super(debugName, BndLanguage.INSTANCE);

@@ -50,7 +50,7 @@ public class EnterInBndFileHandler extends EnterHandlerDelegateAdapter {
 
         IElementType elementType = psiAtOffset == null ? null : psiAtOffset.getNode().getElementType();
 
-        if (!line.endsWith("\\") && elementType == BndTokenType.HEADER_VALUE_PART) {
+        if (!line.endsWith("\\") && (elementType == BndTokenType.HEADER_VALUE_PART || elementType == BndTokenType.COMMA || line.endsWith(",")) ) {
             toInsert = "\\\n    ";
         } else {
             toInsert = "\n";
