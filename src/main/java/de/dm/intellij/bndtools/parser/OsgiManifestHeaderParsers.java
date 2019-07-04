@@ -16,6 +16,7 @@ public class OsgiManifestHeaderParsers {
         PARSERS.put(Constants.PRIVATE_PACKAGE, BasePackageParser.INSTANCE);
         PARSERS.put(Constants.IGNORE_PACKAGE, BasePackageParser.INSTANCE);
         PARSERS.put(Constants.IMPORT_PACKAGE, BasePackageParser.INSTANCE);
+        PARSERS.put(Constants.CONDITIONAL_PACKAGE, BasePackageParser.INSTANCE);
         PARSERS.put(Constants.EXPORT_PACKAGE, ExportPackageParser.INSTANCE);
 
         for (String header : LiferayBndConstants.CLASS_REFERENCE_PROPERTIES) {
