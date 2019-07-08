@@ -5,6 +5,7 @@ import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiTreeUtil;
 import de.dm.intellij.bndtools.parser.OsgiHeaderParser;
@@ -16,7 +17,7 @@ import de.dm.intellij.bndtools.psi.BndTokenType;
 import org.jetbrains.annotations.NotNull;
 
 public class BndHeaderValuePartImpl extends ASTWrapperPsiElement implements BndHeaderValuePart {
-    private static final TokenSet SPACES = TokenSet.create(BndTokenType.SIGNIFICANT_SPACE, BndTokenType.NEWLINE);
+    private static final TokenSet SPACES = TokenSet.create(TokenType.WHITE_SPACE, BndTokenType.NEWLINE);
 
     public BndHeaderValuePartImpl(ASTNode node) {
         super(node);

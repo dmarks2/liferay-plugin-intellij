@@ -1,6 +1,7 @@
 package de.dm.intellij.bndtools.parser;
 
 import com.intellij.lexer.LexerBase;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import de.dm.intellij.bndtools.psi.BndTokenType;
 import org.jetbrains.annotations.NotNull;
@@ -103,7 +104,7 @@ public class BndLexer extends LexerBase {
         if (atLineStart) {
             myDefaultState = true;
             if (c == ' ') {
-                myTokenType = BndTokenType.SIGNIFICANT_SPACE;
+                myTokenType = TokenType.WHITE_SPACE;
                 myTokenEnd = myTokenStart + 1;
             }
             else if (c == '\n') {
@@ -132,7 +133,7 @@ public class BndLexer extends LexerBase {
             myTokenEnd = myTokenStart + 1;
         }
         else if (!myDefaultState && c == ' ') {
-            myTokenType = BndTokenType.SIGNIFICANT_SPACE;
+            myTokenType = TokenType.WHITE_SPACE;
             myTokenEnd = myTokenStart + 1;
             myDefaultState = true;
         }
@@ -145,6 +146,9 @@ public class BndLexer extends LexerBase {
             }
             else if ((special = SPECIAL_CHARACTERS_TOKEN_MAPPING.get(c)) != null) {
                 myTokenType = special;
+                myTokenEnd = myTokenStart + 1;
+            } else if (c == ' ') {
+                myTokenType = TokenType.WHITE_SPACE;
                 myTokenEnd = myTokenStart + 1;
             }
             else {

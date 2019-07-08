@@ -114,6 +114,7 @@
         <enterHandlerDelegate implementation="de.dm.intellij.bndtools.actions.EnterInBndFileHandler"/>
         <lang.elementManipulator forClass="de.dm.intellij.bndtools.psi.BndHeaderValuePart"
                                  implementationClass="de.dm.intellij.bndtools.psi.impl.BndHeaderValuePartManipulator"/>
+        <lang.formatter language="bnd" implementationClass="de.dm.intellij.bndtools.formatting.BndFormattingModelBuilder"/>
 
         <!-- Completion Contribution for @Component annotation -->
         <completion.contributor order="first, before propertiesCompletion" language="JAVA" implementationClass="de.dm.intellij.liferay.language.osgi.ComponentPropertiesCompletionContributor"/>

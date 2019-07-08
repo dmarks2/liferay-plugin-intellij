@@ -3,6 +3,7 @@ package de.dm.intellij.bndtools.parser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.psi.PsiReference;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import de.dm.intellij.bndtools.psi.BndHeader;
@@ -92,7 +93,7 @@ public class OsgiHeaderParser {
         psiBuilder.advanceLexer();
 
         if (expect(psiBuilder, BndTokenType.NEWLINE)) {
-            expect(psiBuilder, BndTokenType.SIGNIFICANT_SPACE);
+            expect(psiBuilder, TokenType.WHITE_SPACE);
         }
 
         expect(psiBuilder, BndTokenType.EQUALS);
