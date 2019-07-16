@@ -210,7 +210,7 @@ task generateLiferayDefinitions {
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-workflow-definition_7_0_0.xsd',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-workflow-definition_7_1_0.xsd',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/portlet-app_2_0.xsd',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/portlet-app_2_0.xsd'
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/portlet-app_3_0.xsd'
             ])
             dest target
             acceptAnyCertificate true
