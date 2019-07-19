@@ -43,6 +43,7 @@ public class LiferaySassFileReferenceHelper extends FileReferenceHelper {
                 } else if (
                             (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_0) ||
                             (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
+                            (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                             (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                         ) {
                     if (

@@ -102,6 +102,7 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
                 if (
                         (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_0) ||
                         (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
+                        (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                         (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                         ) { //Liferay 7.0
                     result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-product-navigation.tld", module, "liferay_product_navigation"));
@@ -215,6 +216,7 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
         if (
                 (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_0) ||
                 (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
+                (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                 (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                 ) { //Liferay 7.0
             return new String[] {
@@ -242,6 +244,8 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
             return "/com/liferay/ftl/FTL_liferay_70.ftl";
         } else if (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_1) {
             return "/com/liferay/ftl/FTL_liferay_71.ftl";
+        } else if (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_2) {
+            return "/com/liferay/ftl/FTL_liferay_72.ftl";
         }
 
         return null;

@@ -143,6 +143,13 @@ task generateLiferayTemplateHelperFiles {
             overwrite true
             onlyIfNewer true
         }
+        download {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
+            dest new File(targetFtl, "FTL_liferay_72.ftl")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
     }
 }
 task generateLiferayDefinitions {
