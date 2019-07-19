@@ -8,9 +8,22 @@ OSGi components
 Syntax Hightlighting for BND files
 ----------------------------------
 
-This plugin adds basic syntax highlighting for ```bnd.bnd``` files.
+This plugin adds syntax highlighting and code completions for ```bnd.bnd``` files.
 
 ![bnd.bnd file](bnd.png "bnd.bnd file")
+
+For the following situations an additional validation is provided:
+* Bundle Versions are validated if they are valid versions (i.e. correct format, no invalid characters etc.)
+* `Bundle-Activator` is being checked if it is a valid class and if the class inherits from `org.osgi.framework.BundleActivator`
+* `Private-Package`, `Import-Package`, `Ignore-Package`, `Conditional-Package` and `Export-Package` are being validated if they point to a valid java package.
+* `-plugin.bundle`, `-plugin.jsp`, `-plugin.npm`, `-plugin.resourcebundle`, `-plugin.sass`, `-plugin.service` and `-plugin.spring` are being validated if they point to a valid java class.
+* `Liferay-JS-Config` is being checked if it points to a valid file
+
+Additionally to the standard bnd headers the following Liferay keywords are detected as valid headers, too:
+
+    -jsp, -sass, -liferay-service-xml, Liferay-Releng-Module-Group-Description, Liferay-Releng-Module-Group-Title,
+    Liferay-Require-SchemaVersion, Liferay-Service, DynamicImport-Package, Liferay-Modules-Compat-Adapters
+        
 
 *Works for Liferay 7.x, works in IntelliJ Community Edition and Ultimate Edition*
 

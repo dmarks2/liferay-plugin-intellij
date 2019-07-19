@@ -21,6 +21,7 @@ import com.intellij.psi.util.PsiMethodUtil;
 import de.dm.intellij.bndtools.psi.BndHeader;
 import de.dm.intellij.bndtools.psi.BndHeaderValue;
 import de.dm.intellij.bndtools.psi.BndHeaderValuePart;
+import de.dm.intellij.bndtools.psi.Clause;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.lang.manifest.ManifestBundle;
 
@@ -57,8 +58,19 @@ public class BndClassReferenceParser extends OsgiHeaderParser /*extends ClassRef
     @Override
     public boolean annotate(@NotNull BndHeader bndHeader, @NotNull AnnotationHolder holder) {
         BndHeaderValue value = bndHeader.getBndHeaderValue();
-        if (!(value instanceof BndHeaderValuePart)) return false;
-        BndHeaderValuePart valuePart = (BndHeaderValuePart)value;
+
+        BndHeaderValuePart valuePart = null;
+
+        if (value instanceof BndHeaderValuePart) {
+            valuePart = (BndHeaderValuePart) value;
+        } else if (value instanceof Clause) {
+            Clause clause = (Clause)value;
+            valuePart = clause.getValue();
+        }
+
+        if (valuePart == null) {
+            return false;
+        }
 
         String className = valuePart.getUnwrappedText();
         if (StringUtil.isEmptyOrSpaces(className)) {
