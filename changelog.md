@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Feature: File References for portlet.properties files
 - Feature: Improved bnd.bnd editor
 - Feature: Improved code completions to support Portlet 3.0 Specification
+- Feature: Added support for Liferay 7.2
 
 ## 0.0.5
 - Feature: Experimental Freemarker debugger
