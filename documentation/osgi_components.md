@@ -17,7 +17,7 @@ For the following situations an additional validation is provided:
 * `Bundle-Activator` is being checked if it is a valid class and if the class inherits from `org.osgi.framework.BundleActivator`
 * `Private-Package`, `Import-Package`, `Ignore-Package`, `Conditional-Package` and `Export-Package` are being validated if they point to a valid java package.
 * `-plugin.bundle`, `-plugin.jsp`, `-plugin.npm`, `-plugin.resourcebundle`, `-plugin.sass`, `-plugin.service` and `-plugin.spring` are being validated if they point to a valid java class.
-* `Liferay-JS-Config` is being checked if it points to a valid file
+* `Liferay-JS-Config` and `Liferay-Configuration-Path` are being checked if they point to a valid file
 
 Additionally to the standard bnd headers the following Liferay keywords are detected as valid headers, too:
 

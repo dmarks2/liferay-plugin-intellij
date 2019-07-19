@@ -21,6 +21,7 @@ public class LiferayBndConstants {
     public static final String LIFERAY_MODULES_COMPAT_ADAPTERS = "Liferay-Modules-Compat-Adapters";
 
     public static final String LIFERAY_JS_CONFIG = "Liferay-JS-Config";
+    public static final String LIFERAY_CONFIGURATION_PATH = "Liferay-Configuration-Path";
 
 
     public static final String[] DEFAULT_HEADER_PROPERTIES = {
@@ -34,7 +35,7 @@ public class LiferayBndConstants {
     };
 
     public static final String[] FILE_REFERENCE_PROPERTIES = {
-        LIFERAY_JS_CONFIG
+        LIFERAY_JS_CONFIG, LIFERAY_CONFIGURATION_PATH
     };
 
 }
