@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Improved bnd.bnd editor
 - Feature: Improved code completions to support Portlet 3.0 Specification
 - Feature: Added support for Liferay 7.2
+- Bugfix: Fixed parsing of invalid pom.xml
 
 ## 0.0.5
 - Feature: Experimental Freemarker debugger

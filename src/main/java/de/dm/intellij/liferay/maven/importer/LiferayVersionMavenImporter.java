@@ -103,38 +103,41 @@ public class LiferayVersionMavenImporter extends MavenImporter {
 
                         VirtualFile pomFile = mavenProject.getFile();
 
-                        XmlFile xmlFile = (XmlFile) PsiManager.getInstance(project).findFile(pomFile);
-                        if ((xmlFile != null) && (xmlFile.isValid())) {
-                            XmlTag rootTag = xmlFile.getRootTag();
-                            if (rootTag != null) {
-                                XmlTag dependencyManagement = rootTag.findFirstSubTag("dependencyManagement");
-                                if (dependencyManagement != null) {
-                                    XmlTag[] dependenciesTags = dependencyManagement.findSubTags("dependencies");
-                                    for (XmlTag dependenciesTag : dependenciesTags) {
-                                        XmlTag[] dependencyTags = dependenciesTag.findSubTags("dependency");
-                                        for (XmlTag dependencyTag : dependencyTags) {
-                                            String groupId = dependencyTag.getSubTagText("groupId");
-                                            String artifactId = dependencyTag.getSubTagText("artifactId");
-                                            String version = dependencyTag.getSubTagText("version");
-                                            String type = dependencyTag.getSubTagText("type");
-                                            String scope = dependencyTag.getSubTagText("scope");
-                                            if (
+                        if (pomFile.isValid()) {
+
+                            XmlFile xmlFile = (XmlFile) PsiManager.getInstance(project).findFile(pomFile);
+                            if ((xmlFile != null) && (xmlFile.isValid())) {
+                                XmlTag rootTag = xmlFile.getRootTag();
+                                if (rootTag != null) {
+                                    XmlTag dependencyManagement = rootTag.findFirstSubTag("dependencyManagement");
+                                    if (dependencyManagement != null) {
+                                        XmlTag[] dependenciesTags = dependencyManagement.findSubTags("dependencies");
+                                        for (XmlTag dependenciesTag : dependenciesTags) {
+                                            XmlTag[] dependencyTags = dependenciesTag.findSubTags("dependency");
+                                            for (XmlTag dependencyTag : dependencyTags) {
+                                                String groupId = dependencyTag.getSubTagText("groupId");
+                                                String artifactId = dependencyTag.getSubTagText("artifactId");
+                                                String version = dependencyTag.getSubTagText("version");
+                                                String type = dependencyTag.getSubTagText("type");
+                                                String scope = dependencyTag.getSubTagText("scope");
+                                                if (
                                                     "import".equals(scope) &&
-                                                            "pom".equals(type) &&
-                                                            (
-                                                                "com.liferay".equals(groupId) ||
+                                                        "pom".equals(type) &&
+                                                        (
+                                                            "com.liferay".equals(groupId) ||
                                                                 "com.liferay.portal".equals(groupId)
-                                                            ) &&
-                                                            artifactId != null &&
-                                                            LIFERAY_BOMS.contains(artifactId) &&
-                                                            version != null
-                                            ) {
-                                                if (version.startsWith("${") && version.endsWith("}")) {
-                                                    String versionProperty = version.substring(2, version.length() - 1);
-                                                    Properties properties = mavenProject.getProperties();
-                                                    version = properties.getProperty(versionProperty);
+                                                        ) &&
+                                                        artifactId != null &&
+                                                        LIFERAY_BOMS.contains(artifactId) &&
+                                                        version != null
+                                                ) {
+                                                    if (version.startsWith("${") && version.endsWith("}")) {
+                                                        String versionProperty = version.substring(2, version.length() - 1);
+                                                        Properties properties = mavenProject.getProperties();
+                                                        version = properties.getProperty(versionProperty);
+                                                    }
+                                                    return version;
                                                 }
-                                                return version;
                                             }
                                         }
                                     }

@@ -30,6 +30,8 @@
             <li>Feature: File References for portlet.properties files</li>
             <li>Feature: Improved bnd.bnd editor</li>
             <li>Feature: Improved code completions to support Portlet 3.0 Specification</li>
+            <li>Feature: Added support for Liferay 7.2</li>
+            <li>Bugfix: Fixed parsing of invalid pom.xml</li>
         </ul>
         <p>Version 0.0.5</p>
         <ul>
