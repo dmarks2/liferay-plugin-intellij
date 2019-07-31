@@ -57,23 +57,25 @@ public class ServiceLocatorFtlVariable extends FtlLightVariable {
 
                     String valueText = LiferayFreemarkerUtil.getArgumentListEntryValue(argumentList, 0);
 
-                    try {
-                        PsiFile psiFile = parent.getContainingFile();
-                        if (psiFile.getOriginalFile() != null) {
-                            psiFile = psiFile.getOriginalFile();
+                    if (valueText != null) {
+                        try {
+                            PsiFile psiFile = parent.getContainingFile();
+                            if (psiFile.getOriginalFile() != null) {
+                                psiFile = psiFile.getOriginalFile();
+                            }
+                            final PsiType targetType = JavaPsiFacade.getInstance(parent.getProject()).getElementFactory().createTypeFromText(valueText, parent);
+                            FtlPsiType stringType = FtlPsiType.wrap(PsiType.getJavaLangString(psiFile.getManager(), psiFile.getResolveScope()));
+
+                            FtlCallableType findServiceType = FtlCallableType.createLightFunctionType(psiMethod, FtlPsiType.wrap(targetType), "serviceName", stringType);
+
+                            //TODO findService is shown as "variable" instead of "method".
+                            FtlDynamicMember findService = new FtlDynamicMember("findService", psiMethod, findServiceType);
+
+                            processor.execute(findService, state);
+
+                        } catch (IncorrectOperationException e) {
+                            //unable to resolve type
                         }
-                        final PsiType targetType = JavaPsiFacade.getInstance(parent.getProject()).getElementFactory().createTypeFromText(valueText, parent);
-                        FtlPsiType stringType = FtlPsiType.wrap(PsiType.getJavaLangString(psiFile.getManager(), psiFile.getResolveScope()));
-
-                        FtlCallableType findServiceType = FtlCallableType.createLightFunctionType(psiMethod, FtlPsiType.wrap(targetType), "serviceName", stringType);
-
-                        //TODO findService is shown as "variable" instead of "method".
-                        FtlDynamicMember findService = new FtlDynamicMember("findService", psiMethod, findServiceType);
-
-                        processor.execute(findService, state);
-
-                    } catch (IncorrectOperationException e) {
-                        //unable to resolve type
                     }
 
                 }
