@@ -70,12 +70,12 @@ intellij {
 //    version "IU-2017.3.4"
 //    version "IU-2018.1.1"
 //    version "IU-2018.3.4"
-    version "IU-2019.1.1"
+    version "IU-2019.2.1"
     type 'IU'
     pluginName 'Liferay IntelliJ Plugin'
     plugins = [
             'JavaScriptLanguage', 'Tomcat', 'Velocity', 'FreeMarker', 'maven', 'properties', 'java-i18n', 'CSS', 'sass', 'JavaEE', 'jsp', 'gradle', 'de.dm.intellij.maven-archetypes-catalog-plugin:1.2.5',
-            'IntelliLang', 'uml',
+            'IntelliLang', 'uml', 'java',
             //test only?
             'osmorc',
             'Groovy', 'junit', 'PersistenceSupport', 'DatabaseTools'

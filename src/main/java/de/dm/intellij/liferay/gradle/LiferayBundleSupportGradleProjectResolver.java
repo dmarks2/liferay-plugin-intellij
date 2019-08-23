@@ -46,26 +46,28 @@ public class LiferayBundleSupportGradleProjectResolver extends AbstractProjectRe
             VirtualFile fileByIoFile = VfsUtil.findFileByIoFile(rootDirectory, false);
             if (fileByIoFile != null) {
                 Project project = ProjectUtil.guessProjectForFile(fileByIoFile);
-                Module module = ModuleUtil.findModuleForFile(fileByIoFile, project);
+                if (project != null) {
+                    Module module = ModuleUtil.findModuleForFile(fileByIoFile, project);
 
-                String liferayHome = liferayBundleSupportGradleTaskModel.getLiferayHome();
-                if (liferayHome != null) {
-                    VirtualFile virtualFile = LocalFileSystem.getInstance().findFileByPath(liferayHome);
-                    if (virtualFile != null) {
-                        String url = virtualFile.getUrl();
+                    String liferayHome = liferayBundleSupportGradleTaskModel.getLiferayHome();
+                    if (liferayHome != null) {
+                        VirtualFile virtualFile = LocalFileSystem.getInstance().findFileByPath(liferayHome);
+                        if (virtualFile != null) {
+                            String url = virtualFile.getUrl();
 
-                        Collection<String> excludeFolders = new ArrayList<String>();
-                        excludeFolders.add(url);
+                            Collection<String> excludeFolders = new ArrayList<String>();
+                            excludeFolders.add(url);
 
-                        ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
+                            ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
 
-                        for (VirtualFile sourceRoot : moduleRootManager.getContentRoots()) {
-                            ModuleRootModificationUtil.updateExcludedFolders(
+                            for (VirtualFile sourceRoot : moduleRootManager.getContentRoots()) {
+                                ModuleRootModificationUtil.updateExcludedFolders(
                                     module,
                                     sourceRoot,
                                     Collections.<String>emptyList(),
                                     excludeFolders
-                            );
+                                );
+                            }
                         }
                     }
                 }

@@ -9,6 +9,9 @@ All notable changes to this project will be documented in this file.
 - Feature: Improved code completions to support Portlet 3.0 Specification
 - Feature: Added support for Liferay 7.2
 - Bugfix: Fixed parsing of invalid pom.xml
+- Bugfix: Fixed non-idempotent computation error message
+- Bugfix: Detecting the bundles directory for gradle projects
+- Change: Updated compatibility to IntelliJ 2019.2 
 
 ## 0.0.5
 - Feature: Experimental Freemarker debugger
