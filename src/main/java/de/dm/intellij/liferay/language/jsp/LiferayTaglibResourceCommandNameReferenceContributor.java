@@ -15,13 +15,12 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ProcessingContext;
-import de.dm.intellij.liferay.index.RenderCommandIndex;
 import de.dm.intellij.liferay.index.ResourceCommandIndex;
 import de.dm.intellij.liferay.util.Icons;
 import de.dm.intellij.liferay.util.LiferayTaglibs;
-import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,15 +36,15 @@ import java.util.TreeSet;
  */
 public class LiferayTaglibResourceCommandNameReferenceContributor extends AbstractLiferayTaglibCommandNameReferenceContributor {
 
-    private static final Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES = new HashMap<String, Collection<Pair<String, String>>>();
+    private static final Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> TAGLIB_ATTRIBUTES = new HashMap<>();
 
     static {
         TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_JAVAX_PORTLET, Arrays.asList(
-            new Pair<>("resourceURL", "id")
+            new AbstractMap.SimpleEntry<>("resourceURL", "id")
         ));
 
         TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET, Arrays.asList(
-            new Pair<>("resourceURL", "id")
+            new AbstractMap.SimpleEntry<>("resourceURL", "id")
         ));
     }
 
@@ -162,7 +161,7 @@ public class LiferayTaglibResourceCommandNameReferenceContributor extends Abstra
     }
 
     @Override
-    protected Map<String, Collection<Pair<String, String>>> getTaglibMap() {
+    protected Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> getTaglibMap() {
         return TAGLIB_ATTRIBUTES;
     }
 }

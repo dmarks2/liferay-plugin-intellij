@@ -6,10 +6,10 @@ import com.intellij.psi.PsiReferenceProvider;
 import com.intellij.psi.PsiReferenceRegistrar;
 import com.intellij.psi.filters.ElementFilter;
 import de.dm.intellij.liferay.util.LiferayTaglibAttributes;
-import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -31,8 +31,8 @@ public abstract class AbstractLiferayResourceBundleReferenceContributor<TagType 
 
     protected String[] getAttributeNames() {
         Set<String> attributeNames = new HashSet<String>();
-        for (Map.Entry<String, Collection<Pair<String, String>>> taglib : LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.entrySet()) {
-            for (Pair<String, String> entry : taglib.getValue()) {
+        for (Map.Entry<String, Collection<AbstractMap.SimpleEntry<String, String>>> taglib : LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.entrySet()) {
+            for (AbstractMap.SimpleEntry<String, String> entry : taglib.getValue()) {
                 attributeNames.add(entry.getValue());
             }
         }
@@ -65,9 +65,9 @@ public abstract class AbstractLiferayResourceBundleReferenceContributor<TagType 
                     String attributeName = getAttributeName(attribute);
 
                     if (LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.containsKey(namespace)) {
-                        Collection<Pair<String, String>> entries = LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.get(namespace);
+                        Collection<AbstractMap.SimpleEntry<String, String>> entries = LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.get(namespace);
 
-                        for (Pair<String, String> entry : entries) {
+                        for (AbstractMap.SimpleEntry<String, String> entry : entries) {
                             if (
                                     (entry.getKey().equals(localName)) &&
                                     (entry.getValue().equals(attributeName))

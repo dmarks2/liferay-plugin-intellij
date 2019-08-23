@@ -5,10 +5,10 @@ import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.lang.javascript.JSTargetedInjector;
 import com.intellij.psi.PsiElement;
 import de.dm.intellij.liferay.util.LiferayTaglibAttributes;
-import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.AbstractMap;
 import java.util.Collection;
 
 public abstract class AbstractLiferayJavascriptLanguageInjector<TagType extends PsiElement, AttributeType extends PsiElement> implements MultiHostInjector, JSTargetedInjector {
@@ -26,9 +26,9 @@ public abstract class AbstractLiferayJavascriptLanguageInjector<TagType extends 
             String localName = getLocalName(tag);
 
             if (LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_JAVASCRIPT.containsKey(namespace)) {
-                Collection<Pair<String, String>> taglibAttributes = LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_JAVASCRIPT.get(namespace);
+                Collection<AbstractMap.SimpleEntry<String, String>> taglibAttributes = LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_JAVASCRIPT.get(namespace);
 
-                for (Pair<String, String> pair : taglibAttributes) {
+                for (AbstractMap.SimpleEntry<String, String> pair : taglibAttributes) {
                     if (pair.getKey().equals(localName)) {
                         if ("".equals(pair.getValue())) {
                             if (isContextSuitableForBodyInjection(context)) {

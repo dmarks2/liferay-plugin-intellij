@@ -1,7 +1,6 @@
 package de.dm.intellij.liferay.util;
 
-import javafx.util.Pair;
-
+import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -9,39 +8,39 @@ import java.util.Map;
 
 public class LiferayTaglibAttributes {
 
-    public static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES_JAVASCRIPT = new HashMap<String, Collection<Pair<String, String>>>();
-    public static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES_RESOURCEBUNDLE = new HashMap<String, Collection<Pair<String, String>>>();
-    public static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES_CSS = new HashMap<String, Collection<Pair<String, String>>>();
-    public static Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES_CLASS_NAME = new HashMap<String, Collection<Pair<String, String>>>();
+    public static Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> TAGLIB_ATTRIBUTES_JAVASCRIPT = new HashMap<>();
+    public static Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> TAGLIB_ATTRIBUTES_RESOURCEBUNDLE = new HashMap<>();
+    public static Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> TAGLIB_ATTRIBUTES_CSS = new HashMap<>();
+    public static Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> TAGLIB_ATTRIBUTES_CLASS_NAME = new HashMap<>();
 
     //TAGLIB_ATTRIBUTES_JAVASCRIPT
     static {
         TAGLIB_ATTRIBUTES_JAVASCRIPT.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI, Arrays.asList(
-                new Pair<String, String>("script", ""),
-                new Pair<String, String>("validator", ""),
-                new Pair<String, String>("a", "onClick"),
-                new Pair<String, String>("button", "onClick"),
-                new Pair<String, String>("form", "onSubmit"),
-                new Pair<String, String>("input", "onChange"),
-                new Pair<String, String>("input", "onClick"),
-                new Pair<String, String>("select", "onChange"),
-                new Pair<String, String>("select", "onClick")
+                new AbstractMap.SimpleEntry<String, String>("script", ""),
+                new AbstractMap.SimpleEntry<String, String>("validator", ""),
+                new AbstractMap.SimpleEntry<String, String>("a", "onClick"),
+                new AbstractMap.SimpleEntry<String, String>("button", "onClick"),
+                new AbstractMap.SimpleEntry<String, String>("form", "onSubmit"),
+                new AbstractMap.SimpleEntry<String, String>("input", "onChange"),
+                new AbstractMap.SimpleEntry<String, String>("input", "onClick"),
+                new AbstractMap.SimpleEntry<String, String>("select", "onChange"),
+                new AbstractMap.SimpleEntry<String, String>("select", "onClick")
         ));
 
         TAGLIB_ATTRIBUTES_JAVASCRIPT.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND, Arrays.asList(
-                new Pair<String, String>("edit-form", "onSubmit"),
-                new Pair<String, String>("icon-vertical-card", "onClick"),
-                new Pair<String, String>("vertical-card", "onClick")
+                new AbstractMap.SimpleEntry<String, String>("edit-form", "onSubmit"),
+                new AbstractMap.SimpleEntry<String, String>("icon-vertical-card", "onClick"),
+                new AbstractMap.SimpleEntry<String, String>("vertical-card", "onClick")
         ));
 
         TAGLIB_ATTRIBUTES_JAVASCRIPT.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
-                new Pair<String, String>("icon", "onClick"),
-                new Pair<String, String>("input-checkbox", "onClick"),
-                new Pair<String, String>("input-move-boxes", "leftOnChange"),
-                new Pair<String, String>("input-move-boxes", "rightOnChange"),
-                new Pair<String, String>("page-iterator", "jsCall"),
-                new Pair<String, String>("quick-access-entry", "onClick"),
-                new Pair<String, String>("tabs", "onClick")
+                new AbstractMap.SimpleEntry<String, String>("icon", "onClick"),
+                new AbstractMap.SimpleEntry<String, String>("input-checkbox", "onClick"),
+                new AbstractMap.SimpleEntry<String, String>("input-move-boxes", "leftOnChange"),
+                new AbstractMap.SimpleEntry<String, String>("input-move-boxes", "rightOnChange"),
+                new AbstractMap.SimpleEntry<String, String>("page-iterator", "jsCall"),
+                new AbstractMap.SimpleEntry<String, String>("quick-access-entry", "onClick"),
+                new AbstractMap.SimpleEntry<String, String>("tabs", "onClick")
         ));
 
         TAGLIB_ATTRIBUTES_JAVASCRIPT.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI_OLD, LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_JAVASCRIPT.get(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI));
@@ -50,125 +49,125 @@ public class LiferayTaglibAttributes {
     //TAGLIB_ATTRIBUTES_RESOURCEBUNDLE
     static {
         TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_ASSET, Arrays.asList(
-                new Pair<String, String>("asset-addon-entry-selector", "title"),
-                new Pair<String, String>("asset-metadata", "metadataField"),
-                new Pair<String, String>("asset-tags-summary", "message")
+                new AbstractMap.SimpleEntry<String, String>("asset-addon-entry-selector", "title"),
+                new AbstractMap.SimpleEntry<String, String>("asset-metadata", "metadataField"),
+                new AbstractMap.SimpleEntry<String, String>("asset-tags-summary", "message")
         ));
 
         TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI, Arrays.asList(
-                new Pair<String, String>("a", "title"),
-                new Pair<String, String>("a", "label"),
-                new Pair<String, String>("button", "value"),
-                new Pair<String, String>("field-wrapper", "helpMessage"),
-                new Pair<String, String>("field-wrapper", "label"),
-                new Pair<String, String>("fieldset", "helpMessage"),
-                new Pair<String, String>("fieldset", "label"),
-                new Pair<String, String>("icon", "label"),
-                new Pair<String, String>("input", "helpMessage"),
-                new Pair<String, String>("input", "label"),
-                new Pair<String, String>("input", "labelOff"),
-                new Pair<String, String>("input", "labelOn"),
-                new Pair<String, String>("input", "title"),
-                new Pair<String, String>("input", "placeholder"),
-                new Pair<String, String>("input", "prefix"),
-                new Pair<String, String>("input", "suffix"),
-                new Pair<String, String>("nav-bar", "selectedItemName"),
-                new Pair<String, String>("nav-item", "label"),
-                new Pair<String, String>("nav-item", "title"),
-                new Pair<String, String>("option", "label"),
-                new Pair<String, String>("panel", "label"),
-                new Pair<String, String>("select", "label"),
-                new Pair<String, String>("select", "helpMessage"),
-                new Pair<String, String>("select", "prefix"),
-                new Pair<String, String>("select", "suffix"),
-                new Pair<String, String>("select", "title"),
-                new Pair<String, String>("validator", "errorMessage"),
-                new Pair<String, String>("workflow-status", "helpMessage"),
-                new Pair<String, String>("workflow-status", "statusMessage")
+                new AbstractMap.SimpleEntry<String, String>("a", "title"),
+                new AbstractMap.SimpleEntry<String, String>("a", "label"),
+                new AbstractMap.SimpleEntry<String, String>("button", "value"),
+                new AbstractMap.SimpleEntry<String, String>("field-wrapper", "helpMessage"),
+                new AbstractMap.SimpleEntry<String, String>("field-wrapper", "label"),
+                new AbstractMap.SimpleEntry<String, String>("fieldset", "helpMessage"),
+                new AbstractMap.SimpleEntry<String, String>("fieldset", "label"),
+                new AbstractMap.SimpleEntry<String, String>("icon", "label"),
+                new AbstractMap.SimpleEntry<String, String>("input", "helpMessage"),
+                new AbstractMap.SimpleEntry<String, String>("input", "label"),
+                new AbstractMap.SimpleEntry<String, String>("input", "labelOff"),
+                new AbstractMap.SimpleEntry<String, String>("input", "labelOn"),
+                new AbstractMap.SimpleEntry<String, String>("input", "title"),
+                new AbstractMap.SimpleEntry<String, String>("input", "placeholder"),
+                new AbstractMap.SimpleEntry<String, String>("input", "prefix"),
+                new AbstractMap.SimpleEntry<String, String>("input", "suffix"),
+                new AbstractMap.SimpleEntry<String, String>("nav-bar", "selectedItemName"),
+                new AbstractMap.SimpleEntry<String, String>("nav-item", "label"),
+                new AbstractMap.SimpleEntry<String, String>("nav-item", "title"),
+                new AbstractMap.SimpleEntry<String, String>("option", "label"),
+                new AbstractMap.SimpleEntry<String, String>("panel", "label"),
+                new AbstractMap.SimpleEntry<String, String>("select", "label"),
+                new AbstractMap.SimpleEntry<String, String>("select", "helpMessage"),
+                new AbstractMap.SimpleEntry<String, String>("select", "prefix"),
+                new AbstractMap.SimpleEntry<String, String>("select", "suffix"),
+                new AbstractMap.SimpleEntry<String, String>("select", "title"),
+                new AbstractMap.SimpleEntry<String, String>("validator", "errorMessage"),
+                new AbstractMap.SimpleEntry<String, String>("workflow-status", "helpMessage"),
+                new AbstractMap.SimpleEntry<String, String>("workflow-status", "statusMessage")
         ));
         TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI_OLD, LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.get(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI));
 
         TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_DDM, Arrays.asList(
-                new Pair<String, String>("template-selector", "label")
+                new AbstractMap.SimpleEntry<String, String>("template-selector", "label")
         ));
 
         TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPANDO, Arrays.asList(
-                new Pair<String, String>("custom-attribute", "name")
+                new AbstractMap.SimpleEntry<String, String>("custom-attribute", "name")
         ));
 
         TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND, Arrays.asList(
-                new Pair<String, String>("email-notification-settings", "bodyLabel"),
-                new Pair<String, String>("email-notification-settings", "helpMessage"),
-                new Pair<String, String>("management-bar-button", "label"),
-                new Pair<String, String>("management-bar-filter", "label")
+                new AbstractMap.SimpleEntry<String, String>("email-notification-settings", "bodyLabel"),
+                new AbstractMap.SimpleEntry<String, String>("email-notification-settings", "helpMessage"),
+                new AbstractMap.SimpleEntry<String, String>("management-bar-button", "label"),
+                new AbstractMap.SimpleEntry<String, String>("management-bar-filter", "label")
         ));
 
         TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_SITE, Arrays.asList(
-                new Pair<String, String>("site-browser", "emptyResultsMessage")
+                new AbstractMap.SimpleEntry<String, String>("site-browser", "emptyResultsMessage")
         ));
 
         TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_STAGING, Arrays.asList(
-                new Pair<String, String>("checkbox", "description"),
-                new Pair<String, String>("checkbox", "label"),
-                new Pair<String, String>("checkbox", "popover"),
-                new Pair<String, String>("checkbox", "suggestion"),
-                new Pair<String, String>("checkbox", "warning"),
-                new Pair<String, String>("popover", "text"),
-                new Pair<String, String>("popover", "title"),
-                new Pair<String, String>("process-date", "labelKey"),
-                new Pair<String, String>("process-list", "emptyResultsMessage"),
-                new Pair<String, String>("radio", "description"),
-                new Pair<String, String>("radio", "label"),
-                new Pair<String, String>("radio", "popover")
+                new AbstractMap.SimpleEntry<String, String>("checkbox", "description"),
+                new AbstractMap.SimpleEntry<String, String>("checkbox", "label"),
+                new AbstractMap.SimpleEntry<String, String>("checkbox", "popover"),
+                new AbstractMap.SimpleEntry<String, String>("checkbox", "suggestion"),
+                new AbstractMap.SimpleEntry<String, String>("checkbox", "warning"),
+                new AbstractMap.SimpleEntry<String, String>("popover", "text"),
+                new AbstractMap.SimpleEntry<String, String>("popover", "title"),
+                new AbstractMap.SimpleEntry<String, String>("process-date", "labelKey"),
+                new AbstractMap.SimpleEntry<String, String>("process-list", "emptyResultsMessage"),
+                new AbstractMap.SimpleEntry<String, String>("radio", "description"),
+                new AbstractMap.SimpleEntry<String, String>("radio", "label"),
+                new AbstractMap.SimpleEntry<String, String>("radio", "popover")
         ));
 
         TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_TRASH, Arrays.asList(
-                new Pair<String, String>("empty", "confirmMessage"),
-                new Pair<String, String>("empty", "emptyMessage"),
-                new Pair<String, String>("empty", "infoMessage")
+                new AbstractMap.SimpleEntry<String, String>("empty", "confirmMessage"),
+                new AbstractMap.SimpleEntry<String, String>("empty", "emptyMessage"),
+                new AbstractMap.SimpleEntry<String, String>("empty", "infoMessage")
         ));
 
         TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
-                new Pair<String, String>("app-view-search-entry", "containerType"),
-                new Pair<String, String>("alert", "message"),
-                new Pair<String, String>("asset-addon-entry-selector", "title"),
-                new Pair<String, String>("asset-metadata", "metadataField"),
-                new Pair<String, String>("asset-tags-summary", "message"),
-                new Pair<String, String>("custom-attribute", "name"),
-                new Pair<String, String>("diff-html", "infoMessage"),
-                new Pair<String, String>("drop-here-info", "message"),
-                new Pair<String, String>("empty-result-message", "message"),
-                new Pair<String, String>("error", "message"),
-                new Pair<String, String>("form-navigator", "categoryLabels"),
-                new Pair<String, String>("form-navigator", "categorySectionLabels"),
-                new Pair<String, String>("header", "backLabel"),
-                new Pair<String, String>("header", "title"),
-                new Pair<String, String>("icon", "message"),
-                new Pair<String, String>("icon-delete", "confirmation"),
-                new Pair<String, String>("icon-delete", "message"),
-                new Pair<String, String>("icon-help", "message"),
-                new Pair<String, String>("icon-menu", "message"),
-                new Pair<String, String>("input-field", "placeholder"),
-                new Pair<String, String>("input-localized", "helpMessaage"),
-                new Pair<String, String>("input-localized", "placeholder"),
-                new Pair<String, String>("input-resource", "title"),
-                new Pair<String, String>("input-move-boxes", "leftTitle"),
-                new Pair<String, String>("input-move-boxes", "rightTitle"),
-                new Pair<String, String>("input-resource", "title"),
-                new Pair<String, String>("message", "key"),
-                new Pair<String, String>("panel", "helpMessage"),
-                new Pair<String, String>("panel", "title"),
-                new Pair<String, String>("progress", "message"),
-                new Pair<String, String>("quick-access-entry", "label"),
-                new Pair<String, String>("search-container", "emptyResultsMessage"),
-                new Pair<String, String>("search-container", "headerNames"),
-                new Pair<String, String>("search-container-column-button", "name"),
-                new Pair<String, String>("search-container-column-date", "name"),
-                new Pair<String, String>("search-container-column-text", "name"),
-                new Pair<String, String>("search-toggle", "buttonLabel"),
-                new Pair<String, String>("success", "message"),
-                new Pair<String, String>("tabs", "names"),
-                new Pair<String, String>("upload-progress", "message")
+                new AbstractMap.SimpleEntry<String, String>("app-view-search-entry", "containerType"),
+                new AbstractMap.SimpleEntry<String, String>("alert", "message"),
+                new AbstractMap.SimpleEntry<String, String>("asset-addon-entry-selector", "title"),
+                new AbstractMap.SimpleEntry<String, String>("asset-metadata", "metadataField"),
+                new AbstractMap.SimpleEntry<String, String>("asset-tags-summary", "message"),
+                new AbstractMap.SimpleEntry<String, String>("custom-attribute", "name"),
+                new AbstractMap.SimpleEntry<String, String>("diff-html", "infoMessage"),
+                new AbstractMap.SimpleEntry<String, String>("drop-here-info", "message"),
+                new AbstractMap.SimpleEntry<String, String>("empty-result-message", "message"),
+                new AbstractMap.SimpleEntry<String, String>("error", "message"),
+                new AbstractMap.SimpleEntry<String, String>("form-navigator", "categoryLabels"),
+                new AbstractMap.SimpleEntry<String, String>("form-navigator", "categorySectionLabels"),
+                new AbstractMap.SimpleEntry<String, String>("header", "backLabel"),
+                new AbstractMap.SimpleEntry<String, String>("header", "title"),
+                new AbstractMap.SimpleEntry<String, String>("icon", "message"),
+                new AbstractMap.SimpleEntry<String, String>("icon-delete", "confirmation"),
+                new AbstractMap.SimpleEntry<String, String>("icon-delete", "message"),
+                new AbstractMap.SimpleEntry<String, String>("icon-help", "message"),
+                new AbstractMap.SimpleEntry<String, String>("icon-menu", "message"),
+                new AbstractMap.SimpleEntry<String, String>("input-field", "placeholder"),
+                new AbstractMap.SimpleEntry<String, String>("input-localized", "helpMessaage"),
+                new AbstractMap.SimpleEntry<String, String>("input-localized", "placeholder"),
+                new AbstractMap.SimpleEntry<String, String>("input-resource", "title"),
+                new AbstractMap.SimpleEntry<String, String>("input-move-boxes", "leftTitle"),
+                new AbstractMap.SimpleEntry<String, String>("input-move-boxes", "rightTitle"),
+                new AbstractMap.SimpleEntry<String, String>("input-resource", "title"),
+                new AbstractMap.SimpleEntry<String, String>("message", "key"),
+                new AbstractMap.SimpleEntry<String, String>("panel", "helpMessage"),
+                new AbstractMap.SimpleEntry<String, String>("panel", "title"),
+                new AbstractMap.SimpleEntry<String, String>("progress", "message"),
+                new AbstractMap.SimpleEntry<String, String>("quick-access-entry", "label"),
+                new AbstractMap.SimpleEntry<String, String>("search-container", "emptyResultsMessage"),
+                new AbstractMap.SimpleEntry<String, String>("search-container", "headerNames"),
+                new AbstractMap.SimpleEntry<String, String>("search-container-column-button", "name"),
+                new AbstractMap.SimpleEntry<String, String>("search-container-column-date", "name"),
+                new AbstractMap.SimpleEntry<String, String>("search-container-column-text", "name"),
+                new AbstractMap.SimpleEntry<String, String>("search-toggle", "buttonLabel"),
+                new AbstractMap.SimpleEntry<String, String>("success", "message"),
+                new AbstractMap.SimpleEntry<String, String>("tabs", "names"),
+                new AbstractMap.SimpleEntry<String, String>("upload-progress", "message")
         ));
 
     }
@@ -176,210 +175,210 @@ public class LiferayTaglibAttributes {
     //TAGLIB_ATTRIBUTES_CSS
     static {
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_ADAPTIVE_MEDIA_IMAGE, Arrays.asList(
-                new Pair<String, String>("img", "class")
+                new AbstractMap.SimpleEntry<String, String>("img", "class")
         ));
 
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI, Arrays.asList(
-                new Pair<String, String>("a", "cssClass"),
-                new Pair<String, String>("a", "iconCssClass"),
-                new Pair<String, String>("alert", "cssClass"),
-                new Pair<String, String>("button", "cssClass"),
-                new Pair<String, String>("button-row", "cssClass"),
-                new Pair<String, String>("col", "cssClass"),
-                new Pair<String, String>("container", "cssClass"),
-                new Pair<String, String>("field-wrapper", "cssClass"),
-                new Pair<String, String>("fieldset", "cssClass"),
-                new Pair<String, String>("form", "cssClass"),
-                new Pair<String, String>("icon", "cssClass"),
-                new Pair<String, String>("input", "cssClass"),
-                new Pair<String, String>("input", "helpTextCssClass"),
-                new Pair<String, String>("input", "wrapperCssClass"),
-                new Pair<String, String>("nav", "cssClass"),
-                new Pair<String, String>("nav-bar", "cssClass"),
-                new Pair<String, String>("nav-bar-search", "cssClass"),
-                new Pair<String, String>("nav-item", "anchorCssClass"),
-                new Pair<String, String>("nav-item", "cssClass"),
-                new Pair<String, String>("nav-item", "iconCssClass"),
-                new Pair<String, String>("option", "cssClass"),
-                new Pair<String, String>("row", "cssClass"),
-                new Pair<String, String>("select", "cssClass"),
-                new Pair<String, String>("select", "wrapperCssClass")
+                new AbstractMap.SimpleEntry<String, String>("a", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("a", "iconCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("alert", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("button", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("button-row", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("col", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("container", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("field-wrapper", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("fieldset", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("form", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("icon", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input", "helpTextCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input", "wrapperCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("nav", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("nav-bar", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("nav-bar-search", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("nav-item", "anchorCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("nav-item", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("nav-item", "iconCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("option", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("row", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("select", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("select", "wrapperCssClass")
         ));
 
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI_OLD, TAGLIB_ATTRIBUTES_CSS.get(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI));
 
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_CLAY, Arrays.asList(
-                new Pair<String, String>("alert", "elementClasses"),
-                new Pair<String, String>("badge", "elementClasses"),
-                new Pair<String, String>("button", "elementClasses"),
-                new Pair<String, String>("button", "icon"),
-                new Pair<String, String>("checkbox", "elementClasses"),
-                new Pair<String, String>("dropdown-actions", "elementClasses"),
-                new Pair<String, String>("dropdown-actions", "triggerCssClasses"),
-                new Pair<String, String>("dropdown-menu", "elementClasses"),
-                new Pair<String, String>("dropdown-menu", "icon"),
-                new Pair<String, String>("dropdown-menu", "triggerCssClasses"),
-                new Pair<String, String>("file-card", "elementClasses"),
-                new Pair<String, String>("file-card", "icon"),
-                new Pair<String, String>("horizontal-card", "elementClasses"),
-                new Pair<String, String>("horizontal-card", "icon"),
-                new Pair<String, String>("icon", "elementClasses"),
-                new Pair<String, String>("icon", "symbol"),
-                new Pair<String, String>("image-card", "elementClasses"),
-                new Pair<String, String>("image-card", "icon"),
-                new Pair<String, String>("label", "elementClasses"),
-                new Pair<String, String>("link", "elementClasses"),
-                new Pair<String, String>("link", "icon"),
-                new Pair<String, String>("management-toolbar", "elementClasses"),
-                new Pair<String, String>("navigation-bar", "elementClasses"),
-                new Pair<String, String>("progressbar", "elementClasses"),
-                new Pair<String, String>("radio", "elementClasses"),
-                new Pair<String, String>("select", "elementClasses"),
-                new Pair<String, String>("sticker", "elementClasses"),
-                new Pair<String, String>("sticker", "icon"),
-                new Pair<String, String>("stripe", "elementClasses"),
-                new Pair<String, String>("user-card", "elementClasses"),
-                new Pair<String, String>("user-card", "icon")
+                new AbstractMap.SimpleEntry<String, String>("alert", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("badge", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("button", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("button", "icon"),
+                new AbstractMap.SimpleEntry<String, String>("checkbox", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("dropdown-actions", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("dropdown-actions", "triggerCssClasses"),
+                new AbstractMap.SimpleEntry<String, String>("dropdown-menu", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("dropdown-menu", "icon"),
+                new AbstractMap.SimpleEntry<String, String>("dropdown-menu", "triggerCssClasses"),
+                new AbstractMap.SimpleEntry<String, String>("file-card", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("file-card", "icon"),
+                new AbstractMap.SimpleEntry<String, String>("horizontal-card", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("horizontal-card", "icon"),
+                new AbstractMap.SimpleEntry<String, String>("icon", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("icon", "symbol"),
+                new AbstractMap.SimpleEntry<String, String>("image-card", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("image-card", "icon"),
+                new AbstractMap.SimpleEntry<String, String>("label", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("link", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("link", "icon"),
+                new AbstractMap.SimpleEntry<String, String>("management-toolbar", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("navigation-bar", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("progressbar", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("radio", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("select", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("sticker", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("sticker", "icon"),
+                new AbstractMap.SimpleEntry<String, String>("stripe", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("user-card", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("user-card", "icon")
         ));
 
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_DDM, Arrays.asList(
-                new Pair<String, String>("template-selector", "icon")
+                new AbstractMap.SimpleEntry<String, String>("template-selector", "icon")
         ));
 
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_EDITOR, Arrays.asList(
-                new Pair<String, String>("editor", "cssClass")
+                new AbstractMap.SimpleEntry<String, String>("editor", "cssClass")
         ));
 
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND, Arrays.asList(
-                new Pair<String, String>("horizontal-card", "checkboxCSSClass"),
-                new Pair<String, String>("horizontal-card", "cssClass"),
-                new Pair<String, String>("icon-vertical-card", "checkboxCSSClass"),
-                new Pair<String, String>("icon-vertical-card", "cssClass"),
-                new Pair<String, String>("image-card", "cssClass"),
-                new Pair<String, String>("image-card", "imageCssClass"),
-                new Pair<String, String>("info-bar-button", "cssClass"),
-                new Pair<String, String>("info-bar-button", "iconCssClass"),
-                new Pair<String, String>("info-bar-sidenav-toggler-button", "cssClass"),
-                new Pair<String, String>("info-bar-sidenav-toggler-button", "iconCssClass"),
-                new Pair<String, String>("management-bar-button", "cssClass"),
-                new Pair<String, String>("management-bar-button", "iconCssClass"),
-                new Pair<String, String>("management-bar-sidenav-toggler-button", "cssClass"),
-                new Pair<String, String>("management-bar-sidenav-toggler-button", "iconCssClass"),
-                new Pair<String, String>("translation-manager", "cssClass"),
-                new Pair<String, String>("user-vertical-card", "checkboxCSSClass"),
-                new Pair<String, String>("user-vertical-card", "cssClass"),
-                new Pair<String, String>("vertical-card", "checkboxCSSClass"),
-                new Pair<String, String>("vertical-card", "cssClass"),
-                new Pair<String, String>("vertical-card", "imageCSSClass"),
-                new Pair<String, String>("vertical-card-small-image", "cssClass")
+                new AbstractMap.SimpleEntry<String, String>("horizontal-card", "checkboxCSSClass"),
+                new AbstractMap.SimpleEntry<String, String>("horizontal-card", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("icon-vertical-card", "checkboxCSSClass"),
+                new AbstractMap.SimpleEntry<String, String>("icon-vertical-card", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("image-card", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("image-card", "imageCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("info-bar-button", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("info-bar-button", "iconCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("info-bar-sidenav-toggler-button", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("info-bar-sidenav-toggler-button", "iconCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("management-bar-button", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("management-bar-button", "iconCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("management-bar-sidenav-toggler-button", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("management-bar-sidenav-toggler-button", "iconCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("translation-manager", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("user-vertical-card", "checkboxCSSClass"),
+                new AbstractMap.SimpleEntry<String, String>("user-vertical-card", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("vertical-card", "checkboxCSSClass"),
+                new AbstractMap.SimpleEntry<String, String>("vertical-card", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("vertical-card", "imageCSSClass"),
+                new AbstractMap.SimpleEntry<String, String>("vertical-card-small-image", "cssClass")
         ));
 
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_ITEM_SELECTOR, Arrays.asList(
-                new Pair<String, String>("image-selector", "draggableImage")
+                new AbstractMap.SimpleEntry<String, String>("image-selector", "draggableImage")
         ));
 
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_STAGING, Arrays.asList(
-                new Pair<String, String>("menu", "cssClass"),
-                new Pair<String, String>("permissions", "descriptionCSSClass"),
-                new Pair<String, String>("permissions", "labelCSSClass"),
-                new Pair<String, String>("process-message-task-details", "linkClass"),
-                new Pair<String, String>("process-status", "linkClass"),
-                new Pair<String, String>("status", "cssClass")
+                new AbstractMap.SimpleEntry<String, String>("menu", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("permissions", "descriptionCSSClass"),
+                new AbstractMap.SimpleEntry<String, String>("permissions", "labelCSSClass"),
+                new AbstractMap.SimpleEntry<String, String>("process-message-task-details", "linkClass"),
+                new AbstractMap.SimpleEntry<String, String>("process-status", "linkClass"),
+                new AbstractMap.SimpleEntry<String, String>("status", "cssClass")
         ));
 
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
-                new Pair<String, String>("alert", "cssClass"),
-                new Pair<String, String>("app-view-entry", "cssClass"),
-                new Pair<String, String>("app-view-entry", "iconCssClass"),
-                new Pair<String, String>("app-view-search-entry", "iconCssClass"),
-                new Pair<String, String>("empty-result-message", "cssClass"),
-                new Pair<String, String>("header", "cssClass"),
-                new Pair<String, String>("icon", "cssClass"),
-                new Pair<String, String>("icon", "iconCssClass"),
-                new Pair<String, String>("icon", "linkCssClass"),
-                new Pair<String, String>("icon-delete", "cssClass"),
-                new Pair<String, String>("icon-delete", "linkCssClass"),
-                new Pair<String, String>("icon-menu", "cssClass"),
-                new Pair<String, String>("icon-menu", "triggerCssClass"),
-                new Pair<String, String>("input-checkbox", "cssClass"),
-                new Pair<String, String>("input-date", "cssClass"),
-                new Pair<String, String>("input-editor", "cssClass"),
-                new Pair<String, String>("input-field", "cssClass"),
-                new Pair<String, String>("input-localized", "cssClass"),
-                new Pair<String, String>("input-move-boxes", "cssClass"),
-                new Pair<String, String>("input-repeat", "cssClass"),
-                new Pair<String, String>("input-resource", "cssClass"),
-                new Pair<String, String>("input-search", "cssClass"),
-                new Pair<String, String>("input-select", "cssClass"),
-                new Pair<String, String>("input-textarea", "cssClass"),
-                new Pair<String, String>("input-time", "cssClass"),
-                new Pair<String, String>("input-time-zone", "cssClass"),
-                new Pair<String, String>("my-sites", "cssClass"),
-                new Pair<String, String>("panel", "cssClass"),
-                new Pair<String, String>("panel", "iconCssClass"),
-                new Pair<String, String>("panel-container", "cssClass"),
-                new Pair<String, String>("search-container", "cssClass"),
-                new Pair<String, String>("search-container", "emptyResultsMessageCssClass"),
-                new Pair<String, String>("search-container-column-button", "cssClass"),
-                new Pair<String, String>("search-container-column-date", "cssClass"),
-                new Pair<String, String>("search-container-column-icon", "cssClass"),
-                new Pair<String, String>("search-container-column-image", "cssClass"),
-                new Pair<String, String>("search-container-column-jsp", "cssClass"),
-                new Pair<String, String>("search-container-column-status", "cssClass"),
-                new Pair<String, String>("search-container-column-text", "cssClass"),
-                new Pair<String, String>("search-container-column-user", "cssClass"),
-                new Pair<String, String>("search-container-row", "cssClass"),
-                new Pair<String, String>("tabs", "cssClass"),
-                new Pair<String, String>("user-display", "imageCssClass"),
-                new Pair<String, String>("user-display", "userIconCssClass"),
-                new Pair<String, String>("user-portrait", "cssClass"),
-                new Pair<String, String>("user-portrait", "imageCssClass")
+                new AbstractMap.SimpleEntry<String, String>("alert", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("app-view-entry", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("app-view-entry", "iconCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("app-view-search-entry", "iconCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("empty-result-message", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("header", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("icon", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("icon", "iconCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("icon", "linkCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("icon-delete", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("icon-delete", "linkCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("icon-menu", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("icon-menu", "triggerCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input-checkbox", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input-date", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input-editor", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input-field", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input-localized", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input-move-boxes", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input-repeat", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input-resource", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input-search", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input-select", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input-textarea", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input-time", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("input-time-zone", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("my-sites", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("panel", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("panel", "iconCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("panel-container", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("search-container", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("search-container", "emptyResultsMessageCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("search-container-column-button", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("search-container-column-date", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("search-container-column-icon", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("search-container-column-image", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("search-container-column-jsp", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("search-container-column-status", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("search-container-column-text", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("search-container-column-user", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("search-container-row", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("tabs", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("user-display", "imageCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("user-display", "userIconCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("user-portrait", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("user-portrait", "imageCssClass")
         ));
     }
 
     //TAGLIB_ATTRIBUTES_CLASS_NAME
     static {
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI, Arrays.asList(
-            new Pair<>("model-context", "model"),
-            new Pair<>("input", "model"),
-            new Pair<>("select", "model"),
-            new Pair<>("workflow-status", "model")
+            new AbstractMap.SimpleEntry<>("model-context", "model"),
+            new AbstractMap.SimpleEntry<>("input", "model"),
+            new AbstractMap.SimpleEntry<>("select", "model"),
+            new AbstractMap.SimpleEntry<>("workflow-status", "model")
         ));
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPANDO, Arrays.asList(
-            new Pair<>("custom-attribute", "className"),
-            new Pair<>("custom-attribute-list", "className"),
-            new Pair<>("custom-attributes-available", "className")
+            new AbstractMap.SimpleEntry<>("custom-attribute", "className"),
+            new AbstractMap.SimpleEntry<>("custom-attribute-list", "className"),
+            new AbstractMap.SimpleEntry<>("custom-attributes-available", "className")
         ));
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FLAGS, Arrays.asList(
-            new Pair<>("flags", "className")
+            new AbstractMap.SimpleEntry<>("flags", "className")
         ));
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET, Arrays.asList(
-            new Pair<>("runtime", "portletProviderClassName")
+            new AbstractMap.SimpleEntry<>("runtime", "portletProviderClassName")
         ));
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_SECURITY, Arrays.asList(
-            new Pair<>("permissionsURL", "modelResource")
+            new AbstractMap.SimpleEntry<>("permissionsURL", "modelResource")
         ));
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
-            new Pair<>("app-view-entry", "assetCategoryClassName"),
-            new Pair<>("app-view-entry", "assetTagClassName"),
-            new Pair<>("asset-categories-available", "className"),
-            new Pair<>("asset-categories-selector", "className"),
-            new Pair<>("asset-categories-summary", "className"),
-            new Pair<>("asset-display", "className"),
-            new Pair<>("asset-links", "className"),
-            new Pair<>("asset-metadata", "className"),
-            new Pair<>("asset-tags-available", "className"),
-            new Pair<>("asset-tags-selector", "className"),
-            new Pair<>("asset-tags-summary", "className"),
-            new Pair<>("discussion", "className"),
-            new Pair<>("error", "exception"),  //extends Exception?
-            new Pair<>("input-asset-links", "className"),
-            new Pair<>("input-field", "model"),
-            new Pair<>("input-permissions", "modelName"),
-            new Pair<>("input-permissions-params", "modelName"),
-            new Pair<>("ratings", "className"),
-            new Pair<>("search-container-row", "className"),
-            new Pair<>("social-activities", "className")
+            new AbstractMap.SimpleEntry<>("app-view-entry", "assetCategoryClassName"),
+            new AbstractMap.SimpleEntry<>("app-view-entry", "assetTagClassName"),
+            new AbstractMap.SimpleEntry<>("asset-categories-available", "className"),
+            new AbstractMap.SimpleEntry<>("asset-categories-selector", "className"),
+            new AbstractMap.SimpleEntry<>("asset-categories-summary", "className"),
+            new AbstractMap.SimpleEntry<>("asset-display", "className"),
+            new AbstractMap.SimpleEntry<>("asset-links", "className"),
+            new AbstractMap.SimpleEntry<>("asset-metadata", "className"),
+            new AbstractMap.SimpleEntry<>("asset-tags-available", "className"),
+            new AbstractMap.SimpleEntry<>("asset-tags-selector", "className"),
+            new AbstractMap.SimpleEntry<>("asset-tags-summary", "className"),
+            new AbstractMap.SimpleEntry<>("discussion", "className"),
+            new AbstractMap.SimpleEntry<>("error", "exception"),  //extends Exception?
+            new AbstractMap.SimpleEntry<>("input-asset-links", "className"),
+            new AbstractMap.SimpleEntry<>("input-field", "model"),
+            new AbstractMap.SimpleEntry<>("input-permissions", "modelName"),
+            new AbstractMap.SimpleEntry<>("input-permissions-params", "modelName"),
+            new AbstractMap.SimpleEntry<>("ratings", "className"),
+            new AbstractMap.SimpleEntry<>("search-container-row", "className"),
+            new AbstractMap.SimpleEntry<>("social-activities", "className")
         ));
     }
 

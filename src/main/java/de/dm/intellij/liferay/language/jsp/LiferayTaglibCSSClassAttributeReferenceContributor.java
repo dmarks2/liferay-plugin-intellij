@@ -10,10 +10,9 @@ import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.util.XmlUtil;
 import de.dm.intellij.liferay.util.LiferayTaglibAttributes;
-import de.dm.intellij.liferay.util.LiferayTaglibs;
-import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -78,8 +77,8 @@ public class LiferayTaglibCSSClassAttributeReferenceContributor extends PsiRefer
                 XmlTag xmlTag = xmlAttribute.getParent();
                 if (xmlTag != null) {
                     if (LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_CSS.containsKey(xmlTag.getNamespace())) {
-                        Collection<Pair<String, String>> entries = LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_CSS.get(xmlTag.getNamespace());
-                        for (Pair<String, String> entry : entries) {
+                        Collection<AbstractMap.SimpleEntry<String, String>> entries = LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_CSS.get(xmlTag.getNamespace());
+                        for (AbstractMap.SimpleEntry<String, String> entry : entries) {
                             if (
                                 (entry.getKey().equals(xmlTag.getLocalName())) &&
                                 (entry.getValue().equals(xmlAttribute.getLocalName()))

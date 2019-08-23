@@ -7,8 +7,8 @@ import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.psi.xml.XmlTokenType;
 import de.dm.intellij.liferay.util.LiferayTaglibAttributes;
-import javafx.util.Pair;
 
+import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
@@ -49,7 +49,7 @@ public class LiferayTaglibClassNameReferenceContributor extends AbstractLiferayT
     }
 
     @Override
-    protected Map<String, Collection<Pair<String, String>>> getTaglibMap() {
+    protected Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> getTaglibMap() {
         return LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_CLASS_NAME;
     }
 

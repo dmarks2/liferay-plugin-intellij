@@ -3,11 +3,15 @@ package de.dm.intellij.liferay.language.xml;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.filters.ElementFilter;
 import com.intellij.psi.filters.position.FilterPattern;
-import com.intellij.psi.xml.*;
+import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlAttributeValue;
+import com.intellij.psi.xml.XmlElement;
+import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.XmlText;
 import de.dm.intellij.liferay.schema.LiferayDefinitionsResourceProvider;
-import javafx.util.Pair;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -17,7 +21,7 @@ public class LiferayXmlFileReferenceFilterPattern extends FilterPattern {
 
     private static Map<String, Collection<String>> XML_FILEREFERENCE_TAGS = new HashMap<String, Collection<String>>();
 
-    private static Map<String, Collection<Pair<String, String>>> XML_FILEREFERENCE_ATTRIBUTES = new HashMap<String, Collection<Pair<String, String>>>();
+    private static Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> XML_FILEREFERENCE_ATTRIBUTES = new HashMap<>();
 
     static {
         XML_FILEREFERENCE_TAGS.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_HOOK_6_1_0,
@@ -79,7 +83,7 @@ public class LiferayXmlFileReferenceFilterPattern extends FilterPattern {
 
         XML_FILEREFERENCE_ATTRIBUTES.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_RESOURCE_ACTION_MAPPING_6_1_0,
                 Arrays.asList(
-                        new Pair<String, String>("resource", "file")
+                        new AbstractMap.SimpleEntry<String, String>("resource", "file")
                 )
         );
         XML_FILEREFERENCE_ATTRIBUTES.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_RESOURCE_ACTION_MAPPING_6_2_0, XML_FILEREFERENCE_ATTRIBUTES.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_RESOURCE_ACTION_MAPPING_6_1_0));
@@ -87,7 +91,7 @@ public class LiferayXmlFileReferenceFilterPattern extends FilterPattern {
 
         XML_FILEREFERENCE_ATTRIBUTES.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_SERVICE_BUILDER_6_1_0,
                 Arrays.asList(
-                        new Pair<String, String>("service-builder-import", "file")
+                        new AbstractMap.SimpleEntry<String, String>("service-builder-import", "file")
                 )
         );
         XML_FILEREFERENCE_ATTRIBUTES.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_SERVICE_BUILDER_6_1_0, XML_FILEREFERENCE_ATTRIBUTES.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_SERVICE_BUILDER_6_1_0));
@@ -130,7 +134,7 @@ public class LiferayXmlFileReferenceFilterPattern extends FilterPattern {
                             XmlTag xmlTag = xmlAttribute.getParent();
                             if (xmlTag != null) {
                                 if (XML_FILEREFERENCE_ATTRIBUTES.containsKey(xmlTag.getNamespace())) {
-                                    for (Pair<String, String> pair : XML_FILEREFERENCE_ATTRIBUTES.get(xmlTag.getNamespace())) {
+                                    for (AbstractMap.SimpleEntry<String, String> pair : XML_FILEREFERENCE_ATTRIBUTES.get(xmlTag.getNamespace())) {
                                         if (pair.getKey().equals(xmlTag.getLocalName())) {
                                             if (pair.getValue().equals(xmlAttribute.getLocalName())) {
                                                 return true;

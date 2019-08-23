@@ -16,9 +16,9 @@ import com.intellij.util.ProcessingContext;
 import de.dm.intellij.liferay.index.PortletNameIndex;
 import de.dm.intellij.liferay.util.Icons;
 import de.dm.intellij.liferay.util.LiferayTaglibs;
-import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -33,15 +33,15 @@ import java.util.TreeSet;
  */
 public class LiferayTaglibPortletNameReferenceContributor extends AbstractLiferayTaglibReferenceContributor {
 
-    private static final Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES = new HashMap<String, Collection<Pair<String, String>>>();
+    private static final Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> TAGLIB_ATTRIBUTES = new HashMap<>();
 
     static {
         TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET, Arrays.asList(
-                new Pair<String, String>("actionURL", "portletName"),
-                new Pair<String, String>("preview", "portletName"),
-                new Pair<String, String>("renderURL", "portletName"),
-                new Pair<String, String>("resourceURL", "portletName"),
-                new Pair<String, String>("runtime", "portletName")
+                new AbstractMap.SimpleEntry<String, String>("actionURL", "portletName"),
+                new AbstractMap.SimpleEntry<String, String>("preview", "portletName"),
+                new AbstractMap.SimpleEntry<String, String>("renderURL", "portletName"),
+                new AbstractMap.SimpleEntry<String, String>("resourceURL", "portletName"),
+                new AbstractMap.SimpleEntry<String, String>("runtime", "portletName")
         ));
 
     }
@@ -115,7 +115,7 @@ public class LiferayTaglibPortletNameReferenceContributor extends AbstractLifera
     }
 
     @Override
-    protected Map<String, Collection<Pair<String, String>>> getTaglibMap() {
+    protected Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> getTaglibMap() {
         return TAGLIB_ATTRIBUTES;
     }
 }

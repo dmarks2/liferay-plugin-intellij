@@ -1,7 +1,6 @@
 package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReferenceContributor;
 import com.intellij.psi.PsiReferenceProvider;
 import com.intellij.psi.PsiReferenceRegistrar;
 import com.intellij.psi.filters.ElementFilter;
@@ -9,18 +8,8 @@ import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.util.XmlUtil;
 import de.dm.intellij.liferay.language.resourcebundle.AbstractLiferayResourceBundleReferenceContributor;
-import de.dm.intellij.liferay.language.resourcebundle.LiferayTaglibResourceBundleReferenceProvider;
-import de.dm.intellij.liferay.util.LiferayTaglibAttributes;
-import de.dm.intellij.liferay.util.LiferayTaglibs;
-import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Adds code completion features for references to language kays inside Liferay or AlloyUI Taglibs

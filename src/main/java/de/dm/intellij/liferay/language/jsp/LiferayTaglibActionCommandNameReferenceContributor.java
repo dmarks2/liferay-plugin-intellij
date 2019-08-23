@@ -18,9 +18,9 @@ import com.intellij.util.ProcessingContext;
 import de.dm.intellij.liferay.index.ActionCommandIndex;
 import de.dm.intellij.liferay.util.Icons;
 import de.dm.intellij.liferay.util.LiferayTaglibs;
-import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -36,19 +36,19 @@ import java.util.TreeSet;
  */
 public class LiferayTaglibActionCommandNameReferenceContributor extends AbstractLiferayTaglibCommandNameReferenceContributor {
 
-    private static final Map<String, Collection<Pair<String, String>>> TAGLIB_ATTRIBUTES = new HashMap<String, Collection<Pair<String, String>>>();
+    private static final Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> TAGLIB_ATTRIBUTES = new HashMap<>();
 
     private static final String ACTION_NAME = "javax.portlet.action";
 
     static {
         TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_JAVAX_PORTLET, Arrays.asList(
-            new Pair<>("actionURL", "name"),
-            new Pair<>("param", "value")
+            new AbstractMap.SimpleEntry<>("actionURL", "name"),
+            new AbstractMap.SimpleEntry<>("param", "value")
         ));
 
         TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET, Arrays.asList(
-            new Pair<>("actionURL", "name"),
-            new Pair<>("param", "value")
+            new AbstractMap.SimpleEntry<>("actionURL", "name"),
+            new AbstractMap.SimpleEntry<>("param", "value")
         ));
     }
 
@@ -173,7 +173,7 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
     }
 
     @Override
-    protected Map<String, Collection<Pair<String, String>>> getTaglibMap() {
+    protected Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> getTaglibMap() {
         return TAGLIB_ATTRIBUTES;
     }
 
