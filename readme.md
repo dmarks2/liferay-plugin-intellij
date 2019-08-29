@@ -37,12 +37,12 @@ Supported Liferay Versions
 --------------------------
 * Liferay 6.1 CE / EE
 * Liferay 6.2 CE / EE
-* Liferay 7.0, 7.1 / DXP
+* Liferay 7.0, 7.1, 7.2 / DXP
 
 Supported Build Tools
 ---------------------
 * Maven
-* Gradle (Liferay 7.0, 7.1 / DXP only)
+* Gradle (Liferay 7.0, 7.1, 7.2 / DXP only)
 * Npm 
 
 Releases
