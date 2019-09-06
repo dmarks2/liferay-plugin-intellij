@@ -3,6 +3,9 @@ Liferay Plugin for IntelliJ
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.7
+- Feature: Updated taglib support for Liferay 7.1 and 7.2
+
 ## 0.0.6
 - Feature: File References for portlet.properties files
 - Feature: Improved bnd.bnd editor

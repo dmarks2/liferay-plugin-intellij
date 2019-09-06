@@ -29,6 +29,7 @@ public class LiferayTaglibAttributes {
 
         TAGLIB_ATTRIBUTES_JAVASCRIPT.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND, Arrays.asList(
                 new AbstractMap.SimpleEntry<String, String>("edit-form", "onSubmit"),
+                new AbstractMap.SimpleEntry<String, String>("html-vertical-card", "onClick"),
                 new AbstractMap.SimpleEntry<String, String>("icon-vertical-card", "onClick"),
                 new AbstractMap.SimpleEntry<String, String>("vertical-card", "onClick")
         ));
@@ -96,10 +97,19 @@ public class LiferayTaglibAttributes {
         ));
 
         TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND, Arrays.asList(
+                new AbstractMap.SimpleEntry<String, String>("add-menu-item", "title"),
                 new AbstractMap.SimpleEntry<String, String>("email-notification-settings", "bodyLabel"),
                 new AbstractMap.SimpleEntry<String, String>("email-notification-settings", "helpMessage"),
+                new AbstractMap.SimpleEntry<String, String>("fieldset", "helpMessage"),
+                new AbstractMap.SimpleEntry<String, String>("fieldset", "label"),
                 new AbstractMap.SimpleEntry<String, String>("management-bar-button", "label"),
                 new AbstractMap.SimpleEntry<String, String>("management-bar-filter", "label")
+        ));
+        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_ITEM_SELECTOR, Arrays.asList(
+                new AbstractMap.SimpleEntry<>("repository-entry-browser", "emptyResultsMessage")
+        ));
+        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_PRODUCT_NAVIGATION, Arrays.asList(
+                new AbstractMap.SimpleEntry<>("personal-menu", "label")
         ));
 
         TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_SITE, Arrays.asList(
@@ -112,6 +122,7 @@ public class LiferayTaglibAttributes {
                 new AbstractMap.SimpleEntry<String, String>("checkbox", "popover"),
                 new AbstractMap.SimpleEntry<String, String>("checkbox", "suggestion"),
                 new AbstractMap.SimpleEntry<String, String>("checkbox", "warning"),
+                new AbstractMap.SimpleEntry<String, String>("configuration-header", "label"),
                 new AbstractMap.SimpleEntry<String, String>("popover", "text"),
                 new AbstractMap.SimpleEntry<String, String>("popover", "title"),
                 new AbstractMap.SimpleEntry<String, String>("process-date", "labelKey"),
@@ -147,6 +158,8 @@ public class LiferayTaglibAttributes {
                 new AbstractMap.SimpleEntry<String, String>("icon-delete", "message"),
                 new AbstractMap.SimpleEntry<String, String>("icon-help", "message"),
                 new AbstractMap.SimpleEntry<String, String>("icon-menu", "message"),
+                new AbstractMap.SimpleEntry<String, String>("icon-menu", "triggerLabel"),
+                new AbstractMap.SimpleEntry<String, String>("input-date", "dateTogglerCheckboxLabel"),
                 new AbstractMap.SimpleEntry<String, String>("input-field", "placeholder"),
                 new AbstractMap.SimpleEntry<String, String>("input-localized", "helpMessaage"),
                 new AbstractMap.SimpleEntry<String, String>("input-localized", "placeholder"),
@@ -240,7 +253,9 @@ public class LiferayTaglibAttributes {
                 new AbstractMap.SimpleEntry<String, String>("user-card", "elementClasses"),
                 new AbstractMap.SimpleEntry<String, String>("user-card", "icon")
         ));
-
+        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_DOCUMENT_LIBRARY, Arrays.asList(
+                new AbstractMap.SimpleEntry<>("mime-type-sticker", "cssClass")
+        ));
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_DDM, Arrays.asList(
                 new AbstractMap.SimpleEntry<String, String>("template-selector", "icon")
         ));
@@ -250,8 +265,20 @@ public class LiferayTaglibAttributes {
         ));
 
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND, Arrays.asList(
+                new AbstractMap.SimpleEntry<String, String>("add-menu-item", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("contextual-sidebar", "bodyClasses"),
+                new AbstractMap.SimpleEntry<String, String>("contextual-sidebar", "elementClasses"),
+                new AbstractMap.SimpleEntry<String, String>("contextual-sidebar", "headerClasses"),
+                new AbstractMap.SimpleEntry<String, String>("edit-form", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("fieldset", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("form-navigator", "fieldSetCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("horizontal-card", "cardCssClass"),
                 new AbstractMap.SimpleEntry<String, String>("horizontal-card", "checkboxCSSClass"),
                 new AbstractMap.SimpleEntry<String, String>("horizontal-card", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("html-vertical-card", "cardCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("html-vertical-card", "checkboxCSSClass"),
+                new AbstractMap.SimpleEntry<String, String>("html-vertical-card", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("icon-vertical-card", "cardCssClass"),
                 new AbstractMap.SimpleEntry<String, String>("icon-vertical-card", "checkboxCSSClass"),
                 new AbstractMap.SimpleEntry<String, String>("icon-vertical-card", "cssClass"),
                 new AbstractMap.SimpleEntry<String, String>("image-card", "cssClass"),
@@ -264,9 +291,15 @@ public class LiferayTaglibAttributes {
                 new AbstractMap.SimpleEntry<String, String>("management-bar-button", "iconCssClass"),
                 new AbstractMap.SimpleEntry<String, String>("management-bar-sidenav-toggler-button", "cssClass"),
                 new AbstractMap.SimpleEntry<String, String>("management-bar-sidenav-toggler-button", "iconCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("screen-navigation", "containerCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("screen-navigation", "containerWrapperCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("screen-navigation", "menubarCssClass"),
+                new AbstractMap.SimpleEntry<String, String>("screen-navigation", "navCssClass"),
                 new AbstractMap.SimpleEntry<String, String>("translation-manager", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("user-vertical-card", "cardCssClass"),
                 new AbstractMap.SimpleEntry<String, String>("user-vertical-card", "checkboxCSSClass"),
                 new AbstractMap.SimpleEntry<String, String>("user-vertical-card", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("vertical-card", "cardCssClass"),
                 new AbstractMap.SimpleEntry<String, String>("vertical-card", "checkboxCSSClass"),
                 new AbstractMap.SimpleEntry<String, String>("vertical-card", "cssClass"),
                 new AbstractMap.SimpleEntry<String, String>("vertical-card", "imageCSSClass"),
@@ -275,6 +308,11 @@ public class LiferayTaglibAttributes {
 
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_ITEM_SELECTOR, Arrays.asList(
                 new AbstractMap.SimpleEntry<String, String>("image-selector", "draggableImage")
+        ));
+
+        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_JOURNAL, Arrays.asList(
+                new AbstractMap.SimpleEntry<>("journal-article", "wrapperCssClass"),
+                new AbstractMap.SimpleEntry<>("journal-article-display", "wrapperCssClass")
         ));
 
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_STAGING, Arrays.asList(
@@ -328,6 +366,7 @@ public class LiferayTaglibAttributes {
                 new AbstractMap.SimpleEntry<String, String>("search-container-column-text", "cssClass"),
                 new AbstractMap.SimpleEntry<String, String>("search-container-column-user", "cssClass"),
                 new AbstractMap.SimpleEntry<String, String>("search-container-row", "cssClass"),
+                new AbstractMap.SimpleEntry<String, String>("search-iterator", "searchResultCssClass"),
                 new AbstractMap.SimpleEntry<String, String>("tabs", "cssClass"),
                 new AbstractMap.SimpleEntry<String, String>("user-display", "imageCssClass"),
                 new AbstractMap.SimpleEntry<String, String>("user-display", "userIconCssClass"),
@@ -338,16 +377,37 @@ public class LiferayTaglibAttributes {
 
     //TAGLIB_ATTRIBUTES_CLASS_NAME
     static {
+        TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_ASSET, Arrays.asList(
+            new AbstractMap.SimpleEntry<>("asset-categories-available", "className"),
+            new AbstractMap.SimpleEntry<>("asset-categories-selector", "className"),
+            new AbstractMap.SimpleEntry<>("asset-categories-summary", "className"),
+            new AbstractMap.SimpleEntry<>("asset-display", "className"),
+            new AbstractMap.SimpleEntry<>("asset-entry-usages", "className"),
+            new AbstractMap.SimpleEntry<>("asset-links", "className"),
+            new AbstractMap.SimpleEntry<>("asset-metadata", "className"),
+            new AbstractMap.SimpleEntry<>("asset-tags-available", "className"),
+            new AbstractMap.SimpleEntry<>("asset-tags-selector", "className"),
+            new AbstractMap.SimpleEntry<>("asset-tags-summary", "className"),
+            new AbstractMap.SimpleEntry<>("asset-view-usages", "className"),
+            new AbstractMap.SimpleEntry<>("input-asset-links", "className")
+        ));
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI, Arrays.asList(
             new AbstractMap.SimpleEntry<>("model-context", "model"),
             new AbstractMap.SimpleEntry<>("input", "model"),
             new AbstractMap.SimpleEntry<>("select", "model"),
             new AbstractMap.SimpleEntry<>("workflow-status", "model")
         ));
+        TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_COMMENT, Arrays.asList(
+            new AbstractMap.SimpleEntry<>("discussion", "className")
+        ));
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPANDO, Arrays.asList(
             new AbstractMap.SimpleEntry<>("custom-attribute", "className"),
             new AbstractMap.SimpleEntry<>("custom-attribute-list", "className"),
             new AbstractMap.SimpleEntry<>("custom-attributes-available", "className")
+        ));
+        TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPORT_IMPORT_CHANGESET, Arrays.asList(
+            new AbstractMap.SimpleEntry<>("export-entity", "className"),
+            new AbstractMap.SimpleEntry<>("publish-entity-menu-item", "className")
         ));
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FLAGS, Arrays.asList(
             new AbstractMap.SimpleEntry<>("flags", "className")
@@ -357,6 +417,9 @@ public class LiferayTaglibAttributes {
         ));
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_SECURITY, Arrays.asList(
             new AbstractMap.SimpleEntry<>("permissionsURL", "modelResource")
+        ));
+        TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_SHARING, Arrays.asList(
+            new AbstractMap.SimpleEntry<>("button", "className")
         ));
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
             new AbstractMap.SimpleEntry<>("app-view-entry", "assetCategoryClassName"),
