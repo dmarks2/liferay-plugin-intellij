@@ -48,5 +48,7 @@ public class LiferayTaglibs {
     public static final String TAGLIB_URI_LIFERAY_UTIL = "http://liferay.com/tld/util";
 
     public static final String TAGLIB_URI_JAVAX_PORTLET = "http://java.sun.com/portlet";
+    public static final String TAGLIB_URI_JAVAX_PORTLET_2_0 = "http://java.sun.com/portlet_2_0";
+    public static final String TAGLIB_URI_JCP_PORTLET_APP_3_0 = "http://xmlns.jcp.org/portlet_3_0";
 
 }

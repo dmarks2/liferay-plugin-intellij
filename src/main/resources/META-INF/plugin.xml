@@ -28,6 +28,7 @@
         <p>Version 0.0.7</p>
         <ul>
             <li>Feature: Updated taglib support for Liferay 7.1 and 7.2</li>
+            <li>Feature: Inspections for wrongly nested Liferay tags inside JSPs</li>
         </ul>
         <p>Version 0.0.6</p>
         <ul>

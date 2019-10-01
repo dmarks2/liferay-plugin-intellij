@@ -10,7 +10,8 @@ public class LiferayTaglibInspectionToolProvider implements InspectionToolProvid
     public Class[] getInspectionClasses() {
         return new Class[] {
                 LiferayTaglibStrictQuoteEscapingInspection.class,
-                LiferayTaglibStringConcatInspection.class
+                LiferayTaglibStringConcatInspection.class,
+                LiferayTaglibNestingInspection.class
         };
     }
 }

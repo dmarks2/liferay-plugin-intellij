@@ -12,6 +12,7 @@ public class LiferayTaglibAttributes {
     public static Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> TAGLIB_ATTRIBUTES_RESOURCEBUNDLE = new HashMap<>();
     public static Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> TAGLIB_ATTRIBUTES_CSS = new HashMap<>();
     public static Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> TAGLIB_ATTRIBUTES_CLASS_NAME = new HashMap<>();
+    public static Map<String, Collection<AbstractMap.SimpleImmutableEntry<String, String>>> TAGLIB_SUGGESTED_PARENTS = new HashMap<>();
 
     //TAGLIB_ATTRIBUTES_JAVASCRIPT
     static {
@@ -443,6 +444,57 @@ public class LiferayTaglibAttributes {
             new AbstractMap.SimpleEntry<>("search-container-row", "className"),
             new AbstractMap.SimpleEntry<>("social-activities", "className")
         ));
+    }
+
+    //TAGLIB_SUGGESTED_PARENTS
+    static {
+        //param inside any of urls, etc.
+        //validator inside any input field
+        TAGLIB_SUGGESTED_PARENTS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI, Arrays.asList(
+            new AbstractMap.SimpleImmutableEntry<>("fieldset", "fieldset-group"),
+            new AbstractMap.SimpleImmutableEntry<>("input", "form"),
+            new AbstractMap.SimpleImmutableEntry<>("nav-bar-search", "nav-bar"),
+            new AbstractMap.SimpleImmutableEntry<>("nav-item", "nav-bar"),
+            new AbstractMap.SimpleImmutableEntry<>("nav", "nav-bar")
+        ));
+
+        TAGLIB_SUGGESTED_PARENTS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI_OLD, TAGLIB_SUGGESTED_PARENTS.get(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI));
+
+        TAGLIB_SUGGESTED_PARENTS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
+            new AbstractMap.SimpleImmutableEntry<>("organization-search-container-results", "search-container"),
+            new AbstractMap.SimpleImmutableEntry<>("panel", "panel-container"),
+            new AbstractMap.SimpleImmutableEntry<>("search-container-column-date", "search-container-row"),
+            new AbstractMap.SimpleImmutableEntry<>("search-container-column-icon", "search-container-row"),
+            new AbstractMap.SimpleImmutableEntry<>("search-container-column-image", "search-container-row"),
+            new AbstractMap.SimpleImmutableEntry<>("search-container-column-jsp", "search-container-row"),
+            new AbstractMap.SimpleImmutableEntry<>("search-container-column-status", "search-container-row"),
+            new AbstractMap.SimpleImmutableEntry<>("search-container-column-text", "search-container-row"),
+            new AbstractMap.SimpleImmutableEntry<>("search-container-column-user", "search-container-row"),
+            new AbstractMap.SimpleImmutableEntry<>("search-form", "search-container"),
+            new AbstractMap.SimpleImmutableEntry<>("section", "tabs"),
+            new AbstractMap.SimpleImmutableEntry<>("user-group-search-container-results", "search-container"),
+            new AbstractMap.SimpleImmutableEntry<>("user-search-container-results", "search-container")
+        ));
+
+        TAGLIB_SUGGESTED_PARENTS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET, Arrays.asList(
+            new AbstractMap.SimpleImmutableEntry<>("param", LiferayTaglibs.TAGLIB_URI_LIFERAY_SOY + "|template-renderer"),
+            new AbstractMap.SimpleImmutableEntry<>("param", LiferayTaglibs.TAGLIB_URI_LIFERAY_READING_TIME + "|reading-time"),
+            new AbstractMap.SimpleImmutableEntry<>("param", LiferayTaglibs.TAGLIB_URI_LIFERAY_ADAPTIVE_MEDIA_IMAGE + "|img"),
+            new AbstractMap.SimpleImmutableEntry<>("param", LiferayTaglibs.TAGLIB_URI_LIFERAY_UTIL + "|include"),
+            new AbstractMap.SimpleImmutableEntry<>("param", LiferayTaglibs.TAGLIB_URI_LIFERAY_SOCIAL_BOOKMARKS + "|social-bookmarks"),
+            new AbstractMap.SimpleImmutableEntry<>("param", "actionURL"),
+            new AbstractMap.SimpleImmutableEntry<>("param", LiferayTaglibs.TAGLIB_URI_JAVAX_PORTLET_2_0 + "|actionURL"),
+            new AbstractMap.SimpleImmutableEntry<>("param", LiferayTaglibs.TAGLIB_URI_JCP_PORTLET_APP_3_0 + "|actionURL"),
+            new AbstractMap.SimpleImmutableEntry<>("param", "resourceURL"),
+            new AbstractMap.SimpleImmutableEntry<>("param", LiferayTaglibs.TAGLIB_URI_JAVAX_PORTLET_2_0 + "|resourceURL"),
+            new AbstractMap.SimpleImmutableEntry<>("param", LiferayTaglibs.TAGLIB_URI_JCP_PORTLET_APP_3_0 + "|resourceURL"),
+            new AbstractMap.SimpleImmutableEntry<>("param", "renderURL"),
+            new AbstractMap.SimpleImmutableEntry<>("param", LiferayTaglibs.TAGLIB_URI_JAVAX_PORTLET_2_0 + "|renderURL"),
+            new AbstractMap.SimpleImmutableEntry<>("param", LiferayTaglibs.TAGLIB_URI_JCP_PORTLET_APP_3_0 + "|renderURL"),
+            new AbstractMap.SimpleImmutableEntry<>("param", LiferayTaglibs.TAGLIB_URI_LIFERAY_UI + "|search-container-row")
+        ));
+
+        //c.tld -> when inside choose
     }
 
 }
