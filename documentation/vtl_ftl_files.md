@@ -139,8 +139,8 @@ Freemarker Imports
 ------------------
 
 It is possible to import commonly used macros from Freemarker files placed in the web context root of
-a module. This plugin in able to resolve those files when they are included with the following syntax.
+a module or a dependency. This plugin in able to resolve those files when they are included with the following syntax.
 
 ```ftl>
-    <#import "/<your-module-name>_SERVLET_CONTEXT_/my_macros.ftl" as mymacros/>
+    <#import "/<web-context-path>_SERVLET_CONTEXT_/my_macros.ftl" as mymacros/>
 ```

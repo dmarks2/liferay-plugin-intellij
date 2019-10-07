@@ -18,6 +18,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiField;
 import com.intellij.testFramework.IdeaTestUtil;
 import com.intellij.testFramework.LightProjectDescriptor;
+import com.intellij.testFramework.PsiTestUtil;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
@@ -30,6 +31,8 @@ import java.net.URL;
 import java.util.List;
 
 public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestCase {
+
+    private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/freemarker/LiferayFtlVariableProviderTest";
 
     private static final LightProjectDescriptor MY_PROJECT_DESCRIPTOR = new DefaultLightProjectDescriptor() {
 
@@ -55,6 +58,10 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
             resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
             VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePath );
 
+            final String testDataPath = PathUtil.toSystemIndependentName(new File(TEST_DATA_PATH).getAbsolutePath());
+            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), testDataPath );
+
+            PsiTestUtil.addLibrary(model, "freemarker-other", testDataPath, "freemarker-other.jar");
         }
 
         @Override
@@ -77,7 +84,7 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
 
     @Override
     protected String getTestDataPath() {
-        return "testdata/de/dm/intellij/liferay/language/freemarker/LiferayFtlVariableProviderTest";
+        return TEST_DATA_PATH;
     }
 
     public void testStructureVariablesSimpleJson() {
@@ -372,7 +379,12 @@ public class LiferayFtlVariableProviderTest extends LightCodeInsightFixtureTestC
         assertTrue(strings.contains("ADMIN_PLUGINS"));
     }
 
-
+    public void testIncludeServletContextFromDependency() {
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/include-servlet-context.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("/freemarker-other-common_SERVLET_CONTEXT_/foobar.ftl"));
+    }
 
 
 }

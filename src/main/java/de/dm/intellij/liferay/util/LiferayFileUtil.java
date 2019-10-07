@@ -232,6 +232,18 @@ public class LiferayFileUtil {
         return null;
     }
 
+    public static VirtualFile getFileInContentRoot(Module module, String path) {
+        ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
+        for (VirtualFile sourceRoot : moduleRootManager.getContentRoots()) {
+            VirtualFile pathFile = sourceRoot.findFileByRelativePath(path);
+            if (pathFile != null) {
+                return pathFile;
+            }
+        }
+
+        return null;
+    }
+
     public static VirtualFile getFileInWebRoot(Module module, String path) {
         Collection<WebFacet> webFacets = WebFacet.getInstances(module);
         for (WebFacet webFacet : webFacets) {

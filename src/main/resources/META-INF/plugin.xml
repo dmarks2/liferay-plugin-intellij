@@ -29,6 +29,7 @@
         <ul>
             <li>Feature: Updated taglib support for Liferay 7.1 and 7.2</li>
             <li>Feature: Inspections for wrongly nested Liferay tags inside JSPs</li>
+            <li>Feature: resolve _SERVLET_CONTEXT_ based imports in Freemarker templates from external dependencies, too.</li>
         </ul>
         <p>Version 0.0.6</p>
         <ul>

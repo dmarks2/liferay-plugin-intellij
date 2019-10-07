@@ -9,11 +9,15 @@ import com.intellij.freemarker.psi.variables.FtlTemplateType;
 import com.intellij.freemarker.psi.variables.FtlVariable;
 import com.intellij.javaee.web.WebRoot;
 import com.intellij.javaee.web.facet.WebFacet;
+import com.intellij.openapi.fileEditor.impl.LoadTextUtil;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ModuleRootManager;
+import com.intellij.openapi.roots.OrderEnumerator;
+import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -39,10 +43,12 @@ import de.dm.intellij.liferay.language.freemarker.themereference.ThemeReferenceF
 import de.dm.intellij.liferay.language.freemarker.themesettings.ThemeSettingsFtlVariable;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.theme.LiferayThemeTemplateVariables;
+import de.dm.intellij.liferay.util.LiferayFileUtil;
 import de.dm.intellij.liferay.util.LiferayVersions;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
@@ -53,6 +59,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implements TemplateVariableProcessor<FtlFile, FtlVariable>, TemplateMacroProcessor<FtlFile, FtlFile> {
 
@@ -140,44 +150,9 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
                 result.put("FTL_liferay.ftl", macro);
             }
 
-            Project project = file.getProject();
-            ModuleManager moduleManager = ModuleManager.getInstance(project);
-            Module[] modules = moduleManager.getModules();
+            Map<String, FtlFile> servletContextFiles = getServletContextFilesFromDependencies(ftlFile);
 
-            for (Module module : modules) {
-                String servletContextName = module.getName() + "_SERVLET_CONTEXT_";
-
-                Collection<WebFacet> webFacets = WebFacet.getInstances(module);
-
-                for (WebFacet webFacet : webFacets) {
-
-                    List<WebRoot> webRoots = webFacet.getWebRoots();
-
-                    for (WebRoot webRoot : webRoots) {
-                        if ("/".equals(webRoot.getRelativePath())) {
-
-                            if (webRoot.getFile() != null) {
-                                VirtualFile webRootFile = webRoot.getFile();
-
-                                VfsUtilCore.processFilesRecursively(webRootFile, virtualFile -> {
-                                    if (FtlFileType.INSTANCE.equals(virtualFile.getFileType())) {
-
-                                        FtlFile webContextFtlFile = (FtlFile)PsiManager.getInstance(module.getProject()).findFile(virtualFile);
-
-                                        String relativePath = VfsUtilCore.getRelativePath(virtualFile, webRootFile);
-
-                                        String filePath = "/" + servletContextName + "/" + relativePath;
-
-                                        result.put(filePath, webContextFtlFile);
-                                    }
-
-                                    return true;
-                                });
-                            }
-                        }
-                    }
-                }
-            }
+            result.putAll(servletContextFiles);
 
             return result;
 
@@ -284,6 +259,138 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
         }
 
         return Arrays.asList(new CustomFtlVariable(taglibPrefix, ftlFile, new FtlTemplateType(ftlFile)));
+    }
+
+    @NotNull
+    private Map<String, FtlFile> getServletContextFilesFromDependencies(@NotNull FtlFile ftlFile) {
+        Map<String, FtlFile> result = new HashMap<>();
+
+        final Module module = ModuleUtil.findModuleForPsiElement(ftlFile);
+
+        if (module != null) {
+            final Project project = module.getProject();
+
+            ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
+
+            OrderEnumerator orderEntries = moduleRootManager.orderEntries();
+
+            orderEntries.forEachModule(
+                orderEntryModule -> {
+
+                    String servletContextName = orderEntryModule.getName() + "_SERVLET_CONTEXT_";
+
+                    VirtualFile bndVirtualFile = LiferayFileUtil.getFileInContentRoot(orderEntryModule, "bnd.bnd");
+
+                    if (bndVirtualFile != null) {
+                        CharSequence text = LoadTextUtil.loadText(bndVirtualFile);
+
+                        Pattern webContextPathPattern = Pattern.compile("Web-ContextPath:( *)([\\w\\.-])");
+                        Matcher webContextPathMatcher = webContextPathPattern.matcher(text);
+
+                        if (webContextPathMatcher.find()) {
+                            String webContextPath = webContextPathMatcher.group(2);
+
+                            if (webContextPath.startsWith("/")) {
+                                webContextPath = webContextPath.substring(1);
+                            }
+
+                            servletContextName = webContextPath + "_SERVLET_CONTEXT_";
+                        }
+                    }
+
+                    String finalServletContextName = servletContextName;
+
+                    Collection<WebFacet> webFacets = WebFacet.getInstances(orderEntryModule);
+
+                    for (WebFacet webFacet : webFacets) {
+
+                        List<WebRoot> webRoots = webFacet.getWebRoots();
+
+                        for (WebRoot webRoot : webRoots) {
+                            if ("/".equals(webRoot.getRelativePath())) {
+
+                                if (webRoot.getFile() != null) {
+                                    VirtualFile webRootFile = webRoot.getFile();
+
+                                    VfsUtilCore.processFilesRecursively(webRootFile, virtualFile -> {
+                                        if (FtlFileType.INSTANCE.equals(virtualFile.getFileType())) {
+
+                                            FtlFile webContextFtlFile = (FtlFile)PsiManager.getInstance(orderEntryModule.getProject()).findFile(virtualFile);
+
+                                            String relativePath = VfsUtilCore.getRelativePath(virtualFile, webRootFile);
+
+                                            String filePath = "/" + finalServletContextName + "/" + relativePath;
+
+                                            result.put(filePath, webContextFtlFile);
+                                        }
+
+                                        return true;
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                    return true;
+                }
+            );
+
+            orderEntries.forEachLibrary(
+                orderEntryLibrary -> {
+                    VirtualFile[] files = orderEntryLibrary.getFiles(OrderRootType.CLASSES);
+                    for (VirtualFile file : files) {
+
+                        VirtualFile root = LiferayFileUtil.getJarRoot(file);
+
+                        if (root != null) {
+                            VirtualFile manifestVirtualFile = LiferayFileUtil.getChild(root, "META-INF/MANIFEST.MF");
+
+                            if (manifestVirtualFile != null) {
+                                try {
+                                    Manifest manifest = new Manifest(manifestVirtualFile.getInputStream());
+
+                                    String webContextPath = manifest.getMainAttributes().getValue("Web-ContextPath");
+
+                                    if (webContextPath != null) {
+                                        if (webContextPath.startsWith("/")) {
+                                            webContextPath = webContextPath.substring(1);
+                                        }
+
+                                        String servletContextName = webContextPath + "_SERVLET_CONTEXT_";
+
+                                        VirtualFile resourcesDirectory = LiferayFileUtil.getChild(root, "META-INF/resources");
+
+                                        if (resourcesDirectory != null) {
+                                            VfsUtilCore.processFilesRecursively(resourcesDirectory, virtualFile -> {
+                                                if (FtlFileType.INSTANCE.equals(virtualFile.getFileType())) {
+
+                                                    FtlFile webContextFtlFile = (FtlFile)PsiManager.getInstance(project).findFile(virtualFile);
+
+                                                    String relativePath = VfsUtilCore.getRelativePath(virtualFile, resourcesDirectory);
+
+                                                    String filePath = "/" + servletContextName + "/" + relativePath;
+
+                                                    result.put(filePath, webContextFtlFile);
+                                                }
+
+                                                return true;
+                                            });
+                                        }
+                                    }
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                    return true;
+                }
+            );
+        }
+
+        return result;
+
     }
 
 }
