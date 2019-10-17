@@ -36,6 +36,7 @@ public class LiferayModuleComponent implements ModuleComponent, PersistentStateC
     private String liferayHookXml = "";
     private String osgiFragmentHost = "";
     private String parentTheme = "";
+    private String customJspDir = "";
 
     public LiferayModuleComponent(@NotNull Module module) {
         this.module = module;
@@ -50,6 +51,7 @@ public class LiferayModuleComponent implements ModuleComponent, PersistentStateC
         state.liferayHookXml = this.liferayHookXml;
         state.osgiFragmentHost = this.osgiFragmentHost;
         state.parentTheme = this.parentTheme;
+        state.customJspDir = this.customJspDir;
         return state;
     }
 
@@ -60,6 +62,7 @@ public class LiferayModuleComponent implements ModuleComponent, PersistentStateC
         this.liferayHookXml = state.liferayHookXml;
         this.osgiFragmentHost = state.osgiFragmentHost;
         this.parentTheme = state.parentTheme;
+        this.customJspDir = state.customJspDir;
     }
 
     public void moduleAdded() {
@@ -205,4 +208,19 @@ public class LiferayModuleComponent implements ModuleComponent, PersistentStateC
         return null;
     }
 
+    public String getCustomJspDir() {
+        return customJspDir;
+    }
+
+    public void setCustomJspDir(String customJspDir) {
+        this.customJspDir = customJspDir;
+    }
+
+    public static String getCustomJspDir(Module module) {
+        LiferayModuleComponent component = getInstance(module);
+        if (component != null) {
+            return component.getCustomJspDir();
+        }
+        return null;
+    }
 }

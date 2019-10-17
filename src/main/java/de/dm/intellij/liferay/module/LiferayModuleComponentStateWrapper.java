@@ -20,12 +20,15 @@ public class LiferayModuleComponentStateWrapper {
 
     public String parentTheme;
 
+    public String customJspDir;
+
     public LiferayModuleComponentStateWrapper() {
         this.liferayVersion = "";
         this.liferayLookAndFeelXml = "";
         this.liferayHookXml = "";
         this.osgiFragmentHost = "";
         this.parentTheme = "";
+        this.customJspDir = "";
         themeSettings = new HashMap<String, String>();
     }
 }

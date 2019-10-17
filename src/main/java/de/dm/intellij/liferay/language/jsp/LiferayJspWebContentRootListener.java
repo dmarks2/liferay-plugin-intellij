@@ -14,6 +14,7 @@ import com.intellij.openapi.vfs.VirtualFileEvent;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
+import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.util.LiferayFileUtil;
 import de.dm.intellij.liferay.util.ProjectUtils;
 
@@ -62,6 +63,11 @@ public class LiferayJspWebContentRootListener {
                                 PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
                                 String customJspDir = LiferayCustomJspBagUtil.getCustomJspDir(psiJavaFile);
                                 if (customJspDir != null) {
+                                    LiferayModuleComponent liferayModuleComponent = LiferayModuleComponent.getInstance(module);
+                                    if (liferayModuleComponent != null) {
+                                        liferayModuleComponent.setCustomJspDir(customJspDir);
+                                    }
+
                                     ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
 
                                     for (VirtualFile sourceRoot : moduleRootManager.getSourceRoots()) {

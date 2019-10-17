@@ -15,6 +15,7 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.searches.ClassInheritorsSearch;
 import com.intellij.psi.util.PsiUtil;
 import com.intellij.util.Query;
+import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import org.jetbrains.annotations.NotNull;
 
 public class LiferayCustomJspBagUtil {
@@ -22,17 +23,9 @@ public class LiferayCustomJspBagUtil {
     private static final String CUSTOM_JSP_BAG_CLASS_NAME = "com.liferay.portal.deploy.hot.CustomJspBag";
 
     public static boolean hasCustomJspBags(@NotNull final Module module) {
-        Project project = module.getProject();
+        String customJspDir = LiferayModuleComponent.getCustomJspDir(module);
 
-        PsiClass psiClass = JavaPsiFacade.getInstance(project).findClass(CUSTOM_JSP_BAG_CLASS_NAME, GlobalSearchScope.allScope(project));
-        if (psiClass != null) {
-            GlobalSearchScope moduleScope = module.getModuleScope(false);
-            Query<PsiClass> query = ClassInheritorsSearch.search(psiClass, moduleScope, true);
-
-            return (query.findFirst() != null);
-        }
-
-        return false;
+        return (customJspDir != null);
     }
 
     public static String getCustomJspDir(PsiJavaFile psiJavaFile) {

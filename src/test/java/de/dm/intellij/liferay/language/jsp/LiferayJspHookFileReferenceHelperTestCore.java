@@ -88,4 +88,22 @@ public class LiferayJspHookFileReferenceHelperTestCore extends LightCodeInsightF
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("namespace"));
     }
+
+    public void testCoreJspHookInclude() {
+        //test with string return value in CustomJspBag.getCustomJspDir()
+        PsiFile[] psiFiles = myFixture.configureByFiles(
+            "META-INF/custom_jsps/include.jsp",
+            "com/liferay/portal/deploy/hot/CustomJspBag.java",
+            "com/liferay/portal/kernel/url/URLContainer.java",
+            "de/dm/CoreJspHookBag.java"
+        );
+
+        String text = psiFiles[3].getText();
+        myFixture.saveText(psiFiles[3].getVirtualFile(), text);
+
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("init.jsp"));
+    }
+
 }
