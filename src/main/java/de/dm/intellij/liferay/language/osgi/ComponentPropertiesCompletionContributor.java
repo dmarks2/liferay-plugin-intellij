@@ -836,6 +836,9 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("javax.websocket.Endpoint",
                 new String[][]{
                         {"org.osgi.http.websocket.endpoint.path", "String"},
+                        {"org.osgi.http.websocket.endpoint.decoders", "String"},
+                        {"org.osgi.http.websocket.endpoint.encoders", "String"},
+                        {"org.osgi.http.websocket.endpoint.subprotocol", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("org.eclipse.osgi.service.urlconversion.URLConverter",

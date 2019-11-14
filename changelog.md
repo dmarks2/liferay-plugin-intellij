@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Updated taglib support for Liferay 7.1 and 7.2
 - Feature: Inspections for wrongly nested Liferay tags inside JSPs
 - Feature: resolve \_SERVLET_CONTEXT\_ based imports in Freemarker templates from external dependencies, too.
+- Feature OSGi Websocket Whiteboard properties
 - Bugfix: Performance issues resolving JSPs from Custom JSP Bags 
 
 ## 0.0.6
