@@ -8,7 +8,8 @@ All notable changes to this project will be documented in this file.
 - Feature: Inspections for wrongly nested Liferay tags inside JSPs
 - Feature: resolve \_SERVLET_CONTEXT\_ based imports in Freemarker templates from external dependencies, too.
 - Feature OSGi Websocket Whiteboard properties
-- Bugfix: Performance issues resolving JSPs from Custom JSP Bags 
+- Bugfix: Performance issues resolving JSPs from Custom JSP Bags
+- Bugfix: fixed JSON schema for sitemap.json 
 
 ## 0.0.6
 - Feature: File References for portlet.properties files

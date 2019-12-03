@@ -31,7 +31,7 @@
   },
   "definitions": {
     "column": {
-      "type": "object",
+      "type": ["string", "object"],
       "properties": {
         "portletId": {
           "type": "string"
@@ -42,7 +42,10 @@
             "columns": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/column"
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/column"
+                }
               }
             }
           }
@@ -68,7 +71,7 @@
           "type": "string"
         },
         "hidden": {
-          "type": "boolean"
+          "type": "string"
         },
         "themeId": {
           "type": "string"
@@ -97,7 +100,10 @@
         "columns": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/column"
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/column"
+            }
           }
         },
         "layouts": {

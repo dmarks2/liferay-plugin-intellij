@@ -32,6 +32,7 @@
             <li>Feature: resolve _SERVLET_CONTEXT_ based imports in Freemarker templates from external dependencies, too.</li>
             <li>Feature OSGi Websocket Whiteboard properties</li>
             <li>Bugfix: Performance issues resolving JSPs from Custom JSP Bags</li>
+            <li>Bugfix: fixed JSON schema for sitemap.json</li>
         </ul>
         <p>Version 0.0.6</p>
         <ul>
