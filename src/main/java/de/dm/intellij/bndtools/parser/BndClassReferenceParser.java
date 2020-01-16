@@ -8,12 +8,7 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiModifier;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiType;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.JavaClassReferenceProvider;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.ProjectScope;
@@ -93,21 +88,27 @@ public class BndClassReferenceParser extends OsgiHeaderParser /*extends ClassRef
     }
 
     protected boolean checkClass(@NotNull BndHeaderValuePart valuePart, @NotNull PsiClass aClass, @NotNull AnnotationHolder holder) {
-        String header = ((BndHeader)valuePart.getParent()).getName();
+        PsiElement parent = valuePart.getParent();
 
-        if (MAIN_CLASS.equals(header) && !PsiMethodUtil.hasMainMethod(aClass)) {
-            holder.createErrorAnnotation(valuePart.getHighlightingRange(), ManifestBundle.message("header.main.class.invalid"));
-            return true;
-        }
+        if (parent instanceof BndHeader) {
+            BndHeader bndHeader = (BndHeader) parent;
 
-        if (PREMAIN_CLASS.equals(header) && !hasInstrumenterMethod(aClass, "premain")) {
-            holder.createErrorAnnotation(valuePart.getHighlightingRange(), ManifestBundle.message("header.pre-main.class.invalid"));
-            return true;
-        }
+            String bndHeaderName = bndHeader.getName();
 
-        if ((AGENT_CLASS.equals(header) || LAUNCHER_AGENT_CLASS.equals(header)) && !hasInstrumenterMethod(aClass, "agentmain")) {
-            holder.createErrorAnnotation(valuePart.getHighlightingRange(), ManifestBundle.message("header.agent.class.invalid"));
-            return true;
+            if (MAIN_CLASS.equals(bndHeaderName) && !PsiMethodUtil.hasMainMethod(aClass)) {
+                holder.createErrorAnnotation(valuePart.getHighlightingRange(), ManifestBundle.message("header.main.class.invalid"));
+                return true;
+            }
+
+            if (PREMAIN_CLASS.equals(bndHeaderName) && !hasInstrumenterMethod(aClass, "premain")) {
+                holder.createErrorAnnotation(valuePart.getHighlightingRange(), ManifestBundle.message("header.pre-main.class.invalid"));
+                return true;
+            }
+
+            if ((AGENT_CLASS.equals(bndHeaderName) || LAUNCHER_AGENT_CLASS.equals(bndHeaderName)) && !hasInstrumenterMethod(aClass, "agentmain")) {
+                holder.createErrorAnnotation(valuePart.getHighlightingRange(), ManifestBundle.message("header.agent.class.invalid"));
+                return true;
+            }
         }
 
         return false;
