@@ -18,7 +18,7 @@ public class BundleActivatorParser extends BndClassReferenceParser {
     protected boolean checkClass(@NotNull BndHeaderValuePart valuePart, @NotNull PsiClass aClass, @NotNull AnnotationHolder holder) {
         Project project = valuePart.getProject();
 
-        PsiClass activatorClass = BndPsiUtil.getActivatorClass(project);
+        PsiClass activatorClass = BndPsiUtil.getBundleActivatorClass(project);
 
         if (activatorClass != null) {
             if (! aClass.isInheritor(activatorClass, true)) {

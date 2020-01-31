@@ -8,7 +8,7 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.tree.IElementType;
-import de.dm.intellij.bndtools.parser.BndLexer;
+import de.dm.intellij.bndtools.lexer.BndLexer;
 import de.dm.intellij.bndtools.psi.BndTokenType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

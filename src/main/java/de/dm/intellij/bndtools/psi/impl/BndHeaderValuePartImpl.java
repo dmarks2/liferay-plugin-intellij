@@ -8,8 +8,8 @@ import com.intellij.psi.PsiReference;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiTreeUtil;
-import de.dm.intellij.bndtools.parser.OsgiHeaderParser;
-import de.dm.intellij.bndtools.parser.OsgiManifestHeaderParsers;
+import de.dm.intellij.bndtools.parser.BndHeaderParser;
+import de.dm.intellij.bndtools.parser.BndHeaderParsers;
 import de.dm.intellij.bndtools.psi.BndHeader;
 import de.dm.intellij.bndtools.psi.BndHeaderValuePart;
 import de.dm.intellij.bndtools.psi.BndToken;
@@ -32,9 +32,9 @@ public class BndHeaderValuePartImpl extends ASTWrapperPsiElement implements BndH
 
         BndHeader bndHeader = PsiTreeUtil.getParentOfType(this, BndHeader.class);
         if (bndHeader != null) {
-            OsgiHeaderParser osgiHeaderParser = OsgiManifestHeaderParsers.PARSERS.get(bndHeader.getName());
-            if (osgiHeaderParser != null) {
-                return osgiHeaderParser.getReferences(this);
+            BndHeaderParser bndHeaderParser = BndHeaderParsers.PARSERS_MAP.get(bndHeader.getName());
+            if (bndHeaderParser != null) {
+                return bndHeaderParser.getReferences(this);
             }
         }
 

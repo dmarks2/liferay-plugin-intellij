@@ -20,7 +20,7 @@ import de.dm.intellij.bndtools.psi.Clause;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.lang.manifest.ManifestBundle;
 
-public class BndClassReferenceParser extends OsgiHeaderParser /*extends ClassReferenceParser*/ {
+public class BndClassReferenceParser extends BndHeaderParser /*extends ClassReferenceParser*/ {
 
     public static final BndClassReferenceParser INSTANCE = new BndClassReferenceParser();
 

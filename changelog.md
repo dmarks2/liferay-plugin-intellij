@@ -3,6 +3,9 @@ Liferay Plugin for IntelliJ
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.8
+- Bugfix: Bugfix detecting a wrong version number in the Bundle-Version instruction inside the bnd.bnd file.
+
 ## 0.0.7
 - Feature: Updated taglib support for Liferay 7.1 and 7.2
 - Feature: Inspections for wrongly nested Liferay tags inside JSPs

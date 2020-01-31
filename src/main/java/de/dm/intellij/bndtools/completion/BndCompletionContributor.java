@@ -16,7 +16,7 @@ import com.intellij.patterns.PsiElementPattern;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.ProcessingContext;
 import de.dm.intellij.bndtools.BndLanguage;
-import de.dm.intellij.bndtools.parser.OsgiManifestHeaderParsers;
+import de.dm.intellij.bndtools.parser.BndHeaderParsers;
 import de.dm.intellij.bndtools.psi.BndHeader;
 import de.dm.intellij.bndtools.psi.BndTokenType;
 import de.dm.intellij.bndtools.psi.Directive;
@@ -25,9 +25,9 @@ import org.osgi.framework.Constants;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 
-public class OsgiManifestCompletionContributor extends CompletionContributor {
+public class BndCompletionContributor extends CompletionContributor {
 
-    public OsgiManifestCompletionContributor() {
+    public BndCompletionContributor() {
         extend(
             CompletionType.BASIC, _header(Constants.EXPORT_PACKAGE),
             new HeaderParametersProvider(Constants.VERSION_ATTRIBUTE, Constants.USES_DIRECTIVE + ':'));
@@ -47,7 +47,7 @@ public class OsgiManifestCompletionContributor extends CompletionContributor {
                 public void addCompletions(@NotNull CompletionParameters parameters,
                                            @NotNull ProcessingContext context,
                                            @NotNull CompletionResultSet resultSet) {
-                    for (String header : OsgiManifestHeaderParsers.PARSERS.keySet()) {
+                    for (String header : BndHeaderParsers.PARSERS_MAP.keySet()) {
                         resultSet.addElement(LookupElementBuilder.create(header).withInsertHandler(HEADER_INSERT_HANDLER));
                     }
                 }

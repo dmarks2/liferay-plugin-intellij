@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BasePackageParser extends OsgiHeaderParser {
+public class BasePackageParser extends BndHeaderParser {
 
     public static final BasePackageParser INSTANCE = new BasePackageParser();
 

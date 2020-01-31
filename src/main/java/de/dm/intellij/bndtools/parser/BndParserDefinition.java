@@ -13,13 +13,14 @@ import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiUtilCore;
 import de.dm.intellij.bndtools.BndLanguage;
-import de.dm.intellij.bndtools.psi.OsgiManifestElementType;
+import de.dm.intellij.bndtools.lexer.BndLexer;
+import de.dm.intellij.bndtools.psi.BndElementType;
 import de.dm.intellij.bndtools.psi.impl.BndFileImpl;
 import org.jetbrains.annotations.NotNull;
 
-public class BndParserDefinition implements ParserDefinition /*extends ManifestParserDefinition*/ {
+public class BndParserDefinition implements ParserDefinition {
 
-    public static final IFileElementType FILE = new IFileElementType("BndFile", BndLanguage.INSTANCE);
+    public static final IFileElementType BND_FILE_ELEMENT_TYPE = new IFileElementType("BndFile", BndLanguage.INSTANCE);
 
     @NotNull
     @Override
@@ -34,7 +35,7 @@ public class BndParserDefinition implements ParserDefinition /*extends ManifestP
 
     @Override
     public IFileElementType getFileNodeType() {
-        return FILE;
+        return BND_FILE_ELEMENT_TYPE;
     }
 
     @Override
@@ -46,9 +47,11 @@ public class BndParserDefinition implements ParserDefinition /*extends ManifestP
     @NotNull
     @Override
     public PsiElement createElement(ASTNode node) {
-        IElementType type = node.getElementType();
-        if (type instanceof OsgiManifestElementType) {
-            return ((OsgiManifestElementType)type).createPsi(node);
+        IElementType elementType = node.getElementType();
+        if (elementType instanceof BndElementType) {
+            BndElementType bndElementType = (BndElementType)elementType;
+
+            return bndElementType.createPsi(node);
         }
 
         return PsiUtilCore.NULL_PSI_ELEMENT;

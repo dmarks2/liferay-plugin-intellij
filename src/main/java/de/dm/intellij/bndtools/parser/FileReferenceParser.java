@@ -6,7 +6,7 @@ import de.dm.intellij.bndtools.psi.Clause;
 import de.dm.intellij.bndtools.psi.util.BndPsiUtil;
 import org.jetbrains.annotations.NotNull;
 
-public class FileReferenceParser extends OsgiHeaderParser {
+public class FileReferenceParser extends BndHeaderParser {
 
     public static final FileReferenceParser INSTANCE = new FileReferenceParser();
 

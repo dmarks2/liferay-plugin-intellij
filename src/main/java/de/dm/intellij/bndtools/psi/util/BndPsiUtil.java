@@ -32,15 +32,15 @@ import java.util.Collections;
 public class BndPsiUtil {
 
     @Nullable
-    public static PsiClass getActivatorClass(@NotNull Project project) {
+    public static PsiClass getBundleActivatorClass(@NotNull Project project) {
 
         GlobalSearchScope librariesScope = ProjectScope.getLibrariesScope(project);
 
         JavaPsiFacade javaPsiFacade = JavaPsiFacade.getInstance(project);
 
-        PsiClass aClass = javaPsiFacade.findClass(BundleActivator.class.getName(), librariesScope);
+        PsiClass bundleActivatorClass = javaPsiFacade.findClass(BundleActivator.class.getName(), librariesScope);
 
-        return aClass;
+        return bundleActivatorClass;
     }
 
 

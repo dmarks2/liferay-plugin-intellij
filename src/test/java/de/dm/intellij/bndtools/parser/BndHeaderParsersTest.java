@@ -24,9 +24,9 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.List;
 
-public class OsgiManifestHeaderParsersTest extends LightCodeInsightFixtureTestCase {
+public class BndHeaderParsersTest extends LightCodeInsightFixtureTestCase {
 
-    private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/bndtools/parser/OsgiManifestHeaderParsersTest";
+    private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/bndtools/parser/BndHeaderParsersTest";
 
     private static final LightProjectDescriptor JAVA_OSGI_DESCRIPTOR = new DefaultLightProjectDescriptor() {
 
@@ -55,6 +55,28 @@ public class OsgiManifestHeaderParsersTest extends LightCodeInsightFixtureTestCa
     @Override
     protected String getTestDataPath() {
         return TEST_DATA_PATH;
+    }
+
+    public void testHeadersCodeCompletion() {
+        myFixture.configureByFiles("testHeadersCodeCompletion/bnd.bnd");
+
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("Bundle-Activator"));
+    }
+
+    public void testOptionsCodeCompletion() {
+        myFixture.configureByFiles("testOptionsCodeCompletion/bnd.bnd");
+
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("-baseline"));
+    }
+
+    public void testBundleVersionHighlighting() {
+        myFixture.configureByFiles("testBundleVersionHighlighting/bnd.bnd");
+
+        myFixture.checkHighlighting(false, false, true, true);
     }
 
     public void testBundleActivatorHighlighting() {

@@ -13,9 +13,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.codeStyle.CodeStyleSettings;
 import de.dm.intellij.bndtools.BndFileType;
-import de.dm.intellij.bndtools.psi.BndToken;
 import de.dm.intellij.bndtools.psi.BndTokenType;
-import de.dm.intellij.bndtools.psi.OsgiManifestElementType;
+import de.dm.intellij.bndtools.psi.BndElementType;
 import org.jetbrains.annotations.NotNull;
 
 public class BndFormattingModelBuilder implements FormattingModelBuilder {
@@ -28,7 +27,7 @@ public class BndFormattingModelBuilder implements FormattingModelBuilder {
         PsiFile psiFile = element.getContainingFile();
 
         SpacingBuilder spacingBuilder = new SpacingBuilder(settings, psiFile.getLanguage())
-            .between(BndTokenType.COLON, OsgiManifestElementType.CLAUSE).spaces(1)
+            .between(BndTokenType.COLON, BndElementType.CLAUSE).spaces(1)
             .between(BndTokenType.NEWLINE, BndTokenType.HEADER_VALUE_PART).spaces(settings.getIndentSize(BndFileType.INSTANCE));
 
 

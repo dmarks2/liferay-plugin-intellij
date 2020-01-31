@@ -5,8 +5,8 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.psi.PsiElement;
-import de.dm.intellij.bndtools.parser.OsgiHeaderParser;
-import de.dm.intellij.bndtools.parser.OsgiManifestHeaderParsers;
+import de.dm.intellij.bndtools.parser.BndHeaderParser;
+import de.dm.intellij.bndtools.parser.BndHeaderParsers;
 import de.dm.intellij.bndtools.psi.AssignmentExpression;
 import de.dm.intellij.bndtools.psi.Attribute;
 import de.dm.intellij.bndtools.psi.BndHeader;
@@ -24,9 +24,9 @@ public class OsgiManifestHighlightingAnnotator implements Annotator {
         if (psiElement instanceof BndHeader) {
             BndHeader bndHeader = (BndHeader)psiElement;
             String name = bndHeader.getName();
-            OsgiHeaderParser osgiHeaderParser = OsgiManifestHeaderParsers.PARSERS.get(name);
-            if (osgiHeaderParser != null) {
-                osgiHeaderParser.annotate(bndHeader, annotationHolder);
+            BndHeaderParser bndHeaderParser = BndHeaderParsers.PARSERS_MAP.get(name);
+            if (bndHeaderParser != null) {
+                bndHeaderParser.annotate(bndHeader, annotationHolder);
             }
         } else if (psiElement instanceof BndHeaderValuePart) {
             PsiElement parentPsiElement = psiElement.getParent();

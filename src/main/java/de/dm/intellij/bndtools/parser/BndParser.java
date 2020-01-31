@@ -8,11 +8,11 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.ObjectUtils;
 import de.dm.intellij.bndtools.psi.BndTokenType;
-import de.dm.intellij.bndtools.psi.OsgiManifestElementType;
+import de.dm.intellij.bndtools.psi.BndElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.lang.manifest.ManifestBundle;
 
-public class BndParser implements PsiParser /*extends ManifestParser*/ {
+public class BndParser implements PsiParser {
 
     public static final TokenSet HEADER_END_TOKENS = TokenSet.create(BndTokenType.SECTION_END, BndTokenType.HEADER_NAME);
 
@@ -30,57 +30,52 @@ public class BndParser implements PsiParser /*extends ManifestParser*/ {
         return builder.getTreeBuilt();
     }
 
-    private void parseSection(PsiBuilder builder) {
-        PsiBuilder.Marker section = builder.mark();
+    private void parseSection(PsiBuilder psiBuilder) {
+        PsiBuilder.Marker sectionMarker = psiBuilder.mark();
 
-        while (!builder.eof()) {
-            IElementType tokenType = builder.getTokenType();
+        while (!psiBuilder.eof()) {
+            IElementType tokenType = psiBuilder.getTokenType();
             if (tokenType == BndTokenType.HEADER_NAME) {
-                parseHeader(builder);
+                parseHeader(psiBuilder);
             }
             else if (tokenType == BndTokenType.SECTION_END) {
-                builder.advanceLexer();
+                psiBuilder.advanceLexer();
                 break;
             }
             else {
-                PsiBuilder.Marker marker = builder.mark();
-                consumeHeaderValue(builder);
+                PsiBuilder.Marker marker = psiBuilder.mark();
+                consumeHeaderValue(psiBuilder);
                 marker.error(ManifestBundle.message("manifest.header.expected"));
             }
         }
 
-        section.done(OsgiManifestElementType.SECTION);
+        sectionMarker.done(BndElementType.SECTION);
     }
 
-    private void parseHeader(PsiBuilder builder) {
-        PsiBuilder.Marker header = builder.mark();
-        String headerName = builder.getTokenText();
-        assert headerName != null : "[" + builder.getOriginalText() + "]@" + builder.getCurrentOffset();
-        builder.advanceLexer();
+    private void parseHeader(PsiBuilder psiBuilder) {
+        PsiBuilder.Marker headerMarker = psiBuilder.mark();
+        String headerName = psiBuilder.getTokenText();
 
-        if (builder.getTokenType() == BndTokenType.COLON) {
-            builder.advanceLexer();
+        psiBuilder.advanceLexer();
 
-/*            if (!expect(builder, ManifestTokenType.SIGNIFICANT_SPACE)) {
-                builder.error(ManifestBundle.message("manifest.whitespace.expected"));
-            }
- */
+        if (psiBuilder.getTokenType() == BndTokenType.COLON) {
+            psiBuilder.advanceLexer();
 
-            OsgiHeaderParser osgiHeaderParser = ObjectUtils.notNull(OsgiManifestHeaderParsers.PARSERS.get(headerName), OsgiHeaderParser.INSTANCE);
-            osgiHeaderParser.parse(builder);
+            BndHeaderParser bndHeaderParser = ObjectUtils.notNull(BndHeaderParsers.PARSERS_MAP.get(headerName), BndHeaderParser.INSTANCE);
+            bndHeaderParser.parse(psiBuilder);
         }
         else {
-            PsiBuilder.Marker marker = builder.mark();
-            consumeHeaderValue(builder);
+            PsiBuilder.Marker marker = psiBuilder.mark();
+            consumeHeaderValue(psiBuilder);
             marker.error(ManifestBundle.message("manifest.colon.expected"));
         }
 
-        header.done(OsgiManifestElementType.HEADER);
+        headerMarker.done(BndElementType.HEADER);
     }
 
-    private static void consumeHeaderValue(PsiBuilder builder) {
-        while (!builder.eof() && !HEADER_END_TOKENS.contains(builder.getTokenType())) {
-            builder.advanceLexer();
+    private static void consumeHeaderValue(PsiBuilder psiBuilder) {
+        while (!psiBuilder.eof() && !HEADER_END_TOKENS.contains(psiBuilder.getTokenType())) {
+            psiBuilder.advanceLexer();
         }
     }
 
