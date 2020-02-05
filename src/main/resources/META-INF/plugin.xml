@@ -2,7 +2,7 @@
     <id>de.dm.intellij.liferay</id>
     <name>Liferay</name>
     <category>Framework integration</category>
-    <version>0.0.6</version>
+    <version>0.0.8</version>
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
@@ -25,6 +25,10 @@
       ]]></description>
 
     <change-notes><![CDATA[
+        <p>Version 0.0.8</p>
+        <ul>
+            <li>Bugfix: Bugfix detecting a wrong version number in the Bundle-Version instruction inside the bnd.bnd file.</li>
+        </ul>
         <p>Version 0.0.7</p>
         <ul>
             <li>Feature: Updated taglib support for Liferay 7.1 and 7.2</li>
