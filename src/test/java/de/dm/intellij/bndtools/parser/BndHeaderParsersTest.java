@@ -73,12 +73,6 @@ public class BndHeaderParsersTest extends LightCodeInsightFixtureTestCase {
         assertTrue(strings.contains("-baseline"));
     }
 
-    public void testImportPackageHighlighting() {
-        myFixture.configureByFiles("testImportPackageHighlighting/bnd.bnd", "de/dm/Foo.java");
-
-        myFixture.checkHighlighting(false, false, true, true);
-    }
-
     public void testExportPackageHighlighting() {
         myFixture.configureByFiles("testExportPackageHighlighting/bnd.bnd", "de/dm/Foo.java");
 
