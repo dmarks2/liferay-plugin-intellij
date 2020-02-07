@@ -15,15 +15,15 @@ public class BundleActivatorParser extends BndClassReferenceParser {
     }
 
     @Override
-    protected boolean checkClass(@NotNull BndHeaderValuePart valuePart, @NotNull PsiClass aClass, @NotNull AnnotationHolder holder) {
-        Project project = valuePart.getProject();
+    protected boolean checkClass(@NotNull BndHeaderValuePart bndHeaderValuePart, @NotNull PsiClass psiClass, @NotNull AnnotationHolder annotationHolder) {
+        boolean result = super.checkClass(bndHeaderValuePart, psiClass, annotationHolder);
 
-        PsiClass activatorClass = BndPsiUtil.getBundleActivatorClass(project);
+        PsiClass bundleActivatorClass = BndPsiUtil.getBundleActivatorClass(bndHeaderValuePart);
 
-        if (activatorClass != null) {
-            if (! aClass.isInheritor(activatorClass, true)) {
-                holder.createErrorAnnotation(
-                    valuePart.getHighlightingRange(),
+        if (bundleActivatorClass != null) {
+            if (! psiClass.isInheritor(bundleActivatorClass, true)) {
+                annotationHolder.createErrorAnnotation(
+                    bndHeaderValuePart.getHighlightingRange(),
                     "Activator class does not inherit from BundleActivator"
                 );
 
@@ -31,7 +31,7 @@ public class BundleActivatorParser extends BndClassReferenceParser {
             }
         }
 
-        return false;
+        return result;
     }
 }
 

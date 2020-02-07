@@ -17,7 +17,7 @@ import de.dm.intellij.bndtools.psi.Clause;
 import de.dm.intellij.bndtools.psi.Directive;
 import org.jetbrains.annotations.NotNull;
 
-public class OsgiManifestHighlightingAnnotator implements Annotator {
+public class BndHighlightingAnnotator implements Annotator {
 
     @Override
     public void annotate(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {

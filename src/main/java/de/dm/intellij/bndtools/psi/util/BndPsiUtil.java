@@ -32,17 +32,22 @@ import java.util.Collections;
 public class BndPsiUtil {
 
     @Nullable
-    public static PsiClass getBundleActivatorClass(@NotNull Project project) {
+    public static PsiClass getBundleActivatorClass(@NotNull PsiElement psiElement) {
+        Project project = psiElement.getProject();
 
-        GlobalSearchScope librariesScope = ProjectScope.getLibrariesScope(project);
+        Module module = ModuleUtilCore.findModuleForPsiElement(psiElement);
+
+        GlobalSearchScope globalSearchScope;
+        if (module == null) {
+            globalSearchScope = ProjectScope.getLibrariesScope(project);
+        } else {
+            globalSearchScope = GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(module);
+        }
 
         JavaPsiFacade javaPsiFacade = JavaPsiFacade.getInstance(project);
 
-        PsiClass bundleActivatorClass = javaPsiFacade.findClass(BundleActivator.class.getName(), librariesScope);
-
-        return bundleActivatorClass;
+        return javaPsiFacade.findClass(BundleActivator.class.getName(), globalSearchScope);
     }
-
 
     @NotNull
     public static PsiReference[] getPackageReferences(@NotNull PsiElement psiElement) {

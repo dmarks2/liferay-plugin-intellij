@@ -23,6 +23,10 @@ public class LiferayBndConstants {
     public static final String LIFERAY_JS_CONFIG = "Liferay-JS-Config";
     public static final String LIFERAY_CONFIGURATION_PATH = "Liferay-Configuration-Path";
 
+    public static final String MAIN_CLASS = "Main-Class";
+    public static final String PREMAIN_CLASS = "Premain-Class";
+    public static final String AGENT_CLASS = "Agent-Class";
+    public static final String LAUNCHER_AGENT_CLASS = "Launcher-Agent-Class";
 
     public static final String[] DEFAULT_HEADER_PROPERTIES = {
         JSP, SASS, LIFERAY_SERVICE_XML, LIFERAY_RELENG_MODULE_GROUP_DESCRIPTION, LIFERAY_RELENG_MODULE_GROUP_TITLE,
@@ -31,7 +35,7 @@ public class LiferayBndConstants {
 
     public static final String[] CLASS_REFERENCE_PROPERTIES = {
         PLUGIN_BUNDLE, PLUGIN_JSP, PLUGIN_NPM, PLUGIN_RESOURCEBUNDLE,
-        PLUGIN_SASS, PLUGIN_SERVICE, PLUGIN_SPRING
+        PLUGIN_SASS, PLUGIN_SERVICE, PLUGIN_SPRING, MAIN_CLASS, PREMAIN_CLASS, AGENT_CLASS, LAUNCHER_AGENT_CLASS
     };
 
     public static final String[] FILE_REFERENCE_PROPERTIES = {
