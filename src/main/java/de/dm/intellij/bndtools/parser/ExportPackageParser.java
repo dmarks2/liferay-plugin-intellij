@@ -71,8 +71,8 @@ public class ExportPackageParser extends BasePackageParser {
     }
 
     @Override
-    public boolean annotate(@NotNull BndHeader bndHeader, @NotNull AnnotationHolder holder) {
-        if (super.annotate(bndHeader, holder)) {
+    public boolean annotate(@NotNull BndHeader bndHeader, @NotNull AnnotationHolder annotationHolder) {
+        if (super.annotate(bndHeader, annotationHolder)) {
             return true;
         }
 
@@ -124,7 +124,7 @@ public class ExportPackageParser extends BasePackageParser {
                             if (StringUtil.isEmptyOrSpaces(packageName)) {
                                 TextRange highlightTextRange = textRange.shiftRight(offset);
 
-                                holder.createErrorAnnotation(highlightTextRange, "Invalid reference");
+                                annotationHolder.createErrorAnnotation(highlightTextRange, "Invalid reference");
 
                                 annotated = true;
 
@@ -136,7 +136,7 @@ public class ExportPackageParser extends BasePackageParser {
                             if (psiDirectories.length == 0) {
                                 TextRange highlightTextRange = BndPsiUtil.adjustTextRangeWithoutWhitespaces(textRange, text).shiftRight(offset);
 
-                                holder.createErrorAnnotation(
+                                annotationHolder.createErrorAnnotation(
                                     highlightTextRange,
                                     JavaErrorMessages.message("cannot.resolve.package", packageName)
                                 );

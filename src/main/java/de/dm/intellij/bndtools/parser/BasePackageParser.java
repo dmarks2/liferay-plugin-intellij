@@ -23,6 +23,8 @@ public class BasePackageParser extends BndHeaderParser {
     @NotNull
     @Override
     public PsiReference[] getReferences(@NotNull BndHeaderValuePart bndHeaderValuePart) {
+        //TODO add test to resolve reference
+
         if (bndHeaderValuePart.getParent() instanceof Clause) {
             return BndPsiUtil.getPackageReferences(bndHeaderValuePart);
         }
@@ -31,7 +33,7 @@ public class BasePackageParser extends BndHeaderParser {
     }
 
     @Override
-    public boolean annotate(@NotNull BndHeader bndHeader, @NotNull AnnotationHolder holder) {
+    public boolean annotate(@NotNull BndHeader bndHeader, @NotNull AnnotationHolder annotationHolder) {
         boolean annotated = false;
 
         for (BndHeaderValue bndHeaderValue : bndHeader.getBndHeaderValues()) {
@@ -46,7 +48,7 @@ public class BasePackageParser extends BndHeaderParser {
                     packageName = StringUtil.trimEnd(packageName, ".*");
 
                     if (StringUtil.isEmptyOrSpaces(packageName)) {
-                        holder.createErrorAnnotation(
+                        annotationHolder.createErrorAnnotation(
                             bndHeaderValuePart.getHighlightingRange(),
                             "Invalid reference"
                         );
@@ -65,7 +67,8 @@ public class BasePackageParser extends BndHeaderParser {
                         PsiDirectory[] psiDirectories = BndPsiUtil.resolvePackage(bndHeader, packageName);
 
                         if (psiDirectories.length == 0) {
-                            holder.createErrorAnnotation(
+                            //TODO create test
+                            annotationHolder.createErrorAnnotation(
                                 bndHeaderValuePart.getHighlightingRange(),
                                 JavaErrorMessages.message("cannot.resolve.package", packageName)
                             );
