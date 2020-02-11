@@ -101,33 +101,34 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
                     result.addAll(getTemplateTypeVariables(macro, "liferay"));
                 }
 
-                //Provide Liferay Taglibs as predefined variables in their corresponding Freemarker namespaces
-                result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-aui.tld", module, "liferay_aui"));
-                result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-portlet-ext.tld", module, "liferay_portlet"));
-                result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-portlet.tld", module, "portlet"));
-                result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-security.tld", module, "liferay_security"));
-                result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-theme.tld", module, "liferay_theme"));
-                result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-ui.tld", module, "liferay_ui"));
-                result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-util.tld", module, "liferay_util"));
-
-                if (
-                        (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_0) ||
-                        (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
-                        (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
-                        (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
-                        ) { //Liferay 7.0
-                    result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-product-navigation.tld", module, "liferay_product_navigation"));
-                    result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-journal.tld", module, "liferay_journal"));
-                    result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-flags.tld", module, "liferay_flags"));
-                    result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-layout.tld", module, "liferay_layout"));
-                    result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-site-navigation.tld", module, "liferay_site_navigation"));
-                    result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-asset.tld", module, "liferay_asset"));
-                    result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-map.tld", module, "liferay_map"));
-                    result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-item-selector.tld", module, "liferay_item_selector"));
-                    result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-expando.tld", module, "liferay_expando"));
-                    result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-frontend.tld", module, "liferay_frontend"));
-                    result.addAll(getTaglibSupportVariables("/com/liferay/tld/liferay-trash.tld", module, "liferay_trash"));
+                //default for Liferay 7.0 or unknown Liferay version
+                String liferayVersionPrefix = "70";
+                if (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_1) {
+                    liferayVersionPrefix = "71";
+                } else if (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_2) {
+                    liferayVersionPrefix = "72";
                 }
+
+                //Provide Liferay Taglibs as predefined variables in their corresponding Freemarker namespaces
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-aui.tld", module, "liferay_aui"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-portlet-ext.tld", module, "liferay_portlet"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-portlet.tld", module, "portlet"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-security.tld", module, "liferay_security"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-theme.tld", module, "liferay_theme"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-ui.tld", module, "liferay_ui"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-util.tld", module, "liferay_util"));
+
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-product-navigation.tld", module, "liferay_product_navigation"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-journal.tld", module, "liferay_journal"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-flags.tld", module, "liferay_flags"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-layout.tld", module, "liferay_layout"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-site-navigation.tld", module, "liferay_site_navigation"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-asset.tld", module, "liferay_asset"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-map.tld", module, "liferay_map"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-item-selector.tld", module, "liferay_item_selector"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-expando.tld", module, "liferay_expando"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-frontend.tld", module, "liferay_frontend"));
+                result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/liferay-trash.tld", module, "liferay_trash"));
             }
 
             return result;
