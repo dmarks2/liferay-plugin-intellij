@@ -1,7 +1,9 @@
 package de.dm.intellij.liferay.util;
 
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.module.ModifiableModuleModel;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
@@ -43,12 +45,13 @@ import com.intellij.psi.impl.source.PsiFieldImpl;
 import com.intellij.psi.impl.source.tree.JavaSourceUtil;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.util.ArrayUtil;
 import com.intellij.util.DisposeAwareRunnable;
 import com.intellij.util.Processor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.*;
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -444,6 +447,47 @@ public class ProjectUtils {
         }
 
         return referencePlaceholder;
+    }
+
+    @Nullable
+    public static Module getParentModule(Module module) {
+        ModuleManager moduleManager = ModuleManager.getInstance(module.getProject());
+
+        ModifiableModuleModel modifiableModuleModel = moduleManager.getModifiableModel();
+
+        String[] groupPaths = modifiableModuleModel.getModuleGroupPath(module);
+
+        String path = ArrayUtil.getLastElement(groupPaths);
+
+        if (path != null) {
+            for (Module modifiableModule : modifiableModuleModel.getModules()) {
+                if (path.equals(modifiableModule.getName())) {
+                    return modifiableModule;
+                }
+            }
+        } else {
+            String moduleDirPath = ModuleUtilCore.getModuleDirPath(module);
+            for (Module modifiableModule : modifiableModuleModel.getModules()) {
+                if (! module.equals(modifiableModule)) {
+                    String otherModuleDirPath = ModuleUtilCore.getModuleDirPath(modifiableModule);
+
+                    if (isParentDirectory(moduleDirPath, otherModuleDirPath)) {
+                        return modifiableModule;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public static boolean isParentDirectory(@NotNull String childDirectory, @NotNull String parentDirectory) {
+        int index = childDirectory.lastIndexOf('/');
+        if (index > -1) {
+            String calulatedParent = childDirectory.substring(0, childDirectory.lastIndexOf('/'));
+            return (calulatedParent.equals(parentDirectory));
+        }
+        return false;
     }
 
 }

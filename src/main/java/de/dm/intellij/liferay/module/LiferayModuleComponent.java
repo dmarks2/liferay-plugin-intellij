@@ -7,6 +7,7 @@ import com.intellij.openapi.components.StoragePathMacros;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleComponent;
 import de.dm.intellij.liferay.util.LiferayVersions;
+import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -82,7 +83,29 @@ public class LiferayModuleComponent implements ModuleComponent, PersistentStateC
     }
 
     public String getLiferayVersion() {
-        return liferayVersion;
+        if ( (liferayVersion != null ) && (! liferayVersion.equals("")) ) {
+            return liferayVersion;
+        }
+
+        Module parentModule = ProjectUtils.getParentModule(module);
+        while (parentModule != null) {
+            String parentLiferayVersion = getLiferayVersion(parentModule);
+            if ( (parentLiferayVersion != null) && (! parentLiferayVersion.equals(""))) {
+                return parentLiferayVersion;
+            }
+
+            parentModule = ProjectUtils.getParentModule(parentModule);
+        }
+
+        return "";
+    }
+
+    public static String getLiferayVersion(Module module) {
+        LiferayModuleComponent component = getInstance(module);
+        if (component != null) {
+            return component.getLiferayVersion();
+        }
+        return "";
     }
 
     public void setLiferayVersion(String liferayVersion) {
@@ -96,7 +119,7 @@ public class LiferayModuleComponent implements ModuleComponent, PersistentStateC
     public float getPortalMajorVersion() {
         float majorVersion = 0;
 
-        Matcher matcher = LIFERAY_MAJOR_VERSION_PATTERN.matcher(liferayVersion);
+        Matcher matcher = LIFERAY_MAJOR_VERSION_PATTERN.matcher(getLiferayVersion());
 
         if (matcher.find()) {
             majorVersion = Float.parseFloat(matcher.group(1));

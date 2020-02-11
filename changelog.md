@@ -4,7 +4,9 @@ Liferay Plugin for IntelliJ
 All notable changes to this project will be documented in this file.
 
 ## 0.0.9
+- Feature: Added Liferay taglib support for Liferay 7.1 and 7.2 in Freemarker templates
 - Bugfix: Bugfix renaming packages inside bnd.bnd files
+- Bugfix: Detecting the Liferay version not working correctly in submodules
 
 ## 0.0.8
 - Bugfix: Bugfix detecting a wrong version number in the Bundle-Version instruction inside the bnd.bnd file.
