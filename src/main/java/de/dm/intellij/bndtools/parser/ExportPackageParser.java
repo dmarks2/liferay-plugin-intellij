@@ -33,9 +33,9 @@ public class ExportPackageParser extends BasePackageParser {
     @NotNull
     @Override
     public PsiReference[] getReferences(@NotNull BndHeaderValuePart bndHeaderValuePart) {
-        PsiElement parent = bndHeaderValuePart.getParent();
+        PsiElement parentPsiElement = bndHeaderValuePart.getParent();
 
-        if (parent instanceof Clause) {
+        if (parentPsiElement instanceof Clause) {
             PsiElement originalElement = bndHeaderValuePart.getOriginalElement();
 
             PsiElement prevSibling = originalElement.getPrevSibling();
@@ -46,25 +46,22 @@ public class ExportPackageParser extends BasePackageParser {
             ) {
                 return BndPsiUtil.getPackageReferences(bndHeaderValuePart);
             }
-        } else if (parent instanceof Attribute) {
-            Attribute attribute = (Attribute)parent;
+        } else if (isUsesDirectiveAttributeOrDirective(parentPsiElement)) {
+            List<PsiReference> psiReferences = ContainerUtil.newSmartList();
 
-            if (Constants.USES_DIRECTIVE.equals(attribute.getName())) {
-                List<PsiReference> psiReferences = ContainerUtil.newSmartList();
+            ASTNode headerValuePartNode = bndHeaderValuePart.getNode();
 
-                ASTNode headerValuePartNode = bndHeaderValuePart.getNode();
-                ASTNode[] childNodes = headerValuePartNode.getChildren(TOKEN_SET);
+            ASTNode[] childNodes = headerValuePartNode.getChildren(TOKEN_SET);
 
-                for (ASTNode astNode : childNodes) {
-                    if (astNode instanceof BndToken) {
-                        BndToken bndToken = (BndToken)astNode;
+            for (ASTNode childNode : childNodes) {
+                if (childNode instanceof BndToken) {
+                    BndToken bndToken = (BndToken) childNode;
 
-                        ContainerUtil.addAll(psiReferences, BndPsiUtil.getPackageReferences(bndToken));
-                    }
+                    ContainerUtil.addAll(psiReferences, BndPsiUtil.getPackageReferences(bndToken));
                 }
-
-                return psiReferences.toArray(new PsiReference[0]);
             }
+
+            return psiReferences.toArray(new PsiReference[0]);
         }
 
         return PsiReference.EMPTY_ARRAY;
@@ -150,5 +147,20 @@ public class ExportPackageParser extends BasePackageParser {
         }
 
         return annotated;
+    }
+
+    private boolean isUsesDirectiveAttributeOrDirective(PsiElement psiElement) {
+        if (psiElement instanceof Attribute) {
+            Attribute attribute = (Attribute)psiElement;
+
+            return (Constants.USES_DIRECTIVE.equals(attribute.getName()));
+        }
+        if (psiElement instanceof Directive) {
+            Directive directive = (Directive)psiElement;
+
+            return (Constants.USES_DIRECTIVE.equals(directive.getName()));
+        }
+
+        return false;
     }
 }
