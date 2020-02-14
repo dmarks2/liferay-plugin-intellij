@@ -19,7 +19,7 @@ public class BndHeaderParsers {
             put(Constants.EXPORT_PACKAGE, ExportPackageParser.INSTANCE);
 
             for (String header : LiferayBndConstants.CLASS_REFERENCE_PROPERTIES) {
-                put(header, BndClassReferenceParser.INSTANCE);
+                put(header, ClassReferenceParser.INSTANCE);
             }
 
             for (String header : LiferayBndConstants.FILE_REFERENCE_PROPERTIES) {

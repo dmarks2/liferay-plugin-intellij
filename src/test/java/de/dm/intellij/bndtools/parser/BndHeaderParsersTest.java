@@ -73,22 +73,4 @@ public class BndHeaderParsersTest extends LightCodeInsightFixtureTestCase {
         assertTrue(strings.contains("-baseline"));
     }
 
-    public void testPluginBundleClassReferenceContributor() {
-        myFixture.configureByFiles("testPluginBundleClassReferenceContributor/bnd.bnd", "de/dm/Foo.java");
-
-        myFixture.complete(CompletionType.BASIC, 1);
-        List<String> strings = myFixture.getLookupElementStrings();
-        assertTrue(strings.contains("Foo"));
-    }
-
-    public void testLiferayJsConfigReferenceContributor() {
-        myFixture.configureByFiles(
-                "testLiferayJsConfigReferenceContributor/bnd.bnd",
-                "configs/main.js"
-        );
-
-        myFixture.complete(CompletionType.BASIC, 1);
-        List<String> strings = myFixture.getLookupElementStrings();
-        assertTrue(strings.contains("configs"));
-    }
 }

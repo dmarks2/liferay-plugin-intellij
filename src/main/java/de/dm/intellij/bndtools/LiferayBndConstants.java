@@ -1,5 +1,7 @@
 package de.dm.intellij.bndtools;
 
+import aQute.bnd.osgi.Constants;
+
 public class LiferayBndConstants {
 
     public static final String PLUGIN_BUNDLE = "-plugin.bundle";
@@ -35,7 +37,7 @@ public class LiferayBndConstants {
 
     public static final String[] CLASS_REFERENCE_PROPERTIES = {
         PLUGIN_BUNDLE, PLUGIN_JSP, PLUGIN_NPM, PLUGIN_RESOURCEBUNDLE,
-        PLUGIN_SASS, PLUGIN_SERVICE, PLUGIN_SPRING, MAIN_CLASS, PREMAIN_CLASS, AGENT_CLASS, LAUNCHER_AGENT_CLASS
+        PLUGIN_SASS, PLUGIN_SERVICE, PLUGIN_SPRING, MAIN_CLASS, PREMAIN_CLASS, AGENT_CLASS, LAUNCHER_AGENT_CLASS, Constants.TESTCASES
     };
 
     public static final String[] FILE_REFERENCE_PROPERTIES = {

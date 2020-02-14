@@ -1,13 +1,12 @@
 package de.dm.intellij.bndtools.parser;
 
 import com.intellij.lang.annotation.AnnotationHolder;
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 import de.dm.intellij.bndtools.psi.BndHeaderValuePart;
 import de.dm.intellij.bndtools.psi.util.BndPsiUtil;
 import org.jetbrains.annotations.NotNull;
 
-public class BundleActivatorParser extends BndClassReferenceParser {
+public class BundleActivatorParser extends ClassReferenceParser {
 
     public static final BundleActivatorParser INSTANCE = new BundleActivatorParser();
 

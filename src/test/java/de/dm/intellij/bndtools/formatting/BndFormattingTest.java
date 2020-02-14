@@ -3,9 +3,10 @@ package de.dm.intellij.bndtools.formatting;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase;
 import com.intellij.util.containers.ContainerUtil;
 
-public class BndFormattingTest extends LightCodeInsightFixtureTestCase {
+public class BndFormattingTest extends LightPlatformCodeInsightFixtureTestCase {
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/bndtools/formatting/BndFormattingTest";
 

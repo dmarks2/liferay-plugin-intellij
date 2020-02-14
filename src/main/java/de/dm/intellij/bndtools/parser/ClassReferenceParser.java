@@ -21,9 +21,9 @@ import de.dm.intellij.bndtools.psi.Clause;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.lang.manifest.ManifestBundle;
 
-public class BndClassReferenceParser extends BndHeaderParser {
+public class ClassReferenceParser extends BndHeaderParser {
 
-    public static final BndClassReferenceParser INSTANCE = new BndClassReferenceParser();
+    public static final ClassReferenceParser INSTANCE = new ClassReferenceParser();
 
     @NotNull
     @Override
