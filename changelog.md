@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.9
 - Feature: Added Liferay taglib support for Liferay 7.1 and 7.2 in Freemarker templates
+- Feature: Added additional component properties for Liferay 7.1. and 7.2
 - Bugfix: Bugfix renaming packages inside bnd.bnd files
 - Bugfix: Detecting the Liferay version not working correctly in submodules
 

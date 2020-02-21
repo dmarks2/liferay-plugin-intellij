@@ -32,10 +32,22 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class ComponentPropertiesCompletionContributor extends CompletionContributor {
+    /*
+        search for
+        * ServiceTrackerCustomizer
+        * ServiceTrackerCustomizerFactory
+        * ServiceTrackerMapFactory
+        * ServiceTrackerListFactory
+     */
 
     //see https://dev.liferay.com/develop/reference/-/knowledge_base/7-0/portlet-descriptor-to-osgi-service-property-map
     public static Map<String, String[][]> COMPONENT_PROPERTIES = new HashMap<String, String[][]>();
     static {
+
+        COMPONENT_PROPERTIES.put("com.liferay.adaptive.media.content.transformer.ContentTransformer",
+                new String[][]{
+                        {"content.transformer.content.type", "String"}
+                });
 
         COMPONENT_PROPERTIES.put("com.liferay.adaptive.media.handler.AMRequestHandler",
                 new String[][]{
@@ -59,6 +71,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"service.ranking", "Integer"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.adaptive.media.processor.AMProcessor",
+                new String[][]{
+                        {"model.class.name", "String"}
+                });
+
         //see https://dev.liferay.com/de/develop/tutorials/-/knowledge_base/7-0/customizing-the-product-menu
         COMPONENT_PROPERTIES.put("com.liferay.application.list.PanelApp",
                 new String[][]{
@@ -71,6 +88,23 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                 new String[][]{
                         {"panel.category.key", "String"},
                         {"panel.category.order", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.asset.auto.tagger.AssetAutoTagProvider",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.asset.display.contributor.AssetDisplayContributorField",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.asset.kernel.action.AssetEntryAction",
+                new String[][]{
+                        {"asset.entry.action.order", "Integer"},
+                        {"javax.portlet.name", "String"},
+                        {"model.class.name", "String"},
                 });
 
         //see https://dev.liferay.com/de/develop/tutorials/-/knowledge_base/7-0/rendering-an-asset
@@ -92,6 +126,69 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.asset.kernel.validator.AssetEntryValidatorExclusionRule",
                 new String[][]{
                         {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.asset.util.AssetEntryUsageActionMenuContributor",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.bulk.selection.BulkSelectionFactory",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.configuration.admin.definition.ConfigurationDDMFormDeclaration",
+                new String[][]{
+                        {"configurationPid", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider",
+                new String[][]{
+                        {"configuration.pid", "String"},
+                        {"configuration.field.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.configuration.admin.display.ConfigurationVisibilityController",
+                new String[][]{
+                        {"configuration.pid", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.configuration.admin.menu.ConfigurationMenuItem",
+                new String[][]{
+                        {"configuration.pid", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.document.library.preview.DLPreviewRendererProvider",
+                new String[][]{
+                        {"content.type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.document.library.kernel.store.Store",
+                new String[][]{
+                        {"store.type", "String"},
+                        {"service.ranking", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider",
+                new String[][]{
+                        {"ddm.data.provider.instance.id", "String"},
+                        {"ddm.data.provider.type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.data.provider.settings.DDMDataProviderSettingsProvider",
+                new String[][]{
+                        {"ddm.data.provider.type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory",
+                new String[][]{
+                        {"name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor",
+                new String[][]{
+                        {"ddm.form.field.type.name", "String"},
                 });
 
         //see https://dev.liferay.com/de/develop/tutorials/-/knowledge_base/7-0/creating-form-field-types
@@ -124,6 +221,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer",
                 new String[][]{
                         {"ddm.form.field.type.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter",
+                new String[][]{
+                        {"ddm.storage.adapter.type", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.util.DDMDisplay",
@@ -181,6 +283,10 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"portlet.preferences.translator.portlet.id", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.frontend.editor.embed.EditorEmbedProvider",
+                new String[][]{
+                        {"type", "String"},
+                });
 
         COMPONENT_PROPERTIES.put("com.liferay.frontend.image.editor.capability.ImageEditorCapability",
                 new String[][]{
@@ -191,16 +297,71 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"com.liferay.frontend.image.editor.capability.type", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.frontend.taglib.clay.servlet.taglib.contributor.ClayTableTagSchemaContributor",
+                new String[][]{
+                        {"clay.table.tag.schema.contributor.key", "String"},
+                        {"service.ranking", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.frontend.taglib.clay.servlet.taglib.contributor.ClayTagContextContributor",
+                new String[][]{
+                        {"clay.tag.context.contributor.key", "String"},
+                        {"service.ranking", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.frontend.taglib.clay.servlet.taglib.data.ClayTagDataSource",
+                new String[][]{
+                        {"clay.tag.data.source.key", "String"},
+                        {"service.ranking", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.frontend.taglib.dynamic.section.DynamicSection",
+                new String[][]{
+                        {"name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.frontend.taglib.dynamic.section.DynamicSectionReplace",
+                new String[][]{
+                        {"name", "String"},
+                });
+
         //see https://dev.liferay.com/de/develop/tutorials/-/knowledge_base/7-0/creating-form-navigator-contexts
+
         COMPONENT_PROPERTIES.put("com.liferay.frontend.taglib.form.navigator.context.FormNavigatorContextProvider",
                 new String[][]{
                         {"formNavigatorId", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory",
+                new String[][]{
+                        {"screen.navigation.category.order", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry",
+                new String[][]{
+                        {"screen.navigation.entry.order", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter",
+                new String[][]{
+                        {"asset.entry.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.info.display.contributor.field.InfoDisplayContributorField",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
         //see https://dev.liferay.com/de/develop/tutorials/-/knowledge_base/7-0/creating-custom-item-selector-views
         COMPONENT_PROPERTIES.put("com.liferay.item.selector.ItemSelectorView",
                 new String[][]{
+                        {"item.selector.view.key", "String"},
                         {"item.selector.view.order", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.item.selector.ItemSelectorViewReturnTypeProvider",
+                new String[][]{
+                        {"item.selector.view.key", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.knowledge.base.web.internal.selector.KBArticleSelector",
@@ -208,9 +369,29 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"model.class.name", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.layout.util.template.LayoutConverter",
+                new String[][]{
+                        {"layout.template.id", "String"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.mentions.matcher.MentionsMatcher",
                 new String[][]{
                         {"model.class.name", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandler",
+                new String[][]{
+                        {"format", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.oauth2.provider.scope.spi.application.descriptor.ApplicationDescriptor",
+                new String[][]{
+                        {"osgi.jaxrs.name", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.oauth2.provider.scope.spi.scope.matcher.ScopeMatcherFactory",
+                new String[][]{
+                        {"company.id", "String"}
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener",
@@ -259,6 +440,12 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"editor.name", "String"},
                         {"javax.portlet.name", "String"},
                         {"service.ranking", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor",
+                new String[][]{
+                        {"editor.config.key", "String"},
+                        {"javax.portlet.name", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.events.LifecycleAction",
@@ -314,6 +501,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                 new String[][]{
                         {"javax.portlet.name", "String"},
                         {"valid.url.prefixes", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.portlet.DisplayInformationProvider",
+                new String[][]{
+                        {"javax.portlet.name", "String"},
                 });
 
         //see https://dev.liferay.com/de/develop/tutorials/-/knowledge_base/7-0/providing-the-user-personal-bar
@@ -432,6 +624,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"search.engine.impl", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.search.RelatedEntryIndexer",
+                new String[][]{
+                        {"related.entry.indexer.class.name", "String"},
+                });
+
         //see https://dev.liferay.com/de/develop/tutorials/-/knowledge_base/7-0/introduction-to-liferay-search
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.search.hits.HitsProcessor",
                 new String[][]{
@@ -457,6 +654,12 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                 });
 
 
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.security.auto.login.AutoLogin",
+                new String[][]{
+                        {"private.auto.login", "boolean"},
+                        {"type", "String"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker",
                 new String[][]{
                         {"model.class.name", "String"},
@@ -470,6 +673,16 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.security.permission.ResourcePermissionChecker",
                 new String[][]{
                         {"resource.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.security.permission.propagator.PermissionPropagator",
+                new String[][]{
+                        {"javax.portlet.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic",
+                new String[][]{
+                        {"background.task.executor.class.name", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.servlet.taglib.DynamicInclude",
@@ -544,6 +757,8 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.upgrade.UpgradeStep",
                 new String[][]{
                         {"upgrade.bundle.symbolic.name", "String"},
+                        {"upgrade.db.type", "String"},
+                        {"upgrade.from.schema.version", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.util.ResourceBundleLoader",
@@ -565,6 +780,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.portal.output.stream.container.OutputStreamContainerFactory",
                 new String[][]{
                         {"name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.relationship.RelationshipResource",
+                new String[][]{
+                        {"model.class.name", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.search.analysis.FieldQueryBuilderFactory",
@@ -589,9 +809,35 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"operation.mode", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.portal.search.spi.model.index.contributor.ExpandoBridgeRetriever",
+                new String[][]{
+                        {"indexer.class.name", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor",
+                new String[][]{
+                        {"indexer.class.name", "String"},
+                        {"model.pre.filter.contributor.id", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.search.spi.searcher.SearchRequestContributor",
+                new String[][]{
+                        {"search.request.contributor.id", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor",
+                new String[][]{
+                        {"javax.portlet.name", "String"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.portal.security.ldap.configuration.ConfigurationProvider",
                 new String[][]{
                         {"factoryPid", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.security.permission.contributor.PermissionSQLContributor",
+                new String[][]{
+                        {"model.class.name", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.security.sso.openid.OpenIdProviderRegistry",
@@ -599,6 +845,16 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"open.id.ax.schema", "String"},
                         {"open.id.ax.type", "String"},
                         {"open.id.url", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.security.sso.token.events.LogoutProcessor",
+                new String[][]{
+                        {"logout.processor.type", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.security.sso.token.security.auth.TokenRetriever",
+                new String[][]{
+                        {"token.location", "String"}
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.struts.FindActionHelper",
@@ -619,6 +875,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.portal.verify.VerifyProcess",
                 new String[][]{
                         {"verify.process.name", "String"},
+                        {"service.ranking", "Integer"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator",
@@ -643,6 +900,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"recipient.type", "String"}
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.portal.workflow.portlet.tab.WorkflowPortletTab",
+                new String[][]{
+                        {"portal.workflow.tabs.name", "String"}
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.portlet.documentlibrary.store.Store",
                 new String[][]{
                         {"store.type", "String"},
@@ -654,15 +916,79 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                 });
 
         //see https://dev.liferay.com/de/develop/tutorials/-/knowledge_base/7-0/customizing-the-control-menu
+        COMPONENT_PROPERTIES.put("com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory",
+                new String[][]{
+                        {"product.navigation.control.menu.category.key", "String"},
+                        {"product.navigation.control.menu.category.order", "Integer"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry",
                 new String[][]{
                         {"product.navigation.control.menu.category.key", "String"},
                         {"product.navigation.control.menu.category.order", "Integer"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.product.navigation.personal.menu.PersonalMenuEntry",
+                new String[][]{
+                        {"product.navigation.personal.menu.group", "String"},
+                        {"product.navigation.personal.menu.entry.order", "Integer"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.push.notifications.sender.PushNotificationsSender",
                 new String[][]{
                         {"platform", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.reading.time.calculator.ReadingTimeModelInfo",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.reading.time.message.ReadingTimeMessageProvider",
+                new String[][]{
+                        {"display.style", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor",
+                new String[][]{
+                        {"segments.criteria.contributor.model.class.name", "String"},
+                        {"segments.criteria.contributor.priority", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.segments.field.customizer.SegmentsFieldCustomizer",
+                new String[][]{
+                        {"segments.field.customizer.entity.name", "String"},
+                        {"segments.field.customizer.priority", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.segments.odata.retriever.ODataRetriever",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.segments.provider.SegmentsEntryProvider",
+                new String[][]{
+                        {"segments.entry.provider.source", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.sharing.interpreter.SharingEntryInterpreter",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.sharing.security.permission.SharingPermissionChecker",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.sharing.servlet.taglib.ui.SharingEntryMenuItemContributor",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.social.bookmarks.SocialBookmark",
+                new String[][]{
+                        {"social.bookmarks.type", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.social.kernel.model.SocialActivityInterpreter",
@@ -681,10 +1007,20 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"json.web.service.context.path", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.text.localizer.address.AddressTextLocalizer",
+                new String[][]{
+                        {"country", "String"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.wiki.importer.WikiImporter",
                 new String[][]{
                         {"importer", "String"},
                         {"page", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.wiki.processor.WikiPageRenameContentProcessor",
+                new String[][]{
+                        {"wiki.format.name", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("java.lang.Object",
