@@ -217,6 +217,12 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"ddm.form.field.type.name", "String"},
                 });
 
+        //see https://portal.liferay.dev/docs/7-2/frameworks/-/knowledge_base/f/serializing-forms
+        COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.io.DDMFormSerializer",
+                new String[][]{
+                        {"ddm.form.serializer.type", "String"},
+                });
+
         //see https://dev.liferay.com/de/develop/tutorials/-/knowledge_base/7-0/creating-form-field-types
         COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer",
                 new String[][]{
@@ -281,6 +287,12 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.exportimport.resources.importer.portlet.preferences.PortletPreferencesTranslator",
                 new String[][]{
                         {"portlet.preferences.translator.portlet.id", "String"},
+                });
+
+        //see https://portal.liferay.dev/docs/7-2/frameworks/-/knowledge_base/f/implementing-the-staged-model-repository-framework
+        COMPONENT_PROPERTIES.put("com.liferay.exportimport.staged.model.repository.StagedModelRepository",
+                new String[][]{
+                        {"model.class.name", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.frontend.editor.embed.EditorEmbedProvider",
@@ -814,10 +826,38 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"indexer.class.name", "String"}
                 });
 
+        //see https://portal.liferay.dev/docs/7-2/frameworks/-/knowledge_base/f/indexing-model-entities
+        COMPONENT_PROPERTIES.put("com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor",
+                new String[][]{
+                        {"indexer.class.name", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor",
+                new String[][]{
+                        {"indexer.class.name", "String"}
+                });
+
+        //see https://portal.liferay.dev/docs/7-2/frameworks/-/knowledge_base/f/searching-the-index-for-model-entities
+        COMPONENT_PROPERTIES.put("com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor",
+                new String[][]{
+                        {"indexer.class.name", "String"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor",
                 new String[][]{
                         {"indexer.class.name", "String"},
                         {"model.pre.filter.contributor.id", "String"},
+                });
+
+        //see https://portal.liferay.dev/docs/7-2/frameworks/-/knowledge_base/f/returning-results
+        COMPONENT_PROPERTIES.put("com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor",
+                new String[][]{
+                        {"indexer.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityContributor",
+                new String[][]{
+                        {"indexer.class.name", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.search.spi.searcher.SearchRequestContributor",
@@ -939,6 +979,12 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"platform", "String"},
                 });
 
+        //see https://portal.liferay.dev/docs/7-2/frameworks/-/knowledge_base/f/implementing-rating-type-selection
+        COMPONENT_PROPERTIES.put("com.liferay.ratings.kernel.definition.PortletRatingsDefinition",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.reading.time.calculator.ReadingTimeModelInfo",
                 new String[][]{
                         {"model.class.name", "String"},
@@ -949,8 +995,17 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"display.style", "String"},
                 });
 
+        //see https://portal.liferay.dev/docs/7-2/frameworks/-/knowledge_base/f/creating-a-request-context-contributor
+        COMPONENT_PROPERTIES.put("com.liferay.segments.context.contributor.RequestContextContributor",
+                new String[][]{
+                        {"request.context.contributor.key", "String"},
+                        {"request.context.contributor.type", "String"},
+                });
+
+        //see https://portal.liferay.dev/docs/7-2/frameworks/-/knowledge_base/f/creating-a-segment-criteria-contributor
         COMPONENT_PROPERTIES.put("com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor",
                 new String[][]{
+                        {"segments.criteria.contributor.key", "String"},
                         {"segments.criteria.contributor.model.class.name", "String"},
                         {"segments.criteria.contributor.priority", "Integer"},
                 });
@@ -958,9 +1013,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.segments.field.customizer.SegmentsFieldCustomizer",
                 new String[][]{
                         {"segments.field.customizer.entity.name", "String"},
+                        {"segments.field.customizer.key", "String"},
                         {"segments.field.customizer.priority", "Integer"},
                 });
 
+        //see https://portal.liferay.dev/docs/7-2/frameworks/-/knowledge_base/f/creating-a-segment-criteria-contributor
         COMPONENT_PROPERTIES.put("com.liferay.segments.odata.retriever.ODataRetriever",
                 new String[][]{
                         {"model.class.name", "String"},
