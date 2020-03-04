@@ -18,7 +18,7 @@ public class BndFileType extends LanguageFileType {
 
     @NotNull
     public String getName() {
-        return "BND file";
+        return "bnd";
     }
 
     @NotNull

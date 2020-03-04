@@ -1,0 +1,72 @@
+<templateSet group="Liferay">
+    <template name="JournalArticleLocalService" value="&lt;#assign JournalArticleLocalService = serviceLocator.findService(&quot;com.liferay.journal.service.JournalArticleLocalService&quot;)&gt;" description="JournalArticleLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY JOURNAL TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="JournalArticleService" value="&lt;#assign JournalArticleService = serviceLocator.findService(&quot;com.liferay.journal.service.JournalArticleService&quot;)&gt;" description="JournalArticleService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY JOURNAL TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="DDMStructureLocalService" value="&lt;#assign DDMStructureLocalService = serviceLocator.findService(&quot;com.liferay.dynamic.data.mapping.service.DDMStructureLocalService&quot;)&gt;" description="DDMStructureLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY JOURNAL TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="DDMStructureService" value="&lt;#assign DDMStructureService = serviceLocator.findService(&quot;com.liferay.dynamic.data.mapping.service.DDMStructureService&quot;)&gt;" description="DDMStructureService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY JOURNAL TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="DDMTemplateLocalService" value="&lt;#assign DDMTemplateLocalService = serviceLocator.findService(&quot;com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService&quot;)&gt;" description="DDMTemplateLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY JOURNAL TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="DDMTemplateService" value="&lt;#assign DDMTemplateService = serviceLocator.findService(&quot;com.liferay.dynamic.data.mapping.service.DDMTemplateService&quot;)&gt;" description="DDMTemplateService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY JOURNAL TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="GroupLocalService" value="&lt;#assign GroupLocalService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.GroupLocalService&quot;)&gt;" description="GroupLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY JOURNAL TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="GroupService" value="&lt;#assign GroupService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.GroupService&quot;)&gt;" description="GroupService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY JOURNAL TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="LayoutLocalService" value="&lt;#assign LayoutLocalService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.LayoutLocalService&quot;)&gt;" description="LayoutLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY JOURNAL TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="LayoutService" value="&lt;#assign LayoutService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.LayoutService&quot;)&gt;" description="LayoutService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY JOURNAL TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="OrganizationLocalService" value="&lt;#assign OrganizationLocalService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.OrganizationLocalService&quot;)&gt;" description="OrganizationLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY JOURNAL TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="OrganizationService" value="&lt;#assign OrganizationService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.OrganizationService&quot;)&gt;" description="OrganizationService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY JOURNAL TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="UserLocalService" value="&lt;#assign UserLocalService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.UserLocalService&quot;)&gt;" description="UserLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY JOURNAL TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="UserService" value="&lt;#assign UserService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.UserService&quot;)&gt;" description="UserService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY JOURNAL TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+</templateSet>

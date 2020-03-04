@@ -22,6 +22,10 @@
         <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayApplicationDisplayTemplateFreemarkerContextType"/>
         <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayThemeTemplateFreemarkerContextType"/>
 
+        <!-- Add Live Templates for specific contexts -->
+        <defaultLiveTemplatesProvider implementation="de.dm.intellij.liferay.language.freemarker.LiferayJournalTemplateLiveTemplatesProvider"/>
+        <defaultLiveTemplatesProvider implementation="de.dm.intellij.liferay.language.freemarker.LiferayApplicationDisplayTemplateLiveTemplatesProvider"/>
+
         <lang.documentationProvider language="FTL" implementationClass="de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerDocumentationProvider"/>
 
         <configurationType implementation="de.dm.intellij.liferay.language.freemarker.runner.FreemarkerAttachDebugConfigurationType"/>

@@ -1,0 +1,137 @@
+<templateSet group="Liferay">
+    <template name="AssetEntryLocalService" value="&lt;#assign AssetEntryLocalService = serviceLocator.findService(&quot;com.liferay.asset.kernel.service.AssetEntryLocalService&quot;)&gt;" description="AssetEntryLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="AssetEntryService" value="&lt;#assign AssetEntryService = serviceLocator.findService(&quot;com.liferay.asset.kernel.service.AssetEntryService&quot;)&gt;" description="AssetEntryService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="AssetVocabularyLocalService" value="&lt;#assign AssetVocabularyLocalService = serviceLocator.findService(&quot;com.liferay.asset.kernel.service.AssetVocabularyLocalService&quot;)&gt;" description="AssetVocabularyLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="AssetVocabularyService" value="&lt;#assign AssetVocabularyService = serviceLocator.findService(&quot;com.liferay.asset.kernel.service.AssetVocabularyService&quot;)&gt;" description="AssetVocabularyService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="AssetCategoryLocalService" value="&lt;#assign AssetCategoryLocalService = serviceLocator.findService(&quot;com.liferay.asset.kernel.service.AssetCategoryLocalService&quot;)&gt;" description="AssetCategoryLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="AssetCategoryService" value="&lt;#assign AssetCategoryService = serviceLocator.findService(&quot;com.liferay.asset.kernel.service.AssetCategoryService&quot;)&gt;" description="AssetCategoryService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="AssetTagLocalService" value="&lt;#assign AssetTagLocalService = serviceLocator.findService(&quot;com.liferay.asset.kernel.service.AssetTagLocalService&quot;)&gt;" description="AssetTagLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="AssetTagService" value="&lt;#assign AssetTagService = serviceLocator.findService(&quot;com.liferay.asset.kernel.service.AssetTagService&quot;)&gt;" description="AssetTagService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="AssetTagStatsLocalService" value="&lt;#assign AssetTagStatsLocalService = serviceLocator.findService(&quot;com.liferay.asset.tag.stats.service.AssetTagStatsLocalService&quot;)&gt;" description="AssetTagStatsLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="BlogsEntryLocalService" value="&lt;#assign BlogsEntryLocalService = serviceLocator.findService(&quot;com.liferay.blogs.service.BlogsEntryLocalServicee&quot;)&gt;" description="BlogsEntryLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="BlogsEntryService" value="&lt;#assign BlogsEntryService = serviceLocator.findService(&quot;com.liferay.blogs.service.BlogsEntryService&quot;)&gt;" description="BlogsEntryService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="DLAppLocalService" value="&lt;#assign DLAppLocalService = serviceLocator.findService(&quot;com.liferay.document.library.kernel.service.DLAppLocalService&quot;)&gt;" description="DLAppLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="DLAppService" value="&lt;#assign DLAppService = serviceLocator.findService(&quot;com.liferay.document.library.kernel.service.DLAppService&quot;)&gt;" description="DLAppService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="DLFileEntryTypeLocalService" value="&lt;#assign DLFileEntryTypeLocalService = serviceLocator.findService(&quot;com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService&quot;)&gt;" description="DLFileEntryTypeLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="WikiPageLocalService" value="&lt;#assign WikiPageLocalService = serviceLocator.findService(&quot;com.liferay.wiki.service.WikiPageLocalService&quot;)&gt;" description="WikiPageLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="WikiPageService" value="&lt;#assign WikiPageService = serviceLocator.findService(&quot;com.liferay.wiki.service.WikiPageService&quot;)&gt;" description="WikiPageService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="WikiNodeLocalService" value="&lt;#assign WikiNodeLocalService = serviceLocator.findService(&quot;com.liferay.wiki.service.WikiNodeLocalService&quot;)&gt;" description="WikiNodeLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="WikiNodeService" value="&lt;#assign WikiNodeService = serviceLocator.findService(&quot;com.liferay.wiki.service.WikiNodeService&quot;)&gt;" description="WikiNodeService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="DLFileEntryTypeService" value="&lt;#assign DLFileEntryTypeService = serviceLocator.findService(&quot;om.liferay.document.library.kernel.service.DLFileEntryTypeService&quot;)&gt;" description="DLFileEntryTypeService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="GroupLocalService" value="&lt;#assign GroupLocalService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.GroupLocalService&quot;)&gt;" description="GroupLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="GroupService" value="&lt;#assign GroupService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.GroupService&quot;)&gt;" description="GroupService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="LayoutLocalService" value="&lt;#assign LayoutLocalService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.LayoutLocalService&quot;)&gt;" description="LayoutLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="LayoutService" value="&lt;#assign LayoutService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.LayoutService&quot;)&gt;" description="LayoutService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="OrganizationLocalService" value="&lt;#assign OrganizationLocalService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.OrganizationLocalService&quot;)&gt;" description="OrganizationLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="OrganizationService" value="&lt;#assign OrganizationService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.OrganizationService&quot;)&gt;" description="OrganizationService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="UserLocalService" value="&lt;#assign UserLocalService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.UserLocalService&quot;)&gt;" description="UserLocalService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+    <template name="UserService" value="&lt;#assign UserService = serviceLocator.findService(&quot;com.liferay.portal.kernel.service.UserService&quot;)&gt;" description="UserService" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER" value="true" />
+        </context>
+    </template>
+</templateSet>
