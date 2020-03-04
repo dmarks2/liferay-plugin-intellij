@@ -71,3 +71,5 @@
 #* @vtlvariable name="subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory" type="java.lang.String" *#
 #* @vtlvariable name="subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory" type="java.lang.String" *#
 #* @vtlvariable name="template_id" type="java.lang.Long" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#
+#* @vtlvariable name="request" type="javax.servlet.http.HttpServletRequest" *#
