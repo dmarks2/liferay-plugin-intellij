@@ -6,6 +6,7 @@ public class LiferayBndConstants {
 
     public static final String PLUGIN_BUNDLE = "-plugin.bundle";
     public static final String PLUGIN_JSP = "-plugin.jsp";
+    public static final String PLUGIN_METATYPE = "-plugin.metatype";
     public static final String PLUGIN_NPM = "-plugin.npm";
     public static final String PLUGIN_RESOURCEBUNDLE = "-plugin.resourcebundle";
     public static final String PLUGIN_SASS = "-plugin.sass";
@@ -36,7 +37,7 @@ public class LiferayBndConstants {
     };
 
     public static final String[] CLASS_REFERENCE_PROPERTIES = {
-        PLUGIN_BUNDLE, PLUGIN_JSP, PLUGIN_NPM, PLUGIN_RESOURCEBUNDLE,
+        PLUGIN_BUNDLE, PLUGIN_JSP, PLUGIN_METATYPE, PLUGIN_NPM, PLUGIN_RESOURCEBUNDLE,
         PLUGIN_SASS, PLUGIN_SERVICE, PLUGIN_SPRING, MAIN_CLASS, PREMAIN_CLASS, AGENT_CLASS, LAUNCHER_AGENT_CLASS, Constants.TESTCASES
     };
 
