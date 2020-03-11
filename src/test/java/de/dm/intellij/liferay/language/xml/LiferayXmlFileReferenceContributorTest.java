@@ -29,4 +29,12 @@ public class LiferayXmlFileReferenceContributorTest extends LightCodeInsightFixt
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("my_resources.xml"));
     }
+
+    public void testXmlAttributeRelativePathFileReference() {
+        myFixture.configureByFiles("META-INF/resource-actions/default.xml", "META-INF/resource-actions/custom.xml");
+
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("custom.xml"));
+    }
 }

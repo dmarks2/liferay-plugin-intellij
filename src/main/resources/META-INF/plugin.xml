@@ -33,6 +33,7 @@
             <li>Feature: Added generic support for Liferay 7.3</li>
             <li>Bugfix: Bugfix renaming packages inside bnd.bnd files</li>
             <li>Bugfix: Detecting the Liferay version not working correctly in submodules</li>
+            <li>Bugfix: Resolving files relative to the content root directories in XML files using file references</li>
         </ul>
         <p>Version 0.0.8</p>
         <ul>
