@@ -31,9 +31,11 @@
             <li>Feature: Added additional component properties for Liferay 7.1. and 7.2</li>
             <li>Feature: Live Templates for Application Display Templates and Journal Templates</li>
             <li>Feature: Added generic support for Liferay 7.3</li>
+            <li>Feature: Inspection to check inheritance of OSGi component service classes</li>
             <li>Bugfix: Bugfix renaming packages inside bnd.bnd files</li>
             <li>Bugfix: Detecting the Liferay version not working correctly in submodules</li>
             <li>Bugfix: Resolving files relative to the content root directories in XML files using file references</li>
+            <li>Bugfix: Fixed Velocity support for Liferay 7.1, 7.2 and 7.3</li>
         </ul>
         <p>Version 0.0.8</p>
         <ul>
@@ -187,6 +189,9 @@
 
         <!-- File Based Index for finding the portlet name for JSPs -->
         <fileBasedIndex implementation="de.dm.intellij.liferay.index.PortletJspIndex" />
+
+        <!-- inspections -->
+        <inspectionToolProvider implementation="de.dm.intellij.liferay.language.osgi.ComponentInspectionToolProvider"/>
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">

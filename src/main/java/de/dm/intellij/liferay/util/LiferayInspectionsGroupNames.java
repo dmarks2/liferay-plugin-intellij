@@ -6,5 +6,6 @@ public interface LiferayInspectionsGroupNames {
 
     String SERVICE_XML_GROUP_NAME = "service.xml";
     String JSP_GROUP_NAME = "JSP";
+    String OSGI_GROUP_NAME = "OSGi";
 
 }

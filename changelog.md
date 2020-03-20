@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Added additional component properties for Liferay 7.1. and 7.2
 - Feature: Live Templates for Application Display Templates and Journal Templates
 - Feature: Added generic support for Liferay 7.3
+- Feature: Inspection to check inheritance of OSGi component service classes
 - Bugfix: Bugfix renaming packages inside bnd.bnd files
 - Bugfix: Detecting the Liferay version not working correctly in submodules
 - Bugfix: Resolving files relative to the content root directories in XML files using file references

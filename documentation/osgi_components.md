@@ -4,6 +4,7 @@ OSGi components
 1. [Syntax Hightlighting for BND files](#syntax-hightlighting-for-bnd-files)
 2. [Component annotation code completion](#component-annotation-code-completion)
 3. [Implicit usage for Reference annotations](#implicit-usage-for-reference-annotations)
+4. [Inspections of service class inheritance](#inspections-of-service-class-inheritance)
 
 Syntax Hightlighting for BND files
 ----------------------------------
@@ -185,3 +186,10 @@ List of supported annotations:
     org.jboss.arquillian.core.api.annotation.Inject
 
 *Works for Liferay 7.x, works in IntelliJ Community Edition and Ultimate Edition*
+
+Inspections of service class inheritance
+----------------------------------------
+
+To implement an OSGi service the class should inherit from the given service class.
+
+An inspection checks if these conditions are given.
