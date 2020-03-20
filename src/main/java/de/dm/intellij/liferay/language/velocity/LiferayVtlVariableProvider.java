@@ -75,6 +75,9 @@ public class LiferayVtlVariableProvider extends VtlGlobalVariableProvider implem
     public String[] getAdditionalLanguageSpecificResources(float liferayVersion) {
         if (
                 (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_0) ||
+                (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
+                (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
+                (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
                 (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                 ) { //Liferay 7.0
             return new String[] {
