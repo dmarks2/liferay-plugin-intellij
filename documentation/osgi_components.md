@@ -192,4 +192,8 @@ Inspections of service class inheritance
 
 To implement an OSGi service the class should inherit from the given service class.
 
-An inspection checks if these conditions are given.
+An inspection checks if these conditions are given and offers a quick fix.
+
+![OSGi inspection](osgi_inspection.png "OSGi inspection")
+
+*Works for Liferay 7.x, works in IntelliJ Community Edition and Ultimate Edition*

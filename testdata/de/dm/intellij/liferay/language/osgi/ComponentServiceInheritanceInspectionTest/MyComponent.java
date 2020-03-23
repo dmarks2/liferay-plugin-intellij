@@ -4,5 +4,5 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 @Component(
     service = MVCActionCommand.class
 )
-public class <warning descr="Class MyComponent is not assignable to specified service com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand">MyComponent</warning> {
+public class <error descr="Class MyComponent is not assignable to specified service com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand">MyComponent</error> {
 }

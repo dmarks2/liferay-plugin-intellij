@@ -12,6 +12,10 @@ import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiAnnotationParameterList;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiTypeParameter;
+import com.intellij.psi.StubBasedPsiElement;
+import com.intellij.psi.impl.compiled.ClsClassImpl;
+import com.intellij.psi.impl.java.stubs.PsiClassStub;
+import com.intellij.psi.impl.java.stubs.impl.PsiClassStubImpl;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.SearchScope;
 import com.intellij.psi.search.searches.ClassInheritorsSearch;
@@ -94,26 +98,31 @@ public class ComponentServiceInheritanceInspection extends AbstractBaseJavaLocal
 
                         SearchScope scope = GlobalSearchScope.allScope(project);
                         Query<PsiClass> query = ClassInheritorsSearch.search(serviceClass, scope, false);
-                        query.forEach(
-                                psiClass -> {
+                        int i = 1;
+
+                        PsiClass[] psiClasses = query.toArray(new PsiClass[0]);
+                        for (PsiClass psiClass : psiClasses) {
+                            if (psiClass.getSuperClass() != null) {
+                                if ( (! isAnonymousClass(psiClass)) && (! isLocalClass(psiClass)) ) {
                                     quickFixes.add(
                                             new ChangeSuperClassFix(
                                                     aClass,
                                                     psiClass,
                                                     aClass.getSuperClass(),
-                                                    1,
-                                                    serviceClass.isInterface() && !aClass.isInterface()
+                                                    i++,
+                                                    psiClass.isInterface()
                                             )
                                     );
                                 }
-                        );
+                            }
+                        }
 
                         ProblemDescriptor problemDescriptor = manager.createProblemDescriptor(
                                 aClass.getNameIdentifier(),
                                 "Class " + aClass.getQualifiedName() + " is not assignable to specified service " + serviceClass.getQualifiedName(),
                                 isOnTheFly,
                                 quickFixes.toArray(new LocalQuickFix[quickFixes.size()]),
-                                ProblemHighlightType.GENERIC_ERROR_OR_WARNING
+                                ProblemHighlightType.GENERIC_ERROR
                         );
 
                         problemDescriptors.add(problemDescriptor);
@@ -142,5 +151,27 @@ public class ComponentServiceInheritanceInspection extends AbstractBaseJavaLocal
         });
 
         return result.get();
+    }
+
+    private static boolean isLocalClass(PsiClass psiClass) {
+        if (psiClass instanceof StubBasedPsiElement) {
+            StubBasedPsiElement stubBasedPsiElement = (StubBasedPsiElement)psiClass;
+
+            PsiClassStub<?> stub = (PsiClassStub) stubBasedPsiElement.getStub();
+
+            return stub instanceof PsiClassStubImpl && ((PsiClassStubImpl) stub).isLocalClassInner();
+        }
+
+        return false;
+    }
+
+    private static boolean isAnonymousClass(PsiClass psiClass) {
+        if (psiClass instanceof StubBasedPsiElement) {
+            StubBasedPsiElement stubBasedPsiElement = (StubBasedPsiElement) psiClass;
+
+            PsiClassStub<?> stub = (PsiClassStub) stubBasedPsiElement.getStub();
+            return stub instanceof PsiClassStubImpl && ((PsiClassStubImpl) stub).isAnonymousInner();
+        }
+        return false;
     }
 }
