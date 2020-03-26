@@ -82,50 +82,51 @@ public class ComponentServiceInheritanceInspection extends AbstractBaseJavaLocal
                 for (String serviceClassName : serviceClassNames) {
                     PsiClass serviceClass = ProjectUtils.getClassByName(project, serviceClassName, aClass);
 
-                    //if (! InheritanceUtil.isInheritorOrSelf(serviceClass, aClass, true)) {
-                    if (! isInheritorOrSelf(project, serviceClass, aClass, true)) {
-                        List<LocalQuickFix> quickFixes = new ArrayList<>();
+                    if (serviceClass != null) {
+                        if (!isInheritorOrSelf(project, serviceClass, aClass, true)) {
+                            List<LocalQuickFix> quickFixes = new ArrayList<>();
 
-                        LocalQuickFix quickFix = new ChangeSuperClassFix(
-                                aClass,
-                                serviceClass,
-                                aClass.getSuperClass(),
-                                0,
-                                serviceClass.isInterface() && !aClass.isInterface()
-                        );
+                            LocalQuickFix quickFix = new ChangeSuperClassFix(
+                                    aClass,
+                                    serviceClass,
+                                    aClass.getSuperClass(),
+                                    0,
+                                    serviceClass.isInterface() && !aClass.isInterface()
+                            );
 
-                        quickFixes.add(quickFix);
+                            quickFixes.add(quickFix);
 
-                        SearchScope scope = GlobalSearchScope.allScope(project);
-                        Query<PsiClass> query = ClassInheritorsSearch.search(serviceClass, scope, false);
-                        int i = 1;
+                            SearchScope scope = GlobalSearchScope.allScope(project);
+                            Query<PsiClass> query = ClassInheritorsSearch.search(serviceClass, scope, false);
+                            int i = 1;
 
-                        PsiClass[] psiClasses = query.toArray(new PsiClass[0]);
-                        for (PsiClass psiClass : psiClasses) {
-                            if (psiClass.getSuperClass() != null) {
-                                if ( (! isAnonymousClass(psiClass)) && (! isLocalClass(psiClass)) ) {
-                                    quickFixes.add(
-                                            new ChangeSuperClassFix(
-                                                    aClass,
-                                                    psiClass,
-                                                    aClass.getSuperClass(),
-                                                    i++,
-                                                    psiClass.isInterface()
-                                            )
-                                    );
+                            PsiClass[] psiClasses = query.toArray(new PsiClass[0]);
+                            for (PsiClass psiClass : psiClasses) {
+                                if (psiClass.getSuperClass() != null) {
+                                    if ((!isAnonymousClass(psiClass)) && (!isLocalClass(psiClass))) {
+                                        quickFixes.add(
+                                                new ChangeSuperClassFix(
+                                                        aClass,
+                                                        psiClass,
+                                                        aClass.getSuperClass(),
+                                                        i++,
+                                                        psiClass.isInterface()
+                                                )
+                                        );
+                                    }
                                 }
                             }
+
+                            ProblemDescriptor problemDescriptor = manager.createProblemDescriptor(
+                                    aClass.getNameIdentifier(),
+                                    "Class " + aClass.getQualifiedName() + " is not assignable to specified service " + serviceClass.getQualifiedName(),
+                                    isOnTheFly,
+                                    quickFixes.toArray(new LocalQuickFix[quickFixes.size()]),
+                                    ProblemHighlightType.GENERIC_ERROR
+                            );
+
+                            problemDescriptors.add(problemDescriptor);
                         }
-
-                        ProblemDescriptor problemDescriptor = manager.createProblemDescriptor(
-                                aClass.getNameIdentifier(),
-                                "Class " + aClass.getQualifiedName() + " is not assignable to specified service " + serviceClass.getQualifiedName(),
-                                isOnTheFly,
-                                quickFixes.toArray(new LocalQuickFix[quickFixes.size()]),
-                                ProblemHighlightType.GENERIC_ERROR
-                        );
-
-                        problemDescriptors.add(problemDescriptor);
                     }
                 }
             }
