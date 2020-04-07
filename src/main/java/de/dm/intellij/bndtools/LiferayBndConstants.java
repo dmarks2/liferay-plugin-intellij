@@ -26,6 +26,17 @@ public class LiferayBndConstants {
     public static final String LIFERAY_JS_CONFIG = "Liferay-JS-Config";
     public static final String LIFERAY_CONFIGURATION_PATH = "Liferay-Configuration-Path";
 
+    public static final String LIFERAY_JS_RESSOURCS_TOP_HEAD_AUTHENTICATED = "Liferay-JS-Resources-Top-Head-Authenticated";
+    public static final String LIFERAY_JS_RESSOURCS_TOP_HEAD = "Liferay-JS-Resources-Top-Head";
+    public static final String LIFERAY_JS_SUBMODULES_BRIDGE = "Liferay-JS-Submodules-Bridge";
+    public static final String LIFERAY_JS_SUBMODULES_EXPORT = "Liferay-JS-Submodules-Export";
+    public static final String LIFERAY_RELENG_APP_DESCRIPTION = "Liferay-Releng-App-Description";
+    public static final String LIFERAY_RTL_SUPPORT_REQUIRED = "Liferay-RTL-Support-Required";
+    public static final String LIFERAY_THEME_CONTRIBUTOR_TYPE = "Liferay-Theme-Contributor-Type";
+    public static final String LIFERAY_THEME_CONTRIBUTOR_WEIGHT = "Liferay-Theme-Contributor-Weight";
+    public static final String LIFERAY_VERSIONS = "Liferay-Versions";
+    public static final String WEB_CONTEXT_PATH = "Web-ContextPath";
+
     public static final String MAIN_CLASS = "Main-Class";
     public static final String PREMAIN_CLASS = "Premain-Class";
     public static final String AGENT_CLASS = "Agent-Class";
@@ -33,7 +44,10 @@ public class LiferayBndConstants {
 
     public static final String[] DEFAULT_HEADER_PROPERTIES = {
         JSP, SASS, LIFERAY_SERVICE_XML, LIFERAY_RELENG_MODULE_GROUP_DESCRIPTION, LIFERAY_RELENG_MODULE_GROUP_TITLE,
-        LIFERAY_REQUIRE_SCHEMA_VERSION, LIFERAY_SERVICE, DYNAMIC_IMPORT_PACKAGE, LIFERAY_MODULES_COMPAT_ADAPTERS
+        LIFERAY_REQUIRE_SCHEMA_VERSION, LIFERAY_SERVICE, DYNAMIC_IMPORT_PACKAGE, LIFERAY_MODULES_COMPAT_ADAPTERS,
+        LIFERAY_JS_RESSOURCS_TOP_HEAD_AUTHENTICATED, LIFERAY_JS_RESSOURCS_TOP_HEAD, LIFERAY_JS_SUBMODULES_BRIDGE,
+        LIFERAY_JS_SUBMODULES_EXPORT, LIFERAY_RELENG_APP_DESCRIPTION, LIFERAY_RTL_SUPPORT_REQUIRED,
+        LIFERAY_THEME_CONTRIBUTOR_TYPE, LIFERAY_THEME_CONTRIBUTOR_WEIGHT, LIFERAY_VERSIONS, WEB_CONTEXT_PATH
     };
 
     public static final String[] CLASS_REFERENCE_PROPERTIES = {
