@@ -1,22 +1,20 @@
 package de.dm.intellij.bndtools.parser;
 
-import de.dm.intellij.bndtools.LiferayBndConstants;
-import org.gradle.internal.impldep.aQute.bnd.osgi.Constants;
-
 import java.util.HashMap;
 import java.util.Map;
+import de.dm.intellij.bndtools.LiferayBndConstants;
 
 public class BndHeaderParsers {
 
     public static final Map<String, BndHeaderParser> PARSERS_MAP = new HashMap<String, BndHeaderParser>() {
         {
-            put(Constants.BUNDLE_VERSION, BundleVersionParser.INSTANCE);
-            put(Constants.BUNDLE_ACTIVATOR, BundleActivatorParser.INSTANCE);
-            put(Constants.PRIVATE_PACKAGE, BasePackageParser.INSTANCE);
-            put(Constants.IGNORE_PACKAGE, BasePackageParser.INSTANCE);
-            put(Constants.IMPORT_PACKAGE, BasePackageParser.INSTANCE);
-            put(Constants.CONDITIONAL_PACKAGE, BasePackageParser.INSTANCE);
-            put(Constants.EXPORT_PACKAGE, ExportPackageParser.INSTANCE);
+            put(OsgiConstants.BUNDLE_VERSION, BundleVersionParser.INSTANCE);
+            put(OsgiConstants.BUNDLE_ACTIVATOR, BundleActivatorParser.INSTANCE);
+            put(OsgiConstants.PRIVATE_PACKAGE, BasePackageParser.INSTANCE);
+            put(OsgiConstants.IGNORE_PACKAGE, BasePackageParser.INSTANCE);
+            put(OsgiConstants.IMPORT_PACKAGE, BasePackageParser.INSTANCE);
+            put(OsgiConstants.CONDITIONAL_PACKAGE, BasePackageParser.INSTANCE);
+            put(OsgiConstants.EXPORT_PACKAGE, ExportPackageParser.INSTANCE);
 
             for (String header : LiferayBndConstants.CLASS_REFERENCE_PROPERTIES) {
                 put(header, ClassReferenceParser.INSTANCE);
@@ -30,13 +28,13 @@ public class BndHeaderParsers {
                 put(header, BndHeaderParser.INSTANCE);
             }
 
-            for (String header : Constants.headers) {
+            for (String header : OsgiConstants.headers) {
                 if (!containsKey(header)) {
                     put(header, BndHeaderParser.INSTANCE);
                 }
             }
 
-            for (String option : Constants.options) {
+            for (String option : OsgiConstants.options) {
                 if (!containsKey(option)) {
                     put(option, BndHeaderParser.INSTANCE);
                 }

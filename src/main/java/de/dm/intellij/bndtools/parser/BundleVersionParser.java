@@ -8,7 +8,6 @@ import de.dm.intellij.bndtools.psi.BndHeaderValuePart;
 import de.dm.intellij.bndtools.psi.Clause;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osgi.framework.Version;
 
 public class BundleVersionParser extends BndHeaderParser {
 
@@ -25,7 +24,7 @@ public class BundleVersionParser extends BndHeaderParser {
 
         if (value instanceof BndHeaderValuePart) {
             try {
-                new Version(value.getUnwrappedText());
+                new OsgiVersion(value.getUnwrappedText());
             }
             catch (IllegalArgumentException iae) {
                 BndHeaderValuePart bndHeaderValuePart = (BndHeaderValuePart)value;
@@ -53,7 +52,7 @@ public class BundleVersionParser extends BndHeaderParser {
 
         if (value instanceof BndHeaderValuePart) {
             try {
-                return new Version(value.getUnwrappedText());
+                return new OsgiVersion(value.getUnwrappedText());
             }
             catch (IllegalArgumentException iae) {
             }

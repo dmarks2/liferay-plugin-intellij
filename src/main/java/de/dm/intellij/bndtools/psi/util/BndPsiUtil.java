@@ -23,7 +23,6 @@ import com.intellij.psi.search.ProjectScope;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osgi.framework.BundleActivator;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,7 +45,7 @@ public class BndPsiUtil {
 
         JavaPsiFacade javaPsiFacade = JavaPsiFacade.getInstance(project);
 
-        return javaPsiFacade.findClass(BundleActivator.class.getName(), globalSearchScope);
+        return javaPsiFacade.findClass("org.osgi.framework.BundleActivator", globalSearchScope);
     }
 
     @NotNull
@@ -70,14 +69,7 @@ public class BndPsiUtil {
 
         Project project = psiElement.getProject();
 
-        Module module = ModuleUtilCore.findModuleForPsiElement(psiElement);
-
-        GlobalSearchScope scope;
-        if (module == null) {
-            scope = ProjectScope.getAllScope(project);
-        } else {
-            scope = module.getModuleWithDependenciesAndLibrariesScope(false);
-        }
+        GlobalSearchScope scope = ProjectScope.getAllScope(project);
 
         PackageReferenceSet packageReferenceSet = new PackageReferenceSet(packageName, psiElement, offset, scope) {
             @Override
@@ -111,14 +103,7 @@ public class BndPsiUtil {
     public static PsiDirectory[] resolvePackage(@NotNull PsiElement psiElement, @NotNull String packageName) {
         Project project = psiElement.getProject();
 
-        Module module = ModuleUtilCore.findModuleForPsiElement(psiElement);
-
-        GlobalSearchScope scope;
-        if (module == null) {
-            scope = ProjectScope.getAllScope(project);
-        } else {
-            scope = module.getModuleWithDependenciesAndLibrariesScope(false);
-        }
+        GlobalSearchScope scope = ProjectScope.getAllScope(project);
 
         JavaPsiFacade javaPsiFacade = JavaPsiFacade.getInstance(project);
 

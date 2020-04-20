@@ -43,6 +43,14 @@ public class BndHeaderValuePartManipulatorTest extends LightCodeInsightFixtureTe
         myFixture.checkResultByFile("com/liferay/renamed/Foo.java", "com/liferay/test/Foo_Renamed.java", false);
     }
 
+    public void testRenamePackageInsideBndFormatted() {
+        myFixture.configureByFiles("testRenamePackageInsideBndFormatted/bnd.bnd", "com/liferay/test/Foo.java");
+
+        myFixture.renameElementAtCaret("renamed");
+
+        myFixture.checkResultByFile("testRenamePackageInsideBndFormatted/bnd.bnd", "testRenamePackageInsideBndFormatted/bnd_renamed.bnd", false);
+    }
+
     public void testRenamePackageInsideClass() {
         myFixture.configureByFiles("com/liferay/test/Bar.java", "testRenamePackageInsideClass/bnd.bnd");
 

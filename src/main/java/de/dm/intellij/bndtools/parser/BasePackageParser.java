@@ -67,7 +67,6 @@ public class BasePackageParser extends BndHeaderParser {
                         PsiDirectory[] psiDirectories = BndPsiUtil.resolvePackage(bndHeader, packageName);
 
                         if (psiDirectories.length == 0) {
-                            //TODO create test
                             annotationHolder.createErrorAnnotation(
                                 bndHeaderValuePart.getHighlightingRange(),
                                 JavaErrorMessages.message("cannot.resolve.package", packageName)

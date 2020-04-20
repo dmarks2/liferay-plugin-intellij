@@ -17,11 +17,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.util.ProcessingContext;
 import de.dm.intellij.bndtools.BndLanguage;
 import de.dm.intellij.bndtools.parser.BndHeaderParsers;
+import de.dm.intellij.bndtools.parser.OsgiConstants;
 import de.dm.intellij.bndtools.psi.BndHeader;
 import de.dm.intellij.bndtools.psi.BndTokenType;
 import de.dm.intellij.bndtools.psi.Directive;
 import org.jetbrains.annotations.NotNull;
-import org.osgi.framework.Constants;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 
@@ -29,16 +29,16 @@ public class BndCompletionContributor extends CompletionContributor {
 
     public BndCompletionContributor() {
         extend(
-            CompletionType.BASIC, _header(Constants.EXPORT_PACKAGE),
-            new HeaderParametersProvider(Constants.VERSION_ATTRIBUTE, Constants.USES_DIRECTIVE + ':'));
+            CompletionType.BASIC, _header(OsgiConstants.EXPORT_PACKAGE),
+            new HeaderParametersProvider(OsgiConstants.VERSION_ATTRIBUTE, OsgiConstants.USES_DIRECTIVE + ':'));
 
         extend(
-            CompletionType.BASIC, _header(Constants.IMPORT_PACKAGE),
-            new HeaderParametersProvider(Constants.VERSION_ATTRIBUTE, Constants.RESOLUTION_DIRECTIVE + ':'));
+            CompletionType.BASIC, _header(OsgiConstants.IMPORT_PACKAGE),
+            new HeaderParametersProvider(OsgiConstants.VERSION_ATTRIBUTE, OsgiConstants.RESOLUTION_DIRECTIVE + ':'));
 
         extend(
-            CompletionType.BASIC, _directive(Constants.RESOLUTION_DIRECTIVE),
-            new SimpleProvider(Constants.RESOLUTION_MANDATORY, Constants.RESOLUTION_OPTIONAL));
+            CompletionType.BASIC, _directive(OsgiConstants.RESOLUTION_DIRECTIVE),
+            new SimpleProvider(OsgiConstants.RESOLUTION_MANDATORY, OsgiConstants.RESOLUTION_OPTIONAL));
 
         extend(CompletionType.BASIC,
             PlatformPatterns.psiElement(BndTokenType.HEADER_NAME).withLanguage(BndLanguage.INSTANCE),
