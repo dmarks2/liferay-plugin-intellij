@@ -25,14 +25,14 @@ public class LiferayThemeBuilderGradleProjectResolver extends AbstractProjectRes
 
     @NotNull
     @Override
-    public Set<Class<?>> getExtraProjectModelClasses() {
-        return Collections.<Class<?>>singleton(LiferayThemeBuilderGradleTaskModel.class);
+    public Set<Class> getExtraProjectModelClasses() {
+        return Collections.<Class>singleton(LiferayThemeBuilderGradleTaskModel.class);
     }
 
     @NotNull
     @Override
-    public Set<Class<?>> getToolingExtensionsClasses() {
-        return Collections.<Class<?>>singleton(LiferayThemeBuilderGradleTaskModelBuilder.class);
+    public Set<Class> getToolingExtensionsClasses() {
+        return Collections.<Class>singleton(LiferayThemeBuilderGradleTaskModelBuilder.class);
     }
 
     @Override
