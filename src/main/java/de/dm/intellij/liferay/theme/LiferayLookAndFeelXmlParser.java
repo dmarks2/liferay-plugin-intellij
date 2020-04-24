@@ -1,10 +1,13 @@
 package de.dm.intellij.liferay.theme;
 
+import com.intellij.openapi.externalSystem.service.project.autoimport.FileChangeListenerBase;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileEvent;
+import com.intellij.openapi.vfs.newvfs.events.VFileEvent;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.xml.XmlFile;
@@ -20,7 +23,7 @@ import java.util.Collection;
 /**
  * Class to parse liferay-look-and-feel.xml (if present) and to save information into LiferayModuleComponent
  */
-public class LiferayLookAndFeelXmlParser {
+public class LiferayLookAndFeelXmlParser extends FileChangeListenerBase  {
 
     public static final String TEMPLATE_EXTENSION = "template-extension";
     public static final String ROOT_PATH = "root-path";
@@ -29,55 +32,52 @@ public class LiferayLookAndFeelXmlParser {
     public static final String JAVASCRIPT_PATH = "javascript-path";
     public static final String TEMPLATES_PATH = "templates-path";
 
-    public static void handleChange(Project project, VirtualFileEvent event) {
-        if ("liferay-look-and-feel.xml".equals(event.getFileName())) {
-            VirtualFile virtualFile = event.getFile();
-            final Module module = ModuleUtil.findModuleForFile(virtualFile, project);
-            if (module != null) {
-                LiferayModuleComponent component = module.getComponent(LiferayModuleComponent.class);
-                if (component != null) {
-                    component.setLiferayLookAndFeelXml(virtualFile.getUrl());
+    public static void handleChange(Project project, VirtualFile virtualFile) {
+        final Module module = ModuleUtil.findModuleForFile(virtualFile, project);
+        if (module != null) {
+            LiferayModuleComponent component = module.getComponent(LiferayModuleComponent.class);
+            if (component != null) {
+                component.setLiferayLookAndFeelXml(virtualFile.getUrl());
 
-                    if (virtualFile.getLength() > 0) {
-                        try {
-                            //set defaults
-                            component.getThemeSettings().put(TEMPLATE_EXTENSION, "ftl");
-                            component.getThemeSettings().put(ROOT_PATH, "/");
-                            component.getThemeSettings().put(CSS_PATH, "/css");
-                            component.getThemeSettings().put(IMAGES_PATH, "/images");
-                            component.getThemeSettings().put(JAVASCRIPT_PATH, "/js");
-                            component.getThemeSettings().put(TEMPLATES_PATH, "/templates");
+                if (virtualFile.getLength() > 0) {
+                    try {
+                        //set defaults
+                        component.getThemeSettings().put(TEMPLATE_EXTENSION, "ftl");
+                        component.getThemeSettings().put(ROOT_PATH, "/");
+                        component.getThemeSettings().put(CSS_PATH, "/css");
+                        component.getThemeSettings().put(IMAGES_PATH, "/images");
+                        component.getThemeSettings().put(JAVASCRIPT_PATH, "/js");
+                        component.getThemeSettings().put(TEMPLATES_PATH, "/templates");
 
-                            NanoXmlUtil.parse(virtualFile.getInputStream(), new NanoXmlUtil.BaseXmlBuilder() {
-                                @Override
-                                public void addPCData(Reader reader, String systemID, int lineNr) throws Exception {
-                                    String location = getLocation();
+                        NanoXmlUtil.parse(virtualFile.getInputStream(), new NanoXmlUtil.BaseXmlBuilder() {
+                            @Override
+                            public void addPCData(Reader reader, String systemID, int lineNr) throws Exception {
+                                String location = getLocation();
 
-                                    switch (location) {
-                                        case ".look-and-feel.theme." + ROOT_PATH:
-                                            component.getThemeSettings().put(ROOT_PATH, readText(reader).trim());
-                                            break;
-                                        case ".look-and-feel.theme." + TEMPLATE_EXTENSION:
-                                            component.getThemeSettings().put(TEMPLATE_EXTENSION, readText(reader).trim());
-                                            break;
-                                        case ".look-and-feel.theme." + CSS_PATH:
-                                            component.getThemeSettings().put(CSS_PATH, readText(reader).trim());
-                                            break;
-                                        case ".look-and-feel.theme." + IMAGES_PATH:
-                                            component.getThemeSettings().put(IMAGES_PATH, readText(reader).trim());
-                                            break;
-                                        case ".look-and-feel.theme." + JAVASCRIPT_PATH:
-                                            component.getThemeSettings().put(JAVASCRIPT_PATH, readText(reader).trim());
-                                            break;
-                                        case ".look-and-feel.theme." + TEMPLATES_PATH:
-                                            component.getThemeSettings().put(TEMPLATES_PATH, readText(reader).trim());
-                                            break;
-                                    }
+                                switch (location) {
+                                    case ".look-and-feel.theme." + ROOT_PATH:
+                                        component.getThemeSettings().put(ROOT_PATH, readText(reader).trim());
+                                        break;
+                                    case ".look-and-feel.theme." + TEMPLATE_EXTENSION:
+                                        component.getThemeSettings().put(TEMPLATE_EXTENSION, readText(reader).trim());
+                                        break;
+                                    case ".look-and-feel.theme." + CSS_PATH:
+                                        component.getThemeSettings().put(CSS_PATH, readText(reader).trim());
+                                        break;
+                                    case ".look-and-feel.theme." + IMAGES_PATH:
+                                        component.getThemeSettings().put(IMAGES_PATH, readText(reader).trim());
+                                        break;
+                                    case ".look-and-feel.theme." + JAVASCRIPT_PATH:
+                                        component.getThemeSettings().put(JAVASCRIPT_PATH, readText(reader).trim());
+                                        break;
+                                    case ".look-and-feel.theme." + TEMPLATES_PATH:
+                                        component.getThemeSettings().put(TEMPLATES_PATH, readText(reader).trim());
+                                        break;
                                 }
-                            });
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -111,20 +111,29 @@ public class LiferayLookAndFeelXmlParser {
         return result;
     }
 
-    private static String getTagValue(XmlTag parent, String qname, String defaultValue) {
-        String result = defaultValue;
+    public static boolean isRelevantFile(String path) {
+        return path.endsWith("liferay-look-and-feel.xml");
+    }
 
-        XmlTag child = parent.findFirstSubTag(qname);
-        if (child != null) {
-            if (child.getValue() != null) {
-                String text = child.getValue().getText();
-                if ( (text != null) && (text.trim().length() > 0) ) {
-                    result = text;
-                }
-            }
+    @Override
+    protected boolean isRelevant(String path) {
+        return isRelevantFile(path);
+    }
+
+    @Override
+    protected void updateFile(VirtualFile virtualFile, VFileEvent vFileEvent) {
+        Project project = ProjectUtil.guessProjectForFile(virtualFile);
+        if (project != null) {
+            handleChange(project, virtualFile);
         }
+    }
 
-        return result;
+    @Override
+    protected void deleteFile(VirtualFile virtualFile, VFileEvent vFileEvent) {
+    }
+
+    @Override
+    protected void apply() {
     }
 
     public static class Setting {

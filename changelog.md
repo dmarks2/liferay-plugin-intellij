@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Bugfix: Detecting the Liferay version not working correctly in submodules
 - Bugfix: Resolving files relative to the content root directories in XML files using file references
 - Bugfix: Fixed Velocity support for Liferay 7.1, 7.2 and 7.3
+- Change: Dropped support for IntelliJ IDEA 2019.2 or earlier
 
 ## 0.0.8
 - Bugfix: Bugfix detecting a wrong version number in the Bundle-Version instruction inside the bnd.bnd file.
