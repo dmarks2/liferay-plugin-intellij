@@ -1,8 +1,8 @@
 package de.dm.intellij.liferay.language.service;
 
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
-public class LiferayServiceXMLNamespaceInspectionTest extends LightCodeInsightFixtureTestCase {
+public class LiferayServiceXMLNamespaceInspectionTest extends BasePlatformTestCase {
 
     @Override
     protected void setUp() throws Exception {

@@ -9,6 +9,7 @@ import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.tree.TokenSet;
+import com.intellij.util.SmartList;
 import com.intellij.util.containers.ContainerUtil;
 import de.dm.intellij.bndtools.psi.Attribute;
 import de.dm.intellij.bndtools.psi.BndHeader;
@@ -47,7 +48,7 @@ public class ExportPackageParser extends BasePackageParser {
                 return BndPsiUtil.getPackageReferences(bndHeaderValuePart);
             }
         } else if (isUsesDirectiveAttributeOrDirective(parentPsiElement)) {
-            List<PsiReference> psiReferences = ContainerUtil.newSmartList();
+            List<PsiReference> psiReferences = new SmartList<>();
 
             ASTNode headerValuePartNode = bndHeaderValuePart.getNode();
 

@@ -13,7 +13,7 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.PsiTestUtil;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
 import com.intellij.util.indexing.FileBasedIndex;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.List;
 
-public class ActionCommandIndexTest extends LightCodeInsightFixtureTestCase {
+public class ActionCommandIndexTest extends LightJavaCodeInsightFixtureTestCase {
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/index/ActionCommandIndexTest";
 

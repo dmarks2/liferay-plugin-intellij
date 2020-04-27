@@ -1,6 +1,7 @@
 package de.dm.intellij.liferay.language.velocity;
 
 import com.intellij.codeInsight.completion.CompletionType;
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.roots.ContentEntry;
@@ -14,20 +15,19 @@ import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.testFramework.IdeaTestUtil;
 import com.intellij.testFramework.LightProjectDescriptor;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
 import de.dm.intellij.liferay.language.freemarker.LiferayFtlVariableProviderTest;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Ignore;
 
 import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-public class LiferayVtlVariableProviderTest extends LightCodeInsightFixtureTestCase {
+public class LiferayVtlVariableProviderTest extends BasePlatformTestCase {
 
     private static final LightProjectDescriptor MY_PROJECT_DESCRIPTOR = new DefaultLightProjectDescriptor() {
 
@@ -47,7 +47,13 @@ public class LiferayVtlVariableProviderTest extends LightCodeInsightFixtureTestC
 
             resource = LiferayFtlVariableProviderTest.class.getResource("/com/liferay/tld");
             resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePath );
+
+            Disposable disposable = Disposer.newDisposable();
+            try {
+                VfsRootAccess.allowRootAccess(disposable, resourcePath);
+            } finally {
+                Disposer.dispose(disposable);
+            }
 
         }
 

@@ -1,11 +1,11 @@
 package de.dm.intellij.liferay.schema;
 
 import com.intellij.codeInsight.completion.CompletionType;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 import java.util.List;
 
-public class LiferayXmlSchemaProviderTest extends LightCodeInsightFixtureTestCase {
+public class LiferayXmlSchemaProviderTest extends BasePlatformTestCase {
 
     @Override
     protected String getTestDataPath() {

@@ -8,15 +8,12 @@ import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlText;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class LiferayServiceXMLPrimaryKeyColumnInspection extends XmlSuppressableInspectionTool {
 

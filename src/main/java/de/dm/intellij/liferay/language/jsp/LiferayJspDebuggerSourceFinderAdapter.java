@@ -85,7 +85,7 @@ public class LiferayJspDebuggerSourceFinderAdapter implements SourcesFinder<Java
             }
 
             matcher = (FileNameMatcher)var2.next();
-        } while(!matcher.accept(relPath));
+        } while(!matcher.acceptsCharSequence(relPath));
 
         return true;
     }

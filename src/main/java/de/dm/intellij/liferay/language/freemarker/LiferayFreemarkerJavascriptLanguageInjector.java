@@ -14,7 +14,6 @@ import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.SmartList;
 import de.dm.intellij.liferay.language.javascript.AbstractLiferayJavascriptLanguageInjector;
-import de.dm.intellij.liferay.util.LiferayTaglibs;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

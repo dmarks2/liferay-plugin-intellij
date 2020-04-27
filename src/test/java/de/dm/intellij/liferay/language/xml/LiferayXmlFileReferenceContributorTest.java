@@ -1,11 +1,11 @@
 package de.dm.intellij.liferay.language.xml;
 
 import com.intellij.codeInsight.completion.CompletionType;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 import java.util.List;
 
-public class LiferayXmlFileReferenceContributorTest extends LightCodeInsightFixtureTestCase {
+public class LiferayXmlFileReferenceContributorTest extends BasePlatformTestCase {
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/xml/LiferayXmlFileReferenceContributorTest";
 

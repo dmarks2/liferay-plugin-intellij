@@ -1,7 +1,6 @@
 package de.dm.intellij.liferay.hook;
 
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 
 public class LiferayHookXmlParserTest extends BasePlatformTestCase {

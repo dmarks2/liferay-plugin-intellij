@@ -4,10 +4,7 @@ import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.psi.PsiFile;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 
 public class LiferayPackageJSONParserTest extends BasePlatformTestCase {

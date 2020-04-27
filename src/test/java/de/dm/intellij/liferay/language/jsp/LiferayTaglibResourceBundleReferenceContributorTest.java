@@ -2,11 +2,11 @@ package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.psi.PsiElement;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 import java.util.List;
 
-public class LiferayTaglibResourceBundleReferenceContributorTest extends LightCodeInsightFixtureTestCase {
+public class LiferayTaglibResourceBundleReferenceContributorTest extends BasePlatformTestCase {
 
     @Override
     protected void setUp() throws Exception {

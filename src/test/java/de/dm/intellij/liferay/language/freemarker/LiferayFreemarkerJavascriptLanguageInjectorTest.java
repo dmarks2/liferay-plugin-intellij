@@ -1,11 +1,11 @@
 package de.dm.intellij.liferay.language.freemarker;
 
 import com.intellij.codeInsight.completion.CompletionType;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 import java.util.List;
 
-public class LiferayFreemarkerJavascriptLanguageInjectorTest extends LightCodeInsightFixtureTestCase {
+public class LiferayFreemarkerJavascriptLanguageInjectorTest extends BasePlatformTestCase {
 
     @Override
     protected void setUp() throws Exception {

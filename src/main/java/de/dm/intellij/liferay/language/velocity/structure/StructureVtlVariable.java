@@ -4,13 +4,12 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.ResolveState;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.velocity.psi.VtlLightVariable;
-import com.intellij.velocity.psi.VtlVariable;
 import com.intellij.velocity.psi.files.VtlFile;
 import de.dm.intellij.liferay.language.TemplateVariable;
 import de.dm.intellij.liferay.util.Icons;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
+import javax.swing.Icon;
 
 public class StructureVtlVariable extends VtlLightVariable {
 

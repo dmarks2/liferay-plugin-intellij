@@ -1,7 +1,6 @@
 package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
@@ -11,10 +10,7 @@ import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiReturnStatement;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.search.searches.ClassInheritorsSearch;
 import com.intellij.psi.util.PsiUtil;
-import com.intellij.util.Query;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import org.jetbrains.annotations.NotNull;
 

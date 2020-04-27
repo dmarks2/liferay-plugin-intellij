@@ -14,14 +14,14 @@ import com.intellij.psi.PsiFile;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.PsiTestUtil;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.List;
 
-public class LiferayJspHookFileReferenceHelperTestCore extends LightCodeInsightFixtureTestCase {
+public class LiferayJspHookFileReferenceHelperTestCore extends LightJavaCodeInsightFixtureTestCase {
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/jsp/LiferayJspHookFileReferenceHelperTest";
 

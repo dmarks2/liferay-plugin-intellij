@@ -1,12 +1,8 @@
 package de.dm.intellij.liferay.schema;
 
-import com.intellij.codeInsight.completion.CompletionType;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
-import org.junit.Ignore;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
-import java.util.List;
-
-public class LiferayJournalStructureJsonSchemaFileProviderTest extends LightCodeInsightFixtureTestCase {
+public class LiferayJournalStructureJsonSchemaFileProviderTest extends BasePlatformTestCase {
 
     @Override
     protected String getTestDataPath() {

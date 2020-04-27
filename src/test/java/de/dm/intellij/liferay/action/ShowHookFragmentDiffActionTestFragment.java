@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.action;
 
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -19,13 +20,13 @@ import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.PsiTestUtil;
 import com.intellij.testFramework.TestDataProvider;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
-public class ShowHookFragmentDiffActionTestFragment extends LightCodeInsightFixtureTestCase {
+public class ShowHookFragmentDiffActionTestFragment extends LightJavaCodeInsightFixtureTestCase {
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/action/ShowHookFragmentDiffActionTest";
 
@@ -41,7 +42,13 @@ public class ShowHookFragmentDiffActionTestFragment extends LightCodeInsightFixt
             model.setSdk(jdk);
 
             final String testDataPath = PathUtil.toSystemIndependentName(new File(TEST_DATA_PATH).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), testDataPath );
+
+            Disposable disposable = Disposer.newDisposable();
+            try {
+                VfsRootAccess.allowRootAccess(disposable, testDataPath);
+            } finally {
+                Disposer.dispose(disposable);
+            }
 
             PsiTestUtil.addLibrary(model, "com.liferay:com.liferay.login.web", testDataPath, "com.liferay.login.web.jar");
         }

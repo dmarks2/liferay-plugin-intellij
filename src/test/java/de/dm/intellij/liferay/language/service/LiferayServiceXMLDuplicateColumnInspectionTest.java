@@ -1,11 +1,11 @@
 package de.dm.intellij.liferay.language.service;
 
 import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 import java.util.List;
 
-public class LiferayServiceXMLDuplicateColumnInspectionTest extends LightCodeInsightFixtureTestCase {
+public class LiferayServiceXMLDuplicateColumnInspectionTest extends BasePlatformTestCase {
 
     @Override
     protected void setUp() throws Exception {

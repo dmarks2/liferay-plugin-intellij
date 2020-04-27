@@ -3,21 +3,16 @@ package de.dm.intellij.bndtools.psi.impl;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.AbstractElementManipulator;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.impl.PsiFileFactoryImpl;
 import com.intellij.util.IncorrectOperationException;
-import de.dm.intellij.bndtools.BndFileType;
 import de.dm.intellij.bndtools.BndLanguage;
 import de.dm.intellij.bndtools.psi.BndElementType;
-import de.dm.intellij.bndtools.psi.BndFile;
 import de.dm.intellij.bndtools.psi.BndHeader;
 import de.dm.intellij.bndtools.psi.BndHeaderValue;
 import de.dm.intellij.bndtools.psi.BndHeaderValuePart;
 import de.dm.intellij.bndtools.psi.Clause;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class BndHeaderValuePartManipulator extends AbstractElementManipulator<BndHeaderValuePart> {
 

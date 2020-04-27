@@ -1,11 +1,11 @@
 package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.codeInsight.completion.CompletionType;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 import java.util.List;
 
-public class LiferayTaglibCSSClassAttributeReferenceContributorTest extends LightCodeInsightFixtureTestCase {
+public class LiferayTaglibCSSClassAttributeReferenceContributorTest extends BasePlatformTestCase {
 
     @Override
     protected void setUp() throws Exception {

@@ -1,14 +1,13 @@
 package de.dm.intellij.liferay.language.sass;
 
 import com.intellij.codeInsight.completion.CompletionType;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
+import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
 
 import java.util.List;
 
-import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
-
-public class LiferaySassPlaceholderReferenceProviderTest extends LightCodeInsightFixtureTestCase {
+public class LiferaySassPlaceholderReferenceProviderTest extends BasePlatformTestCase {
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/sass/LiferaySassPlaceholderReferenceProviderTest";
 

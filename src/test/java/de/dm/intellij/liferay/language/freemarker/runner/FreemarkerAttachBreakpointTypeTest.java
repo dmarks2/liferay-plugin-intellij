@@ -1,16 +1,10 @@
 package de.dm.intellij.liferay.language.freemarker.runner;
 
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 import com.intellij.xdebugger.XDebuggerUtil;
-import de.dm.intellij.liferay.client.Constants;
-import de.dm.intellij.liferay.client.LiferayServicesUtil;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-public class FreemarkerAttachBreakpointTypeTest extends LightCodeInsightFixtureTestCase {
+public class FreemarkerAttachBreakpointTypeTest extends BasePlatformTestCase {
 
     @Override
     protected String getTestDataPath() {

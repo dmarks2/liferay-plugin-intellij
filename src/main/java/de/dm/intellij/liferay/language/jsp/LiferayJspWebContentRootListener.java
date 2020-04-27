@@ -1,9 +1,5 @@
 package de.dm.intellij.liferay.language.jsp;
 
-import com.intellij.facet.impl.FacetUtil;
-import com.intellij.javaee.web.WebRoot;
-import com.intellij.javaee.web.facet.WebFacet;
-import com.intellij.javaee.web.facet.WebFacetType;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.externalSystem.service.project.autoimport.FileChangeListenerBase;
 import com.intellij.openapi.module.Module;
@@ -12,7 +8,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileEvent;
 import com.intellij.openapi.vfs.newvfs.events.VFileEvent;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
@@ -20,9 +15,6 @@ import com.intellij.psi.PsiManager;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.util.LiferayFileUtil;
 import de.dm.intellij.liferay.util.ProjectUtils;
-
-import java.util.Collection;
-import java.util.List;
 
 /**
  * VirtualFileListener that watches files in META-INF/resources.

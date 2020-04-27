@@ -10,12 +10,12 @@ import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.pom.java.LanguageLevel;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class GroovyScriptingImplicitMembersContributorTest extends LightCodeInsightFixtureTestCase {
+public class GroovyScriptingImplicitMembersContributorTest extends LightJavaCodeInsightFixtureTestCase {
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/groovy/GroovyScriptingImplicitMembersContributorTest";
 

@@ -1,8 +1,8 @@
 package de.dm.intellij.bndtools.actions;
 
-import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
-public class EnterInBndFileHandlerTest extends LightPlatformCodeInsightFixtureTestCase {
+public class EnterInBndFileHandlerTest extends BasePlatformTestCase {
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/bndtools/actions/EnterInBndFileHandlerTest";
 

@@ -10,7 +10,6 @@ import com.intellij.openapi.roots.ModuleRootModificationUtil;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileEvent;
 import com.intellij.openapi.vfs.newvfs.events.VFileEvent;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import org.jetbrains.io.JsonReaderEx;

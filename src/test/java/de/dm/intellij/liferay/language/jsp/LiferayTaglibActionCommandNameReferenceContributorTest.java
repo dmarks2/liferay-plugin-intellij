@@ -13,19 +13,18 @@ import com.intellij.pom.java.LanguageLevel;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.PsiTestUtil;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
 import com.intellij.util.indexing.FileBasedIndex;
 import de.dm.intellij.liferay.index.ActionCommandIndex;
 import de.dm.intellij.liferay.index.PortletJspIndex;
 import de.dm.intellij.liferay.index.PortletNameIndex;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Ignore;
 
 import java.io.File;
 import java.util.List;
 
-public class LiferayTaglibActionCommandNameReferenceContributorTest extends LightCodeInsightFixtureTestCase {
+public class LiferayTaglibActionCommandNameReferenceContributorTest extends LightJavaCodeInsightFixtureTestCase {
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/jsp/LiferayTaglibActionCommandNameReferenceContributorTest";
 

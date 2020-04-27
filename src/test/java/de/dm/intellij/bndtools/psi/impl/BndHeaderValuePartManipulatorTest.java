@@ -14,17 +14,19 @@
 
 package de.dm.intellij.bndtools.psi.impl;
 
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
 import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.LanguageLevelModuleExtension;
 import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
 import com.intellij.pom.java.LanguageLevel;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,7 +35,7 @@ import java.io.File;
 /**
  * @author Dominik Marks
  */
-public class BndHeaderValuePartManipulatorTest extends LightCodeInsightFixtureTestCase {
+public class BndHeaderValuePartManipulatorTest extends LightJavaCodeInsightFixtureTestCase {
 
     public void testRenamePackageInsideBnd() {
         myFixture.configureByFiles("testRenamePackageInsideBnd/bnd.bnd", "com/liferay/test/Foo.java");
@@ -111,7 +113,12 @@ public class BndHeaderValuePartManipulatorTest extends LightCodeInsightFixtureTe
 
             final String testDataPath = PathUtil.toSystemIndependentName(testDataDir.getAbsolutePath());
 
-            VfsRootAccess.allowRootAccess(testDataPath);
+            Disposable disposable = Disposer.newDisposable();
+            try {
+                VfsRootAccess.allowRootAccess(disposable, testDataPath);
+            } finally {
+                Disposer.dispose(disposable);
+            }
         }
 
     };

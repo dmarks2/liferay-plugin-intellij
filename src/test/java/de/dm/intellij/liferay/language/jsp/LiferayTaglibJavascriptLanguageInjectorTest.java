@@ -1,11 +1,11 @@
 package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.codeInsight.completion.CompletionType;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 import java.util.List;
 
-public class LiferayTaglibJavascriptLanguageInjectorTest extends LightCodeInsightFixtureTestCase {
+public class LiferayTaglibJavascriptLanguageInjectorTest extends BasePlatformTestCase {
 
     @Override
     protected void setUp() throws Exception {

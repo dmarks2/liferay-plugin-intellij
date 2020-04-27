@@ -15,12 +15,14 @@
 package de.dm.intellij.bndtools.parser;
 
 import com.intellij.codeInsight.daemon.impl.HighlightInfo;
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
 import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.LanguageLevelModuleExtension;
 import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
 import com.intellij.pom.java.LanguageLevel;
 import com.intellij.psi.PsiElement;
@@ -28,7 +30,7 @@ import com.intellij.psi.PsiPackage;
 import com.intellij.psi.PsiReference;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,7 +40,7 @@ import java.util.List;
 /**
  * @author Dominik Marks
  */
-public class BasePackageParserTest extends LightCodeInsightFixtureTestCase {
+public class BasePackageParserTest extends LightJavaCodeInsightFixtureTestCase {
 
     public void testInvalidImportPackageHighlighting() {
         myFixture.configureByFiles(
@@ -130,7 +132,12 @@ public class BasePackageParserTest extends LightCodeInsightFixtureTestCase {
 
             final String testDataPath = PathUtil.toSystemIndependentName(testDataDir.getAbsolutePath());
 
-            VfsRootAccess.allowRootAccess(testDataPath);
+            Disposable disposable = Disposer.newDisposable();
+            try {
+                VfsRootAccess.allowRootAccess(disposable, testDataPath);
+            } finally {
+                Disposer.dispose(disposable);
+            }
         }
 
     };

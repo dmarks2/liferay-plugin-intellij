@@ -2,11 +2,11 @@ package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.javaee.web.WebRoot;
 import com.intellij.javaee.web.facet.WebFacet;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 import java.util.Collection;
 
-public class LiferayJspWebContentRootListenerTest extends LightCodeInsightFixtureTestCase {
+public class LiferayJspWebContentRootListenerTest extends BasePlatformTestCase {
 
     @Override
     protected String getTestDataPath() {

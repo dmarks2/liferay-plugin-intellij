@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.index;
 
+import com.intellij.lang.java.JavaParserDefinition;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiAnnotation;
@@ -14,7 +15,6 @@ import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.PsiNameValuePair;
 import com.intellij.psi.PsiReferenceExpression;
-import com.intellij.psi.impl.java.stubs.JavaStubElementTypes;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.indexing.DataIndexer;
 import com.intellij.util.indexing.FileContent;
@@ -66,7 +66,7 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
     protected PsiJavaFile getPsiJavaFileForPsiDependentIndex(@NotNull FileContent fileContent) {
         VirtualFile virtualFile = fileContent.getFile();
 
-        boolean shouldBuildStubFor = JavaStubElementTypes.JAVA_FILE.shouldBuildStubFor(virtualFile);
+        boolean shouldBuildStubFor = JavaParserDefinition.JAVA_FILE.shouldBuildStubFor(virtualFile);
         if (! shouldBuildStubFor) {
             return null;
         }

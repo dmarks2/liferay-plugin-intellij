@@ -5,7 +5,6 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 
 public class LiferayLookAndFeelXmlParserTest extends BasePlatformTestCase {
