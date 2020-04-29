@@ -124,6 +124,7 @@ public class BasePackageParserTest extends LightJavaCodeInsightFixtureTestCase {
 
             JavaAwareProjectJdkTableImpl javaAwareProjectJdkTableImpl = JavaAwareProjectJdkTableImpl.getInstanceEx();
 
+            //TODO deprecated in 2020.1?
             Sdk sdk = javaAwareProjectJdkTableImpl.getInternalJdk();
 
             modifiableRootModel.setSdk(sdk);

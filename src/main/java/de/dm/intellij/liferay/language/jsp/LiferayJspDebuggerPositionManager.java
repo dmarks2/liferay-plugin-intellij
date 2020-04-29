@@ -69,6 +69,7 @@ public class LiferayJspDebuggerPositionManager extends JSR45PositionManager<Java
                 catch(ObjectCollectedException | ClassNotPreparedException | AbsentInformationException ignored) {
                 }
                 catch (InternalError ignored) {
+                    //TODO moved to JavaDebuggerBundle in 2020.1
                     myDebugProcess.printToConsole(
                         DebuggerBundle.message("internal.error.locations.of.line", type.name()));
                 }
