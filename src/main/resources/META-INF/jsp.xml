@@ -32,7 +32,4 @@
         <inspectionToolProvider implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibInspectionToolProvider"/>
     </extensions>
 
-    <applicationListeners>
-        <listener class="de.dm.intellij.liferay.language.jsp.LiferayJspWebContentRootListener" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
-    </applicationListeners>
 </idea-plugin>
