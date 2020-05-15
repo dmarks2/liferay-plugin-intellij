@@ -178,7 +178,7 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
 
                     return constructor.newInstance(parent);
                 } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e2) {
-                    e2.printStackTrace();
+                    //ignore
                 }
             }
         }
