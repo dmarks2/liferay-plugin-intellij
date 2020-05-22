@@ -196,7 +196,6 @@ public class TemplateVariableProcessorUtil {
                         //see https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/rss/rss-web/src/main/java/com/liferay/rss/web/internal/portlet/template/RSSPortletDisplayTemplateHandler.java
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_rss_feed_70.vm"));
                     }
-                    //TODO
                 } else if ("site_map".equals(applicationDisplayTemplateFileType)) {
                     if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_6_1) {
                         //Liferay 6.1 does not have Application Display Templates
@@ -237,6 +236,64 @@ public class TemplateVariableProcessorUtil {
                             ) { //Liferay 7.0
                         //see https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/collaboration/wiki/wiki-web/src/main/java/com/liferay/wiki/web/internal/portlet/template/WikiPortletDisplayTemplateHandler.java
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_wiki_page_70.vm"));
+                    }
+                } else if ("media_gallery".equals(applicationDisplayTemplateFileType)) {
+                     if (
+                            (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_0) ||
+                                    (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
+                                    (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
+                                    (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                                    (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
+                    ) {
+                        variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_media_gallery_70.vm"));
+                    }
+                } else if ("category_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                        variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_category_facet_73.vm"));
+                    }
+                } else if ("custom_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                        variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_custom_facet_73.vm"));
+                    }
+                } else if ("custom_filter".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                        variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_custom_filter_73.vm"));
+                    }
+                } else if ("folder_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                        variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_folder_facet_73.vm"));
+                    }
+                } else if ("modified_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                        variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_modified_facet_73.vm"));
+                    }
+                } else if ("search_bar".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                        variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_search_bar_73.vm"));
+                    }
+                } else if ("search_results".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                        variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_search_results_73.vm"));
+                    }
+                } else if ("site_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                        variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_site_facet_73.vm"));
+                    }
+                } else if ("sort".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                        variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_sort_73.vm"));
+                    }
+                } else if ("tag_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                        variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_tag_facet_73.vm"));
+                    }
+                } else if ("type_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                        variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_type_facet_73.vm"));
+                    }
+                } else if ("user_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                        variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_user_facet_73.vm"));
                     }
                 }
             }

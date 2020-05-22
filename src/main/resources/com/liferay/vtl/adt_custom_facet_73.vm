@@ -1,0 +1,5 @@
+#* @vtlvariable name="customFacetDisplayContext" type="com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetDisplayContext" *#
+#* @vtlvariable name="entries" type="java.util.List<com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetTermDisplayContext>" *#
+#* @vtlvariable name="template_id" type="java.lang.Long" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#
+#* @vtlvariable name="request" type="javax.servlet.http.HttpServletRequest" *#

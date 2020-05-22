@@ -1,0 +1,5 @@
+#* @vtlvariable name="assetTagsSearchFacetDisplayContext" type="com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetDisplayContext" *#
+#* @vtlvariable name="entries" type="java.util.List<com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetTermDisplayContext>" *#
+#* @vtlvariable name="template_id" type="java.lang.Long" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#
+#* @vtlvariable name="request" type="javax.servlet.http.HttpServletRequest" *#

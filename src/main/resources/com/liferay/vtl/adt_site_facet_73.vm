@@ -1,0 +1,5 @@
+#* @vtlvariable name="scopeSearchFacetDisplayContext" type="com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetDisplayContext" *#
+#* @vtlvariable name="entries" type="java.util.List<com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetTermDisplayContext>" *#
+#* @vtlvariable name="template_id" type="java.lang.Long" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#
+#* @vtlvariable name="request" type="javax.servlet.http.HttpServletRequest" *#

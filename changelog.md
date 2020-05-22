@@ -9,10 +9,12 @@ All notable changes to this project will be documented in this file.
 - Feature: Live Templates for Application Display Templates and Journal Templates
 - Feature: Added generic support for Liferay 7.3
 - Feature: Inspection to check inheritance of OSGi component service classes
+- Feature: Experimental support for new ADTs for the search components in Liferay 7.3
 - Bugfix: Bugfix renaming packages inside bnd.bnd files
 - Bugfix: Detecting the Liferay version not working correctly in submodules
 - Bugfix: Resolving files relative to the content root directories in XML files using file references
 - Bugfix: Fixed Velocity support for Liferay 7.1, 7.2 and 7.3
+- Bugfix: Fixed detecting proper Liferay version when .iml file is saved inside .idea folder
 - Change: Dropped support for IntelliJ IDEA 2019.2 or earlier
 
 ## 0.0.8

@@ -1,0 +1,4 @@
+#* @vtlvariable name="customFilterDisplayContext" type="com.liferay.portal.search.web.internal.custom.filter.display.context.CustomFilterDisplayContext" *#
+#* @vtlvariable name="template_id" type="java.lang.Long" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#
+#* @vtlvariable name="request" type="javax.servlet.http.HttpServletRequest" *#

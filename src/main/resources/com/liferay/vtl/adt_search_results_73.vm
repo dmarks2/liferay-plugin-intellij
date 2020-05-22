@@ -1,0 +1,6 @@
+#* @vtlvariable name="entries" type="java.util.List<com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext>" *#
+#* @vtlvariable name="searchContainer" type="com.liferay.portal.kernel.dao.search.SearchContainer" *#
+#* @vtlvariable name="searchResultsPortletDisplayContext" type="com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletDisplayContext" *#
+#* @vtlvariable name="template_id" type="java.lang.Long" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#
+#* @vtlvariable name="request" type="javax.servlet.http.HttpServletRequest" *#

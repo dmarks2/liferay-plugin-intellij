@@ -230,6 +230,9 @@ public class LiferayServicesUtil {
     }
     public String getFreemarkerApplicationDisplayTemplateName(String type, String templateName) throws IOException {
         String className = Constants.APPLICATION_DISPLAY_TEMPLATE_TYPES_7_0.get(type);
+        if (className == null) {
+            className = Constants.APPLICATION_DISPLAY_TEMPLATE_TYPES_7_3.get(type);
+        }
         if (className != null) {
             long classNameId = getClassNameId(className);
 
