@@ -51,6 +51,7 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.DisposeAwareRunnable;
+import com.intellij.util.PathUtilRt;
 import com.intellij.util.Processor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -474,6 +475,10 @@ public class ProjectUtils {
             for (Module modifiableModule : modifiableModuleModel.getModules()) {
                 if (! module.equals(modifiableModule)) {
                     String otherModuleDirPath = ModuleUtilCore.getModuleDirPath(modifiableModule);
+
+                    if (otherModuleDirPath.endsWith(".idea")) {
+                        otherModuleDirPath = PathUtilRt.getParentPath(moduleDirPath);
+                    }
 
                     if (isParentDirectory(moduleDirPath, otherModuleDirPath)) {
                         return modifiableModule;
