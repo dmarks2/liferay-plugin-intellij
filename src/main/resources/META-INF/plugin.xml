@@ -39,6 +39,7 @@
             <li>Bugfix: Fixed Velocity support for Liferay 7.1, 7.2 and 7.3</li>
             <li>Bugfix: Fixed detecting proper Liferay version when .iml file is saved inside .idea folder</li>
             <li>Change: Dropped support for IntelliJ IDEA 2019.2 or earlier</li>
+            <li>Change: Try to avoid conflicts with the official IntelliJ plugin from Liferay</li>
         </ul>
         <p>Version 0.0.8</p>
         <ul>
@@ -195,6 +196,8 @@
 
         <!-- inspections -->
         <inspectionToolProvider implementation="de.dm.intellij.liferay.language.osgi.ComponentInspectionToolProvider"/>
+        
+        <pluginReplacement implementation="de.dm.intellij.LiferayPluginReplacement" />
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">

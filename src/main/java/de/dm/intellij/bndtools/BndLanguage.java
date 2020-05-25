@@ -4,7 +4,15 @@ import com.intellij.lang.Language;
 
 public class BndLanguage extends Language {
 
-    public static final BndLanguage INSTANCE = new BndLanguage();
+    private static BndLanguage INSTANCE;
+
+    public static BndLanguage getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new BndLanguage();
+        }
+
+        return INSTANCE;
+    }
 
     public BndLanguage() {
         super("bnd");

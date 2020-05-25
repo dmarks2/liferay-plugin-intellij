@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class BndParserDefinition implements ParserDefinition {
 
-    public static final IFileElementType BND_FILE_ELEMENT_TYPE = new IFileElementType("BndFile", BndLanguage.INSTANCE);
+    public static final IFileElementType BND_FILE_ELEMENT_TYPE = new IFileElementType("BndFile", BndLanguage.getInstance());
 
     @NotNull
     @Override

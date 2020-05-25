@@ -24,7 +24,7 @@ public class BndHeaderValuePartManipulator extends AbstractElementManipulator<Bn
             PsiFileFactoryImpl psiFileFactoryImpl = (PsiFileFactoryImpl) psiFileFactory;
             String elementText = textRange.replace(element.getText(), newContent);
 
-            PsiElement baseElement = psiFileFactoryImpl.createElementFromText("HeaderValuePartManipulator: " + elementText, BndLanguage.INSTANCE, BndElementType.HEADER_VALUE_PART, element.getContainingFile());
+            PsiElement baseElement = psiFileFactoryImpl.createElementFromText("HeaderValuePartManipulator: " + elementText, BndLanguage.getInstance(), BndElementType.HEADER_VALUE_PART, element.getContainingFile());
             if (baseElement != null) {
                 PsiElement sectionElement = baseElement.getFirstChild();
                 if (sectionElement != null) {

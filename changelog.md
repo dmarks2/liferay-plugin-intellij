@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Bugfix: Fixed Velocity support for Liferay 7.1, 7.2 and 7.3
 - Bugfix: Fixed detecting proper Liferay version when .iml file is saved inside .idea folder
 - Change: Dropped support for IntelliJ IDEA 2019.2 or earlier
+- Change: Try to avoid conflicts with the official IntelliJ plugin from Liferay
 
 ## 0.0.8
 - Bugfix: Bugfix detecting a wrong version number in the Bundle-Version instruction inside the bnd.bnd file.

@@ -62,7 +62,7 @@ public abstract class BndElementType extends IElementType {
     };
 
     private BndElementType(String name) {
-        super(name, BndLanguage.INSTANCE);
+        super(name, BndLanguage.getInstance());
     }
 
     public abstract PsiElement createPsi(ASTNode node);

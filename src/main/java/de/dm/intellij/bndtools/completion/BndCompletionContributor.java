@@ -41,7 +41,7 @@ public class BndCompletionContributor extends CompletionContributor {
             new SimpleProvider(OsgiConstants.RESOLUTION_MANDATORY, OsgiConstants.RESOLUTION_OPTIONAL));
 
         extend(CompletionType.BASIC,
-            PlatformPatterns.psiElement(BndTokenType.HEADER_NAME).withLanguage(BndLanguage.INSTANCE),
+            PlatformPatterns.psiElement(BndTokenType.HEADER_NAME).withLanguage(BndLanguage.getInstance()),
             new CompletionProvider<CompletionParameters>() {
                 @Override
                 public void addCompletions(@NotNull CompletionParameters parameters,

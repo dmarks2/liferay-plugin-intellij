@@ -27,7 +27,7 @@ public class BndTokenType extends IElementType implements ILeafElementType {
     public static final BndTokenType BACKSLASH_TOKEN = new BndTokenType("BACKSLASH_TOKEN");
 
     private BndTokenType(@NotNull @NonNls String debugName) {
-        super(debugName, BndLanguage.INSTANCE);
+        super(debugName, BndLanguage.getInstance());
     }
 
     @NotNull

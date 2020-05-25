@@ -6,14 +6,14 @@ import de.dm.intellij.liferay.util.Icons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
+import javax.swing.Icon;
 
 public class BndFileType extends LanguageFileType {
 
-    public static final BndFileType INSTANCE = new BndFileType();
+    public static BndFileType INSTANCE = new BndFileType();
 
-    public BndFileType() {
-        super(BndLanguage.INSTANCE);
+    private BndFileType() {
+        super(BndLanguage.getInstance());
     }
 
     @NotNull

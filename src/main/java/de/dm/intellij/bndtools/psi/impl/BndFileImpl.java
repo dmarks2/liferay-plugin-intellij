@@ -17,7 +17,7 @@ import java.util.List;
 public class BndFileImpl extends PsiFileBase implements BndFile {
 
     public BndFileImpl(FileViewProvider viewProvider) {
-        super(viewProvider, BndLanguage.INSTANCE);
+        super(viewProvider, BndLanguage.getInstance());
     }
 
     @NotNull
