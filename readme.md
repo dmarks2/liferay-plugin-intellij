@@ -13,6 +13,9 @@ Description
 -----------
 A plugin for Jetbrains [IntelliJ IDEA](https://www.jetbrains.com/idea/) to support developing [Liferay](http://www.liferay.com/) components. 
 
+Note that there is an [official plugin for IntelliJ from Liferay](https://plugins.jetbrains.com/plugin/10739-liferay) (which I contribute to regularly). This plugin here should be 
+considered experimental. Both plugins cannot be installed at the same time.
+
 This plugin mainly focuses on code completion features. It gives IntelliJ IDEA more information about typical Liferay files and project structures. 
 By this the existing code completion features of IntelliJ can be used for Liferay specific files, too. There is no user interface
 for the plugin. Just have a look at the following topics to see which areas have been improved:
@@ -30,14 +33,14 @@ for the plugin. Just have a look at the following topics to see which areas have
 
 Supported IDEs
 --------------
-* IntelliJ 2018.1 and above (Community)
-* IntelliJ 2018.1 and above (Ultimate)
+* IntelliJ 2019.2 and above (Community)
+* IntelliJ 2019.2 and above (Ultimate)
 
 Supported Liferay Versions
 --------------------------
 * Liferay 6.1 CE / EE
 * Liferay 6.2 CE / EE
-* Liferay 7.0, 7.1, 7.2 / DXP
+* Liferay 7.0, 7.1, 7.2, 7.3 / DXP
 
 Supported Build Tools
 ---------------------
@@ -66,6 +69,7 @@ Known Issues
 ------------
 * Indent does not work properly inside ``<aui:script>``-Tags containing other tags like ``<portlet:namespace/>``.
 * ``@theme_image_path@`` reference in CSS files work, but still shown in red (SCSS works properly)
+* This plugin cannot be installed together with the official plugin from Liferay.
 
 Licence
 -------
