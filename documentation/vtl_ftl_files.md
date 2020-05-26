@@ -9,6 +9,7 @@ Velocity and Freemarker
 6. [Implicit Theme Path variables](#implicit-theme-path-variables)
 7. [Freemarker Debugger](#freemarker-debugger)
 8. [Freemarker Imports](#freemarker-imports)
+9. [Gulpfile](#gulpfile)
 
 Liferay Layout Templates
 ------------------------
@@ -144,3 +145,14 @@ a module or a dependency. This plugin in able to resolve those files when they a
 ```ftl>
     <#import "/<web-context-path>_SERVLET_CONTEXT_/my_macros.ftl" as mymacros/>
 ```
+
+Gulpfile
+--------
+
+Themes for Liferay 7.x are built using gulp in most cases.
+
+The `gulpfile.js` is being parsed to test for the `liferay-theme-tasks` configurations. If you
+configured a different source folder using the option `pathSrc` option that folder is detected as
+Source Folder in your project. By default the folder `src` is used.
+
+By this code completions should work inside those modules, too.

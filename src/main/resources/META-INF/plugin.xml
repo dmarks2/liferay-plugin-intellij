@@ -33,6 +33,7 @@
             <li>Feature: Added generic support for Liferay 7.3</li>
             <li>Feature: Inspection to check inheritance of OSGi component service classes</li>
             <li>Feature: Experimental support for new ADTs for the search components in Liferay 7.3</li>
+            <li>Feature: Detect source folder from gulpfile.js to improve code completions in Liferay Theme modules</li>
             <li>Bugfix: Bugfix renaming packages inside bnd.bnd files</li>
             <li>Bugfix: Detecting the Liferay version not working correctly in submodules</li>
             <li>Bugfix: Resolving files relative to the content root directories in XML files using file references</li>
@@ -235,6 +236,7 @@
         <listener class="de.dm.intellij.liferay.hook.LiferayHookXmlParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
         <listener class="de.dm.intellij.liferay.bnd.OsgiBndFileParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
         <listener class="de.dm.intellij.liferay.language.jsp.LiferayJspWebContentRootListener" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
+        <listener class="de.dm.intellij.liferay.language.gulp.LiferayGulpfileParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
     </applicationListeners>
 
     <actions>

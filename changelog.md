@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Added generic support for Liferay 7.3
 - Feature: Inspection to check inheritance of OSGi component service classes
 - Feature: Experimental support for new ADTs for the search components in Liferay 7.3
+- Feature: Detect source folder from gulpfile.js to improve code completions in Liferay Theme modules
 - Bugfix: Bugfix renaming packages inside bnd.bnd files
 - Bugfix: Detecting the Liferay version not working correctly in submodules
 - Bugfix: Resolving files relative to the content root directories in XML files using file references
