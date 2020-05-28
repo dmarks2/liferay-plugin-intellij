@@ -39,6 +39,7 @@
             <li>Bugfix: Resolving files relative to the content root directories in XML files using file references</li>
             <li>Bugfix: Fixed Velocity support for Liferay 7.1, 7.2 and 7.3</li>
             <li>Bugfix: Fixed detecting proper Liferay version when .iml file is saved inside .idea folder</li>
+            <li>Bugfix: Fixed Freemarker Debugger for Web Content Templates in Liferay 7.3</li>
             <li>Change: Dropped support for IntelliJ IDEA 2019.2 or earlier</li>
             <li>Change: Try to avoid conflicts with the official IntelliJ plugin from Liferay</li>
         </ul>

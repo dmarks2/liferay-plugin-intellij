@@ -123,8 +123,32 @@ public class LiferayServicesUtil {
         return serviceInvoker.invoke("/ddm.ddmstructure/get-structures", params, JSONArray.class);
     }
 
+    public JSONArray getDDMStructures_73(long companyId, long groupId, long classNameId) throws JSONException, IOException {
+        JSONArray groupIds = new JSONArray();
+        groupIds.put(groupId);
+
+        JSONObject params = new JSONObject();
+        params.put("companyId", companyId);
+        params.put("groupIds", groupIds);
+        params.put("classNameId", classNameId);
+        params.put("start", -1);
+        params.put("end", -1);
+        params.put("orderByComparator", JSONObject.NULL);
+
+        return serviceInvoker.invoke("/ddm.ddmstructure/get-structures", params, JSONArray.class);
+    }
+
     public JSONObject getDDMStructure(long companyId, long groupId, long classNameId, String name) throws JSONException, IOException {
-        JSONArray ddmStructures = getDDMStructures_70(companyId, groupId, classNameId, -1);
+        String version = getVersion();
+
+        JSONArray ddmStructures;
+
+        if (version.startsWith("7.3")) {
+            ddmStructures = getDDMStructures_73(companyId, groupId, classNameId);
+        } else {
+            ddmStructures = getDDMStructures_70(companyId, groupId, classNameId, -1);
+        }
+
         for (int i = 0; i < ddmStructures.length(); i++) {
             JSONObject ddmStructure = ddmStructures.getJSONObject(i);
             if (name.equalsIgnoreCase(LiferayXMLUtil.getName(ddmStructure.getString("name")))) {
