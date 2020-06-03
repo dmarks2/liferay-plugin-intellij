@@ -12,6 +12,7 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.newvfs.events.VFileEvent;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
+import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.io.JsonReaderEx;
 
 import java.util.ArrayList;
@@ -93,13 +94,12 @@ public class LiferayPackageJSONParser extends FileChangeListenerBase {
                                 excludeFolders.add(pathDistFile.getUrl());
                             }
 
-                            ModuleRootModificationUtil.updateExcludedFolders(
+                            ProjectUtils.runDumbAwareLater(project, () -> ModuleRootModificationUtil.updateExcludedFolders(
                                     module,
                                     sourceRoot,
                                     Collections.<String>emptyList(),
                                     excludeFolders
-                            );
-
+                            ));
                         }
                     }
 
