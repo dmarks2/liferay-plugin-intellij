@@ -386,5 +386,12 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         assertTrue(strings.contains("/freemarker-other-common_SERVLET_CONTEXT_/foobar.ftl"));
     }
 
+    public void testLiferayTaglibs() {
+        myFixture.configureByFiles("templates/liferay_taglibs.ftl");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("liferay_aui"));
+    }
+
 
 }

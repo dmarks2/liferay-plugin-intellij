@@ -27,6 +27,7 @@
     <change-notes><![CDATA[
         <p>Version 0.0.10</p>
         <ul>
+            <li>Feature: Additional taglibs available in Freemarker templates for Liferay 7.1, 7.2 and 7.3</li>
             <li>Bugfix: Parsing package.json may lead to an exception in the log</li>
         </ul>
         <p>Version 0.0.9</p>

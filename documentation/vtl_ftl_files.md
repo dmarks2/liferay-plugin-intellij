@@ -64,18 +64,31 @@ The following taglibs are available:
     <@liferay_theme />
     <@liferay_ui />
     <@liferay_util />
-    <@liferay_product_navigation />
-    <@liferay_journal />
-    <@liferay_flags />
-    <@liferay_layout />
-    <@liferay_site_navigation />
+    <@adaptive_media_image />
     <@liferay_asset />
-    <@liferay_map />
-    <@liferay_item_selector />
+    <@chart />
+    <@clay />
+    <@liferay_comment />
+    <@liferay_document_library />
+    <@liferay_editor />
     <@liferay_expando />
+    <@liferay_flags />
+    <@lliferay-fragment />
     <@liferay_frontend />
+    <@liferay_item_selector />
+    <@liferay_journal />
+    <@liferay_layout />
+    <@liferay_map />
+    <@liferay_product_navigation />
+    <@liferay_reading_time />
+    <@liferay_rss />
+    <@liferay_sharing />
+    <@liferay_site />
+    <@liferay_site_navigation />
+    <@liferay_social_activities />
+    <@liferay_social_bookmarks />
     <@liferay_trash />
-
+    
 *This feature works in IntelliJ Ultimate Edition only.*
 
 Implicit Theme Settings variables

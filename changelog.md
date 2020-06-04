@@ -4,6 +4,7 @@ Liferay Plugin for IntelliJ
 All notable changes to this project will be documented in this file.
 
 ## 0.0.10
+- Feature: Additional taglibs available in Freemarker templates for Liferay 7.1, 7.2 and 7.3
 - Bugfix: Parsing package.json may lead to an exception in the log
 
 ## 0.0.9
