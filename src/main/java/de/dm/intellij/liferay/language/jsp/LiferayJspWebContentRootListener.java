@@ -15,6 +15,7 @@ import com.intellij.psi.PsiManager;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.util.LiferayFileUtil;
 import de.dm.intellij.liferay.util.ProjectUtils;
+import de.dm.intellij.liferay.util.WebFacetUtil;
 
 /**
  * VirtualFileListener that watches files in META-INF/resources.
@@ -46,7 +47,7 @@ public class LiferayJspWebContentRootListener extends FileChangeListenerBase {
                 if (metaInf != null) {
                     VirtualFile parent = metaInf.getParent();
 
-                    ProjectUtils.addWebFacet(resources, parent, module);
+                    WebFacetUtil.addWebFacet(resources, parent, module);
                 }
             } else {
                 ProjectUtils.runDumbAwareLater(project, () -> {
@@ -75,7 +76,7 @@ public class LiferayJspWebContentRootListener extends FileChangeListenerBase {
 
                                     if (relativePath != null) {
                                         if (LiferayFileUtil.isParent(relativePath, sourceRoot)) {
-                                            ProjectUtils.addWebFacet(relativePath, sourceRoot, module);
+                                            WebFacetUtil.addWebFacet(relativePath, sourceRoot, module);
                                         }
                                     }
                                 }

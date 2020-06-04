@@ -29,6 +29,7 @@
         <ul>
             <li>Feature: Additional taglibs available in Freemarker templates for Liferay 7.1, 7.2 and 7.3</li>
             <li>Bugfix: Parsing package.json may lead to an exception in the log</li>
+            <li>Bugfix: Fixed compatibility with IntelliJ Community Edition</li>
         </ul>
         <p>Version 0.0.9</p>
         <ul>
@@ -242,15 +243,6 @@
         <listener class="de.dm.intellij.liferay.hook.LiferayHookXmlParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
         <listener class="de.dm.intellij.liferay.bnd.OsgiBndFileParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
         <listener class="de.dm.intellij.liferay.language.jsp.LiferayJspWebContentRootListener" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
-        <listener class="de.dm.intellij.liferay.language.gulp.LiferayGulpfileParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
     </applicationListeners>
-
-    <actions>
-        <action id="de.dm.intellij.liferay.action.ShowHookFragmentDiffAction"
-                class="de.dm.intellij.liferay.action.ShowHookFragmentDiffAction" text="Compare with Liferay original file"
-                description="Compares the current file with the original file from Liferay" icon="/com/liferay/icons/liferay.png">
-            <add-to-group group-id="ProjectViewPopupMenu" relative-to-action="CompareFileWithEditor" anchor="after"/>
-        </action>
-    </actions>
 
 </idea-plugin>

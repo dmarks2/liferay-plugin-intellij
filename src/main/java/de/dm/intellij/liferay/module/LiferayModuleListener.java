@@ -8,8 +8,6 @@ import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import de.dm.intellij.liferay.bnd.OsgiBndFileParser;
 import de.dm.intellij.liferay.hook.LiferayHookXmlParser;
-import de.dm.intellij.liferay.language.gulp.LiferayGulpfileParser;
-import de.dm.intellij.liferay.language.jsp.LiferayJspWebContentRootListener;
 import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
 import de.dm.intellij.liferay.theme.LiferayPackageJSONParser;
 import de.dm.intellij.liferay.util.ProjectUtils;
@@ -26,8 +24,6 @@ public class LiferayModuleListener implements ModuleListener {
             handleModuleFiles(project, module, "liferay-hook.xml");
             handleModuleFiles(project, module, "bnd.bnd");
             handleModuleFiles(project, module, "package.json");
-            handleModuleFiles(project, module, "resources");
-            handleModuleFiles(project, module, "gulpfile.js");
         });
     }
 
@@ -46,12 +42,6 @@ public class LiferayModuleListener implements ModuleListener {
                 }
                 if (LiferayPackageJSONParser.isRelevantFile(virtualFile.getPath())) {
                     LiferayPackageJSONParser.handleChange(project, virtualFile);
-                }
-                if (LiferayJspWebContentRootListener.isRelevantFile(virtualFile.getPath())) {
-                    LiferayJspWebContentRootListener.handleChange(project, virtualFile);
-                }
-                if (LiferayGulpfileParser.isRelevantFile(virtualFile.getPath())) {
-                    LiferayGulpfileParser.handleChange(project, virtualFile);
                 }
             }
         }

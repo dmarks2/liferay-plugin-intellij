@@ -32,4 +32,19 @@
         <inspectionToolProvider implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibInspectionToolProvider"/>
     </extensions>
 
+    <actions>
+        <action id="de.dm.intellij.liferay.action.ShowHookFragmentDiffAction"
+                class="de.dm.intellij.liferay.action.ShowHookFragmentDiffAction" text="Compare with Liferay Original File"
+                description="Compares the current file with the original file from Liferay" icon="/com/liferay/icons/liferay.png">
+            <add-to-group group-id="ProjectViewPopupMenu" relative-to-action="CompareFileWithEditor" anchor="after"/>
+        </action>
+    </actions>
+
+    <projectListeners>
+        <listener class="de.dm.intellij.liferay.module.LiferayJspModuleListener" topic="com.intellij.openapi.project.ModuleListener" />
+    </projectListeners>
+    <applicationListeners>
+        <listener class="de.dm.intellij.liferay.language.jsp.LiferayJspWebContentRootListener" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
+    </applicationListeners>
+
 </idea-plugin>

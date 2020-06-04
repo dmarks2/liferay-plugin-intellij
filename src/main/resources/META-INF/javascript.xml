@@ -7,7 +7,13 @@
     <extensions defaultExtensionNs="JavaScript">
         <!-- JSON Schema Provider for Liferay specific JSON files -->
         <JsonSchema.ProviderFactory implementation="de.dm.intellij.liferay.schema.LiferayJsonSchemaProviderFactory"/>
-
     </extensions>
+
+    <projectListeners>
+        <listener class="de.dm.intellij.liferay.module.LiferayGulpModuleListener" topic="com.intellij.openapi.project.ModuleListener" />
+    </projectListeners>
+    <applicationListeners>
+        <listener class="de.dm.intellij.liferay.language.gulp.LiferayGulpfileParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
+    </applicationListeners>
 
 </idea-plugin>
