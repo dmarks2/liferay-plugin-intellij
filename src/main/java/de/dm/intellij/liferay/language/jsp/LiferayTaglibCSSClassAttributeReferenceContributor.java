@@ -25,6 +25,7 @@ public class LiferayTaglibCSSClassAttributeReferenceContributor extends PsiRefer
     private static final List<String> ATTRIBUTE_NAMES = Arrays.asList(
             "anchorCssClass",
             "bodyClasses",
+            "buttonCssClass",
             "cardCssClass",
             "checkboxCSSClass",
             "class",
@@ -48,8 +49,11 @@ public class LiferayTaglibCSSClassAttributeReferenceContributor extends PsiRefer
             "menubarCssClass",
             "navCssClass",
             "searchResultCssClass",
+            "stickerCssClass",
             "symbol",
+            "tableClasses",
             "triggerCssClass",
+            "userColorClass",
             "userIconCssClass",
             "wrapperCssClass"
     );

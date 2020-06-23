@@ -28,6 +28,7 @@
         <p>Version 0.0.10</p>
         <ul>
             <li>Feature: Additional taglibs available in Freemarker templates for Liferay 7.1, 7.2 and 7.3</li>
+            <li>Feature: Updated taglib support (CSS, Language Bundle) for Liferay 7.3</li>
             <li>Bugfix: Parsing package.json may lead to an exception in the log</li>
             <li>Bugfix: Fixed compatibility with IntelliJ Community Edition</li>
         </ul>
