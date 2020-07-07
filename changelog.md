@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Additional taglibs available in Freemarker templates for Liferay 7.1, 7.2 and 7.3
 - Feature: Updated taglib support (CSS, Language Bundle) for Liferay 7.3
 - Feature: Added some basic code completions for some liferay taglib attributes
+- Feature: Code completion for Java Classes in Freemarker taglibs
 - Bugfix: Parsing package.json may lead to an exception in the log
 - Bugfix: Fixed compatibility with IntelliJ Community Edition
 - Bugfix: Fixed injection of Javascript inside Freemarker taglibs using the square bracket notation

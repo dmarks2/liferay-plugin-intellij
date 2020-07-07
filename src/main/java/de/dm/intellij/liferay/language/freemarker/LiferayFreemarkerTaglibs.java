@@ -14,9 +14,37 @@ public class LiferayFreemarkerTaglibs {
     public static final Map<String, String> FTL_TAGLIB_MAPPINGS = new HashMap<>();
 
     static {
+        FTL_MACRO_PREFIXES.put("adaptive_media_image", LiferayTaglibs.TAGLIB_URI_LIFERAY_ADAPTIVE_MEDIA_IMAGE);
+        FTL_MACRO_PREFIXES.put("chart", LiferayTaglibs.TAGLIB_URI_LIFERAY_CHART);
+        FTL_MACRO_PREFIXES.put("clay", LiferayTaglibs.TAGLIB_URI_LIFERAY_CLAY);
+        FTL_MACRO_PREFIXES.put("liferay_asset", LiferayTaglibs.TAGLIB_URI_LIFERAY_ASSET);
         FTL_MACRO_PREFIXES.put("liferay_aui", LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI);
-        FTL_MACRO_PREFIXES.put("liferay_ui", LiferayTaglibs.TAGLIB_URI_LIFERAY_UI);
+        FTL_MACRO_PREFIXES.put("liferay_comment", LiferayTaglibs.TAGLIB_URI_LIFERAY_COMMENT);
+        FTL_MACRO_PREFIXES.put("liferay_document_library", LiferayTaglibs.TAGLIB_URI_LIFERAY_DOCUMENT_LIBRARY);
+        FTL_MACRO_PREFIXES.put("liferay_editor", LiferayTaglibs.TAGLIB_URI_LIFERAY_EDITOR);
+        FTL_MACRO_PREFIXES.put("liferay_expando", LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPANDO);
+        FTL_MACRO_PREFIXES.put("liferay_flags", LiferayTaglibs.TAGLIB_URI_LIFERAY_FLAGS);
+        FTL_MACRO_PREFIXES.put("liferay-fragment", LiferayTaglibs.TAGLIB_URI_LIFERAY_FRAGMENT);
         FTL_MACRO_PREFIXES.put("liferay_frontend", LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND);
+        FTL_MACRO_PREFIXES.put("liferay_item_selector", LiferayTaglibs.TAGLIB_URI_LIFERAY_ITEM_SELECTOR);
+        FTL_MACRO_PREFIXES.put("liferay_journal", LiferayTaglibs.TAGLIB_URI_LIFERAY_JOURNAL);
+        FTL_MACRO_PREFIXES.put("liferay_layout", LiferayTaglibs.TAGLIB_URI_LIFERAY_LAYOUT);
+        FTL_MACRO_PREFIXES.put("liferay_map", LiferayTaglibs.TAGLIB_URI_LIFERAY_MAP);
+        FTL_MACRO_PREFIXES.put("liferay_portlet", LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET);
+        FTL_MACRO_PREFIXES.put("liferay_product_navigation", LiferayTaglibs.TAGLIB_URI_LIFERAY_PRODUCT_NAVIGATION);
+        FTL_MACRO_PREFIXES.put("liferay_reading_time", LiferayTaglibs.TAGLIB_URI_LIFERAY_READING_TIME);
+        FTL_MACRO_PREFIXES.put("liferay_rss", LiferayTaglibs.TAGLIB_URI_LIFERAY_RSS);
+        FTL_MACRO_PREFIXES.put("liferay_security", LiferayTaglibs.TAGLIB_URI_LIFERAY_SECURITY);
+        FTL_MACRO_PREFIXES.put("liferay_sharing", LiferayTaglibs.TAGLIB_URI_LIFERAY_SHARING);
+        FTL_MACRO_PREFIXES.put("liferay_site", LiferayTaglibs.TAGLIB_URI_LIFERAY_SITE);
+        FTL_MACRO_PREFIXES.put("liferay_site_navigation", LiferayTaglibs.TAGLIB_URI_LIFERAY_SITE_NAVIGATION);
+        FTL_MACRO_PREFIXES.put("liferay_social_activities", LiferayTaglibs.TAGLIB_URI_LIFERAY_SOCIAL_ACTIVITIES);
+        FTL_MACRO_PREFIXES.put("liferay_social_bookmarks", LiferayTaglibs.TAGLIB_URI_LIFERAY_SOCIAL_BOOKMARKS);
+        FTL_MACRO_PREFIXES.put("liferay_theme", LiferayTaglibs.TAGLIB_URI_LIFERAY_THEME);
+        FTL_MACRO_PREFIXES.put("liferay_trash", LiferayTaglibs.TAGLIB_URI_LIFERAY_TRASH);
+        FTL_MACRO_PREFIXES.put("liferay_ui", LiferayTaglibs.TAGLIB_URI_LIFERAY_UI);
+        FTL_MACRO_PREFIXES.put("liferay_util", LiferayTaglibs.TAGLIB_URI_LIFERAY_UTIL);
+        FTL_MACRO_PREFIXES.put("portlet", LiferayTaglibs.TAGLIB_URI_JAVAX_PORTLET_2_0);
     }
 
     static {

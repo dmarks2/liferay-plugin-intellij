@@ -27,7 +27,8 @@ public class LiferayFreemarkerClassNameGotoDeclarationHandler extends GotoDeclar
                         (EnumUtilClassNameCompletionContributor.isEnumUtilCall(sourceElement)) ||
                         (ServiceLocatorClassNameCompletionContributor.isServiceLocatorCall(sourceElement)) ||
                         (StaticUtilClassNameCompletionContributor.isStaticUtilCall(sourceElement)) ||
-                        (StaticFieldGetterClassNameCompletionContributor.isStaticFieldGetterCall(sourceElement))
+                        (StaticFieldGetterClassNameCompletionContributor.isStaticFieldGetterCall(sourceElement)) ||
+                        (LiferayFreemarkerTaglibClassNameCompletionContributor.isClassNameAttribute(sourceElement))
                 ) {
                     try {
                         Project project = sourceElement.getProject();
