@@ -136,7 +136,7 @@
 
     <depends>org.jetbrains.idea.maven</depends>
     <depends>com.intellij.gradle</depends>
-    <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.java</depends>
     <depends optional="true" config-file="javascript.xml">JavaScript</depends>
     <depends optional="true" config-file="javaee.xml">com.intellij.javaee</depends>
     <depends optional="true" config-file="jsp.xml">com.intellij.jsp</depends>
