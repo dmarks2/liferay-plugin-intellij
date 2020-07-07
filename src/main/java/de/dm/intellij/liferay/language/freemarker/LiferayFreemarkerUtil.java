@@ -3,9 +3,11 @@ package de.dm.intellij.liferay.language.freemarker;
 import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.freemarker.psi.FtlArgumentList;
+import com.intellij.freemarker.psi.FtlBinaryExpression;
 import com.intellij.freemarker.psi.FtlExpression;
 import com.intellij.freemarker.psi.FtlIndexExpression;
 import com.intellij.freemarker.psi.FtlMethodCallExpression;
+import com.intellij.freemarker.psi.FtlNameValuePair;
 import com.intellij.freemarker.psi.FtlQualifiedReference;
 import com.intellij.freemarker.psi.FtlReferenceQualifier;
 import com.intellij.freemarker.psi.FtlStringLiteral;
@@ -228,5 +230,22 @@ public class LiferayFreemarkerUtil {
                 result.addElement(LookupElementBuilder.create(name).withPsiElement(psiField).withIcon(Icons.LIFERAY_ICON));
             }
         }
+    }
+
+    public static String getAttributeName(PsiElement psiElement) {
+        FtlBinaryExpression ftlBinaryExpression = PsiTreeUtil.getParentOfType(psiElement, FtlBinaryExpression.class);
+        if (ftlBinaryExpression != null) {
+            FtlExpression leftOperand = ftlBinaryExpression.getLeftOperand();
+            if (leftOperand != null) {
+                return leftOperand.getText();
+            }
+        } else {
+            FtlNameValuePair ftlNameValuePair = PsiTreeUtil.getParentOfType(psiElement, FtlNameValuePair.class);
+            if (ftlNameValuePair != null) {
+                return ftlNameValuePair.getName();
+            }
+        }
+
+        return null;
     }
 }

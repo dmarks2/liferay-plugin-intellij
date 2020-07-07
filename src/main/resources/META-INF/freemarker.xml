@@ -14,6 +14,7 @@
         <completion.contributor order="first, before propertiesCompletion" language="FTL" implementationClass="de.dm.intellij.liferay.language.freemarker.staticfieldgetter.StaticFieldGetterClassNameCompletionContributor"/>
         <completion.contributor order="first, before propertiesCompletion" language="FTL" implementationClass="de.dm.intellij.liferay.language.freemarker.staticfieldgetter.StaticFieldGetterFieldNameCompletionContributor"/>
         <completion.contributor order="first, before propertiesCompletion" language="FTL" implementationClass="de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerTaglibClassNameCompletionContributor"/>
+        <completion.contributor order="first, before propertiesCompletion" language="FTL" implementationClass="de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerTaglibSimpleAttributesCompletionContributor"/>
 
         <gotoDeclarationHandler implementation="de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerClassNameGotoDeclarationHandler" />
         <gotoDeclarationHandler implementation="de.dm.intellij.liferay.language.freemarker.staticfieldgetter.StaticFieldGetterFieldNameGotoDeclarationHandler" />

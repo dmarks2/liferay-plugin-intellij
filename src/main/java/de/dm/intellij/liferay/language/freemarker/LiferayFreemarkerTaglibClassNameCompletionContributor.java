@@ -5,9 +5,6 @@ import com.intellij.codeInsight.completion.CompletionParameters;
 import com.intellij.codeInsight.completion.CompletionProvider;
 import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.completion.CompletionType;
-import com.intellij.freemarker.psi.FtlBinaryExpression;
-import com.intellij.freemarker.psi.FtlExpression;
-import com.intellij.freemarker.psi.FtlNameValuePair;
 import com.intellij.freemarker.psi.directives.FtlMacro;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -32,7 +29,7 @@ public class LiferayFreemarkerTaglibClassNameCompletionContributor extends Compl
             );
 
     public static boolean isClassNameAttribute(PsiElement psiElement) {
-        String attributeName = getAttributeName(psiElement);
+        String attributeName = LiferayFreemarkerUtil.getAttributeName(psiElement);
 
         if (attributeName != null) {
             FtlMacro ftlMacro = PsiTreeUtil.getParentOfType(psiElement, FtlMacro.class);
@@ -55,23 +52,6 @@ public class LiferayFreemarkerTaglibClassNameCompletionContributor extends Compl
         }
 
         return false;
-    }
-
-    private static String getAttributeName(PsiElement psiElement) {
-        FtlBinaryExpression ftlBinaryExpression = PsiTreeUtil.getParentOfType(psiElement, FtlBinaryExpression.class);
-        if (ftlBinaryExpression != null) {
-            FtlExpression leftOperand = ftlBinaryExpression.getLeftOperand();
-            if (leftOperand != null) {
-                return leftOperand.getText();
-            }
-        } else {
-            FtlNameValuePair ftlNameValuePair = PsiTreeUtil.getParentOfType(psiElement, FtlNameValuePair.class);
-            if (ftlNameValuePair != null) {
-                return ftlNameValuePair.getName();
-            }
-        }
-
-        return null;
     }
 
     public LiferayFreemarkerTaglibClassNameCompletionContributor() {
