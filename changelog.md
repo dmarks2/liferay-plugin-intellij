@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Added some basic code completions for some liferay taglib attributes
 - Bugfix: Parsing package.json may lead to an exception in the log
 - Bugfix: Fixed compatibility with IntelliJ Community Edition
+- Bugfix: Fixed injection of Javascript inside Freemarker taglibs using the square bracket notation
 
 ## 0.0.9
 - Feature: Added Liferay taglib support for Liferay 7.1 and 7.2 in Freemarker templates

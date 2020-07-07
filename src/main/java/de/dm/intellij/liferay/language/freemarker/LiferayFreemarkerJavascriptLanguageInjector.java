@@ -1,7 +1,10 @@
 package de.dm.intellij.liferay.language.freemarker;
 
 import com.intellij.freemarker.psi.FtlArgumentList;
+import com.intellij.freemarker.psi.FtlBinaryExpression;
+import com.intellij.freemarker.psi.FtlCompositeElement;
 import com.intellij.freemarker.psi.FtlElementTypes;
+import com.intellij.freemarker.psi.FtlExpression;
 import com.intellij.freemarker.psi.FtlNameValuePair;
 import com.intellij.freemarker.psi.FtlStringLiteral;
 import com.intellij.freemarker.psi.directives.FtlMacro;
@@ -20,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferayJavascriptLanguageInjector<FtlMacro, FtlNameValuePair> {
+public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferayJavascriptLanguageInjector<FtlMacro, FtlCompositeElement> {
 
     @Nullable
     @Override
@@ -39,8 +42,20 @@ public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferay
     }
 
     @Override
-    protected String getAttributeName(FtlNameValuePair ftlNameValuePair) {
-        return ftlNameValuePair.getName();
+    protected String getAttributeName(FtlCompositeElement ftlCompositeElement) {
+        if (ftlCompositeElement instanceof FtlNameValuePair) {
+            return ftlCompositeElement.getName();
+        } else if (ftlCompositeElement instanceof FtlBinaryExpression) {
+            FtlBinaryExpression ftlBinaryExpression = (FtlBinaryExpression)ftlCompositeElement;
+
+            FtlExpression leftOperand = ftlBinaryExpression.getLeftOperand();
+
+            if (leftOperand != null) {
+                return leftOperand.getText();
+            }
+        }
+
+        return "";
     }
 
     @Override
@@ -50,11 +65,27 @@ public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferay
 
     @NotNull
     @Override
-    protected FtlNameValuePair[] getAttributes(@NotNull PsiElement psiElement) {
+    protected FtlCompositeElement[] getAttributes(@NotNull PsiElement psiElement) {
         FtlMacro ftlMacro = (FtlMacro)psiElement;
 
         FtlArgumentList argumentList = ftlMacro.getArgumentList();
-        return argumentList.getNamedArguments();
+        if (argumentList.getNamedArguments().length > 0) {
+            return argumentList.getNamedArguments();
+        } else {
+            FtlExpression[] positionalArguments = argumentList.getPositionalArguments();
+
+            FtlBinaryExpression[] binaryExpressions = new FtlBinaryExpression[positionalArguments.length];
+
+            for (int i = 0 ; i < positionalArguments.length; i++) {
+                if (positionalArguments[i] instanceof FtlBinaryExpression) {
+                    binaryExpressions[i] = (FtlBinaryExpression)positionalArguments[i];
+                } else {
+                    //unknown?
+                    return new FtlCompositeElement[0];
+                }
+            }
+            return binaryExpressions;
+        }
     }
 
     @NotNull
@@ -62,9 +93,25 @@ public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferay
         return Arrays.asList(FtlMacro.class);
     }
 
+    private PsiElement getValueElement(FtlCompositeElement ftlCompositeElement) {
+        if (ftlCompositeElement instanceof FtlNameValuePair) {
+            return ((FtlNameValuePair)ftlCompositeElement).getValueElement();
+        } else if (ftlCompositeElement instanceof FtlBinaryExpression) {
+            FtlBinaryExpression ftlBinaryExpression = (FtlBinaryExpression)ftlCompositeElement;
+
+            FtlExpression rightOperand = ftlBinaryExpression.getRightOperand();
+
+            if (rightOperand instanceof FtlStringLiteral) {
+                return rightOperand;
+            }
+        }
+
+        return null;
+    }
+
     @Override
-    protected void injectIntoAttribute(@NotNull MultiHostRegistrar registrar, FtlNameValuePair ftlNameValuePair) {
-        PsiElement valueElement = ftlNameValuePair.getValueElement();
+    protected void injectIntoAttribute(@NotNull MultiHostRegistrar registrar, FtlCompositeElement ftlCompositeElement) {
+        PsiElement valueElement = getValueElement(ftlCompositeElement);
 
         if (valueElement instanceof FtlStringLiteral) {
             FtlStringLiteral ftlStringLiteral = (FtlStringLiteral)valueElement;

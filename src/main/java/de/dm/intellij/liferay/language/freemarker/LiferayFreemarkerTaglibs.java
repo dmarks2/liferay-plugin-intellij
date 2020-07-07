@@ -1,6 +1,7 @@
 package de.dm.intellij.liferay.language.freemarker;
 
 import com.intellij.freemarker.psi.directives.FtlMacro;
+import com.intellij.openapi.util.text.StringUtil;
 import de.dm.intellij.liferay.util.LiferayTaglibs;
 
 import java.util.HashMap;
@@ -81,15 +82,26 @@ public class LiferayFreemarkerTaglibs {
 
     public static String getNamespace(FtlMacro ftlMacro) {
         String directiveName = ftlMacro.getDirectiveName();
+
+        String prefix = null;
+
         if (directiveName.contains(".")) {
             String[] split = directiveName.split("\\.");
             if (split.length == 2) {
-                String prefix = split[0];
-                if (LiferayFreemarkerTaglibs.FTL_MACRO_PREFIXES.containsKey(prefix)) {
-                    return LiferayFreemarkerTaglibs.FTL_MACRO_PREFIXES.get(prefix);
-                }
+                prefix = split[0];
+            }
+        } else if (directiveName.contains("[")) {
+            String[] split = directiveName.split("\\[");
+            if (split.length == 2) {
+                prefix = split[0];
             }
         }
+        if (prefix != null) {
+            if (LiferayFreemarkerTaglibs.FTL_MACRO_PREFIXES.containsKey(prefix)) {
+                return LiferayFreemarkerTaglibs.FTL_MACRO_PREFIXES.get(prefix);
+            }
+        }
+
         return "";
     }
 
@@ -100,7 +112,20 @@ public class LiferayFreemarkerTaglibs {
             if (split.length == 2) {
                 return split[1];
             }
+        } else if (directiveName.contains("[")) {
+            String[] split = directiveName.split("\\[");
+            if (split.length == 2) {
+                String localName = split[1];
+                if (localName.endsWith("]")) {
+                    localName = localName.substring(0, localName.length() -1);
+                }
+
+                localName = StringUtil.unquoteString(localName);
+
+                return localName;
+            }
         }
+
         return "";
     }
 }

@@ -32,6 +32,7 @@
             <li>Feature: Added some basic code completions for some liferay taglib attributes</li>
             <li>Bugfix: Parsing package.json may lead to an exception in the log</li>
             <li>Bugfix: Fixed compatibility with IntelliJ Community Edition</li>
+            <li>Bugfix: Fixed injection of Javascript inside Freemarker taglibs using the square bracket notation</li>
         </ul>
         <p>Version 0.0.9</p>
         <ul>
