@@ -34,6 +34,7 @@
             <li>Bugfix: Parsing package.json may lead to an exception in the log</li>
             <li>Bugfix: Fixed compatibility with IntelliJ Community Edition</li>
             <li>Bugfix: Fixed injection of Javascript inside Freemarker taglibs using the square bracket notation</li>
+            <li>Bugfix: Improved compatibility with IntelliJ 2020.2</li>
         </ul>
         <p>Version 0.0.9</p>
         <ul>

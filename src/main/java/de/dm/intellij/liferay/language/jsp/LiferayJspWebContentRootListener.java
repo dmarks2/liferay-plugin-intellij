@@ -89,7 +89,7 @@ public class LiferayJspWebContentRootListener extends FileChangeListenerBase {
     }
 
     public static boolean isRelevantFile(String path) {
-        return true;
+        return (! path.endsWith(".iml"));
     }
 
     @Override
