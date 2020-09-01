@@ -30,7 +30,13 @@ public class LiferayJspWebContentRootListener extends FileChangeListenerBase {
 
     private static final Logger log = com.intellij.openapi.diagnostic.Logger.getInstance(LiferayJspWebContentRootListener.class.getName());
 
+    private static final ThreadLocal<Boolean> changeRunning = new ThreadLocal<>();
+
     public static void handleChange(final Project project, VirtualFile virtualFile) {
+        if (Boolean.TRUE.equals(changeRunning.get())) {
+            return;
+        }
+
         final Module module = ModuleUtil.findModuleForFile(virtualFile, project);
 
         if (module != null) {
@@ -47,7 +53,11 @@ public class LiferayJspWebContentRootListener extends FileChangeListenerBase {
                 if (metaInf != null) {
                     VirtualFile parent = metaInf.getParent();
 
+                    changeRunning.set(true);
+
                     WebFacetUtil.addWebFacet(resources, parent, module);
+
+                    changeRunning.set(false);
                 }
             } else {
                 ProjectUtils.runDumbAwareLater(project, () -> {
@@ -76,7 +86,11 @@ public class LiferayJspWebContentRootListener extends FileChangeListenerBase {
 
                                     if (relativePath != null) {
                                         if (LiferayFileUtil.isParent(relativePath, sourceRoot)) {
+                                            changeRunning.set(true);
+
                                             WebFacetUtil.addWebFacet(relativePath, sourceRoot, module);
+
+                                            changeRunning.set(false);
                                         }
                                     }
                                 }
