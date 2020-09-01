@@ -35,6 +35,7 @@ import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
+import com.intellij.psi.PsiPackage;
 import com.intellij.psi.PsiPackageStatement;
 import com.intellij.psi.PsiParameter;
 import com.intellij.psi.PsiParameterList;
@@ -417,7 +418,9 @@ public class ProjectUtils {
         String className = StringUtil.getPackageName(fullQualifiedReference);
         String fieldMemberName = StringUtil.getShortName(fullQualifiedReference);
 
-        PsiClass psiClass = JavaPsiFacade.getInstance(project).findClass(className, scope);
+        //PsiClass psiClass = JavaPsiFacade.getInstance(project).findClass(className, scope);
+        PsiClass psiClass = getClassWithoutResolve(className, project, scope);
+
         if (psiClass != null) {
             PsiField psiField = ProjectUtils.getClassPublicStaticField(psiClass, fieldMemberName);
             if (psiField != null) {
@@ -432,6 +435,24 @@ public class ProjectUtils {
                 if (value instanceof String) {
                     return (String)value;
                 }
+            }
+        }
+
+        return null;
+    }
+
+    @Nullable
+    public static PsiClass getClassWithoutResolve(@NotNull String qualifiedName, @NotNull Project project, @NotNull GlobalSearchScope scope) {
+        JavaPsiFacade javaPsiFacade = JavaPsiFacade.getInstance(project);
+
+        String packageName = StringUtil.getPackageName(qualifiedName);
+        PsiPackage pkg = javaPsiFacade.findPackage(packageName);
+        String className = StringUtil.getShortName(qualifiedName);
+
+        if (pkg != null) {
+            PsiClass[] classes = pkg.findClassByShortName(className, scope);
+            if (classes.length > 0) {
+                return classes[0];
             }
         }
 
