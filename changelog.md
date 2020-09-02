@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Bugfix: Fixed compatibility with IntelliJ Community Edition
 - Bugfix: Fixed injection of Javascript inside Freemarker taglibs using the square bracket notation
 - Bugfix: Improved compatibility with IntelliJ 2020.2
+- Bugfix: Fixed errors in IntelliJ log (recursive commit, index deadlock)
 
 ## 0.0.9
 - Feature: Added Liferay taglib support for Liferay 7.1 and 7.2 in Freemarker templates
