@@ -23,21 +23,14 @@ public abstract class AbstractCommandKeyIndexer extends AbstractComponentPropert
     public static List<String> getCommands(@NotNull ID<CommandKey, Void> name, @NotNull String portletName, Project project, GlobalSearchScope scope) {
         return ReadAction.compute(
             () -> {
-                final List<String> result = new ArrayList<>();
+                final List<CommandKey> result = new ArrayList<>();
+                final List<String> commands = new ArrayList<>();
 
                 try {
                     FileBasedIndex.getInstance().processAllKeys(
                         name,
                         commandKey -> {
-                            String commandKeyPortletName = commandKey.getPortletName();
-                            commandKeyPortletName = ProjectUtils.resolveReferencePlaceholder(commandKeyPortletName, project, scope);
-
-                            if (portletName.equals(commandKeyPortletName)) {
-                                String commandName = commandKey.getCommandName();
-                                commandName = ProjectUtils.resolveReferencePlaceholder(commandName, project, scope);
-
-                                result.add(commandName);
-                            }
+                            result.add(commandKey);
                             return true;
                         },
                         scope,
@@ -48,7 +41,20 @@ public abstract class AbstractCommandKeyIndexer extends AbstractComponentPropert
                     //ignore
                 }
 
-                return result;
+                for (CommandKey commandKey : result) {
+                    String commandKeyPortletName = commandKey.getPortletName();
+
+                    commandKeyPortletName = ProjectUtils.resolveReferencePlaceholder(commandKeyPortletName, project, scope);
+
+                    if (portletName.equals(commandKeyPortletName)) {
+                        String commandName = commandKey.getCommandName();
+                        commandName = ProjectUtils.resolveReferencePlaceholder(commandName, project, scope);
+
+                        commands.add(commandName);
+                    }
+                }
+
+                return commands;
             }
         );
     }
@@ -58,16 +64,14 @@ public abstract class AbstractCommandKeyIndexer extends AbstractComponentPropert
         return ReadAction.compute(
                 () -> {
                     final List<String> result = new ArrayList<>();
+                    final List<String> commands = new ArrayList<>();
 
                     try {
                         FileBasedIndex.getInstance().processAllKeys(
                                 name,
                                 commandKey -> {
                                     if (commandKey.getCommandName().startsWith(ProjectUtils.REFERENCE_PLACEHOLDER)) {
-                                        String resolvedCommandName = ProjectUtils.resolveReferencePlaceholder(commandKey.getCommandName(), project, scope);
-                                        if (commandName.equals(resolvedCommandName)) {
-                                            result.add(commandKey.getCommandName());
-                                        }
+                                        result.add(commandKey.getCommandName());
                                     }
                                     return true;
                                 },
@@ -79,7 +83,14 @@ public abstract class AbstractCommandKeyIndexer extends AbstractComponentPropert
                         //ignore
                     }
 
-                    return result;
+                    for (String value : result) {
+                        String resolvedCommandName = ProjectUtils.resolveReferencePlaceholder(value, project, scope);
+                        if (commandName.equals(resolvedCommandName)) {
+                            commands.add(value);
+                        }
+                    }
+
+                    return commands;
                 }
         );
     }

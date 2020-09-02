@@ -85,7 +85,8 @@ public class PortletNameIndex extends FileBasedIndexExtension<String, Void> impl
                         NAME,
                         name -> {
                             result.add(
-                                ProjectUtils.resolveReferencePlaceholder(name, project, scope)
+                                //ProjectUtils.resolveReferencePlaceholder(name, project, scope)
+                                name
                             );
                             return true;
                         },
@@ -95,6 +96,14 @@ public class PortletNameIndex extends FileBasedIndexExtension<String, Void> impl
 
                 } catch (IndexNotReadyException e) {
                     //ignore
+                }
+
+                for (int i = 0; i < result.size(); i++) {
+                    String value = result.get(i);
+
+                    value = ProjectUtils.resolveReferencePlaceholder(value, project, scope);
+
+                    result.set(i, value);
                 }
 
                 return result;

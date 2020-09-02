@@ -121,7 +121,8 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> imple
                         NAME,
                         jspKey -> {
                             if (jspPath.equals(jspKey.getJspPath())) {
-                                result.add(ProjectUtils.resolveReferencePlaceholder(jspKey.getPortletName(), project, scope));
+                                //result.add(ProjectUtils.resolveReferencePlaceholder(jspKey.getPortletName(), project, scope));
+                                result.add(jspKey.getPortletName());
                             }
                             return true;
                         },
@@ -131,6 +132,14 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> imple
 
                 } catch (IndexNotReadyException e) {
                     //ignore
+                }
+
+                for (int i = 0; i < result.size(); i++) {
+                    String value = result.get(i);
+
+                    value = ProjectUtils.resolveReferencePlaceholder(value, project, scope);
+
+                    result.set(i, value);
                 }
 
                 return result;
