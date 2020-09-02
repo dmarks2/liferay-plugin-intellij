@@ -116,16 +116,14 @@ public class PortletNameIndex extends FileBasedIndexExtension<String, Void> impl
         return ReadAction.compute(
                 () -> {
                     final List<String> result = new ArrayList<>();
+                    final List<String> names = new ArrayList<>();
 
                     try {
                         FileBasedIndex.getInstance().processAllKeys(
                                 NAME,
                                 name -> {
                                     if (name.startsWith(ProjectUtils.REFERENCE_PLACEHOLDER)) {
-                                        String resolvedPortletName = ProjectUtils.resolveReferencePlaceholder(name, project, scope);
-                                        if (portletName.equals(resolvedPortletName)) {
-                                            result.add(name);
-                                        }
+                                        result.add(name);
                                     }
                                     return true;
                                 },
@@ -137,7 +135,15 @@ public class PortletNameIndex extends FileBasedIndexExtension<String, Void> impl
                         //ignore
                     }
 
-                    return result;
+                    for (String value : result) {
+                        String resolvedPortletName = ProjectUtils.resolveReferencePlaceholder(value, project, scope);
+
+                        if (portletName.equals(resolvedPortletName)) {
+                            names.add(value);
+                        }
+                    }
+
+                    return names;
                 }
         );
     }
