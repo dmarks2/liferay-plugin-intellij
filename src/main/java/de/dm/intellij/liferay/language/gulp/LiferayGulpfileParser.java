@@ -1,7 +1,6 @@
 package de.dm.intellij.liferay.language.gulp;
 
 import com.google.gson.JsonParseException;
-import com.intellij.lang.javascript.buildTools.gulp.GulpService;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.externalSystem.service.project.autoimport.FileChangeListenerBase;
 import com.intellij.openapi.module.Module;
@@ -12,7 +11,6 @@ import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.ModifiableModelsProvider;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.SourceFolder;
-import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.newvfs.events.VFileEvent;
@@ -31,90 +29,87 @@ public class LiferayGulpfileParser extends FileChangeListenerBase {
     public static void handleChange(Project project, VirtualFile virtualFile) {
         final Module module = ModuleUtil.findModuleForFile(virtualFile, project);
         if (module != null) {
-            GulpService gulpService = GulpService.getInstance();
 
-            if (gulpService.isBuildfile(virtualFile)) {
-                if (virtualFile.getLength() > 0) {
-                    try {
-                        String fileText = FileUtil.loadTextAndClose(virtualFile.getInputStream());
+            if (virtualFile.getLength() > 0) {
+                try {
+                    String fileText = FileUtil.loadTextAndClose(virtualFile.getInputStream());
 
-                        Matcher declareLiferayThemeTaskMatcher = DECLARE_LIFERAY_THEME_TASKS.matcher(fileText);
-                        if (declareLiferayThemeTaskMatcher.find()) {
-                            String liferayThemeTaskVariableName = declareLiferayThemeTaskMatcher.group(1);
+                    Matcher declareLiferayThemeTaskMatcher = DECLARE_LIFERAY_THEME_TASKS.matcher(fileText);
+                    if (declareLiferayThemeTaskMatcher.find()) {
+                        String liferayThemeTaskVariableName = declareLiferayThemeTaskMatcher.group(1);
 
-                            int index = fileText.indexOf(liferayThemeTaskVariableName + ".registerTasks(");
+                        int index = fileText.indexOf(liferayThemeTaskVariableName + ".registerTasks(");
 
-                            if (index > -1) {
-                                int openBracketIndex = index + (liferayThemeTaskVariableName + ".registerTasks(").length() - 1;
+                        if (index > -1) {
+                            int openBracketIndex = index + (liferayThemeTaskVariableName + ".registerTasks(").length() - 1;
 
-                                int closingBracketIndex = getMatchingBracket(fileText, openBracketIndex);
+                            int closingBracketIndex = getMatchingBracket(fileText, openBracketIndex);
 
-                                if (closingBracketIndex > -1) {
-                                    String jsonExpression = fileText.substring(openBracketIndex + 1, closingBracketIndex);
+                            if (closingBracketIndex > -1) {
+                                String jsonExpression = fileText.substring(openBracketIndex + 1, closingBracketIndex);
 
-                                    String pathSrc = "src";
+                                String pathSrc = "src";
 
-                                    try {
-                                        JsonReaderEx jsonReaderEx = new JsonReaderEx(jsonExpression);
-                                        jsonReaderEx.setLenient(true);
-                                        jsonReaderEx.beginObject();
-                                        while (jsonReaderEx.hasNext()) {
-                                            String name = jsonReaderEx.nextName();
-                                            if ("pathSrc".equals(name)) {
-                                                pathSrc = jsonReaderEx.nextString();
-                                            } else {
-                                                jsonReaderEx.skipValue();
-                                            }
+                                try {
+                                    JsonReaderEx jsonReaderEx = new JsonReaderEx(jsonExpression);
+                                    jsonReaderEx.setLenient(true);
+                                    jsonReaderEx.beginObject();
+                                    while (jsonReaderEx.hasNext()) {
+                                        String name = jsonReaderEx.nextName();
+                                        if ("pathSrc".equals(name)) {
+                                            pathSrc = jsonReaderEx.nextString();
+                                        } else {
+                                            jsonReaderEx.skipValue();
                                         }
-                                        jsonReaderEx.endObject();
-                                    } catch (JsonParseException e) {
-                                        //content is probably not valid JSON, ignore for now.
+                                    }
+                                    jsonReaderEx.endObject();
+                                } catch (JsonParseException e) {
+                                    //content is probably not valid JSON, ignore for now.
+                                }
+
+                                if (pathSrc.length() > 0) {
+                                    if (pathSrc.startsWith("./")) {
+                                        pathSrc = pathSrc.substring(2);
                                     }
 
-                                    if (pathSrc.length() > 0) {
-                                        if (pathSrc.startsWith("./")) {
-                                            pathSrc = pathSrc.substring(2);
-                                        }
+                                    VirtualFile sourceRootVirtualFile = LiferayFileUtil.getFileInContentRoot(module, pathSrc);
 
-                                        VirtualFile sourceRootVirtualFile = LiferayFileUtil.getFileInContentRoot(module, pathSrc);
+                                    if (sourceRootVirtualFile != null) {
 
-                                        if (sourceRootVirtualFile != null) {
+                                        final ModifiableModelsProvider modelsProvider = ModifiableModelsProvider.SERVICE.getInstance();
+                                        final ModifiableRootModel model = modelsProvider.getModuleModifiableModel(module);
 
-                                            final ModifiableModelsProvider modelsProvider = ModifiableModelsProvider.SERVICE.getInstance();
-                                            final ModifiableRootModel model = modelsProvider.getModuleModifiableModel(module);
+                                        ApplicationManager.getApplication().runWriteAction(
+                                                new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        ContentEntry[] contentEntries = model.getContentEntries();
+                                                        if (contentEntries.length > 0) {
+                                                            ContentEntry contentEntry = contentEntries[0];
 
-                                            ApplicationManager.getApplication().runWriteAction(
-                                                    new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            ContentEntry[] contentEntries = model.getContentEntries();
-                                                            if (contentEntries.length > 0) {
-                                                                ContentEntry contentEntry = contentEntries[0];
+                                                            if (! ApplicationManager.getApplication().isUnitTestMode()) {
+                                                                SourceFolder[] sourceFolders = contentEntry.getSourceFolders();
 
-                                                                if (! ApplicationManager.getApplication().isUnitTestMode()) {
-                                                                    SourceFolder[] sourceFolders = contentEntry.getSourceFolders();
-
-                                                                    for (SourceFolder sourceFolder : sourceFolders) {
-                                                                        if (!sourceFolder.isTestSource()) {
-                                                                            contentEntry.removeSourceFolder(sourceFolder);
-                                                                        }
+                                                                for (SourceFolder sourceFolder : sourceFolders) {
+                                                                    if (!sourceFolder.isTestSource()) {
+                                                                        contentEntry.removeSourceFolder(sourceFolder);
                                                                     }
                                                                 }
-
-                                                                contentEntry.addSourceFolder(sourceRootVirtualFile, false);
                                                             }
-                                                            modelsProvider.commitModuleModifiableModel(model);
+
+                                                            contentEntry.addSourceFolder(sourceRootVirtualFile, false);
                                                         }
+                                                        modelsProvider.commitModuleModifiableModel(model);
                                                     }
-                                            );
-                                        }
+                                                }
+                                        );
                                     }
                                 }
                             }
                         }
-                    } catch (IOException e) {
-                        //unable to read the file, ignore?
                     }
+                } catch (IOException e) {
+                    //unable to read the file, ignore?
                 }
             }
         }
