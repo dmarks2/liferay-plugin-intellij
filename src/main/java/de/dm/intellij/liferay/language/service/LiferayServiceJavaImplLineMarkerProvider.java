@@ -22,7 +22,7 @@ import java.util.Collection;
 public class LiferayServiceJavaImplLineMarkerProvider extends RelatedItemLineMarkerProvider {
 
     @Override
-    protected void collectNavigationMarkers(@NotNull PsiElement element, Collection<? super RelatedItemLineMarkerInfo> result) {
+    protected void collectNavigationMarkers(@NotNull PsiElement element, Collection<? super RelatedItemLineMarkerInfo<?>> result) {
         if (element instanceof PsiIdentifier) {
             if (element.getParent() instanceof PsiClass) {
                 PsiClass psiClass = (PsiClass) element.getParent();

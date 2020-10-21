@@ -1,7 +1,5 @@
 package de.dm.intellij.bndtools;
 
-import aQute.bnd.osgi.Constants;
-
 public class LiferayBndConstants {
 
     public static final String PLUGIN_BUNDLE = "-plugin.bundle";
@@ -42,6 +40,8 @@ public class LiferayBndConstants {
     public static final String AGENT_CLASS = "Agent-Class";
     public static final String LAUNCHER_AGENT_CLASS = "Launcher-Agent-Class";
 
+    public static final String TESTCASES = "Test-Cases";
+
     public static final String[] DEFAULT_HEADER_PROPERTIES = {
         JSP, SASS, LIFERAY_SERVICE_XML, LIFERAY_RELENG_MODULE_GROUP_DESCRIPTION, LIFERAY_RELENG_MODULE_GROUP_TITLE,
         LIFERAY_REQUIRE_SCHEMA_VERSION, LIFERAY_SERVICE, DYNAMIC_IMPORT_PACKAGE, LIFERAY_MODULES_COMPAT_ADAPTERS,
@@ -52,7 +52,7 @@ public class LiferayBndConstants {
 
     public static final String[] CLASS_REFERENCE_PROPERTIES = {
         PLUGIN_BUNDLE, PLUGIN_JSP, PLUGIN_METATYPE, PLUGIN_NPM, PLUGIN_RESOURCEBUNDLE,
-        PLUGIN_SASS, PLUGIN_SERVICE, PLUGIN_SPRING, MAIN_CLASS, PREMAIN_CLASS, AGENT_CLASS, LAUNCHER_AGENT_CLASS, Constants.TESTCASES
+        PLUGIN_SASS, PLUGIN_SERVICE, PLUGIN_SPRING, MAIN_CLASS, PREMAIN_CLASS, AGENT_CLASS, LAUNCHER_AGENT_CLASS, TESTCASES
     };
 
     public static final String[] FILE_REFERENCE_PROPERTIES = {

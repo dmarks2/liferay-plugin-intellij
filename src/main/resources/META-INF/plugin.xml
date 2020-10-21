@@ -6,7 +6,7 @@
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
-    <idea-version since-build="193" />
+    <idea-version since-build="202" />
 
     <description><![CDATA[
         <p>This plugin adds some features for developing Liferay modules. The following topics have been improved so far</p>
@@ -155,6 +155,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Define a new filetype for "bnd.bnd" files -->
+        <!-- <fileTypeFactory implementation="de.dm.intellij.bndtools.BndFileTypeFactory"/> -->
         <fileType name="bnd" implementationClass="de.dm.intellij.bndtools.BndFileType" fieldName="INSTANCE" language="bnd" extensions="bnd"/>
         <lang.parserDefinition language="bnd" implementationClass="de.dm.intellij.bndtools.parser.BndParserDefinition"/>
         <lang.syntaxHighlighterFactory language="bnd" implementationClass="de.dm.intellij.bndtools.highlighting.BndSyntaxHighlighterFactory"/>

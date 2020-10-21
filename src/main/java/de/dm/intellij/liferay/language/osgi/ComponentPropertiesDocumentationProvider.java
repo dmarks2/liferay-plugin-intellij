@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.osgi;
 
+import com.intellij.BundleBase;
 import com.intellij.lang.documentation.AbstractDocumentationProvider;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
@@ -26,6 +27,8 @@ public class ComponentPropertiesDocumentationProvider extends AbstractDocumentat
                             info += "<b>" + property[0] + "</b><br/>\n";
 
                             String componentPropertiesDocumentationBundleKey = serviceClassName + "." + property[0];
+
+                            BundleBase.assertOnMissedKeys(false);
 
                             String description = ComponentPropertiesDocumentationBundle.message(componentPropertiesDocumentationBundleKey);
                             if (description != null) {

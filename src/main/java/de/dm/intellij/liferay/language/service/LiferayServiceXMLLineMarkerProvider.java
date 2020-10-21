@@ -27,7 +27,7 @@ import java.util.stream.Stream;
 public class LiferayServiceXMLLineMarkerProvider extends RelatedItemLineMarkerProvider {
 
     @Override
-    protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo> result) {
+    protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
         XmlAttribute nameXmlAttribute = Stream.of(
             element
         ).filter(

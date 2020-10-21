@@ -21,7 +21,6 @@ import de.dm.intellij.bndtools.psi.Clause;
 import de.dm.intellij.bndtools.psi.Directive;
 import de.dm.intellij.bndtools.psi.util.BndPsiUtil;
 import org.jetbrains.annotations.NotNull;
-import org.osgi.framework.Constants;
 
 import java.util.List;
 
@@ -80,7 +79,7 @@ public class ExportPackageParser extends BasePackageParser {
             if (bndHeaderValue instanceof Clause) {
                 Clause clause = (Clause)bndHeaderValue;
 
-                Directive usesDirective = clause.getDirective(Constants.USES_DIRECTIVE);
+                Directive usesDirective = clause.getDirective(OsgiConstants.USES_DIRECTIVE);
 
                 if (usesDirective != null) {
                     BndHeaderValuePart valueElement = usesDirective.getValueElement();
@@ -154,12 +153,12 @@ public class ExportPackageParser extends BasePackageParser {
         if (psiElement instanceof Attribute) {
             Attribute attribute = (Attribute)psiElement;
 
-            return (Constants.USES_DIRECTIVE.equals(attribute.getName()));
+            return (OsgiConstants.USES_DIRECTIVE.equals(attribute.getName()));
         }
         if (psiElement instanceof Directive) {
             Directive directive = (Directive)psiElement;
 
-            return (Constants.USES_DIRECTIVE.equals(directive.getName()));
+            return (OsgiConstants.USES_DIRECTIVE.equals(directive.getName()));
         }
 
         return false;
