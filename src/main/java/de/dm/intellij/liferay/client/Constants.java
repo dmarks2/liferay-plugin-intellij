@@ -14,6 +14,7 @@ public class Constants {
 
     public static final String CMD_GET_USER_SITES_GROUP = "/group/get-user-sites-groups";
     public static final String CMD_GET_GROUP = "/group/get-group";
+    public static final String CMD_GET_COMPANY_GROUP = "/group/get-company-group";
 
     public static final Map<String, String> APPLICATION_DISPLAY_TEMPLATE_TYPES_7_0 = new HashMap<String, String>();
     public static final Map<String, String> APPLICATION_DISPLAY_TEMPLATE_TYPES_7_3 = new HashMap<String, String>();

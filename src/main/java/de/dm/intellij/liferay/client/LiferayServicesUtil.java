@@ -15,6 +15,7 @@ public class LiferayServicesUtil {
 
     private long defaultCompanyId;
     private long globalGroupId;
+    private long companyGroupId;
     private Map<String, Long> classNameIds = new HashMap<>();
 
     public LiferayServicesUtil(URI endpoint) {
@@ -27,6 +28,13 @@ public class LiferayServicesUtil {
 
     public JSONArray getUserSitesGroup() throws IOException, JSONException {
         return serviceInvoker.invoke(Constants.CMD_GET_USER_SITES_GROUP, new JSONObject(), JSONArray.class);
+    }
+
+    public JSONObject getCompanyGroup(long companyId) throws JSONException, IOException {
+        JSONObject params = new JSONObject();
+        params.put("companyId", companyId);
+
+        return serviceInvoker.invoke(Constants.CMD_GET_COMPANY_GROUP, params, JSONObject.class);
     }
 
     public JSONObject getGroup(long companyId, String name) throws JSONException, IOException {
@@ -55,6 +63,19 @@ public class LiferayServicesUtil {
         return defaultCompanyId;
     }
 
+    public long getCompanyGroupId() throws IOException, JSONException {
+        if (companyGroupId == 0) {
+            long companyId = getDefaultCompanyId();
+
+            JSONObject companyGroup = getCompanyGroup(companyId);
+            if (companyGroup != null) {
+                companyGroupId = companyGroup.getLong("groupId");
+            }
+        }
+
+        return companyGroupId;
+    }
+
     public long getGlobalGroupId() throws IOException, JSONException {
         if (globalGroupId == 0) {
             long companyId = getDefaultCompanyId();
@@ -66,6 +87,21 @@ public class LiferayServicesUtil {
         }
 
         return globalGroupId;
+    }
+
+    public long getGroupId(String groupName) throws IOException, JSONException {
+        if (GroupConstants.GLOBAL.equals(groupName)) {
+            return getGlobalGroupId();
+        }
+
+        long companyId = getDefaultCompanyId();
+
+        JSONObject group = getGroup(companyId, groupName);
+        if (group != null) {
+            return group.getLong("groupId");
+        }
+
+        return 0;
     }
 
     public JSONObject fetchClassName(String value) throws JSONException, IOException {
@@ -219,19 +255,19 @@ public class LiferayServicesUtil {
         return null;
     }
 
-    public JSONObject getDDMStructureByName(String name) throws IOException {
+    public JSONObject getDDMStructureByName(String name, String groupName) throws IOException {
         long classNameId = getClassNameId(Constants.CLASS_NAME_JOURNAL_ARTICLE_7_0);
         long companyId = getDefaultCompanyId();
-        long groupId = getGlobalGroupId();
+        long groupId = getGroupId(groupName);
 
         JSONObject ddmStructure = getDDMStructure(companyId, groupId, classNameId, name);
 
         return ddmStructure;
     }
 
-    public JSONObject getDDMTemplateByName(long structureId, String name) throws IOException {
+    public JSONObject getDDMTemplateByName(long structureId, String name, String groupName) throws IOException {
         long companyId = getDefaultCompanyId();
-        long groupId = getGlobalGroupId();
+        long groupId = getGroupId(groupName);
 
         long classNameIdDDMStructure = getClassNameId(Constants.CLASS_NAME_DDM_STRUCTURE_7_0);
         long journalArticleClassNameId = getClassNameId(Constants.CLASS_NAME_JOURNAL_ARTICLE_7_0);
@@ -241,18 +277,21 @@ public class LiferayServicesUtil {
         return ddmTemplate;
     }
 
-    public String getFreemarkerTemplateName(String structureName, String templateName) throws IOException {
-        JSONObject ddmStructure = getDDMStructureByName(structureName);
+    public String getFreemarkerTemplateName(String structureName, String templateName, String groupName) throws IOException {
+        JSONObject ddmStructure = getDDMStructureByName(structureName, groupName);
         if (ddmStructure != null) {
-            JSONObject ddmTemplate = getDDMTemplateByName(ddmStructure.getLong("structureId"), templateName);
+            JSONObject ddmTemplate = getDDMTemplateByName(ddmStructure.getLong("structureId"), templateName, groupName);
             if (ddmTemplate != null) {
-                return ddmTemplate.getLong("companyId") + "#" + ddmStructure.getLong("groupId") + "#" + ddmTemplate.getString("templateKey");
+                //Identifier contains companyGroupId if rendered within a request
+                long companyGroupId = getCompanyGroupId();
+
+                return ddmTemplate.getLong("companyId") + "#" + companyGroupId + "#" + ddmTemplate.getString("templateKey");
             }
         }
 
         return null;
     }
-    public String getFreemarkerApplicationDisplayTemplateName(String type, String templateName) throws IOException {
+    public String getFreemarkerApplicationDisplayTemplateName(String type, String templateName, String groupName) throws IOException {
         String className = Constants.APPLICATION_DISPLAY_TEMPLATE_TYPES_7_0.get(type);
         if (className == null) {
             className = Constants.APPLICATION_DISPLAY_TEMPLATE_TYPES_7_3.get(type);
@@ -264,12 +303,15 @@ public class LiferayServicesUtil {
                 long portletDisplayTemplateClassNameId = getClassNameId(Constants.CLASS_NAME_PORTLET_DISPLAY_TEMPLATE_7_0);
 
                 long companyId = getDefaultCompanyId();
-                long groupId = getGlobalGroupId();
+                long groupId = getGroupId(groupName);
 
                 JSONObject ddmTemplate = getDDMTemplate_70(companyId, groupId, classNameId, portletDisplayTemplateClassNameId, 0, templateName);
 
                 if (ddmTemplate != null) {
-                    return ddmTemplate.getLong("companyId") + "#" + ddmTemplate.getLong("groupId") + "#" + ddmTemplate.getLong("templateId");
+                    //Identifier contains companyGroupId if rendered within a request
+                    long companyGroupId = getCompanyGroupId();
+
+                    return ddmTemplate.getLong("companyId") + "#" + companyGroupId + "#" + ddmTemplate.getLong("templateId");
                 }
             }
         }

@@ -22,6 +22,8 @@ public class LiferayModuleComponentStateWrapper {
 
     public String customJspDir;
 
+    public String resourcesImporterGroupName;
+
     public LiferayModuleComponentStateWrapper() {
         this.liferayVersion = "";
         this.liferayLookAndFeelXml = "";
@@ -29,6 +31,7 @@ public class LiferayModuleComponentStateWrapper {
         this.osgiFragmentHost = "";
         this.parentTheme = "";
         this.customJspDir = "";
+        this.resourcesImporterGroupName = "";
         themeSettings = new HashMap<String, String>();
     }
 }

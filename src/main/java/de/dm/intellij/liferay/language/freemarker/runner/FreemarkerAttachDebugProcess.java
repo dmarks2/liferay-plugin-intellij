@@ -3,6 +3,7 @@ package de.dm.intellij.liferay.language.freemarker.runner;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.execution.ui.ExecutionConsole;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.xdebugger.XDebugProcess;
@@ -27,6 +28,8 @@ import java.rmi.RemoteException;
 import java.util.Collection;
 
 public class FreemarkerAttachDebugProcess extends XDebugProcess {
+
+    private final static Logger log = Logger.getInstance(FreemarkerAttachDebugProcess.class);
 
     private FreemarkerAttachDebugConfiguration freemarkerAttachDebugConfiguration;
     private Debugger debugger;
@@ -59,6 +62,10 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
 
             String templateName = e.getName();
             int line = e.getLine();
+
+            if (log.isDebugEnabled()) {
+                log.debug("Reached Breakpoint at line " + line + " in template " + templateName);
+            }
 
             XLineBreakpoint<FreemarkerAttachBreakpointProperties> xlineBreakpoint = freemarkerAttachBreakpointHandler.findXlineBreakpoint(templateName, line);
 

@@ -17,6 +17,12 @@ public class FreemarkerAttachDebugConfigurationType implements ConfigurationType
 
         @NotNull
         @Override
+        public String getId() {
+            return "";
+        }
+
+        @NotNull
+        @Override
         public RunConfiguration createTemplateConfiguration(@NotNull Project project) {
             return new FreemarkerAttachDebugConfiguration(project, this, "");
         }

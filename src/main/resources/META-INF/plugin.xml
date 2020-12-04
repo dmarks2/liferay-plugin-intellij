@@ -31,10 +31,11 @@
             <li>Feature: Updated taglib support (CSS, Language Bundle) for Liferay 7.3</li>
             <li>Feature: Added some basic code completions for some liferay taglib attributes in JSPs and Freemarker</li>
             <li>Feature: Code completion for Java Classes in Freemarker taglibs</li>
+            <li>Feature: Support for debugging Resource Importer files imported to specific sites</li>
             <li>Bugfix: Parsing package.json may lead to an exception in the log</li>
             <li>Bugfix: Fixed compatibility with IntelliJ Community Edition</li>
             <li>Bugfix: Fixed injection of Javascript inside Freemarker taglibs using the square bracket notation</li>
-            <li>Bugfix: Improved compatibility with IntelliJ 2020.2</li>
+            <li>Bugfix: Improved compatibility with IntelliJ 2020.2 and 2020.3</li>
             <li>Bugfix: Fixed errors in IntelliJ log (recursive commit, index deadlock)</li>
         </ul>
         <p>Version 0.0.9</p>
@@ -250,6 +251,8 @@
         <listener class="de.dm.intellij.liferay.hook.LiferayHookXmlParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
         <listener class="de.dm.intellij.liferay.bnd.OsgiBndFileParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
         <listener class="de.dm.intellij.liferay.language.jsp.LiferayJspWebContentRootListener" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
+        <listener class="de.dm.intellij.liferay.resourcesimporter.LiferayPluginPackagePropertiesParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
+        <listener class="de.dm.intellij.liferay.resourcesimporter.LiferayAdvancedResourcesImporterBndParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
     </applicationListeners>
 
 </idea-plugin>

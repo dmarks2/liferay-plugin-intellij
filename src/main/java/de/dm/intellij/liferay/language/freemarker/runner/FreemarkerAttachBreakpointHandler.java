@@ -3,6 +3,7 @@ package de.dm.intellij.liferay.language.freemarker.runner;
 import com.intellij.freemarker.psi.FtlElementTypes;
 import com.intellij.icons.AllIcons;
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -21,7 +22,9 @@ import com.intellij.xdebugger.XSourcePosition;
 import com.intellij.xdebugger.breakpoints.XBreakpointHandler;
 import com.intellij.xdebugger.breakpoints.XLineBreakpoint;
 import de.dm.intellij.liferay.client.Constants;
+import de.dm.intellij.liferay.client.GroupConstants;
 import de.dm.intellij.liferay.client.LiferayServicesUtil;
+import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.util.LiferayFileUtil;
 import freemarker.debug.Breakpoint;
 import freemarker.debug.Debugger;
@@ -36,6 +39,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineBreakpoint<FreemarkerAttachBreakpointProperties>> {
+
+    private final static Logger log = Logger.getInstance(FreemarkerAttachBreakpointHandler.class);
 
     public static final String SERVLET_CONTEXT = "_SERVLET_CONTEXT_";
 
@@ -91,6 +96,10 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
                     try {
                         debugger.addBreakpoint(registeredBreakpoint);
 
+                        if (log.isDebugEnabled()) {
+                            log.debug("Successfully registered breakpoint at line " + line + " in template " + templateName);
+                        }
+
                         debugProcess.getSession().updateBreakpointPresentation(
                             breakpoint,
                             AllIcons.Debugger.Db_verified_breakpoint,
@@ -102,7 +111,7 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
                             AllIcons.Debugger.Db_invalid_breakpoint,
                             e.getMessage()
                         );
-                        e.printStackTrace();
+                        log.error(e.getMessage(), e);
                     }
                 } else {
                     debugProcess.getSession().updateBreakpointPresentation(
@@ -141,8 +150,12 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
 
                 try {
                     debugger.removeBreakpoint(registeredBreakpoint);
+
+                    if (log.isDebugEnabled()) {
+                        log.debug("Successfully unregistered breakpoint at line " + line + " in template " + templateName);
+                    }
                 } catch (RemoteException e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage(), e);
                 }
             }
         }
@@ -182,11 +195,19 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
             } else if (LiferayFileUtil.isJournalTemplateFile(psiFile)) {
                 VirtualFile journalStructureFile = LiferayFileUtil.getJournalStructureFile(psiFile);
                 if (journalStructureFile != null) {
+                    String groupName = GroupConstants.GLOBAL;
+                    final Module module = ModuleUtil.findModuleForFile(virtualFile, debugProcess.getSession().getProject());
+                    if (module != null) {
+                        if (LiferayModuleComponent.getResourcesImporterGroupName(module) != null) {
+                            groupName = LiferayModuleComponent.getResourcesImporterGroupName(module);
+                        }
+                    }
+
                     String structureName = journalStructureFile.getNameWithoutExtension();
                     String templateName = virtualFile.getNameWithoutExtension();
 
                     try {
-                        String result = liferayServicesUtil.getFreemarkerTemplateName(structureName, templateName);
+                        String result = liferayServicesUtil.getFreemarkerTemplateName(structureName, templateName, groupName);
 
                         return result;
                     } catch (IOException e) {
@@ -197,8 +218,16 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
                 String templateName = virtualFile.getNameWithoutExtension();
                 String type = LiferayFileUtil.getApplicationDisplayTemplateType(psiFile);
 
+                String groupName = GroupConstants.GLOBAL;
+                final Module module = ModuleUtil.findModuleForFile(virtualFile, debugProcess.getSession().getProject());
+                if (module != null) {
+                    if (LiferayModuleComponent.getResourcesImporterGroupName(module) != null) {
+                        groupName = LiferayModuleComponent.getResourcesImporterGroupName(module);
+                    }
+                }
+
                 try {
-                    String result = liferayServicesUtil.getFreemarkerApplicationDisplayTemplateName(type,templateName);
+                    String result = liferayServicesUtil.getFreemarkerApplicationDisplayTemplateName(type, templateName, groupName);
 
                     return result;
                 } catch (IOException e) {

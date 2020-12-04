@@ -8,10 +8,11 @@ All notable changes to this project will be documented in this file.
 - Feature: Updated taglib support (CSS, Language Bundle) for Liferay 7.3
 - Feature: Added some basic code completions for some liferay taglib attributes in JSPs and Freemarker
 - Feature: Code completion for Java Classes in Freemarker taglibs
+- Feature: Support for debugging Resource Importer files imported to specific sites  
 - Bugfix: Parsing package.json may lead to an exception in the log
 - Bugfix: Fixed compatibility with IntelliJ Community Edition
 - Bugfix: Fixed injection of Javascript inside Freemarker taglibs using the square bracket notation
-- Bugfix: Improved compatibility with IntelliJ 2020.2
+- Bugfix: Improved compatibility with IntelliJ 2020.2 and IntelliJ 2020.3
 - Bugfix: Fixed errors in IntelliJ log (recursive commit, index deadlock)
 
 ## 0.0.9

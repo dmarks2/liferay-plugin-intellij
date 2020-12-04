@@ -38,6 +38,7 @@ public class LiferayModuleComponent implements ModuleComponent, PersistentStateC
     private String osgiFragmentHost = "";
     private String parentTheme = "";
     private String customJspDir = "";
+    private String resourcesImporterGroupName = "";
 
     public LiferayModuleComponent(@NotNull Module module) {
         this.module = module;
@@ -53,6 +54,7 @@ public class LiferayModuleComponent implements ModuleComponent, PersistentStateC
         state.osgiFragmentHost = this.osgiFragmentHost;
         state.parentTheme = this.parentTheme;
         state.customJspDir = this.customJspDir;
+        state.resourcesImporterGroupName = this.resourcesImporterGroupName;
         return state;
     }
 
@@ -64,17 +66,7 @@ public class LiferayModuleComponent implements ModuleComponent, PersistentStateC
         this.osgiFragmentHost = state.osgiFragmentHost;
         this.parentTheme = state.parentTheme;
         this.customJspDir = state.customJspDir;
-    }
-
-    public void moduleAdded() {
-
-    }
-
-    public void initComponent() {
-    }
-
-    public void disposeComponent() {
-
+        this.resourcesImporterGroupName = state.resourcesImporterGroupName;
     }
 
     @NotNull
@@ -243,6 +235,22 @@ public class LiferayModuleComponent implements ModuleComponent, PersistentStateC
         LiferayModuleComponent component = getInstance(module);
         if (component != null) {
             return component.getCustomJspDir();
+        }
+        return null;
+    }
+
+    public String getResourcesImporterGroupName() {
+        return resourcesImporterGroupName;
+    }
+
+    public void setResourcesImporterGroupName(String resourcesImporterGroupName) {
+        this.resourcesImporterGroupName = resourcesImporterGroupName;
+    }
+
+    public static String getResourcesImporterGroupName(Module module) {
+        LiferayModuleComponent component = getInstance(module);
+        if (component != null) {
+            return component.getResourcesImporterGroupName();
         }
         return null;
     }
