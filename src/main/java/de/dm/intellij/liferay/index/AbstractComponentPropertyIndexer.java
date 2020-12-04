@@ -18,7 +18,6 @@ import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.indexing.DataIndexer;
 import com.intellij.util.indexing.FileContent;
-import com.intellij.util.indexing.FileContentImpl;
 import com.intellij.util.indexing.PsiDependentIndex;
 import de.dm.intellij.liferay.language.osgi.ComponentPropertiesCompletionContributor;
 import de.dm.intellij.liferay.util.ProjectUtils;
@@ -71,8 +70,7 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
             return null;
         }
 
-        FileContentImpl fileContentImpl = (FileContentImpl)fileContent;
-        PsiFile psiFile = fileContentImpl.getPsiFileForPsiDependentIndex();
+        PsiFile psiFile = fileContent.getPsiFile();
 
         if (! (psiFile instanceof PsiJavaFile)) {
             return null;

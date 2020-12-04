@@ -4,14 +4,20 @@ import com.intellij.facet.impl.FacetUtil;
 import com.intellij.javaee.web.WebRoot;
 import com.intellij.javaee.web.facet.WebFacet;
 import com.intellij.javaee.web.facet.WebFacetType;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
+import de.dm.intellij.liferay.language.freemarker.runner.FreemarkerAttachBreakpointHandler;
 
 import java.util.Collection;
 import java.util.List;
 
 public class WebFacetUtil {
+
+    private final static Logger log = Logger.getInstance(WebFacetUtil.class);
+
+    private static final String LIFERAY_RESOURCES_WEB_FACET = "LiferayResourcesWeb";
 
     public static void addWebFacet(VirtualFile resources, VirtualFile parent, Module module) {
         ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
@@ -34,7 +40,11 @@ public class WebFacetUtil {
                 }
 
                 if (!facetPresent) {
-                    final WebFacet webFacet = FacetUtil.addFacet(module, WebFacetType.getInstance());
+                    if (log.isDebugEnabled()) {
+                        log.debug("Adding " + resources.getPath() + " as " + LIFERAY_RESOURCES_WEB_FACET + " facet");
+                    }
+
+                    final WebFacet webFacet = FacetUtil.addFacet(module, WebFacetType.getInstance(), LIFERAY_RESOURCES_WEB_FACET);
                     webFacet.addWebRoot(resources, "/");
                 }
 
