@@ -55,7 +55,7 @@ public class LiferayJspWebContentRootListener extends FileChangeListenerBase {
 
                     changeRunning.set(true);
 
-                    WebFacetUtil.addWebFacet(resources, parent, module);
+                    WebFacetUtil.addWebFacet(resources, parent, module, WebFacetUtil.LIFERAY_RESOURCES_WEB_FACET);
 
                     changeRunning.set(false);
                 }
@@ -88,7 +88,7 @@ public class LiferayJspWebContentRootListener extends FileChangeListenerBase {
                                         if (LiferayFileUtil.isParent(relativePath, sourceRoot)) {
                                             changeRunning.set(true);
 
-                                            WebFacetUtil.addWebFacet(relativePath, sourceRoot, module);
+                                            WebFacetUtil.addWebFacet(relativePath, sourceRoot, module, WebFacetUtil.LIFERAY_CORE_WEB_FACET);
 
                                             changeRunning.set(false);
                                         }

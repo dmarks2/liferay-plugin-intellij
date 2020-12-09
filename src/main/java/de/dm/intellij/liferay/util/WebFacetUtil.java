@@ -9,6 +9,7 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import de.dm.intellij.liferay.language.freemarker.runner.FreemarkerAttachBreakpointHandler;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.List;
@@ -17,9 +18,10 @@ public class WebFacetUtil {
 
     private final static Logger log = Logger.getInstance(WebFacetUtil.class);
 
-    private static final String LIFERAY_RESOURCES_WEB_FACET = "LiferayResourcesWeb";
+    public static final String LIFERAY_RESOURCES_WEB_FACET = "LiferayResourcesWeb";
+    public static final String LIFERAY_CORE_WEB_FACET = "LiferayCoreWeb";
 
-    public static void addWebFacet(VirtualFile resources, VirtualFile parent, Module module) {
+    public static void addWebFacet(VirtualFile resources, VirtualFile parent, Module module, @NotNull String facetName) {
         ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
 
         //Add web facet only if at <source-root>/<dir>
@@ -41,10 +43,18 @@ public class WebFacetUtil {
 
                 if (!facetPresent) {
                     if (log.isDebugEnabled()) {
-                        log.debug("Adding " + resources.getPath() + " as " + LIFERAY_RESOURCES_WEB_FACET + " facet");
+                        log.debug("Adding " + resources.getPath() + " as " + facetName + " facet");
                     }
 
-                    final WebFacet webFacet = FacetUtil.addFacet(module, WebFacetType.getInstance(), LIFERAY_RESOURCES_WEB_FACET);
+                    for (WebFacet webFacet : webFacets) {
+                        if (facetName.equals(webFacet.getName())) {
+                            FacetUtil.deleteFacet(webFacet);
+
+                            break;
+                        }
+                    }
+
+                    final WebFacet webFacet = FacetUtil.addFacet(module, WebFacetType.getInstance(), facetName);
                     webFacet.addWebRoot(resources, "/");
                 }
 
