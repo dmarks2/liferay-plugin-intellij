@@ -8,14 +8,19 @@ import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
 import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.LanguageLevelModuleExtension;
 import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.util.Disposer;
+import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
 import com.intellij.pom.java.LanguageLevel;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
+import com.intellij.util.PathUtil;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.net.URL;
 import java.util.List;
 
 public class LiferayFreemarkerTaglibClassNameCompletionContributorTest extends LightJavaCodeInsightFixtureTestCase {
@@ -32,6 +37,14 @@ public class LiferayFreemarkerTaglibClassNameCompletionContributorTest extends L
             }
             Sdk jdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
             model.setSdk(jdk);
+
+            URL resource = LiferayFtlVariableProviderTest.class.getResource("/com/liferay/ftl");
+            String resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
+            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePath );
+
+            resource = LiferayFtlVariableProviderTest.class.getResource("/com/liferay/tld");
+            resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
+            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePath );
         }
     };
 

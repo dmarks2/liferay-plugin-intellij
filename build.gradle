@@ -6,7 +6,7 @@ buildscript {
 
 
 plugins {
-    id "org.jetbrains.intellij" version "0.3.12"
+    id "org.jetbrains.intellij" version "0.6.5"
     id 'de.undercouch.download' version '3.4.3'
 }
 
@@ -15,14 +15,6 @@ import de.undercouch.gradle.tasks.download.Download
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
-
-apply from:'https://raw.githubusercontent.com/FWDekker/intellij-randomness/master/gradle/scripts/verifier.gradle'
-
-runPluginVerifier {
-    pluginFileName = "Liferay IntelliJ Plugin-0.0.10"
-    ides = ["IC-2019.3.5"]
-    verifierVersion = "1.241"
-}
 
 sourceCompatibility = 1.8
 
@@ -82,7 +74,7 @@ intellij {
     type 'IU'
     pluginName 'Liferay IntelliJ Plugin'
     plugins = [
-            'JavaScriptLanguage', 'Tomcat', 'Velocity', 'FreeMarker', 'maven', 'properties', 'java-i18n', 'CSS', 'sass', 'JavaEE', 'Web', 'jsp', 'gradle', 'de.dm.intellij.maven-archetypes-catalog-plugin:1.2.5',
+            'JavaScriptLanguage', 'Tomcat', 'Velocity', 'FreeMarker', 'maven', 'properties', 'java-i18n', 'CSS', 'sass', 'JavaEE', 'Web', 'jsp', 'gradle', 'de.dm.intellij.maven-archetypes-catalog-plugin:1.4.0',
             'IntelliLang', 'uml', 'java',
             //test only?
             'Groovy', 'junit', 'PersistenceSupport', 'DatabaseTools'

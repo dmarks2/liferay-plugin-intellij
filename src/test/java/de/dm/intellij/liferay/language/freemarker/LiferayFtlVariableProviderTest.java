@@ -50,8 +50,12 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
             LiferayModuleComponent.getInstance(module).getThemeSettings().put(LiferayLookAndFeelXmlParser.TEMPLATES_PATH, "/templates");
             LiferayModuleComponent.getInstance(module).getThemeSettings().put(LiferayLookAndFeelXmlParser.TEMPLATE_EXTENSION, "ftl");
 
-            URL resource = LiferayFtlVariableProviderTest.class.getResource("/com/liferay/ftl");
+            URL resource = LiferayFtlVariableProviderTest.class.getResource("/com/liferay/vtl");
             String resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
+            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePath );
+
+            resource = LiferayFtlVariableProviderTest.class.getResource("/com/liferay/ftl");
+            resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
             VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePath );
 
             resource = LiferayFtlVariableProviderTest.class.getResource("/com/liferay/tld");

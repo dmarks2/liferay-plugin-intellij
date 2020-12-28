@@ -7,6 +7,7 @@ import com.intellij.freemarker.psi.variables.FtlDynamicMember;
 import com.intellij.freemarker.psi.variables.FtlLightVariable;
 import com.intellij.freemarker.psi.variables.FtlMethodType;
 import com.intellij.freemarker.psi.variables.FtlSpecialVariableType;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
@@ -18,10 +19,12 @@ import com.intellij.psi.PsiType;
 import com.intellij.psi.ResolveState;
 import com.intellij.psi.scope.NameHint;
 import com.intellij.psi.scope.PsiScopeProcessor;
+import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PropertyUtil;
 import com.intellij.util.IncorrectOperationException;
 import de.dm.intellij.liferay.language.TemplateVariable;
 import de.dm.intellij.liferay.util.Icons;
+import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -60,10 +63,19 @@ public class StructureFtlVariable extends FtlLightVariable {
         this.templateVariable = templateVariable;
 
         try {
-            PsiType psiType = JavaPsiFacade.getInstance(templateVariable.getParentFile().getProject()).getElementFactory().createTypeFromText("com.liferay.portal.kernel.templateparser.TemplateNode", templateVariable.getParentFile());
+            Project project = templateVariable.getParentFile().getProject();
+
+            PsiType psiType = JavaPsiFacade.getInstance(project).getElementFactory().createTypeFromText("com.liferay.portal.kernel.templateparser.TemplateNode", templateVariable.getParentFile());
             if (psiType instanceof PsiClassType) {
                 templateNodeClassType = (PsiClassType) psiType;
-                PsiClass psiClass = templateNodeClassType.resolve();
+
+                PsiClass psiClass = ProjectUtils.getClassWithoutResolve(
+                        "com.liferay.portal.kernel.templateparser.TemplateNode",
+                        project,
+                        GlobalSearchScope.allScope(project)
+                );
+
+                //PsiClass psiClass = templateNodeClassType.resolve();
                 if (psiClass != null) {
                     templateNodeClass = psiClass;
                 }

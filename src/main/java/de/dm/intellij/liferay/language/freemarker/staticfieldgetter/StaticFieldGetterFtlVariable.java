@@ -5,6 +5,7 @@ import com.intellij.freemarker.psi.variables.FtlCallableType;
 import com.intellij.freemarker.psi.variables.FtlDynamicMember;
 import com.intellij.freemarker.psi.variables.FtlLightVariable;
 import com.intellij.freemarker.psi.variables.FtlPsiType;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiField;
@@ -13,6 +14,7 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.ResolveState;
 import com.intellij.psi.scope.PsiScopeProcessor;
+import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.IncorrectOperationException;
 import de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerUtil;
 import de.dm.intellij.liferay.util.Icons;
@@ -33,7 +35,13 @@ public class StaticFieldGetterFtlVariable extends FtlLightVariable {
     public StaticFieldGetterFtlVariable(@NotNull PsiElement parent) {
         super(VARIABLE_NAME, parent, STATIC_FIELD_GETTER_LOCATOR_CLASS_NAME);
 
-        staticFieldGetterClass = ProjectUtils.getClassByName(parent.getProject(), STATIC_FIELD_GETTER_LOCATOR_CLASS_NAME, parent);
+        Project project = parent.getProject();
+
+        staticFieldGetterClass = ProjectUtils.getClassWithoutResolve(
+                STATIC_FIELD_GETTER_LOCATOR_CLASS_NAME,
+                project,
+                GlobalSearchScope.allScope(project)
+        );
     }
 
     @NotNull
