@@ -33,8 +33,8 @@ for the plugin. Just have a look at the following topics to see which areas have
 
 Supported IDEs
 --------------
-* IntelliJ 2019.2 and above (Community)
-* IntelliJ 2019.2 and above (Ultimate)
+* IntelliJ 2020.2 and above (Community)
+* IntelliJ 2020.2 and above (Ultimate)
 
 Supported Liferay Versions
 --------------------------

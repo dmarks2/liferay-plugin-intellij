@@ -137,8 +137,8 @@ to provide the URL to the local Liferay and credentials for a user who is allowe
 Debugging is available for
 * Themes
 * Layout Templates
-* Journal Templates (Global scope only)
-* Application Display Templates (Global scope only)
+* Journal Templates
+* Application Display Templates
 
 Note that the functionality of the Freemarker debugger is limited. It does not support operations like
 step into, step out or pause. A step over is available, but only for "sequential" instructions. That means that

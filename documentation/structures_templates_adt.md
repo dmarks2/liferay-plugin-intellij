@@ -60,11 +60,24 @@ The following Application Display Template types are supported:
     asset_tag
     blogs_entry
     bread_crumb
+    category_facet
+    custom_facet
+    custom_filter
     document_library
+    folder_facet
     language_entry
+    media_gallery
+    modified_facet
     rss_feed
+    search_bar
+    search_results
+    site_facet
     site_map
     site_navigation
+    sort
+    tag_facet
+    type_facet
+    user_facet
     wiki_page
  
 *This feature works in IntelliJ Ultimate Edition only.*

@@ -7,6 +7,7 @@ JSP files
 4. [Code completions for Liferay taglibs](#code-completions-for-liferay-taglibs)
 5. [JSP inspections](#jsp-inspections)
 6. [Debugger support for JSPs](#debugger-support-for-jsps) 
+7. [Suggested Parents](#suggested-parent)
 
 Resolve includes to JSPs inside JSP Hooks
 -----------------------------------------
@@ -82,14 +83,20 @@ The following tag libraries are supported:
     <portlet:>
     <liferay-adaptive-media:>
     <liferay-asset:>  
+    <liferay-comment:>
     <liferay-ddm:>
+    <liferay-document-library:>
     <liferay-editor:>
     <liferay-expando:>
+    <liferay-export-import-changeset:>
     <liferay-flags:>
     <liferay-frontend:>
     <liferay-item-selector:>
+    <liferay-journal:>
     <liferay-portlet:>
+    <liferay-product-navigation:>
     <liferay-security:>
+    <liferay-sharing:>
     <liferay-site:>
     <liferay-staging:>
     <liferay-trash:>
@@ -124,3 +131,33 @@ This works for JSPs in your own modules and even for JSPs inside any Liferay dep
 ![Debugging in your own module](jsp_debug_own_module.png "Debugging in your own module") 
 
 ![Debugging in Liferay dependency](jsp_debug_dependency.png "Debugging in Liferay dependency")
+
+Suggested Parents
+-----------------
+
+For some taglibs the plugin detects if they are used in the correct context. Specific tags should be used 
+inside other tags, only. E.g. an `<aui:input>` should be used inside an `<aui:form>` only.
+
+The plugin detects such a situation and shows a warning if a tag is not used in the right context. 
+The warning (inspection) can be disabled if desired.
+
+The following tags are checked for the right context:
+
+    <aui:fieldset>
+    <aui:input>
+    <aui:nav-bar-search>
+    <aui:nav-item>
+    <aui:nav>
+    <liferay-ui:organization-search-container-results>
+    <liferay-ui:panel>
+    <liferay-ui:search-container-column-date>
+    <liferay-ui:search-container-column-icon>
+    <liferay-ui:search-container-column-image>
+    <liferay-ui:search-container-column-jsp>
+    <liferay-ui:search-container-column-status>
+    <liferay-ui:search-container-column-text>
+    <liferay-ui:search-form>
+    <liferay-ui:section>
+    <liferay-ui:user-group-search-container-results>
+    <liferay-ui:user-search-container-results>
+    <liferay-portlet:param>
