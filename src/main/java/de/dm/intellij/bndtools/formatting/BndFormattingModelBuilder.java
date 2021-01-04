@@ -21,6 +21,7 @@ public class BndFormattingModelBuilder implements FormattingModelBuilder {
 
     @NotNull
     @Override
+    //TODO ScheduledForRemoval(inVersion = "2021.1") - use createModel(FormattingContext.create(element, settings)) - available since 2020.3
     public FormattingModel createModel(PsiElement element, CodeStyleSettings settings) {
         ASTNode astNode = element.getNode();
 
