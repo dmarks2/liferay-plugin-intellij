@@ -3,6 +3,9 @@ Liferay Plugin for IntelliJ
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.11
+
+
 ## 0.0.10
 - Feature: Additional taglibs available in Freemarker templates for Liferay 7.1, 7.2 and 7.3
 - Feature: Updated taglib support (CSS, Language Bundle) for Liferay 7.3
