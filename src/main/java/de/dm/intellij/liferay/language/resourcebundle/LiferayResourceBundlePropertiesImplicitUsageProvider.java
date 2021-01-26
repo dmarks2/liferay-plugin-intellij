@@ -10,27 +10,27 @@ public class LiferayResourceBundlePropertiesImplicitUsageProvider extends Implic
     private static final String LANGUAGE_PROPERTY_FILE_PREFIX = "Language";
 
     private static final String[] IMPLICIT_PROPERTY_PREFIXES = new String[] {
+            "action.",
+            "category.",
+            "javax.portlet.description.",
+            "javax.portlet.long-title.",
             "javax.portlet.title.",
-            "model.resource.",
-            "action."
+            "model.resource."
     };
 
     @Override
     protected boolean isUsed(@NotNull Property property) {
         PsiFile containingFile = property.getContainingFile();
 
-        if (containingFile != null) {
+        String propertyKey = property.getKey();
+
+        if ( (containingFile != null) && (propertyKey != null) ) {
             String fileName = containingFile.getName();
 
             if (fileName.startsWith(LANGUAGE_PROPERTY_FILE_PREFIX)) {
-                String propertyKey = property.getKey();
-
-                if (propertyKey != null) {
-
-                    for (String implicitPropertyPrefix : IMPLICIT_PROPERTY_PREFIXES) {
-                        if (propertyKey.startsWith(implicitPropertyPrefix)) {
-                            return true;
-                        }
+                for (String implicitPropertyPrefix : IMPLICIT_PROPERTY_PREFIXES) {
+                    if (propertyKey.startsWith(implicitPropertyPrefix)) {
+                        return true;
                     }
                 }
             }

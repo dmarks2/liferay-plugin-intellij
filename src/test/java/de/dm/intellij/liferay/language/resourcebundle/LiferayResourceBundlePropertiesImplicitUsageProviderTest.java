@@ -26,4 +26,11 @@ public class LiferayResourceBundlePropertiesImplicitUsageProviderTest extends Ba
         myFixture.checkHighlighting();
     }
 
+    public void testImplicitUsageArbitraryPropertyInLanguageProperties() {
+        myFixture.configureByFiles("Language_unused.properties");
+
+        //Language.properties should not show any unused warning, even if javax.portlet.title.my_portlet is not used explicitly
+        myFixture.checkHighlighting();
+    }
+
 }
