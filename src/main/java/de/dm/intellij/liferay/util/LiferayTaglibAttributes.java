@@ -473,6 +473,7 @@ public class LiferayTaglibAttributes {
         TAGLIB_SUGGESTED_PARENTS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI, Arrays.asList(
             new AbstractMap.SimpleImmutableEntry<>("fieldset", "fieldset-group"),
             new AbstractMap.SimpleImmutableEntry<>("input", "form"),
+            new AbstractMap.SimpleImmutableEntry<>("input", LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND + "|edit-form"),
             new AbstractMap.SimpleImmutableEntry<>("nav-bar-search", "nav-bar"),
             new AbstractMap.SimpleImmutableEntry<>("nav-item", "nav-bar"),
             new AbstractMap.SimpleImmutableEntry<>("nav", "nav-bar")
