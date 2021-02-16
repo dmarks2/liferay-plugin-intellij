@@ -2,5 +2,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.properties.LiferayPropertiesFileReferenceContributor"/>
         <properties.implicitPropertyUsageProvider implementation="de.dm.intellij.liferay.language.resourcebundle.LiferayResourceBundlePropertiesImplicitUsageProvider" />
+        <properties.implicitPropertyUsageProvider implementation="de.dm.intellij.liferay.gradle.LiferayGradlePropertiesImplicitUsageProvider" />
+        <properties.implicitPropertyUsageProvider implementation="de.dm.intellij.liferay.workspace.LiferayWorkspacePropertiesImplicitUsageProvider" />
     </extensions>
 </idea-plugin>
