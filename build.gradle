@@ -53,7 +53,7 @@ dependencies {
     //compileOnly 'org.jetbrains.plugins:maven-server-api:2016.3'
     compileOnly 'com.github.adedayo.intellij.sdk:maven-server-api:142.1'
     compile 'org.glassfish:javax.json:1.1'
-    compile files(org.gradle.internal.jvm.Jvm.current().toolsJar)
+//    compile files(org.gradle.internal.jvm.Jvm.current().toolsJar)
     compile 'org.freemarker:freemarker:2.3.28'
 
     compile 'org.glassfish.jersey.core:jersey-client:2.26'

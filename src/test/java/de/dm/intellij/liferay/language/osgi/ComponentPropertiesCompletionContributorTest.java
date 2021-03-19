@@ -79,4 +79,12 @@ public class ComponentPropertiesCompletionContributorTest extends LightJavaCodeI
         assertTrue("should contain properties from MVCActionCommand", strings.contains("mvc.command.name"));
     }
 
+    public void testSinglePropertyComponentPropertiesCompletion() {
+        myFixture.configureByFile("SinglePropertyComponent.java");
+
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue("Single property annotation should offer \"osgi.command.scope\" for java.lang.Object component", strings.contains("osgi.command.scope"));
+    }
+
 }

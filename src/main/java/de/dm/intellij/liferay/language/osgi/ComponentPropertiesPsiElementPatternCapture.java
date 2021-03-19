@@ -24,26 +24,31 @@ public class ComponentPropertiesPsiElementPatternCapture {
 
                     @Override
                     public boolean accepts(@NotNull PsiElement psiElement, ProcessingContext context) {
+                        PsiNameValuePair psiNameValuePair;
+
                         PsiArrayInitializerMemberValue psiArrayInitializerMemberValue = PsiTreeUtil.getParentOfType(
                                 psiElement, PsiArrayInitializerMemberValue.class);
 
                         if (psiArrayInitializerMemberValue != null) {
-                            PsiNameValuePair psiNameValuePair = PsiTreeUtil.getParentOfType(
+                            psiNameValuePair = PsiTreeUtil.getParentOfType(
                                     psiArrayInitializerMemberValue, PsiNameValuePair.class);
+                        } else {
+                            psiNameValuePair = PsiTreeUtil.getParentOfType(
+                                    psiElement, PsiNameValuePair.class);
+                        }
 
-                            if (psiNameValuePair != null) {
-                                String name = psiNameValuePair.getName();
+                        if (psiNameValuePair != null) {
+                            String name = psiNameValuePair.getName();
 
-                                if ("property".equals(name)) {
-                                    PsiAnnotation psiAnnotation = PsiTreeUtil.getParentOfType(
-                                            psiNameValuePair, PsiAnnotation.class);
+                            if ("property".equals(name)) {
+                                PsiAnnotation psiAnnotation = PsiTreeUtil.getParentOfType(
+                                        psiNameValuePair, PsiAnnotation.class);
 
-                                    if (psiAnnotation != null) {
-                                        String qualifiedName = psiAnnotation.getQualifiedName();
+                                if (psiAnnotation != null) {
+                                    String qualifiedName = psiAnnotation.getQualifiedName();
 
-                                        if ("org.osgi.service.component.annotations.Component".equals(qualifiedName)) {
-                                            return true;
-                                        }
+                                    if ("org.osgi.service.component.annotations.Component".equals(qualifiedName)) {
+                                        return true;
                                     }
                                 }
                             }
