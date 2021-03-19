@@ -1,6 +1,7 @@
 package de.dm.intellij.liferay.language.freemarker;
 
 import com.intellij.codeInsight.completion.CompletionResultSet;
+import com.intellij.codeInsight.lookup.AutoCompletionPolicy;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.freemarker.psi.FtlArgumentList;
 import com.intellij.freemarker.psi.FtlBinaryExpression;
@@ -214,7 +215,7 @@ public class LiferayFreemarkerUtil {
                 String qualifiedName = psiClass.getQualifiedName();
                 if (qualifiedName != null) {
                     if (qualifiedNameFilter.test(qualifiedName)) {
-                        result.addElement(LookupElementBuilder.create(qualifiedName).withPsiElement(psiClass).withIcon(Icons.LIFERAY_ICON));
+                        result.addElement(LookupElementBuilder.create(qualifiedName).withPsiElement(psiClass).withIcon(Icons.LIFERAY_ICON).withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE));
                     }
                 }
             });
