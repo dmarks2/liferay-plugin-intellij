@@ -1,6 +1,6 @@
 package de.dm.intellij.liferay.maven.importer;
 
-import com.intellij.openapi.application.ReadAction;
+import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.externalSystem.service.project.IdeModifiableModelsProvider;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
@@ -95,7 +95,7 @@ public class LiferayVersionMavenImporter extends MavenImporter {
     }
 
     private String getLiferayVersionFromBOM(MavenProject mavenProject) {
-        return ReadAction.compute(
+        return WriteAction.compute(
                 () -> {
 
                     Project project = ProjectUtils.getActiveProject();
