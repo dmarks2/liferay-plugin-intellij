@@ -1,16 +1,19 @@
 package de.dm.intellij.liferay.maven.importer;
 
-import com.intellij.openapi.application.WriteAction;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.externalSystem.service.project.IdeModifiableModelsProvider;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import com.intellij.openapi.module.ModuleType;
+import com.intellij.openapi.module.ModuleTypeManager;
+import de.dm.intellij.liferay.language.freemarker.runner.FreemarkerAttachBreakpointHandler;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
-import de.dm.intellij.liferay.util.ProjectUtils;
+import org.apache.maven.model.Dependency;
+import org.apache.maven.model.DependencyManagement;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.jdom.Element;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.idea.maven.importing.MavenImporter;
 import org.jetbrains.idea.maven.importing.MavenRootModelAdapter;
 import org.jetbrains.idea.maven.model.MavenPlugin;
@@ -20,6 +23,9 @@ import org.jetbrains.idea.maven.project.MavenProjectsProcessorTask;
 import org.jetbrains.idea.maven.project.MavenProjectsTree;
 import org.jetbrains.idea.maven.project.SupportedRequestType;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -30,6 +36,8 @@ import java.util.Properties;
  * A Maven Importer which tries to find out the target Liferay Version and Parent Theme (Liferay 6.x) based on the pom.xml within your project
  */
 public class LiferayVersionMavenImporter extends MavenImporter {
+
+    private final static Logger log = Logger.getInstance(LiferayVersionMavenImporter.class);
 
     public static final String LIFERAY_MAVEN_GROUP_ID = "com.liferay.maven.plugins";
     public static final String LIFERAY_MAVEN_ARTIFACT_ID = "liferay-maven-plugin";
@@ -95,59 +103,43 @@ public class LiferayVersionMavenImporter extends MavenImporter {
     }
 
     private String getLiferayVersionFromBOM(MavenProject mavenProject) {
-        return WriteAction.compute(
-                () -> {
+        MavenXpp3Reader mavenXpp3Reader = new MavenXpp3Reader();
+        try ( Reader reader = new InputStreamReader(mavenProject.getFile().getInputStream()) ){
+            Model model = mavenXpp3Reader.read(reader);
+            DependencyManagement dependencyManagement = model.getDependencyManagement();
+            if (dependencyManagement != null) {
+                for (Dependency dependency : dependencyManagement.getDependencies()) {
+                    String groupId = dependency.getGroupId();
+                    String artifactId = dependency.getArtifactId();
+                    String version = dependency.getVersion();
+                    String type = dependency.getType();
+                    String scope = dependency.getScope();
 
-                    Project project = ProjectUtils.getActiveProject();
-                    if (project != null) {
-
-                        VirtualFile pomFile = mavenProject.getFile();
-
-                        if (pomFile.isValid()) {
-
-                            XmlFile xmlFile = (XmlFile) PsiManager.getInstance(project).findFile(pomFile);
-                            if ((xmlFile != null) && (xmlFile.isValid())) {
-                                XmlTag rootTag = xmlFile.getRootTag();
-                                if (rootTag != null) {
-                                    XmlTag dependencyManagement = rootTag.findFirstSubTag("dependencyManagement");
-                                    if (dependencyManagement != null) {
-                                        XmlTag[] dependenciesTags = dependencyManagement.findSubTags("dependencies");
-                                        for (XmlTag dependenciesTag : dependenciesTags) {
-                                            XmlTag[] dependencyTags = dependenciesTag.findSubTags("dependency");
-                                            for (XmlTag dependencyTag : dependencyTags) {
-                                                String groupId = dependencyTag.getSubTagText("groupId");
-                                                String artifactId = dependencyTag.getSubTagText("artifactId");
-                                                String version = dependencyTag.getSubTagText("version");
-                                                String type = dependencyTag.getSubTagText("type");
-                                                String scope = dependencyTag.getSubTagText("scope");
-                                                if (
-                                                    "import".equals(scope) &&
-                                                        "pom".equals(type) &&
-                                                        (
-                                                            "com.liferay".equals(groupId) ||
-                                                                "com.liferay.portal".equals(groupId)
-                                                        ) &&
-                                                        artifactId != null &&
-                                                        LIFERAY_BOMS.contains(artifactId) &&
-                                                        version != null
-                                                ) {
-                                                    if (version.startsWith("${") && version.endsWith("}")) {
-                                                        String versionProperty = version.substring(2, version.length() - 1);
-                                                        Properties properties = mavenProject.getProperties();
-                                                        version = properties.getProperty(versionProperty);
-                                                    }
-                                                    return version;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                    if (
+                            "import".equals(scope) &&
+                                    "pom".equals(type) &&
+                                    (
+                                            "com.liferay".equals(groupId) ||
+                                                    "com.liferay.portal".equals(groupId)
+                                    ) &&
+                                    artifactId != null &&
+                                    LIFERAY_BOMS.contains(artifactId) &&
+                                    version != null
+                    ) {
+                        if (version.startsWith("${") && version.endsWith("}")) {
+                            String versionProperty = version.substring(2, version.length() - 1);
+                            Properties properties = mavenProject.getProperties();
+                            version = properties.getProperty(versionProperty);
                         }
+                        return version;
                     }
-                    return null;
                 }
-        );
+            }
+        } catch (IOException | XmlPullParserException e) {
+            log.error(e.getMessage(), e);
+        }
+
+        return null;
     }
 
     @Override
@@ -174,5 +166,10 @@ public class LiferayVersionMavenImporter extends MavenImporter {
     @Override
     public void getSupportedDependencyTypes(Collection<String> result, SupportedRequestType type) {
         getSupportedPackagings(result);
+    }
+
+    @Override
+    public @NotNull ModuleType getModuleType() {
+        return ModuleTypeManager.getInstance().findByID("JAVA_MODULE");
     }
 }
