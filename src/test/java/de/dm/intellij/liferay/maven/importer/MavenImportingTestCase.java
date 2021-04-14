@@ -5,7 +5,6 @@ import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
-import com.intellij.openapi.progress.EmptyProgressIndicator;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
 import com.intellij.openapi.roots.CompilerModuleExtension;
@@ -16,16 +15,12 @@ import com.intellij.openapi.roots.JavadocOrderRootType;
 import com.intellij.openapi.roots.LibraryOrderEntry;
 import com.intellij.openapi.roots.ModuleOrderEntry;
 import com.intellij.openapi.roots.ModuleRootManager;
-import com.intellij.openapi.roots.ModuleRootModificationUtil;
 import com.intellij.openapi.roots.OrderEntry;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.RootPolicy;
 import com.intellij.openapi.roots.SourceFolder;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTablesRegistrar;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.ui.TestDialog;
-import com.intellij.openapi.util.AsyncResult;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.util.text.StringUtil;
@@ -43,14 +38,7 @@ import com.intellij.util.ui.UIUtil;
 import org.apache.commons.io.FileUtils;
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.idea.maven.execution.MavenExecutor;
-import org.jetbrains.idea.maven.execution.MavenExternalExecutor;
-import org.jetbrains.idea.maven.execution.MavenRunnerParameters;
-import org.jetbrains.idea.maven.execution.MavenRunnerSettings;
-import org.jetbrains.idea.maven.execution.SoutMavenConsole;
-import org.jetbrains.idea.maven.model.MavenArtifact;
 import org.jetbrains.idea.maven.model.MavenExplicitProfiles;
-import org.jetbrains.idea.maven.project.MavenArtifactDownloader;
 import org.jetbrains.idea.maven.project.MavenProject;
 import org.jetbrains.idea.maven.project.MavenProjectsManager;
 import org.jetbrains.idea.maven.project.MavenProjectsTree;
@@ -64,10 +52,8 @@ import org.jetbrains.jps.model.module.JpsModuleSourceRootType;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class MavenImportingTestCase extends MavenTestCase {
   protected MavenProjectsTree myProjectsTree;
@@ -89,7 +75,7 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
   protected void tearDown() throws Exception {
     new RunAll(
       () -> WriteAction.runAndWait(() -> JavaAwareProjectJdkTableImpl.removeInternalJdkInTests()),
-      () -> Messages.setTestDialog(TestDialog.DEFAULT),
+/*      () -> Messages.setTestDialog(TestDialog.DEFAULT), */
       () -> removeFromLocalRepository("test"),
       () -> myProjectsManager = null,
       () -> myProjectsTree = null,
@@ -485,35 +471,8 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     myProjectsManager.waitForPluginsResolvingCompletion();
   }
 
-  protected void downloadArtifacts() {
-    downloadArtifacts(myProjectsManager.getProjects(), null);
-  }
-
-  protected MavenArtifactDownloader.DownloadResult downloadArtifacts(Collection<MavenProject> projects,
-                                                                     List<MavenArtifact> artifacts) {
-    final MavenArtifactDownloader.DownloadResult[] unresolved = new MavenArtifactDownloader.DownloadResult[1];
-
-    AsyncResult<MavenArtifactDownloader.DownloadResult> result = new AsyncResult<>();
-    result.doWhenDone((AsyncResult.Handler<MavenArtifactDownloader.DownloadResult>) downloadResult -> unresolved[0] = downloadResult);
-
-    myProjectsManager.scheduleArtifactsDownloading(projects, artifacts, true, true, result);
-    myProjectsManager.waitForArtifactsDownloadingCompletion();
-
-    return unresolved[0];
-  }
-
   protected void performPostImportTasks() {
     myProjectsManager.waitForPostImportTasksCompletion();
-  }
-
-  protected void executeGoal(String relativePath, String goal) {
-    VirtualFile dir = myProjectRoot.findFileByRelativePath(relativePath);
-
-    MavenRunnerParameters rp = new MavenRunnerParameters(true, dir.getPath(), (String)null, Arrays.asList(goal), Collections.emptyList());
-    MavenRunnerSettings rs = new MavenRunnerSettings();
-    MavenExecutor e = new MavenExternalExecutor(myProject, rp, getMavenGeneralSettings(), rs, new SoutMavenConsole());
-
-    e.execute(new EmptyProgressIndicator());
   }
 
   protected void removeFromLocalRepository(String relativePath) {
@@ -523,38 +482,8 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     FileUtil.delete(new File(getRepositoryPath(), relativePath));
   }
 
-  protected void setupJdkForModules(String... moduleNames) {
-    for (String each : moduleNames) {
-      setupJdkForModule(each);
-    }
-  }
-
-  protected Sdk setupJdkForModule(final String moduleName) {
-    final Sdk sdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
-    ModuleRootModificationUtil.setModuleSdk(getModule(moduleName), sdk);
-    return sdk;
-  }
-
   protected static Sdk createJdk() {
     return IdeaTestUtil.getMockJdk18();
-  }
-
-  protected static AtomicInteger configConfirmationForYesAnswer() {
-    final AtomicInteger counter = new AtomicInteger();
-    Messages.setTestDialog(message -> {
-      counter.getAndIncrement();
-      return Messages.YES;
-    });
-    return counter;
-  }
-
-  protected static AtomicInteger configConfirmationForNoAnswer() {
-    final AtomicInteger counter = new AtomicInteger();
-    Messages.setTestDialog(message -> {
-      counter.getAndIncrement();
-      return Messages.NO;
-    });
-    return counter;
   }
 
   protected Module createJavaModule(final String name) throws Exception {
@@ -575,28 +504,6 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
   }
 
   /**
-   * Create a new module into the test project from existing project folder.
-   *
-   * @param name the new module name
-   * @param projectDir the project folder
-   * @return the created module
-   */
-  protected Module createMavenModule(String name, File projectDir) throws Exception {
-    Module module = myTestFixture.getModule();
-    String xml = FileUtils.readFileToString(new File(projectDir, "pom.xml"), "UTF-8");
-    File moduleDir = new File(module.getModuleFilePath()).getParentFile();
-    VirtualFile pomFile = createPomFile(LocalFileSystem.getInstance().findFileByIoFile(moduleDir), xml);
-    FileUtils.copyDirectory(projectDir, moduleDir);
-    importProject(pomFile);
-    Module[] modules = ModuleManager.getInstance(myTestFixture.getProject()).getModules();
-    if (modules.length > 0) {
-      module = modules[modules.length - 1];
-      setupJdkForModule(module.getName());
-    }
-    return module;
-  }
-
-  /**
    * Create a new module into the test project from existing in memory POM.
    *
    * @param name the new module name
@@ -611,7 +518,7 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     Module[] modules = ModuleManager.getInstance(myTestFixture.getProject()).getModules();
     if (modules.length > 0) {
       module = modules[modules.length - 1];
-      setupJdkForModule(module.getName());
+      //setupJdkForModule(module.getName());
     }
     return module;
   }

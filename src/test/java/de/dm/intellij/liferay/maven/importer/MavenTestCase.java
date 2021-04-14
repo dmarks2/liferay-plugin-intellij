@@ -1,14 +1,12 @@
 package de.dm.intellij.liferay.maven.importer;
 
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleType;
 import com.intellij.openapi.module.StdModuleTypes;
-import com.intellij.openapi.progress.EmptyProgressIndicator;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.LanguageLevelProjectExtension;
 import com.intellij.openapi.util.SystemInfo;
@@ -27,7 +25,6 @@ import com.intellij.testFramework.fixtures.IdeaProjectTestFixture;
 import com.intellij.testFramework.fixtures.IdeaTestFixtureFactory;
 import com.intellij.testFramework.fixtures.JavaTestFixtureFactory;
 import com.intellij.testFramework.fixtures.TestFixtureBuilder;
-import com.intellij.util.ExceptionUtil;
 import gnu.trove.THashSet;
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NonNls;
@@ -40,9 +37,7 @@ import org.jetbrains.idea.maven.project.MavenProjectsManager;
 import org.jetbrains.idea.maven.project.MavenWorkspaceSettings;
 import org.jetbrains.idea.maven.project.MavenWorkspaceSettingsComponent;
 import org.jetbrains.idea.maven.server.MavenServerManager;
-import org.jetbrains.idea.maven.utils.MavenProgressIndicator;
 
-import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -212,38 +207,6 @@ public abstract class MavenTestCase extends UsefulTestCase {
     resetClassFields(aClass.getSuperclass());
   }
 
-  @Override
-  protected void runTest() throws Throwable {
-    try {
-      if (runInWriteAction()) {
-        try {
-          WriteAction.runAndWait(() -> super.runTest());
-        }
-        catch (Throwable throwable) {
-          ExceptionUtil.rethrowAllAsUnchecked(throwable);
-        }
-      }
-      else {
-        super.runTest();
-      }
-    }
-    catch (Exception throwable) {
-      Throwable each = throwable;
-      do {
-        if (each instanceof HeadlessException) {
-          printIgnoredMessage("Doesn't work in Headless environment");
-          return;
-        }
-      }
-      while ((each = each.getCause()) != null);
-      throw throwable;
-    }
-  }
-
-  @Override
-  protected void invokeTestRunnable(@NotNull Runnable runnable) {
-    runnable.run();
-  }
 
   protected boolean runInWriteAction() {
     return false;

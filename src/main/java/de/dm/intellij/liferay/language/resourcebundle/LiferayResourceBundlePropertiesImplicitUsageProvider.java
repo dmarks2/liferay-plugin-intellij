@@ -1,11 +1,11 @@
 package de.dm.intellij.liferay.language.resourcebundle;
 
-import com.intellij.codeInspection.unused.ImplicitPropertyUsageProvider;
+import com.intellij.lang.properties.codeInspection.unused.ImplicitPropertyUsageProvider;
 import com.intellij.lang.properties.psi.Property;
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
 
-public class LiferayResourceBundlePropertiesImplicitUsageProvider extends ImplicitPropertyUsageProvider {
+public class LiferayResourceBundlePropertiesImplicitUsageProvider implements ImplicitPropertyUsageProvider {
 
     private static final String LANGUAGE_PROPERTY_FILE_PREFIX = "Language";
 
@@ -19,7 +19,7 @@ public class LiferayResourceBundlePropertiesImplicitUsageProvider extends Implic
     };
 
     @Override
-    protected boolean isUsed(@NotNull Property property) {
+    public boolean isUsed(@NotNull Property property) {
         PsiFile containingFile = property.getContainingFile();
 
         String propertyKey = property.getKey();

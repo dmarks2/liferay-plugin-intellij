@@ -1,6 +1,6 @@
 package de.dm.intellij.liferay.language.resourcebundle;
 
-import com.intellij.codeInspection.unused.UnusedPropertyInspection;
+import com.intellij.lang.properties.codeInspection.unused.UnusedPropertyInspection;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 public class LiferayResourceBundlePropertiesImplicitUsageProviderTest extends BasePlatformTestCase {

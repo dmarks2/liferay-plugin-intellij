@@ -6,7 +6,7 @@
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
-    <idea-version since-build="202" />
+    <idea-version since-build="210" />
 
     <description><![CDATA[
         <p>This plugin adds some features for developing Liferay modules. The following topics have been improved so far</p>
@@ -30,6 +30,7 @@
             <li>Feature: Implicit usage of some property files and keys ("javax.portlet.title." or "liferay.workspace."), so that they are no longer shown as "unused property"</li>
             <li>Bugfix: OSGi property code completion for single properties, e.g. without brackets around</li>
             <li>Bugfix: Improved compatibility with IntelliJ 2021.1</li>
+            <li>Change: Dropped support for IntelliJ IDEA 2020.3 or earlier</li>
         </ul>
         <p>Version 0.0.10</p>
         <ul>

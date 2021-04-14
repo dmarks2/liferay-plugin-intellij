@@ -1,8 +1,6 @@
 package de.dm.intellij.liferay.util;
 
 import com.intellij.diagnostic.IdeErrorsDialog;
-import com.intellij.diagnostic.LogMessageEx;
-import com.intellij.errorreport.bean.ErrorBean;
 import com.intellij.ide.DataManager;
 import com.intellij.ide.plugins.IdeaPluginDescriptor;
 import com.intellij.ide.plugins.PluginManager;
@@ -24,13 +22,14 @@ import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.util.Consumer;
+import com.intellij.util.ExceptionUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import java.awt.*;
+import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,28 +51,8 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
     }
 
     @Override
-    public boolean submit(@NotNull IdeaLoggingEvent[] events, @Nullable String additionalInfo, @NotNull Component parentComponent, @NotNull final Consumer<SubmittedReportInfo> consumer) {
+    public boolean submit(@NotNull IdeaLoggingEvent[] events, @Nullable String additionalInfo, @NotNull Component parentComponent, @NotNull final Consumer<? super SubmittedReportInfo> consumer) {
         IdeaLoggingEvent event = events[0];
-        final ErrorBean bean = new ErrorBean(event.getThrowable(), IdeaLogger.ourLastActionId);
-
-        bean.setDescription(additionalInfo);
-        bean.setMessage(event.getMessage());
-
-        if (event.getThrowable() != null) {
-            PluginId pluginId = IdeErrorsDialog.findPluginId(event.getThrowable());
-            if (pluginId != null) {
-                IdeaPluginDescriptor plugin = PluginManager.getPlugin(pluginId);
-                if ( (plugin != null) && (plugin.isBundled() == false) ) {
-                    bean.setPluginName(plugin.getName());
-                    bean.setPluginVersion(plugin.getVersion());
-                }
-            }
-        }
-
-        if (event.getData() instanceof LogMessageEx) {
-            bean.setAttachments(((LogMessageEx) event.getData()).getAllAttachments());
-        }
-
 
         DataContext dataContext = DataManager.getInstance().getDataContext(parentComponent);
         Project project = CommonDataKeys.PROJECT.getData(dataContext);
@@ -108,9 +87,9 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
                     }
 
                     StringBuilder body = new StringBuilder();
-                    body.append(bean.getDescription()).append("\n\n");
-                    body.append(bean.getStackTrace()).append("\n\n");
-                    body.append(bean.getMessage()).append("\n\n");
+                    body.append(additionalInfo).append("\n\n");
+                    body.append(event.getThrowable() != null ? ExceptionUtil.getThrowableText(event.getThrowable()) : null).append("\n\n");
+                    body.append(event.getMessage()).append("\n\n");
 
                     body.append("os.name: " + SystemInfo.OS_NAME).append("\n");
                     body.append("java.version: " + SystemInfo.JAVA_VERSION).append("\n");
@@ -128,9 +107,18 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
                     body.append("application.build.number: " + appInfo.getBuild().asString()).append("\n");
                     body.append("application.version.number: " + appInfo.getMajorVersion() + "." + appInfo.getMinorVersion()).append("\n");
 
-                    body.append("plugin.name: " + bean.getPluginName()).append("\n");
-                    body.append("application.version: " + bean.getPluginVersion()).append("\n");
-                    body.append("last.action: " + bean.getLastAction()).append("\n");
+                    if (event.getThrowable() != null) {
+                        PluginId pluginId = IdeErrorsDialog.findPluginId(event.getThrowable());
+                        if (pluginId != null) {
+                            IdeaPluginDescriptor plugin = PluginManager.getPlugin(pluginId);
+                            if ( (plugin != null) && (plugin.isBundled() == false) ) {
+                                body.append("plugin.name: "  + plugin.getName()).append("\n");
+                                body.append("application.version: " + plugin.getVersion()).append("\n");
+                            }
+                        }
+                    }
+
+                    body.append("last.action: " + IdeaLogger.ourLastActionId).append("\n");
 
                     JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
                     objectBuilder.add("title", "Bug Report in Plugin [automatically created]");

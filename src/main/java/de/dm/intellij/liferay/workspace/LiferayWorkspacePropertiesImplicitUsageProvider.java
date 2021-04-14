@@ -1,16 +1,16 @@
 package de.dm.intellij.liferay.workspace;
 
-import com.intellij.codeInspection.unused.ImplicitPropertyUsageProvider;
+import com.intellij.lang.properties.codeInspection.unused.ImplicitPropertyUsageProvider;
 import com.intellij.lang.properties.psi.Property;
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
 
-public class LiferayWorkspacePropertiesImplicitUsageProvider extends ImplicitPropertyUsageProvider {
+public class LiferayWorkspacePropertiesImplicitUsageProvider implements ImplicitPropertyUsageProvider {
 
     private static final String BLADE_PROPERTIES = ".blade.properties";
 
     @Override
-    protected boolean isUsed(@NotNull Property property) {
+    public boolean isUsed(@NotNull Property property) {
         PsiFile containingFile = property.getContainingFile();
 
         String propertyKey = property.getKey();
