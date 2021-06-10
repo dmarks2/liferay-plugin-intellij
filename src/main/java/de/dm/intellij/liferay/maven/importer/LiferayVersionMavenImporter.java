@@ -136,7 +136,7 @@ public class LiferayVersionMavenImporter extends MavenImporter {
                 }
             }
         } catch (IOException | XmlPullParserException e) {
-            log.error(e.getMessage(), e);
+            //unable to read the xml, ignore
         }
 
         return null;
