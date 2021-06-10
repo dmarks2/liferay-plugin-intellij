@@ -27,6 +27,10 @@ public class LiferayJspDebuggerSourceFinderAdapter implements SourcesFinder<Java
     public Collection<PsiFile> findSourceFiles(String relPath, Project project, JavaeeFacet[] scope) {
         Collection<PsiFile> results = new ArrayList<>();
 
+        if (project.isDisposed()) {
+            return results;
+        }
+
         if (isJava(relPath)) {
             return results;
         }
