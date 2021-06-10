@@ -8,7 +8,8 @@ public class ComponentInspectionToolProvider implements InspectionToolProvider {
     @Override
     public Class[] getInspectionClasses() {
         return new Class[] {
-                ComponentServiceInheritanceInspection.class
+                ComponentServiceInheritanceInspection.class,
+                ReferenceWithoutComponentInspection.class
         };
     }
 }

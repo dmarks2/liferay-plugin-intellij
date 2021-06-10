@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.11
 - Feature: Implicit usage of some property files and keys ("javax.portlet.title." or "liferay.workspace."), so that they are no longer shown as "unused property"
+- Feature: Inspection of @Reference usage outside of a @Component class  
 - Bugfix: OSGi property code completion for single properties, e.g. without brackets around
 - Bugfix: Improved compatibility with IntelliJ 2021.1 
 - Bugfix: fixed implicit freemarker variables for modified facet portlet
