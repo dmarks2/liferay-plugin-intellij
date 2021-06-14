@@ -10,5 +10,6 @@ public class LiferayVersions {
     public static final float LIFERAY_VERSION_7_1 = 7.1f;
     public static final float LIFERAY_VERSION_7_2 = 7.2f;
     public static final float LIFERAY_VERSION_7_3 = 7.3f;
+    public static final float LIFERAY_VERSION_7_4 = 7.4f;
 
 }

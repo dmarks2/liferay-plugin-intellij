@@ -72,6 +72,7 @@ public class TemplateVariableProcessorUtil {
                     (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                     (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                     (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                    (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                     (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                     ) { //Liferay 7.0
                 variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/journal_template_70.vm"));
@@ -98,6 +99,7 @@ public class TemplateVariableProcessorUtil {
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                            (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                             ) { //Liferay 7.0
                         //see https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/asset/asset-publisher-web/src/main/java/com/liferay/asset/publisher/web/internal/portlet/template/AssetPublisherPortletDisplayTemplateHandler.java
@@ -113,6 +115,7 @@ public class TemplateVariableProcessorUtil {
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                            (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                             ) { //Liferay 7.0
                         //see https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/asset/asset-categories-navigation-web/src/main/java/com/liferay/asset/categories/navigation/web/internal/portlet/template/AssetCategoriesNavigationPortletDisplayTemplateHandler.java
@@ -128,6 +131,7 @@ public class TemplateVariableProcessorUtil {
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                            (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                             ) { //Liferay 7.0
                         //see https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/asset/asset-tags-navigation-web/src/main/java/com/liferay/asset/tags/navigation/web/internal/portlet/template/AssetTagsNavigationPortletDisplayTemplateHandler.java
@@ -143,6 +147,7 @@ public class TemplateVariableProcessorUtil {
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                            (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                             ) { //Liferay 7.0
                         //see https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/collaboration/blogs/blogs-web/src/main/java/com/liferay/blogs/web/internal/template/BlogsPortletDisplayTemplateHandler.java
@@ -154,6 +159,7 @@ public class TemplateVariableProcessorUtil {
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                            (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                             ) { //Liferay 7.0
                         //see https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/site-navigation/site-navigation-breadcrumb-web/src/main/java/com/liferay/site/navigation/breadcrumb/web/internal/portlet/template/SiteNavigationBreadcrumbPortletDisplayTemplateHandler.java
@@ -169,6 +175,7 @@ public class TemplateVariableProcessorUtil {
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                            (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                             ) { //Liferay 7.0
                         //see https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/collaboration/document-library/document-library-web/src/main/java/com/liferay/document/library/web/internal/template/DocumentLibraryPortletDisplayTemplateHandler.java
@@ -180,6 +187,7 @@ public class TemplateVariableProcessorUtil {
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                            (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                             ) { //Liferay 7.0
                         //see https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/site-navigation/site-navigation-language-web/src/main/java/com/liferay/site/navigation/language/web/internal/portlet/template/SiteNavigationLanguagePortletDisplayTemplateHandler.java
@@ -191,6 +199,7 @@ public class TemplateVariableProcessorUtil {
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                            (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                             ) { //Liferay 7.0
                         //see https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/rss/rss-web/src/main/java/com/liferay/rss/web/internal/portlet/template/RSSPortletDisplayTemplateHandler.java
@@ -206,6 +215,7 @@ public class TemplateVariableProcessorUtil {
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                            (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                             ) { //Liferay 7.0
                         //see https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/site-navigation/site-navigation-site-map-web/src/main/java/com/liferay/site/navigation/site/map/web/internal/portlet/template/SiteNavigationSiteMapPortletDisplayTemplateHandler.java
@@ -217,6 +227,7 @@ public class TemplateVariableProcessorUtil {
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                            (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                             ) { //Liferay 7.0
                         //see https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/site-navigation/site-navigation-menu-web/src/main/java/com/liferay/site/navigation/menu/web/internal/portlet/template/SiteNavigationMenuPortletDisplayTemplateHandler.java
@@ -232,6 +243,7 @@ public class TemplateVariableProcessorUtil {
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                            (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                             ) { //Liferay 7.0
                         //see https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/collaboration/wiki/wiki-web/src/main/java/com/liferay/wiki/web/internal/portlet/template/WikiPortletDisplayTemplateHandler.java
@@ -243,56 +255,57 @@ public class TemplateVariableProcessorUtil {
                                     (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                                     (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                                     (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                                    (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                                     (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                     ) {
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_media_gallery_70.vm"));
                     }
                 } else if ("category_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
-                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3 || portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_category_facet_73.vm"));
                     }
                 } else if ("custom_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
-                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3 || portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_custom_facet_73.vm"));
                     }
                 } else if ("custom_filter".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
-                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3 || portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_custom_filter_73.vm"));
                     }
                 } else if ("folder_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
-                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3 || portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_folder_facet_73.vm"));
                     }
                 } else if ("modified_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
-                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3 || portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_modified_facet_73.vm"));
                     }
                 } else if ("search_bar".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
-                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3 || portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_search_bar_73.vm"));
                     }
                 } else if ("search_results".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
-                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3 || portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_search_results_73.vm"));
                     }
                 } else if ("site_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
-                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3 || portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_site_facet_73.vm"));
                     }
                 } else if ("sort".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
-                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3 || portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_sort_73.vm"));
                     }
                 } else if ("tag_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
-                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3 || portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_tag_facet_73.vm"));
                     }
                 } else if ("type_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
-                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3 || portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_type_facet_73.vm"));
                     }
                 } else if ("user_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
-                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3 || portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_user_facet_73.vm"));
                     }
                 }
@@ -309,6 +322,7 @@ public class TemplateVariableProcessorUtil {
                         (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                         (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                         (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                        (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                         (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                     ) { //Liferay 7.0
                 variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/theme_template_70.vm"));
@@ -325,6 +339,7 @@ public class TemplateVariableProcessorUtil {
                 (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                 (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                 (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                 (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                 ) { //Liferay 7.0
                 variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/layout_template_62_70.vm"));
@@ -341,6 +356,7 @@ public class TemplateVariableProcessorUtil {
                 (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                 (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                 (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                 (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                 ) { //Liferay 7.0
                 variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/velocity_context_70.vm"));
@@ -361,6 +377,7 @@ public class TemplateVariableProcessorUtil {
                 (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                 (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                 (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                 (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
             ) { //Liferay 7.0
                 variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/velocity_request_70.vm"));
@@ -379,6 +396,7 @@ public class TemplateVariableProcessorUtil {
                     (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                     (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                     (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                    (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                     (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                     ) { //Liferay 7.0
                 //Liferay 7.0, see https://github.com/liferay/com-liferay-dynamic-data-mapping/blob/master/dynamic-data-mapping-service/src/main/java/com/liferay/dynamic/data/mapping/template/BaseDDMTemplateHandler.java

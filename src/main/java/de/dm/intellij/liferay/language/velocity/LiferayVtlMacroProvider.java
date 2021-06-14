@@ -45,6 +45,7 @@ public class LiferayVtlMacroProvider extends VtlGlobalMacroProvider implements T
                     (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                     (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                     (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                    (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                     (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                 ) {
             return "/com/liferay/vtl/VM_liferay_70.vm";

@@ -78,6 +78,7 @@ public class LiferayVtlVariableProvider extends VtlGlobalVariableProvider implem
                 (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                 (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
                 (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
+                (liferayVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                 (liferayVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                 ) { //Liferay 7.0
             return new String[] {
