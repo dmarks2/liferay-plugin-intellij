@@ -28,6 +28,7 @@
         <p>Version 0.0.12</p>
         <ul>
             <li>Feature: Added support for Liferay 7.4</li>
+            <li>Feature: Code Completion and documentation for portal.properties files</li>
         </ul>
         <p>Version 0.0.11</p>
         <ul>

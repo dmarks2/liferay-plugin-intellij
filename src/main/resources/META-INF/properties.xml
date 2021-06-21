@@ -4,5 +4,8 @@
         <properties.implicitPropertyUsageProvider implementation="de.dm.intellij.liferay.language.resourcebundle.LiferayResourceBundlePropertiesImplicitUsageProvider" />
         <properties.implicitPropertyUsageProvider implementation="de.dm.intellij.liferay.gradle.LiferayGradlePropertiesImplicitUsageProvider" />
         <properties.implicitPropertyUsageProvider implementation="de.dm.intellij.liferay.workspace.LiferayWorkspacePropertiesImplicitUsageProvider" />
+
+        <completion.contributor language="Properties" implementationClass="de.dm.intellij.liferay.language.properties.LiferayPortalPropertiesCompletionContributor" />
+        <lang.documentationProvider order="first" language="Properties" implementationClass="de.dm.intellij.liferay.language.properties.LiferayPortalPropertiesDocumentationProvider" />
     </extensions>
 </idea-plugin>

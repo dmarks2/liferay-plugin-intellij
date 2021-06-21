@@ -40,7 +40,7 @@ sourceSets {
             srcDirs = ['src/main/resources']
         }
 
-        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions'])
+        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'generateLiferayPortalPropertiesFiles', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions'])
     }
 }
 
@@ -85,6 +85,57 @@ intellij {
 
 runIde {
     jvmArgs '-Xmx2048m'
+}
+
+task generateLiferayPortalPropertiesFiles {
+    doLast {
+        def target70 = new File(generatedResources, "com/liferay/properties/70");
+        def target71 = new File(generatedResources, "com/liferay/properties/71");
+        def target72 = new File(generatedResources, "com/liferay/properties/72");
+        def target73 = new File(generatedResources, "com/liferay/properties/73");
+        def target74 = new File(generatedResources, "com/liferay/properties/74");
+        target70.mkdirs();
+        target71.mkdirs();
+        target72.mkdirs();
+        target73.mkdirs();
+        target74.mkdirs();
+
+        download {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/portal-impl/src/portal.properties'
+            dest new File(target70, "portal.properties")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+        download {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/portal-impl/src/portal.properties'
+            dest new File(target71, "portal.properties")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+        download {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/portal-impl/src/portal.properties'
+            dest new File(target72, "portal.properties")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+        download {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/portal-impl/src/portal.properties'
+            dest new File(target73, "portal.properties")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+        download {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.4.0-ga1/portal-impl/src/portal.properties'
+            dest new File(target74, "portal.properties")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+    }
 }
 
 task generateLiferayTemplateHelperFiles {
