@@ -17,7 +17,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-public class LiferayJournalStructureJsonSchemaFileProviderTest extends BasePlatformTestCase {
+public class LiferayFrontendTokenDefinitionJsonSchemaFileProviderTest extends BasePlatformTestCase {
 
     private static final LightProjectDescriptor MY_PROJECT_DESCRIPTOR = new DefaultLightProjectDescriptor() {
         @Override
@@ -36,13 +36,14 @@ public class LiferayJournalStructureJsonSchemaFileProviderTest extends BasePlatf
 
     @Override
     protected String getTestDataPath() {
-        return "testdata/de/dm/intellij/liferay/schema/LiferayJournalStructureJsonSchemaFileProviderTest";
+        return "testdata/de/dm/intellij/liferay/schema/LiferayFrontendTokenDefinitionJsonSchemaFileProviderTest";
     }
 
     public void testCompletion() {
-        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/structures/test.json");
+        myFixture.configureByFiles("frontend-token-definition.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
-        assertTrue(strings.contains("text"));
+        assertTrue(strings.contains("\"frontendTokenCategories\""));
     }
+
 }

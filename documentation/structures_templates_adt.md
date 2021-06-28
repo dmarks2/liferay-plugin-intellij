@@ -44,6 +44,7 @@ A JSON Schema is provided for the following files:
     Journal Structure Files
     assets.json
     sitemap.json
+    frontend-token-definition.json
 
 Implicit variables for Application Display Templates
 ----------------------------------------------------
