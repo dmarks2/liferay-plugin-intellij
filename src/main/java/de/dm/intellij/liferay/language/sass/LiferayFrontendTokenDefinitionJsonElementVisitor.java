@@ -59,8 +59,10 @@ public class LiferayFrontendTokenDefinitionJsonElementVisitor extends JsonRecurs
     private void checkTypeValueMapping() {
         if (insideMapping) {
             if (typeMapping != null && valueMapping != null) {
-                if (valueReference != null) {
-                    cssVariableMap.put(StringUtil.unquoteString(valueMapping), valueReference);
+                if ("cssVariable".equals(StringUtil.unquoteString(typeMapping))) {
+                    if (valueReference != null) {
+                        cssVariableMap.put(StringUtil.unquoteString(valueMapping), valueReference);
+                    }
                 }
             }
         }
