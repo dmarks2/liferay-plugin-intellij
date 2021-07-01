@@ -5,6 +5,7 @@ CSS / SCSS files
 2. [Bourbon Library](#bourbon-library)
 3. [Theme Inheritance](#theme-inheritance)
 4. [Compass Support](#compass-support)
+5. [Clay SCSS Variables documentation](#clay-scss-variables-documentation)
 
 Theme Image Path reference
 --------------------------
@@ -50,7 +51,12 @@ Liferay 6.1 and 6.2 use the Compass library. This plugin creates a Compass libra
 
 *This feature works in IntelliJ Ultimate Edition only.*
 
+Clay SCSS Variables documentation
+---------------------------------
 
+Some Clay SCSS variable declarations are provided with a Quick Documentation (Ctrl-Q).
+
+*This feature works in IntelliJ Ultimate Edition only.*
 
 
 

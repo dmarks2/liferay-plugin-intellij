@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Added support for Liferay 7.4
 - Feature: Code Completion and documentation for portal.properties files
 - Feature: JSON Schema for frontend-token-definition.json
+- Feature: Clay SCSS Variables documentation
 
 ## 0.0.11
 - Feature: Implicit usage of some property files and keys ("javax.portlet.title." or "liferay.workspace."), so that they are no longer shown as "unused property"
