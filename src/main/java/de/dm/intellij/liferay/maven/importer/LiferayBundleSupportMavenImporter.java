@@ -41,7 +41,7 @@ public class LiferayBundleSupportMavenImporter extends MavenImporter {
     public void process(IdeModifiableModelsProvider ideModifiableModelsProvider, Module module, MavenRootModelAdapter mavenRootModelAdapter, MavenProjectsTree mavenProjectsTree, MavenProject mavenProject, MavenProjectChanges mavenProjectChanges, Map<MavenProject, String> map, List<MavenProjectsProcessorTask> list) {
         MavenPlugin plugin = mavenProject.findPlugin(myPluginGroupID, myPluginArtifactID);
         if (plugin != null) {
-            String liferayHome = "bundles";
+            String liferayHome = null;
 
             Element configurationElement = plugin.getConfigurationElement();
             if (configurationElement != null) {
@@ -49,10 +49,19 @@ public class LiferayBundleSupportMavenImporter extends MavenImporter {
                 if (configBundleSupportLiferayHome != null) {
                     liferayHome = configBundleSupportLiferayHome.getText();
 
-                    if (liferayHome.startsWith("${") && liferayHome.endsWith("}")) {
-                        String liferayHomeProperty = liferayHome.substring(2, liferayHome.length() - 1);
-                        Properties properties = mavenProject.getProperties();
-                        liferayHome = properties.getProperty(liferayHomeProperty);
+                    if (liferayHome.contains(":")) {
+                        //absolute path
+                        String mavenDirectory = mavenProject.getDirectory();
+
+                        mavenDirectory = mavenDirectory.replace('/', '\\');
+
+                        if (liferayHome.startsWith(mavenDirectory)) {
+                            liferayHome = liferayHome.substring(mavenDirectory.length());
+                        }
+
+                        if (liferayHome.startsWith("/")) {
+                            liferayHome = liferayHome.substring(1);
+                        }
                     }
                 }
             }
@@ -61,10 +70,12 @@ public class LiferayBundleSupportMavenImporter extends MavenImporter {
                 liferayHome = mavenProject.getProperties().getProperty(PROPERTY_BUNDLE_SUPPORT_LIFERAY_HOME);
             }
 
-            if (liferayHome != null) {
-                if (! ( liferayHome.startsWith("/") || liferayHome.contains(":") ) ) {
-                    mavenRootModelAdapter.addExcludedFolder(liferayHome);
-                }
+            if (liferayHome == null) {
+                liferayHome = "bundles"; //default value from com.liferay.portal.tools.bundle.support plugin
+            }
+
+            if (! ( liferayHome.startsWith("/") || liferayHome.contains(":") ) ) {
+                mavenRootModelAdapter.addExcludedFolder(liferayHome);
             }
         }
     }
