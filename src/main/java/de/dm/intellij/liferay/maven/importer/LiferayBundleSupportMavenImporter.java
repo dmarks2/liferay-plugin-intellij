@@ -15,6 +15,7 @@ import org.jetbrains.idea.maven.project.SupportedRequestType;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * A Maven Importer which resolves the Liferay Home directory if the bundle-support plugin is present and will "exclude" the bundles folder from indexing in IntelliJ IDEA
@@ -47,6 +48,12 @@ public class LiferayBundleSupportMavenImporter extends MavenImporter {
                 Element configBundleSupportLiferayHome = configurationElement.getChild(CONFIG_BUNDLE_SUPPORT_LIFERAY_HOME);
                 if (configBundleSupportLiferayHome != null) {
                     liferayHome = configBundleSupportLiferayHome.getText();
+
+                    if (liferayHome.startsWith("${") && liferayHome.endsWith("}")) {
+                        String liferayHomeProperty = liferayHome.substring(2, liferayHome.length() - 1);
+                        Properties properties = mavenProject.getProperties();
+                        liferayHome = properties.getProperty(liferayHomeProperty);
+                    }
                 }
             }
 
