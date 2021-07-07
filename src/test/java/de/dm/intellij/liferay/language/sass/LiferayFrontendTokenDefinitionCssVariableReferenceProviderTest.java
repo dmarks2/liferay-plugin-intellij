@@ -1,8 +1,11 @@
 package de.dm.intellij.liferay.language.sass;
 
+import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
+
+import java.util.List;
 
 public class LiferayFrontendTokenDefinitionCssVariableReferenceProviderTest extends BasePlatformTestCase {
 
@@ -35,6 +38,21 @@ public class LiferayFrontendTokenDefinitionCssVariableReferenceProviderTest exte
         }
 
         assertTrue(referenceResolved);
+    }
+
+    public void testCompletion() {
+        myFixture.configureByFiles("completion.css", "WEB-INF/frontend-token-definition.json");
+
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("--primary"));
+
+        /*
+        myFixture.complete(CompletionType.BASIC);
+        myFixture.type("");
+
+        myFixture.checkResultByFile("completed.css");
+         */
     }
 
 }

@@ -30,7 +30,9 @@
             <li>Feature: Added support for Liferay 7.4</li>
             <li>Feature: Code Completion and documentation for portal.properties files</li>
             <li>Feature: JSON Schema for frontend-token-definition.json</li>
+            <li>Feature: Language.properties references for label attributes in frontend-token-definition.json</li>
             <li>Feature: Clay SCSS Variables documentation</li>
+            <li>Bugfix: Fixed detecting the bundles directory from the bundle-support maven plugin</li>
         </ul>
         <p>Version 0.0.11</p>
         <ul>

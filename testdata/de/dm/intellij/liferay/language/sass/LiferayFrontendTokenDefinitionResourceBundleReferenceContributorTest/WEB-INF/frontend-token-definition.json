@@ -1,0 +1,29 @@
+{
+  "frontendTokenCategories": [
+    {
+      "frontendTokenSets": [
+        {
+          "frontendTokens": [
+            {
+              "defaultValue": "#0B5FFF",
+              "editorType": "ColorPicker",
+              "label": "primary<caret>",
+              "mappings": [
+                {
+                  "type": "cssVariable",
+                  "value": "primary"
+                }
+              ],
+              "name": "primaryColor",
+              "type": "String"
+            }
+          ],
+          "label": "primary-colors",
+          "name": "primaryColors"
+        }
+      ],
+      "label": "colors",
+      "name": "colors"
+    }
+  ]
+}

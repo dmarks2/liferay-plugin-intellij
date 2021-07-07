@@ -3,6 +3,8 @@
         <!-- Reference helper to provide root contexts for SCSS files -->
         <psi.fileReferenceHelper implementation="de.dm.intellij.liferay.language.sass.LiferaySassFileReferenceHelper" />
 
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.sass.LiferayFrontendTokenDefinitionResourceBundleReferenceContributor"/>
+
         <lang.documentationProvider language="SCSS" implementationClass="de.dm.intellij.liferay.language.sass.LiferaySassClayVariablesDocumentationProvider"/>
     </extensions>
 

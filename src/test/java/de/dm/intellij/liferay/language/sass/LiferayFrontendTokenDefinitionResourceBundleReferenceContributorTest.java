@@ -1,7 +1,5 @@
 package de.dm.intellij.liferay.language.sass;
 
-import com.intellij.codeInsight.documentation.DocumentationManager;
-import com.intellij.lang.documentation.DocumentationProvider;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.roots.ContentEntry;
@@ -21,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.net.URL;
 
-public class LiferaySassClayVariablesDocumentationProviderTest extends BasePlatformTestCase {
+public class LiferayFrontendTokenDefinitionResourceBundleReferenceContributorTest extends BasePlatformTestCase {
 
     private static final LightProjectDescriptor MY_PROJECT_DESCRIPTOR = new DefaultLightProjectDescriptor() {
 
@@ -29,9 +27,9 @@ public class LiferaySassClayVariablesDocumentationProviderTest extends BasePlatf
         public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
             LiferayModuleComponent.getInstance(module).setLiferayVersion("7.0.6");
 
-            URL resource = LiferaySassClayVariablesDocumentationProviderTest.class.getResource("/ClayVariablesDocumentationBundle.properties");
+            URL resource = LiferayFrontendTokenDefinitionResourceBundleReferenceContributorTest.class.getResource("/com/liferay/schema");
             String resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
-            VfsRootAccess.allowRootAccess(Disposer.newDisposable(), resourcePath );
+            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePath );
         }
 
         @Override
@@ -40,11 +38,6 @@ public class LiferaySassClayVariablesDocumentationProviderTest extends BasePlatf
         }
     };
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
     @NotNull
     @Override
     protected LightProjectDescriptor getProjectDescriptor() {
@@ -52,23 +45,21 @@ public class LiferaySassClayVariablesDocumentationProviderTest extends BasePlatf
     }
 
     @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+    }
+
+    @Override
     protected String getTestDataPath() {
-        return "testdata/de/dm/intellij/liferay/language/sass/LiferaySassClayVariablesDocumentationProviderTest";
+        return "testdata/de/dm/intellij/liferay/language/sass/LiferayFrontendTokenDefinitionResourceBundleReferenceContributorTest";
     }
 
-    public void testScssVariableDeclarationDocumentationProvider() {
-        myFixture.configureByFiles("custom.scss");
+    public void testReference() {
+        myFixture.configureByFiles("WEB-INF/frontend-token-definition.json", "Language.properties");
 
-        DocumentationManager documentationManager = DocumentationManager.getInstance(getProject());
-        PsiElement docElement = documentationManager.findTargetElement(myFixture.getEditor(), 1, myFixture.getFile(), null);
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement resolve = element.getReferences()[0].resolve();
 
-        DocumentationProvider provider = DocumentationManager.getProviderFromElement(docElement);
-
-        String expectedDocumentation = "<font color=#808080>Globally enable/disable decorative box-shadows. This is `true` by default. If set to `false`, decorative box shadows cannot be re-implemented through variables.</font>\n" +
-                "<br>\n" +
-                "<b>enable-shadows</b> [custom.scss]";
-
-        assertEquals("Should provide proper documentation for $enable-shadows variable declaration", expectedDocumentation, provider.generateDoc(docElement, null));
+        assertTrue("\"primary\" should be resolvable, because it is in Language.properties", (resolve != null));
     }
-
 }
