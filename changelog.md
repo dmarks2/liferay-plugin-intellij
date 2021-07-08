@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Feature: JSON Schema for frontend-token-definition.json
 - Feature: Language.properties references for label attributes in frontend-token-definition.json  
 - Feature: Clay SCSS Variables documentation
+- Feature: Added support for portlet-display-templates.xml (XML Schema and file references)
 - Bugfix: Fixed detecting the bundles directory from the bundle-support maven plugin
   
 ## 0.0.11

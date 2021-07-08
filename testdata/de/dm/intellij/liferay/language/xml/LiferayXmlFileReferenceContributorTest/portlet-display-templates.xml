@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root>
+    <template>
+        <template-key>my-menu</template-key>
+        <name>my-menu-name</name>
+        <description>my-menu-description</description>
+        <language>ftl</language>
+        <script-file><caret></script-file>
+        <cacheable>false</cacheable>
+    </template>
+</root>

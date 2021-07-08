@@ -1,9 +1,8 @@
-<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin>
     <extensions defaultExtensionNs="com.intellij">
         <!-- provide Liferay DTD and XSD files -->
         <standardResourceProvider implementation="de.dm.intellij.liferay.schema.LiferayDefinitionsResourceProvider" />
-        <!-- Provides XML Schema files for portlet-model-hints.xml and custom-sql/default.xml -->
+        <!-- Provides XML Schema files for portlet-model-hints.xml, custom-sql/default.xml and portlet-display-templates.xml -->
         <xml.schemaProvider implementation="de.dm.intellij.liferay.schema.LiferayXmlSchemaProvider" />
 
         <!-- Reference contributor for file references in Liferay specific XML files -->

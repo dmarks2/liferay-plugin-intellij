@@ -1,6 +1,8 @@
 package de.dm.intellij.liferay.language.xml;
 
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.filters.ElementFilter;
 import com.intellij.psi.filters.position.FilterPattern;
 import com.intellij.psi.xml.XmlAttribute;
@@ -14,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -126,6 +129,12 @@ public class LiferayXmlFileReferenceFilterPattern extends FilterPattern {
         XML_FILEREFERENCE_TAGS.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_THEME_LOADER_7_2_0, XML_FILEREFERENCE_TAGS.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_THEME_LOADER_6_1_0));
         XML_FILEREFERENCE_TAGS.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_THEME_LOADER_7_3_0, XML_FILEREFERENCE_TAGS.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_THEME_LOADER_6_1_0));
 
+
+        XML_FILEREFERENCE_TAGS.put("portlet-display-templates.xml",
+                Collections.singletonList(
+                        "script-file"
+                )
+        );
     }
 
     public LiferayXmlFileReferenceFilterPattern() {
@@ -138,8 +147,17 @@ public class LiferayXmlFileReferenceFilterPattern extends FilterPattern {
                         XmlText xmlText = (XmlText) xmlElement.getParent();
                         XmlTag xmlTag = xmlText.getParentTag();
                         if (xmlTag != null) {
-                            if (XML_FILEREFERENCE_TAGS.containsKey(xmlTag.getNamespace())) {
-                                for (String tagName : XML_FILEREFERENCE_TAGS.get(xmlTag.getNamespace())) {
+                            String namespace = xmlTag.getNamespace();
+
+                            if (StringUtil.isEmpty(namespace)) {
+                                PsiFile containingFile = xmlTag.getContainingFile();
+
+                                if (containingFile != null) {
+                                    namespace = containingFile.getName();
+                                }
+                            }
+                            if (XML_FILEREFERENCE_TAGS.containsKey(namespace)) {
+                                for (String tagName : XML_FILEREFERENCE_TAGS.get(namespace)) {
                                     if (tagName.equals(xmlTag.getLocalName())) {
                                         return true;
                                     }

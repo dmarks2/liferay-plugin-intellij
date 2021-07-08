@@ -32,6 +32,7 @@
             <li>Feature: JSON Schema for frontend-token-definition.json</li>
             <li>Feature: Language.properties references for label attributes in frontend-token-definition.json</li>
             <li>Feature: Clay SCSS Variables documentation</li>
+            <li>Feature: Added support for portlet-display-templates.xml (XML Schema and file references)</li>
             <li>Bugfix: Fixed detecting the bundles directory from the bundle-support maven plugin</li>
         </ul>
         <p>Version 0.0.11</p>

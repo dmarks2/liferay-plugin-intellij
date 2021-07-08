@@ -54,4 +54,11 @@ public class LiferayXmlSchemaProviderTest extends BasePlatformTestCase {
         assertTrue(strings.contains("max-length"));
     }
 
+    public void testPortletDisplayTemplatesCompletion() {
+        myFixture.configureByFiles("portlet-display-templates.xml");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("template-key"));
+    }
+
 }

@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.net.URL;
 
 /**
- * Provides XML Schema files for portlet-model-hints.xml and custom-sql/default.xml
+ * Provides XML Schema files for portlet-model-hints.xml, custom-sql/default.xml and portlet-display-templates.xml
  */
 public class LiferayXmlSchemaProvider extends XmlSchemaProvider {
 
@@ -51,6 +51,8 @@ public class LiferayXmlSchemaProvider extends XmlSchemaProvider {
             } else if (LiferayVersions.LIFERAY_VERSION_6_2 == liferayVersion) {
                 targetFileUrl = LiferayXmlSchemaProvider.class.getResource("/com/liferay/definitions/liferay-ddm-structure_6_2_0.xsd");
             }
+        } else if (psiFile.getName().equals("portlet-display-templates.xml")) {
+            targetFileUrl = LiferayXmlSchemaProvider.class.getResource("/com/liferay/xsd/liferay-portlet-display-templates_7_0_0.xsd");
         }
 
         if (targetFileUrl != null) {
@@ -89,6 +91,9 @@ public class LiferayXmlSchemaProvider extends XmlSchemaProvider {
             }
         }
         if (LiferayFileUtil.isJournalStructureFile(file)) {
+            return true;
+        }
+        if (psiFile.getName().equals("portlet-display-templates.xml")) {
             return true;
         }
         return false;
