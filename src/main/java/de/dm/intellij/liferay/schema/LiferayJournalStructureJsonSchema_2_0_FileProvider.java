@@ -15,18 +15,18 @@ import org.jetbrains.annotations.Nullable;
 
 import java.net.URL;
 
-public class LiferayJournalStructureJsonSchemaFileProvider implements JsonSchemaFileProvider {
+public class LiferayJournalStructureJsonSchema_2_0_FileProvider implements JsonSchemaFileProvider {
 
     @NotNull private final Project project;
     @Nullable private final VirtualFile schemaFile;
 
-    public LiferayJournalStructureJsonSchemaFileProvider(@NotNull Project project) {
+    public LiferayJournalStructureJsonSchema_2_0_FileProvider(@NotNull Project project) {
         this.project = project;
         this.schemaFile = getResourceFile();
     }
 
     private static VirtualFile getResourceFile() {
-        URL url = LiferayJournalStructureJsonSchemaFileProvider.class.getResource("/com/liferay/schema/journal-structure-schema.json");
+        URL url = LiferayJournalStructureJsonSchema_2_0_FileProvider.class.getResource("/com/liferay/schema/journal-structure-schema-2-0.json");
         if (url != null) {
             return VfsUtil.findFileByURL(url);
         }
@@ -43,7 +43,7 @@ public class LiferayJournalStructureJsonSchemaFileProvider implements JsonSchema
                     if (LiferayFileUtil.isJournalStructureFile(psiFile)) {
                         String definitionSchemaVersion = LiferayFileUtil.getJournalStructureJsonFileDefinitionSchemaVersion(psiFile);
 
-                        return (! "2.0".equals(definitionSchemaVersion));
+                        return ("2.0".equals(definitionSchemaVersion));
                     }
                 }
                 return false;
@@ -55,7 +55,7 @@ public class LiferayJournalStructureJsonSchemaFileProvider implements JsonSchema
     @NotNull
     @Override
     public String getName() {
-        return "Liferay Journal Structure";
+        return "Liferay Journal Structure Schema 2.0";
     }
 
     @Nullable

@@ -1,0 +1,14 @@
+{
+  "definitionSchemaVersion": "2.0",
+  "availableLanguageIds": [
+    "de_DE"
+  ],
+  "defaultLanguageId": "de_DE",
+  "fields": [
+    {
+      "name": "simple",
+      "dataType": "string",
+      "type": "<caret>"
+    }
+  ]
+}

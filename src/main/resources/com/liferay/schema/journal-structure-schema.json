@@ -29,28 +29,87 @@
     "defaultLanguageId"
   ],
   "definitions": {
+    "field_name": {
+      "type": "string",
+      "pattern": "(\\w|\\-)+",
+      "description": "Define the name to access the value in Journal Templates."
+    },
+    "field_indexType": {
+      "type": "string",
+      "enum": [ "", "keyword", "text" ]
+    },
+    "field_label": {
+      "type": "object",
+      "description": "Enter a descriptive field label that guides users to enter the information you want.",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "field_localizable": {
+      "type": "boolean",
+      "description": "Define whether the field input can be localized."
+    },
+    "field_predefinedValue": {
+      "type": "object",
+      "description": "Enter a default value that is submitted if no other value is entered.",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": ["array","string","boolean","integer","number","object"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "field_readOnly": {
+      "type": "boolean",
+      "description": "Define if the field can be read only."
+    },
+    "field_repeatable": {
+      "type": "boolean",
+      "description": "Define whether the input field can be repeated, i.e. multiple values can be entered."
+    },
+    "field_required": {
+      "type": "boolean",
+      "description": "Define if the input field is required."
+    },
+    "field_showLabel": {
+      "type": "boolean"
+    },
+    "field_tip": {
+      "type": "object",
+      "description": "Add a comment to help users understand the field label.",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "field_validation": {
+      "type": "object",
+      "properties": {
+        "errorMessage": {
+          "type": "string"
+        },
+        "expression": {
+          "type": "string"
+        }
+      }
+    },
+    "field_visibilityExpression": {
+      "type": "string",
+      "description": "Write a conditional expression to control whether this field is displayed"
+    },
     "field": {
       "type": "object",
       "properties": {
         "label": {
-          "type": "object",
-          "description": "Enter a descriptive field label that guides users to enter the information you want.",
-          "patternProperties": {
-            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
+          "$ref": "#/definitions/field_label"
         },
         "predefinedValue": {
-          "type": "object",
-          "description": "Enter a default value that is submitted if no other value is entered.",
-          "patternProperties": {
-            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
-              "type": ["array","string","boolean","integer","number","object"]
-            }
-          },
-          "additionalProperties": false
+          "$ref": "#/definitions/field_predefinedValue"
         },
         "style": {
           "type": "object",
@@ -63,14 +122,7 @@
           "additionalProperties": false
         },
         "tip": {
-          "type": "object",
-          "description": "Add a comment to help users understand the field label.",
-          "patternProperties": {
-            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
+          "$ref": "#/definitions/field_tip"
         },
         "dataType": {
           "type": "string",
@@ -80,20 +132,16 @@
           "type": "string"
         },
         "indexType": {
-          "type": "string",
-          "enum": [ "", "keyword", "text" ]
+          "$ref": "#/definitions/field_indexType"
         },
         "localizable": {
-          "type": "boolean",
-          "description": "Define whether the field input can be localized."
+          "$ref": "#/definitions/field_localizable"
         },
         "multiple": {
           "type": "boolean"
         },
         "name": {
-          "type": "string",
-          "pattern": "(\\w|\\-)+",
-          "description": "Define the name to access the value in Journal Templates."
+          "$ref": "#/definitions/field_name"
         },
         "options": {
           "type": "array",
@@ -117,19 +165,16 @@
           }
         },
         "readOnly": {
-          "type": "boolean",
-          "description": "Define if the field can be read only."
+          "$ref": "#/definitions/field_readOnly"
         },
         "repeatable": {
-          "type": "boolean",
-          "description": "Define whether the input field can be repeated, i.e. multiple values can be entered."
+          "$ref": "#/definitions/field_repeatable"
         },
         "required": {
-          "type": "boolean",
-          "description": "Define if the input field is required."
+          "$ref": "#/definitions/field_required"
         },
         "showLabel": {
-          "type": "boolean"
+          "$ref": "#/definitions/field_showLabel"
         },
         "type": {
           "type": "string",
@@ -137,19 +182,10 @@
           "pattern": "(\\w|-)+"
         },
         "validation": {
-          "type": "object",
-          "properties": {
-            "errorMessage": {
-              "type": "string"
-            },
-            "expression": {
-              "type": "string"
-            }
-          }
+          "$ref": "#/definitions/field_validation"
         },
         "visibilityExpression": {
-          "type": "string",
-          "description": "Write a conditional expression to control whether this field is displayed"
+          "$ref": "#/definitions/field_visibilityExpression"
         },
         "nestedFields": {
           "type": "array",

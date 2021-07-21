@@ -3,6 +3,8 @@ package de.dm.intellij.liferay.util;
 import com.intellij.javaee.web.WebRoot;
 import com.intellij.javaee.web.facet.WebFacet;
 import com.intellij.json.psi.JsonFile;
+import com.intellij.json.psi.JsonProperty;
+import com.intellij.json.psi.JsonValue;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.roots.ModuleRootManager;
@@ -12,6 +14,7 @@ import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileSystem;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileSystemItem;
 import com.intellij.psi.PsiManager;
@@ -21,6 +24,7 @@ import com.intellij.psi.xml.XmlTag;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,6 +85,39 @@ public class LiferayFileUtil {
             }
         }
         return false;
+    }
+
+    @Nullable
+    public static String getJournalStructureJsonFileDefinitionSchemaVersion(PsiFile psiFile) {
+        if (psiFile instanceof JsonFile) {
+            JsonFile jsonFile = (JsonFile) psiFile;
+
+            JsonValue topLevelValue = jsonFile.getTopLevelValue();
+
+            if (topLevelValue != null) {
+                PsiElement[] children = topLevelValue.getChildren();
+
+                for (PsiElement psiElement : children) {
+                    if (psiElement instanceof JsonProperty) {
+                        JsonProperty jsonProperty = (JsonProperty) psiElement;
+
+                        if ("definitionSchemaVersion".equals(jsonProperty.getName())) {
+                            JsonValue jsonValue = jsonProperty.getValue();
+
+                            if (jsonValue != null) {
+                                String definitionSchemaVersion = jsonValue.getText();
+
+                                definitionSchemaVersion = StringUtil.unquoteString(definitionSchemaVersion);
+
+                                return definitionSchemaVersion;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
     public static boolean isApplicationDisplayTemplateFile(PsiFile psiFile) {

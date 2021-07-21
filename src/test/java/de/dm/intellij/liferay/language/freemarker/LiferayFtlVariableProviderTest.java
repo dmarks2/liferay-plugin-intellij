@@ -98,6 +98,14 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         assertTrue(strings.contains("simple"));
     }
 
+    public void testStructureVariablesSimpleJson_Schema_2_0() {
+        myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test_2_0/simple.ftl", "WEB-INF/src/resources-importer/journal/structures/test_2_0.json");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue("Should provide fieldReference \"myReference\", because it is schema version 2.0", strings.contains("myReference"));
+        assertFalse("Should not provide name \"simple\", because it is schema version 2.0",  strings.contains("simple"));
+    }
+
     public void testStructureVariablesSimpleJsonTemplateNode() {
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/simple-data.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "com/liferay/portal/kernel/templateparser/TemplateNode.java");
         myFixture.complete(CompletionType.BASIC, 1);

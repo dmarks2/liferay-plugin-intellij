@@ -17,7 +17,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-public class LiferayJournalStructureJsonSchemaFileProviderTest extends BasePlatformTestCase {
+public class LiferayJournalStructureJsonSchema_2_0_FileProviderTest extends BasePlatformTestCase {
 
     private static final LightProjectDescriptor MY_PROJECT_DESCRIPTOR = new DefaultLightProjectDescriptor() {
         @Override
@@ -36,15 +36,15 @@ public class LiferayJournalStructureJsonSchemaFileProviderTest extends BasePlatf
 
     @Override
     protected String getTestDataPath() {
-        return "testdata/de/dm/intellij/liferay/schema/LiferayJournalStructureJsonSchemaFileProviderTest";
+        return "testdata/de/dm/intellij/liferay/schema/LiferayJournalStructureJsonSchema_2_0_FileProviderTest";
     }
 
     public void testCompletion() {
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/structures/test.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
-        assertTrue(strings.contains("text"));
+        assertTrue(strings.contains("rich_text"));
 
-        assertFalse("\"type\" should not contain \"rich_text\", because it is not schema 2.0", strings.contains("rich_text"));
+        assertFalse("\"type\" should not contain \"ddm-journal-article\", because it is schema 2.0", strings.contains("ddm-journal-article"));
     }
 }

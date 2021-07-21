@@ -1,0 +1,452 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/journal-structure.schema-2-0.json",
+  "title": "Liferay Journal Structure Schema 2.0",
+  "type": "object",
+  "properties": {
+    "definitionSchemaVersion": {
+      "type": "string",
+      "const": "2.0"
+    },
+    "availableLanguageIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^([a-z]{2})([_-]{1}[A-Z]{2})?$"
+      },
+      "uniqueItems": true
+    },
+    "defaultLanguageId": {
+      "type": "string",
+      "pattern": "^([a-z]{2})([_-]{1}[A-Z]{2})?$"
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/field_2_0"
+      },
+      "minItems": 1
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/rule"
+      }
+    },
+    "successPage": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "type": "object",
+          "patternProperties": {
+            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "title": {
+          "type": "object",
+          "patternProperties": {
+            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "required": [
+    "availableLanguageIds",
+    "defaultLanguageId",
+    "definitionSchemaVersion"
+  ],
+  "definitions": {
+    "field_name": {
+      "type": "string",
+      "pattern": "(\\w|\\-)+",
+      "description": "Define the name to access the value in Journal Templates."
+    },
+    "field_indexType": {
+      "type": "string",
+      "enum": [
+        "none",
+        "keyword",
+        "text"
+      ]
+    },
+    "field_fieldReference": {
+      "type": "string",
+      "pattern": "(\\w|\\-)+",
+      "description": "Field reference serves as a friendly identifier for developers reference a field during a custom development."
+    },
+    "field_label": {
+      "type": "object",
+      "description": "Enter a descriptive field label that guides users to enter the information you want.",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "field_localizable": {
+      "type": "boolean",
+      "description": "Define whether the field input can be localized."
+    },
+    "field_predefinedValue": {
+      "type": "object",
+      "description": "Enter a default value that is submitted if no other value is entered.",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": ["array","string","boolean","integer","number","object"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "field_readOnly": {
+      "type": "boolean",
+      "description": "Define if the field can be read only."
+    },
+    "field_repeatable": {
+      "type": "boolean",
+      "description": "Define whether the input field can be repeated, i.e. multiple values can be entered."
+    },
+    "field_required": {
+      "type": "boolean",
+      "description": "Define if the input field is required."
+    },
+    "field_showLabel": {
+      "type": "boolean"
+    },
+    "field_tip": {
+      "type": "object",
+      "description": "Add a comment to help users understand the field label.",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "field_placeholder": {
+      "type": "object",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "field_inputMask": {
+      "type": "object",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "field_confirmationLabel": {
+      "type": "object",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "field_requiredErrorMessage": {
+      "type": "object",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "field_validation": {
+      "type": "object",
+      "properties": {
+        "errorMessage": {
+          "type": "string"
+        },
+        "expression": {
+          "type": "string"
+        }
+      }
+    },
+    "field_visibilityExpression": {
+      "type": "string",
+      "description": "Write a conditional expression to control whether this field is displayed"
+    },
+    "rule": {
+      "type": "object",
+      "properties": {
+        "condition": {
+          "type": "string"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "field_2_0": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/field_name"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "checkbox_multiple",
+            "color",
+            "date",
+            "document_library",
+            "fieldset",
+            "geolocation",
+            "grid",
+            "image",
+            "journal_article",
+            "link_to_layout",
+            "numeric",
+            "radio",
+            "rich_text",
+            "select",
+            "separator",
+            "text"
+          ],
+          "pattern": "(\\w|-)+"
+        },
+        "indexType": {
+          "$ref": "#/definitions/field_indexType"
+        },
+        "label": {
+          "$ref": "#/definitions/field_label"
+        },
+        "localizable": {
+          "$ref": "#/definitions/field_localizable"
+        },
+        "predefinedValue": {
+          "$ref": "#/definitions/field_predefinedValue"
+        },
+        "readOnly": {
+          "$ref": "#/definitions/field_readOnly"
+        },
+        "repeatable": {
+          "$ref": "#/definitions/field_repeatable"
+        },
+        "required": {
+          "$ref": "#/definitions/field_required"
+        },
+        "showLabel": {
+          "$ref": "#/definitions/field_showLabel"
+        },
+        "tip": {
+          "$ref": "#/definitions/field_tip"
+        },
+        "validation": {
+          "$ref": "#/definitions/field_validation"
+        },
+        "visibilityExpression": {
+          "$ref": "#/definitions/field_visibilityExpression"
+        },
+        "dataType": {
+          "type": "string",
+          "enum": [
+            "",
+            "date",
+            "double",
+            "document-library",
+            "geolocation",
+            "image",
+            "integer",
+            "journal-article",
+            "link-to-page",
+            "number",
+            "string"
+          ]
+        },
+        "options": {
+          "type": "array",
+          "description": "Define a list of available options for radio buttons or select boxes.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "reference": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              },
+              "label": {
+                "type": "object",
+                "patternProperties": {
+                  "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "dataSourceType": {
+          "type": "string",
+          "enum": ["manual", "[manual]"]
+        },
+        "ddmDataProviderInstanceId": {
+          "type": "string"
+        },
+        "ddmDataProviderInstanceOutput": {
+          "type": "string"
+        },
+        "autocomplete": {
+          "type": "boolean"
+        },
+        "displayStyle": {
+          "type": "string",
+          "enum": [
+            "singleline",
+            "multiline"
+          ]
+        },
+        "placeholder": {
+          "$ref": "#/definitions/field_placeholder"
+        },
+        "confirmationLabel": {
+          "$ref": "#/definitions/field_confirmationLabel"
+        },
+        "upgradedStructure": {
+          "type": "boolean"
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "reference": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              },
+              "label": {
+                "type": "object",
+                "patternProperties": {
+                  "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "reference": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              },
+              "label": {
+                "type": "object",
+                "patternProperties": {
+                  "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "collapsible": {
+          "type": "boolean"
+        },
+        "fieldReference": {
+          "$ref": "#/definitions/field_fieldReference"
+        },
+        "labelAtStructureLevel": {
+          "type": "boolean"
+        },
+        "requireConfirmation": {
+          "type": "boolean"
+        },
+        "nativeField": {
+          "type": "boolean"
+        },
+        "direction": {
+          "type": "string"
+        },
+        "hideField": {
+          "type": "boolean"
+        },
+        "multiple": {
+          "type": "boolean"
+        },
+        "alphabeticalOrder": {
+          "type": "boolean"
+        },
+        "inline": {
+          "type": "boolean"
+        },
+        "showAsSwitcher": {
+          "type": "boolean"
+        },
+        "characterOptions": {
+          "type": "boolean"
+        },
+        "inputMask": {
+          "type": "boolean"
+        },
+        "inputMaskFormat": {
+          "$ref": "#/definitions/field_inputMask"
+        },
+        "allowGuestUsers": {
+          "type": "boolean"
+        },
+        "style": {
+          "type": "object",
+          "patternProperties": {
+            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "ddmStructureLayoutId": {
+          "type": "string"
+        },
+        "ddmStructureId": {
+          "type": "string"
+        },
+        "nestedFields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/field_2_0"
+          }
+        }
+      },
+      "required": [
+        "name", "type"
+      ]
+    }
+  }
+}

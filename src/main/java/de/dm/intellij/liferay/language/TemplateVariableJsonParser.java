@@ -9,6 +9,7 @@ import com.intellij.json.psi.JsonValue;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import de.dm.intellij.liferay.util.LiferayFileUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class TemplateVariableJsonParser implements TemplateVariableParser<JsonFi
     @Override
     public List<TemplateVariable> getTemplateVariables(JsonFile jsonFile, PsiFile templateFile) {
         List<TemplateVariable> result = new ArrayList<>();
+
+        String definitionSchemaVersion = LiferayFileUtil.getJournalStructureJsonFileDefinitionSchemaVersion(jsonFile);
 
         JsonValue root = jsonFile.getTopLevelValue();
 
@@ -50,7 +53,7 @@ public class TemplateVariableJsonParser implements TemplateVariableParser<JsonFi
                             if (jsonValue instanceof JsonObject) {
                                 JsonObject jsonObject = (JsonObject) jsonValue;
 
-                                TemplateVariable templateVariable = getTemplateVariable(templateFile, jsonFile, jsonObject, defaultLanguageId);
+                                TemplateVariable templateVariable = getTemplateVariable(templateFile, jsonFile, jsonObject, defaultLanguageId, definitionSchemaVersion);
                                 if (templateVariable != null) {
                                     result.add(templateVariable);
                                 }
@@ -65,10 +68,17 @@ public class TemplateVariableJsonParser implements TemplateVariableParser<JsonFi
     }
 
     @Nullable
-    private TemplateVariable getTemplateVariable(PsiFile templateFile, PsiFile originalFile, JsonObject jsonObject, String defaultLanguageId) {
-        JsonProperty nameProperty = jsonObject.findProperty("name");
-        if (nameProperty != null) {
-            String name = nameProperty.getValue().getText();
+    private TemplateVariable getTemplateVariable(PsiFile templateFile, PsiFile originalFile, JsonObject jsonObject, String defaultLanguageId, String definitionSchemaVersion) {
+        JsonProperty fieldReferenceProperty;
+
+        if ("2.0".equals(definitionSchemaVersion)) {
+            fieldReferenceProperty = jsonObject.findProperty("fieldReference");
+        } else {
+            fieldReferenceProperty = jsonObject.findProperty("name");
+        }
+
+        if (fieldReferenceProperty != null) {
+            String name = fieldReferenceProperty.getValue().getText();
             if ((name != null) && (name.trim().length() > 0)) {
                 name = StringUtil.unquoteString(name);
 
@@ -146,7 +156,7 @@ public class TemplateVariableJsonParser implements TemplateVariableParser<JsonFi
                 }
 
                 templateVariable.setRepeatable(repeatable);
-                templateVariable.setNavigationalElement(nameProperty.getValue());
+                templateVariable.setNavigationalElement(fieldReferenceProperty.getValue());
                 templateVariable.setParentFile(templateFile);
                 templateVariable.setOriginalFile(originalFile);
                 templateVariable.setDefaultLanguageId(defaultLanguageId);
@@ -159,7 +169,7 @@ public class TemplateVariableJsonParser implements TemplateVariableParser<JsonFi
                             if (subjsonValue instanceof JsonObject) {
                                 JsonObject subjsonObject = (JsonObject) subjsonValue;
 
-                                TemplateVariable nestedVariable = getTemplateVariable(templateFile, originalFile, subjsonObject, defaultLanguageId);
+                                TemplateVariable nestedVariable = getTemplateVariable(templateFile, originalFile, subjsonObject, defaultLanguageId, definitionSchemaVersion);
                                 if (nestedVariable != null) {
                                     templateVariable.addNestedVariable(nestedVariable);
                                 }
