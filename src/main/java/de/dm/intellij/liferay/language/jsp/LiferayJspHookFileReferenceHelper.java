@@ -1,6 +1,6 @@
 package de.dm.intellij.liferay.language.jsp;
 
-import com.intellij.ide.highlighter.NewJspFileType;
+import com.intellij.jsp.highlighter.NewJspFileType;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;

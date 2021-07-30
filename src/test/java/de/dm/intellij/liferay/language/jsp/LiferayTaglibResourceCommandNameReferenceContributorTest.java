@@ -15,6 +15,7 @@ import com.intellij.testFramework.PsiTestUtil;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
+import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -24,30 +25,12 @@ public class LiferayTaglibResourceCommandNameReferenceContributorTest extends Li
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/jsp/LiferayTaglibResourceCommandNameReferenceContributorTest";
 
-    private static final LightProjectDescriptor JAVA_OSGI_LIB_DESCRIPTOR = new DefaultLightProjectDescriptor() {
-
-        @Override
-        public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
-            LanguageLevelModuleExtension extension = model.getModuleExtension(LanguageLevelModuleExtension.class);
-            if (extension != null) {
-                extension.setLanguageLevel(LanguageLevel.JDK_1_8);
-            }
-            Sdk jdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
-            model.setSdk(jdk);
-
-            final String testDataPath = PathUtil.toSystemIndependentName(new File(TEST_DATA_PATH).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), testDataPath );
-
-            PsiTestUtil.addLibrary(model, "OSGi", testDataPath, "osgi.jar");
-        }
-    };
-
-
-
     @NotNull
     @Override
     protected LightProjectDescriptor getProjectDescriptor() {
-        return JAVA_OSGI_LIB_DESCRIPTOR;
+        return new LightProjectDescriptorBuilder()
+                .library("OSGi", TEST_DATA_PATH, "osgi.jar")
+                .build();
     }
 
     @Override

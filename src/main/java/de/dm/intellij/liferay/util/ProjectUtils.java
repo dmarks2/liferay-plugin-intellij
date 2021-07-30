@@ -40,6 +40,7 @@ import com.intellij.psi.PsiPackageStatement;
 import com.intellij.psi.PsiParameter;
 import com.intellij.psi.PsiParameterList;
 import com.intellij.psi.PsiType;
+import com.intellij.psi.impl.JavaConstantExpressionEvaluator;
 import com.intellij.psi.impl.compiled.ClsFieldImpl;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.impl.source.PsiFieldImpl;
@@ -384,6 +385,10 @@ public class ProjectUtils {
 
     @NotNull
     public static String getQualifiedNameWithoutResolve(@NotNull PsiJavaCodeReferenceElement psiJavaCodeReferenceElement, boolean stripMember) {
+        if (psiJavaCodeReferenceElement.getNode() == null) {
+            return "";
+        }
+
         String referenceText = JavaSourceUtil.getReferenceText(psiJavaCodeReferenceElement);
 
         String memberText = null;
@@ -428,6 +433,10 @@ public class ProjectUtils {
                 Object value = null;
                 if (psiField instanceof PsiFieldImpl) {
                     value = ((PsiFieldImpl) psiField).computeConstantValue(null);
+
+                    if (value == null) {
+                        value = JavaConstantExpressionEvaluator.computeConstantExpression(PsiFieldImpl.getDetachedInitializer(psiField), false);
+                    }
                 } else if (psiField instanceof ClsFieldImpl) {
                     value = ((ClsFieldImpl)psiField).computeConstantValue(null);
                 }

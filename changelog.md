@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Added support for portlet-display-templates.xml (XML Schema and file references)
 - Feature: Added support for new journal structure json schema (for Liferay 7.4)
 - Bugfix: Fixed detecting the bundles directory from the bundle-support maven plugin
+- Change: Fixed support for IntelliJ 2021.2, dropped support for IntelliJ 2021.1 and lower
   
 ## 0.0.11
 - Feature: Implicit usage of some property files and keys ("javax.portlet.title." or "liferay.workspace."), so that they are no longer shown as "unused property"

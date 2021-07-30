@@ -19,8 +19,6 @@ import com.intellij.codeInsight.daemon.impl.HighlightInfo;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
 import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.LanguageLevelModuleExtension;
 import com.intellij.openapi.roots.ModifiableRootModel;
@@ -122,12 +120,6 @@ public class ClassReferenceParserTest extends LightJavaCodeInsightFixtureTestCas
 			if (extension != null) {
 				extension.setLanguageLevel(LanguageLevel.JDK_1_8);
 			}
-
-			JavaAwareProjectJdkTableImpl javaAwareProjectJdkTableImpl = JavaAwareProjectJdkTableImpl.getInstanceEx();
-
-			Sdk sdk = javaAwareProjectJdkTableImpl.getInternalJdk();
-
-			modifiableRootModel.setSdk(sdk);
 
 			File testDataDir = new File(_TEST_DATA_PATH);
 

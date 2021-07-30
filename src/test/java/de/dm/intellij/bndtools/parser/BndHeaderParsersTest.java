@@ -2,8 +2,6 @@ package de.dm.intellij.bndtools.parser;
 
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
 import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.LanguageLevelModuleExtension;
 import com.intellij.openapi.roots.ModifiableRootModel;
@@ -32,8 +30,6 @@ public class BndHeaderParsersTest extends LightJavaCodeInsightFixtureTestCase {
             if (extension != null) {
                 extension.setLanguageLevel(LanguageLevel.JDK_1_8);
             }
-            Sdk jdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
-            model.setSdk(jdk);
 
             final String testDataPath = PathUtil.toSystemIndependentName(new File(TEST_DATA_PATH).getAbsolutePath());
             VfsRootAccess.allowRootAccess( Disposer.newDisposable(), testDataPath );

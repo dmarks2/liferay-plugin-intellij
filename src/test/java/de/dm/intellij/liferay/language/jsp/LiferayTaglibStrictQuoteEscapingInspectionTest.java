@@ -12,35 +12,17 @@ import com.intellij.testFramework.IdeaTestUtil;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
+import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class LiferayTaglibStrictQuoteEscapingInspectionTest extends LightJavaCodeInsightFixtureTestCase {
 
-    private static final LightProjectDescriptor MY_PROJECT_DESCRIPTOR = new DefaultLightProjectDescriptor() {
-
-        @Override
-        public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
-            LanguageLevelModuleExtension extension = model.getModuleExtension(LanguageLevelModuleExtension.class);
-            if (extension != null) {
-                extension.setLanguageLevel(LanguageLevel.JDK_1_8);
-            }
-
-            Sdk jdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
-            model.setSdk(jdk);
-        }
-
-        @Override
-        public Sdk getSdk() {
-            return IdeaTestUtil.getMockJdk18();
-        }
-    };
-
     @NotNull
     @Override
     protected LightProjectDescriptor getProjectDescriptor() {
-        return MY_PROJECT_DESCRIPTOR;
+        return LightProjectDescriptorBuilder.DEFAULT_PROJECT_DESCRIPTOR;
     }
 
 

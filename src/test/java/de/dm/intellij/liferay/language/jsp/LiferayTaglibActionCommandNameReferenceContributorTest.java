@@ -1,57 +1,27 @@
 package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.codeInsight.completion.CompletionType;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
-import com.intellij.openapi.roots.ContentEntry;
-import com.intellij.openapi.roots.LanguageLevelModuleExtension;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.util.Disposer;
-import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
-import com.intellij.pom.java.LanguageLevel;
 import com.intellij.testFramework.LightProjectDescriptor;
-import com.intellij.testFramework.PsiTestUtil;
-import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
-import com.intellij.util.PathUtil;
 import com.intellij.util.indexing.FileBasedIndex;
 import de.dm.intellij.liferay.index.ActionCommandIndex;
 import de.dm.intellij.liferay.index.PortletJspIndex;
 import de.dm.intellij.liferay.index.PortletNameIndex;
+import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.List;
 
 public class LiferayTaglibActionCommandNameReferenceContributorTest extends LightJavaCodeInsightFixtureTestCase {
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/jsp/LiferayTaglibActionCommandNameReferenceContributorTest";
 
-    private static final LightProjectDescriptor JAVA_OSGI_LIB_DESCRIPTOR = new DefaultLightProjectDescriptor() {
-
-        @Override
-        public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
-            LanguageLevelModuleExtension extension = model.getModuleExtension(LanguageLevelModuleExtension.class);
-            if (extension != null) {
-                extension.setLanguageLevel(LanguageLevel.JDK_1_8);
-            }
-            Sdk jdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
-            model.setSdk(jdk);
-
-            final String testDataPath = PathUtil.toSystemIndependentName(new File(TEST_DATA_PATH).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), testDataPath );
-
-            PsiTestUtil.addLibrary(model, "OSGi", testDataPath, "osgi.jar");
-        }
-    };
-
-
-
     @NotNull
     @Override
     protected LightProjectDescriptor getProjectDescriptor() {
-        return JAVA_OSGI_LIB_DESCRIPTOR;
+        return new LightProjectDescriptorBuilder()
+                .library("OSGi", TEST_DATA_PATH, "osgi.jar")
+                .build();
     }
 
     @Override

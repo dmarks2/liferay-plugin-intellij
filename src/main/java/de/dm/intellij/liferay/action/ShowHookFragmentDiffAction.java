@@ -4,7 +4,7 @@ import com.intellij.diff.DiffManager;
 import com.intellij.diff.DiffRequestFactory;
 import com.intellij.diff.actions.CompareFilesAction;
 import com.intellij.diff.requests.DiffRequest;
-import com.intellij.ide.highlighter.NewJspFileType;
+import com.intellij.jsp.highlighter.NewJspFileType;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;

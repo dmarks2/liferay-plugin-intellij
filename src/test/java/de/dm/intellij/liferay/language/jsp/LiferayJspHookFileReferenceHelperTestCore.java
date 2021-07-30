@@ -16,6 +16,7 @@ import com.intellij.testFramework.PsiTestUtil;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
+import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -25,29 +26,13 @@ public class LiferayJspHookFileReferenceHelperTestCore extends LightJavaCodeInsi
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/jsp/LiferayJspHookFileReferenceHelperTest";
 
-    private static final LightProjectDescriptor JAVA_PORTAL_WEB_DESCRIPTOR = new DefaultLightProjectDescriptor() {
-
-        @Override
-        public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
-        LanguageLevelModuleExtension extension = model.getModuleExtension(LanguageLevelModuleExtension.class);
-        if (extension != null) {
-            extension.setLanguageLevel(LanguageLevel.JDK_1_8);
-        }
-        Sdk jdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
-        model.setSdk(jdk);
-
-        final String testDataPath = PathUtil.toSystemIndependentName(new File(TEST_DATA_PATH).getAbsolutePath());
-        VfsRootAccess.allowRootAccess( Disposer.newDisposable(), testDataPath );
-
-        PsiTestUtil.addLibrary(model, "com.liferay.portal:com.liferay.portal.web", testDataPath, "com.liferay.portal.web.war");
-        PsiTestUtil.addLibrary(model, "OSGi", testDataPath, "osgi.jar");
-        }
-    };
-
     @NotNull
     @Override
     protected LightProjectDescriptor getProjectDescriptor() {
-        return JAVA_PORTAL_WEB_DESCRIPTOR;
+        return new LightProjectDescriptorBuilder()
+                .library("com.liferay.portal:com.liferay.portal.web", TEST_DATA_PATH, "com.liferay.portal.web.war")
+                .library("OSGi", TEST_DATA_PATH, "osgi.jar")
+                .build();
     }
 
     @Override

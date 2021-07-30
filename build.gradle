@@ -6,8 +6,8 @@ buildscript {
 
 
 plugins {
-    id "org.jetbrains.intellij" version "0.6.5"
-    id 'de.undercouch.download' version '3.4.3'
+    id "org.jetbrains.intellij" version "1.1.4"
+    id 'de.undercouch.download' version '4.1.2'
 }
 
 import de.undercouch.gradle.tasks.download.Download
@@ -24,11 +24,13 @@ tasks.withType(JavaCompile) {
 
 def generatedResources = "$buildDir/generated-resources"
 def tempDir = "$buildDir/tmp"
+def mockDir = "$buildDir/mock"
 
 test {
     testLogging {
         exceptionFormat = 'full'
     }
+    systemProperty "idea.home.path", mockDir
 }
 
 sourceSets {
@@ -40,7 +42,7 @@ sourceSets {
             srcDirs = ['src/main/resources']
         }
 
-        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'generateLiferayPortalPropertiesFiles', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions'])
+        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'generateLiferayPortalPropertiesFiles', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions', 'downloadIntelliJCommunityMockJDK11'])
     }
 }
 
@@ -71,16 +73,17 @@ intellij {
 //    version "IU-2019.3.4"
 //    version "IU-2020.2.1"
 //    version "IU-2020.3"
-    version "IU-2021.1"
-    type 'IU'
-    pluginName 'Liferay IntelliJ Plugin'
-    plugins = [
+//    version.set("IU-2021.1")
+    version.set("IU-2021.2")
+    type.set('IU')
+    pluginName.set('Liferay IntelliJ Plugin')
+    plugins.set([
             'JavaScriptLanguage', 'Tomcat', 'Velocity', 'FreeMarker', 'maven', 'properties', 'java-i18n', 'CSS', 'sass', 'JavaEE', 'Web', 'jsp', 'gradle', 'de.dm.intellij.maven-archetypes-catalog-plugin:1.4.0',
             'IntelliLang', 'uml', 'java',
             //test only?
             'Groovy', 'junit', 'PersistenceSupport', 'DatabaseTools'
-    ]
-    updateSinceUntilBuild false
+    ])
+    updateSinceUntilBuild.set(false)
 }
 
 runIde {
@@ -561,6 +564,32 @@ task unzipCompass0122SassExtensions(dependsOn: downloadCompass0122, type: Copy) 
         fcp.path = fcp.path.replaceFirst("^compass-0.12.2/lib/compass/sass_extensions", '')
     }
     includeEmptyDirs false
+}
+
+task downloadIntelliJCommunityMockJDK11() {
+    doLast {
+        new File(mockDir, "bin").mkdirs();
+
+        def target = new File(mockDir, "java/mockJDK-11/jre/lib");
+
+        target.mkdirs();
+
+        download {
+            src 'https://github.com/JetBrains/intellij-community/blob/master/java/mockJDK-11/jre/lib/annotations.jar?raw=true'
+            dest new File(target, "annotations.jar")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+
+        download {
+            src 'https://github.com/JetBrains/intellij-community/blob/master/java/mockJDK-11/jre/lib/rt.jar?raw=true'
+            dest new File(target, "rt.jar")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+    }
 }
 
 //BND filetype definition from https://github.com/lpireyn

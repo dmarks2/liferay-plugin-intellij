@@ -15,6 +15,8 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.tree.TokenSet;
+import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.SmartList;
 import de.dm.intellij.liferay.language.javascript.AbstractLiferayJavascriptLanguageInjector;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +30,11 @@ public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferay
     @Nullable
     @Override
     protected FtlMacro getTag(@NotNull PsiElement psiElement) {
-        return (FtlMacro)psiElement;
+        if (psiElement instanceof FtlMacro) {
+            return (FtlMacro)psiElement;
+        }
+
+        return PsiTreeUtil.getParentOfType(psiElement, FtlMacro.class);
     }
 
     @Override
@@ -66,31 +72,35 @@ public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferay
     @NotNull
     @Override
     protected FtlCompositeElement[] getAttributes(@NotNull PsiElement psiElement) {
-        FtlMacro ftlMacro = (FtlMacro)psiElement;
+        FtlMacro ftlMacro = getTag(psiElement);
 
-        FtlArgumentList argumentList = ftlMacro.getArgumentList();
-        if (argumentList.getNamedArguments().length > 0) {
-            return argumentList.getNamedArguments();
-        } else {
-            FtlExpression[] positionalArguments = argumentList.getPositionalArguments();
+        if (ftlMacro != null) {
+            FtlArgumentList argumentList = ftlMacro.getArgumentList();
+            if (argumentList.getNamedArguments().length > 0) {
+                return argumentList.getNamedArguments();
+            } else {
+                FtlExpression[] positionalArguments = argumentList.getPositionalArguments();
 
-            FtlBinaryExpression[] binaryExpressions = new FtlBinaryExpression[positionalArguments.length];
+                FtlBinaryExpression[] binaryExpressions = new FtlBinaryExpression[positionalArguments.length];
 
-            for (int i = 0 ; i < positionalArguments.length; i++) {
-                if (positionalArguments[i] instanceof FtlBinaryExpression) {
-                    binaryExpressions[i] = (FtlBinaryExpression)positionalArguments[i];
-                } else {
-                    //unknown?
-                    return new FtlCompositeElement[0];
+                for (int i = 0; i < positionalArguments.length; i++) {
+                    if (positionalArguments[i] instanceof FtlBinaryExpression) {
+                        binaryExpressions[i] = (FtlBinaryExpression) positionalArguments[i];
+                    } else {
+                        //unknown?
+                        return new FtlCompositeElement[0];
+                    }
                 }
+                return binaryExpressions;
             }
-            return binaryExpressions;
         }
+
+        return new FtlCompositeElement[0];
     }
 
     @NotNull
     public List<? extends Class<? extends PsiElement>> elementsToInjectIn() {
-        return Arrays.asList(FtlMacro.class);
+        return Arrays.asList(FtlMacro.class, FtlStringLiteral.class);
     }
 
     private PsiElement getValueElement(FtlCompositeElement ftlCompositeElement) {

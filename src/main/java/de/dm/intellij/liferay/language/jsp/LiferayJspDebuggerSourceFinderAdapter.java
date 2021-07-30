@@ -1,7 +1,7 @@
 package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.debugger.engine.SourcesFinder;
-import com.intellij.javaee.deployment.JspDeploymentManager;
+import com.intellij.javaee.web.deployment.JspDeploymentManager;
 import com.intellij.javaee.facet.JavaeeFacet;
 import com.intellij.openapi.fileTypes.FileNameMatcher;
 import com.intellij.openapi.fileTypes.FileTypeManager;

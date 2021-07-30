@@ -1,51 +1,23 @@
 package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.codeInsight.completion.CompletionType;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
-import com.intellij.openapi.roots.ContentEntry;
-import com.intellij.openapi.roots.LanguageLevelModuleExtension;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.util.Disposer;
-import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
-import com.intellij.pom.java.LanguageLevel;
 import com.intellij.testFramework.LightProjectDescriptor;
-import com.intellij.testFramework.PsiTestUtil;
-import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
-import com.intellij.util.PathUtil;
+import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.List;
 
 public class LiferayJspHookFileReferenceHelperTestFragment extends LightJavaCodeInsightFixtureTestCase {
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/jsp/LiferayJspHookFileReferenceHelperTest";
 
-    private static final LightProjectDescriptor JAVA_LOGIN_WEB_DESCRIPTOR = new DefaultLightProjectDescriptor() {
-
-        @Override
-        public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
-        LanguageLevelModuleExtension extension = model.getModuleExtension(LanguageLevelModuleExtension.class);
-        if (extension != null) {
-            extension.setLanguageLevel(LanguageLevel.JDK_1_8);
-        }
-        Sdk jdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
-        model.setSdk(jdk);
-
-        final String testDataPath = PathUtil.toSystemIndependentName(new File(TEST_DATA_PATH).getAbsolutePath());
-        VfsRootAccess.allowRootAccess( Disposer.newDisposable(), testDataPath );
-
-        PsiTestUtil.addLibrary(model, "com.liferay:com.liferay.login.web", testDataPath, "com.liferay.login.web.jar");
-        }
-    };
-
     @NotNull
     @Override
     protected LightProjectDescriptor getProjectDescriptor() {
-        return JAVA_LOGIN_WEB_DESCRIPTOR;
+        return new LightProjectDescriptorBuilder()
+                .library("com.liferay:com.liferay.login.web", TEST_DATA_PATH, "com.liferay.login.web.jar")
+                .build();
     }
 
     @Override

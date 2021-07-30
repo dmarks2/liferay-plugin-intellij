@@ -17,6 +17,7 @@ import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
+import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -27,27 +28,6 @@ public class LiferayFreemarkerTaglibClassNameCompletionContributorTest extends L
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/freemarker/LiferayFreemarkerTaglibClassNameCompletionContributorTest";
 
-    private static final LightProjectDescriptor JAVA_DESCRIPTOR = new DefaultLightProjectDescriptor() {
-
-        @Override
-        public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
-            LanguageLevelModuleExtension extension = model.getModuleExtension(LanguageLevelModuleExtension.class);
-            if (extension != null) {
-                extension.setLanguageLevel(LanguageLevel.JDK_1_8);
-            }
-            Sdk jdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
-            model.setSdk(jdk);
-
-            URL resource = LiferayFtlVariableProviderTest.class.getResource("/com/liferay/ftl");
-            String resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePath );
-
-            resource = LiferayFtlVariableProviderTest.class.getResource("/com/liferay/tld");
-            resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePath );
-        }
-    };
-
     @Override
     protected String getTestDataPath() {
         return TEST_DATA_PATH;
@@ -56,7 +36,12 @@ public class LiferayFreemarkerTaglibClassNameCompletionContributorTest extends L
     @NotNull
     @Override
     protected LightProjectDescriptor getProjectDescriptor() {
-        return JAVA_DESCRIPTOR;
+        return new LightProjectDescriptorBuilder()
+                .rootAccess(
+                        "/com/liferay/ftl",
+                        "/com/liferay/tld"
+                ).build();
+
     }
 
     public void testCompletion() {

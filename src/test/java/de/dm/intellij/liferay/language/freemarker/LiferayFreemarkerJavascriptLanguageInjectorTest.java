@@ -1,11 +1,25 @@
 package de.dm.intellij.liferay.language.freemarker;
 
 import com.intellij.codeInsight.completion.CompletionType;
+import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
+import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class LiferayFreemarkerJavascriptLanguageInjectorTest extends BasePlatformTestCase {
+
+    @NotNull
+    @Override
+    protected LightProjectDescriptor getProjectDescriptor() {
+        return
+                new LightProjectDescriptorBuilder()
+                        .rootAccess(
+                                "/com/liferay/ftl",
+                                "/com/liferay/tld")
+                        .build();
+    }
 
     @Override
     protected void setUp() throws Exception {

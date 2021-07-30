@@ -15,6 +15,7 @@ import com.intellij.testFramework.PsiTestUtil;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
+import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -24,24 +25,6 @@ public class ComponentPropertiesCompletionContributorTest extends LightJavaCodeI
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/osgi/ComponentPropertiesCompletionContributorTest";
 
-    private static final LightProjectDescriptor JAVA_OSGI_LIB_DESCRIPTOR = new DefaultLightProjectDescriptor() {
-
-        @Override
-        public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
-            LanguageLevelModuleExtension extension = model.getModuleExtension(LanguageLevelModuleExtension.class);
-            if (extension != null) {
-                extension.setLanguageLevel(LanguageLevel.JDK_1_8);
-            }
-            Sdk jdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
-            model.setSdk(jdk);
-
-            final String testDataPath = PathUtil.toSystemIndependentName(new File(TEST_DATA_PATH).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), testDataPath );
-
-            PsiTestUtil.addLibrary(model, "OSGi", testDataPath, "osgi.jar");
-        }
-    };
-
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -50,9 +33,10 @@ public class ComponentPropertiesCompletionContributorTest extends LightJavaCodeI
     @NotNull
     @Override
     protected LightProjectDescriptor getProjectDescriptor() {
-        return JAVA_OSGI_LIB_DESCRIPTOR;
+        return new LightProjectDescriptorBuilder()
+                .library("OSGi", TEST_DATA_PATH, "osgi.jar")
+                .build();
     }
-
     @Override
     protected String getTestDataPath() {
         return TEST_DATA_PATH;

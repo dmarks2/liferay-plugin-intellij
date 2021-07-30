@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.freemarker;
 
+import com.intellij.codeInsight.template.TemplateActionContext;
 import com.intellij.codeInsight.template.impl.TemplateImpl;
 import com.intellij.codeInsight.template.impl.TemplateManagerImpl;
 import com.intellij.psi.PsiFile;
@@ -20,7 +21,10 @@ public class LiferayJournalTemplateLiveTemplatesProviderTest extends BasePlatfor
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/simple.ftl");
 
         PsiFile psiFile = myFixture.getFile();
-        final List<TemplateImpl> availableTemplates = TemplateManagerImpl.listApplicableTemplates(psiFile, 0, false);
+
+        TemplateActionContext templateActionContext = TemplateActionContext.create(psiFile, null, 0, 0, false);
+
+        final List<TemplateImpl> availableTemplates = TemplateManagerImpl.listApplicableTemplates(templateActionContext);
 
         assertTrue(availableTemplates.stream().anyMatch(t -> "JournalArticleLocalService".equals(t.getKey())));
     }

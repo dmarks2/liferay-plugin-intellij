@@ -89,6 +89,15 @@ public class LiferayTaglibAttributes {
         ));
         TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI_OLD, LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.get(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI));
 
+        TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_CLAY, Arrays.asList(
+                new AbstractMap.SimpleEntry<String, String>("alert", "message"),
+                new AbstractMap.SimpleEntry<String, String>("button", "label"),
+                new AbstractMap.SimpleEntry<String, String>("checkbox", "label"),
+                new AbstractMap.SimpleEntry<String, String>("dropdown-menu", "label"),
+                new AbstractMap.SimpleEntry<String, String>("link", "label"),
+                new AbstractMap.SimpleEntry<String, String>("stripe", "message")
+        ));
+
         TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_DDM, Arrays.asList(
                 new AbstractMap.SimpleEntry<String, String>("template-selector", "label")
         ));

@@ -2,82 +2,37 @@ package de.dm.intellij.liferay.language.freemarker;
 
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.codeInsight.navigation.actions.GotoDeclarationAction;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
-import com.intellij.openapi.roots.ContentEntry;
-import com.intellij.openapi.roots.LanguageLevelModuleExtension;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
-import com.intellij.pom.java.LanguageLevel;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiField;
-import com.intellij.testFramework.IdeaTestUtil;
 import com.intellij.testFramework.LightProjectDescriptor;
-import com.intellij.testFramework.PsiTestUtil;
-import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
-import com.intellij.util.PathUtil;
-import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
+import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.net.URL;
 import java.util.List;
 
 public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureTestCase {
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/freemarker/LiferayFtlVariableProviderTest";
 
-    private static final LightProjectDescriptor MY_PROJECT_DESCRIPTOR = new DefaultLightProjectDescriptor() {
-
-        @Override
-        public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
-            LanguageLevelModuleExtension extension = model.getModuleExtension(LanguageLevelModuleExtension.class);
-            if (extension != null) {
-                extension.setLanguageLevel(LanguageLevel.JDK_1_8);
-            }
-
-            Sdk jdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
-            model.setSdk(jdk);
-
-            LiferayModuleComponent.getInstance(module).setLiferayVersion("7.0.6");
-            LiferayModuleComponent.getInstance(module).getThemeSettings().put(LiferayLookAndFeelXmlParser.TEMPLATES_PATH, "/templates");
-            LiferayModuleComponent.getInstance(module).getThemeSettings().put(LiferayLookAndFeelXmlParser.TEMPLATE_EXTENSION, "ftl");
-
-            URL resource = LiferayFtlVariableProviderTest.class.getResource("/com/liferay/vtl");
-            String resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePath );
-
-            resource = LiferayFtlVariableProviderTest.class.getResource("/com/liferay/ftl");
-            resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePath );
-
-            resource = LiferayFtlVariableProviderTest.class.getResource("/com/liferay/tld");
-            resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePath );
-
-            final String testDataPath = PathUtil.toSystemIndependentName(new File(TEST_DATA_PATH).getAbsolutePath());
-            VfsRootAccess.allowRootAccess( Disposer.newDisposable(), testDataPath );
-
-            PsiTestUtil.addLibrary(model, "freemarker-other", testDataPath, "freemarker-other.jar");
-        }
-
-        @Override
-        public Sdk getSdk() {
-            return IdeaTestUtil.getMockJdk18();
-        }
-    };
-
     @NotNull
     @Override
     protected LightProjectDescriptor getProjectDescriptor() {
-        return MY_PROJECT_DESCRIPTOR;
+        return new LightProjectDescriptorBuilder()
+                .rootAccess(
+                        "/com/liferay/vtl",
+                        "/com/liferay/ftl",
+                        "/com/liferay/tld"
+                )
+                .liferayVersion("7.0.6")
+                .themeSettings(LiferayLookAndFeelXmlParser.TEMPLATES_PATH, "/templates")
+                .themeSettings(LiferayLookAndFeelXmlParser.TEMPLATE_EXTENSION, "ftl")
+                .library("freemarker-other", TEST_DATA_PATH, "freemarker-other.jar")
+                .build();
     }
 
 

@@ -1,8 +1,7 @@
-<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin>
     <extensions defaultExtensionNs="com.intellij">
         <!-- Declare that .tpl files should be handled as Velocity files -->
-        <fileTypeFactory implementation="de.dm.intellij.liferay.language.tpl.TplFileTypeFactory"/>
+        <fileType name="TPL" implementationClass="de.dm.intellij.liferay.language.tpl.TplFileType" fieldName="INSTANCE" language="VTL" extensions="tpl"/>
 
         <!-- Adds file references for known template variables (Freemarker / Velocity) like ${images_folder} -->
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.TemplateVariableReferenceContributor"/>
