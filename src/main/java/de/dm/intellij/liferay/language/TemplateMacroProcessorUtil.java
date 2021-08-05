@@ -16,10 +16,7 @@ import java.util.Collections;
 public class TemplateMacroProcessorUtil {
 
     public static <F extends PsiFile, T extends PsiNamedElement> Collection<T> getGlobalMacros(TemplateMacroProcessor<F, T> templateMacroProcessor, F file) {
-        F templateFile = file;
-        if (file.getOriginalFile() != null) {
-            templateFile = (F)file.getOriginalFile();
-        }
+        F templateFile = (F)file.getOriginalFile();
 
         final Module module = ModuleUtil.findModuleForPsiElement(templateFile);
         if (module == null) {
@@ -32,10 +29,17 @@ public class TemplateMacroProcessorUtil {
             String macroFileName = templateMacroProcessor.getMacroFileName(portalMajorVersion);
             if (macroFileName != null) {
                 URL url = TemplateMacroProcessorUtil.class.getResource(macroFileName);
-                VirtualFile macroFile = VfsUtil.findFileByURL(url);
-                PsiFile macroPsiFile = PsiManager.getInstance(module.getProject()).findFile(macroFile);
+                if (url != null) {
+                    VirtualFile macroFile = VfsUtil.findFileByURL(url);
 
-                return templateMacroProcessor.getMacrosFromFile(macroPsiFile);
+                    if (macroFile != null) {
+                        if (macroFile.isValid()) {
+                            PsiFile macroPsiFile = PsiManager.getInstance(module.getProject()).findFile(macroFile);
+
+                            return templateMacroProcessor.getMacrosFromFile(macroPsiFile);
+                        }
+                    }
+                }
             }
 
         }
