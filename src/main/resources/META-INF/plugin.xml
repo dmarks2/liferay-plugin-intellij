@@ -25,6 +25,10 @@
       ]]></description>
 
     <change-notes><![CDATA[
+        <p>Version 0.0.13</p>
+        <ul>
+            <li>Bugfix: Exception when trying to inject Javascript inside aui:script-tags containing additonal attributes (like "use" or "require")</li>
+        </ul>
         <p>Version 0.0.12</p>
         <ul>
             <li>Feature: Added support for Liferay 7.4</li>

@@ -66,7 +66,7 @@ public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferay
 
     @Override
     protected boolean isContextSuitableForBodyInjection(PsiElement context) {
-        return true;
+        return context instanceof FtlMacro;
     }
 
     @NotNull

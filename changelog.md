@@ -3,6 +3,9 @@ Liferay Plugin for IntelliJ
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.13
+- Bugfix: Exception when trying to inject Javascript inside aui:script-tags containing additonal attributes (like "use" or "require")
+
 ## 0.0.12
 - Feature: Added support for Liferay 7.4
 - Feature: Code Completion and documentation for portal.properties files
