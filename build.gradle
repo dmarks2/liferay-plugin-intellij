@@ -611,4 +611,4 @@ task downloadIntelliJCommunityMockJDK11() {
 */
 
 group 'de.dm.intellij.liferay'
-version '0.0.12'
+version '0.0.13'

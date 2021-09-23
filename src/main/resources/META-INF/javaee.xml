@@ -9,5 +9,7 @@
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.xml.LiferayXmlFileReferenceContributor"/>
 
         <debugger.positionManagerFactory id="liferayPositionManager" implementation="de.dm.intellij.liferay.language.jsp.LiferayJspDebuggerPositionManagerFactory" />
+
+        <multiHostInjector implementation="de.dm.intellij.liferay.workflow.LiferayWorkflowScriptLanguageInjector"/>
     </extensions>
 </idea-plugin>

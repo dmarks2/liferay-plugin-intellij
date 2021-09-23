@@ -2,7 +2,7 @@
     <id>de.dm.intellij.liferay</id>
     <name>Liferay</name>
     <category>Framework integration</category>
-    <version>0.0.12</version>
+    <version>0.0.13</version>
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
@@ -27,6 +27,7 @@
     <change-notes><![CDATA[
         <p>Version 0.0.13</p>
         <ul>
+            <li>Feature: Language injections for script and templat tags in Liferay workflow definition files</li>
             <li>Bugfix: Exception when trying to inject Javascript inside aui:script-tags containing additonal attributes (like "use" or "require")</li>
         </ul>
         <p>Version 0.0.12</p>

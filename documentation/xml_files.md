@@ -3,6 +3,7 @@ Liferay XML files
 
 1. [XML-Schemas and DTD files](#xml-schemas-and-dtd-files)
 2. [File References](#file-references) 
+2. [Liferay Workflow Definitions](#liferay-workflow-definitions) 
 
 XML-Schemas and DTD files
 -------------------------
@@ -68,3 +69,32 @@ The following tags and attributes are supported:
 
     portlet-display-templates.xml
         <script-file>
+
+Liferay Workflow Definitions
+----------------------------
+
+For workflow definition files the XML tags `<script>` and `<template>` are examined. If
+the corresponding `<script-language>` or `<template-language>` is present and a proper language is defined
+the languge is injected into the tags above. 
+
+So if the `<script-language>` defines that *groovy* is being used in `<script>` you can
+use code completion, syntax checking and other language features inside the `<script>`-Tag.
+
+If specific language features are available in IntelliJ depends on if you installed and activated
+the proper plugin for that language.
+
+The following languages are supported for `<script-language>`:
+
+* javascript
+* groovy
+* java
+* beanshell
+* drl
+* python
+* ruby
+
+The following languages are supported for `<template-language>`:
+
+* freemarker
+* velocity
+
