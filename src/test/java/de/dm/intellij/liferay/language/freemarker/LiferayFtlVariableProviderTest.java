@@ -360,5 +360,12 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         assertTrue(strings.contains("liferay_aui"));
     }
 
+    public void testWorkflowDefinitionTemplateContextVariables() {
+        myFixture.configureByFiles("workflow-definition-freemarker.xml");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("workflowContext"));
+    }
+
 
 }

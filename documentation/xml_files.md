@@ -98,3 +98,5 @@ The following languages are supported for `<template-language>`:
 * freemarker
 * velocity
 
+For `<script>`-Tags containing groovy scripts the available context variables like `workflowContext` are detected, so
+that code completion for those variables is available.

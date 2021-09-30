@@ -2,10 +2,15 @@ package de.dm.intellij.liferay.language.groovy;
 
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.ResolveState;
 import com.intellij.psi.impl.light.LightFieldBuilder;
 import com.intellij.psi.scope.PsiScopeProcessor;
+import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.XmlText;
+import de.dm.intellij.liferay.workflow.LiferayWorkflowContextVariablesUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.plugins.groovy.lang.psi.impl.synthetic.GroovyScriptClass;
 import org.jetbrains.plugins.groovy.lang.resolve.NonCodeMembersContributor;
@@ -31,23 +36,70 @@ public class GroovyScriptingImplicitMembersContributor extends NonCodeMembersCon
     public void processDynamicElements(@NotNull PsiType qualifierType, PsiClass aClass, @NotNull PsiScopeProcessor processor, @NotNull PsiElement place, @NotNull ResolveState state) {
         String name = ResolveUtil.getNameHint(processor);
 
-        if (aClass instanceof GroovyScriptClass) {
+        if (isInsideWorkflowDefinitionScriptTag(place)) {
             if (name == null) {
+                for (Map.Entry<String, String> scriptContextVariable : LiferayWorkflowContextVariablesUtil.WORKFLOW_SCRIPT_CONTEXT_VARIABLES.entrySet()) {
+                    LightFieldBuilder lightField = new LightFieldBuilder(scriptContextVariable.getKey(), scriptContextVariable.getValue(), place);
 
-                for (Map.Entry<String, String> implicitVariable : IMPLICIT_VARIABLES.entrySet()) {
-                    LightFieldBuilder lightField = new LightFieldBuilder(implicitVariable.getKey(), implicitVariable.getValue(), place);
+                    boolean continueProcessing = processor.execute(lightField, state);
 
-                    processor.execute(lightField, state);
+                    if (!continueProcessing) {
+                        return;
+                    }
                 }
             } else {
-                if (IMPLICIT_VARIABLES.containsKey(name)) {
-                    String type = IMPLICIT_VARIABLES.get(name);
+                if (LiferayWorkflowContextVariablesUtil.WORKFLOW_SCRIPT_CONTEXT_VARIABLES.containsKey(name)) {
+                    String type = LiferayWorkflowContextVariablesUtil.WORKFLOW_SCRIPT_CONTEXT_VARIABLES.get(name);
 
                     LightFieldBuilder lightField = new LightFieldBuilder(name, type, place);
 
                     processor.execute(lightField, state);
                 }
             }
+        } else {
+            if (aClass instanceof GroovyScriptClass) {
+                if (name == null) {
+
+                    for (Map.Entry<String, String> implicitVariable : IMPLICIT_VARIABLES.entrySet()) {
+                        LightFieldBuilder lightField = new LightFieldBuilder(implicitVariable.getKey(), implicitVariable.getValue(), place);
+
+                        boolean continueProcessing = processor.execute(lightField, state);
+
+                        if (!continueProcessing) {
+                            return;
+                        }
+                    }
+                } else {
+                    if (IMPLICIT_VARIABLES.containsKey(name)) {
+                        String type = IMPLICIT_VARIABLES.get(name);
+
+                        LightFieldBuilder lightField = new LightFieldBuilder(name, type, place);
+
+                        processor.execute(lightField, state);
+                    }
+                }
+            }
         }
     }
+
+    private boolean isInsideWorkflowDefinitionScriptTag(@NotNull PsiElement place) {
+        PsiFile containingFile = place.getContainingFile();
+
+        if (containingFile != null) {
+            PsiElement context = containingFile.getContext();
+
+            if (context instanceof XmlText) {
+                //probably inside workflow definition file
+
+                XmlTag xmlTag = PsiTreeUtil.getParentOfType(context, XmlTag.class);
+
+                if (xmlTag != null) {
+                    return (LiferayWorkflowContextVariablesUtil.isWorkflowScriptTag(xmlTag));
+                }
+            }
+        }
+
+        return false;
+    }
+
 }

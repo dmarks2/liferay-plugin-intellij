@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.13
 - Feature: Language injections for script and template tags in Liferay workflow definition files
+- Feature: Provide workflow context variables for script and template tags (groovy and freemarker)
 - Bugfix: Exception when trying to inject Javascript inside aui:script-tags containing additonal attributes (like "use" or "require")
 
 ## 0.0.12

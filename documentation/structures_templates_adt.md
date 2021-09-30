@@ -6,6 +6,7 @@ Structures, Templates and Application Display Templates
 3. [JSON Schema](#json-schema)
 4. [Implicit variables for Application Display Templates](#implicit-variables-for-application-display-templates)
 5. [Live Template scopes](#live-template-scopes)
+6. [Implicit Variables for Workflow Definition Templates](#implicit-variables-for-workflow-definition-templates)
 
 Implicit variables for Journal Templates
 ----------------------------------------
@@ -100,4 +101,9 @@ The following scopes are available
     Liferay Journal Templates (Velocity)
     Liferay Theme Template (Velocity)
 
+Implicit Variables for Workflow Definition Templates
+----------------------------------------------------
 
+Inside `<template>` tags inside a workflow definition file Freemarker or Velocity can be used. In those tags
+context variables like `workflowContext` are detected, so that code completion
+is available for those variables.

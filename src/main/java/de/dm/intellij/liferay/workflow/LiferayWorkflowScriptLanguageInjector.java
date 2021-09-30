@@ -15,23 +15,11 @@ import org.intellij.plugins.intelliLang.inject.InjectorUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class LiferayWorkflowScriptLanguageInjector implements MultiHostInjector {
-
-    private static final Collection<String> WORKFLOW_NAMESPACES = Arrays.asList(
-            "urn:liferay.com:liferay-workflow_6.1.0",
-            "urn:liferay.com:liferay-workflow_6.2.0",
-            "urn:liferay.com:liferay-workflow_7.0.0",
-            "urn:liferay.com:liferay-workflow_7.1.0",
-            "urn:liferay.com:liferay-workflow_7.2.0",
-            "urn:liferay.com:liferay-workflow_7.3.0",
-            "urn:liferay.com:liferay-workflow_7.4.0"
-    );
 
     private static final Map<String, String> SCRIPT_LANGUAGE_MAPPING = new HashMap<>();
     static {
@@ -60,9 +48,9 @@ public class LiferayWorkflowScriptLanguageInjector implements MultiHostInjector 
 
             String namespace = xmlTag.getNamespace();
 
-            if (WORKFLOW_NAMESPACES.contains(namespace)) {
-                handleLanguageInjection(registrar, xmlTag, "script", "script-language", SCRIPT_LANGUAGE_MAPPING);
-                handleLanguageInjection(registrar, xmlTag, "template", "template-language", TEMPLATE_LANGUAGE_MAPPING);
+            if (LiferayWorkflowContextVariablesUtil.WORKFLOW_NAMESPACES.contains(namespace)) {
+                handleLanguageInjection(registrar, xmlTag, LiferayWorkflowContextVariablesUtil.WORKFLOW_SCRIPT_TAG, "script-language", SCRIPT_LANGUAGE_MAPPING);
+                handleLanguageInjection(registrar, xmlTag, LiferayWorkflowContextVariablesUtil.WORKFLOW_TEMPLATE_TAG, "template-language", TEMPLATE_LANGUAGE_MAPPING);
             }
         }
     }

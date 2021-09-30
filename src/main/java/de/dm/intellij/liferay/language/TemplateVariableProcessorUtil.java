@@ -11,17 +11,22 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiNamedElement;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.XmlText;
 import com.intellij.velocity.psi.files.VtlFile;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.util.LiferayFileUtil;
 import de.dm.intellij.liferay.util.LiferayVersions;
+import de.dm.intellij.liferay.workflow.LiferayWorkflowContextVariablesUtil;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,6 +68,18 @@ public class TemplateVariableProcessorUtil {
         boolean isStandardVelocityContextFile = isJournalTemplateFile || isThemeTemplateFile || isLayoutTemplateFile || isApplicationDisplayTemplateFile;
 
         boolean isRequestBasedContextFile = isThemeTemplateFile || isLayoutTemplateFile || isApplicationDisplayTemplateFile;
+
+        if (templateFile.getContext() instanceof XmlText) {
+            XmlTag xmlTag = PsiTreeUtil.getParentOfType(templateFile.getContext(), XmlTag.class);
+
+            if (xmlTag != null) {
+                if (LiferayWorkflowContextVariablesUtil.isWorkflowTemplateTag(xmlTag)) {
+                    for (Map.Entry<String, String> templateContextVariable : LiferayWorkflowContextVariablesUtil.WORKFLOW_TEMPLATE_CONTEXT_VARIABLES.entrySet()) {
+                        variables.add(templateVariableProcessor.createVariable(templateContextVariable.getKey(), templateFile, templateContextVariable.getValue()));
+                    }
+                }
+            }
+        }
 
         if (isJournalTemplateFile) {
             variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/journal_template.vm"));
@@ -404,6 +421,7 @@ public class TemplateVariableProcessorUtil {
                 variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/base_ddm_template_70.vm"));
             }
         }
+
         return variables;
     }
 
