@@ -1,0 +1,15 @@
+{
+  "layoutTemplateId": "2_columns_ii",
+  "publicPages": [
+    {
+      "friendlyURL": "/home",
+      "name": "Welcome",
+      "title": "Welcome"
+    },
+    {
+      "friendlyURL": "/search",
+      "name": "Search",
+      "title": "Search"
+    }
+  ]
+}

@@ -14,6 +14,7 @@ import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileSystem;
+import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileSystemItem;
@@ -352,6 +353,48 @@ public class LiferayFileUtil {
                 }
             }
             return getParent(parent, name);
+        }
+
+        return null;
+    }
+
+    public static PsiFileSystemItem getParent(PsiFileSystemItem file, String name) {
+        if (file != null) {
+            PsiFileSystemItem parent = file.getParent();
+            if (parent != null) {
+                if (name.equals(parent.getName())) {
+                    return parent;
+                }
+            }
+            return getParent(parent, name);
+        }
+
+        return null;
+    }
+
+    public static PsiFileSystemItem getChild(PsiFileSystemItem parent, String name) {
+        int index = name.indexOf('/');
+
+        String pathElement = name;
+
+        if (index > -1) {
+            pathElement = name.substring(0, index);
+        }
+
+        if (parent != null) {
+            for (PsiElement psiElement : parent.getChildren()) {
+                if (psiElement instanceof PsiFileSystemItem) {
+                    PsiFileSystemItem psiFileSystemItem = (PsiFileSystemItem)psiElement;
+
+                    if (pathElement.equals(psiFileSystemItem.getName())) {
+                        if (index == -1) {
+                            return psiFileSystemItem;
+                        } else {
+                            return getChild(psiFileSystemItem, name.substring(index + 1));
+                        }
+                    }
+                }
+            }
         }
 
         return null;

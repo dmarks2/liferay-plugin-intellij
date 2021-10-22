@@ -11,5 +11,7 @@
         <debugger.positionManagerFactory id="liferayPositionManager" implementation="de.dm.intellij.liferay.language.jsp.LiferayJspDebuggerPositionManagerFactory" />
 
         <multiHostInjector implementation="de.dm.intellij.liferay.workflow.LiferayWorkflowScriptLanguageInjector"/>
+
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.resourcesimporter.LiferayResourcesImporterPlaceholderReferenceContributor"/>
     </extensions>
 </idea-plugin>

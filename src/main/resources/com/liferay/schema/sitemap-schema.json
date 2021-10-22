@@ -106,6 +106,12 @@
             }
           }
         },
+        "content": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/content"
+          }
+        },
         "layouts": {
           "type": "array",
           "items": {
@@ -117,6 +123,107 @@
         "name",
         "title"
       ]
+    },
+    "content": {
+      "type": ["string", "object"],
+      "oneOf": [
+        {
+          "required": [
+            "fragmentKey"
+          ],
+          "properties": {
+            "fragmentKey": {
+              "type": "string"
+            },
+            "configuration": {
+              "type": "string"
+            },
+            "css": {
+              "type": "string"
+            },
+            "html": {
+              "type": "string"
+            },
+            "js": {
+              "type": "string"
+            },
+            "editableValues": {
+              "type": "object"
+            }
+          }
+        },
+        {
+          "required": [
+            "portletId"
+          ],
+          "properties": {
+            "portletId": {
+              "type": "string"
+            },
+            "instanceId": {
+              "type": "string"
+            },
+            "portletPreferences": {
+              "type": "object"
+            }
+          }
+        },
+        {
+          "required": [
+            "itemType"
+          ],
+          "properties": {
+            "itemType": {
+              "type": "string",
+              "enum": [
+                "collection", "row", "container"
+              ]
+            },
+            "itemConfig": {
+              "type": "object",
+              "properties": {
+                "tablet": {
+                  "type": "object"
+                },
+                "landscapeMobile": {
+                  "type": "object"
+                },
+                "portraitMobile": {
+                  "type": "object"
+                }
+              },
+              "additionalProperties": true
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/columnContent"
+              }
+            },
+            "content": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/content"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "columnContent": {
+      "allOf": [
+        { "$ref": "#/definitions/content" }
+      ],
+      "properties": {
+        "config": {
+          "type": "object",
+          "properties": {
+            "size": {
+              "type": "integer"
+            }
+          }
+        }
+      }
     }
   }
 }
