@@ -12,7 +12,10 @@ The plugin provides known XML-Schema and DTD files for Liferay 6.x and 7.x. This
 
 ![liferay-portlet.xml](liferay_portlet_xml.png "liferay-portlet.xml")
 
-Additionally the plugin provides XML-Schemas for ```portlet-model-hints.xml```, ```custom-sql/default.xml``` and `portlet-display-templates.xml` 
+Additionally the plugin provides XML-Schemas for ```portlet-model-hints.xml```, ```custom-sql/default.xml``` and `portlet-display-templates.xml`
+
+Inside custom sql files the content of the `<sql>` tag is recognized as SQL language, so code completion
+is available here.
 
 File References
 ---------------

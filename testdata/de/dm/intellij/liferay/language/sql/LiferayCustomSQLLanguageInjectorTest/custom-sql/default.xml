@@ -1,0 +1,5 @@
+<custom-sql>
+    <sql id="de.dm.liferay.custom.sql.findEntity">
+        <caret>
+    </sql>
+</custom-sql>

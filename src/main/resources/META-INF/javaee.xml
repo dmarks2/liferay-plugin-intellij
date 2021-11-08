@@ -13,5 +13,7 @@
         <multiHostInjector implementation="de.dm.intellij.liferay.workflow.LiferayWorkflowScriptLanguageInjector"/>
 
         <psi.referenceContributor implementation="de.dm.intellij.liferay.resourcesimporter.LiferayResourcesImporterPlaceholderReferenceContributor"/>
+
+        <multiHostInjector implementation="de.dm.intellij.liferay.language.sql.LiferayCustomSQLLanguageInjector" />
     </extensions>
 </idea-plugin>

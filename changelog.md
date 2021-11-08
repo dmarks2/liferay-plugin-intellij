@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Language injections for script and template tags in Liferay workflow definition files
 - Feature: Provide workflow context variables for script and template tags (groovy and freemarker)
 - Feature: Resolve Files and Layout entries in Resources Importer Template files
+- Feature: Inject SQL language into custom-sql definition files
 - Bugfix: Exception when trying to inject Javascript inside aui:script-tags containing additonal attributes (like "use" or "require")
 
 ## 0.0.12
