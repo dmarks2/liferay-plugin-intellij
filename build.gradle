@@ -74,7 +74,8 @@ intellij {
 //    version "IU-2020.2.1"
 //    version "IU-2020.3"
 //    version.set("IU-2021.1")
-    version.set("IU-2021.2")
+//    version.set("IU-2021.2")
+    version.set("IU-2021.3")
     type.set('IU')
     pluginName.set('Liferay IntelliJ Plugin')
     plugins.set([

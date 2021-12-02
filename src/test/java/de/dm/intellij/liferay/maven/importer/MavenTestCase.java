@@ -117,9 +117,9 @@ public abstract class MavenTestCase extends UsefulTestCase {
     new RunAll(
       () -> MavenServerManager.getInstance().shutdown(true),
       () -> MavenArtifactDownloader.awaitQuiescence(100, TimeUnit.SECONDS),
-      () -> myProject = null,
       () -> EdtTestUtil.runInEdtAndWait(() -> tearDownFixtures()),
-      () -> MavenIndicesManager.getInstance().clear(),
+      () -> MavenIndicesManager.getInstance(myProject).clear(),
+      () -> myProject = null,
       () -> super.tearDown(),
       () -> {
         if (myDir != null) {

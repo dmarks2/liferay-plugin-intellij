@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Resolve Files and Layout entries in Resources Importer Template files
 - Feature: Inject SQL language into custom-sql definition files
 - Bugfix: Exception when trying to inject Javascript inside aui:script-tags containing additonal attributes (like "use" or "require")
+- Change: Fixed support for IntelliJ 2021.3
 
 ## 0.0.12
 - Feature: Added support for Liferay 7.4
