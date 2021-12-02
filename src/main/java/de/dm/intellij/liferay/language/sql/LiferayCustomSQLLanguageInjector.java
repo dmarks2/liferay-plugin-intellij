@@ -21,6 +21,9 @@ import java.util.List;
 
 public class LiferayCustomSQLLanguageInjector implements MultiHostInjector {
 
+    private static final String CDATA_START = "<![CDATA[";
+    private static final String CDATA_END = "]]>";
+
     @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement context) {
         PsiFile psiFile = context.getContainingFile().getOriginalFile();
@@ -44,13 +47,26 @@ public class LiferayCustomSQLLanguageInjector implements MultiHostInjector {
                     for (PsiElement child : myChildren) {
                         if (child instanceof XmlText) {
                             if (((PsiLanguageInjectionHost)child).isValidHost()) {
-                                list.add(
-                                        Trinity.create(
-                                                ((PsiLanguageInjectionHost) child),
-                                                sqlLanguage,
-                                                ElementManipulators.getManipulator(child).getRangeInElement(child)
-                                        )
-                                );
+                                TextRange textRange = ElementManipulators.getManipulator(child).getRangeInElement(child);
+
+                                String text = child.getText();
+
+                                if (text != null) {
+                                    int cdataStart = text.indexOf(CDATA_START);
+                                    int cdataEnd = text.indexOf(CDATA_END);
+
+                                    if (cdataStart > -1 && cdataEnd > -1 && cdataEnd > cdataStart) {
+                                        textRange = new TextRange(cdataStart + CDATA_START.length(), cdataEnd);
+                                    }
+
+                                    list.add(
+                                            Trinity.create(
+                                                    ((PsiLanguageInjectionHost) child),
+                                                    sqlLanguage,
+                                                    textRange
+                                            )
+                                    );
+                                }
                             }
                         }
                     }

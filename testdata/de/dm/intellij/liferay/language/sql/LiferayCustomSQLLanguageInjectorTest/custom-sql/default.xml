@@ -1,5 +1,5 @@
 <custom-sql>
     <sql id="de.dm.liferay.custom.sql.findEntity">
-        <caret>
+        <![CDATA[<caret>]]>
     </sql>
 </custom-sql>
