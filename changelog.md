@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Provide workflow context variables for script and template tags (groovy and freemarker)
 - Feature: Resolve Files and Layout entries in Resources Importer Template files
 - Feature: Inject SQL language into custom-sql definition files
+- Feature: OSGi component properties for Fragment components
 - Bugfix: Exception when trying to inject Javascript inside aui:script-tags containing additonal attributes (like "use" or "require")
 - Change: Fixed support for IntelliJ 2021.3
 

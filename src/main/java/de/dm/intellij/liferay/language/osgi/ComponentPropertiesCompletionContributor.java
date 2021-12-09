@@ -295,6 +295,16 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"model.class.name", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.fragment.contributor.FragmentCollectionContributor",
+                new String[][] {
+                        {"fragment.collection.key", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.fragment.processor.FragmentEntryProcessor",
+                new String[][] {
+                        {"fragment.entry.processor.priority", "Integer"}
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.frontend.editor.embed.EditorEmbedProvider",
                 new String[][]{
                         {"type", "String"},
