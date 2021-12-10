@@ -115,10 +115,10 @@ public abstract class MavenTestCase extends UsefulTestCase {
   @Override
   protected void tearDown() throws Exception {
     new RunAll(
+      () -> MavenIndicesManager.getInstance(myProject).clear(),
       () -> MavenServerManager.getInstance().shutdown(true),
       () -> MavenArtifactDownloader.awaitQuiescence(100, TimeUnit.SECONDS),
       () -> EdtTestUtil.runInEdtAndWait(() -> tearDownFixtures()),
-      () -> MavenIndicesManager.getInstance(myProject).clear(),
       () -> myProject = null,
       () -> super.tearDown(),
       () -> {
