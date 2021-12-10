@@ -2,6 +2,7 @@ package de.dm.intellij.liferay.language.osgi;
 
 import com.intellij.AbstractBundle;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.PropertyKey;
 
 public class ComponentPropertiesDocumentationBundle extends AbstractBundle {
@@ -13,8 +14,9 @@ public class ComponentPropertiesDocumentationBundle extends AbstractBundle {
         super(PATH_TO_BUNDLE);
     }
 
+    @Nullable
     public static String message(@NotNull @PropertyKey(resourceBundle = PATH_TO_BUNDLE) String key, @NotNull Object... params) {
-        return ourInstance.getMessage(key, params);
+        return ourInstance.messageOrNull(key, params);
     }
 
 }

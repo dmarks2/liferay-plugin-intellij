@@ -1,6 +1,5 @@
 package de.dm.intellij.liferay.language.osgi;
 
-import com.intellij.BundleBase;
 import com.intellij.lang.documentation.AbstractDocumentationProvider;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
@@ -21,22 +20,23 @@ public class ComponentPropertiesDocumentationProvider extends AbstractDocumentat
 
                 for (String serviceClassName : serviceClassNames) {
                     String[][] properties = ComponentPropertiesCompletionContributor.COMPONENT_PROPERTIES.get(serviceClassName);
-                    for (String[] property : properties) {
-                        if (text.startsWith(property[0])) {
-                            String info = "";
-                            info += "<b>" + property[0] + "</b><br/>\n";
+                    if (properties != null) {
+                        for (String[] property : properties) {
+                            if (text.startsWith(property[0])) {
+                                String info = "";
+                                info += "<b>" + property[0] + "</b><br/>\n";
 
-                            String componentPropertiesDocumentationBundleKey = serviceClassName + "." + property[0];
+                                String componentPropertiesDocumentationBundleKey = serviceClassName + "." + property[0];
 
-                            BundleBase.assertOnMissedKeys(false);
+                                String description = ComponentPropertiesDocumentationBundle.message(componentPropertiesDocumentationBundleKey);
 
-                            String description = ComponentPropertiesDocumentationBundle.message(componentPropertiesDocumentationBundleKey);
-                            if (description != null) {
-                                description = StringUtil.join(StringUtil.split(description, "\n"), "<br>");
+                                if (description != null) {
+                                    description = StringUtil.join(StringUtil.split(description, "\n"), "<br>");
 
-                                info += description;
+                                    info += description;
+                                }
+                                return info;
                             }
-                            return info;
                         }
                     }
                 }
