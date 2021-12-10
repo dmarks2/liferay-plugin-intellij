@@ -1,7 +1,8 @@
 package de.dm.intellij.bndtools.parser;
 
-import com.intellij.codeInsight.daemon.JavaErrorMessages;
+import com.intellij.codeInsight.daemon.JavaErrorBundle;
 import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiReference;
@@ -48,10 +49,11 @@ public class BasePackageParser extends BndHeaderParser {
                     packageName = StringUtil.trimEnd(packageName, ".*");
 
                     if (StringUtil.isEmptyOrSpaces(packageName)) {
-                        annotationHolder.createErrorAnnotation(
-                            bndHeaderValuePart.getHighlightingRange(),
-                            "Invalid reference"
-                        );
+                        annotationHolder.newAnnotation(
+                                HighlightSeverity.ERROR, "Invalid reference"
+                        ).range(
+                                bndHeaderValuePart.getHighlightingRange()
+                        ).create();
 
                         annotated = true;
 
@@ -67,10 +69,12 @@ public class BasePackageParser extends BndHeaderParser {
                         PsiDirectory[] psiDirectories = BndPsiUtil.resolvePackage(bndHeader, packageName);
 
                         if (psiDirectories.length == 0) {
-                            annotationHolder.createErrorAnnotation(
-                                bndHeaderValuePart.getHighlightingRange(),
-                                JavaErrorMessages.message("cannot.resolve.package", packageName)
-                            );
+                            annotationHolder.newAnnotation(
+                                    HighlightSeverity.ERROR, JavaErrorBundle.message("cannot.resolve.package", packageName)
+                            ).range(
+                                    bndHeaderValuePart.getHighlightingRange()
+                            ).create();
+
                             annotated = true;
                         }
                     }

@@ -1,6 +1,7 @@
 package de.dm.intellij.bndtools.parser;
 
 import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.util.TextRange;
 import de.dm.intellij.bndtools.psi.BndHeader;
 import de.dm.intellij.bndtools.psi.BndHeaderValue;
@@ -31,7 +32,11 @@ public class BundleVersionParser extends BndHeaderParser {
 
                 TextRange range = bndHeaderValuePart.getHighlightingRange();
 
-                annotationHolder.createErrorAnnotation(range, iae.getMessage());
+                annotationHolder.newAnnotation(
+                        HighlightSeverity.ERROR, iae.getMessage()
+                ).range(
+                        range
+                ).create();
 
                 return true;
             }

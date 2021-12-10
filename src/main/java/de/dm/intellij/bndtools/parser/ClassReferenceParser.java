@@ -1,14 +1,20 @@
 package de.dm.intellij.bndtools.parser;
 
-import com.intellij.codeInsight.daemon.JavaErrorMessages;
+import com.intellij.codeInsight.daemon.JavaErrorBundle;
 import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.lang.annotation.Annotation;
 import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.*;
+import com.intellij.psi.JavaPsiFacade;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiModifier;
+import com.intellij.psi.PsiReference;
+import com.intellij.psi.PsiType;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.JavaClassReferenceProvider;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.ProjectScope;
@@ -67,7 +73,12 @@ public class ClassReferenceParser extends BndHeaderParser {
         String className = valuePart.getUnwrappedText();
         if (StringUtil.isEmptyOrSpaces(className)) {
             //TODO create a test!
-            holder.createErrorAnnotation(valuePart.getHighlightingRange(), ManifestBundle.message("header.reference.invalid"));
+            holder.newAnnotation(
+                    HighlightSeverity.ERROR, ManifestBundle.message("header.reference.invalid")
+            ).range(
+                    valuePart.getHighlightingRange()
+            ).create();
+
             return true;
         }
 
@@ -77,9 +88,14 @@ public class ClassReferenceParser extends BndHeaderParser {
         PsiClass psiClass = JavaPsiFacade.getInstance(project).findClass(className, globalSearchScope);
         if (psiClass == null) {
             //TODO create a test!
-            String message = JavaErrorMessages.message("error.cannot.resolve.class", className);
-            Annotation annotation = holder.createErrorAnnotation(valuePart.getHighlightingRange(), message);
-            annotation.setHighlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL);
+            holder.newAnnotation(
+                    HighlightSeverity.ERROR, JavaErrorBundle.message("error.cannot.resolve.class", className)
+            ).range(
+                    valuePart.getHighlightingRange()
+            ).highlightType(
+                    ProblemHighlightType.LIKE_UNKNOWN_SYMBOL
+            ).create();
+
             return true;
         }
 
@@ -95,17 +111,32 @@ public class ClassReferenceParser extends BndHeaderParser {
             String bndHeaderName = bndHeader.getName();
 
             if (LiferayBndConstants.MAIN_CLASS.equals(bndHeaderName) && !PsiMethodUtil.hasMainMethod(psiClass)) {
-                annotationHolder.createErrorAnnotation(bndHeaderValuePart.getHighlightingRange(), ManifestBundle.message("header.main.class.invalid"));
+                annotationHolder.newAnnotation(
+                        HighlightSeverity.ERROR, ManifestBundle.message("header.main.class.invalid")
+                ).range(
+                        bndHeaderValuePart.getHighlightingRange()
+                ).create();
+
                 return true;
             }
 
             if (LiferayBndConstants.PREMAIN_CLASS.equals(bndHeaderName) && !hasInstrumenterMethod(psiClass, "premain")) {
-                annotationHolder.createErrorAnnotation(bndHeaderValuePart.getHighlightingRange(), ManifestBundle.message("header.pre-main.class.invalid"));
+                annotationHolder.newAnnotation(
+                        HighlightSeverity.ERROR, ManifestBundle.message("header.pre-main.class.invalid")
+                ).range(
+                        bndHeaderValuePart.getHighlightingRange()
+                ).create();
+
                 return true;
             }
 
             if ((LiferayBndConstants.AGENT_CLASS.equals(bndHeaderName) || LiferayBndConstants.LAUNCHER_AGENT_CLASS.equals(bndHeaderName)) && !hasInstrumenterMethod(psiClass, "agentmain")) {
-                annotationHolder.createErrorAnnotation(bndHeaderValuePart.getHighlightingRange(), ManifestBundle.message("header.agent.class.invalid"));
+                annotationHolder.newAnnotation(
+                        HighlightSeverity.ERROR, ManifestBundle.message("header.agent.class.invalid")
+                ).range(
+                        bndHeaderValuePart.getHighlightingRange()
+                ).create();
+
                 return true;
             }
         }

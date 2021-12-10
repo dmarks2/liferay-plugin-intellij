@@ -1,8 +1,8 @@
 package de.dm.intellij.bndtools;
 
-import com.intellij.lang.annotation.Annotation;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
+import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.psi.PsiElement;
 import de.dm.intellij.bndtools.parser.BndHeaderParser;
@@ -80,9 +80,13 @@ public class BndHighlightingAnnotator implements Annotator {
         PsiElement psiElement, TextAttributesKey textAttributesKey, AnnotationHolder annotationHolder) {
 
         if (psiElement != null) {
-            Annotation annotation = annotationHolder.createInfoAnnotation(psiElement, null);
-
-            annotation.setTextAttributes(textAttributesKey);
+            annotationHolder.newAnnotation(
+                    HighlightSeverity.INFORMATION, ""
+            ).range(
+                    psiElement
+            ).textAttributes(
+                    textAttributesKey
+            ).create();
         }
     }
 

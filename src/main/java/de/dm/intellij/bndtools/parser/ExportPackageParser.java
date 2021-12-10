@@ -1,8 +1,9 @@
 package de.dm.intellij.bndtools.parser;
 
-import com.intellij.codeInsight.daemon.JavaErrorMessages;
+import com.intellij.codeInsight.daemon.JavaErrorBundle;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiDirectory;
@@ -121,7 +122,11 @@ public class ExportPackageParser extends BasePackageParser {
                             if (StringUtil.isEmptyOrSpaces(packageName)) {
                                 TextRange highlightTextRange = textRange.shiftRight(offset);
 
-                                annotationHolder.createErrorAnnotation(highlightTextRange, "Invalid reference");
+                                annotationHolder.newAnnotation(
+                                        HighlightSeverity.ERROR, "Invalid reference"
+                                ).range(
+                                        highlightTextRange
+                                ).create();
 
                                 annotated = true;
 
@@ -133,10 +138,11 @@ public class ExportPackageParser extends BasePackageParser {
                             if (psiDirectories.length == 0) {
                                 TextRange highlightTextRange = BndPsiUtil.adjustTextRangeWithoutWhitespaces(textRange, text).shiftRight(offset);
 
-                                annotationHolder.createErrorAnnotation(
-                                    highlightTextRange,
-                                    JavaErrorMessages.message("cannot.resolve.package", packageName)
-                                );
+                                annotationHolder.newAnnotation(
+                                        HighlightSeverity.ERROR, JavaErrorBundle.message("cannot.resolve.package", packageName)
+                                ).range(
+                                        highlightTextRange
+                                ).create();
 
                                 annotated = true;
                             }

@@ -1,8 +1,8 @@
 package de.dm.intellij.bndtools.parser;
 
 import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.lang.annotation.Annotation;
 import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.roots.ModuleRootManager;
@@ -44,8 +44,11 @@ public class FileReferenceParser extends BndHeaderParser {
         String filePath = bndHeaderValuePart.getUnwrappedText();
 
         if (StringUtil.isEmptyOrSpaces(filePath)) {
-            holder.createErrorAnnotation(
-                    bndHeaderValuePart.getHighlightingRange(), ManifestBundle.message("header.reference.invalid"));
+            holder.newAnnotation(
+                    HighlightSeverity.ERROR, ManifestBundle.message("header.reference.invalid")
+            ).range(
+                    bndHeaderValuePart.getHighlightingRange()
+            ).create();
 
             return true;
         }
@@ -72,9 +75,13 @@ public class FileReferenceParser extends BndHeaderParser {
 
         String message = "Cannot resolve file '" + filePath + "'";
 
-        Annotation annotation = holder.createErrorAnnotation(bndHeaderValuePart.getHighlightingRange(), message);
-
-        annotation.setHighlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL);
+        holder.newAnnotation(
+                HighlightSeverity.ERROR, message
+        ).range(
+                bndHeaderValuePart.getHighlightingRange()
+        ).highlightType(
+                ProblemHighlightType.LIKE_UNKNOWN_SYMBOL
+        ).create();
 
         return true;
     }

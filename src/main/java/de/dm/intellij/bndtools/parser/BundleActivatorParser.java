@@ -1,6 +1,7 @@
 package de.dm.intellij.bndtools.parser;
 
 import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiClass;
 import de.dm.intellij.bndtools.psi.BndHeaderValuePart;
 import de.dm.intellij.bndtools.psi.util.BndPsiUtil;
@@ -21,10 +22,11 @@ public class BundleActivatorParser extends ClassReferenceParser {
 
         if (bundleActivatorClass != null) {
             if (! psiClass.isInheritor(bundleActivatorClass, true)) {
-                annotationHolder.createErrorAnnotation(
-                    bndHeaderValuePart.getHighlightingRange(),
-                    "Activator class does not inherit from BundleActivator"
-                );
+                annotationHolder.newAnnotation(
+                        HighlightSeverity.ERROR, "Activator class does not inherit from BundleActivator"
+                ).range(
+                        bndHeaderValuePart.getHighlightingRange()
+                ).create();
 
                 return true;
             }
