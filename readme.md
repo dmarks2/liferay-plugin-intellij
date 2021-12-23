@@ -31,6 +31,7 @@ for the plugin. Just have a look at the following topics to see which areas have
 * You can jump forward and backward between the [service.xml](documentation/service_xml.md) and the implementation class.
 * Support for [groovy scripts](documentation/groovy.md) (Liferay admin console).
 * Code completion and documentation are available for [portal.properties](documentation/portalprops.md)
+* Support for [developing fragments](documentation/fragments.md) is integrated.
 
 Supported IDEs
 --------------

@@ -88,6 +88,17 @@ public class LiferayFileUtil {
         return false;
     }
 
+    public static boolean isFragmentFile(PsiFile psiFile) {
+        if (psiFile.getParent() != null) {
+            VirtualFile parent = psiFile.getVirtualFile().getParent();
+            if (parent != null) {
+                return getChild(parent, "fragment.json") != null;
+            }
+        }
+
+        return false;
+    }
+
     @Nullable
     public static String getJournalStructureJsonFileDefinitionSchemaVersion(PsiFile psiFile) {
         if (psiFile instanceof JsonFile) {
