@@ -5,10 +5,12 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "title": "Collection name"
     },
     "description": {
-      "type": "string"
+      "type": "string",
+      "title": "Optional description"
     }
   },
   "required": [
