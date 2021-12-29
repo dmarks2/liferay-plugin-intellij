@@ -39,4 +39,12 @@ public class FragmentAttributeDescriptorsTest extends BasePlatformTestCase {
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("data-lfr-background-image-id"));
     }
+
+    public void testEnumeratableAttributeCodeCompletion() {
+        myFixture.configureByFiles("editable-type-attributes.html", "fragment.json");
+
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue("value for <div data-lfr-editable-type=\"\"> should provide allowed types like \"text\"", strings.contains("text"));
+    }
 }

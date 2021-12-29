@@ -18,6 +18,6 @@
 
         <xml.tagNameProvider implementation="de.dm.intellij.liferay.language.fragment.FragmentTagNameProvider" />
         <xml.elementDescriptorProvider implementation="de.dm.intellij.liferay.language.fragment.FragmentTagNameProvider" order="first" />
-        <xml.attributeDescriptorsProvider implementation="de.dm.intellij.liferay.language.fragment.FragmentAttributeDescriptorsProvider" />
+        <xml.attributeDescriptorsProvider implementation="de.dm.intellij.liferay.language.fragment.FragmentAttributeDescriptorsProvider" order="first" />
     </extensions>
 </idea-plugin>
