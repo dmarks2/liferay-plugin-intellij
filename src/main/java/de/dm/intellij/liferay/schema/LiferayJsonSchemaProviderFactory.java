@@ -19,7 +19,8 @@ public class LiferayJsonSchemaProviderFactory implements JsonSchemaProviderFacto
             new LiferayAssetsJsonSchemaFileProvider(project),
             new LiferaySitemapJsonSchemaFileProvider(project),
             new LiferayFrontendTokenDefinitionJsonSchemaFileProvider(project),
-            new LiferayFragmentCollectionSchemaFileProvider(project)
+            new LiferayFragmentCollectionSchemaFileProvider(),
+            new LiferayFragmentConfigurationSchemaFileProvider()
         );
     }
 }

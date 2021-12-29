@@ -2,6 +2,7 @@ Fragments
 =========
 
 1. [Fragment HTML tags and attributes](#fragment-html-tags-and-attributes)
+2. [JSON Schemas](#json-schemas)
 
 Fragment HTML tags and attributes
 ---------------------------------
@@ -19,3 +20,14 @@ For example the following HTML file inside a fragment collection contributor is 
     </div>
 </div>
 ```
+
+JSON Schemas
+------------
+
+JSON Schemas are provides for several fragment json files. By this the files are checked if they are valid. Additionally
+code completion features are available.
+
+JSON Schemas are available for:
+
+* `collection.json`
+* `configuration.json`

@@ -90,10 +90,16 @@ public class LiferayFileUtil {
 
     public static boolean isFragmentFile(PsiFile psiFile) {
         if (psiFile.getParent() != null) {
-            VirtualFile parent = psiFile.getVirtualFile().getParent();
-            if (parent != null) {
-                return getChild(parent, "fragment.json") != null;
-            }
+            return isFragmentFile(psiFile.getVirtualFile());
+        }
+
+        return false;
+    }
+
+    public static boolean isFragmentFile(VirtualFile virtualFile) {
+        VirtualFile parent = virtualFile.getParent();
+        if (parent != null) {
+            return getChild(parent, "fragment.json") != null;
         }
 
         return false;

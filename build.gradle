@@ -45,7 +45,7 @@ sourceSets {
             srcDirs = ['src/main/resources']
         }
 
-        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'generateLiferayPortalPropertiesFiles', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions', 'downloadIntelliJCommunityMockJDK11'])
+        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'generateLiferayPortalPropertiesFiles', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions', 'downloadIntelliJCommunityMockJDK11', "downloadSchemaDefinitions"])
     }
 }
 
@@ -596,6 +596,21 @@ task downloadIntelliJCommunityMockJDK11() {
     }
 }
 
+task downloadSchemaDefinitions() {
+    doLast {
+        def target = new File(generatedResources, "com/liferay/schema");
+
+        target.mkdirs();
+
+        download {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.4.x/modules/apps/fragment/fragment-service/src/main/resources/com/liferay/fragment/internal/validator/dependencies/configuration-json-schema.json'
+            dest new File(target, "configuration-json-schema.json")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+    }
+}
 //BND filetype definition from https://github.com/lpireyn
 /*task generateBndFiletypeDefinitions {
     doLast {

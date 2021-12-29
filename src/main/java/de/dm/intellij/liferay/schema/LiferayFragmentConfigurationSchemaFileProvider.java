@@ -5,22 +5,23 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.jetbrains.jsonSchema.extension.JsonSchemaFileProvider;
 import com.jetbrains.jsonSchema.extension.SchemaType;
 import com.jetbrains.jsonSchema.impl.JsonSchemaVersion;
+import de.dm.intellij.liferay.util.LiferayFileUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.net.URL;
 
-public class LiferayFragmentCollectionSchemaFileProvider implements JsonSchemaFileProvider {
+public class LiferayFragmentConfigurationSchemaFileProvider implements JsonSchemaFileProvider {
 
     @Nullable
     private final VirtualFile schemaFile;
 
-    public LiferayFragmentCollectionSchemaFileProvider() {
+    public LiferayFragmentConfigurationSchemaFileProvider() {
         this.schemaFile = getResourceFile();
     }
 
     private static VirtualFile getResourceFile() {
-        URL url = LiferayAssetsJsonSchemaFileProvider.class.getResource("/com/liferay/schema/fragment-collection-schema.json");
+        URL url = LiferayAssetsJsonSchemaFileProvider.class.getResource("/com/liferay/schema/configuration-json-schema.json");
         if (url != null) {
             return VfsUtil.findFileByURL(url);
         }
@@ -29,13 +30,13 @@ public class LiferayFragmentCollectionSchemaFileProvider implements JsonSchemaFi
 
     @Override
     public boolean isAvailable(@NotNull VirtualFile file) {
-        return file.isValid() && "collection.json".equals(file.getName());
+        return file.isValid() && LiferayFileUtil.isFragmentFile(file) && "configuration.json".equals(file.getName());
     }
 
     @NotNull
     @Override
     public String getName() {
-        return "Liferay Fragment Collection";
+        return "Liferay Fragment configuration";
     }
 
     @Nullable
@@ -54,5 +55,4 @@ public class LiferayFragmentCollectionSchemaFileProvider implements JsonSchemaFi
     public JsonSchemaVersion getSchemaVersion() {
         return JsonSchemaVersion.SCHEMA_7;
     }
-
 }
