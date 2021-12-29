@@ -28,23 +28,23 @@ public class FragmentTagNameProvider implements XmlTagNameProvider, XmlElementDe
 
     //https://learn.liferay.com/dxp/latest/en/site-building/developer-guide/reference/fragments/fragment-specific-tags-reference.html
     public static final Collection<AbstractMap.SimpleEntry<String, FragmentAttributeInformationHolder>> COMMON_FRAGMENT_ATTRIBUTES = Arrays.asList(
-            new AbstractMap.SimpleEntry<>("data-lfr-editable-id", new FragmentAttributeInformationHolder.Builder().idType(true).build()),
-            new AbstractMap.SimpleEntry<>("data-lfr-editable-type", new FragmentAttributeInformationHolder.Builder().attributeValues(new String[]{"text", "html", "rich-text", "image", "link", "background-image"}).build()),
-            new AbstractMap.SimpleEntry<>("data-lfr-background-image-id", new FragmentAttributeInformationHolder.Builder().idRefType(true).build())
+            new AbstractMap.SimpleEntry<>("data-lfr-editable-id", new FragmentAttributeInformationHolder.Builder().idType(true).typeName("String").build()),
+            new AbstractMap.SimpleEntry<>("data-lfr-editable-type", new FragmentAttributeInformationHolder.Builder().typeName("String").attributeValues(new String[]{"text", "html", "rich-text", "image", "link", "background-image"}).build()),
+            new AbstractMap.SimpleEntry<>("data-lfr-background-image-id", new FragmentAttributeInformationHolder.Builder().typeName("String").idRefType(true).build())
         );
 
     static {
         FRAGMENT_TAG_NAMES.put(
                 "lfr-drop-zone", Arrays.asList(
-                        new AbstractMap.SimpleEntry<>("data-lfr-drop-zone-id", FragmentAttributeInformationHolder.EMPTY),
+                        new AbstractMap.SimpleEntry<>("data-lfr-drop-zone-id", new FragmentAttributeInformationHolder.Builder().idType(true).typeName("String").build()),
                         new AbstractMap.SimpleEntry<>("data-lfr-priority", new FragmentAttributeInformationHolder.Builder().typeName("Integer").build()),
-                        new AbstractMap.SimpleEntry<>("uuid", FragmentAttributeInformationHolder.EMPTY)
+                        new AbstractMap.SimpleEntry<>("uuid", new FragmentAttributeInformationHolder.Builder().typeName("String").build())
                 )
         );
 
         FRAGMENT_TAG_NAMES.put("lfr-editable", Arrays.asList(
-                new AbstractMap.SimpleEntry<>("id", new FragmentAttributeInformationHolder.Builder().required(true).idType(true).build()),
-                new AbstractMap.SimpleEntry<>("type", new FragmentAttributeInformationHolder.Builder().required(true).attributeValues(new String[]{"text", "html", "rich-text", "image", "link", "background-image"}).build()),
+                new AbstractMap.SimpleEntry<>("id", new FragmentAttributeInformationHolder.Builder().required(true).typeName("String").idType(true).build()),
+                new AbstractMap.SimpleEntry<>("type", new FragmentAttributeInformationHolder.Builder().required(true).typeName("String").attributeValues(new String[]{"text", "html", "rich-text", "image", "link", "background-image"}).build()),
                 new AbstractMap.SimpleEntry<>("data-lfr-priority", new FragmentAttributeInformationHolder.Builder().typeName("Integer").build())
             )
         );
