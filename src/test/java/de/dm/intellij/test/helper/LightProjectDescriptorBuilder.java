@@ -32,8 +32,10 @@ public class LightProjectDescriptorBuilder {
             .build();
 
     public static final LightProjectDescriptor LIFERAY_SCHEMA_ROOT_ACCESS_PROJECT_DESCRIPTOR = new LightProjectDescriptorBuilder()
-            .rootAccess("/com/liferay/schema")
-            .build();
+            .rootAccess(
+                    "/com/liferay/schema",
+                    "/com/liferay/schema74/configuration-json-schema.json"
+            ).build();
 
     private static class LibraryInfo {
         private String libName;
@@ -95,11 +97,14 @@ public class LightProjectDescriptorBuilder {
                 model.getModuleExtension(LanguageLevelModuleExtension.class).setLanguageLevel(languageLevel);
 
                 if (rootAccess != null) {
+                    Collection<String> resourcePaths = new ArrayList<>();
+
                     for (String rootAccessUrl : rootAccess) {
                         URL resource = LightProjectDescriptorBuilder.class.getResource(rootAccessUrl);
-                        String resourcePath = PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
-                        VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePath );
+                        resourcePaths.add(PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath()));
                     }
+
+                    VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePaths.toArray(new String[0]));
                 }
 
                 if (liferayVersion != null) {

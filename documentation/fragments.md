@@ -31,3 +31,4 @@ JSON Schemas are available for:
 
 * `collection.json`
 * `configuration.json`
+* `fragment.json`

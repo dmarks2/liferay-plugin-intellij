@@ -598,7 +598,7 @@ task downloadIntelliJCommunityMockJDK11() {
 
 task downloadSchemaDefinitions() {
     doLast {
-        def target = new File(generatedResources, "com/liferay/schema");
+        def target = new File(generatedResources, "com/liferay/schema74");
 
         target.mkdirs();
 

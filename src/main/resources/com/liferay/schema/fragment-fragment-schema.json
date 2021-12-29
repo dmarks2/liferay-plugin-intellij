@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/fragment-fragment-schema.json",
+  "title": "Liferay Fragment Definition",
+  "type": "object",
+  "properties": {
+    "cacheable": {
+      "type": "boolean"
+    },
+    "cssPath": {
+      "type": "string",
+      "title": "Path to the CSS source for the fragment."
+    },
+    "configurationPath": {
+      "type": "string",
+      "title": "Path to a JSON file that defines the fragment’s configuration."
+    },
+    "fragmentEntryKey": {
+      "type": "string"
+    },
+    "htmlPath": {
+      "type": "string",
+      "title": "Path to the HTML source for the fragment."
+    },
+    "icon": {
+      "type": "string"
+    },
+    "jsPath": {
+      "type": "string",
+      "title": "Path to the JavaScript source for the fragment."
+    },
+    "name": {
+      "type": "string",
+      "title": "The fragment name."
+    },
+    "readOnly": {
+      "type": "boolean"
+    },
+    "thumbnailPath": {
+      "type": "string",
+      "title": "Optional path to a thumbnail for the fragment."
+    },
+    "type": {
+      "type": "string",
+      "title": "The fragment type.",
+      "enum": ["component", "react", "section"]
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ]
+}
