@@ -33,6 +33,9 @@
         <configurationType implementation="de.dm.intellij.liferay.language.freemarker.runner.FreemarkerAttachDebugConfigurationType"/>
         <programRunner id="Debug" implementation="de.dm.intellij.liferay.language.freemarker.runner.FreemarkerAttachDebuggerRunner"/>
         <xdebugger.breakpointType implementation="de.dm.intellij.liferay.language.freemarker.runner.FreemarkerAttachBreakpointType"/>
+
+        <fileTypeOverrider implementation="de.dm.intellij.liferay.language.fragment.FragmentFreemarkerHtmlFileTypeOverrider" />
+        <lang.substitutor language="FTL" implementationClass="de.dm.intellij.liferay.language.fragment.FragmentFreemarkerHtmlLanguageSubstitutor" />
     </extensions>
 
 </idea-plugin>

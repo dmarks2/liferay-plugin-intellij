@@ -105,6 +105,13 @@ public class LiferayFileUtil {
         return false;
     }
 
+    public static boolean isFragmentHtmlFile(VirtualFile virtualFile) {
+        return
+                (virtualFile.getExtension() != null) &&
+                ("html".equalsIgnoreCase(virtualFile.getExtension()) || "htm".equalsIgnoreCase(virtualFile.getExtension())) &&
+                isFragmentFile(virtualFile);
+    }
+
     @Nullable
     public static String getJournalStructureJsonFileDefinitionSchemaVersion(PsiFile psiFile) {
         if (psiFile instanceof JsonFile) {

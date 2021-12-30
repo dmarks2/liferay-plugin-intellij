@@ -2,7 +2,8 @@ Fragments
 =========
 
 1. [Fragment HTML tags and attributes](#fragment-html-tags-and-attributes)
-2. [JSON Schemas](#json-schemas)
+2. [Freemarker inside fragment HTML files](#freemarker-inside-fragment-html-files)
+3. [JSON Schemas](#json-schemas)
 
 Fragment HTML tags and attributes
 ---------------------------------
@@ -19,6 +20,21 @@ For example the following HTML file inside a fragment collection contributor is 
         <lfr-drop-zone data-lfr-drop-zone-id="1" data-lfr-priority="1"></lfr-drop-zone>
     </div>
 </div>
+```
+
+Freemarker inside fragment HTML files
+-------------------------------------
+
+It is possible to use Freemarker inside fragment HTML files. 
+
+Code completion is available for the square bracket notation of Freemarker.
+
+```injectedfreemarker
+[#list 0..configuration.numberOfTabs-1 as i]
+    <div>
+        
+    </div>
+[/#list]
 ```
 
 JSON Schemas
