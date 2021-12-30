@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Add support for custom fragment html tags and attributes
 - Feature: Add JSON schemas for several fragment related files
 - Feature: Add freemarker support for fragment html files
+- Feature: File references in fragment.json file
 - Bugfix: Exception when trying to inject Javascript inside aui:script-tags containing additonal attributes (like "use" or "require")
 - Bugfix: Avoid NullPointerException when trying to lookup documentation for an unknown OSGi property
 - Change: Fixed support for IntelliJ 2021.3

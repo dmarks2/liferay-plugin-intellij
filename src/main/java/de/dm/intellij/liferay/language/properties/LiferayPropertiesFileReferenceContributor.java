@@ -23,7 +23,7 @@ public class LiferayPropertiesFileReferenceContributor extends PsiReferenceContr
 
                 @NotNull
                 @Override
-                public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+                public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
                     PropertyValueImpl propertyValue = (PropertyValueImpl)element;
 
                     String text = propertyValue.getText();
