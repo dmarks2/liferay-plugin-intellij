@@ -109,6 +109,19 @@ public class BndLexer extends LexerBase {
             } else if (c == '\n') {
                 tokenType = BndTokenType.SECTION_END;
                 tokenEnd = tokenStart + 1;
+            } else if (c == '#') {
+                int commentEnd = tokenStart + 1;
+
+                while (commentEnd < endOffset) {
+                    c = buffer.charAt(commentEnd);
+                    if (c == '\n') {
+                        break;
+                    }
+                    commentEnd++;
+                }
+
+                tokenType = BndTokenType.COMMENT;
+                tokenEnd = commentEnd;
             } else {
                 int headerEnd = tokenStart + 1;
                 while (headerEnd < endOffset) {

@@ -15,12 +15,14 @@ import com.intellij.psi.util.PsiUtilCore;
 import de.dm.intellij.bndtools.BndLanguage;
 import de.dm.intellij.bndtools.lexer.BndLexer;
 import de.dm.intellij.bndtools.psi.BndElementType;
+import de.dm.intellij.bndtools.psi.BndTokenType;
 import de.dm.intellij.bndtools.psi.impl.BndFileImpl;
 import org.jetbrains.annotations.NotNull;
 
 public class BndParserDefinition implements ParserDefinition {
 
     public static final IFileElementType BND_FILE_ELEMENT_TYPE = new IFileElementType("BndFile", BndLanguage.getInstance());
+    public static final TokenSet COMMENTS = TokenSet.create(BndTokenType.COMMENT);
 
     @NotNull
     @Override
@@ -60,7 +62,7 @@ public class BndParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public TokenSet getCommentTokens() {
-        return TokenSet.EMPTY;
+        return COMMENTS;
     }
 
     @NotNull

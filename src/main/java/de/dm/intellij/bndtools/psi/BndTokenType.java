@@ -18,6 +18,7 @@ public class BndTokenType extends IElementType implements ILeafElementType {
     public static final BndTokenType EQUALS = new BndTokenType("EQUALS_TOKEN");
     public static final BndTokenType COMMA = new BndTokenType("COMMA_TOKEN");
     public static final BndTokenType QUOTE = new BndTokenType("QUOTE_TOKEN");
+    public static final BndTokenType COMMENT = new BndTokenType("COMMENT_TOKEN");
     public static final BndTokenType HEADER_VALUE_PART = new BndTokenType("HEADER_VALUE_PART_TOKEN");
 
     public static final BndTokenType OPENING_PARENTHESIS_TOKEN = new BndTokenType("OPENING_PARENTHESIS_TOKEN");

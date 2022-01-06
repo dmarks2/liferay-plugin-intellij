@@ -30,6 +30,9 @@ public class OsgiManifestColorsAndFonts {
     public static final TextAttributesKey PARAMETER_SEPARATOR_KEY = TextAttributesKey.createTextAttributesKey(
         "bnd.parameterSeparator", DefaultLanguageHighlighterColors.SEMICOLON);
 
+    public static final TextAttributesKey LINE_COMMENT_KEY = TextAttributesKey.createTextAttributesKey(
+            "bnd.lineComment", DefaultLanguageHighlighterColors.LINE_COMMENT);
+
     private OsgiManifestColorsAndFonts() {
     }
 

@@ -4,6 +4,7 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
+import com.intellij.psi.PsiComment;
 import com.intellij.psi.PsiElement;
 import de.dm.intellij.bndtools.parser.BndHeaderParser;
 import de.dm.intellij.bndtools.parser.BndHeaderParsers;
@@ -72,6 +73,8 @@ public class BndHighlightingAnnotator implements Annotator {
             }
             else if ((psiElement.getParent() instanceof BndHeader) && (type == BndTokenType.COMMA)) {
                 _annotate(psiElement, OsgiManifestColorsAndFonts.CLAUSE_SEPARATOR_KEY, annotationHolder);
+            } else if (type == BndTokenType.COMMENT) {
+                _annotate(psiElement, OsgiManifestColorsAndFonts.LINE_COMMENT_KEY, annotationHolder);
             }
         }
     }
