@@ -83,8 +83,8 @@ public class BndHighlightingAnnotator implements Annotator {
         PsiElement psiElement, TextAttributesKey textAttributesKey, AnnotationHolder annotationHolder) {
 
         if (psiElement != null) {
-            annotationHolder.newAnnotation(
-                    HighlightSeverity.INFORMATION, ""
+            annotationHolder.newSilentAnnotation(
+                    HighlightSeverity.INFORMATION
             ).range(
                     psiElement
             ).textAttributes(

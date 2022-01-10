@@ -1,6 +1,7 @@
 package de.dm.intellij.bndtools;
 
 import com.intellij.codeInsight.daemon.impl.HighlightInfo;
+import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
 import com.intellij.openapi.editor.markup.TextAttributes;
@@ -28,8 +29,12 @@ public class BndHighlightingAnnotatorTest extends BasePlatformTestCase {
 
         List<HighlightInfo> highlightInfos = myFixture.doHighlighting();
 
-        HighlightInfo highlightInfo = highlightInfos.get(0);
-
-        assertEquals(lineCommentTextAttributes, highlightInfo.getTextAttributes(null, globalScheme));
+        for (HighlightInfo highlightInfo : highlightInfos) {
+            if (highlightInfo.getSeverity() == HighlightSeverity.INFORMATION) {
+                assertEquals(lineCommentTextAttributes, highlightInfo.getTextAttributes(null, globalScheme));
+            } else {
+                fail("unexpected Highlighting Info found: " + highlightInfo);
+            }
+        }
     }
 }

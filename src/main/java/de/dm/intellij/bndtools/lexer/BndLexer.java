@@ -117,7 +117,7 @@ public class BndLexer extends LexerBase {
                     if (c == '\n') {
                         break;
                     }
-                    commentEnd++;
+                    ++commentEnd;
                 }
 
                 tokenType = BndTokenType.COMMENT;
@@ -150,8 +150,14 @@ public class BndLexer extends LexerBase {
             defaultState = true;
             IElementType special;
             if (c == '\n') {
-                tokenType = BndTokenType.NEWLINE;
-                tokenEnd = tokenStart + 1;
+                if (tokenType == BndTokenType.COMMENT) {
+                    //end of comment
+                    tokenType = BndTokenType.SECTION_END;
+                    tokenEnd = tokenStart + 1;
+                } else {
+                    tokenType = BndTokenType.NEWLINE;
+                    tokenEnd = tokenStart + 1;
+                }
             }
             else if ((special = SPECIAL_CHARACTERS_TOKEN_MAP.get(c)) != null) {
                 tokenType = special;
