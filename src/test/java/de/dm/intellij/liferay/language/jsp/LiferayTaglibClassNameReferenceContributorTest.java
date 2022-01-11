@@ -28,4 +28,11 @@ public class LiferayTaglibClassNameReferenceContributorTest extends LightJavaCod
         assertTrue(strings.contains("MyObject"));
     }
 
+    public void testCompletionInnerClass() {
+        myFixture.configureByFiles("inner.jsp", "liferay-aui.tld", "de/dm/Outer.java");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue("className should suggest inner classes separated with a dot (and not a dollar sign)", strings.contains("Inner"));
+    }
+
 }

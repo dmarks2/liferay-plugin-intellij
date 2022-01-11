@@ -39,6 +39,7 @@
             <li>Feature: Add support for comments in bnd.bnd files</li>
             <li>Bugfix: Exception when trying to inject Javascript inside aui:script-tags containing additonal attributes (like "use" or "require")</li>
             <li>Bugfix: Avoid NullPointerException when trying to lookup documentation for an unknown OSGi property</li>
+            <li>Bugfix: Inner classes where not properly resolved inside className attributes in JSP files</li>
             <li>Change: Fixed support for IntelliJ 2021.3</li>
         </ul>
         <p>Version 0.0.12</p>

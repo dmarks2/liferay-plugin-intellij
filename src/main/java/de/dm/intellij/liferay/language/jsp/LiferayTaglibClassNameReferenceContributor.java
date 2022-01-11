@@ -22,6 +22,7 @@ public class LiferayTaglibClassNameReferenceContributor extends AbstractLiferayT
 
         provider.setOption(JavaClassReferenceProvider.ADVANCED_RESOLVE, Boolean.TRUE);
         provider.setOption(JavaClassReferenceProvider.RESOLVE_QUALIFIED_CLASS_NAME, Boolean.TRUE);
+        provider.setOption(JavaClassReferenceProvider.ALLOW_DOLLAR_NAMES, Boolean.FALSE);
 
         return provider;
     }
