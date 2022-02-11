@@ -10,6 +10,9 @@
     "themeId": {
       "type": "string"
     },
+    "colorSchemeId": {
+      "type": "string"
+    },
     "layouts": {
       "type": "array",
       "items": {
