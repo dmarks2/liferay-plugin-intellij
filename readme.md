@@ -32,6 +32,7 @@ for the plugin. Just have a look at the following topics to see which areas have
 * Support for [groovy scripts](documentation/groovy.md) (Liferay admin console).
 * Code completion and documentation are available for [portal.properties](documentation/portalprops.md)
 * Support for [developing fragments](documentation/fragments.md) is integrated.
+* Resource Bundle files can be resolved for [Language Support](documentation/language_support.md)
 
 Supported IDEs
 --------------

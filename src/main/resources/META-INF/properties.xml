@@ -7,5 +7,7 @@
 
         <completion.contributor language="Properties" implementationClass="de.dm.intellij.liferay.language.properties.LiferayPortalPropertiesCompletionContributor" />
         <lang.documentationProvider order="first" language="Properties" implementationClass="de.dm.intellij.liferay.language.properties.LiferayPortalPropertiesDocumentationProvider" />
+
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.resourcebundle.ResourceBundleReferenceContributor"/>
     </extensions>
 </idea-plugin>

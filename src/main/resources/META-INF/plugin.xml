@@ -26,6 +26,9 @@
 
     <change-notes><![CDATA[
         <p>Version 0.0.14</p>
+        <ul>
+            <li>Feature: Resolve Resource Bundles</li>
+        </ul>
 
         <p>Version 0.0.13</p>
         <ul>
