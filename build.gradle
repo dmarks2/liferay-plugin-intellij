@@ -630,4 +630,4 @@ task downloadSchemaDefinitions() {
 */
 
 group 'de.dm.intellij.liferay'
-version '0.0.13'
+version '0.0.14'
