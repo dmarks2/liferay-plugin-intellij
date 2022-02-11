@@ -1,4 +1,4 @@
-portal.properites
+portal.properties
 =================
 
 1. [Code Completion and documentation](#code-completion-and-documentation)
