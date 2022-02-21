@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.14
 - Feature: Resolve Resource Bundles
+- Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file
 
 ## 0.0.13
 - Feature: Language injections for script and template tags in Liferay workflow definition files

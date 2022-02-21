@@ -33,12 +33,14 @@ public class LiferayFrontendTokenDefinitionResourceBundleReferenceContributor ex
                                         if (psiElement instanceof JsonValue) {
                                             JsonValue jsonValue = (JsonValue) psiElement;
 
-                                            JsonProperty jsonProperty = (JsonProperty) jsonValue.getParent();
+                                            if (jsonValue.getParent() instanceof JsonProperty) {
+                                                JsonProperty jsonProperty = (JsonProperty) jsonValue.getParent();
 
-                                            String name = JsonPsiImplUtils.getName(jsonProperty);
+                                                String name = JsonPsiImplUtils.getName(jsonProperty);
 
-                                            if ("label".equals(StringUtil.unquoteString(name))) {
-                                                return true;
+                                                if ("label".equals(StringUtil.unquoteString(name))) {
+                                                    return true;
+                                                }
                                             }
                                         }
                                     }
