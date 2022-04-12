@@ -16,6 +16,7 @@ public class LiferayJsonSchemaProviderFactory implements JsonSchemaProviderFacto
         return Arrays.asList(
             new LiferayJournalStructureJsonSchemaFileProvider(project),
             new LiferayJournalStructureJsonSchema_2_0_FileProvider(project),
+            new LiferayJournalStructureJsonSchemaDataDefinitionFileProvider(project),
             new LiferayAssetsJsonSchemaFileProvider(project),
             new LiferaySitemapJsonSchemaFileProvider(project),
             new LiferayFrontendTokenDefinitionJsonSchemaFileProvider(project),

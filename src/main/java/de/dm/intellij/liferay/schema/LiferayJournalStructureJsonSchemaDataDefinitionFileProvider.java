@@ -15,18 +15,20 @@ import org.jetbrains.annotations.Nullable;
 
 import java.net.URL;
 
-public class LiferayJournalStructureJsonSchemaFileProvider implements JsonSchemaFileProvider {
+public class LiferayJournalStructureJsonSchemaDataDefinitionFileProvider implements JsonSchemaFileProvider {
 
-    @NotNull private final Project project;
-    @Nullable private final VirtualFile schemaFile;
+    @NotNull
+    private final Project project;
+    @Nullable
+    private final VirtualFile schemaFile;
 
-    public LiferayJournalStructureJsonSchemaFileProvider(@NotNull Project project) {
+    public LiferayJournalStructureJsonSchemaDataDefinitionFileProvider(@NotNull Project project) {
         this.project = project;
         this.schemaFile = getResourceFile();
     }
 
     private static VirtualFile getResourceFile() {
-        URL url = LiferayJournalStructureJsonSchemaFileProvider.class.getResource("/com/liferay/schema/journal-structure-schema.json");
+        URL url = LiferayJournalStructureJsonSchemaFileProvider.class.getResource("/com/liferay/schema/journal-structure-schema-data-definition.json");
         if (url != null) {
             return VfsUtil.findFileByURL(url);
         }
@@ -36,22 +38,22 @@ public class LiferayJournalStructureJsonSchemaFileProvider implements JsonSchema
     @Override
     public boolean isAvailable(@NotNull VirtualFile file) {
         return ReadAction.compute(
-            () -> {
-                PsiManager psiManager = PsiManager.getInstance(project);
-                PsiFile psiFile = psiManager.findFile(file);
-                if (psiFile != null) {
-                    if (LiferayFileUtil.isJournalStructureFile(psiFile)) {
-                        String definitionSchemaVersion = LiferayFileUtil.getJournalStructureJsonFileDefinitionSchemaVersion(psiFile);
+                () -> {
+                    PsiManager psiManager = PsiManager.getInstance(project);
+                    PsiFile psiFile = psiManager.findFile(file);
+                    if (psiFile != null) {
+                        if (LiferayFileUtil.isJournalStructureFile(psiFile)) {
+                            String definitionSchemaVersion = LiferayFileUtil.getJournalStructureJsonFileDefinitionSchemaVersion(psiFile);
 
-                        if ("2.0".equals(definitionSchemaVersion)) {
-                            return false;
+                            if ("2.0".equals(definitionSchemaVersion)) {
+                                return false;
+                            }
+
+                            return LiferayFileUtil.isJournalStructureDataDefinitionSchema(psiFile);
                         }
-
-                        return !LiferayFileUtil.isJournalStructureDataDefinitionSchema(psiFile);
                     }
+                    return false;
                 }
-                return false;
-            }
         );
 
     }
@@ -59,7 +61,7 @@ public class LiferayJournalStructureJsonSchemaFileProvider implements JsonSchema
     @NotNull
     @Override
     public String getName() {
-        return "Liferay Journal Structure";
+        return "Liferay Journal Structure Data Definition";
     }
 
     @Nullable
@@ -78,4 +80,6 @@ public class LiferayJournalStructureJsonSchemaFileProvider implements JsonSchema
     public JsonSchemaVersion getSchemaVersion() {
         return JsonSchemaVersion.SCHEMA_7;
     }
+
+
 }

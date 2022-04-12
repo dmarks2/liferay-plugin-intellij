@@ -1,0 +1,272 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/journal-structure-data-definition.schema.json",
+  "title": "Liferay Journal Structure Data Definition",
+  "type": "object",
+  "properties": {
+    "availableLanguageIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^([a-z]{2})([_-]{1}[A-Z]{2})?$"
+      },
+      "uniqueItems": true
+    },
+    "contentType": {
+      "type": "string"
+    },
+    "dataDefinitionFields": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/dataDefinitionField"
+      }
+    },
+    "dataDefinitionKey": {
+      "type": "string"
+    },
+    "dataRules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/dataRule"
+      }
+    },
+    "defaultDataLayout": {
+      "$ref": "#/definitions/dataLayout"
+    },
+    "defaultLanguageId": {
+      "type": "string",
+      "pattern": "^([a-z]{2})([_-]{1}[A-Z]{2})?$"
+    },
+    "storageType": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "availableLanguageIds",
+    "contentType",
+    "defaultLanguageId"
+  ],
+  "definitions": {
+    "dataDefinitionField": {
+      "type": "object",
+      "properties": {
+        "customProperties": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "defaultValue": {
+          "description": "Enter a default value that is submitted if no other value is entered.",
+          "type": "object",
+          "additionalProperties": true
+        },
+        "fieldType": {
+          "type": "string",
+          "enum": [
+            "checkbox_multiple",
+            "color",
+            "date",
+            "document_library",
+            "fieldset",
+            "geolocation",
+            "grid",
+            "image",
+            "journal_article",
+            "link_to_layout",
+            "numeric",
+            "radio",
+            "rich_text",
+            "select",
+            "separator",
+            "text"
+          ],
+          "pattern": "(\\w|-)+"
+        },
+        "indexType": {
+          "type": "string",
+          "enum": [ "all", "keyword", "none", "text" ]
+        },
+        "indexable": {
+          "type": "boolean"
+        },
+        "label": {
+          "description": "Enter a descriptive field label that guides users to enter the information you want.",
+          "type": "object",
+          "patternProperties": {
+            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "localizable": {
+          "description": "Define whether the field input can be localized.",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Define the name to access the value in Journal Templates.",
+          "type": "string"
+        },
+        "nestedDataDefinitionFields": {
+          "description": "A list of child data definition fields that depend on this resource.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dataDefinitionField"
+          }
+        },
+        "readOnly": {
+          "description": "Define if the field can be read only.",
+          "type": "boolean"
+        },
+        "repeatable": {
+          "description": "Define whether the input field can be repeated, i.e. multiple values can be entered.",
+          "type": "boolean"
+        },
+        "required": {
+          "description": "Define if the input field is required.",
+          "type": "boolean"
+        },
+        "showLabel": {
+          "type": "boolean"
+        },
+        "tip": {
+          "description": "Add a comment to help users understand the field label.",
+          "type": "object",
+          "patternProperties": {
+            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "visible": {
+        "type": "boolean"
+      }
+    },
+    "dataRule": {
+      "type": "object",
+      "properties": {
+        "actions": {
+          "type": "object"
+        },
+        "conditions": {
+          "type": "object"
+        },
+        "logicalOperator": {
+          "type": "string"
+        },
+        "name": {
+          "type": "object",
+          "patternProperties": {
+            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "dataLayout": {
+      "type": "object",
+      "properties": {
+        "contentType": {
+          "type": "string"
+        },
+        "dataLayoutFields": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "dataLayoutKey": {
+          "type": "string"
+        },
+        "dataLayoutPages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dataLayoutPage"
+          }
+        },
+        "dataRules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dataRule"
+          }
+        },
+        "description": {
+          "type": "object",
+          "patternProperties": {
+            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "name": {
+          "type": "object",
+          "patternProperties": {
+            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "paginationMode": {
+          "type": "string"
+        }
+      }
+    },
+    "dataLayoutPage": {
+      "type": "object",
+      "properties": {
+        "dataLayoutRows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dataLayoutRow"
+          }
+        },
+        "description": {
+          "type": "object",
+          "patternProperties": {
+            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "title": {
+          "type": "object",
+          "patternProperties": {
+            "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "dataLayoutRow": {
+      "type": "object",
+      "properties": {
+        "dataLayoutColumns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dataLayoutColumn"
+          }
+        }
+      }
+    },
+    "dataLayoutColumn": {
+      "type": "object",
+      "properties": {
+        "columnSize": {
+          "type": "number"
+        },
+        "fieldNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

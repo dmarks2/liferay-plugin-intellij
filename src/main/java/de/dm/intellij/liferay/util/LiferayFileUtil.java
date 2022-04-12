@@ -145,6 +145,30 @@ public class LiferayFileUtil {
         return null;
     }
 
+    public static boolean isJournalStructureDataDefinitionSchema(PsiFile psiFile) {
+        if (psiFile instanceof JsonFile) {
+            JsonFile jsonFile = (JsonFile) psiFile;
+
+            JsonValue topLevelValue = jsonFile.getTopLevelValue();
+
+            if (topLevelValue != null) {
+                PsiElement[] children = topLevelValue.getChildren();
+
+                for (PsiElement psiElement : children) {
+                    if (psiElement instanceof JsonProperty) {
+                        JsonProperty jsonProperty = (JsonProperty) psiElement;
+
+                        if ("contentType".equals(jsonProperty.getName())) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     public static boolean isApplicationDisplayTemplateFile(PsiFile psiFile) {
         //Application Display Template files in a resource importer directory structure is detected in a path like "/templates/application_display/type/TemplateName"
         if (psiFile != null) {

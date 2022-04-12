@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.14
 - Feature: Resolve Resource Bundles
+- Feature: Define Journal Structures based on Data Engine Definition schema (Liferay 7.4 only)
 - Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file
 
 ## 0.0.13

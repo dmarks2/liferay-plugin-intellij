@@ -1,9 +1,8 @@
 <idea-plugin>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- experimental, work in progress...
+        <!-- experimental -->
         <diagram.Provider implementation="de.dm.intellij.liferay.workflow.LiferayWorkflowDiagramProvider"/>
-        -->
     </extensions>
 
 </idea-plugin>
