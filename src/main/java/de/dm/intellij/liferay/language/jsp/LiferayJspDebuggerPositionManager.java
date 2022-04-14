@@ -7,10 +7,11 @@ import com.intellij.debugger.engine.DebugProcess;
 import com.intellij.debugger.engine.JSR45PositionManager;
 import com.intellij.javaee.facet.JavaeeFacet;
 import com.intellij.javaee.facet.JavaeeFacetUtil;
+import com.intellij.jsp.highlighter.JspxFileType;
+import com.intellij.jsp.highlighter.NewJspFileType;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.LanguageFileType;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.util.Computable;
 import com.intellij.psi.PsiFile;
 import com.sun.jdi.AbsentInformationException;
@@ -31,7 +32,7 @@ public class LiferayJspDebuggerPositionManager extends JSR45PositionManager<Java
     }
 
     public LiferayJspDebuggerPositionManager(DebugProcess myDebugProcess, JavaeeFacet[] scope) {
-        super(myDebugProcess, scope, "JSP", new LanguageFileType[]{StdFileTypes.JSP, StdFileTypes.JSPX}, new LiferayJspDebuggerSourceFinderAdapter());
+        super(myDebugProcess, scope, "JSP", new LanguageFileType[]{NewJspFileType.INSTANCE, JspxFileType.INSTANCE}, new LiferayJspDebuggerSourceFinderAdapter());
     }
 
     @Override

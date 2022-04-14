@@ -27,7 +27,6 @@ import com.intellij.util.indexing.FileBasedIndex;
 import com.intellij.util.indexing.FileBasedIndexExtension;
 import com.intellij.util.indexing.FileContent;
 import com.intellij.util.indexing.ID;
-import com.intellij.util.indexing.PsiDependentIndex;
 import com.intellij.util.io.DataExternalizer;
 import com.intellij.util.io.KeyDescriptor;
 import com.intellij.util.io.VoidDataExternalizer;
@@ -46,7 +45,7 @@ import java.util.Map;
 /**
  * FileBasedIndexer to quickly find all action commands names
  */
-public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void> implements PsiDependentIndex {
+public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void> {
 
     @NonNls
     public static final ID<CommandKey, Void> NAME = ID.create("ActionCommandIndex");

@@ -34,9 +34,12 @@ import org.jetbrains.idea.maven.project.MavenArtifactDownloader;
 import org.jetbrains.idea.maven.project.MavenGeneralSettings;
 import org.jetbrains.idea.maven.project.MavenImportingSettings;
 import org.jetbrains.idea.maven.project.MavenProjectsManager;
+import org.jetbrains.idea.maven.project.MavenUnlinkedProjectAware;
 import org.jetbrains.idea.maven.project.MavenWorkspaceSettings;
 import org.jetbrains.idea.maven.project.MavenWorkspaceSettingsComponent;
 import org.jetbrains.idea.maven.server.MavenServerManager;
+import org.jetbrains.idea.maven.utils.MavenUtil;
+import org.jetbrains.idea.maven.utils.MavenWslUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -115,7 +118,6 @@ public abstract class MavenTestCase extends UsefulTestCase {
   @Override
   protected void tearDown() throws Exception {
     new RunAll(
-      () -> MavenIndicesManager.getInstance(myProject).clear(),
       () -> MavenServerManager.getInstance().shutdown(true),
       () -> MavenArtifactDownloader.awaitQuiescence(100, TimeUnit.SECONDS),
       () -> EdtTestUtil.runInEdtAndWait(() -> tearDownFixtures()),
@@ -239,7 +241,8 @@ public abstract class MavenTestCase extends UsefulTestCase {
   }
 
   protected File getRepositoryFile() {
-    return getMavenGeneralSettings().getEffectiveLocalRepository();
+    MavenGeneralSettings mavenGeneralSettings = getMavenGeneralSettings();
+    return MavenWslUtil.getLocalRepo(myProject, mavenGeneralSettings.getLocalRepository(), mavenGeneralSettings.getMavenHome(), mavenGeneralSettings.getUserSettingsFile(), mavenGeneralSettings.getMavenConfig());
   }
 
   protected void setRepositoryPath(String path) {

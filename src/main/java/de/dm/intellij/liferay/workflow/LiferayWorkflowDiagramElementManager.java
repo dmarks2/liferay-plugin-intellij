@@ -1,7 +1,6 @@
 package de.dm.intellij.liferay.workflow;
 
 import com.intellij.diagram.AbstractDiagramElementManager;
-import com.intellij.diagram.presentation.DiagramState;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.project.Project;
@@ -9,7 +8,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.ui.SimpleColoredText;
 import org.jetbrains.annotations.Nullable;
 
 public class LiferayWorkflowDiagramElementManager extends AbstractDiagramElementManager<XmlTag> {
@@ -48,12 +46,6 @@ public class LiferayWorkflowDiagramElementManager extends AbstractDiagramElement
     @Override
     public String getElementTitle(XmlTag xmlTag) {
         return xmlTag.getName();
-    }
-
-    @Nullable
-    @Override
-    public SimpleColoredText getItemName(Object o, DiagramState diagramState) {
-        return null;
     }
 
     @Override

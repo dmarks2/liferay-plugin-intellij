@@ -18,7 +18,6 @@ import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.indexing.DataIndexer;
 import com.intellij.util.indexing.FileContent;
-import com.intellij.util.indexing.PsiDependentIndex;
 import de.dm.intellij.liferay.language.osgi.ComponentPropertiesCompletionContributor;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
@@ -31,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndexer<Key, Void, FileContent>, PsiDependentIndex {
+public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndexer<Key, Void, FileContent> {
 
     @NotNull
     @Override
