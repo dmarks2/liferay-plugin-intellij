@@ -29,6 +29,7 @@
         <ul>
             <li>Feature: Resolve Resource Bundles</li>
             <li>Feature: Define Journal Structures based on Data Engine Definition schema (Liferay 7.4 only)</li>
+            <li>Change: Update support for IntelliJ 2022.1</li>
             <li>Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file</li>
         </ul>
 
