@@ -35,4 +35,9 @@ public class LiferayOsgiImplicitUsageProviderTest extends LightJavaCodeInsightFi
         myFixture.checkHighlighting();
     }
 
+    public void testOsgiComponentConstructorImplicitUsage() {
+        myFixture.configureByFiles("MyServiceWrapper.java", "com/liferay/portal/kernel/service/ServiceWrapper.java");
+        myFixture.checkHighlighting();
+    }
+
 }

@@ -2,9 +2,12 @@ package de.dm.intellij.liferay.language.osgi;
 
 import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.codeInsight.daemon.ImplicitUsageProvider;
+import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifierList;
 import com.intellij.psi.PsiModifierListOwner;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,19 +29,28 @@ public class LiferayOsgiImplicitUsageProvider implements ImplicitUsageProvider {
             "org.osgi.service.component.annotations.Modified");
 
     @Override
-    public boolean isImplicitUsage(PsiElement element) {
+    public boolean isImplicitUsage(@NotNull PsiElement element) {
         return isImplicitWrite(element);
     }
 
     @Override
-    public boolean isImplicitRead(PsiElement element) {
+    public boolean isImplicitRead(@NotNull PsiElement element) {
         return false;
     }
 
     @Override
-    public boolean isImplicitWrite(PsiElement element) {
+    public boolean isImplicitWrite(@NotNull PsiElement element) {
         if (element instanceof PsiModifierListOwner) {
             PsiModifierListOwner modifierListOwner = (PsiModifierListOwner)element;
+
+            if (element instanceof PsiMethod && ((PsiMethod)element).isConstructor()) {
+                PsiMethod constructor = (PsiMethod) element;
+
+                PsiClass containingClass = constructor.getContainingClass();
+
+                return containingClass != null && AnnotationUtil.isAnnotated(containingClass, "org.osgi.service.component.annotations.Component", AnnotationUtil.CHECK_TYPE);
+            }
+
             PsiModifierList modifierList = modifierListOwner.getModifierList();
             if ( (modifierList != null) && (modifierList.getAnnotations().length > 0)) {
                 return AnnotationUtil.isAnnotated(modifierListOwner, WRITE_ANNOTATIONS, AnnotationUtil.CHECK_TYPE);
