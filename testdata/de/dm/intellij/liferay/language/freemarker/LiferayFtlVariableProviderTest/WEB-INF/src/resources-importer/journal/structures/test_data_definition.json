@@ -1,0 +1,76 @@
+{
+  "availableLanguageIds": [
+    "de_DE"
+  ],
+  "contentType": "journal",
+  "dataDefinitionFields": [
+    {
+      "customProperties": {
+        "dataType": "string",
+        "fieldNamespace": "",
+        "fieldReference": "myReference",
+        "visibilityExpression": ""
+      },
+      "defaultValue": {
+      },
+      "fieldType": "text",
+      "indexType": "text",
+      "indexable": true,
+      "label": {
+        "de_DE": "simple"
+      },
+      "localizable": true,
+      "name": "simple",
+      "nestedDataDefinitionFields": [
+      ],
+      "readOnly": false,
+      "repeatable": false,
+      "required": true,
+      "showLabel": true,
+      "tip": {
+        "de_DE": ""
+      }
+    }
+  ],
+  "defaultDataLayout": {
+    "dataLayoutFields": {
+    },
+    "dataLayoutPages": [
+      {
+        "dataLayoutRows": [
+          {
+            "dataLayoutColumns": [
+              {
+                "columnSize": 12,
+                "fieldNames": [
+                  "simple"
+                ]
+              }
+            ]
+          }
+        ],
+        "description": {
+          "de_DE": "Beschreibung"
+        },
+        "title": {
+          "de_DE": "Seite"
+        }
+      }
+    ],
+    "dataRules": [
+    ],
+    "description": {
+    },
+    "name": {
+      "de_DE": "simple"
+    },
+    "paginationMode": "single-page"
+  },
+  "defaultLanguageId": "de_DE",
+  "description": {
+  },
+  "name": {
+    "de_DE": "simple"
+  },
+  "storageType": ""
+}

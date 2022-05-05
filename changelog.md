@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.14
 - Feature: Resolve Resource Bundles
-- Feature: Define Journal Structures based on Data Engine Definition schema (Liferay 7.4 only)
+- Feature: Support for Journal Structures based on Data Engine Definition schema (Liferay 7.4 only)
 - Feature: Implicit usage of constructors in OSGi components (e.g. ServiceWrappers)
 - Change: Update support for IntelliJ 2022.1
 - Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file
