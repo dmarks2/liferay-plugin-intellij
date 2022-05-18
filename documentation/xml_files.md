@@ -78,7 +78,7 @@ Liferay Workflow Definitions
 
 For workflow definition files the XML tags `<script>` and `<template>` are examined. If
 the corresponding `<script-language>` or `<template-language>` is present and a proper language is defined
-the languge is injected into the tags above. 
+the language is injected into the tags above. 
 
 So if the `<script-language>` defines that *groovy* is being used in `<script>` you can
 use code completion, syntax checking and other language features inside the `<script>`-Tag.
@@ -103,3 +103,5 @@ The following languages are supported for `<template-language>`:
 
 For `<script>`-Tags containing groovy scripts the available context variables like `workflowContext` are detected, so
 that code completion for those variables is available.
+
+For `<template>`-Tags proper context variables are injected, so they can be used in e.g. Freemarker templates.
