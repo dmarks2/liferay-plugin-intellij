@@ -3,6 +3,7 @@ package de.dm.intellij.liferay.workflow;
 import com.intellij.psi.xml.XmlTag;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -26,6 +27,8 @@ public class LiferayWorkflowContextVariablesUtil {
 
     public static final Map<String, String> WORKFLOW_SCRIPT_CONTEXT_VARIABLES = new HashMap<>();
     public static final Map<String, String> WORKFLOW_TEMPLATE_CONTEXT_VARIABLES = new HashMap<>();
+    
+    private static final Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> WORKFLOW_SCRIPT_OUTPUT_VARIABLES = new HashMap<>();
 
     //workflowContext filled from here https://github.com/liferay/liferay-portal/blob/master/portal-kernel/src/com/liferay/portal/kernel/workflow/WorkflowHandlerRegistryUtil.java#L137
     //additional script context variables from here https://github.com/liferay/liferay-portal/blob/master/modules/apps/portal-workflow/portal-workflow-kaleo-runtime-scripting-impl/src/main/java/com/liferay/portal/workflow/kaleo/runtime/scripting/internal/util/ScriptingContextBuilderImpl.java
@@ -48,9 +51,29 @@ public class LiferayWorkflowContextVariablesUtil {
 
     //workflowContext filled from here https://github.com/liferay/liferay-portal/blob/master/portal-kernel/src/com/liferay/portal/kernel/workflow/WorkflowHandlerRegistryUtil.java#L137
     //additional template context variables from here https://github.com/liferay/liferay-portal/blob/master/modules/apps/portal-workflow/portal-workflow-kaleo-runtime-impl/src/main/java/com/liferay/portal/workflow/kaleo/runtime/internal/notification/TemplateNotificationMessageGenerator.java
+    //documentation see https://github.com/rbohl/liferay-docs/blob/workflow-7.3-notificationTemplateVariables_LRDOCS-7311/en/developer/reference/articles/02-workflow/05-notification-templates.markdown
     static {
         WORKFLOW_TEMPLATE_CONTEXT_VARIABLES.putAll(WORKFLOW_SCRIPT_CONTEXT_VARIABLES);
         WORKFLOW_TEMPLATE_CONTEXT_VARIABLES.put("userName", "java.lang.String");
+    }
+
+    static {
+        WORKFLOW_SCRIPT_OUTPUT_VARIABLES.put("scripted-assignment", Arrays.asList(
+                new AbstractMap.SimpleEntry<>("workflowContext", "java.util.Map<java.lang.String, java.lang.Serializable>"),
+                new AbstractMap.SimpleEntry<>("roles", "java.util.List<com.liferay.portal.kernel.model.Role>"),
+                new AbstractMap.SimpleEntry<>("user", "com.liferay.portal.kernel.model.User")
+        ));
+
+        WORKFLOW_SCRIPT_OUTPUT_VARIABLES.put("scripted-receipient", Arrays.asList(
+                new AbstractMap.SimpleEntry<>("workflowContext", "java.util.Map<java.lang.String, java.lang.Serializable>"),
+                new AbstractMap.SimpleEntry<>("roles", "java.util.List<com.liferay.portal.kernel.model.Role>"),
+                new AbstractMap.SimpleEntry<>("user", "com.liferay.portal.kernel.model.User")
+        ));
+
+        WORKFLOW_SCRIPT_OUTPUT_VARIABLES.put("condition", Arrays.asList(
+                new AbstractMap.SimpleEntry<>("workflowContext", "java.util.Map<java.lang.String, java.lang.Serializable>"),
+                new AbstractMap.SimpleEntry<>("returnValue", "java.lang.String")
+        ));
     }
 
     public static boolean isWorkflowScriptTag(@NotNull XmlTag xmlTag) {
@@ -61,4 +84,25 @@ public class LiferayWorkflowContextVariablesUtil {
         return WORKFLOW_NAMESPACES.contains(xmlTag.getNamespace()) && WORKFLOW_TEMPLATE_TAG.equals(xmlTag.getName());
     }
 
+    public static Map<String, String> getWorkflowScriptVariables(@NotNull XmlTag xmlTag) {
+        Map<String, String> result = new HashMap<>(WORKFLOW_SCRIPT_CONTEXT_VARIABLES);
+
+        result.putAll(getOutputVariables(xmlTag));
+
+        return result;
+    }
+
+    private static Map<String, String> getOutputVariables(@NotNull XmlTag xmlTag) {
+        Map<String, String> result = new HashMap<>();
+
+        XmlTag parentTag = xmlTag.getParentTag();
+
+        if (parentTag != null && WORKFLOW_SCRIPT_OUTPUT_VARIABLES.containsKey(parentTag.getName())) {
+            for (AbstractMap.SimpleEntry<String, String> entry : WORKFLOW_SCRIPT_OUTPUT_VARIABLES.get(parentTag.getName())) {
+                result.put(entry.getKey(), entry.getValue());
+            }
+        }
+
+        return result;
+    }
 }

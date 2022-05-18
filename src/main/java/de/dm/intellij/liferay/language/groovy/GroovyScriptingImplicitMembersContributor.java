@@ -37,8 +37,14 @@ public class GroovyScriptingImplicitMembersContributor extends NonCodeMembersCon
         String name = ResolveUtil.getNameHint(processor);
 
         if (isInsideWorkflowDefinitionScriptTag(place)) {
+            PsiFile containingFile = place.getContainingFile();
+
+            XmlTag xmlTag = PsiTreeUtil.getParentOfType(containingFile.getContext(), XmlTag.class);
+
+            Map<String, String> scriptContextVariables = LiferayWorkflowContextVariablesUtil.getWorkflowScriptVariables(xmlTag);
+
             if (name == null) {
-                for (Map.Entry<String, String> scriptContextVariable : LiferayWorkflowContextVariablesUtil.WORKFLOW_SCRIPT_CONTEXT_VARIABLES.entrySet()) {
+                for (Map.Entry<String, String> scriptContextVariable : scriptContextVariables.entrySet()) {
                     LightFieldBuilder lightField = new LightFieldBuilder(scriptContextVariable.getKey(), scriptContextVariable.getValue(), place);
 
                     boolean continueProcessing = processor.execute(lightField, state);
@@ -48,8 +54,8 @@ public class GroovyScriptingImplicitMembersContributor extends NonCodeMembersCon
                     }
                 }
             } else {
-                if (LiferayWorkflowContextVariablesUtil.WORKFLOW_SCRIPT_CONTEXT_VARIABLES.containsKey(name)) {
-                    String type = LiferayWorkflowContextVariablesUtil.WORKFLOW_SCRIPT_CONTEXT_VARIABLES.get(name);
+                if (scriptContextVariables.containsKey(name)) {
+                    String type = scriptContextVariables.get(name);
 
                     LightFieldBuilder lightField = new LightFieldBuilder(name, type, place);
 
