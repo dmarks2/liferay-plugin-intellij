@@ -63,6 +63,8 @@ public class TemplateVariableProcessorUtil {
 
         boolean isApplicationDisplayTemplateFile = LiferayFileUtil.isApplicationDisplayTemplateFile(templateFile);
 
+        boolean isFragmentHtmlFile = LiferayFileUtil.isFragmentHtmlFile(templateFile.getVirtualFile());
+
         boolean isBaseDDMTemplateFile = isJournalTemplateFile || isApplicationDisplayTemplateFile;
 
         boolean isStandardVelocityContextFile = isJournalTemplateFile || isThemeTemplateFile || isLayoutTemplateFile || isApplicationDisplayTemplateFile;
@@ -420,6 +422,10 @@ public class TemplateVariableProcessorUtil {
 
                 variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/base_ddm_template_70.vm"));
             }
+        }
+
+        if (isFragmentHtmlFile) {
+            variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/fragment_template_74.vm"));
         }
 
         return variables;

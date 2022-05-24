@@ -382,5 +382,12 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         assertTrue("<description>-Tag should provide Freemarker variables", strings.contains("workflowContext"));
     }
 
+    public void testFragmentHtmlContextVariables() {
+        myFixture.configureByFiles("fragment/index.html", "fragment/fragment.json");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("getterUtil"));
+    }
+
 
 }
