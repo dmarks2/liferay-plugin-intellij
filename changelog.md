@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Implicit usage of constructors in OSGi components (e.g. ServiceWrappers)
 - Change: Update support for IntelliJ 2022.1
 - Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file
+- Bugfix: description tag inside notification of a workflow definition supports Freemarker, too
 
 ## 0.0.13
 - Feature: Language injections for script and template tags in Liferay workflow definition files

@@ -32,6 +32,7 @@
             <li>Feature: Implicit usage of constructors in OSGi components (e.g. ServiceWrappers)</li>
             <li>Change: Update support for IntelliJ 2022.1</li>
             <li>Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file</li>
+            <li>Bugfix: description tag inside notification of a workflow definition supports Freemarker, too</li>
         </ul>
 
         <p>Version 0.0.13</p>

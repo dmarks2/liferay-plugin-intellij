@@ -104,6 +104,6 @@ The following scopes are available
 Implicit Variables for Workflow Definition Templates
 ----------------------------------------------------
 
-Inside `<template>` tags inside a workflow definition file Freemarker or Velocity can be used. In those tags
+Inside `<template>` tags and inside `<description>` tags within a `<notification>` tag in a workflow definition file Freemarker or Velocity can be used. In those tags
 context variables like `workflowContext` are detected, so that code completion
 is available for those variables.

@@ -13,6 +13,7 @@ import com.intellij.psi.xml.XmlText;
 import org.intellij.plugins.intelliLang.inject.InjectedLanguage;
 import org.intellij.plugins.intelliLang.inject.InjectorUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,8 +50,9 @@ public class LiferayWorkflowScriptLanguageInjector implements MultiHostInjector 
             String namespace = xmlTag.getNamespace();
 
             if (LiferayWorkflowContextVariablesUtil.WORKFLOW_NAMESPACES.contains(namespace)) {
-                handleLanguageInjection(registrar, xmlTag, LiferayWorkflowContextVariablesUtil.WORKFLOW_SCRIPT_TAG, "script-language", SCRIPT_LANGUAGE_MAPPING);
-                handleLanguageInjection(registrar, xmlTag, LiferayWorkflowContextVariablesUtil.WORKFLOW_TEMPLATE_TAG, "template-language", TEMPLATE_LANGUAGE_MAPPING);
+                handleLanguageInjection(registrar, xmlTag, LiferayWorkflowContextVariablesUtil.WORKFLOW_SCRIPT_TAG, null,"script-language", SCRIPT_LANGUAGE_MAPPING);
+                handleLanguageInjection(registrar, xmlTag, LiferayWorkflowContextVariablesUtil.WORKFLOW_TEMPLATE_TAG, null, "template-language", TEMPLATE_LANGUAGE_MAPPING);
+                handleLanguageInjection(registrar, xmlTag, LiferayWorkflowContextVariablesUtil.WORKFLOW_DESCRIPTION_TAG, LiferayWorkflowContextVariablesUtil.WORKFLOW_NOTIFICATION_TAG, "template-language", TEMPLATE_LANGUAGE_MAPPING);
             }
         }
     }
@@ -60,7 +62,7 @@ public class LiferayWorkflowScriptLanguageInjector implements MultiHostInjector 
         return List.of(XmlTag.class);
     }
 
-    private void handleLanguageInjection(@NotNull MultiHostRegistrar registrar, @NotNull XmlTag xmlTag, @NotNull String contentTagName, @NotNull String languageTagName, @NotNull Map<String, String> languageMapping) {
+    private void handleLanguageInjection(@NotNull MultiHostRegistrar registrar, @NotNull XmlTag xmlTag, @NotNull String contentTagName, @Nullable String parentTagName, @NotNull String languageTagName, @NotNull Map<String, String> languageMapping) {
         String tagName = xmlTag.getName();
 
         if (contentTagName.equals(tagName)) {
@@ -68,54 +70,56 @@ public class LiferayWorkflowScriptLanguageInjector implements MultiHostInjector 
             XmlTag parentTag = xmlTag.getParentTag();
 
             if (parentTag != null) {
-                String languageName = parentTag.getSubTagText(languageTagName);
+                if (parentTagName == null || parentTag.getName().equals(parentTagName)) {
+                    String languageName = parentTag.getSubTagText(languageTagName);
 
-                if (languageName != null) {
-                    String mappedLanguage = languageMapping.get(languageName);
+                    if (languageName != null) {
+                        String mappedLanguage = languageMapping.get(languageName);
 
-                    if (mappedLanguage != null) {
-                        Language language = Language.findLanguageByID(mappedLanguage);
+                        if (mappedLanguage != null) {
+                            Language language = Language.findLanguageByID(mappedLanguage);
 
-                        if (language != null) {
-                            InjectedLanguage injectedLanguage = InjectedLanguage.create(mappedLanguage, "", "", true);
+                            if (language != null) {
+                                InjectedLanguage injectedLanguage = InjectedLanguage.create(mappedLanguage, "", "", true);
 
-                            List<Trinity<PsiLanguageInjectionHost, InjectedLanguage, TextRange>> list = new ArrayList<>();
+                                List<Trinity<PsiLanguageInjectionHost, InjectedLanguage, TextRange>> list = new ArrayList<>();
 
-                            PsiElement[] myChildren = xmlTag.getChildren();
-                            for (PsiElement child : myChildren) {
-                                if (child instanceof XmlText) {
-                                    if (((PsiLanguageInjectionHost) child).isValidHost()) {
-                                        TextRange textRange = ElementManipulators.getManipulator(child).getRangeInElement(child);
+                                PsiElement[] myChildren = xmlTag.getChildren();
+                                for (PsiElement child : myChildren) {
+                                    if (child instanceof XmlText) {
+                                        if (((PsiLanguageInjectionHost) child).isValidHost()) {
+                                            TextRange textRange = ElementManipulators.getManipulator(child).getRangeInElement(child);
 
-                                        String text = child.getText();
+                                            String text = child.getText();
 
-                                        if (text != null) {
-                                            int cdataStart = text.indexOf(CDATA_START);
-                                            int cdataEnd = text.indexOf(CDATA_END);
+                                            if (text != null) {
+                                                int cdataStart = text.indexOf(CDATA_START);
+                                                int cdataEnd = text.indexOf(CDATA_END);
 
-                                            if (cdataStart > -1 && cdataEnd > -1 && cdataEnd > cdataStart) {
-                                                textRange = new TextRange(cdataStart + CDATA_START.length(), cdataEnd);
+                                                if (cdataStart > -1 && cdataEnd > -1 && cdataEnd > cdataStart) {
+                                                    textRange = new TextRange(cdataStart + CDATA_START.length(), cdataEnd);
+                                                }
+
+                                                list.add(
+                                                        Trinity.create(
+                                                                ((PsiLanguageInjectionHost) child),
+                                                                injectedLanguage,
+                                                                textRange
+                                                        )
+                                                );
                                             }
-
-                                            list.add(
-                                                    Trinity.create(
-                                                            ((PsiLanguageInjectionHost) child),
-                                                            injectedLanguage,
-                                                            textRange
-                                                    )
-                                            );
                                         }
                                     }
                                 }
-                            }
 
-                            if (!list.isEmpty()) {
-                                InjectorUtils.registerInjection(
-                                        language,
-                                        list,
-                                        xmlTag.getContainingFile(),
-                                        registrar
-                                );
+                                if (!list.isEmpty()) {
+                                    InjectorUtils.registerInjection(
+                                            language,
+                                            list,
+                                            xmlTag.getContainingFile(),
+                                            registrar
+                                    );
+                                }
                             }
                         }
                     }

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+        xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+    <name>Sample Workflow</name>
+    <version>1</version>
+    <state>
+        <name>created</name>
+        <initial>true</initial>
+        <transitions>
+            <transition>
+                <name>approved</name>
+                <target>approved</target>
+                <default>true</default>
+            </transition>
+        </transitions>
+    </state>
+    <task>
+        <name>update</name>
+        <actions>
+            <notification>
+                <name>Creator Modification Notification</name>
+                <description><![CDATA[${<caret>}]]></description>
+                <template>Foo!</template>
+                <template-language>freemarker</template-language>
+                <notification-type>email</notification-type>
+                <notification-type>user-notification</notification-type>
+                <execution-type>onAssignment</execution-type>
+            </notification>
+        </actions>
+        <assignments>
+            <user />
+        </assignments>
+        <transitions>
+            <transition>
+                <name>resubmit</name>
+                <target>review</target>
+                <default>true</default>
+            </transition>
+        </transitions>
+    </task>
+</workflow-definition>

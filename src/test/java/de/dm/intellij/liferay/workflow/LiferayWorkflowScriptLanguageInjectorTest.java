@@ -26,4 +26,11 @@ public class LiferayWorkflowScriptLanguageInjectorTest extends BasePlatformTestC
         assertTrue(strings.contains("assign"));
     }
 
+    public void testTemplateFreemarkerDescription() {
+        myFixture.configureByFiles("workflow-definition-freemarker-description.xml");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue("<description>-Tag should provide Freemarker syntax", strings.contains("assign"));
+    }
+
 }

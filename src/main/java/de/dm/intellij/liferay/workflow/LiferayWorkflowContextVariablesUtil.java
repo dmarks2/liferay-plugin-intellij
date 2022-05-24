@@ -25,6 +25,10 @@ public class LiferayWorkflowContextVariablesUtil {
 
     public static final String WORKFLOW_TEMPLATE_TAG = "template";
 
+    public static final String WORKFLOW_DESCRIPTION_TAG = "description";
+
+    public static final String WORKFLOW_NOTIFICATION_TAG = "notification";
+
     public static final Map<String, String> WORKFLOW_SCRIPT_CONTEXT_VARIABLES = new HashMap<>();
     public static final Map<String, String> WORKFLOW_TEMPLATE_CONTEXT_VARIABLES = new HashMap<>();
     
@@ -143,7 +147,10 @@ public class LiferayWorkflowContextVariablesUtil {
     }
 
     public static boolean isWorkflowTemplateTag(@NotNull XmlTag xmlTag) {
-        return WORKFLOW_NAMESPACES.contains(xmlTag.getNamespace()) && WORKFLOW_TEMPLATE_TAG.equals(xmlTag.getName());
+        return WORKFLOW_NAMESPACES.contains(xmlTag.getNamespace()) && (
+                WORKFLOW_TEMPLATE_TAG.equals(xmlTag.getName()) ||
+                (WORKFLOW_DESCRIPTION_TAG.equals(xmlTag.getName()) && xmlTag.getParentTag() != null && xmlTag.getParentTag().getName().equals(WORKFLOW_NOTIFICATION_TAG))
+        );
     }
 
     public static Map<String, String> getWorkflowScriptVariables(@NotNull XmlTag xmlTag) {

@@ -375,5 +375,12 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         assertTrue(strings.contains("workflowContext"));
     }
 
+    public void testWorkflowDefinitionDescriptionContextVariables() {
+        myFixture.configureByFiles("workflow-definition-freemarker-description.xml");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue("<description>-Tag should provide Freemarker variables", strings.contains("workflowContext"));
+    }
+
 
 }
