@@ -107,6 +107,7 @@ public class LiferayFileUtil {
 
     public static boolean isFragmentHtmlFile(VirtualFile virtualFile) {
         return
+                (virtualFile != null) &&
                 (virtualFile.getExtension() != null) &&
                 ("html".equalsIgnoreCase(virtualFile.getExtension()) || "htm".equalsIgnoreCase(virtualFile.getExtension())) &&
                 isFragmentFile(virtualFile);
