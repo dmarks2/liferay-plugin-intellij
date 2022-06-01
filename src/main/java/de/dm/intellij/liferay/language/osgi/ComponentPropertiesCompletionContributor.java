@@ -525,6 +525,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"valid.url.prefixes", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.portlet.ControlPanelEntry",
+                new String[][]{
+                        {"javax.portlet.name", "String"}
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.portlet.DisplayInformationProvider",
                 new String[][]{
                         {"javax.portlet.name", "String"},
