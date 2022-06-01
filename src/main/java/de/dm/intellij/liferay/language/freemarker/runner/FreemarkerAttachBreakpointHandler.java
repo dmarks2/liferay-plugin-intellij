@@ -10,6 +10,7 @@ import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.util.TextRange;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiDocumentManager;
@@ -186,28 +187,43 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
 
     public String getTemplateName(VirtualFile virtualFile) {
         PsiFile psiFile = PsiManager.getInstance(debugProcess.getSession().getProject()).findFile(virtualFile);
+
         if (psiFile != null) {
+
             if (
                 (LiferayFileUtil.isLayoutTemplateFile(psiFile)) ||
                     (LiferayFileUtil.isThemeTemplateFile(psiFile))
             ) {
-                return getServletContextTemplateName(virtualFile);
+                String servletContextTemplateName = getServletContextTemplateName(virtualFile);
+
+                if (log.isDebugEnabled()) {
+                    log.debug("Found template name for file " + virtualFile.getName() + " based on theme or layout as " + servletContextTemplateName);
+                }
+
+                return servletContextTemplateName;
             } else if (LiferayFileUtil.isJournalTemplateFile(psiFile)) {
                 VirtualFile journalStructureFile = LiferayFileUtil.getJournalStructureFile(psiFile);
+
                 if (journalStructureFile != null) {
                     String groupName = GroupConstants.GLOBAL;
+
                     final Module module = ModuleUtil.findModuleForFile(virtualFile, debugProcess.getSession().getProject());
+
                     if (module != null) {
                         if (LiferayModuleComponent.getResourcesImporterGroupName(module) != null) {
                             groupName = LiferayModuleComponent.getResourcesImporterGroupName(module);
                         }
                     }
 
-                    String structureName = journalStructureFile.getNameWithoutExtension();
-                    String templateName = virtualFile.getNameWithoutExtension();
+                    String structureKey = getKey(journalStructureFile.getNameWithoutExtension());
+                    String templateKey = getKey(virtualFile.getNameWithoutExtension());
 
                     try {
-                        String result = liferayServicesUtil.getFreemarkerTemplateName(structureName, templateName, groupName);
+                        if (log.isDebugEnabled()) {
+                            log.debug("Trying to find Journal Structure Template for file " + virtualFile.getName() + " with Structure Key " + structureKey + " and Template Key " + templateKey + " in Group " + groupName + " ...");
+                        }
+
+                        String result = liferayServicesUtil.getFreemarkerTemplateName(structureKey, templateKey, groupName);
 
                         return result;
                     } catch (IOException e) {
@@ -219,7 +235,9 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
                 String type = LiferayFileUtil.getApplicationDisplayTemplateType(psiFile);
 
                 String groupName = GroupConstants.GLOBAL;
+
                 final Module module = ModuleUtil.findModuleForFile(virtualFile, debugProcess.getSession().getProject());
+
                 if (module != null) {
                     if (LiferayModuleComponent.getResourcesImporterGroupName(module) != null) {
                         groupName = LiferayModuleComponent.getResourcesImporterGroupName(module);
@@ -227,6 +245,10 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
                 }
 
                 try {
+                    if (log.isDebugEnabled()) {
+                        log.debug("Trying to find Application Display Template for file " + virtualFile.getName() + " with Template name " + templateName + " and Type " + type + " in Group " + groupName + " ...");
+                    }
+
                     String result = liferayServicesUtil.getFreemarkerApplicationDisplayTemplateName(type, templateName, groupName);
 
                     return result;
@@ -289,5 +311,13 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
         }
 
         return isValidFreemarkerLocation;
+    }
+
+    private String getKey(String name) {
+        name = StringUtil.replace(name, " ", "-");
+
+        name = StringUtil.toUpperCase(name);
+
+        return name;
     }
 }

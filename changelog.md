@@ -7,10 +7,12 @@ All notable changes to this project will be documented in this file.
 - Feature: Resolve Resource Bundles
 - Feature: Support for Journal Structures based on Data Engine Definition schema (Liferay 7.4 only)
 - Feature: Implicit usage of constructors in OSGi components (e.g. ServiceWrappers)
-- Feature: Resolve known Freemarker context variables in Fragment HTML files 
+- Feature: Resolve known Freemarker context variables in Fragment HTML files
+- Feature: Add support for Freemarker debugger in Liferay 7.4
 - Change: Update support for IntelliJ 2022.1
 - Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file
 - Bugfix: description tag inside notification of a workflow definition supports Freemarker, too
+- Bugfix: unable to attach Freemarker breakpoint if journal structure or template has been renamed 
 
 ## 0.0.13
 - Feature: Language injections for script and template tags in Liferay workflow definition files
