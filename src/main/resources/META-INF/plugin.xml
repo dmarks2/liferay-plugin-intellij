@@ -32,6 +32,7 @@
             <li>Feature: Implicit usage of constructors in OSGi components (e.g. ServiceWrappers)</li>
             <li>Feature: Resolve known Freemarker context variables in Fragment HTML files</li>
             <li>Feature: Add support for Freemarker debugger in Liferay 7.4</li>
+            <li>Feature: Ability to use Freemarker debugger for Modules based on direct service calls to Advanced Resources Importer</li>
             <li>Change: Update support for IntelliJ 2022.1</li>
             <li>Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file</li>
             <li>Bugfix: description tag inside notification of a workflow definition supports Freemarker, too</li>
@@ -296,6 +297,7 @@
 
     <projectListeners>
         <listener class="de.dm.intellij.liferay.module.LiferayModuleListener" topic="com.intellij.openapi.project.ModuleListener" />
+        <listener class="de.dm.intellij.liferay.resourcesimporter.LiferayAdvancedResourcesImporterServiceCallModuleListener" topic="com.intellij.openapi.project.ModuleListener" />
     </projectListeners>
     <applicationListeners>
         <listener class="de.dm.intellij.liferay.theme.LiferayPackageJSONParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
@@ -305,6 +307,7 @@
         <listener class="de.dm.intellij.liferay.language.jsp.LiferayJspWebContentRootListener" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
         <listener class="de.dm.intellij.liferay.resourcesimporter.LiferayPluginPackagePropertiesParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
         <listener class="de.dm.intellij.liferay.resourcesimporter.LiferayAdvancedResourcesImporterBndParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
+        <listener class="de.dm.intellij.liferay.resourcesimporter.LiferayAdvancedResourcesImporterServiceCallWatcher" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
     </applicationListeners>
 
 </idea-plugin>

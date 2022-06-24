@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Implicit usage of constructors in OSGi components (e.g. ServiceWrappers)
 - Feature: Resolve known Freemarker context variables in Fragment HTML files
 - Feature: Add support for Freemarker debugger in Liferay 7.4
+- Feature: Ability to use Freemarker debugger for Modules based on direct service calls to Advanced Resources Importer
 - Change: Update support for IntelliJ 2022.1
 - Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file
 - Bugfix: description tag inside notification of a workflow definition supports Freemarker, too
