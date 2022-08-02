@@ -91,6 +91,10 @@ intellij {
     updateSinceUntilBuild.set(false)
 }
 
+runPluginVerifier {
+    ideVersions = ["IU-222.3345.47"]
+}
+
 runIde {
     jvmArgs '-Xmx2048m'
 }
