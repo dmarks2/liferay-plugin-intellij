@@ -31,4 +31,12 @@ public class LiferayTaglibJavascriptLanguageInjectorTest extends BasePlatformTes
         assertTrue(strings.contains("alert"));
     }
 
+    public void testLookAndFeelXmlJavascriptCodeCompletion() {
+        myFixture.configureByFiles("liferay-look-and-feel.xml");
+
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("alert"));
+    }
+
 }

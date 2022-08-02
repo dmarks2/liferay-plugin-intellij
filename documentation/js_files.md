@@ -3,6 +3,7 @@ JavaScript
 
 1. [Predefined JavaScript Libraries](#predefined-javascript-libraries)
 2. [JavaScript injection for taglibs](#javascript-injection-for-taglibs)
+3. [JavaScript support for liferay-look-and-feel.xml](#javascript-support-for-liferay-look-and-feel.xml)
 
 Predefined JavaScript Libraries
 -------------------------------
@@ -42,4 +43,12 @@ The following tag libraries are supported:
     <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 ```
 
+JavaScript support for liferay-look-and-feel.xml
+------------------------------------------------
 
+Inside `<setting>` tags in a `liferay-look-and-feel.xml` you can use JavaScript to
+add custom logic or validation rules.
+
+This plugin injects JavaScript language into those tags, so code completion is available.
+
+See https://liferay.dev/blogs/-/blogs/theme-settings-and-new-advanced-controls for more info about that feature.

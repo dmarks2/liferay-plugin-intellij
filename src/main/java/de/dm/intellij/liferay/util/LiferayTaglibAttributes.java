@@ -1,9 +1,12 @@
 package de.dm.intellij.liferay.util;
 
+import de.dm.intellij.liferay.schema.LiferayDefinitionsResourceProvider;
+
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LiferayTaglibAttributes {
@@ -46,6 +49,18 @@ public class LiferayTaglibAttributes {
         ));
 
         TAGLIB_ATTRIBUTES_JAVASCRIPT.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI_OLD, LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_JAVASCRIPT.get(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI));
+
+        TAGLIB_ATTRIBUTES_JAVASCRIPT.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_LOOK_AND_FEEL_6_1_0, List.of(
+                new AbstractMap.SimpleEntry<String, String>("setting", "")
+        ));
+
+        TAGLIB_ATTRIBUTES_JAVASCRIPT.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_LOOK_AND_FEEL_6_2_0, TAGLIB_ATTRIBUTES_JAVASCRIPT.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_LOOK_AND_FEEL_6_1_0));
+        TAGLIB_ATTRIBUTES_JAVASCRIPT.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_LOOK_AND_FEEL_7_0_0, TAGLIB_ATTRIBUTES_JAVASCRIPT.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_LOOK_AND_FEEL_6_1_0));
+        TAGLIB_ATTRIBUTES_JAVASCRIPT.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_LOOK_AND_FEEL_7_1_0, TAGLIB_ATTRIBUTES_JAVASCRIPT.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_LOOK_AND_FEEL_6_1_0));
+        TAGLIB_ATTRIBUTES_JAVASCRIPT.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_LOOK_AND_FEEL_7_2_0, TAGLIB_ATTRIBUTES_JAVASCRIPT.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_LOOK_AND_FEEL_6_1_0));
+        TAGLIB_ATTRIBUTES_JAVASCRIPT.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_LOOK_AND_FEEL_7_3_0, TAGLIB_ATTRIBUTES_JAVASCRIPT.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_LOOK_AND_FEEL_6_1_0));
+        TAGLIB_ATTRIBUTES_JAVASCRIPT.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_LOOK_AND_FEEL_7_4_0, TAGLIB_ATTRIBUTES_JAVASCRIPT.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_LOOK_AND_FEEL_6_1_0));
+
     }
 
     //TAGLIB_ATTRIBUTES_RESOURCEBUNDLE
