@@ -20,7 +20,6 @@ This plugin mainly focuses on code completion features. It gives IntelliJ IDEA m
 By this the existing code completion features of IntelliJ can be used for Liferay specific files, too. There is no user interface
 for the plugin. Just have a look at the following topics to see which areas have been improved:
 
-* [Creating new Modules](documentation/new_modules.md) becomes easier, because this plugin provides you with the official Liferay Maven archetypes. 
 * [Editing Liferay XML files](documentation/xml_files.md) is improved, e.g. by providing the XML Schema files for mostly all Liferay specific XML files. 
 * For [JavaScript files](documentation/js_files.md) the plugin provides you with libraries for the Liferay barebone Javascript files and AlloyUI. 
 * For [Velocity and Freemarker files in Layout Templates and Themes](documentation/vtl_ftl_files.md) the plugin provides code completion for known variables and theme settings.
