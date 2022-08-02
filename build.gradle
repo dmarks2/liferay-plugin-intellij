@@ -7,7 +7,7 @@ buildscript {
 }
 
 plugins {
-    id "org.jetbrains.intellij" version "1.6.0"
+    id "org.jetbrains.intellij" version "1.7.0"
     id 'de.undercouch.download' version '4.1.2'
 }
 
@@ -83,7 +83,7 @@ intellij {
     type.set('IU')
     pluginName.set('Liferay IntelliJ Plugin')
     plugins.set([
-            'JavaScriptLanguage', 'Tomcat', 'Velocity', 'FreeMarker', 'maven', 'properties', 'java-i18n', 'CSS', 'sass', 'JavaEE', 'Web', 'jsp', 'gradle', 'de.dm.intellij.maven-archetypes-catalog-plugin:1.4.0',
+            'JavaScriptLanguage', 'Tomcat', 'Velocity', 'FreeMarker', 'maven', 'properties', 'java-i18n', 'CSS', 'sass', 'JavaEE', 'Web', 'jsp', 'gradle',
             'IntelliLang', 'uml', 'java',
             //test only?
             'Groovy', 'junit', 'PersistenceSupport', 'DatabaseTools'

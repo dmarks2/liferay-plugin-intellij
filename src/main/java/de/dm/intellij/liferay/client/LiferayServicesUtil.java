@@ -139,7 +139,7 @@ public class LiferayServicesUtil {
         return jsonObject;
     }
 
-    public String getVersion() throws IOException {
+    public String getVersion() throws IOException, JSONException {
         String result = serviceInvoker.invoke("/portal/get-version", new JSONObject(), String.class);
 
         result = StringUtil.unquoteString(result);
@@ -151,7 +151,7 @@ public class LiferayServicesUtil {
         return result;
     }
 
-    public long getClassNameId(String className) throws IOException {
+    public long getClassNameId(String className) throws IOException, JSONException {
         Long result = classNameIds.get(className);
 
         if (result == null) {
@@ -327,7 +327,7 @@ public class LiferayServicesUtil {
         return null;
     }
 
-    public JSONObject getDDMStructureByKey(String structureKey, String groupName) throws IOException {
+    public JSONObject getDDMStructureByKey(String structureKey, String groupName) throws IOException, JSONException {
         long classNameId = getClassNameId(Constants.CLASS_NAME_JOURNAL_ARTICLE_7_0);
         long companyId = getDefaultCompanyId();
         long groupId = getGroupId(groupName);
@@ -337,7 +337,7 @@ public class LiferayServicesUtil {
         return ddmStructure;
     }
 
-    public JSONObject getDDMTemplateByKey(long structureId, String templateKey, String groupName) throws IOException {
+    public JSONObject getDDMTemplateByKey(long structureId, String templateKey, String groupName) throws IOException, JSONException {
         long companyId = getDefaultCompanyId();
         long groupId = getGroupId(groupName);
 
@@ -349,7 +349,7 @@ public class LiferayServicesUtil {
         return ddmTemplate;
     }
 
-    public String getFreemarkerTemplateName(String structureKey, String templateKey, String groupName) throws IOException {
+    public String getFreemarkerTemplateName(String structureKey, String templateKey, String groupName) throws IOException, JSONException {
         JSONObject ddmStructure = getDDMStructureByKey(structureKey, groupName);
         if (ddmStructure != null) {
             JSONObject ddmTemplate = getDDMTemplateByKey(ddmStructure.getLong("structureId"), templateKey, groupName);
@@ -369,7 +369,7 @@ public class LiferayServicesUtil {
 
         return null;
     }
-    public String getFreemarkerApplicationDisplayTemplateName(String type, String templateName, String groupName) throws IOException {
+    public String getFreemarkerApplicationDisplayTemplateName(String type, String templateName, String groupName) throws IOException, JSONException {
         String className = Constants.APPLICATION_DISPLAY_TEMPLATE_TYPES_7_0.get(type);
         if (className == null) {
             className = Constants.APPLICATION_DISPLAY_TEMPLATE_TYPES_7_3.get(type);

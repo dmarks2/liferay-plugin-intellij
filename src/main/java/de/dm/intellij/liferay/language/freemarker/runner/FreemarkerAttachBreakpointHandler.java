@@ -30,6 +30,7 @@ import de.dm.intellij.liferay.util.LiferayFileUtil;
 import freemarker.debug.Breakpoint;
 import freemarker.debug.Debugger;
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.URI;
@@ -53,7 +54,7 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
     private Map<AbstractMap.SimpleImmutableEntry<String, Integer>, Breakpoint> breakpoints = new HashMap<>();
     private Map<AbstractMap.SimpleImmutableEntry<String, Integer>, XLineBreakpoint<FreemarkerAttachBreakpointProperties>> xlineBreakpoints = new HashMap<>();
 
-    public FreemarkerAttachBreakpointHandler(Debugger debugger, FreemarkerAttachDebugProcess debugProcess) throws URISyntaxException, IOException {
+    public FreemarkerAttachBreakpointHandler(Debugger debugger, FreemarkerAttachDebugProcess debugProcess) throws URISyntaxException, IOException, JSONException {
         super(FreemarkerAttachBreakpointType.class);
 
         this.debugger = debugger;
@@ -226,7 +227,7 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
                         String result = liferayServicesUtil.getFreemarkerTemplateName(structureKey, templateKey, groupName);
 
                         return result;
-                    } catch (IOException e) {
+                    } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
                 }
@@ -252,7 +253,7 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
                     String result = liferayServicesUtil.getFreemarkerApplicationDisplayTemplateName(type, templateName, groupName);
 
                     return result;
-                } catch (IOException e) {
+                } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
             }
