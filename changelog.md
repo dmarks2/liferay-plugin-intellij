@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Add support for Freemarker debugger in Liferay 7.4
 - Feature: Ability to use Freemarker debugger for Modules based on direct service calls to Advanced Resources Importer
 - Feature: JavaScript support for liferay-look-and-feel.xml
+- Feature: Add javax.portlet.version to properties of Portlet components
 - Change: Update support for IntelliJ 2022.1
 - Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file
 - Bugfix: description tag inside notification of a workflow definition supports Freemarker, too

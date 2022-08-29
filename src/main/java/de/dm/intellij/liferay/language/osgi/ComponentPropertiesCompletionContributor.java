@@ -1190,6 +1190,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"javax.portlet.supported-processing-event", "String"},
                         {"javax.portlet.supported-public-render-parameter", "String"},
                         {"javax.portlet.supported-publishing-event", "String"},
+                        {"javax.portlet.version", "double"},
                         {"javax.portlet.window-state", "String"},
                         {"xml.doctype.declaration.allowed", "String"},
                         {"xml.external.general.entities.allowed", "String"},
