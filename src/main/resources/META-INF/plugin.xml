@@ -34,6 +34,8 @@
             <li>Feature: Add support for Freemarker debugger in Liferay 7.4</li>
             <li>Feature: Ability to use Freemarker debugger for Modules based on direct service calls to Advanced Resources Importer</li>
             <li>Feature: JavaScript support for liferay-look-and-feel.xml</li>
+            <li>Feature: Add javax.portlet.version to properties of Portlet components</li>
+            <li>Feature: Run groovy scripts directly on a running Liferay server</li>
             <li>Change: Update support for IntelliJ 2022.1</li>
             <li>Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file</li>
             <li>Bugfix: description tag inside notification of a workflow definition supports Freemarker, too</li>
@@ -267,6 +269,11 @@
         <inspectionToolProvider implementation="de.dm.intellij.liferay.language.osgi.ComponentInspectionToolProvider"/>
         
         <pluginReplacement implementation="de.dm.intellij.LiferayPluginReplacement" />
+
+        <configurationType implementation="de.dm.intellij.liferay.language.groovy.LiferayServerGroovyConfigurationType"/>
+        <programRunner implementation="de.dm.intellij.liferay.language.groovy.LiferayServerGroovyProgramRunner"/>
+        <runConfigurationProducer implementation="de.dm.intellij.liferay.language.groovy.LiferayServerGroovyConfigurationProducer" />
+        <runLineMarkerContributor language="Groovy" implementationClass="de.dm.intellij.liferay.language.groovy.LiferayServerGroovyRunLineMarkerProvider" />
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">
