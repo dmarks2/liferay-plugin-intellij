@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 - Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file
 - Bugfix: description tag inside notification of a workflow definition supports Freemarker, too
 - Bugfix: unable to attach Freemarker breakpoint if journal structure or template has been renamed 
+- Bugfix: try to circumvent IntelliJ hang when adding a Freemarker breakpoint
 
 ## 0.0.13
 - Feature: Language injections for script and template tags in Liferay workflow definition files

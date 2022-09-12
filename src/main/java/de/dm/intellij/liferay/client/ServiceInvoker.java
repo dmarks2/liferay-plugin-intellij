@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsonorg.JsonOrgModule;
 import com.intellij.openapi.util.text.StringUtil;
 import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
@@ -48,6 +49,9 @@ public class ServiceInvoker {
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(username, password);
             client.register(feature);
         }
+
+        client.property(ClientProperties.CONNECT_TIMEOUT, 3000);
+        client.property(ClientProperties.READ_TIMEOUT, 3000);
 
         mapper = new ObjectMapper();
         mapper.registerModule(new JsonOrgModule());

@@ -40,6 +40,7 @@
             <li>Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file</li>
             <li>Bugfix: description tag inside notification of a workflow definition supports Freemarker, too</li>
             <li>Bugfix: unable to attach Freemarker breakpoint if journal structure or template has been renamed</li>
+            <li>Bugfix: try to circumvent IntelliJ hang when adding a Freemarker breakpoint</li>
         </ul>
 
         <p>Version 0.0.13</p>
