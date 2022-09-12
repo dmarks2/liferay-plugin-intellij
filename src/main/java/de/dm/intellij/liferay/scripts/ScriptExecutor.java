@@ -43,6 +43,19 @@ public class ScriptExecutor {
 
             client.send("$currentThread setcontextclassloader ($editServerCommandClass classloader);");
 
+            client.send("portal = service \"com.liferay.portal.kernel.util.Portal\"");
+            client.send("companyId = $portal defaultCompanyId");
+
+            client.send("roleLocalService = service \"com.liferay.portal.kernel.service.RoleLocalService\"");
+            client.send("adminRole = $roleLocalService getRole $companyId \"Administrator\"");
+
+            client.send("userLocalService = service \"com.liferay.portal.kernel.service.UserLocalService\"");
+            client.send("adminUser = ($userLocalService getRoleUsers ($adminRole roleId)) get 0");
+
+            client.send("PrincipalThreadLocal = ((bundle 0) loadclass com.liferay.portal.kernel.security.auth.PrincipalThreadLocal)");
+            client.send("currentUser = $PrincipalThreadLocal name");
+            client.send("$PrincipalThreadLocal setName ($adminUser userId)");
+
             client.send("groovyExecutor = service \"com.liferay.portal.kernel.scripting.ScriptingExecutor\" \"(scripting.language=groovy)\";");
 
             client.send("System = ((bundle 0) loadclass java.lang.System);");
@@ -50,6 +63,7 @@ public class ScriptExecutor {
 
             String result = client.send(gogoScript);
 
+            client.send("$PrincipalThreadLocal setName $currentUser");
             client.send("$currentThread setcontextclassloader $currentThreadClassLoader;");
 
             System.out.println(result);
