@@ -8,6 +8,7 @@ import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.util.PsiUtil;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -60,19 +61,20 @@ public class ReferenceWithoutComponentInspection extends AbstractBaseJavaLocalIn
             PsiClass containingClass = method.getContainingClass();
 
             if (containingClass != null) {
+                if (! (PsiUtil.isAbstractClass(containingClass) || containingClass.isInterface()) ) {
+                    PsiAnnotation classAnnotation = containingClass.getAnnotation("org.osgi.service.component.annotations.Component");
 
-                PsiAnnotation classAnnotation = containingClass.getAnnotation("org.osgi.service.component.annotations.Component");
+                    if (classAnnotation == null) {
+                        ProblemDescriptor problemDescriptor = manager.createProblemDescriptor(
+                                method.getNameIdentifier(),
+                                "Reference annotation on a method where the class " + containingClass.getQualifiedName() + " is not annotated with @Component does not work.",
+                                isOnTheFly,
+                                null,
+                                ProblemHighlightType.GENERIC_ERROR
+                        );
 
-                if (classAnnotation == null) {
-                    ProblemDescriptor problemDescriptor = manager.createProblemDescriptor(
-                            method.getNameIdentifier(),
-                            "Reference annotation on a method where the class " + containingClass.getQualifiedName() + " is not annotated with @Component does not work.",
-                            isOnTheFly,
-                            null,
-                            ProblemHighlightType.GENERIC_ERROR
-                    );
-
-                    problemDescriptors.add(problemDescriptor);
+                        problemDescriptors.add(problemDescriptor);
+                    }
                 }
             }
 
@@ -90,21 +92,21 @@ public class ReferenceWithoutComponentInspection extends AbstractBaseJavaLocalIn
             PsiClass containingClass = field.getContainingClass();
 
             if (containingClass != null) {
+                if (! (PsiUtil.isAbstractClass(containingClass) || containingClass.isInterface()) ) {
+                    PsiAnnotation classAnnotation = containingClass.getAnnotation("org.osgi.service.component.annotations.Component");
 
-                PsiAnnotation classAnnotation = containingClass.getAnnotation("org.osgi.service.component.annotations.Component");
+                    if (classAnnotation == null) {
+                        ProblemDescriptor problemDescriptor = manager.createProblemDescriptor(
+                                field.getNameIdentifier(),
+                                "Reference annotation on a field where the class " + containingClass.getQualifiedName() + " is not annotated with @Component does not work.",
+                                isOnTheFly,
+                                null,
+                                ProblemHighlightType.GENERIC_ERROR
+                        );
 
-                if (classAnnotation == null) {
-                    ProblemDescriptor problemDescriptor = manager.createProblemDescriptor(
-                            field.getNameIdentifier(),
-                            "Reference annotation on a field where the class " + containingClass.getQualifiedName() + " is not annotated with @Component does not work.",
-                            isOnTheFly,
-                            null,
-                            ProblemHighlightType.GENERIC_ERROR
-                    );
-
-                    problemDescriptors.add(problemDescriptor);
+                        problemDescriptors.add(problemDescriptor);
+                    }
                 }
-
             }
         }
 

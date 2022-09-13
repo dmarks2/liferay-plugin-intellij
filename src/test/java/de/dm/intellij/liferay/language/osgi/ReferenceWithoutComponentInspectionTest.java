@@ -51,4 +51,15 @@ public class ReferenceWithoutComponentInspectionTest extends LightJavaCodeInsigh
         myFixture.checkHighlighting();
     }
 
+    public void testAbstractClassWithoutComponentInspection() {
+        myFixture.configureByFiles(
+                "AbstractClassWithoutComponent.java",
+                "MyObject.java",
+                "org/osgi/service/component/annotations/Reference.java",
+                "org/osgi/service/component/annotations/Component.java"
+        );
+
+        myFixture.checkHighlighting();
+    }
+
 }

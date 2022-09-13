@@ -41,11 +41,12 @@
             <li>Bugfix: description tag inside notification of a workflow definition supports Freemarker, too</li>
             <li>Bugfix: unable to attach Freemarker breakpoint if journal structure or template has been renamed</li>
             <li>Bugfix: try to circumvent IntelliJ hang when adding a Freemarker breakpoint</li>
+            <li>Bugfix: Do not add inspection of @Reference usage in abstract classes or interfaces</li>
         </ul>
 
         <p>Version 0.0.13</p>
         <ul>
-            <li>Feature: Language injections for script and templat tags in Liferay workflow definition files</li>
+            <li>Feature: Language injections for script and template tags in Liferay workflow definition files</li>
             <li>Feature: Provide workflow context variables for script and template tags (groovy and freemarker)</li>
             <li>Feature: Resolve Files and Layout entries in Resources Importer Template files</li>
             <li>Feature: Inject SQL language into custom-sql definition files</li>
