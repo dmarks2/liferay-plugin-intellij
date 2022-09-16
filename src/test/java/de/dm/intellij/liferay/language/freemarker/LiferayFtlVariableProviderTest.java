@@ -3,10 +3,7 @@ package de.dm.intellij.liferay.language.freemarker;
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.codeInsight.navigation.actions.GotoDeclarationAction;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiDirectory;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiField;
+import com.intellij.psi.*;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
@@ -389,5 +386,21 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         assertTrue(strings.contains("getterUtil"));
     }
 
+    public void testImplicitVariablesNavigationElement() {
+        myFixture.configureByFiles("templates/theme_variable.ftl", "com/liferay/portal/kernel/util/GetterUtil_IW.java");
+
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        PsiElement elementParent = element.getParent();
+
+        PsiReference[] references = elementParent.getReferences();
+
+        PsiElement resolve = references[0].resolve();
+
+        PsiElement navigationElement = resolve.getNavigationElement();
+
+        assertTrue(navigationElement != null);
+        assertTrue(navigationElement instanceof PsiClass);
+    }
 
 }

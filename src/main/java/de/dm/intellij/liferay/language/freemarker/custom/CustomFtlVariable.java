@@ -12,9 +12,11 @@ import com.intellij.psi.PsiType;
 import com.intellij.psi.ResolveState;
 import com.intellij.psi.scope.NameHint;
 import com.intellij.psi.scope.PsiScopeProcessor;
+import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PropertyUtil;
 import de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerUtil;
 import de.dm.intellij.liferay.util.Icons;
+import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,9 +25,14 @@ import javax.swing.*;
 public class CustomFtlVariable extends FtlLightVariable {
 
     private PsiElement navigationElement;
+    private String typeText;
 
     public CustomFtlVariable(@NotNull String name, @NotNull PsiElement parent, @NotNull String typeText) {
         super(name, parent, typeText);
+
+        this.typeText = typeText;
+
+        findNavigationalElement();
     }
 
     public CustomFtlVariable(@NotNull String name, @NotNull PsiElement parent, @Nullable FtlType type) {
@@ -96,6 +103,18 @@ public class CustomFtlVariable extends FtlLightVariable {
         }
 
         return false;
+    }
+
+    private void findNavigationalElement() {
+        if (typeText != null) {
+            if (! (typeText.startsWith("java"))) {
+                this.navigationElement = ProjectUtils.getClassWithoutResolve(
+                        typeText,
+                        getProject(),
+                        GlobalSearchScope.allScope(getProject())
+                );
+            }
+        }
     }
 
 

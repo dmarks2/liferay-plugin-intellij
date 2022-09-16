@@ -36,6 +36,7 @@
             <li>Feature: JavaScript support for liferay-look-and-feel.xml</li>
             <li>Feature: Add javax.portlet.version to properties of Portlet components</li>
             <li>Feature: Run groovy scripts directly on a running Liferay server</li>
+            <li>Feature: Improve documentation provided for implicit freemarker variables</li>
             <li>Change: Update support for IntelliJ 2022.1</li>
             <li>Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file</li>
             <li>Bugfix: description tag inside notification of a workflow definition supports Freemarker, too</li>
