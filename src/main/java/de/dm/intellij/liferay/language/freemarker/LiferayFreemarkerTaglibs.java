@@ -67,6 +67,12 @@ public class LiferayFreemarkerTaglibs {
         FTL_TAGLIB_MAPPINGS.put("liferay-clay.tld", "clay");
         // https://github.com/liferay/liferay-portal/blob/master/modules/apps/comment/comment-taglib/src/main/resources/META-INF/taglib-mappings.properties
         FTL_TAGLIB_MAPPINGS.put("liferay-comment.tld", "liferay_comment");
+        // https://github.com/liferay/liferay-portal/blob/master/modules/apps/commerce/commerce-taglib/src/main/resources/META-INF/taglib-mappings.properties
+        FTL_TAGLIB_MAPPINGS.put("liferay-commerce.tld", "liferay_commerce");
+        // https://github.com/liferay/liferay-portal/blob/master/modules/apps/commerce/commerce-cart-taglib/src/main/resources/META-INF/taglib-mappings.properties
+        FTL_TAGLIB_MAPPINGS.put("liferay-commerce-cart.tld", "liferay_commerce_cart");
+        // https://github.com/liferay/liferay-portal/blob/master/modules/apps/commerce/commerce-frontend-taglib/src/main/resources/META-INF/taglib-mappings.properties
+        FTL_TAGLIB_MAPPINGS.put("liferay-commerce-ui.tld", "liferay_commerce_ui");
         // https://github.com/liferay/liferay-portal/blob/master/modules/apps/document-library/document-library-taglib/src/main/resources/META-INF/taglib-mappings.properties
         FTL_TAGLIB_MAPPINGS.put("liferay-document-library.tld", "liferay_document_library");
         // https://github.com/liferay/liferay-portal/blob/master/modules/apps/frontend-editor/frontend-editor-taglib/src/main/resources/META-INF/taglib-mappings.properties
@@ -81,14 +87,20 @@ public class LiferayFreemarkerTaglibs {
         FTL_TAGLIB_MAPPINGS.put("liferay-frontend.tld", "liferay_frontend");
         // https://github.com/liferay/liferay-portal/blob/master/modules/apps/item-selector/item-selector-taglib/src/main/resources/META-INF/taglib-mappings.properties
         FTL_TAGLIB_MAPPINGS.put("liferay-item-selector.tld", "liferay_item_selector");
+        // https://github.com/liferay/liferay-portal/blob/master/modules/apps/info/info-taglib/src/main/resources/META-INF/taglib-mappings.properties
+        FTL_TAGLIB_MAPPINGS.put("liferay-info.tld", "liferay_info");
         // https://github.com/liferay/liferay-portal/blob/master/modules/apps/journal/journal-taglib/src/main/resources/META-INF/taglib-mappings.properties
         FTL_TAGLIB_MAPPINGS.put("liferay-journal.tld", "liferay_journal");
         // https://github.com/liferay/liferay-portal/blob/master/modules/apps/layout/layout-taglib/src/main/resources/META-INF/taglib-mappings.properties
         FTL_TAGLIB_MAPPINGS.put("liferay-layout.tld", "liferay_layout");
+        // https://github.com/liferay/liferay-portal/blob/master/modules/apps/learn/learn-taglib/src/main/resources/META-INF/taglib-mappings.properties
+        FTL_TAGLIB_MAPPINGS.put("liferay-learn.tld", "liferay_learn");
         // https://github.com/liferay/liferay-portal/blob/master/modules/apps/map/map-taglib/src/main/resources/META-INF/taglib-mappings.properties
         FTL_TAGLIB_MAPPINGS.put("liferay-map.tld", "liferay_map");
         // https://github.com/liferay/liferay-portal/blob/master/modules/apps/product-navigation/product-navigation-taglib/src/main/resources/META-INF/taglib-mappings.properties
         FTL_TAGLIB_MAPPINGS.put("liferay-product-navigation.tld", "liferay_product_navigation");
+        // https://github.com/liferay/liferay-portal/blob/master/modules/apps/ratings/ratings-taglib/src/main/resources/META-INF/taglib-mappings.properties
+        FTL_TAGLIB_MAPPINGS.put("ratings.tld", "liferay_ratings");
         // https://github.com/liferay/liferay-portal/blob/master/modules/apps/reading-time/reading-time-taglib/src/main/resources/META-INF/taglib-mappings.properties
         FTL_TAGLIB_MAPPINGS.put("liferay-reading-time.tld", "liferay_reading_time");
         // https://github.com/liferay/liferay-portal/blob/master/modules/apps/rss/rss-taglib/src/main/resources/META-INF/taglib-mappings.properties

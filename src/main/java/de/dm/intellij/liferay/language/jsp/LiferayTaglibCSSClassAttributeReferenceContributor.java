@@ -31,7 +31,9 @@ public class LiferayTaglibCSSClassAttributeReferenceContributor extends PsiRefer
             "class",
             "containerCssClass",
             "containerWrapperCssClass",
+            "contentCssClasses",
             "cssClass",
+            "cssClasses",
             "descriptionCSSClass",
             "draggableImage",
             "elementClasses",
@@ -55,7 +57,8 @@ public class LiferayTaglibCSSClassAttributeReferenceContributor extends PsiRefer
             "triggerCssClass",
             "userColorClass",
             "userIconCssClass",
-            "wrapperCssClass"
+            "wrapperCssClass",
+            "wrapperCssClasses"
     );
 
     public void registerReferenceProviders(@NotNull PsiReferenceRegistrar registrar) {

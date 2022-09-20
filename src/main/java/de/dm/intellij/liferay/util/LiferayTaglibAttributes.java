@@ -297,6 +297,16 @@ public class LiferayTaglibAttributes {
                 new AbstractMap.SimpleEntry<String, String>("vertical-card", "elementClasses"),
                 new AbstractMap.SimpleEntry<String, String>("vertical-card", "stickerCssClass")
         ));
+        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_COMMERCE, Arrays.asList(
+                new AbstractMap.SimpleEntry<>("order-transitions", "cssClass")
+        ));
+        TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_COMMERCE_UI, Arrays.asList(
+                new AbstractMap.SimpleEntry<>("header", "cssClasses"),
+                new AbstractMap.SimpleEntry<>("header", "wrapperCssClasses"),
+                new AbstractMap.SimpleEntry<>("modal-content", "contentCssClasses"),
+                new AbstractMap.SimpleEntry<>("panel", "bodyClasses"),
+                new AbstractMap.SimpleEntry<>("panel", "elementClasses")
+        ));
         TAGLIB_ATTRIBUTES_CSS.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_DOCUMENT_LIBRARY, Arrays.asList(
                 new AbstractMap.SimpleEntry<>("mime-type-sticker", "cssClass")
         ));
@@ -445,6 +455,10 @@ public class LiferayTaglibAttributes {
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_COMMENT, Arrays.asList(
             new AbstractMap.SimpleEntry<>("discussion", "className")
         ));
+        TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_DDM, Arrays.asList(
+            new AbstractMap.SimpleEntry<>("template-renderer", "className"),
+            new AbstractMap.SimpleEntry<>("template-selector", "className")
+        ));
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPANDO, Arrays.asList(
             new AbstractMap.SimpleEntry<>("custom-attribute", "className"),
             new AbstractMap.SimpleEntry<>("custom-attribute-list", "className"),
@@ -460,11 +474,17 @@ public class LiferayTaglibAttributes {
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET, Arrays.asList(
             new AbstractMap.SimpleEntry<>("runtime", "portletProviderClassName")
         ));
+        TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_RATINGS, Arrays.asList(
+            new AbstractMap.SimpleEntry<>("ratings", "className")
+        ));
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_SECURITY, Arrays.asList(
             new AbstractMap.SimpleEntry<>("permissionsURL", "modelResource")
         ));
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_SHARING, Arrays.asList(
             new AbstractMap.SimpleEntry<>("button", "className")
+        ));
+        TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_TEMPLATE, Arrays.asList(
+            new AbstractMap.SimpleEntry<>("template-selector", "className")
         ));
         TAGLIB_ATTRIBUTES_CLASS_NAME.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
             new AbstractMap.SimpleEntry<>("app-view-entry", "assetCategoryClassName"),
