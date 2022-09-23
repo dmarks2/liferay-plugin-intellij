@@ -25,10 +25,16 @@ public class GroovyScriptingImplicitMembersContributor extends NonCodeMembersCon
     static {
         IMPLICIT_VARIABLES.put("out", "java.io.PrintWriter");
         IMPLICIT_VARIABLES.put("actionRequest", "javax.portlet.ActionRequest");
-        IMPLICIT_VARIABLES.put("actionResponse", "javax.portlet.ActionReponse");
+        IMPLICIT_VARIABLES.put("actionResponse", "javax.portlet.ActionResponse");
         IMPLICIT_VARIABLES.put("portletConfig", "javax.portlet.PortletConfig");
         IMPLICIT_VARIABLES.put("portletContext", "javax.portlet.PortletContext");
+        IMPLICIT_VARIABLES.put("portletRequest", "javax.portlet.PortletRequest");
+        IMPLICIT_VARIABLES.put("portletResponse", "javax.portlet.PortletResponse");
         IMPLICIT_VARIABLES.put("preferences", "javax.portlet.PortletPreferences");
+        IMPLICIT_VARIABLES.put("renderRequest", "javax.portlet.RenderRequest");
+        IMPLICIT_VARIABLES.put("renderResponse", "javax.portlet.RenderResponse");
+        IMPLICIT_VARIABLES.put("resourceRequest", "javax.portlet.ResourceRequest");
+        IMPLICIT_VARIABLES.put("resourceResponse", "javax.portlet.ResourceResponse");
         IMPLICIT_VARIABLES.put("userInfo", "java.util.Map<String, String>");
     }
 
