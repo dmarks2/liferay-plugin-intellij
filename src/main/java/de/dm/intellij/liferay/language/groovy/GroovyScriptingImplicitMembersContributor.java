@@ -21,6 +21,7 @@ import java.util.Map;
 
 public class GroovyScriptingImplicitMembersContributor extends NonCodeMembersContributor {
 
+    //see https://github.com/liferay/liferay-portal/blob/master/portal-kernel/src/com/liferay/portal/kernel/scripting/ScriptingHelperUtil.java
     private static final Map<String, String> IMPLICIT_VARIABLES = new HashMap<>();
     static {
         IMPLICIT_VARIABLES.put("out", "java.io.PrintWriter");
