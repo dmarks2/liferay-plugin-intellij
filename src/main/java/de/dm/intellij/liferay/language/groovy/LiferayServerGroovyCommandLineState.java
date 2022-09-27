@@ -17,6 +17,8 @@ public class LiferayServerGroovyCommandLineState extends BaseJavaApplicationComm
 
     public LiferayServerGroovyCommandLineState(ExecutionEnvironment environment, @NotNull LiferayServerGroovyConfiguration configuration) {
         super(environment, configuration);
+
+        addConsoleFilters(new LiferayServerGroovyConsoleLinkFilter(environment.getProject(), getConfiguration().getScriptName()));
     }
 
     @Override
