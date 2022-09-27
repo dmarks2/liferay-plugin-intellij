@@ -27,10 +27,12 @@ public class ScriptExecutor {
 
         String content = Files.readString(scriptFile);
 
-        content = content.replace("\r", "");
-        content = content.replace("\n", ";");
+        content = content.replace("\\\\", "\\\\\\\\");
+        content = content.replace("\\", "\\\\");
+        content = content.replace("\r", "\\r");
+        content = content.replace("\n", "\\n");
 
-        String gogoScript = "$groovyExecutor eval null $inputObjects null '" + content + "'";
+        String gogoScript = "$groovyExecutor eval null $inputObjects null $'" + content + "';";
 
         try (GogoShellClient client = new GogoShellClient(host, port)) {
             client.send("service = { $.context service ([($.context servicereferences $1 $2)] get 0) };");
@@ -59,7 +61,7 @@ public class ScriptExecutor {
             client.send("groovyExecutor = service \"com.liferay.portal.kernel.scripting.ScriptingExecutor\" \"(scripting.language=groovy)\";");
 
             client.send("System = ((bundle 0) loadclass java.lang.System);");
-            client.send("inputObjects = [out=$System.out];");
+            client.send("inputObjects = [out=System.out];");
 
             String result = client.send(gogoScript);
 
