@@ -17,7 +17,13 @@ The following implicit variables are provided for groovy files:
     actionResponse
     portletConfig
     portletContext
+    portletRequest
+    portletResponse
     preferences
+    renderRequest
+    renderResponse
+    resourceRequest
+    resourceResponse
     userInfo
 
 Running Groovy scripts on Liferay Server
@@ -32,6 +38,8 @@ In IntelliJ just open the groovy file and click on the run marker at the top of 
 Additional settings can be made by creating a Run Configuration of type **Liferay Remote Groovy**.
 
 The results of the script executions are shown in the console.
+
+![Running Groovy Script](run_groovy_script.png "Running Groovy Script")
 
 If an error occurs and your script prints a stacktrace you can also click on the
 error message in the console to directly open your script file at the erroneous location. 

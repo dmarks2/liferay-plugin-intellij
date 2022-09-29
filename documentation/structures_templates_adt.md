@@ -20,7 +20,8 @@ Journal Templates can use Velocity or Freemarker. This plugin defines implicit v
 Implicit Journal Structure variables
 ------------------------------------
 
-Variables defined in the corresponding structure are available. Structure files in XML (Liferay 6.x) and JSON (Liferay 7 / DXP) are supported.
+Variables defined in the corresponding structure are available. Structure files in XML (Liferay 6.x) and JSON (Liferay 7 / DXP) are supported. For
+Liferay 7.4 the new JSON structure based on the Data Engine implementation is supported, too. 
 You can access nested structure variables and even access variables from a loop variable (Freemarker only).
 
 A quick documentation popup is available which shows the name, the type, the label and the tip from the structure.
@@ -36,7 +37,8 @@ JSON Schema
 -----------
 
 In Liferay 7.x Journal structures are saved as JSON files. This plugin provides a JSON schema for those files, so that
-the files are validated and code completion is available.
+the files are validated and code completion is available. For
+Liferay 7.4 the new JSON structure based on the Data Engine implementation is supported, too.
 
 ![JSON Schema](json_schema.png "JSON Schema")
 
