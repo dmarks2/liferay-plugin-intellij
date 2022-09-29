@@ -8,7 +8,7 @@ buildscript {
 
 plugins {
     id "org.jetbrains.intellij" version "1.6.0"
-    id 'de.undercouch.download' version '4.1.2'
+    id 'de.undercouch.download' version '5.2.1'
 }
 
 import de.undercouch.gradle.tasks.download.Download
@@ -108,35 +108,35 @@ task generateLiferayPortalPropertiesFiles {
         target73.mkdirs();
         target74.mkdirs();
 
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/portal-impl/src/portal.properties'
             dest new File(target70, "portal.properties")
             acceptAnyCertificate true
             overwrite true
             onlyIfNewer true
         }
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/portal-impl/src/portal.properties'
             dest new File(target71, "portal.properties")
             acceptAnyCertificate true
             overwrite true
             onlyIfNewer true
         }
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/portal-impl/src/portal.properties'
             dest new File(target72, "portal.properties")
             acceptAnyCertificate true
             overwrite true
             onlyIfNewer true
         }
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/portal-impl/src/portal.properties'
             dest new File(target73, "portal.properties")
             acceptAnyCertificate true
             overwrite true
             onlyIfNewer true
         }
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.4.x/portal-impl/src/portal.properties'
             dest new File(target74, "portal.properties")
             acceptAnyCertificate true
@@ -153,70 +153,70 @@ task generateLiferayTemplateHelperFiles {
         targetVtl.mkdirs();
         targetFtl.mkdirs();
 
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-impl/src/VM_liferay.vm'
             dest new File(targetVtl, "VM_liferay_61.vm")
             acceptAnyCertificate true
             overwrite true
             onlyIfNewer true
         }
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-impl/src/VM_liferay.vm'
             dest new File(targetVtl, "VM_liferay_62.vm")
             acceptAnyCertificate true
             overwrite true
             onlyIfNewer true
         }
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/foundation/portal-template/portal-template-velocity/src/main/resources/VM_liferay.vm'
             dest new File(targetVtl, "VM_liferay_70.vm")
             acceptAnyCertificate true
             overwrite true
             onlyIfNewer true
         }
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-impl/src/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_61.ftl")
             acceptAnyCertificate true
             overwrite true
             onlyIfNewer true
         }
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-impl/src/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_62.ftl")
             acceptAnyCertificate true
             overwrite true
             onlyIfNewer true
         }
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/foundation/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_70.ftl")
             acceptAnyCertificate true
             overwrite true
             onlyIfNewer true
         }
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_71.ftl")
             acceptAnyCertificate true
             overwrite true
             onlyIfNewer true
         }
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_72.ftl")
             acceptAnyCertificate true
             overwrite true
             onlyIfNewer true
         }
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_73.ftl")
             acceptAnyCertificate true
             overwrite true
             onlyIfNewer true
         }
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.4.x/modules/apps/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_74.ftl")
             acceptAnyCertificate true
@@ -230,7 +230,7 @@ task generateLiferayDefinitions {
         def target = new File(generatedResources, "com/liferay/definitions");
         target.mkdirs();
 
-        download {
+        download.run {
             src([
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-ddm-structure_6_2_0.xsd',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-ddm-structure_6_2_0.xsd',
@@ -355,7 +355,7 @@ task generateTaglibDefinitions {
         target73.mkdirs();
         target74.mkdirs();
 
-        download {
+        download.run {
             src([
                     'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/util-taglib/src/META-INF/liferay-aui.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/util-taglib/src/META-INF/liferay-portlet-ext.tld',
@@ -383,7 +383,7 @@ task generateTaglibDefinitions {
             onlyIfNewer true
         }
 
-        download {
+        download.run {
             src([
                     'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/util-taglib/src/META-INF/liferay-aui.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/util-taglib/src/META-INF/liferay-portlet-ext.tld',
@@ -421,7 +421,7 @@ task generateTaglibDefinitions {
             onlyIfNewer true
         }
 
-        download {
+        download.run {
             src([
                     'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/util-taglib/src/META-INF/liferay-aui.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/util-taglib/src/META-INF/liferay-portlet-ext.tld',
@@ -461,7 +461,7 @@ task generateTaglibDefinitions {
             onlyIfNewer true
         }
 
-        download {
+        download.run {
             src([
                     'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/util-taglib/src/META-INF/liferay-aui.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/util-taglib/src/META-INF/liferay-portlet-ext.tld',
@@ -501,7 +501,7 @@ task generateTaglibDefinitions {
             onlyIfNewer true
         }
 
-        download {
+        download.run {
             src([
                     'https://raw.githubusercontent.com/liferay/liferay-portal/7.4.x/util-taglib/src/META-INF/liferay-aui.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/7.4.x/util-taglib/src/META-INF/liferay-portlet-ext.tld',
@@ -592,7 +592,7 @@ task downloadIntelliJCommunityMockJDK11() {
 
         target.mkdirs();
 
-        download {
+        download.run {
             src 'https://github.com/JetBrains/intellij-community/blob/master/java/mockJDK-11/jre/lib/annotations.jar?raw=true'
             dest new File(target, "annotations.jar")
             acceptAnyCertificate true
@@ -600,7 +600,7 @@ task downloadIntelliJCommunityMockJDK11() {
             onlyIfNewer true
         }
 
-        download {
+        download.run {
             src 'https://github.com/JetBrains/intellij-community/blob/master/java/mockJDK-11/jre/lib/rt.jar?raw=true'
             dest new File(target, "rt.jar")
             acceptAnyCertificate true
@@ -616,7 +616,7 @@ task downloadSchemaDefinitions() {
 
         target.mkdirs();
 
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.4.x/modules/apps/fragment/fragment-service/src/main/resources/com/liferay/fragment/internal/validator/dependencies/configuration-json-schema.json'
             dest new File(target, "configuration-json-schema.json")
             acceptAnyCertificate true
@@ -631,7 +631,7 @@ task downloadSchemaDefinitions() {
         def target = new File(generatedResources, "org/bndtools/bnd");
         target.mkdirs();
 
-        download {
+        download.run {
             src 'https://raw.githubusercontent.com/lpireyn/intellij-filetypes/master/filetypes/BND%20files.xml'
             dest new File(target, "bnd.xml")
             acceptAnyCertificate true
