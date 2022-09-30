@@ -105,3 +105,8 @@ For `<script>`-Tags containing groovy scripts the available context variables li
 that code completion for those variables is available.
 
 For `<template>`-Tags proper context variables are injected, so they can be used in e.g. Freemarker templates.
+
+Additionally `<target>`-Tags, e.g. inside `<transition>`-Tags are able to resolve possible targets within the
+workflow definition files, like `<task>` or `<state>` elements.
+
+![liferay workflow target](workflow_target.png "liferay workflow target")

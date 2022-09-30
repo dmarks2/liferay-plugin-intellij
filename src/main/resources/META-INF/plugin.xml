@@ -37,6 +37,7 @@
             <li>Feature: Add javax.portlet.version to properties of Portlet components</li>
             <li>Feature: Run groovy scripts directly on a running Liferay server</li>
             <li>Feature: Improve documentation provided for implicit freemarker variables</li>
+            <li>Feature: Add references for target names in workflow definition files</li>
             <li>Change: Update support for IntelliJ 2022.1</li>
             <li>Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file</li>
             <li>Bugfix: description tag inside notification of a workflow definition supports Freemarker, too</li>
@@ -277,6 +278,8 @@
         <programRunner implementation="de.dm.intellij.liferay.language.groovy.LiferayServerGroovyProgramRunner"/>
         <runConfigurationProducer implementation="de.dm.intellij.liferay.language.groovy.LiferayServerGroovyConfigurationProducer" />
         <runLineMarkerContributor language="Groovy" implementationClass="de.dm.intellij.liferay.language.groovy.LiferayServerGroovyRunLineMarkerProvider" />
+
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.workflow.LiferayWorkflowXmlReferenceContributor"/>
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">
