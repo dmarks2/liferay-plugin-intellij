@@ -38,6 +38,7 @@
             <li>Feature: Run groovy scripts directly on a running Liferay server</li>
             <li>Feature: Improve documentation provided for implicit freemarker variables</li>
             <li>Feature: Add references for target names in workflow definition files</li>
+            <li>Feature: Add support to debug Freemarker templates imported from web context</li>
             <li>Change: Update support for IntelliJ 2022.1</li>
             <li>Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file</li>
             <li>Bugfix: description tag inside notification of a workflow definition supports Freemarker, too</li>

@@ -32,7 +32,8 @@ public class FreemarkerAttachBreakpointType extends XLineBreakpointType<Freemark
                 return (LiferayFileUtil.isThemeTemplateFile(psiFile)) ||
                     (LiferayFileUtil.isLayoutTemplateFile(psiFile)) ||
                     (LiferayFileUtil.isJournalTemplateFile(psiFile)) ||
-                    (LiferayFileUtil.isApplicationDisplayTemplateFile(psiFile));
+                    (LiferayFileUtil.isApplicationDisplayTemplateFile(psiFile)) ||
+                    (LiferayFileUtil.isWebResourcesFile(psiFile));
             }
         }
 

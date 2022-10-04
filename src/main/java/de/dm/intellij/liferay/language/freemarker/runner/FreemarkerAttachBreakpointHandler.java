@@ -2,6 +2,8 @@ package de.dm.intellij.liferay.language.freemarker.runner;
 
 import com.intellij.freemarker.psi.FtlElementTypes;
 import com.intellij.icons.AllIcons;
+import com.intellij.javaee.web.WebRoot;
+import com.intellij.javaee.web.facet.WebFacet;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Document;
@@ -36,9 +38,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.rmi.RemoteException;
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineBreakpoint<FreemarkerAttachBreakpointProperties>> {
 
@@ -193,7 +193,7 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
 
             if (
                 (LiferayFileUtil.isLayoutTemplateFile(psiFile)) ||
-                    (LiferayFileUtil.isThemeTemplateFile(psiFile))
+                (LiferayFileUtil.isThemeTemplateFile(psiFile))
             ) {
                 String servletContextTemplateName = getServletContextTemplateName(virtualFile);
 
@@ -202,6 +202,14 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
                 }
 
                 return servletContextTemplateName;
+            } else if (LiferayFileUtil.isWebResourcesFile(psiFile)) {
+                String webContextTemplateName = getWebContextTemplateName(virtualFile);
+
+                if (log.isDebugEnabled()) {
+                    log.debug("Found template name for file " + virtualFile.getName() + " based on web context file as " + webContextTemplateName);
+                }
+
+                return webContextTemplateName;
             } else if (LiferayFileUtil.isJournalTemplateFile(psiFile)) {
                 VirtualFile journalStructureFile = LiferayFileUtil.getJournalStructureFile(psiFile);
 
@@ -267,15 +275,49 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
 
         Module module = ModuleUtil.findModuleForFile(virtualFile, project);
 
-        String name = module.getName(); //??
+        if (module != null) {
+            String webContextPath = LiferayFileUtil.getWebContextPath(module, module.getName());
 
-        ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
-        for (VirtualFile sourceRoot : moduleRootManager.getSourceRoots()) {
-            String relativePath = VfsUtilCore.getRelativePath(virtualFile, sourceRoot);
-            if (relativePath != null) {
-                String templateFilename = name + SERVLET_CONTEXT + "/" + relativePath;
+            ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
+            for (VirtualFile sourceRoot : moduleRootManager.getSourceRoots()) {
+                String relativePath = VfsUtilCore.getRelativePath(virtualFile, sourceRoot);
+                if (relativePath != null) {
+                    return webContextPath + SERVLET_CONTEXT + "/" + relativePath;
+                }
+            }
+        }
 
-                return templateFilename;
+        return null;
+    }
+
+    private String getWebContextTemplateName(VirtualFile virtualFile) {
+        Project project = debugProcess.getSession().getProject();
+
+        Module module = ModuleUtil.findModuleForFile(virtualFile, project);
+
+        if (module != null) {
+            String webContextPath = LiferayFileUtil.getWebContextPath(module, module.getName());
+
+            Collection<WebFacet> webFacets = WebFacet.getInstances(module);
+
+            if (! webFacets.isEmpty()) {
+                for (WebFacet webFacet : webFacets) {
+                    List<WebRoot> webRoots = webFacet.getWebRoots();
+
+                    for (WebRoot webRoot : webRoots) {
+                        if ("/".equals(webRoot.getRelativePath())) {
+                            VirtualFile webRootFile = webRoot.getFile();
+
+                            if ( (webRootFile != null) && (webRootFile.isValid()) ) {
+                                String relativePath = VfsUtilCore.getRelativePath(virtualFile, webRootFile);
+
+                                if (relativePath != null) {
+                                    return webContextPath + SERVLET_CONTEXT + "/" + relativePath;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 

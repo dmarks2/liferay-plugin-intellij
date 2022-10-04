@@ -5,6 +5,7 @@ import com.intellij.javaee.web.facet.WebFacet;
 import com.intellij.json.psi.JsonFile;
 import com.intellij.json.psi.JsonProperty;
 import com.intellij.json.psi.JsonValue;
+import com.intellij.openapi.fileEditor.impl.LoadTextUtil;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.roots.ModuleRootManager;
@@ -14,7 +15,6 @@ import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileSystem;
-import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileSystemItem;
@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LiferayFileUtil {
 
@@ -568,6 +570,59 @@ public class LiferayFileUtil {
         portletId = getJSSafeName(portletId);
 
         return portletId;
+    }
+
+    public static String getWebContextPath(Module module, String defaultValue) {
+        VirtualFile bndVirtualFile = getFileInContentRoot(module, "bnd.bnd");
+
+        if (bndVirtualFile != null) {
+            CharSequence text = LoadTextUtil.loadText(bndVirtualFile);
+
+            Pattern webContextPathPattern = Pattern.compile("Web-ContextPath:( *)([\\w\\.-])");
+            Matcher webContextPathMatcher = webContextPathPattern.matcher(text);
+
+            if (webContextPathMatcher.find()) {
+                String webContextPath = webContextPathMatcher.group(2);
+
+                if (webContextPath.startsWith("/")) {
+                    webContextPath = webContextPath.substring(1);
+                }
+
+                return webContextPath;
+            }
+        }
+
+        return defaultValue;
+    }
+
+    public static boolean isWebResourcesFile(PsiFile psiFile) {
+        final Module module = ModuleUtil.findModuleForPsiElement(psiFile);
+
+        if ( (module != null) && (psiFile.getVirtualFile() != null) ) {
+            VirtualFile virtualFile = psiFile.getVirtualFile();
+
+            Collection<WebFacet> webFacets = WebFacet.getInstances(module);
+
+            if (! webFacets.isEmpty()) {
+                for (WebFacet webFacet : webFacets) {
+                    List<WebRoot> webRoots = webFacet.getWebRoots();
+
+                    for (WebRoot webRoot : webRoots) {
+                        if ("/".equals(webRoot.getRelativePath())) {
+                            VirtualFile webRootFile = webRoot.getFile();
+
+                            if ( (webRootFile != null) && (webRootFile.isValid()) ) {
+                                String relativePath = VfsUtilCore.getRelativePath(virtualFile, webRootFile);
+
+                                return (relativePath != null);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
 }

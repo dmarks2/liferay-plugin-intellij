@@ -139,6 +139,7 @@ Debugging is available for
 * Layout Templates
 * Journal Templates
 * Application Display Templates
+* Templates imported from web contexts (e.g. "common macros")
 
 Note that the functionality of the Freemarker debugger is limited. It does not support operations like
 step into, step out or pause. A step over is available, but only for "sequential" instructions. That means that
