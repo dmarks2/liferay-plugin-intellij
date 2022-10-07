@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Improve documentation provided for implicit freemarker variables
 - Feature: Add references for target names in workflow definition files
 - Feature: Add support to debug Freemarker templates imported from web context
+- Feature: Added some documentations for bnd.bnd instructions
 - Change: Update support for IntelliJ 2022.1
 - Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file
 - Bugfix: description tag inside notification of a workflow definition supports Freemarker, too

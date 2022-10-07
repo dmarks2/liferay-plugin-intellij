@@ -33,8 +33,6 @@
 
         <!-- Simple taglib attributes completion contributor -->
         <completion.contributor order="first" language="XML" implementationClass="de.dm.intellij.liferay.language.jsp.LiferayTaglibSimpleAttributesCompletionContributor"/>
-
-        <completion.contributor language="bnd" implementationClass="de.dm.intellij.bndtools.completion.BndCompletionContributor"/>
     </extensions>
 
     <actions>

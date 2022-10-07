@@ -39,6 +39,7 @@
             <li>Feature: Improve documentation provided for implicit freemarker variables</li>
             <li>Feature: Add references for target names in workflow definition files</li>
             <li>Feature: Add support to debug Freemarker templates imported from web context</li>
+            <li>Feature: Added some documentations for bnd.bnd instructions</li>
             <li>Change: Update support for IntelliJ 2022.1</li>
             <li>Bugfix: ClassCastException during code completions in an empty frontend-token-definition.json file</li>
             <li>Bugfix: description tag inside notification of a workflow definition supports Freemarker, too</li>
@@ -222,6 +223,8 @@
         <lang.commenter language="bnd" implementationClass="de.dm.intellij.bndtools.commenter.BndCommenter" />
         <annotator language="bnd" implementationClass="de.dm.intellij.bndtools.BndHighlightingAnnotator"/>
         <completion.contributor language="bnd" implementationClass="de.dm.intellij.bndtools.completion.BndCompletionContributor"/>
+        <lang.documentationProvider language="bnd" implementationClass="de.dm.intellij.bndtools.documentation.BndDocumentationProvider"/>
+
         <enterHandlerDelegate implementation="de.dm.intellij.bndtools.actions.EnterInBndFileHandler"/>
         <lang.elementManipulator forClass="de.dm.intellij.bndtools.psi.BndHeaderValuePart"
                                  implementationClass="de.dm.intellij.bndtools.psi.impl.BndHeaderValuePartManipulator"/>

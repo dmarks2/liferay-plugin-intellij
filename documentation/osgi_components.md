@@ -25,6 +25,7 @@ Additionally to the standard bnd headers the following Liferay keywords are dete
     -jsp, -sass, -liferay-service-xml, Liferay-Releng-Module-Group-Description, Liferay-Releng-Module-Group-Title,
     Liferay-Require-SchemaVersion, Liferay-Service, DynamicImport-Package, Liferay-Modules-Compat-Adapters
         
+For several bnd.bnd instructions a basic documentation has been added, so that you can look up the meaning of the instructions.
 
 *Works for Liferay 7.x, works in IntelliJ Community Edition and Ultimate Edition*
 

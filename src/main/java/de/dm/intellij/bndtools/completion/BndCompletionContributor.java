@@ -27,6 +27,20 @@ import static com.intellij.patterns.PlatformPatterns.psiElement;
 
 public class BndCompletionContributor extends CompletionContributor {
 
+    // List of known Liferay analyzers:
+    // * https://github.com/liferay/liferay-portal/blob/master/modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/enterprise/EnterpriseAnalyzerPlugin.java
+    // * https://github.com/liferay/liferay-portal/blob/master/modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/jsp/JspAnalyzerPlugin.java
+    // * https://github.com/liferay/liferay-portal/blob/master/modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/metatype/MetatypePlugin.java
+    // * https://github.com/liferay/liferay-portal/blob/master/modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/npm/NpmAnalyzerPlugin.java
+    // * https://github.com/liferay/liferay-portal/blob/master/modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/resource/AddResourceVerifierPlugin.java
+    // * https://github.com/liferay/liferay-portal/blob/master/modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/resource/bundle/AggregateResourceBundleLoaderAnalyzerPlugin.java
+    // * https://github.com/liferay/liferay-portal/blob/master/modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/resource/bundle/ProvidesResourceBundleLoaderAnalyzerPlugin.java
+    // * https://github.com/liferay/liferay-portal/blob/master/modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/resource/bundle/ResourceBundleLoaderAnalyzerPlugin.java
+    // * https://github.com/liferay/liferay-portal/blob/master/modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/sass/SassAnalyzerPlugin.java
+    // * https://github.com/liferay/liferay-portal/blob/master/modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/service/ServiceAnalyzerPlugin.java
+    // * https://github.com/liferay/liferay-portal/blob/master/modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/social/SocialAnalyzerPlugin.java
+    // * https://github.com/liferay/liferay-portal/blob/master/modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/spring/SpringDependencyAnalyzerPlugin.java
+
     public BndCompletionContributor() {
         extend(
             CompletionType.BASIC, _header(OsgiConstants.EXPORT_PACKAGE),
@@ -48,7 +62,13 @@ public class BndCompletionContributor extends CompletionContributor {
                                            @NotNull ProcessingContext context,
                                            @NotNull CompletionResultSet resultSet) {
                     for (String header : BndHeaderParsers.PARSERS_MAP.keySet()) {
-                        resultSet.addElement(LookupElementBuilder.create(header).withInsertHandler(HEADER_INSERT_HANDLER));
+                        LookupElementBuilder lookupElementBuilder = LookupElementBuilder.create(header).withInsertHandler(HEADER_INSERT_HANDLER);
+
+                        if (BndTypeConstants.BND_TYPES.containsKey(header)) {
+                            lookupElementBuilder = lookupElementBuilder.withTypeText(BndTypeConstants.BND_TYPES.get(header));
+                        }
+
+                        resultSet.addElement(lookupElementBuilder);
                     }
                 }
             }

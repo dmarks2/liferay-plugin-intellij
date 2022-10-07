@@ -10,9 +10,16 @@ public class LiferayBndConstants {
     public static final String PLUGIN_SASS = "-plugin.sass";
     public static final String PLUGIN_SERVICE = "-plugin.service";
     public static final String PLUGIN_SPRING = "-plugin.spring";
+    public static final String PLUGIN_SOCIAL = "-plugin.social";
 
     public static final String JSP = "-jsp";
     public static final String SASS = "-sass";
+
+    public static final String ADD_RESOURCE = "-add-resource";
+
+    public static final String LIFERAY_AGGREGATE_RESOURCE_BUNDLES = "-liferay-aggregate-resource-bundles";
+    public static final String LIFERAY_SPRING_DEPENDENCY = "-liferay-spring-dependency";
+    public static final String LIFERAY_ENTERPRISE_APP = "Liferay-Enterprise-App";
     public static final String LIFERAY_SERVICE_XML = "-liferay-service-xml";
     public static final String LIFERAY_RELENG_MODULE_GROUP_DESCRIPTION = "Liferay-Releng-Module-Group-Description";
     public static final String LIFERAY_RELENG_MODULE_GROUP_TITLE = "Liferay-Releng-Module-Group-Title";
@@ -47,12 +54,14 @@ public class LiferayBndConstants {
         LIFERAY_REQUIRE_SCHEMA_VERSION, LIFERAY_SERVICE, DYNAMIC_IMPORT_PACKAGE, LIFERAY_MODULES_COMPAT_ADAPTERS,
         LIFERAY_JS_RESSOURCS_TOP_HEAD_AUTHENTICATED, LIFERAY_JS_RESSOURCS_TOP_HEAD, LIFERAY_JS_SUBMODULES_BRIDGE,
         LIFERAY_JS_SUBMODULES_EXPORT, LIFERAY_RELENG_APP_DESCRIPTION, LIFERAY_RTL_SUPPORT_REQUIRED,
-        LIFERAY_THEME_CONTRIBUTOR_TYPE, LIFERAY_THEME_CONTRIBUTOR_WEIGHT, LIFERAY_VERSIONS, WEB_CONTEXT_PATH
+        LIFERAY_THEME_CONTRIBUTOR_TYPE, LIFERAY_THEME_CONTRIBUTOR_WEIGHT, LIFERAY_VERSIONS, WEB_CONTEXT_PATH,
+        LIFERAY_AGGREGATE_RESOURCE_BUNDLES, LIFERAY_ENTERPRISE_APP, ADD_RESOURCE, LIFERAY_SPRING_DEPENDENCY
     };
 
     public static final String[] CLASS_REFERENCE_PROPERTIES = {
         PLUGIN_BUNDLE, PLUGIN_JSP, PLUGIN_METATYPE, PLUGIN_NPM, PLUGIN_RESOURCEBUNDLE,
-        PLUGIN_SASS, PLUGIN_SERVICE, PLUGIN_SPRING, MAIN_CLASS, PREMAIN_CLASS, AGENT_CLASS, LAUNCHER_AGENT_CLASS, TESTCASES
+        PLUGIN_SASS, PLUGIN_SERVICE, PLUGIN_SPRING, MAIN_CLASS, PREMAIN_CLASS, AGENT_CLASS, LAUNCHER_AGENT_CLASS, TESTCASES,
+        PLUGIN_SOCIAL
     };
 
     public static final String[] FILE_REFERENCE_PROPERTIES = {
