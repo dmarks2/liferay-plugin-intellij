@@ -1,9 +1,14 @@
 package de.dm.intellij.bndtools.documentation;
 
+import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.lang.documentation.AbstractDocumentationProvider;
+import com.intellij.lang.documentation.DocumentationMarkup;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiManager;
+import de.dm.intellij.bndtools.BndElementFactory;
 import de.dm.intellij.bndtools.psi.BndHeader;
+import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
 public class BndDocumentationProvider extends AbstractDocumentationProvider {
@@ -20,8 +25,6 @@ public class BndDocumentationProvider extends AbstractDocumentationProvider {
 
             String name = bndHeader.getName();
 
-            String info = "<b>" + name + "</b><br/>\n";
-
             String description = BndDocumentationBundle.message(name);
 
             if (description == null) {
@@ -36,14 +39,34 @@ public class BndDocumentationProvider extends AbstractDocumentationProvider {
 
             if (description != null) {
                 description = StringUtil.join(StringUtil.split(description, "\n"), "<br>");
-
-                info += description;
             }
 
-            return info;
+            if (description != null) {
+                return DocumentationMarkup.DEFINITION_START +
+                        name +
+                        DocumentationMarkup.DEFINITION_END +
+                        DocumentationMarkup.CONTENT_START +
+                        description +
+                        DocumentationMarkup.CONTENT_END;
+            }
         }
 
         return null;
     }
 
+    @Override
+    public @Nullable @Nls String getQuickNavigateInfo(PsiElement element, PsiElement originalElement) {
+        return generateDoc(element, originalElement);
+    }
+
+    @Override
+    public @Nullable PsiElement getDocumentationElementForLookupItem(PsiManager psiManager, Object object, PsiElement element) {
+        if (object instanceof String) {
+            String lookupString = (String) object;
+
+            return BndElementFactory.getInstance(psiManager.getProject()).createHeader(lookupString);
+        }
+
+        return super.getDocumentationElementForLookupItem(psiManager, object, element);
+    }
 }

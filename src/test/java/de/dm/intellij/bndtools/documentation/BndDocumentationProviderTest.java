@@ -20,7 +20,7 @@ public class BndDocumentationProviderTest extends BasePlatformTestCase {
 
         DocumentationProvider provider = DocumentationManager.getProviderFromElement(docElement);
 
-        String expectedDocumentation = "<b>Bundle-SymbolicName</b><br/>\nThe Bundle-SymbolicName header specifies a non-localizable name for this bundle. The bundle symbolic name together with a version must identify a unique bundle though it can be installed multiple times in a framework. The bundle symbolic name should be based on the reverse domain name convention, s.";
+        String expectedDocumentation = "<div class='definition'><pre>Bundle-SymbolicName</pre></div><div class='content'>The Bundle-SymbolicName header specifies a non-localizable name for this bundle. The bundle symbolic name together with a version must identify a unique bundle though it can be installed multiple times in a framework. The bundle symbolic name should be based on the reverse domain name convention, s.</div>";
 
         assertEquals("Should provide proper documentation for Bundle-SymbolicName", expectedDocumentation, provider.generateDoc(docElement, docElement.getOriginalElement()));
 
