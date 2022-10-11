@@ -23,6 +23,27 @@ For example the following HTML file inside a fragment collection contributor is 
 </div>
 ```
 
+The following custom tags are supported:
+
+```html
+    <lfr-drop-zone />
+    <lfr-editable />
+    <lfr-widget-asset-list />
+    <lfr-widget-breadcrumb />
+    <lfr-widget-categories-nav />
+    <lfr-widget-commerce-account-portlet />
+    <lfr-widget-dynamic-data-list />
+    <lfr-widget-form />
+    <lfr-widget-iframe />
+    <lfr-widget-media-gallery />
+    <lfr-widget-nav />
+    <lfr-widget-related-assets />
+    <lfr-widget-rss />
+    <lfr-widget-site-map />
+    <lfr-widget-tags-nav />
+    <lfr-widget-web-content />
+```
+
 Freemarker inside fragment HTML files
 -------------------------------------
 

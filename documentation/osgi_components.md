@@ -20,12 +20,22 @@ For the following situations an additional validation is provided:
 * `-plugin.bundle`, `-plugin.jsp`, `-plugin.npm`, `-plugin.resourcebundle`, `-plugin.sass`, `-plugin.service` and `-plugin.spring` are being validated if they point to a valid java class.
 * `Liferay-JS-Config` and `Liferay-Configuration-Path` are being checked if they point to a valid file
 
-Additionally to the standard bnd headers the following Liferay keywords are detected as valid headers, too:
+Additionally, to the standard bnd headers the following Liferay keywords are detected as valid headers, too:
 
     -jsp, -sass, -liferay-service-xml, Liferay-Releng-Module-Group-Description, Liferay-Releng-Module-Group-Title,
     Liferay-Require-SchemaVersion, Liferay-Service, DynamicImport-Package, Liferay-Modules-Compat-Adapters
         
-For several bnd.bnd instructions a basic documentation has been added, so that you can look up the meaning of the instructions.
+For several `bnd.bnd` instructions a basic documentation has been added, so that you can look up the meaning of the instructions.
+
+![documentation lookup in bnd.bnd file](bnd_documentation.png "documentation lookup in bnd.bnd file")
+
+It is possible to add comments in `bnd.bnd` files. Lines starting with `#` are shown as comments. You can
+toggle line comments using `Ctrl+/`. 
+
+![comment in bnd.bnd file](bnd_comment.png "comment in in bnd.bnd file")
+
+Automatic formatting of `bnd.bnd` files is also possible. Indents and line breaks are formatted properly by pressing
+`Ctrl-Shift-L`.
 
 *Works for Liferay 7.x, works in IntelliJ Community Edition and Ultimate Edition*
 
