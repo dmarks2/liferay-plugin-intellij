@@ -1,6 +1,5 @@
 package de.dm.intellij.bndtools.documentation;
 
-import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.lang.documentation.AbstractDocumentationProvider;
 import com.intellij.lang.documentation.DocumentationMarkup;
 import com.intellij.openapi.util.text.StringUtil;
@@ -31,9 +30,9 @@ public class BndDocumentationProvider extends AbstractDocumentationProvider {
                 int lastIndexOf = name.lastIndexOf('.');
 
                 if (lastIndexOf > -1) {
-                    String parentName = name.substring(0, lastIndexOf);
+                    name = name.substring(0, lastIndexOf) + ".*";
 
-                    description = BndDocumentationBundle.message(parentName + ".*");
+                    description = BndDocumentationBundle.message(name);
                 }
             }
 

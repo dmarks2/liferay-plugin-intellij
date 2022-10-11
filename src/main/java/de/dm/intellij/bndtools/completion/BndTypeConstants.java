@@ -17,12 +17,18 @@ public class BndTypeConstants {
         BND_TYPES.put("Bundle-DocURL", "STRING");
         BND_TYPES.put("Bundle-Name", "STRING");
         BND_TYPES.put("Created-By", "STRING");
+        BND_TYPES.put("Liferay-Icons-Pack-Name", "STRING");
+        BND_TYPES.put("Liferay-Icons-Path", "RESOURCE");
+        BND_TYPES.put("Liferay-Releng-App-Description", "STRING");
+        BND_TYPES.put("Liferay-Releng-App-Title", "STRING");
         BND_TYPES.put("Meta-Persistence", "RESOURCE");
         BND_TYPES.put("Service-Component", "RESOURCE");
         BND_TYPES.put("Test-Cases", "CLASS");
         BND_TYPES.put("Tool", "STRING");
+        BND_TYPES.put("-add-resource", "RESOURCE");
         BND_TYPES.put("-failok", "BOOLEAN");
         BND_TYPES.put("-javaagent", "BOOLEAN");
+        BND_TYPES.put("-liferay-aggregate-resource-bundles", "STRING");
         BND_TYPES.put("-manifest-name", "RESOURCE");
         BND_TYPES.put("-nobuildincache", "BOOLEAN");
         BND_TYPES.put("-nobundles", "BOOLEAN");
