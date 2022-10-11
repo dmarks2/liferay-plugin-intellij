@@ -22,7 +22,7 @@ public class TemplateMacroProcessorUtil {
         if (module == null) {
             return Collections.emptyList();
         }
-        LiferayModuleComponent component = module.getComponent(LiferayModuleComponent.class);
+        LiferayModuleComponent component = module.getService(LiferayModuleComponent.class);
         if (component != null) {
             float portalMajorVersion = component.getPortalMajorVersion();
 

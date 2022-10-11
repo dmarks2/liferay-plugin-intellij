@@ -215,6 +215,8 @@
     <depends optional="true" config-file="properties.xml">com.intellij.properties</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <moduleService serviceImplementation="de.dm.intellij.liferay.module.LiferayModuleComponent" />
+
         <!-- Define a new filetype for "bnd.bnd" files -->
         <!-- <fileTypeFactory implementation="de.dm.intellij.bndtools.BndFileTypeFactory"/> -->
         <fileType name="bnd" implementationClass="de.dm.intellij.bndtools.BndFileType" fieldName="INSTANCE" language="bnd" extensions="bnd"/>
@@ -304,13 +306,6 @@
         <!-- A gradle project resolver which resolves the Liferay Home directory if the bundle-support plugin is present and will "exclude" the bundles folder from indexing in IntelliJ IDEA -->
         <projectResolve implementation="de.dm.intellij.liferay.gradle.LiferayBundleSupportGradleProjectResolver" />
     </extensions>
-
-    <module-components>
-        <!-- Component to mark an IntelliJ module as being a "Liferay" Module -->
-        <component>
-            <implementation-class>de.dm.intellij.liferay.module.LiferayModuleComponent</implementation-class>
-        </component>
-    </module-components>
 
     <projectListeners>
         <listener class="de.dm.intellij.liferay.module.LiferayModuleListener" topic="com.intellij.openapi.project.ModuleListener" />

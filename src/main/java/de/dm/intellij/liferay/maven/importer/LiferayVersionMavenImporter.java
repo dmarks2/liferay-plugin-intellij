@@ -91,7 +91,7 @@ public class LiferayVersionMavenImporter extends MavenImporter {
         if (liferayVersion == null) {
             liferayVersion = getLiferayVersionFromBOM(mavenProject);
         }
-        LiferayModuleComponent liferayModuleComponent = module.getComponent(LiferayModuleComponent.class);
+        LiferayModuleComponent liferayModuleComponent = module.getService(LiferayModuleComponent.class);
         if (liferayModuleComponent != null) {
             if ( (liferayVersion != null) && (liferayVersion.trim().length() > 0) ) {
                 liferayModuleComponent.setLiferayVersion(liferayVersion);

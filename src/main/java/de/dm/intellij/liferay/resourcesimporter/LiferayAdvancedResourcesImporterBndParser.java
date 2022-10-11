@@ -23,7 +23,7 @@ public class LiferayAdvancedResourcesImporterBndParser extends FileChangeListene
     public static void handleChange(Project project, VirtualFile virtualFile) {
         final Module module = ModuleUtil.findModuleForFile(virtualFile, project);
         if (module != null) {
-            LiferayModuleComponent component = module.getComponent(LiferayModuleComponent.class);
+            LiferayModuleComponent component = module.getService(LiferayModuleComponent.class);
             if (component != null) {
                 Properties properties = new Properties();
                 try {

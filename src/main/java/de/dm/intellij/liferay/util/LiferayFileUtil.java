@@ -218,7 +218,7 @@ public class LiferayFileUtil {
     public static boolean isThemeTemplateFile(PsiFile psiFile) {
         final Module module = ModuleUtil.findModuleForPsiElement(psiFile);
         if ( (module != null) && (psiFile.getVirtualFile() != null) ) {
-            LiferayModuleComponent component = module.getComponent(LiferayModuleComponent.class);
+            LiferayModuleComponent component = module.getService(LiferayModuleComponent.class);
             if (component != null) {
                 String templatesPath = component.getThemeSettings().get(LiferayLookAndFeelXmlParser.TEMPLATES_PATH);
                 if ((templatesPath != null) && (templatesPath.trim().length() > 0)) {

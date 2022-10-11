@@ -47,7 +47,7 @@ public class LiferayThemeBuilderGradleProjectResolver extends AbstractProjectRes
             Module module = ModuleUtil.findModuleForFile(fileByIoFile, project);
 
             //Save the parent theme information in the Liferay Module Component
-            LiferayModuleComponent liferayModuleComponent = module.getComponent(LiferayModuleComponent.class);
+            LiferayModuleComponent liferayModuleComponent = module.getService(LiferayModuleComponent.class);
             if (liferayModuleComponent != null) {
                 liferayModuleComponent.setParentTheme(liferayThemeBuilderGradleTaskModel.getParentName());
             }

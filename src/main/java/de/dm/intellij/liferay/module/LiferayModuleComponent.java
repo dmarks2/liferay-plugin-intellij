@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
                 @Storage(StoragePathMacros.MODULE_FILE)
         }
 )
-public class LiferayModuleComponent implements ModuleComponent, PersistentStateComponent<LiferayModuleComponentStateWrapper> {
+public class LiferayModuleComponent implements PersistentStateComponent<LiferayModuleComponentStateWrapper> {
 
     public static final Pattern LIFERAY_MAJOR_VERSION_PATTERN = Pattern.compile("(\\d+[.]\\d+)");
 
@@ -129,7 +129,7 @@ public class LiferayModuleComponent implements ModuleComponent, PersistentStateC
     }
 
     public static LiferayModuleComponent getInstance(Module module) {
-        return module.getComponent(LiferayModuleComponent.class);
+        return module.getService(LiferayModuleComponent.class);
     }
 
     public static String getThemeSetting(Module module, String setting) {

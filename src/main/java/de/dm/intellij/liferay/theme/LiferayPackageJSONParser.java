@@ -29,7 +29,7 @@ public class LiferayPackageJSONParser extends FileChangeListenerBase {
     public static void handleChange(Project project, VirtualFile virtualFile) {
         final Module module = ModuleUtil.findModuleForFile(virtualFile, project);
         if (module != null) {
-            LiferayModuleComponent component = module.getComponent(LiferayModuleComponent.class);
+            LiferayModuleComponent component = module.getService(LiferayModuleComponent.class);
             if (component != null) {
 
                 try {

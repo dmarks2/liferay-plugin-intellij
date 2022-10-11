@@ -56,7 +56,7 @@ public class LiferayPortalPropertiesCompletionContributor extends CompletionCont
 
                         float portalMajorVersion = -1.0f;
 
-                        LiferayModuleComponent component = module.getComponent(LiferayModuleComponent.class);
+                        LiferayModuleComponent component = module.getService(LiferayModuleComponent.class);
                         if (component != null) {
                             portalMajorVersion = component.getPortalMajorVersion();
                         }

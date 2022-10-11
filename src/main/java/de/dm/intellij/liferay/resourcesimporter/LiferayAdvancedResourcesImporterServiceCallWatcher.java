@@ -19,7 +19,7 @@ public class LiferayAdvancedResourcesImporterServiceCallWatcher extends FileChan
         final Module module = ModuleUtil.findModuleForFile(virtualFile, project);
 
         if (module != null) {
-            final LiferayModuleComponent component = module.getComponent(LiferayModuleComponent.class);
+            final LiferayModuleComponent component = module.getService(LiferayModuleComponent.class);
 
             if (component != null) {
                 ProjectUtils.runDumbAwareLater(project, () -> {

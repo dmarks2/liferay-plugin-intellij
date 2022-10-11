@@ -49,7 +49,7 @@ public class LiferayThemeBuilderMavenImporter extends MavenImporter {
                 if (configParentName != null) {
                     String parentName = configParentName.getText();
                     if ( (parentName != null) && (parentName.trim().length() > 0) ) {
-                        LiferayModuleComponent liferayModuleComponent = module.getComponent(LiferayModuleComponent.class);
+                        LiferayModuleComponent liferayModuleComponent = module.getService(LiferayModuleComponent.class);
                         if (liferayModuleComponent != null) {
                             liferayModuleComponent.setParentTheme(parentName);
                         }
