@@ -29,7 +29,7 @@ public class LiferayModuleListener implements ModuleListener {
 
     private void handleModuleFiles(@NotNull Project project, @NotNull Module module, String filenamePattern) {
         if (!module.isDisposed()) {
-            Collection<VirtualFile> virtualFilesByName = FilenameIndex.getVirtualFilesByName(project, filenamePattern, GlobalSearchScope.moduleScope(module));
+            Collection<VirtualFile> virtualFilesByName = FilenameIndex.getVirtualFilesByName(filenamePattern, GlobalSearchScope.moduleScope(module));
             for (VirtualFile virtualFile : virtualFilesByName) {
                if (LiferayLookAndFeelXmlParser.isRelevantFile(virtualFile.getPath())) {
                     LiferayLookAndFeelXmlParser.handleChange(project, virtualFile);

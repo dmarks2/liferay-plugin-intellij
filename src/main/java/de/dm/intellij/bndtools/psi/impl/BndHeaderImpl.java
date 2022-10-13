@@ -48,9 +48,7 @@ public class BndHeaderImpl extends ASTWrapperPsiElement implements BndHeader {
     @NotNull
     @Override
     public BndToken getBndNameElement() {
-        BndToken token = (BndToken)getNode().findChildByType(BndTokenType.HEADER_NAME);
-
-        return token;
+        return (BndToken)getNode().findChildByType(BndTokenType.HEADER_NAME);
     }
 
 }

@@ -59,7 +59,7 @@ public class LiferayTaglibPortletNameReferenceContributor extends AbstractLifera
                     String value = xmlAttributeValue.getValue();
                     if (value != null) {
                         return new PsiReference[]{
-                                new PsiReferenceBase.Poly<XmlAttributeValue>((XmlAttributeValue) element, ElementManipulators.getValueTextRange(element), true) {
+                                new PsiReferenceBase.Poly<>((XmlAttributeValue) element, ElementManipulators.getValueTextRange(element), true) {
                                     @NotNull
                                     @Override
                                     public ResolveResult[] multiResolve(boolean incompleteCode) {
@@ -90,8 +90,8 @@ public class LiferayTaglibPortletNameReferenceContributor extends AbstractLifera
                                             List<PsiFile> portletClasses = PortletNameIndex.getPortletClasses(project, portletName, GlobalSearchScope.allScope(project));
                                             if (portletClasses.size() > 0) {
                                                 result.add(
-                                                    LookupElementBuilder.create(portletName).
-                                                        withIcon(Icons.LIFERAY_ICON)
+                                                        LookupElementBuilder.create(portletName).
+                                                                withIcon(Icons.LIFERAY_ICON)
                                                 );
                                             }
                                         }

@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.velocity;
 
+import com.intellij.codeInsight.template.TemplateActionContext;
 import com.intellij.codeInsight.template.TemplateContextType;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.psi.PsiFile;
@@ -12,16 +13,14 @@ import org.jetbrains.annotations.Nullable;
 public class LiferayJournalTemplateVelocityContextType extends TemplateContextType {
 
     protected LiferayJournalTemplateVelocityContextType() {
-        super("LIFERAY JOURNAL TEMPLATES VELOCITY", "Liferay Journal Templates (Velocity)");
+        super("LIFERAY JOURNAL TEMPLATES VELOCITY", "Liferay journal templates (velocity)");
     }
 
     @Override
-    public boolean isInContext(@NotNull PsiFile file, int offset) {
-        PsiFile originalFile = file;
-        if (file.getOriginalFile() != null) {
-            originalFile = file.getOriginalFile();
-        }
-        return VtlFileType.INSTANCE.equals(file.getFileType()) && LiferayFileUtil.isJournalTemplateFile(originalFile);
+    public boolean isInContext(@NotNull TemplateActionContext templateActionContext) {
+        PsiFile originalFile = templateActionContext.getFile().getOriginalFile();
+
+        return VtlFileType.INSTANCE.equals(templateActionContext.getFile().getFileType()) && LiferayFileUtil.isJournalTemplateFile(originalFile);
     }
 
     @Nullable

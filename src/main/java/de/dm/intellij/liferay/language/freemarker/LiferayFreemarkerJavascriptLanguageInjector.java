@@ -1,12 +1,6 @@
 package de.dm.intellij.liferay.language.freemarker;
 
-import com.intellij.freemarker.psi.FtlArgumentList;
-import com.intellij.freemarker.psi.FtlBinaryExpression;
-import com.intellij.freemarker.psi.FtlCompositeElement;
-import com.intellij.freemarker.psi.FtlElementTypes;
-import com.intellij.freemarker.psi.FtlExpression;
-import com.intellij.freemarker.psi.FtlNameValuePair;
-import com.intellij.freemarker.psi.FtlStringLiteral;
+import com.intellij.freemarker.psi.*;
 import com.intellij.freemarker.psi.directives.FtlMacro;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.injection.MultiHostRegistrar;
@@ -16,7 +10,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.SmartList;
 import de.dm.intellij.liferay.language.javascript.AbstractLiferayJavascriptLanguageInjector;
 import org.jetbrains.annotations.NotNull;
@@ -167,12 +160,12 @@ public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferay
             if (injectionRange != null) {
                 if (!(injectionRange.isEmpty())) {
                     registrar.startInjecting(JavascriptLanguage.INSTANCE);
-                    registrar.addPlace(null, null, (PsiLanguageInjectionHost) ftlMacro, injectionRange);
+                    registrar.addPlace(null, null, ftlMacro, injectionRange);
                     registrar.doneInjecting();
                 }
             } else {
                 int startOffset = ftlMacro.getTextRange().getStartOffset();
-                List<TextRange> ranges = new SmartList<TextRange>();
+                List<TextRange> ranges = new SmartList<>();
 
                 ASTNode node = ftlMacro.getNode();
                 ASTNode[] children = node.getChildren(TokenSet.create(FtlElementTypes.TEMPLATE_TEXT));

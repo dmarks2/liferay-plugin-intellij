@@ -3,7 +3,6 @@ package de.dm.intellij.liferay.language.resourcebundle;
 import com.intellij.lang.properties.IProperty;
 import com.intellij.lang.properties.psi.PropertiesFile;
 import com.intellij.lang.properties.references.PropertyReference;
-import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementResolveResult;
 import com.intellij.psi.ResolveResult;
@@ -15,10 +14,6 @@ import java.util.List;
 import java.util.Set;
 
 public class LiferayTaglibResourceBundlePropertyReference extends PropertyReference {
-
-    public LiferayTaglibResourceBundlePropertyReference(@NotNull String key, @NotNull PsiElement element, @Nullable String bundleName, boolean soft, TextRange range) {
-        super(key, element, bundleName, soft, range);
-    }
 
     public LiferayTaglibResourceBundlePropertyReference(@NotNull String key, @NotNull PsiElement element, @Nullable String bundleName, boolean soft) {
         super(key, element, bundleName, soft);

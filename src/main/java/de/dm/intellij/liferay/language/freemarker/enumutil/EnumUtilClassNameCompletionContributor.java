@@ -27,26 +27,26 @@ public class EnumUtilClassNameCompletionContributor extends CompletionContributo
         extend(
             CompletionType.BASIC,
             ELEMENT_FILTER,
-            new CompletionProvider<CompletionParameters>() {
-                @Override
-                protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result) {
-                    PsiElement originalPosition = parameters.getOriginalPosition();
-                    if (originalPosition != null) {
-                        PsiFile psiFile = originalPosition.getContainingFile();
-                        psiFile = psiFile.getOriginalFile();
+                new CompletionProvider<>() {
+                    @Override
+                    protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result) {
+                        PsiElement originalPosition = parameters.getOriginalPosition();
+                        if (originalPosition != null) {
+                            PsiFile psiFile = originalPosition.getContainingFile();
+                            psiFile = psiFile.getOriginalFile();
 
-                        Module module = ModuleUtil.findModuleForFile(psiFile);
+                            Module module = ModuleUtil.findModuleForFile(psiFile);
 
-                        if (isEnumUtilCall(originalPosition)) {
-                            PsiClass enumClass = ProjectUtils.getClassByName(originalPosition.getProject(), "java.lang.Enum", originalPosition);
+                            if (isEnumUtilCall(originalPosition)) {
+                                PsiClass enumClass = ProjectUtils.getClassByName(originalPosition.getProject(), "java.lang.Enum", originalPosition);
 
-                            LiferayFreemarkerUtil.addClassInheritorsLookup(enumClass, result, module);
+                                LiferayFreemarkerUtil.addClassInheritorsLookup(enumClass, result, module);
 
-                            result.stopHere();
+                                result.stopHere();
+                            }
                         }
                     }
                 }
-            }
         );
     }
 

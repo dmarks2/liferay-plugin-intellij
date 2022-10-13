@@ -31,7 +31,7 @@ public class StaticFieldGetterFieldNameCompletionContributor extends CompletionC
         extend(
                 CompletionType.BASIC,
                 ELEMENT_FILTER,
-                new CompletionProvider<CompletionParameters>() {
+                new CompletionProvider<>() {
                     @Override
                     protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result) {
                         PsiElement originalPosition = parameters.getOriginalPosition();

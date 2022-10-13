@@ -79,20 +79,18 @@ public class StaticFieldGetterFtlVariable extends FtlLightVariable {
                                 for (PsiField psiField : publicStaticFields) {
                                     String name = psiField.getName();
 
-                                    if (name != null) {
-                                        if (name.equals(valueText)) {
-                                            PsiType targetType = psiField.getType();
-                                            FtlPsiType stringType = FtlPsiType.wrap(PsiType.getJavaLangString(psiFile.getManager(), psiFile.getResolveScope()));
+                                    if (name.equals(valueText)) {
+                                        PsiType targetType = psiField.getType();
+                                        FtlPsiType stringType = FtlPsiType.wrap(PsiType.getJavaLangString(psiFile.getManager(), psiFile.getResolveScope()));
 
-                                            FtlCallableType findServiceType = FtlCallableType.createLightFunctionType(psiMethod, FtlPsiType.wrap(targetType), "className", stringType, "fieldName", stringType);
+                                        FtlCallableType findServiceType = FtlCallableType.createLightFunctionType(psiMethod, FtlPsiType.wrap(targetType), "className", stringType, "fieldName", stringType);
 
-                                            //TODO getFieldValue is shown as "variable" instead of "method".
-                                            FtlDynamicMember findService = new FtlDynamicMember("getFieldValue", psiMethod, findServiceType);
+                                        //TODO getFieldValue is shown as "variable" instead of "method".
+                                        FtlDynamicMember findService = new FtlDynamicMember("getFieldValue", psiMethod, findServiceType);
 
-                                            processor.execute(findService, state);
+                                        processor.execute(findService, state);
 
-                                            break;
-                                        }
+                                        break;
                                     }
                                 }
                             }

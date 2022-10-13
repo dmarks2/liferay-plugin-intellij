@@ -14,14 +14,14 @@ public class LiferayTaglibModelContextJavaBeanReferenceContributor extends Abstr
 
     static {
         TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI, Arrays.asList(
-                new AbstractMap.SimpleEntry<String, String>("input", "field"),
-                new AbstractMap.SimpleEntry<String, String>("input", "name"),
-                new AbstractMap.SimpleEntry<String, String>("select", "field"),
-                new AbstractMap.SimpleEntry<String, String>("select", "name")
+                new AbstractMap.SimpleEntry<>("input", "field"),
+                new AbstractMap.SimpleEntry<>("input", "name"),
+                new AbstractMap.SimpleEntry<>("select", "field"),
+                new AbstractMap.SimpleEntry<>("select", "name")
         ));
 
         TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
-                new AbstractMap.SimpleEntry<String, String>("input-field", "field")
+                new AbstractMap.SimpleEntry<>("input-field", "field")
         ));
 
     }

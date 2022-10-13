@@ -66,85 +66,85 @@ public class LiferayTaglibResourceCommandNameReferenceContributor extends Abstra
                     String value = xmlAttributeValue.getValue();
                     if (value != null) {
                         return new PsiReference[]{
-                            new PsiReferenceBase.Poly<XmlAttributeValue>((XmlAttributeValue) element, ElementManipulators.getValueTextRange(element), true) {
-                                @NotNull
-                                @Override
-                                public ResolveResult[] multiResolve(boolean incompleteCode) {
-                                    Project project = getElement().getProject();
+                                new PsiReferenceBase.Poly<>((XmlAttributeValue) element, ElementManipulators.getValueTextRange(element), true) {
+                                    @NotNull
+                                    @Override
+                                    public ResolveResult[] multiResolve(boolean incompleteCode) {
+                                        Project project = getElement().getProject();
 
-                                    XmlTag parentTag = PsiTreeUtil.getParentOfType(getElement(), XmlTag.class);
-                                    if (parentTag != null) {
-                                        String localName = parentTag.getLocalName();
+                                        XmlTag parentTag = PsiTreeUtil.getParentOfType(getElement(), XmlTag.class);
+                                        if (parentTag != null) {
+                                            String localName = parentTag.getLocalName();
 
-                                        String resourceCommandName = null;
-                                        Collection<String> portletNames = Collections.emptyList();
+                                            String resourceCommandName = null;
+                                            Collection<String> portletNames = Collections.emptyList();
 
-                                        if (getURLTagLocalName().equals(localName)) {
-                                            resourceCommandName = getElement().getValue();
-                                            portletNames = getPortletNameFromURLTag(parentTag);
+                                            if (getURLTagLocalName().equals(localName)) {
+                                                resourceCommandName = getElement().getValue();
+                                                portletNames = getPortletNameFromURLTag(parentTag);
 
-                                            if (portletNames.isEmpty()) {
-                                                portletNames = getPortletNameFromJspPath(parentTag);
+                                                if (portletNames.isEmpty()) {
+                                                    portletNames = getPortletNameFromJspPath(parentTag);
+                                                }
+                                            }
+
+                                            if (resourceCommandName != null && (!(portletNames.isEmpty()))) {
+                                                List<PsiFile> portletClasses = new ArrayList<>();
+
+                                                for (String portletName : portletNames) {
+                                                    portletClasses.addAll(ResourceCommandIndex.getPortletClasses(project, portletName, resourceCommandName, GlobalSearchScope.allScope(project)));
+                                                }
+
+                                                return PsiElementResolveResult.createResults(portletClasses);
                                             }
                                         }
 
-                                        if (resourceCommandName != null && (! (portletNames.isEmpty()) ) ) {
-                                            List<PsiFile> portletClasses = new ArrayList<>();
-
-                                            for (String portletName : portletNames) {
-                                                portletClasses.addAll(ResourceCommandIndex.getPortletClasses(project, portletName, resourceCommandName, GlobalSearchScope.allScope(project)));
-                                            }
-
-                                            return PsiElementResolveResult.createResults(portletClasses);
-                                        }
+                                        return new ResolveResult[0];
                                     }
 
-                                    return new ResolveResult[0];
-                                }
+                                    @NotNull
+                                    @Override
+                                    public Object[] getVariants() {
+                                        List<Object> result = new ArrayList<Object>();
 
-                                @NotNull
-                                @Override
-                                public Object[] getVariants() {
-                                    List<Object> result = new ArrayList<Object>();
+                                        Project project = getElement().getProject();
 
-                                    Project project = getElement().getProject();
+                                        XmlTag parentTag = PsiTreeUtil.getParentOfType(getElement(), XmlTag.class);
+                                        if (parentTag != null) {
+                                            String localName = parentTag.getLocalName();
 
-                                    XmlTag parentTag = PsiTreeUtil.getParentOfType(getElement(), XmlTag.class);
-                                    if (parentTag != null) {
-                                        String localName = parentTag.getLocalName();
+                                            Collection<String> portletNames = Collections.emptyList();
 
-                                        Collection<String> portletNames = Collections.emptyList();
+                                            if (getURLTagLocalName().equals(localName)) {
+                                                portletNames = getPortletNameFromURLTag(parentTag);
 
-                                        if (getURLTagLocalName().equals(localName)) {
-                                            portletNames = getPortletNameFromURLTag(parentTag);
-
-                                            if (portletNames.isEmpty()) {
-                                            portletNames = getPortletNameFromJspPath(parentTag);
+                                                if (portletNames.isEmpty()) {
+                                                    portletNames = getPortletNameFromJspPath(parentTag);
+                                                }
                                             }
-                                        }
 
-                                        if (! (portletNames.isEmpty()) ) {
-                                            for (String portletName : portletNames) {
-                                                List<String> resourceCommands = ResourceCommandIndex.getResourceCommands(portletName, project, GlobalSearchScope.allScope(project));
-                                                Set<String> distinctResourceCommands = new TreeSet<>(resourceCommands);
+                                            if (!(portletNames.isEmpty())) {
+                                                for (String portletName : portletNames) {
+                                                    List<String> resourceCommands = ResourceCommandIndex.getResourceCommands(portletName, project, GlobalSearchScope.allScope(project));
+                                                    Set<String> distinctResourceCommands = new TreeSet<>(resourceCommands);
 
-                                                for (String resourceCommand : distinctResourceCommands) {
-                                                    List<PsiFile> portletClasses = ResourceCommandIndex.getPortletClasses(project, portletName, resourceCommand, GlobalSearchScope.allScope(project));
-                                                    if (portletClasses.size() > 0) {
-                                                        result.add(
-                                                            LookupElementBuilder.create(resourceCommand).
-                                                                withIcon(Icons.LIFERAY_ICON)
-                                                        );
+                                                    for (String resourceCommand : distinctResourceCommands) {
+                                                        List<PsiFile> portletClasses = ResourceCommandIndex.getPortletClasses(project, portletName, resourceCommand, GlobalSearchScope.allScope(project));
+                                                        if (portletClasses.size() > 0) {
+                                                            result.add(
+                                                                    LookupElementBuilder.create(resourceCommand).
+                                                                            withIcon(Icons.LIFERAY_ICON)
+                                                            );
 
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
-                                    }
 
-                                    return result.toArray(new Object[result.size()]);
+                                        return result.toArray(new Object[result.size()]);
+                                    }
                                 }
-                            }
                         };
                     }
                 }

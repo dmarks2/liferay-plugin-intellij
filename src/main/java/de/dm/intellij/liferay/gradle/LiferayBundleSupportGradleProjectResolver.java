@@ -27,13 +27,13 @@ public class LiferayBundleSupportGradleProjectResolver extends AbstractProjectRe
     @NotNull
     @Override
     public Set<Class<?>> getExtraProjectModelClasses() {
-        return Collections.<Class<?>>singleton(LiferayBundleSupportGradleTaskModel.class);
+        return Collections.singleton(LiferayBundleSupportGradleTaskModel.class);
     }
 
     @NotNull
     @Override
     public Set<Class<?>> getToolingExtensionsClasses() {
-        return Collections.<Class<?>>singleton(LiferayBundleSupportGradleTaskModelBuilder.class);
+        return Collections.singleton(LiferayBundleSupportGradleTaskModelBuilder.class);
     }
 
     @Override

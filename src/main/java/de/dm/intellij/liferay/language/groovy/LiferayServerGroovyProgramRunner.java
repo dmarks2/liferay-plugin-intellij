@@ -3,13 +3,10 @@ package de.dm.intellij.liferay.language.groovy;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.RunProfile;
 import com.intellij.execution.configurations.RunProfileState;
-import com.intellij.execution.configurations.RunnerSettings;
 import com.intellij.execution.executors.DefaultRunExecutor;
 import com.intellij.execution.impl.DefaultJavaProgramRunner;
 import com.intellij.execution.runners.ExecutionEnvironment;
-import com.intellij.execution.runners.ProgramRunner;
 import com.intellij.execution.ui.RunContentDescriptor;
-import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,8 +24,6 @@ public class LiferayServerGroovyProgramRunner extends DefaultJavaProgramRunner {
 
     @Override
     protected RunContentDescriptor doExecute(@NotNull RunProfileState state, @NotNull ExecutionEnvironment env) throws ExecutionException {
-        RunContentDescriptor runContentDescriptor = super.doExecute(state, env);
-
-        return runContentDescriptor;
+        return super.doExecute(state, env);
     }
 }

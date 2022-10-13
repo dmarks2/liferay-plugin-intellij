@@ -1,15 +1,10 @@
 package de.dm.intellij.liferay.language.properties;
 
-import com.intellij.codeInsight.completion.CompletionContributor;
-import com.intellij.codeInsight.completion.CompletionParameters;
-import com.intellij.codeInsight.completion.CompletionProvider;
-import com.intellij.codeInsight.completion.CompletionResultSet;
-import com.intellij.codeInsight.completion.CompletionType;
+import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.lang.properties.psi.impl.PropertyKeyImpl;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
-import com.intellij.openapi.project.Project;
 import com.intellij.patterns.PlatformPatterns;
 import com.intellij.patterns.StandardPatterns;
 import com.intellij.psi.PsiFile;
@@ -42,7 +37,7 @@ public class LiferayPortalPropertiesCompletionContributor extends CompletionCont
                                                         startsWith("portal")
                                         )
                         ),
-                new CompletionProvider<CompletionParameters>() {
+                new CompletionProvider<>() {
                     @Override
                     protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
                         List<LookupElementBuilder> lookups = new ArrayList<LookupElementBuilder>();

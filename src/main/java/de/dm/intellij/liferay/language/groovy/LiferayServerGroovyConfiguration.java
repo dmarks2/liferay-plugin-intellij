@@ -2,13 +2,12 @@ package de.dm.intellij.liferay.language.groovy;
 
 import com.intellij.execution.CommonJavaRunConfigurationParameters;
 import com.intellij.execution.ExecutionBundle;
-import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
-import com.intellij.execution.configurations.*;
+import com.intellij.execution.configurations.ConfigurationFactory;
+import com.intellij.execution.configurations.LocatableConfigurationBase;
+import com.intellij.execution.configurations.RefactoringListenerProvider;
+import com.intellij.execution.configurations.RunProfileState;
 import com.intellij.execution.runners.ExecutionEnvironment;
-import com.intellij.execution.runners.ProgramRunner;
-import com.intellij.openapi.externalSystem.model.ProjectSystemId;
-import com.intellij.openapi.externalSystem.service.execution.ExternalSystemRunConfiguration;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.options.SettingsEditorGroup;
 import com.intellij.openapi.project.Project;
@@ -18,7 +17,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.refactoring.listeners.RefactoringElementAdapter;
 import com.intellij.refactoring.listeners.RefactoringElementListener;
-import com.intellij.util.net.NetUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,23 +49,6 @@ public class LiferayServerGroovyConfiguration extends LocatableConfigurationBase
     @Override
     public @Nullable RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment) {
         return new LiferayServerGroovyCommandLineState(environment, this);
-    }
-
-    @Override
-    public void checkConfiguration() throws RuntimeConfigurationException {
-        /*
-        if (getHost() == null || getHost().isEmpty()) {
-            throw new RuntimeConfigurationException("Please configure a valid host", "Invalid Host");
-        }
-
-        boolean canConnect = NetUtils.canConnectToRemoteSocket(getHost(), getPort());
-
-        if (! canConnect) {
-            throw new RuntimeConfigurationException("Unable to connect to " + getHost() + ":" + getPort(), "Connection Error");
-        }
-
-        super.checkConfiguration();
-         */
     }
 
     public String getScriptName() {

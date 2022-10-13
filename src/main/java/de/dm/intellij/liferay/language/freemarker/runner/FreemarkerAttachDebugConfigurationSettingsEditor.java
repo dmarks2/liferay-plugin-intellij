@@ -112,8 +112,8 @@ public class FreemarkerAttachDebugConfigurationSettingsEditor extends SettingsEd
             .addLabeledComponent("&Command line arguments for remote JVM:", argsArea, true)
             .addSeparator()
             .addLabeledComponent("Liferay URL:", liferayURLField)
-            .addLabeledComponent("Liferay Username: ", liferayUsernameField)
-            .addLabeledComponent("Liferay Password:", liferayPasswordField)
+            .addLabeledComponent("Liferay username: ", liferayUsernameField)
+            .addLabeledComponent("Liferay password:", liferayPasswordField)
             .getPanel();
     }
 }

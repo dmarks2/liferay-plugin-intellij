@@ -2,7 +2,6 @@ package de.dm.intellij.liferay.language.groovy;
 
 import com.intellij.execution.filters.Filter;
 import com.intellij.execution.filters.HyperlinkInfo;
-import com.intellij.execution.filters.HyperlinkInfoFactory;
 import com.intellij.execution.filters.OpenFileHyperlinkInfo;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.LocalFileSystem;
@@ -12,7 +11,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

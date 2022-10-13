@@ -26,10 +26,7 @@ public class LiferayXmlSchemaProvider extends XmlSchemaProvider {
     public XmlFile getSchema(@NotNull String url, @Nullable Module module, @NotNull PsiFile baseFile) {
         URL targetFileUrl = null;
 
-        PsiFile psiFile = baseFile;
-        if (baseFile.getOriginalFile() != null) {
-            psiFile = baseFile.getOriginalFile();
-        }
+        PsiFile psiFile = baseFile.getOriginalFile();
 
         if (
                 (psiFile.getName().equals("portal-model-hints.xml")) ||
@@ -69,10 +66,7 @@ public class LiferayXmlSchemaProvider extends XmlSchemaProvider {
 
     @Override
     public boolean isAvailable(@NotNull XmlFile file) {
-        PsiFile psiFile = file;
-        if (file.getOriginalFile() != null) {
-            psiFile = file.getOriginalFile();
-        }
+        PsiFile psiFile = file.getOriginalFile();
 
         if (psiFile.getFileType() != XmlFileType.INSTANCE) {
             return false;

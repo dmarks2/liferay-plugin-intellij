@@ -67,7 +67,7 @@ public class ShowHookFragmentDiffAction extends CompareFilesAction {
     }
 
     @Override
-    protected boolean isAvailable(AnActionEvent e) {
+    protected boolean isAvailable(@NotNull AnActionEvent e) {
         VirtualFile selectedFile = getSelectedFile(e);
         if (selectedFile == null) {
             return false;

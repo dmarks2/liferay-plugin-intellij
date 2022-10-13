@@ -47,25 +47,19 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
     @NotNull
     @Override
     public String getReportActionText() {
-        return "Report an issue to the developer";
+        return "Report an Issue to the Developer";
     }
 
     @Override
-    public boolean submit(@NotNull IdeaLoggingEvent[] events, @Nullable String additionalInfo, @NotNull Component parentComponent, @NotNull final Consumer<? super SubmittedReportInfo> consumer) {
+    public boolean submit(IdeaLoggingEvent[] events, @Nullable String additionalInfo, @NotNull Component parentComponent, @NotNull final Consumer<? super SubmittedReportInfo> consumer) {
         IdeaLoggingEvent event = events[0];
 
         DataContext dataContext = DataManager.getInstance().getDataContext(parentComponent);
         Project project = CommonDataKeys.PROJECT.getData(dataContext);
 
-        final Consumer<String> success = new Consumer<String>() {
-
-            @Override
-            public void consume(String s) {
-                consumer.consume(
-                    new SubmittedReportInfo(null, s, SubmittedReportInfo.SubmissionStatus.NEW_ISSUE)
-                );
-            }
-        };
+        final Consumer<String> success = s -> consumer.consume(
+            new SubmittedReportInfo(null, s, SubmittedReportInfo.SubmissionStatus.NEW_ISSUE)
+        );
 
         Task task = new Task.Backgroundable(project, "Sending error report", true) {
 

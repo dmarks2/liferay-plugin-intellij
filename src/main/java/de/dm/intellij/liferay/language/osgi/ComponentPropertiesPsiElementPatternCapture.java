@@ -20,7 +20,7 @@ public class ComponentPropertiesPsiElementPatternCapture {
         instance = PlatformPatterns.psiElement();
         instance = instance.inside(PsiJavaPatterns.literalExpression());
         instance = instance.with(
-                new PatternCondition<PsiElement>("pattern") {
+                new PatternCondition<>("pattern") {
 
                     @Override
                     public boolean accepts(@NotNull PsiElement psiElement, ProcessingContext context) {

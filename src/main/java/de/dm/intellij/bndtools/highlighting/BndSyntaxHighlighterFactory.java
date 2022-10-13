@@ -34,9 +34,8 @@ public class BndSyntaxHighlighterFactory extends SyntaxHighlighterFactory {
             return new BndLexer();
         }
 
-        @NotNull
         @Override
-        public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
+        public TextAttributesKey @NotNull [] getTokenHighlights(IElementType tokenType) {
             return pack(myAttributes.get(tokenType));
         }
     };

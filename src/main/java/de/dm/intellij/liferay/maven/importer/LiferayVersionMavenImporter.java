@@ -5,7 +5,6 @@ import com.intellij.openapi.externalSystem.service.project.IdeModifiableModelsPr
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleType;
 import com.intellij.openapi.module.ModuleTypeManager;
-import de.dm.intellij.liferay.language.freemarker.runner.FreemarkerAttachBreakpointHandler;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.DependencyManagement;
@@ -17,20 +16,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.idea.maven.importing.MavenImporter;
 import org.jetbrains.idea.maven.importing.MavenRootModelAdapter;
 import org.jetbrains.idea.maven.model.MavenPlugin;
-import org.jetbrains.idea.maven.project.MavenProject;
-import org.jetbrains.idea.maven.project.MavenProjectChanges;
-import org.jetbrains.idea.maven.project.MavenProjectsProcessorTask;
-import org.jetbrains.idea.maven.project.MavenProjectsTree;
-import org.jetbrains.idea.maven.project.SupportedRequestType;
+import org.jetbrains.idea.maven.project.*;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * A Maven Importer which tries to find out the target Liferay Version and Parent Theme (Liferay 6.x) based on the pom.xml within your project

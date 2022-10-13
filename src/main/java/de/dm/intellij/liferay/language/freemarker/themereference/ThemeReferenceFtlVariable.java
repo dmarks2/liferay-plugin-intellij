@@ -45,7 +45,9 @@ public class ThemeReferenceFtlVariable extends FtlLightVariable {
                 if (virtualFile != null) {
                     PsiDirectory psiDirectory = psiFile.getContainingFile().getManager().findDirectory(virtualFile);
 
-                    return psiDirectory;
+                    if (psiDirectory != null) {
+                        return psiDirectory;
+                    }
                 }
             }
         }

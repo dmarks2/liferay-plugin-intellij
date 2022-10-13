@@ -232,9 +232,7 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
                             log.debug("Trying to find Journal Structure Template for file " + virtualFile.getName() + " with Structure Key " + structureKey + " and Template Key " + templateKey + " in Group " + groupName + " ...");
                         }
 
-                        String result = liferayServicesUtil.getFreemarkerTemplateName(structureKey, templateKey, groupName);
-
-                        return result;
+                        return liferayServicesUtil.getFreemarkerTemplateName(structureKey, templateKey, groupName);
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
@@ -258,9 +256,7 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
                         log.debug("Trying to find Application Display Template for file " + virtualFile.getName() + " with Template name " + templateName + " and Type " + type + " in Group " + groupName + " ...");
                     }
 
-                    String result = liferayServicesUtil.getFreemarkerApplicationDisplayTemplateName(type, templateName, groupName);
-
-                    return result;
+                    return liferayServicesUtil.getFreemarkerApplicationDisplayTemplateName(type, templateName, groupName);
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }

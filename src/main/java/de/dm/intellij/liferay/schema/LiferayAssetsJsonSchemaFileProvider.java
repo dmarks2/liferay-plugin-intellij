@@ -1,6 +1,5 @@
 package de.dm.intellij.liferay.schema;
 
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.jetbrains.jsonSchema.extension.JsonSchemaFileProvider;
@@ -12,11 +11,9 @@ import java.net.URL;
 
 public class LiferayAssetsJsonSchemaFileProvider implements JsonSchemaFileProvider {
 
-    @NotNull private final Project project;
     @Nullable private final VirtualFile schemaFile;
 
-    public LiferayAssetsJsonSchemaFileProvider(@NotNull Project project) {
-        this.project = project;
+    public LiferayAssetsJsonSchemaFileProvider() {
         this.schemaFile = getResourceFile();
     }
 

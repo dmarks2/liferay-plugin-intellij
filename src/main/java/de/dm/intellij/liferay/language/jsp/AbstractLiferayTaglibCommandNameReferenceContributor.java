@@ -51,10 +51,9 @@ public abstract class AbstractLiferayTaglibCommandNameReferenceContributor exten
 
     @NotNull
     protected Collection<String> getPortletNamesFromParentTag(@NotNull XmlTag parentTag) {
-        Collection<String> portletNames = Collections.emptyList();
-
         XmlTag actionURLTag = getURLTagFromParamTag(parentTag);
-        portletNames = getPortletNameFromURLTag(actionURLTag);
+
+        Collection<String> portletNames = getPortletNameFromURLTag(actionURLTag);
 
         if (portletNames.isEmpty()) {
             portletNames = getPortletNameFromJspPath(parentTag);

@@ -5,7 +5,6 @@ import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.components.StoragePathMacros;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleComponent;
 import de.dm.intellij.liferay.util.LiferayVersions;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
@@ -67,11 +66,6 @@ public class LiferayModuleComponent implements PersistentStateComponent<LiferayM
         this.parentTheme = state.parentTheme;
         this.customJspDir = state.customJspDir;
         this.resourcesImporterGroupName = state.resourcesImporterGroupName;
-    }
-
-    @NotNull
-    public String getComponentName() {
-        return "Liferay Module";
     }
 
     public String getLiferayVersion() {

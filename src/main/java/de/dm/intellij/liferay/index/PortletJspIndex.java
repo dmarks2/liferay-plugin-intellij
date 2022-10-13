@@ -79,7 +79,7 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> {
     @NotNull
     @Override
     public KeyDescriptor<JspKey> getKeyDescriptor() {
-        return new KeyDescriptor<JspKey>() {
+        return new KeyDescriptor<>() {
             @Override
             public int getHashCode(JspKey value) {
                 return value.hashCode();

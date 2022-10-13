@@ -6,13 +6,7 @@ import com.intellij.freemarker.psi.variables.FtlDynamicMember;
 import com.intellij.freemarker.psi.variables.FtlLightVariable;
 import com.intellij.freemarker.psi.variables.FtlPsiType;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiType;
-import com.intellij.psi.ResolveState;
+import com.intellij.psi.*;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.IncorrectOperationException;
@@ -67,10 +61,8 @@ public class ServiceLocatorFtlVariable extends FtlLightVariable {
 
                     if (valueText != null) {
                         try {
-                            PsiFile psiFile = parent.getContainingFile();
-                            if (psiFile.getOriginalFile() != null) {
-                                psiFile = psiFile.getOriginalFile();
-                            }
+                            PsiFile psiFile = parent.getContainingFile().getOriginalFile();
+
                             final PsiType targetType = JavaPsiFacade.getInstance(parent.getProject()).getElementFactory().createTypeFromText(valueText, parent);
                             FtlPsiType stringType = FtlPsiType.wrap(PsiType.getJavaLangString(psiFile.getManager(), psiFile.getResolveScope()));
 

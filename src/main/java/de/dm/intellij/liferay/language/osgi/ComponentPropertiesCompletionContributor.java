@@ -1,20 +1,8 @@
 package de.dm.intellij.liferay.language.osgi;
 
-import com.intellij.codeInsight.completion.CompletionContributor;
-import com.intellij.codeInsight.completion.CompletionParameters;
-import com.intellij.codeInsight.completion.CompletionProvider;
-import com.intellij.codeInsight.completion.CompletionResultSet;
-import com.intellij.codeInsight.completion.CompletionType;
+import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.psi.PsiAnnotationMemberValue;
-import com.intellij.psi.PsiAnnotationParameterList;
-import com.intellij.psi.PsiArrayInitializerMemberValue;
-import com.intellij.psi.PsiClassObjectAccessExpression;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiJavaCodeReferenceElement;
-import com.intellij.psi.PsiNameValuePair;
-import com.intellij.psi.PsiType;
-import com.intellij.psi.PsiTypeElement;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.compiled.ClsElementImpl;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -23,13 +11,7 @@ import de.dm.intellij.liferay.util.Icons;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class ComponentPropertiesCompletionContributor extends CompletionContributor {
     /*
@@ -1279,12 +1261,12 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         extend(
                 CompletionType.BASIC,
                 ComponentPropertiesPsiElementPatternCapture.instance,
-                new CompletionProvider<CompletionParameters>() {
+                new CompletionProvider<>() {
                     @Override
                     protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result) {
                         List<String> serviceClassNames = getServiceClassNames(parameters.getOriginalPosition());
 
-                        if (! (serviceClassNames.isEmpty()) ) {
+                        if (!(serviceClassNames.isEmpty())) {
                             Set<LookupElementBuilder> lookups = new TreeSet<>(Comparator.comparing(LookupElementBuilder::getLookupString));
 
                             for (String serviceClassName : serviceClassNames) {
@@ -1370,9 +1352,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         }
 
         if (referenceElement != null) {
-            String serviceClassName = ProjectUtils.getQualifiedNameWithoutResolve(referenceElement, false);
-
-            return serviceClassName;
+            return ProjectUtils.getQualifiedNameWithoutResolve(referenceElement, false);
         }
 
         return null;

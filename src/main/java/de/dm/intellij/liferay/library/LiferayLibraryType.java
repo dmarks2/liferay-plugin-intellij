@@ -17,7 +17,7 @@ import javax.swing.*;
 public class LiferayLibraryType extends LibraryType<LibraryProperties> {
 
     public static final PersistentLibraryKind<LibraryProperties> LIBRARY_KIND =
-            new PersistentLibraryKind<LibraryProperties>("Liferay") {
+            new PersistentLibraryKind<>("Liferay") {
                 @NotNull
                 @Override
                 public LibraryProperties createDefaultProperties() {
@@ -36,7 +36,7 @@ public class LiferayLibraryType extends LibraryType<LibraryProperties> {
     @Nullable
     @Override
     public String getCreateActionName() {
-        return "Liferay Sources";
+        return "Liferay sources";
     }
 
     @Override

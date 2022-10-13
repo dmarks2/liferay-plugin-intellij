@@ -45,11 +45,7 @@ public class LiferayThemeBuilderGradleTaskModelBuilder implements ModelBuilderSe
                             Method getParentName = task.getClass().getDeclaredMethod("getParentName");
                             String parentName = (String)getParentName.invoke(task);
                             result.setParentName(parentName);
-                        } catch (NoSuchMethodException e) {
-                            //ignore
-                        } catch (IllegalAccessException e) {
-                            //ignore
-                        } catch (InvocationTargetException e) {
+                        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                             //ignore
                         }
                     }

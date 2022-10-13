@@ -32,6 +32,6 @@ public class LiferayModuleComponentStateWrapper {
         this.parentTheme = "";
         this.customJspDir = "";
         this.resourcesImporterGroupName = "";
-        themeSettings = new HashMap<String, String>();
+        themeSettings = new HashMap<>();
     }
 }

@@ -65,13 +65,9 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
     public List<? extends FtlVariable> getGlobalVariables(FtlFile file) {
         try {
 
-            List<FtlVariable> result = new ArrayList<FtlVariable>();
-            result.addAll(TemplateVariableProcessorUtil.getGlobalVariables(this, file));
+            List<FtlVariable> result = new ArrayList<FtlVariable>(TemplateVariableProcessorUtil.getGlobalVariables(this, file));
 
-            FtlFile ftlFile = file;
-            if (file.getOriginalFile() != null) {
-                ftlFile = (FtlFile)file.getOriginalFile();
-            }
+            FtlFile ftlFile = (FtlFile) file.getOriginalFile();
 
             final Module module = ModuleUtil.findModuleForPsiElement(ftlFile);
             if (module != null) {
@@ -111,10 +107,7 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
     @Override
     public Map<String, FtlFile> getSpecialFileReferenceValues(@NotNull FtlFile file) {
         try {
-            FtlFile ftlFile = file;
-            if (file.getOriginalFile() != null) {
-                ftlFile = (FtlFile)file.getOriginalFile();
-            }
+            FtlFile ftlFile = (FtlFile) file.getOriginalFile();
 
             Collection<FtlFile> macros = TemplateMacroProcessorUtil.getGlobalMacros(this, ftlFile);
             Map<String, FtlFile> result = new HashMap<String, FtlFile>();
@@ -232,7 +225,7 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
             declaration = xmlFile;
         }
 
-        return Arrays.asList(new CustomFtlVariable(taglibPrefix, declaration, new FtlXmlNamespaceType(descriptor)));
+        return List.of(new CustomFtlVariable(taglibPrefix, declaration, new FtlXmlNamespaceType(descriptor)));
     }
 
     private List<? extends FtlVariable> getTemplateTypeVariables(final FtlFile ftlFile,  @NotNull @NonNls final String taglibPrefix) {
@@ -240,7 +233,7 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
             return Collections.emptyList();
         }
 
-        return Arrays.asList(new CustomFtlVariable(taglibPrefix, ftlFile, new FtlTemplateType(ftlFile)));
+        return List.of(new CustomFtlVariable(taglibPrefix, ftlFile, new FtlTemplateType(ftlFile)));
     }
 
     @NotNull

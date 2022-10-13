@@ -32,9 +32,7 @@ public class LiferayFrontendTokenDefinitionVariableReference extends PsiReferenc
 
     @Override
     public @InspectionMessage @NotNull String getUnresolvedMessagePattern() {
-        String result = CssBundle.message("message.pattern.value.0.not.found", this.getCanonicalText());
-
-        return result;
+        return CssBundle.message("message.pattern.value.0.not.found", this.getCanonicalText());
     }
 
     @Override

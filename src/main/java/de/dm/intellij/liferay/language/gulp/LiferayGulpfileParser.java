@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 public class LiferayGulpfileParser extends FileChangeListenerBase {
 
-    private static Pattern DECLARE_LIFERAY_THEME_TASKS = Pattern.compile("(\\w+)[ ]*=[ ]*require\\(['\"]liferay-theme-tasks['\"]\\)");
+    private static final Pattern DECLARE_LIFERAY_THEME_TASKS = Pattern.compile("(\\w+)[ ]*=[ ]*require\\(['\"]liferay-theme-tasks['\"]\\)");
 
     public static void handleChange(Project project, VirtualFile virtualFile) {
         final Module module = ModuleUtil.findModuleForFile(virtualFile, project);
@@ -50,10 +50,11 @@ public class LiferayGulpfileParser extends FileChangeListenerBase {
 
                                 String pathSrc = "src";
 
-                                try {
-                                    JsonReaderEx jsonReaderEx = new JsonReaderEx(jsonExpression);
+                                try (JsonReaderEx jsonReaderEx = new JsonReaderEx(jsonExpression)) {
                                     jsonReaderEx.setLenient(true);
+
                                     jsonReaderEx.beginObject();
+
                                     while (jsonReaderEx.hasNext()) {
                                         String name = jsonReaderEx.nextName();
                                         if ("pathSrc".equals(name)) {
@@ -62,6 +63,7 @@ public class LiferayGulpfileParser extends FileChangeListenerBase {
                                             jsonReaderEx.skipValue();
                                         }
                                     }
+
                                     jsonReaderEx.endObject();
                                 } catch (JsonParseException e) {
                                     //content is probably not valid JSON, ignore for now.
@@ -80,27 +82,24 @@ public class LiferayGulpfileParser extends FileChangeListenerBase {
                                         final ModifiableRootModel model = modelsProvider.getModuleModifiableModel(module);
 
                                         ApplicationManager.getApplication().runWriteAction(
-                                                new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        ContentEntry[] contentEntries = model.getContentEntries();
-                                                        if (contentEntries.length > 0) {
-                                                            ContentEntry contentEntry = contentEntries[0];
+                                                () -> {
+                                                    ContentEntry[] contentEntries = model.getContentEntries();
+                                                    if (contentEntries.length > 0) {
+                                                        ContentEntry contentEntry = contentEntries[0];
 
-                                                            if (! ApplicationManager.getApplication().isUnitTestMode()) {
-                                                                SourceFolder[] sourceFolders = contentEntry.getSourceFolders();
+                                                        if (! ApplicationManager.getApplication().isUnitTestMode()) {
+                                                            SourceFolder[] sourceFolders = contentEntry.getSourceFolders();
 
-                                                                for (SourceFolder sourceFolder : sourceFolders) {
-                                                                    if (!sourceFolder.isTestSource()) {
-                                                                        contentEntry.removeSourceFolder(sourceFolder);
-                                                                    }
+                                                            for (SourceFolder sourceFolder : sourceFolders) {
+                                                                if (!sourceFolder.isTestSource()) {
+                                                                    contentEntry.removeSourceFolder(sourceFolder);
                                                                 }
                                                             }
-
-                                                            contentEntry.addSourceFolder(sourceRootVirtualFile, false);
                                                         }
-                                                        modelsProvider.commitModuleModifiableModel(model);
+
+                                                        contentEntry.addSourceFolder(sourceRootVirtualFile, false);
                                                     }
+                                                    modelsProvider.commitModuleModifiableModel(model);
                                                 }
                                         );
                                     }

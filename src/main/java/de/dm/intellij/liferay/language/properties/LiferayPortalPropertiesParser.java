@@ -15,7 +15,6 @@ public class LiferayPortalPropertiesParser {
 
         StringBuilder currentComment = new StringBuilder();
 
-        boolean joining = false;
         StringBuilder joinedLines = new StringBuilder();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {

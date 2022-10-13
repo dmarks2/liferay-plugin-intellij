@@ -56,22 +56,22 @@ public class BndCompletionContributor extends CompletionContributor {
 
         extend(CompletionType.BASIC,
             PlatformPatterns.psiElement(BndTokenType.HEADER_NAME).withLanguage(BndLanguage.getInstance()),
-            new CompletionProvider<CompletionParameters>() {
-                @Override
-                public void addCompletions(@NotNull CompletionParameters parameters,
-                                           @NotNull ProcessingContext context,
-                                           @NotNull CompletionResultSet resultSet) {
-                    for (String header : BndHeaderParsers.PARSERS_MAP.keySet()) {
-                        LookupElementBuilder lookupElementBuilder = LookupElementBuilder.create(header).withInsertHandler(HEADER_INSERT_HANDLER);
+                new CompletionProvider<>() {
+                    @Override
+                    public void addCompletions(@NotNull CompletionParameters parameters,
+                                               @NotNull ProcessingContext context,
+                                               @NotNull CompletionResultSet resultSet) {
+                        for (String header : BndHeaderParsers.PARSERS_MAP.keySet()) {
+                            LookupElementBuilder lookupElementBuilder = LookupElementBuilder.create(header).withInsertHandler(HEADER_INSERT_HANDLER);
 
-                        if (BndTypeConstants.BND_TYPES.containsKey(header)) {
-                            lookupElementBuilder = lookupElementBuilder.withTypeText(BndTypeConstants.BND_TYPES.get(header));
+                            if (BndTypeConstants.BND_TYPES.containsKey(header)) {
+                                lookupElementBuilder = lookupElementBuilder.withTypeText(BndTypeConstants.BND_TYPES.get(header));
+                            }
+
+                            resultSet.addElement(lookupElementBuilder);
                         }
-
-                        resultSet.addElement(lookupElementBuilder);
                     }
                 }
-            }
         );
 
     }
@@ -94,13 +94,10 @@ public class BndCompletionContributor extends CompletionContributor {
         return psiElementCapture.withSuperParent(3, headerElement.withName(name));
     }
 
-    private static final InsertHandler<LookupElement> HEADER_INSERT_HANDLER = new InsertHandler<LookupElement>() {
-        @Override
-        public void handleInsert(@NotNull InsertionContext context, @NotNull LookupElement item) {
-            context.setAddCompletionChar(false);
-            EditorModificationUtil.insertStringAtCaret(context.getEditor(), ": ");
-            context.commitDocument();
-        }
+    private static final InsertHandler<LookupElement> HEADER_INSERT_HANDLER = (context, item) -> {
+        context.setAddCompletionChar(false);
+        EditorModificationUtil.insertStringAtCaret(context.getEditor(), ": ");
+        context.commitDocument();
     };
 
 

@@ -1,29 +1,15 @@
 package de.dm.intellij.liferay.language.jsp;
 
-import com.intellij.codeInsight.completion.CompletionContributor;
-import com.intellij.codeInsight.completion.CompletionParameters;
-import com.intellij.codeInsight.completion.CompletionProvider;
-import com.intellij.codeInsight.completion.CompletionResultSet;
-import com.intellij.codeInsight.completion.CompletionType;
+import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.patterns.PatternCondition;
-import com.intellij.patterns.PlatformPatterns;
 import com.intellij.patterns.PsiElementPattern;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ProcessingContext;
 import de.dm.intellij.liferay.util.Icons;
 import de.dm.intellij.liferay.util.LiferayTaglibs;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.AbstractMap;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 public abstract class AbstractLiferayTaglibSimpleAttributesCompletionContributor extends CompletionContributor {
@@ -279,7 +265,7 @@ public abstract class AbstractLiferayTaglibSimpleAttributesCompletionContributor
     protected abstract PsiElementPattern.Capture<PsiElement> getTaglibPattern(Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> taglibMap);
 
     private static CompletionProvider<CompletionParameters> getCompletionProvider(String[] values, String typeName) {
-        return new CompletionProvider<CompletionParameters>() {
+        return new CompletionProvider<>() {
 
             @Override
             protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {

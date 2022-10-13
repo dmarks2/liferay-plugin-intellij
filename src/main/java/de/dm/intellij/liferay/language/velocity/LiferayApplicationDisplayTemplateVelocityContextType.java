@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.velocity;
 
+import com.intellij.codeInsight.template.TemplateActionContext;
 import com.intellij.codeInsight.template.TemplateContextType;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.psi.PsiFile;
@@ -12,16 +13,14 @@ import org.jetbrains.annotations.Nullable;
 public class LiferayApplicationDisplayTemplateVelocityContextType extends TemplateContextType {
 
     protected LiferayApplicationDisplayTemplateVelocityContextType() {
-        super("LIFERAY APPLICATION DISPLAY TEMPLATES VELOCITY", "Liferay Application Display Templates (Velocity)");
+        super("LIFERAY APPLICATION DISPLAY TEMPLATES VELOCITY", "Liferay application display templates (velocity)");
     }
 
     @Override
-    public boolean isInContext(@NotNull PsiFile file, int offset) {
-        PsiFile originalFile = file;
-        if (file.getOriginalFile() != null) {
-            originalFile = file.getOriginalFile();
-        }
-        return VtlFileType.INSTANCE.equals(file.getFileType()) && LiferayFileUtil.isApplicationDisplayTemplateFile(originalFile);
+    public boolean isInContext(@NotNull TemplateActionContext templateActionContext) {
+        PsiFile originalFile = templateActionContext.getFile().getOriginalFile();
+
+        return VtlFileType.INSTANCE.equals(templateActionContext.getFile().getFileType()) && LiferayFileUtil.isApplicationDisplayTemplateFile(originalFile);
     }
 
     @Nullable

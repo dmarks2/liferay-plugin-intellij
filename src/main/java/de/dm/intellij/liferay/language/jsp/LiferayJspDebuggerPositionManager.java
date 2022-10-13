@@ -1,6 +1,6 @@
 package de.dm.intellij.liferay.language.jsp;
 
-import com.intellij.debugger.DebuggerBundle;
+import com.intellij.debugger.JavaDebuggerBundle;
 import com.intellij.debugger.NoDataException;
 import com.intellij.debugger.SourcePosition;
 import com.intellij.debugger.engine.DebugProcess;
@@ -14,11 +14,7 @@ import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import com.intellij.openapi.util.Computable;
 import com.intellij.psi.PsiFile;
-import com.sun.jdi.AbsentInformationException;
-import com.sun.jdi.ClassNotPreparedException;
-import com.sun.jdi.Location;
-import com.sun.jdi.ObjectCollectedException;
-import com.sun.jdi.ReferenceType;
+import com.sun.jdi.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -50,13 +46,13 @@ public class LiferayJspDebuggerPositionManager extends JSR45PositionManager<Java
     private List<Location> locationsOfClassAt(final ReferenceType type, final SourcePosition position) throws NoDataException {
         checkSourcePositionFileType(position);
 
-        return ApplicationManager.getApplication().runReadAction(new Computable<List<Location>>() {
+        return ApplicationManager.getApplication().runReadAction(new Computable<>() {
             @Override
             public List<Location> compute() {
                 try {
                     final List<String> relativePaths = getRelativeSourePathsByType(type);
 
-                    LiferayJspDebuggerSourceFinderAdapter liferaySourceFinderAdapter = (LiferayJspDebuggerSourceFinderAdapter)mySourcesFinder;
+                    LiferayJspDebuggerSourceFinderAdapter liferaySourceFinderAdapter = (LiferayJspDebuggerSourceFinderAdapter) mySourcesFinder;
 
                     for (String relativePath : relativePaths) {
                         final Collection<PsiFile> files = liferaySourceFinderAdapter.findSourceFiles(relativePath, myDebugProcess.getProject(), myScope);
@@ -66,13 +62,10 @@ public class LiferayJspDebuggerPositionManager extends JSR45PositionManager<Java
                             }
                         }
                     }
-                }
-                catch(ObjectCollectedException | ClassNotPreparedException | AbsentInformationException ignored) {
-                }
-                catch (InternalError ignored) {
-                    //TODO moved to JavaDebuggerBundle in 2020.1
+                } catch (ObjectCollectedException | ClassNotPreparedException | AbsentInformationException ignored) {
+                } catch (InternalError ignored) {
                     myDebugProcess.printToConsole(
-                        DebuggerBundle.message("internal.error.locations.of.line", type.name()));
+                            JavaDebuggerBundle.message("internal.error.locations.of.line", type.name()));
                 }
                 return null;
             }
@@ -81,8 +74,8 @@ public class LiferayJspDebuggerPositionManager extends JSR45PositionManager<Java
             // This is needed because some servers (e.g. WebSphere) put not exact file name such as 'A.jsp  '
             private String getSourceName(final String name, final ReferenceType type) throws AbsentInformationException {
                 return type.sourceNames(getStratumId()).stream()
-                    .filter(sourceNameFromType -> sourceNameFromType.contains(name))
-                    .findFirst().orElse(name);
+                        .filter(sourceNameFromType -> sourceNameFromType.contains(name))
+                        .findFirst().orElse(name);
             }
         });
     }

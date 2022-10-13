@@ -1,11 +1,11 @@
 package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.debugger.engine.SourcesFinder;
-import com.intellij.javaee.web.deployment.JspDeploymentManager;
+import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.javaee.facet.JavaeeFacet;
+import com.intellij.javaee.web.deployment.JspDeploymentManager;
 import com.intellij.openapi.fileTypes.FileNameMatcher;
 import com.intellij.openapi.fileTypes.FileTypeManager;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.ProjectRootManager;
@@ -80,15 +80,15 @@ public class LiferayJspDebuggerSourceFinderAdapter implements SourcesFinder<Java
     }
 
     private boolean isJava(String relPath) {
-        Iterator var2 = FileTypeManager.getInstance().getAssociations(StdFileTypes.JAVA).iterator();
+        Iterator<FileNameMatcher> iterator = FileTypeManager.getInstance().getAssociations(JavaFileType.INSTANCE).iterator();
 
         FileNameMatcher matcher;
         do {
-            if (!var2.hasNext()) {
+            if (!iterator.hasNext()) {
                 return false;
             }
 
-            matcher = (FileNameMatcher)var2.next();
+            matcher = iterator.next();
         } while(!matcher.acceptsCharSequence(relPath));
 
         return true;

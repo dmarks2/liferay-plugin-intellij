@@ -6,7 +6,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
-import de.dm.intellij.liferay.language.jsp.LiferayJspWebContentRootListener;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 

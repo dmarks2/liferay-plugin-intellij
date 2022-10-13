@@ -2,7 +2,6 @@ package de.dm.intellij.liferay.language.sql;
 
 import com.intellij.lang.injection.MultiHostInjector;
 import com.intellij.lang.injection.MultiHostRegistrar;
-import com.intellij.lang.javascript.JavascriptLanguage;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.Trinity;
 import com.intellij.psi.ElementManipulators;

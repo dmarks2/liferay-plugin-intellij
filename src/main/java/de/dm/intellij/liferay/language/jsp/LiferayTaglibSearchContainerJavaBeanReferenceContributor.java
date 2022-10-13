@@ -14,14 +14,14 @@ public class LiferayTaglibSearchContainerJavaBeanReferenceContributor extends Ab
 
     static {
         TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
-                new AbstractMap.SimpleEntry<String, String>("search-container-column-text", "property"),
-                new AbstractMap.SimpleEntry<String, String>("search-container-column-text", "name"),
-                new AbstractMap.SimpleEntry<String, String>("search-container-column-text", "orderableProperty"),
-                new AbstractMap.SimpleEntry<String, String>("search-container-column-date", "property"),
-                new AbstractMap.SimpleEntry<String, String>("search-container-column-status", "property"),
-                new AbstractMap.SimpleEntry<String, String>("search-container-column-user", "property"),
-                new AbstractMap.SimpleEntry<String, String>("search-container-row", "keyProperty"),
-                new AbstractMap.SimpleEntry<String, String>("search-container-row", "rowIdProperty")
+                new AbstractMap.SimpleEntry<>("search-container-column-text", "property"),
+                new AbstractMap.SimpleEntry<>("search-container-column-text", "name"),
+                new AbstractMap.SimpleEntry<>("search-container-column-text", "orderableProperty"),
+                new AbstractMap.SimpleEntry<>("search-container-column-date", "property"),
+                new AbstractMap.SimpleEntry<>("search-container-column-status", "property"),
+                new AbstractMap.SimpleEntry<>("search-container-column-user", "property"),
+                new AbstractMap.SimpleEntry<>("search-container-row", "keyProperty"),
+                new AbstractMap.SimpleEntry<>("search-container-row", "rowIdProperty")
         ));
     }
 

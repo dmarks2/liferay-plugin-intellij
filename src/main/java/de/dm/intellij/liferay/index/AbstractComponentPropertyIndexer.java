@@ -75,9 +75,7 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
             return null;
         }
 
-        PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
-
-        return psiJavaFile;
+        return (PsiJavaFile) psiFile;
     }
 
     @NotNull

@@ -91,12 +91,7 @@ public class LiferayCompassSassExtension extends SassExtension {
 
     protected void stopActivity(@NotNull final Module module) {
         ApplicationManager.getApplication().invokeLater(
-            new Runnable() {
-                @Override
-                public void run() {
-                    ProjectUtils.removeLibrary(module, COMPASS_LIBRARY_NAME);
-                }
-            }
+                () -> ProjectUtils.removeLibrary(module, COMPASS_LIBRARY_NAME)
         );
     }
 }

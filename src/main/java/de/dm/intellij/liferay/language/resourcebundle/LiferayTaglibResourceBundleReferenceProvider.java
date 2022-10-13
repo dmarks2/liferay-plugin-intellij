@@ -9,10 +9,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class LiferayTaglibResourceBundleReferenceProvider extends PropertiesReferenceProvider {
 
-    public LiferayTaglibResourceBundleReferenceProvider() {
-        super();
-    }
-
     public LiferayTaglibResourceBundleReferenceProvider(boolean defaultSoft) {
         super(defaultSoft);
     }

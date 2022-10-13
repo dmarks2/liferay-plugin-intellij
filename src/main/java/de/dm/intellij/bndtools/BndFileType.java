@@ -41,7 +41,7 @@ public class BndFileType extends LanguageFileType {
     }
 
     @Nullable
-    public String getCharset(@NotNull VirtualFile file, @NotNull byte[] content) {
+    public String getCharset(@NotNull VirtualFile file, byte @NotNull [] content) {
         return null;
     }
 

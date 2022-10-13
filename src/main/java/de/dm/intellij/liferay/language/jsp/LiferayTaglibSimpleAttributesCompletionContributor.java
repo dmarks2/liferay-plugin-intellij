@@ -20,7 +20,7 @@ public class LiferayTaglibSimpleAttributesCompletionContributor extends Abstract
 
     protected PsiElementPattern.Capture<PsiElement> getTaglibPattern(Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> taglibMap) {
         return
-                PlatformPatterns.psiElement().with(new PatternCondition<PsiElement>("liferayTaglib") {
+                PlatformPatterns.psiElement().with(new PatternCondition<>("liferayTaglib") {
                     @Override
                     public boolean accepts(@NotNull PsiElement psiElement, ProcessingContext context) {
                         XmlAttributeValue xmlAttributeValue = PsiTreeUtil.getParentOfType(psiElement, XmlAttributeValue.class);

@@ -8,38 +8,15 @@ import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
-import com.intellij.openapi.roots.LibraryOrderEntry;
-import com.intellij.openapi.roots.ModifiableModelsProvider;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.roots.ModuleRootManager;
-import com.intellij.openapi.roots.OrderRootType;
-import com.intellij.openapi.roots.ProjectRootManager;
+import com.intellij.openapi.roots.*;
 import com.intellij.openapi.roots.impl.OrderEntryUtil;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
 import com.intellij.openapi.roots.libraries.LibraryTablesRegistrar;
-import com.intellij.openapi.startup.StartupManager;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.WindowManager;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiClassType;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiField;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiImportList;
-import com.intellij.psi.PsiImportStatement;
-import com.intellij.psi.PsiImportStaticStatement;
-import com.intellij.psi.PsiJavaCodeReferenceElement;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiModifier;
-import com.intellij.psi.PsiModifierList;
-import com.intellij.psi.PsiPackage;
-import com.intellij.psi.PsiPackageStatement;
-import com.intellij.psi.PsiParameter;
-import com.intellij.psi.PsiParameterList;
-import com.intellij.psi.PsiType;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.JavaConstantExpressionEvaluator;
 import com.intellij.psi.impl.compiled.ClsFieldImpl;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
@@ -54,7 +31,7 @@ import com.intellij.util.Processor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.Window;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -62,27 +39,6 @@ import java.util.List;
 public class ProjectUtils {
 
     public static final String REFERENCE_PLACEHOLDER = "+";
-
-    public static void runWhenInitialized(final Project project, final Runnable runnable) {
-        if (project.isDisposed()) return;
-
-        if (isNoBackgroundMode()) {
-            runnable.run();
-            return;
-        }
-
-        if (!project.isInitialized()) {
-            StartupManager.getInstance(project).registerPostStartupActivity(DisposeAwareRunnable.create(runnable, project));
-            return;
-        }
-
-        runDumbAware(project, runnable);
-    }
-
-    public static boolean isNoBackgroundMode() {
-        return (ApplicationManager.getApplication().isUnitTestMode()
-            || ApplicationManager.getApplication().isHeadlessEnvironment());
-    }
 
     public static void runDumbAware(final Project project, final Runnable r) {
         if (DumbService.isDumbAware(r)) {
@@ -100,37 +56,16 @@ public class ProjectUtils {
         }
     }
 
-    public static Collection<Library> findLibrariesByName(final String name, Project project) {
-        final Collection<Library> result = new ArrayList<Library>();
-
-        ProjectRootManager.getInstance(project).orderEntries().forEachLibrary(
-            new Processor<Library>() {
-                @Override
-                public boolean process(Library library) {
-                    if (library.getName() != null && library.getName().contains(name)) {
-                        result.add(library);
-                    }
-                    return true;
-                }
-            }
-        );
-
-        return result;
-    }
-
     public static Collection<Library> findLibrariesByName(final String name, Module module) {
         final Collection<Library> result = new ArrayList<Library>();
 
         ModuleRootManager.getInstance(module).orderEntries().forEachLibrary(
-            new Processor<Library>() {
-                @Override
-                public boolean process(Library library) {
+                library -> {
                     if (library.getName() != null && library.getName().contains(name)) {
                         result.add(library);
                     }
                     return true;
                 }
-            }
         );
 
         return result;
@@ -158,9 +93,7 @@ public class ProjectUtils {
 
             if (libraryEntry != null) {
                 ApplicationManager.getApplication().runWriteAction(
-                    new Runnable() {
-                        @Override
-                        public void run() {
+                        () -> {
                             Library library = libraryEntry.getLibrary();
                             if (library != null) {
                                 LibraryTable table = library.getTable();
@@ -173,16 +106,10 @@ public class ProjectUtils {
                                 modelsProvider.disposeModuleModifiableModel(model);
                             }
                         }
-                    }
                 );
             } else {
                 ApplicationManager.getApplication().runWriteAction(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            modelsProvider.disposeModuleModifiableModel(model);
-                        }
-                    }
+                        () -> modelsProvider.disposeModuleModifiableModel(model)
                 );
             }
         }
@@ -210,9 +137,7 @@ public class ProjectUtils {
             final ModifiableRootModel model = modelsProvider.getModuleModifiableModel(module);
             final LibraryOrderEntry libraryEntry = getLibraryIntern(name, model);
             ApplicationManager.getApplication().runWriteAction(
-                new Runnable() {
-                    @Override
-                    public void run() {
+                    () -> {
                         if (libraryEntry != null) {
                             Library library = libraryEntry.getLibrary();
                             if (library != null) {
@@ -230,21 +155,8 @@ public class ProjectUtils {
 
                         modelsProvider.commitModuleModifiableModel(model);
                     }
-                }
             );
         }
-    }
-
-    public static Project getActiveProject() {
-        Project[] projects = ProjectManager.getInstance().getOpenProjects();
-        Project activeProject = null;
-        for (Project project : projects) {
-            Window window = WindowManager.getInstance().suggestParentWindow(project);
-            if (window != null && window.isActive()) {
-                activeProject = project;
-            }
-        }
-        return activeProject;
     }
 
     public static PsiClass getClassByName(Project project, String className, PsiElement context) {
@@ -252,9 +164,8 @@ public class ProjectUtils {
 
         if (psiType instanceof PsiClassType) {
             PsiClassType psiClassType = (PsiClassType) psiType;
-            PsiClass psiClass = psiClassType.resolve();
 
-            return psiClass;
+            return psiClassType.resolve();
         }
 
         return null;

@@ -43,10 +43,8 @@ public class StaticFieldGetterFieldNameGotoDeclarationHandler extends GotoDeclar
                             for (PsiField psiField : publicStaticFields) {
                                 String name = psiField.getName();
 
-                                if (name != null) {
-                                    if (name.equals(text)) {
-                                        return psiField;
-                                    }
+                                if (name.equals(text)) {
+                                    return psiField;
                                 }
                             }
                         }

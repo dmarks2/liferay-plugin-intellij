@@ -149,7 +149,7 @@ public class LiferayTaglibStrictQuoteEscapingInspection extends XmlSuppressableI
                     psiDocumentManager.doPostponedOperationsAndUnblockDocument(document);
 
                     String oldText = xmlAttributeValue.getText();
-                    String newText = "\'" + StringUtil.unquoteString(oldText, '\"') + "\'";
+                    String newText = "'" + StringUtil.unquoteString(oldText, '\"') + "'";
 
                     document.replaceString(range.getStartOffset(), range.getEndOffset(), newText);
                     psiDocumentManager.commitDocument(document);

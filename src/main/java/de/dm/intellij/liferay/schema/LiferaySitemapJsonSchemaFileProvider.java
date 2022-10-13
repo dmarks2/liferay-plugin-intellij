@@ -12,11 +12,9 @@ import java.net.URL;
 
 public class LiferaySitemapJsonSchemaFileProvider implements JsonSchemaFileProvider {
 
-    @NotNull private final Project project;
     @Nullable private final VirtualFile schemaFile;
 
-    public LiferaySitemapJsonSchemaFileProvider(@NotNull Project project) {
-        this.project = project;
+    public LiferaySitemapJsonSchemaFileProvider() {
         this.schemaFile = getResourceFile();
     }
 

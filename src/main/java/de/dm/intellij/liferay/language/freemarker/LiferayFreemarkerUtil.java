@@ -65,7 +65,7 @@ public class LiferayFreemarkerUtil {
     public static PsiElementPattern.Capture<PsiElement> getFtlStringLiteralFilter(Predicate<PsiElement> condition) {
         return PlatformPatterns.psiElement()
                 .withParent(PlatformPatterns.psiElement(FtlStringLiteral.class))
-                .with(new PatternCondition<PsiElement>("pattern") {
+                .with(new PatternCondition<>("pattern") {
 
                     @Override
                     public boolean accepts(@NotNull PsiElement psiElement, ProcessingContext context) {
@@ -227,9 +227,8 @@ public class LiferayFreemarkerUtil {
 
         for (PsiField psiField : publicStaticFields) {
             String name = psiField.getName();
-            if (name != null) {
-                result.addElement(LookupElementBuilder.create(name).withPsiElement(psiField).withIcon(Icons.LIFERAY_ICON));
-            }
+
+            result.addElement(LookupElementBuilder.create(name).withPsiElement(psiField).withIcon(Icons.LIFERAY_ICON));
         }
     }
 

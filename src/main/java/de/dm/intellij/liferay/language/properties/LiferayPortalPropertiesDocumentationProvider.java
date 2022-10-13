@@ -9,7 +9,6 @@ import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.markup.TextAttributes;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.patterns.PlatformPatterns;
 import com.intellij.patterns.StandardPatterns;
@@ -23,7 +22,7 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.AbstractMap;
@@ -47,8 +46,6 @@ public class LiferayPortalPropertiesDocumentationProvider extends AbstractDocume
                 ).accepts(element)) {
             PsiFile containingFile = element.getContainingFile();
             containingFile = containingFile.getOriginalFile();
-
-            Project project = containingFile.getProject();
 
             final Module module = ModuleUtil.findModuleForPsiElement(containingFile);
             if (module == null) {

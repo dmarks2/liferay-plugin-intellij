@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.freemarker;
 
+import com.intellij.codeInsight.template.TemplateActionContext;
 import com.intellij.codeInsight.template.TemplateContextType;
 import com.intellij.freemarker.psi.files.FtlFileType;
 import com.intellij.freemarker.psi.files.FtlSyntaxHighlighter;
@@ -12,16 +13,14 @@ import org.jetbrains.annotations.Nullable;
 public class LiferayApplicationDisplayTemplateFreemarkerContextType extends TemplateContextType {
 
     protected LiferayApplicationDisplayTemplateFreemarkerContextType() {
-        super("LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER", "Liferay Application Display Templates (Freemarker)");
+        super("LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER", "Liferay application display templates (freemarker)");
     }
 
     @Override
-    public boolean isInContext(@NotNull PsiFile file, int offset) {
-        PsiFile originalFile = file;
-        if (file.getOriginalFile() != null) {
-            originalFile = file.getOriginalFile();
-        }
-        return FtlFileType.INSTANCE.equals(file.getFileType()) && LiferayFileUtil.isApplicationDisplayTemplateFile(originalFile);
+    public boolean isInContext(@NotNull TemplateActionContext templateActionContext) {
+        PsiFile originalFile = templateActionContext.getFile().getOriginalFile();
+
+        return FtlFileType.INSTANCE.equals(templateActionContext.getFile().getFileType()) && LiferayFileUtil.isApplicationDisplayTemplateFile(originalFile);
     }
 
     @Nullable

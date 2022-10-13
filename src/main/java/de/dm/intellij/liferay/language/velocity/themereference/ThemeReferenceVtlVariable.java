@@ -3,7 +3,6 @@ package de.dm.intellij.liferay.language.velocity.themereference;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.velocity.psi.VtlLightVariable;
@@ -44,9 +43,7 @@ public class ThemeReferenceVtlVariable extends VtlLightVariable {
             if (module != null) {
                 VirtualFile virtualFile = LiferayFileUtil.getThemeSettingsDirectory(module, themeSetting);
                 if (virtualFile != null) {
-                    PsiDirectory psiDirectory = psiFile.getContainingFile().getManager().findDirectory(virtualFile);
-
-                    return psiDirectory;
+                    return psiFile.getContainingFile().getManager().findDirectory(virtualFile);
                 }
             }
         }

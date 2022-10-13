@@ -29,26 +29,26 @@ public class ObjectUtilClassNameCompletionContributor extends CompletionContribu
         extend(
             CompletionType.BASIC,
             ELEMENT_FILTER,
-            new CompletionProvider<CompletionParameters>() {
-                @Override
-                protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result) {
-                    PsiElement originalPosition = parameters.getOriginalPosition();
-                    if (originalPosition != null) {
-                        PsiFile psiFile = originalPosition.getContainingFile();
-                        psiFile = psiFile.getOriginalFile();
+                new CompletionProvider<>() {
+                    @Override
+                    protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result) {
+                        PsiElement originalPosition = parameters.getOriginalPosition();
+                        if (originalPosition != null) {
+                            PsiFile psiFile = originalPosition.getContainingFile();
+                            psiFile = psiFile.getOriginalFile();
 
-                        Module module = ModuleUtil.findModuleForFile(psiFile);
+                            Module module = ModuleUtil.findModuleForFile(psiFile);
 
-                        if (isObjectUtilCall(originalPosition)) {
-                            PsiClass objectClass = ProjectUtils.getClassByName(originalPosition.getProject(), "java.lang.Object", originalPosition);
+                            if (isObjectUtilCall(originalPosition)) {
+                                PsiClass objectClass = ProjectUtils.getClassByName(originalPosition.getProject(), "java.lang.Object", originalPosition);
 
-                            LiferayFreemarkerUtil.addClassInheritorsLookup(objectClass, result, module);
+                                LiferayFreemarkerUtil.addClassInheritorsLookup(objectClass, result, module);
 
-                            result.stopHere();
+                                result.stopHere();
+                            }
                         }
                     }
                 }
-            }
         );
     }
 

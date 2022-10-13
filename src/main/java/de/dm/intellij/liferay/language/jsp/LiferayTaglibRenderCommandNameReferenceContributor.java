@@ -68,80 +68,80 @@ public class LiferayTaglibRenderCommandNameReferenceContributor extends Abstract
                     String value = xmlAttributeValue.getValue();
                     if (value != null) {
                         return new PsiReference[]{
-                            new PsiReferenceBase.Poly<XmlAttributeValue>((XmlAttributeValue) element, ElementManipulators.getValueTextRange(element), true) {
-                                @NotNull
-                                @Override
-                                public ResolveResult[] multiResolve(boolean incompleteCode) {
-                                    Project project = getElement().getProject();
+                                new PsiReferenceBase.Poly<>((XmlAttributeValue) element, ElementManipulators.getValueTextRange(element), true) {
+                                    @NotNull
+                                    @Override
+                                    public ResolveResult[] multiResolve(boolean incompleteCode) {
+                                        Project project = getElement().getProject();
 
-                                    XmlTag parentTag = PsiTreeUtil.getParentOfType(getElement(), XmlTag.class);
-                                    if (parentTag != null) {
-                                        String localName = parentTag.getLocalName();
+                                        XmlTag parentTag = PsiTreeUtil.getParentOfType(getElement(), XmlTag.class);
+                                        if (parentTag != null) {
+                                            String localName = parentTag.getLocalName();
 
-                                        String renderCommandName = null;
-                                        Collection<String> portletNames = Collections.emptyList();
+                                            String renderCommandName = null;
+                                            Collection<String> portletNames = Collections.emptyList();
 
-                                        if ("param".equals(localName)) {
-                                            String paramName = parentTag.getAttributeValue("name");
-                                            if (RENDER_COMMAND_NAME.equals(paramName)) {
-                                                renderCommandName = getElement().getValue();
-                                                portletNames = getPortletNamesFromParentTag(parentTag);
+                                            if ("param".equals(localName)) {
+                                                String paramName = parentTag.getAttributeValue("name");
+                                                if (RENDER_COMMAND_NAME.equals(paramName)) {
+                                                    renderCommandName = getElement().getValue();
+                                                    portletNames = getPortletNamesFromParentTag(parentTag);
+                                                }
+                                            }
+
+                                            if (renderCommandName != null && (!(portletNames.isEmpty()))) {
+                                                List<PsiFile> portletClasses = new ArrayList<>();
+
+                                                for (String portletName : portletNames) {
+                                                    portletClasses.addAll(RenderCommandIndex.getPortletClasses(project, portletName, renderCommandName, GlobalSearchScope.allScope(project)));
+                                                }
+
+                                                return PsiElementResolveResult.createResults(portletClasses);
                                             }
                                         }
 
-                                        if (renderCommandName != null && (! (portletNames.isEmpty()) ) ) {
-                                            List<PsiFile> portletClasses = new ArrayList<>();
-
-                                            for (String portletName : portletNames) {
-                                                portletClasses.addAll(RenderCommandIndex.getPortletClasses(project, portletName, renderCommandName, GlobalSearchScope.allScope(project)));
-                                            }
-
-                                            return PsiElementResolveResult.createResults(portletClasses);
-                                        }
+                                        return new ResolveResult[0];
                                     }
 
-                                    return new ResolveResult[0];
-                                }
+                                    @NotNull
+                                    @Override
+                                    public Object[] getVariants() {
+                                        List<Object> result = new ArrayList<Object>();
 
-                                @NotNull
-                                @Override
-                                public Object[] getVariants() {
-                                    List<Object> result = new ArrayList<Object>();
+                                        Project project = getElement().getProject();
 
-                                    Project project = getElement().getProject();
+                                        XmlTag parentTag = PsiTreeUtil.getParentOfType(getElement(), XmlTag.class);
+                                        if (parentTag != null) {
+                                            String localName = parentTag.getLocalName();
 
-                                    XmlTag parentTag = PsiTreeUtil.getParentOfType(getElement(), XmlTag.class);
-                                    if (parentTag != null) {
-                                        String localName = parentTag.getLocalName();
+                                            Collection<String> portletNames = Collections.emptyList();
 
-                                        Collection<String> portletNames = Collections.emptyList();
+                                            if ("param".equals(localName)) {
+                                                portletNames = getPortletNamesFromParentTag(parentTag);
+                                            }
 
-                                        if ("param".equals(localName)) {
-                                            portletNames = getPortletNamesFromParentTag(parentTag);
-                                        }
+                                            if (!(portletNames.isEmpty())) {
+                                                for (String portletName : portletNames) {
+                                                    List<String> renderCommands = RenderCommandIndex.getRenderCommands(portletName, project, GlobalSearchScope.allScope(project));
+                                                    Set<String> distinctRenderCommands = new TreeSet<>(renderCommands);
 
-                                        if (! (portletNames.isEmpty()) ) {
-                                            for (String portletName : portletNames) {
-                                                List<String> renderCommands = RenderCommandIndex.getRenderCommands(portletName, project, GlobalSearchScope.allScope(project));
-                                                Set<String> distinctRenderCommands = new TreeSet<>(renderCommands);
+                                                    for (String renderCommand : distinctRenderCommands) {
+                                                        List<PsiFile> portletClasses = RenderCommandIndex.getPortletClasses(project, portletName, renderCommand, GlobalSearchScope.allScope(project));
+                                                        if (portletClasses.size() > 0) {
+                                                            result.add(
+                                                                    LookupElementBuilder.create(renderCommand).
+                                                                            withIcon(Icons.LIFERAY_ICON)
+                                                            );
 
-                                                for (String renderCommand : distinctRenderCommands) {
-                                                    List<PsiFile> portletClasses = RenderCommandIndex.getPortletClasses(project, portletName, renderCommand, GlobalSearchScope.allScope(project));
-                                                    if (portletClasses.size() > 0) {
-                                                        result.add(
-                                                            LookupElementBuilder.create(renderCommand).
-                                                                withIcon(Icons.LIFERAY_ICON)
-                                                        );
-
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
-                                    }
 
-                                    return result.toArray(new Object[result.size()]);
+                                        return result.toArray(new Object[result.size()]);
+                                    }
                                 }
-                            }
                         };
                     }
                 }

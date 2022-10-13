@@ -6,16 +6,11 @@ import org.jdom.Element;
 import org.jetbrains.idea.maven.importing.MavenImporter;
 import org.jetbrains.idea.maven.importing.MavenRootModelAdapter;
 import org.jetbrains.idea.maven.model.MavenPlugin;
-import org.jetbrains.idea.maven.project.MavenProject;
-import org.jetbrains.idea.maven.project.MavenProjectChanges;
-import org.jetbrains.idea.maven.project.MavenProjectsProcessorTask;
-import org.jetbrains.idea.maven.project.MavenProjectsTree;
-import org.jetbrains.idea.maven.project.SupportedRequestType;
+import org.jetbrains.idea.maven.project.*;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * A Maven Importer which resolves the Liferay Home directory if the bundle-support plugin is present and will "exclude" the bundles folder from indexing in IntelliJ IDEA

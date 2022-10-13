@@ -3,10 +3,7 @@ package de.dm.intellij.liferay.language;
 import com.intellij.json.psi.JsonFile;
 import com.intellij.json.psi.JsonObject;
 import com.intellij.json.psi.JsonProperty;
-import com.intellij.psi.PsiFile;
 import de.dm.intellij.liferay.util.LiferayFileUtil;
-
-import java.util.List;
 
 public class TemplateVariableJsonSchema_2_0_Processor implements TemplateVariableJsonSchemaProcessor {
 

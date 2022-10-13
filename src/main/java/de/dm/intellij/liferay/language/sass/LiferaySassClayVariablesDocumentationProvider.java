@@ -5,15 +5,12 @@ import com.intellij.lang.documentation.DocumentationMarkup;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.patterns.PlatformPatterns;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.plugins.scss.psi.SCSSElementGenerator;
 import org.jetbrains.plugins.scss.psi.SassScssElement;
 import org.jetbrains.plugins.scss.psi.SassScssVariableDeclaration;
-import org.jetbrains.plugins.scss.psi.SassScssVariableImpl;
 
 /** see https://github.com/pat270/clay-paver/blob/v2-dev/views/partials/functions/printInputs.ejs **/
 public class LiferaySassClayVariablesDocumentationProvider extends AbstractDocumentationProvider {
@@ -70,17 +67,4 @@ public class LiferaySassClayVariablesDocumentationProvider extends AbstractDocum
         return super.getDocumentationElementForLookupItem(psiManager, object, element);
     }
 
-
-
-    private static String getLocationString(PsiElement element) {
-        PsiFile file = element.getContainingFile();
-        return file != null ? " [" + file.getName() + "]" : "";
-    }
-
-    @NotNull
-    private static String renderPropertyValue(SassScssVariableImpl variable) {
-        String raw = variable.getName();
-
-        return StringUtil.escapeXmlEntities(raw);
-    }
 }
