@@ -57,6 +57,8 @@ Clay SCSS Variables documentation
 
 Some Clay SCSS variable declarations are provided with a Quick Documentation (Ctrl-Q).
 
+![Clay variables](clay_variables.png "Clay variables")
+
 *This feature works in IntelliJ Ultimate Edition only.*
 
 
