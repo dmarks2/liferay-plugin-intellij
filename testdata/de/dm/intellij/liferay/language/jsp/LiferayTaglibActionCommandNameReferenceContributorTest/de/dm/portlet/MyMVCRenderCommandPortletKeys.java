@@ -7,10 +7,12 @@ import org.osgi.service.component.annotations.Component;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import de.dm.portlet.PortletKeys;
+
 @Component(
     immediate = true,
     property = {
-        "javax.portlet.name=de_dm_portlet_MyJspPortletName",
+        "javax.portlet.name=" + PortletKeys.MY_PORTLET_NAME,
         "mvc.command.name=/my/render"
     },
     service = com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand.class

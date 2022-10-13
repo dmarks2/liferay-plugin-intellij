@@ -42,13 +42,13 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
 
     static {
         TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_JAVAX_PORTLET, Arrays.asList(
-            new AbstractMap.SimpleEntry<>("actionURL", "name"),
-            new AbstractMap.SimpleEntry<>("param", "value")
+                new AbstractMap.SimpleEntry<>("actionURL", "name"),
+                new AbstractMap.SimpleEntry<>("param", "value")
         ));
 
         TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET, Arrays.asList(
-            new AbstractMap.SimpleEntry<>("actionURL", "name"),
-            new AbstractMap.SimpleEntry<>("param", "value")
+                new AbstractMap.SimpleEntry<>("actionURL", "name"),
+                new AbstractMap.SimpleEntry<>("param", "value")
         ));
     }
 
@@ -61,19 +61,16 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
     @Override
     protected PsiReferenceProvider getReferenceProvider() {
         return new PsiReferenceProvider() {
-            @NotNull
             @Override
-            public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+            public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
                 if (element instanceof XmlAttributeValue) {
                     XmlAttributeValue xmlAttributeValue = (XmlAttributeValue)element;
 
                     String value = xmlAttributeValue.getValue();
-                    if (value != null) {
-                        return new PsiReference[]{
-                            new PsiReferenceBase.Poly<XmlAttributeValue>((XmlAttributeValue) element, ElementManipulators.getValueTextRange(element), true) {
-                                @NotNull
+                    return new PsiReference[]{
+                            new PsiReferenceBase.Poly<>((XmlAttributeValue) element, ElementManipulators.getValueTextRange(element), true) {
                                 @Override
-                                public ResolveResult[] multiResolve(boolean incompleteCode) {
+                                public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
                                     Project project = getElement().getProject();
 
                                     XmlTag parentTag = PsiTreeUtil.getParentOfType(getElement(), XmlTag.class);
@@ -98,7 +95,7 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
                                             }
                                         }
 
-                                        if (actionName != null && (! (portletNames.isEmpty()) ) ) {
+                                        if (actionName != null && (!(portletNames.isEmpty()))) {
                                             List<PsiFile> portletClasses = new ArrayList<>();
 
                                             for (String portletName : portletNames) {
@@ -112,9 +109,8 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
                                     return new ResolveResult[0];
                                 }
 
-                                @NotNull
                                 @Override
-                                public Object[] getVariants() {
+                                public Object @NotNull [] getVariants() {
                                     List<Object> result = new ArrayList<Object>();
 
                                     Project project = getElement().getProject();
@@ -135,7 +131,7 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
                                             }
                                         }
 
-                                        if (! (portletNames.isEmpty()) ) {
+                                        if (!(portletNames.isEmpty())) {
                                             for (String portletName : portletNames) {
                                                 List<String> actionCommands = ActionCommandIndex.getActionCommands(portletName, project, GlobalSearchScope.allScope(project));
                                                 Set<String> distinctActionCommands = new TreeSet<>(actionCommands);
@@ -144,8 +140,8 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
                                                     List<PsiFile> portletClasses = ActionCommandIndex.getPortletClasses(project, portletName, actionCommand, GlobalSearchScope.allScope(project));
                                                     if (portletClasses.size() > 0) {
                                                         result.add(
-                                                            LookupElementBuilder.create(actionCommand).
-                                                                withIcon(Icons.LIFERAY_ICON)
+                                                                LookupElementBuilder.create(actionCommand).
+                                                                        withIcon(Icons.LIFERAY_ICON)
                                                         );
 
                                                     }
@@ -154,11 +150,10 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
                                         }
                                     }
 
-                                    return result.toArray(new Object[result.size()]);
+                                    return result.toArray(new Object[0]);
                                 }
                             }
-                        };
-                    }
+                    };
                 }
                 return new PsiReference[0];
             }
@@ -168,7 +163,7 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
     @Override
     protected String[] getAttributeNames() {
         return new String[] {
-            "name", "value"
+                "name", "value"
         };
     }
 

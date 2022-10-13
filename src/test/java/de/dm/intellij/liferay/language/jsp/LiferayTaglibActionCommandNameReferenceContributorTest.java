@@ -2,6 +2,7 @@ package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.testFramework.LightProjectDescriptor;
+import com.intellij.testFramework.PlatformTestUtil;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import com.intellij.util.indexing.FileBasedIndex;
 import de.dm.intellij.liferay.index.ActionCommandIndex;
@@ -83,9 +84,7 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
         assertTrue(strings.contains("/my/portletaction"));
     }
 
-    //TODO not working yet in IntelliJ 2022.1
-    /*
-    public void ignoreTestByJspPath() {
+    public void testByJspPath() {
         myFixture.configureByFiles(
             "META-INF/resources/html/view.jsp",
             "liferay-portlet-ext.tld",
@@ -99,15 +98,14 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
         FileBasedIndex.getInstance().requestRebuild(ActionCommandIndex.NAME);
         FileBasedIndex.getInstance().requestRebuild(PortletJspIndex.NAME);
 
+        PlatformTestUtil.dispatchAllEventsInIdeEventQueue(); //wait for reindex
+
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("/my/jspaction"));
     }
-     */
 
-    //TODO not working yet in IntelliJ 2022.1
-    /*
-    public void ignoreTestByMVCRenderCommand() {
+    public void testByMVCRenderCommand() {
         myFixture.configureByFiles(
             "META-INF/resources/html/render.jsp",
             "liferay-portlet-ext.tld",
@@ -125,9 +123,90 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
         FileBasedIndex.getInstance().requestRebuild(ActionCommandIndex.NAME);
         FileBasedIndex.getInstance().requestRebuild(PortletJspIndex.NAME);
 
+        PlatformTestUtil.dispatchAllEventsInIdeEventQueue(); //wait for reindex
+
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("/my/jspaction"));
     }
-     */
+
+    public void testByMVCRenderCommandPortletKeys() {
+        myFixture.configureByFiles(
+            "META-INF/resources/html/render.jsp",
+            "liferay-portlet-ext.tld",
+            "de/dm/portlet/MyMVCRenderCommandPortletKeys.java",
+            "de/dm/portlet/PortletKeys.java",
+            "de/dm/portlet/MyJspPortlet.java",
+            "javax/portlet/Portlet.java",
+            "javax/portlet/ProcessAction.java",
+            "javax/portlet/RenderRequest.java",
+            "javax/portlet/RenderResponse.java",
+            "com/liferay/portal/kernel/portlet/bridges/mvc/MVCRenderCommand.java"
+        );
+
+
+        FileBasedIndex.getInstance().requestRebuild(PortletNameIndex.NAME);
+        FileBasedIndex.getInstance().requestRebuild(ActionCommandIndex.NAME);
+        FileBasedIndex.getInstance().requestRebuild(PortletJspIndex.NAME);
+
+        PlatformTestUtil.dispatchAllEventsInIdeEventQueue(); //wait for reindex
+
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("/my/jspaction"));
+    }
+
+    public void testByMVCRenderCommandActionCommandPortletKeys() {
+        myFixture.configureByFiles(
+                "META-INF/resources/html/render.jsp",
+                "liferay-portlet-ext.tld",
+                "de/dm/portlet/MyMVCRenderCommandPortletKeys.java",
+                "de/dm/portlet/PortletKeys.java",
+                "de/dm/action/MyMVCActionCommandPortletKeys.java",
+                "de/dm/portlet/SimplePortlet.java",
+                "javax/portlet/Portlet.java",
+                "javax/portlet/ProcessAction.java",
+                "javax/portlet/RenderRequest.java",
+                "javax/portlet/RenderResponse.java",
+                "com/liferay/portal/kernel/portlet/bridges/mvc/MVCRenderCommand.java"
+        );
+
+
+        FileBasedIndex.getInstance().requestRebuild(PortletNameIndex.NAME);
+        FileBasedIndex.getInstance().requestRebuild(ActionCommandIndex.NAME);
+        FileBasedIndex.getInstance().requestRebuild(PortletJspIndex.NAME);
+
+        PlatformTestUtil.dispatchAllEventsInIdeEventQueue(); //wait for reindex
+
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("/my/action"));
+    }
+
+    public void testByMVCRenderCommandActionCommandPortletPortletKeys() {
+        myFixture.configureByFiles(
+                "META-INF/resources/html/render.jsp",
+                "liferay-portlet-ext.tld",
+                "de/dm/portlet/MyMVCRenderCommandPortletKeys.java",
+                "de/dm/portlet/PortletKeys.java",
+                "de/dm/action/MyMVCActionCommandPortletKeys.java",
+                "de/dm/portlet/SimplePortletPortletKeys.java",
+                "javax/portlet/Portlet.java",
+                "javax/portlet/ProcessAction.java",
+                "javax/portlet/RenderRequest.java",
+                "javax/portlet/RenderResponse.java",
+                "com/liferay/portal/kernel/portlet/bridges/mvc/MVCRenderCommand.java"
+        );
+
+
+        FileBasedIndex.getInstance().requestRebuild(PortletNameIndex.NAME);
+        FileBasedIndex.getInstance().requestRebuild(ActionCommandIndex.NAME);
+        FileBasedIndex.getInstance().requestRebuild(PortletJspIndex.NAME);
+
+        PlatformTestUtil.dispatchAllEventsInIdeEventQueue(); //wait for reindex
+
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("/my/action"));
+    }
 }

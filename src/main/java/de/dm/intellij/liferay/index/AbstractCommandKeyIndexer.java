@@ -13,10 +13,7 @@ import com.intellij.util.indexing.ID;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class AbstractCommandKeyIndexer extends AbstractComponentPropertyIndexer<CommandKey> {
 
@@ -105,12 +102,55 @@ public abstract class AbstractCommandKeyIndexer extends AbstractComponentPropert
                 List<PsiFile> result = new ArrayList<>();
 
                 try {
-                    Collection<VirtualFile> containingFiles = FileBasedIndex.getInstance().getContainingFiles(name, new CommandKey(portletName, commandName), scope);
-                    for (String portletReferencePlaceholder : portletReferencePlaceholders) {
-                        containingFiles.addAll(FileBasedIndex.getInstance().getContainingFiles(name, new CommandKey(portletReferencePlaceholder, commandName), scope));
+                    Collection<String> portletNames = new ArrayList<>(Collections.singletonList(portletName));
+                    Collection<String> commandNames = new ArrayList<>(Collections.singletonList(commandName));
+
+                    Collection<String> savedPortletNames = new ArrayList<>();
+                    Collection<String> savedCommandNames = new ArrayList<>();
+
+                    FileBasedIndex.getInstance().processAllKeys(name,
+                            key -> {
+                                savedPortletNames.add(key.getPortletName());
+                                savedCommandNames.add(key.getCommandName());
+
+                                return true;
+                            },
+                            scope,
+                            null
+                    );
+
+                    for (String savedPortletName : savedPortletNames) {
+                        if (savedPortletName.startsWith(ProjectUtils.REFERENCE_PLACEHOLDER)) {
+                            String resolvedPlaceholder = ProjectUtils.resolveReferencePlaceholder(savedPortletName, project, scope);
+
+                            if (portletName.equals(resolvedPlaceholder)) {
+                                portletNames.add(savedPortletName);
+                            }
+                        }
                     }
-                    for (String commandKeyPlaceholder : commandKeyPlaceholders) {
-                        containingFiles.addAll(FileBasedIndex.getInstance().getContainingFiles(name, new CommandKey(portletName, commandKeyPlaceholder), scope));
+
+                    for (String savedCommandName : savedCommandNames) {
+                        if (savedCommandName.startsWith(ProjectUtils.REFERENCE_PLACEHOLDER)) {
+                            String resolvedPlaceholder = ProjectUtils.resolveReferencePlaceholder(savedCommandName, project, scope);
+
+                            if (commandName.equals(resolvedPlaceholder)) {
+                                commandNames.add(savedCommandName);
+                            }
+                        }
+                    }
+
+                    Collection<VirtualFile> containingFiles = new ArrayList<>();
+
+                    for (String innerPortletName : portletNames) {
+                        for (String innerCommandName : commandNames) {
+                            containingFiles.addAll(FileBasedIndex.getInstance().getContainingFiles(name, new CommandKey(innerPortletName, innerCommandName), scope));
+                            for (String portletReferencePlaceholder : portletReferencePlaceholders) {
+                                containingFiles.addAll(FileBasedIndex.getInstance().getContainingFiles(name, new CommandKey(portletReferencePlaceholder, innerCommandName), scope));
+                            }
+                            for (String commandKeyPlaceholder : commandKeyPlaceholders) {
+                                containingFiles.addAll(FileBasedIndex.getInstance().getContainingFiles(name, new CommandKey(innerPortletName, commandKeyPlaceholder), scope));
+                            }
+                        }
                     }
 
                     for (String portletReferencePlaceholder : portletReferencePlaceholders) {

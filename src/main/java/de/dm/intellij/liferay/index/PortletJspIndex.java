@@ -227,7 +227,11 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> {
                                             text = StringUtil.unquoteString(text);
 
                                             for (String portletName : portletNames) {
-                                                String portletId = LiferayFileUtil.getPortletId(portletName);
+                                                String portletId = portletName;
+
+                                                if (! portletId.startsWith(ProjectUtils.REFERENCE_PLACEHOLDER)) {
+                                                    portletId = LiferayFileUtil.getPortletId(portletId);
+                                                }
 
                                                 map.put(new JspKey(portletId, text), null);
                                             }
