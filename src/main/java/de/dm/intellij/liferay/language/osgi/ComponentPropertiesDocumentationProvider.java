@@ -117,7 +117,7 @@ public class ComponentPropertiesDocumentationProvider extends AbstractDocumentat
             builder.append("{");
 
             for (int i = 0; i < serviceClassNames.size(); i++) {
-                builder.append(serviceClassNames.get(i));
+                builder.append(serviceClassNames.get(i)).append(".class");
 
                 if (i < serviceClassNames.size() - 1) {
                     builder.append(", ");
