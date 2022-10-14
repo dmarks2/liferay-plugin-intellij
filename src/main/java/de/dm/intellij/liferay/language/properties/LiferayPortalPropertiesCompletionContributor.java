@@ -80,7 +80,13 @@ public class LiferayPortalPropertiesCompletionContributor extends CompletionCont
                             for (String key : portalProperties.keySet()) {
                                 AbstractMap.SimpleImmutableEntry<String, String> entry = portalProperties.get(key);
 
-                                lookups.add(LookupElementBuilder.create(key).withTypeText(entry.getKey()).withIcon(Icons.LIFERAY_ICON));
+                                String entryKey = entry.getKey();
+
+                                if (entryKey.contains("|")) {
+                                    entryKey = entryKey.substring(0, entryKey.indexOf("|"));
+                                }
+
+                                lookups.add(LookupElementBuilder.create(key).withTypeText(entryKey).withIcon(Icons.LIFERAY_ICON));
                             }
                         } catch (IOException e) {
                             //??

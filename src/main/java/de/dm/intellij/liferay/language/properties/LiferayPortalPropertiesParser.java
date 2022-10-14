@@ -74,17 +74,19 @@ public class LiferayPortalPropertiesParser {
 
                         String type = String.class.getSimpleName();
 
-                        if (split.length > 1) {
-                            String value = split[1];
+                        String value = "";
 
-                            if ("true".equals(value.trim().toLowerCase()) || "false".equals(value.trim().toLowerCase())) {
+                        if (split.length > 1) {
+                            value = split[1];
+
+                            if ("true".equalsIgnoreCase(value.trim()) || "false".equalsIgnoreCase(value.trim())) {
                                 type = Boolean.class.getSimpleName();
                             } else if (isNumericString(value.trim())) {
                                 type = Integer.class.getSimpleName();
                             }
                         }
 
-                        AbstractMap.SimpleImmutableEntry<String, String> entry = new AbstractMap.SimpleImmutableEntry<>(type, currentComment.toString());
+                        AbstractMap.SimpleImmutableEntry<String, String> entry = new AbstractMap.SimpleImmutableEntry<>(type + "|" + value, currentComment.toString());
 
                         result.put(propertyKey, entry);
                     }

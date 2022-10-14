@@ -37,9 +37,11 @@ public class LiferayPortalPropertiesDocumentationProviderTest extends BasePlatfo
 
         DocumentationProvider provider = DocumentationManager.getProviderFromElement(docElement);
 
-        String expectedDocumentation = "<font color=#808080>Specify the Liferay home directory.<br>Env: LIFERAY_LIFERAY_PERIOD_HOME</font>\n" +
-                "<br>\n" +
-                "<b>liferay.home</b>=\"/foo\" [portal-ext.properties]";
+        String expectedDocumentation = "<div class='definition'><pre>liferay.home</pre></div><div class='content'>Specify the Liferay home directory.<br></div>" +
+                "<table class='sections'><p>" +
+                "<tr><td valign='top' class='section'><p>Env: </td><td valign='top'>LIFERAY_LIFERAY_PERIOD_HOME</td>" +
+                "<tr><td valign='top' class='section'><p>Default: </td><td valign='top'>${resource.repositories.root}</td>" +
+                "</table>";
 
         assertEquals("Should provide proper documentation for liferay.home property", expectedDocumentation, provider.generateDoc(docElement, null));
     }

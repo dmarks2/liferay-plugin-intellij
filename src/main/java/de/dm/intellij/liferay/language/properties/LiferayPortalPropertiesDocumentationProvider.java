@@ -1,12 +1,10 @@
 package de.dm.intellij.liferay.language.properties;
 
 import com.intellij.lang.documentation.AbstractDocumentationProvider;
+import com.intellij.lang.documentation.DocumentationMarkup;
 import com.intellij.lang.properties.IProperty;
 import com.intellij.lang.properties.PropertiesCommenter;
-import com.intellij.lang.properties.PropertiesHighlighter;
 import com.intellij.lang.properties.psi.impl.PropertyImpl;
-import com.intellij.openapi.editor.colors.EditorColorsManager;
-import com.intellij.openapi.editor.markup.TextAttributes;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.util.text.StringUtil;
@@ -14,18 +12,15 @@ import com.intellij.patterns.PlatformPatterns;
 import com.intellij.patterns.StandardPatterns;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.ui.GuiUtils;
-import com.intellij.util.containers.ContainerUtil;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.util.LiferayVersions;
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.AbstractMap;
+import java.util.List;
 import java.util.Map;
 
 public class LiferayPortalPropertiesDocumentationProvider extends AbstractDocumentationProvider {
@@ -92,35 +87,68 @@ public class LiferayPortalPropertiesDocumentationProvider extends AbstractDocume
                     String docCommentText = entry.getValue();
 
                     if (docCommentText != null && docCommentText.trim().length() > 0) {
-                        @NonNls String info = "";
 
-                        TextAttributes attributes = EditorColorsManager.getInstance().getGlobalScheme().getAttributes(PropertiesHighlighter.PropertiesComponent.PROPERTY_COMMENT.getTextAttributesKey()).clone();
-                        Color background = attributes.getBackgroundColor();
-                        if (background != null) {
-                            info +="<div bgcolor=#"+ GuiUtils.colorToHex(background)+">";
+                        StringBuilder stringBuilder = new StringBuilder();
+
+                        List<String> lines = StringUtil.split(docCommentText, "\n");
+
+                        String env = "";
+
+                        for (String line : lines) {
+                            line = line.trim();
+                            line = StringUtil.trimStart(line, PropertiesCommenter.HASH_COMMENT_PREFIX);
+                            line = StringUtil.trimStart(line, PropertiesCommenter.EXCLAMATION_COMMENT_PREFIX);
+                            line = line.trim();
+
+                            if (line.contains("Env:")) {
+                                env = StringUtil.substringAfter(line, "Env:");
+
+                                if (env != null) {
+                                    env = env.trim();
+                                }
+                            } else {
+                                stringBuilder.append(line).append("<br>");
+                            }
                         }
 
-                        String doc = StringUtil.join(ContainerUtil.map(StringUtil.split(docCommentText, "\n"), s -> {
-                            final String trim = s.trim();
-                            final String trimHash = StringUtil.trimStart(trim, PropertiesCommenter.HASH_COMMENT_PREFIX);
-                            final String trimExclamation = StringUtil.trimStart(trimHash, PropertiesCommenter.EXCLAMATION_COMMENT_PREFIX);
-                            return trimExclamation.trim();
-                        }), "<br>");
+                        String description = stringBuilder.toString();
 
-                        if (doc.startsWith("<br>")) {
-                            doc = doc.substring(4);
+                        if (description.startsWith("<br>")) {
+                            description = description.substring(4);
                         }
 
-                        final Color foreground = attributes.getForegroundColor();
-                        info += foreground != null ? "<font color=#" + GuiUtils.colorToHex(foreground) + ">" + doc + "</font>" : doc;
-                        info += "\n<br>";
-                        if (background != null) {
-                            info += "</div>";
+                        String result = DocumentationMarkup.DEFINITION_START +
+                                text +
+                                DocumentationMarkup.DEFINITION_END +
+                                DocumentationMarkup.CONTENT_START +
+                                description +
+                                DocumentationMarkup.CONTENT_END;
+
+                        result = result + DocumentationMarkup.SECTIONS_START + "<p>";
+
+                        if (StringUtil.isNotEmpty(env)) {
+                            result = result + DocumentationMarkup.SECTION_HEADER_START +
+                                    "Env: " +
+                                    DocumentationMarkup.SECTION_SEPARATOR +
+                                    env +
+                                    DocumentationMarkup.SECTION_END;
                         }
 
-                        info += "\n<b>" + text + "</b>=\"" + renderPropertyValue(((IProperty)element)) + "\"";
-                        info += getLocationString(element);
-                        return info;
+                        String entryKey = entry.getKey();
+
+                        if (entryKey.contains("|")) {
+                            entryKey = entryKey.substring(entryKey.indexOf("|") + 1);
+                        }
+
+                        result = result + DocumentationMarkup.SECTION_HEADER_START +
+                                "Default: " +
+                                DocumentationMarkup.SECTION_SEPARATOR +
+                                renderPropertyValue(entryKey) +
+                                DocumentationMarkup.SECTION_END;
+
+                        result = result + DocumentationMarkup.SECTIONS_END;
+
+                        return result;
                     }
                 }
             } catch (IOException e) {
@@ -131,17 +159,11 @@ public class LiferayPortalPropertiesDocumentationProvider extends AbstractDocume
         return null;
     }
 
-    private static String getLocationString(PsiElement element) {
-        PsiFile file = element.getContainingFile();
-        return file != null ? " [" + file.getName() + "]" : "";
-    }
-
     @NotNull
-    private static String renderPropertyValue(IProperty prop) {
-        String raw = prop.getValue();
-        if (raw == null) {
+    private static String renderPropertyValue(String value) {
+        if (StringUtil.isEmpty(value)) {
             return "<i>empty</i>";
         }
-        return StringUtil.escapeXmlEntities(raw);
+        return StringUtil.escapeXmlEntities(value);
     }
 }
