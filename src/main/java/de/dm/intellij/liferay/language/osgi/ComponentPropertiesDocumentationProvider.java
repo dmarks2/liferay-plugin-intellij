@@ -5,7 +5,6 @@ import com.intellij.lang.documentation.AbstractDocumentationProvider;
 import com.intellij.lang.documentation.DocumentationMarkup;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiAnnotation;
-import com.intellij.psi.PsiAnnotationMemberValue;
 import com.intellij.psi.PsiAnnotationParameterList;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
@@ -88,16 +87,17 @@ public class ComponentPropertiesDocumentationProvider extends AbstractDocumentat
 
             PsiAnnotation[] annotations = PsiTreeUtil.getChildrenOfType(modifierList, PsiAnnotation.class);
 
-            for (PsiAnnotation annotation : annotations) {
-                String qualifiedName = annotation.getQualifiedName();
+            if (annotations != null) {
 
-                if ("org.osgi.service.component.annotations.Component".equals(qualifiedName)) {
-                    PsiAnnotationParameterList parameterList = annotation.getParameterList();
-                    for (PsiNameValuePair psiNameValuePair : parameterList.getAttributes()) {
-                        if ("property".equals(psiNameValuePair.getName())) {
-                            PsiAnnotationMemberValue psiNameValuePairValue = psiNameValuePair.getValue();
+                for (PsiAnnotation annotation : annotations) {
+                    String qualifiedName = annotation.getQualifiedName();
 
-                            return psiNameValuePairValue;
+                    if ("org.osgi.service.component.annotations.Component".equals(qualifiedName)) {
+                        PsiAnnotationParameterList parameterList = annotation.getParameterList();
+                        for (PsiNameValuePair psiNameValuePair : parameterList.getAttributes()) {
+                            if ("property".equals(psiNameValuePair.getName())) {
+                                return psiNameValuePair.getValue();
+                            }
                         }
                     }
                 }
