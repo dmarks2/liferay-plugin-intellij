@@ -34,7 +34,7 @@ public class ComponentPropertiesDocumentationProviderTest extends LightJavaCodeI
 
         DocumentationProvider provider = DocumentationManager.getProviderFromElement(docElement);
 
-        String expectedDocumentation = "<b>javax.portlet.info.title</b><br/>\nLocale specific static title for this portlet.";
+        String expectedDocumentation = "<div class='definition'><pre>javax.portlet.info.title</pre></div><div class='content'>Locale specific static title for this portlet.</div>";
 
         assertEquals("Should provide proper documentation for javax.portlet.info.title inside a javax.portlet.Portlet component", expectedDocumentation, provider.generateDoc(docElement, docElement.getOriginalElement()));
     }
