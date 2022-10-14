@@ -4,14 +4,19 @@ import com.intellij.lang.documentation.AbstractDocumentationProvider;
 import com.intellij.lang.documentation.DocumentationMarkup;
 import com.intellij.lang.properties.IProperty;
 import com.intellij.lang.properties.PropertiesCommenter;
+import com.intellij.lang.properties.PropertiesFileType;
+import com.intellij.lang.properties.psi.PropertiesFile;
+import com.intellij.lang.properties.psi.Property;
 import com.intellij.lang.properties.psi.impl.PropertyImpl;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
+import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.patterns.PlatformPatterns;
 import com.intellij.patterns.StandardPatterns;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiFileFactory;
+import com.intellij.psi.PsiManager;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.util.LiferayVersions;
 import org.jetbrains.annotations.NotNull;
@@ -39,10 +44,8 @@ public class LiferayPortalPropertiesDocumentationProvider extends AbstractDocume
                                                 startsWith("portal")
                                 )
                 ).accepts(element)) {
-            PsiFile containingFile = element.getContainingFile();
-            containingFile = containingFile.getOriginalFile();
+            final Module module = ModuleUtil.findModuleForPsiElement(element);
 
-            final Module module = ModuleUtil.findModuleForPsiElement(containingFile);
             if (module == null) {
                 return null;
             }
@@ -157,6 +160,31 @@ public class LiferayPortalPropertiesDocumentationProvider extends AbstractDocume
         }
 
         return null;
+    }
+
+    @Override
+    public @Nullable PsiElement getDocumentationElementForLookupItem(PsiManager psiManager, Object object, PsiElement element) {
+        if (object instanceof String) {
+            String lookupString = (String) object;
+
+            PropertiesFile propertiesFile = (PropertiesFile) PsiFileFactory.getInstance(psiManager.getProject()).createFileFromText("portal.properties", PropertiesFileType.INSTANCE, lookupString);
+
+            List<IProperty> properties = propertiesFile.getProperties();
+
+            if (properties.size() > 0) {
+                IProperty iProperty = properties.get(0);
+
+                if (iProperty instanceof Property) {
+                    Property property = (Property) iProperty;
+
+                    property.putUserData(ModuleUtilCore.KEY_MODULE, ModuleUtil.findModuleForPsiElement(element));
+
+                    return property;
+                }
+            }
+        }
+
+        return super.getDocumentationElementForLookupItem(psiManager, object, element);
     }
 
     @NotNull
