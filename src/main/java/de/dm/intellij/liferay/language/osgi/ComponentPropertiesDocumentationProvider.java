@@ -73,36 +73,38 @@ public class ComponentPropertiesDocumentationProvider extends AbstractDocumentat
 
             List<String> serviceClassNames = ComponentPropertiesCompletionContributor.getServiceClassNames(annotationParameterList);
 
-            String dummyClass = "@org.osgi.service.component.annotations.Component(\n" +
-                    "   property=\"" + lookupString + "\",\n" +
-                    "   " + getServiceClassDeclaration(serviceClassNames) + "\n" +
-                    ")\n" +
-                    "public class MyComponent { }";
+            if (serviceClassNames.size() > 0) {
 
-            PsiFile psiFile = PsiFileFactory.getInstance(psiManager.getProject()).createFileFromText("MyComponent.java", JavaFileType.INSTANCE, dummyClass);
+                String dummyClass = "@org.osgi.service.component.annotations.Component(\n" +
+                        "   property=\"" + lookupString + "\",\n" +
+                        "   " + getServiceClassDeclaration(serviceClassNames) + "\n" +
+                        ")\n" +
+                        "public class MyComponent { }";
 
-            PsiClass clazz = PsiTreeUtil.getChildOfType(psiFile, PsiClass.class);
+                PsiFile psiFile = PsiFileFactory.getInstance(psiManager.getProject()).createFileFromText("MyComponent.java", JavaFileType.INSTANCE, dummyClass);
 
-            PsiModifierList modifierList = PsiTreeUtil.getChildOfType(clazz, PsiModifierList.class);
+                PsiClass clazz = PsiTreeUtil.getChildOfType(psiFile, PsiClass.class);
 
-            PsiAnnotation[] annotations = PsiTreeUtil.getChildrenOfType(modifierList, PsiAnnotation.class);
+                PsiModifierList modifierList = PsiTreeUtil.getChildOfType(clazz, PsiModifierList.class);
 
-            if (annotations != null) {
+                PsiAnnotation[] annotations = PsiTreeUtil.getChildrenOfType(modifierList, PsiAnnotation.class);
 
-                for (PsiAnnotation annotation : annotations) {
-                    String qualifiedName = annotation.getQualifiedName();
+                if (annotations != null) {
 
-                    if ("org.osgi.service.component.annotations.Component".equals(qualifiedName)) {
-                        PsiAnnotationParameterList parameterList = annotation.getParameterList();
-                        for (PsiNameValuePair psiNameValuePair : parameterList.getAttributes()) {
-                            if ("property".equals(psiNameValuePair.getName())) {
-                                return psiNameValuePair.getValue();
+                    for (PsiAnnotation annotation : annotations) {
+                        String qualifiedName = annotation.getQualifiedName();
+
+                        if ("org.osgi.service.component.annotations.Component".equals(qualifiedName)) {
+                            PsiAnnotationParameterList parameterList = annotation.getParameterList();
+                            for (PsiNameValuePair psiNameValuePair : parameterList.getAttributes()) {
+                                if ("property".equals(psiNameValuePair.getName())) {
+                                    return psiNameValuePair.getValue();
+                                }
                             }
                         }
                     }
                 }
             }
-
 
             return null;
         }
