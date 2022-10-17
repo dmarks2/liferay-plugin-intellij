@@ -53,7 +53,7 @@ absolute paths (e.g. for includes) are resolved properly. The same applies for c
 Code completions for Liferay taglibs
 ------------------------------------
 
-Several Liferay or AUI tags provide attributes like ```cssClass``` or ```iconCssClass```. This plugins provides code completion features for this attribute, so that
+Several Liferay or AUI tags provide attributes like ```cssClass``` or ```iconCssClass```. This plugin provides code completion features for this attribute, so that
 (S)CSS classes are resolved properly.
 
 ![cssClass attribute](jsp_css_class.png "cssClass attribute")
@@ -63,15 +63,15 @@ attributes.
 
 ![language keys](jsp_language_keys.png "language keys")
 
-Additionally you can search for classnames and java bean properties in specific tags like `<aui:model-context>` or `<aui:input>`.
+Additionally, you can search for classnames and java bean properties in specific tags like `<aui:model-context>` or `<aui:input>`.
 
 ![classnames](jsp_classname.gif "classnames")
 
-For some taglibs you can auto-complete defined Portlet Names. Those are fetched from the `javax.portlet.name` property in your portlet classes.
+For some taglibs you can automatically complete defined Portlet Names. Those are fetched from the `javax.portlet.name` property in your portlet classes.
 
 ![portlet_names](jsp_portlet_name.png "portlet names")
 
-Additionally you can auto-complete action commands, render command and resource commands to
+Additionally, you can auto-complete action commands, render command and resource commands to
 `<portlet:actionURL>`, `<portlet:renderURL>` and `<portlet:resourceURL>`.   
 
 ![action_commands](actioncommands.png "action commands")

@@ -30,4 +30,4 @@ Those are:
 * Check for duplicate ```<finder>``` 
 * Check for duplicate ```<column>``` inside an entity 
 * Check for a valid type for the primary key column
-* Ensure that entities having a uuid also have a primary key column
+* Ensure that entities having an uuid also have a primary key column

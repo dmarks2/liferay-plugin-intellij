@@ -94,7 +94,7 @@ The following taglibs are available:
 Implicit Theme Settings variables
 ---------------------------------
 
-If you have defined custom theme settings in your ```liferay-look-and-feel.xml``` those are are provided for code completion, too. You can jump
+If you have defined custom theme settings in your ```liferay-look-and-feel.xml``` those are provided for code completion, too. You can jump
 to the declaration in the ```liferay-look-and-feel.xml```.
 
 ![Freemarker Theme Settings](freemarker_theme_settings.png "Freemarker Theme Settings")
@@ -167,6 +167,6 @@ Themes for Liferay 7.x are built using gulp in most cases.
 
 The `gulpfile.js` is being parsed to test for the `liferay-theme-tasks` configurations. If you
 configured a different source folder using the option `pathSrc` option that folder is detected as
-Source Folder in your project. By default the folder `src` is used.
+Source Folder in your project. By default, the folder `src` is used.
 
 By this code completions should work inside those modules, too.

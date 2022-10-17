@@ -8,7 +8,7 @@ import com.intellij.psi.filters.position.FilterPattern;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Implementation of a FilterPattern to find CSS-Elements referencing an URL
+ * Implementation of a FilterPattern to find CSS-Elements referencing a URL
  */
 public class CssUrlFilterPattern extends FilterPattern {
 

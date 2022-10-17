@@ -1,12 +1,12 @@
 OSGi components
 ===============
 
-1. [Syntax Hightlighting for BND files](#syntax-hightlighting-for-bnd-files)
+1. [Syntax Highlighting for BND files](#syntax-highlighting-for-bnd-files)
 2. [Component annotation code completion](#component-annotation-code-completion)
 3. [Implicit usage for Reference annotations](#implicit-usage-for-reference-annotations)
 4. [Inspections of service class inheritance](#inspections-of-service-class-inheritance)
 
-Syntax Hightlighting for BND files
+Syntax Highlighting for BND files
 ----------------------------------
 
 This plugin adds syntax highlighting and code completions for ```bnd.bnd``` files.
@@ -181,8 +181,8 @@ Implicit usage for Reference annotations
 ----------------------------------------
 
 Injected component references using the ```@Reference``` annotation are marked as "unused" by IntelliJ by default.
-This plugin tells IntelliJ that those are injected references, so that they are actually "written" somehow and
-so they are not "unsued".
+This plugin tells IntelliJ that those are injected references, so that they are actually "written" somehow, and
+so they are not "unused".
 
 List of supported annotations:
     

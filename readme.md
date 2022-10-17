@@ -23,9 +23,9 @@ for the plugin. Just have a look at the following topics to see which areas have
 * [Editing Liferay XML files](documentation/xml_files.md) is improved, e.g. by providing the XML Schema files for mostly all Liferay specific XML files. 
 * For [JavaScript files](documentation/js_files.md) the plugin provides you with libraries for the Liferay barebone Javascript files and AlloyUI. 
 * For [Velocity and Freemarker files in Layout Templates and Themes](documentation/vtl_ftl_files.md) the plugin provides code completion for known variables and theme settings.
-* Also for [Journal Templates and Application Display Templates](documentation/structures_templates_adt.md) known variables are provided, including variables from Journal structures.
+* Also, for [Journal Templates and Application Display Templates](documentation/structures_templates_adt.md) known variables are provided, including variables from Journal structures.
 * For [CSS / SCSS files](documentation/scss_files.md) references to the parent theme are resolved and specific placeholders like @theme_image_path@ are detected. 
-* When [editing JSP files](documentation/jsp_files.md) you have access to the original JSPs (in JSP hooks or web fragments). Additionally code completion is possible for Liferay or AUI taglibs including cssClasses and language keys.
+* When [editing JSP files](documentation/jsp_files.md) you have access to the original JSPs (in JSP hooks or web fragments). Additionally, code completion is possible for Liferay or AUI taglibs including cssClasses and language keys.
 * Known properties for [OSGi components](documentation/osgi_components.md) are provided (e.g. Portlet properties).
 * You can jump forward and backward between the [service.xml](documentation/service_xml.md) and the implementation class.
 * Support for [groovy scripts](documentation/groovy.md) (Liferay admin console).

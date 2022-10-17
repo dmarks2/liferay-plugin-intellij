@@ -36,8 +36,8 @@ public class LiferayJspDebuggerSourceFinderAdapter implements SourcesFinder<Java
         }
 
         //If you create a local Tomcat Run Configuration, JSPs inside "Web Context" have been found already, so this LifereayJspDebuggerPositionManager is not called at all.
-        //However if you use a different Run Configuration (e.g. Command Line starting of Tomcat or a Remote Debugger Connection to a running Tomcat instance) the "Web Contexts" are not searched.
-        //Therefore this PositionManager looks at the "Web Context" in this case, too.
+        //However, if you use a different Run Configuration (e.g. Command Line starting of Tomcat or a Remote Debugger Connection to a running Tomcat instance) the "Web Contexts" are not searched.
+        //Therefore, this PositionManager looks at the "Web Context" in this case, too.
         PsiFile deployedJspSourceFromFacets = this.myJspDeploymentManager.getDeployedJspSource(relPath, project, scope);
         if (deployedJspSourceFromFacets != null) {
             results.add(deployedJspSourceFromFacets);

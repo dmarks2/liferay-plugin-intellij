@@ -8,7 +8,7 @@ JavaScript
 Predefined JavaScript Libraries
 -------------------------------
 
-The plugin provides predefined JavaScript Libraries for AlloyUI and Liferay Barebone files. By this, code completion works
+The plugin provides predefined JavaScript Libraries for AlloyUI and Liferay barebone files. By this, code completion works
 for JavaScript variables like ```AUI()``` or ```Liferay```.
 
 ![Liferay JavaScript](liferay_js.png "Liferay Javascript")

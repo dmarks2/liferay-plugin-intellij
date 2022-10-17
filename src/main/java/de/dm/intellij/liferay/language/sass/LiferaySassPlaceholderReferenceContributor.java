@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Reference Contributor to resolve Liferay specific placeholders in CSS / SCSS files.
  *
- * Currently replaces @theme_image_path@ by the real path to the images
+ * Currently, replaces @theme_image_path@ by the real path to the images
  */
 public class LiferaySassPlaceholderReferenceContributor extends PsiReferenceContributor {
 

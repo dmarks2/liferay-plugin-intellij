@@ -53,7 +53,7 @@ Implicit variables for Application Display Templates
 ----------------------------------------------------
 
 Application Display Templates can use Velocity or Freemarker, too. This plugin defines implicit variables
-depending on the type of the ADT, e.g. ```entry``` with the type of an ```AssetEntry``` for Asset Publisher ADTs.
+depending on the type of the ADT, e.g. ```entry``` with the type of ```AssetEntry``` for Asset Publisher ADTs.
 
 ![ADT for Asset Entries](adt_asset_entry.png "ADT for Asset Entries")
 

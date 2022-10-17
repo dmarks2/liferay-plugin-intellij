@@ -6,7 +6,7 @@ CSS / SCSS files
 3. [Theme Inheritance](#theme-inheritance)
 4. [Compass Support](#compass-support)
 5. [Clay SCSS Variables documentation](#clay-scss-variables-documentation)
-6. [Frontend Token Defintion support](#fontend-token-definition-support)
+6. [Frontend Token Definition support](#frontend-token-definition-support)
 
 Theme Image Path reference
 --------------------------
@@ -62,14 +62,14 @@ Some Clay SCSS variable declarations are provided with a Quick Documentation (Ct
 *This feature works in IntelliJ Ultimate Edition only.*
 
 
-Frontend Token Defintion support
---------------------------------
+Frontend Token Definition support
+---------------------------------
 
 To customize your theme Liferay offers you to define style books using a `frontend-token-definition.json` file.
 
 This plugin provides a JSON schema for that file, so that code completion and validation is available. 
 
-Additionally all `label` attributes are references to `Language_xx.properties` files, so that you can
+Additionally, all `label` attributes are references to `Language_xx.properties` files, so that you can
 look up language keys while editing that file.
 
 *This feature works in IntelliJ Ultimate Edition only.*

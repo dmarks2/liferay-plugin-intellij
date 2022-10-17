@@ -35,7 +35,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Add freemarker support for fragment html files
 - Feature: File references in fragment.json file
 - Feature: Add support for comments in bnd.bnd files
-- Bugfix: Exception when trying to inject Javascript inside aui:script-tags containing additonal attributes (like "use" or "require")
+- Bugfix: Exception when trying to inject Javascript inside aui:script-tags containing additional attributes (like "use" or "require")
 - Bugfix: Avoid NullPointerException when trying to lookup documentation for an unknown OSGi property
 - Bugfix: Inner classes where not properly resolved inside className attributes in JSP files
 - Change: Fixed support for IntelliJ 2021.3
@@ -53,7 +53,7 @@ All notable changes to this project will be documented in this file.
   
 ## 0.0.11
 - Feature: Implicit usage of some property files and keys ("javax.portlet.title." or "liferay.workspace."), so that they are no longer shown as "unused property"
-- Feature: Inspection of @Reference usage outside of a @Component class  
+- Feature: Inspection of @Reference usage outside a @Component class  
 - Bugfix: OSGi property code completion for single properties, e.g. without brackets around
 - Bugfix: Improved compatibility with IntelliJ 2021.1 
 - Bugfix: fixed implicit freemarker variables for modified facet portlet
