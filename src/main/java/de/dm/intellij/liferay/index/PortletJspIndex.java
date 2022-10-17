@@ -209,12 +209,6 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> {
                                     for (PsiReturnStatement returnStatement : returnStatements) {
                                         PsiExpression returnValue = returnStatement.getReturnValue();
 
-                                        //TODO you cannot use PsiConstantEvaluationHelper during indexing. How to handle?
-                                        /*
-                                        PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(psiClass.getProject()).getConstantEvaluationHelper();
-
-                                        Object constantExpression = constantEvaluationHelper.computeConstantExpression(returnValue);
-                                        */
                                         Object constantExpression = null;
 
                                         if (returnValue instanceof PsiLiteralExpression) {

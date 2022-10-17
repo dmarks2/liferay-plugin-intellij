@@ -85,7 +85,6 @@ public class StaticFieldGetterFtlVariable extends FtlLightVariable {
 
                                         FtlCallableType findServiceType = FtlCallableType.createLightFunctionType(psiMethod, FtlPsiType.wrap(targetType), "className", stringType, "fieldName", stringType);
 
-                                        //TODO getFieldValue is shown as "variable" instead of "method".
                                         FtlDynamicMember findService = new FtlDynamicMember("getFieldValue", psiMethod, findServiceType);
 
                                         processor.execute(findService, state);

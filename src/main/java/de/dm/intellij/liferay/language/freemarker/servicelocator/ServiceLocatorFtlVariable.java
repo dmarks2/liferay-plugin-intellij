@@ -68,7 +68,6 @@ public class ServiceLocatorFtlVariable extends FtlLightVariable {
 
                             FtlCallableType findServiceType = FtlCallableType.createLightFunctionType(psiMethod, FtlPsiType.wrap(targetType), "serviceName", stringType);
 
-                            //TODO findService is shown as "variable" instead of "method".
                             FtlDynamicMember findService = new FtlDynamicMember("findService", psiMethod, findServiceType);
 
                             processor.execute(findService, state);

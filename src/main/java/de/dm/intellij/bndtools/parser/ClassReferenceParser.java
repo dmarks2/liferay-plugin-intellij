@@ -34,8 +34,6 @@ public class ClassReferenceParser extends BndHeaderParser {
     @NotNull
     @Override
     public PsiReference[] getReferences(@NotNull BndHeaderValuePart bndHeaderValuePart) {
-        //TODO add test to resolve reference
-
         Module module = ModuleUtilCore.findModuleForPsiElement(bndHeaderValuePart);
 
         JavaClassReferenceProvider javaClassReferenceProvider;
@@ -72,7 +70,6 @@ public class ClassReferenceParser extends BndHeaderParser {
 
         String className = valuePart.getUnwrappedText();
         if (StringUtil.isEmptyOrSpaces(className)) {
-            //TODO create a test!
             holder.newAnnotation(
                     HighlightSeverity.ERROR, ManifestBundle.message("header.reference.invalid")
             ).range(
@@ -87,7 +84,6 @@ public class ClassReferenceParser extends BndHeaderParser {
         GlobalSearchScope globalSearchScope = module != null ? module.getModuleWithDependenciesAndLibrariesScope(false) : ProjectScope.getAllScope(project);
         PsiClass psiClass = JavaPsiFacade.getInstance(project).findClass(className, globalSearchScope);
         if (psiClass == null) {
-            //TODO create a test!
             holder.newAnnotation(
                     HighlightSeverity.ERROR, JavaErrorBundle.message("error.cannot.resolve.class", className)
             ).range(

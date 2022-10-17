@@ -38,9 +38,6 @@ public class LiferayTaglibPortletNameReferenceContributorTest extends LightJavaC
         assertTrue(strings.contains("de_dm_portlet_MyPortlet"));
     }
 
-    /**
-     * TODO resolve constants
-     */
     public void testPortletNameConstant() {
         myFixture.configureByFiles(
                 "portletName.jsp",

@@ -24,7 +24,6 @@ public class LiferayAdvancedResourcesImporterServiceCallWatcher extends FileChan
             if (component != null) {
                 ProjectUtils.runDumbAwareLater(project, () -> {
                     if (virtualFile.isValid()) {
-                        //TODO psiFile is empty on "contentsChanged". Need to be refreshed once...
                         PsiManager psiManager = PsiManager.getInstance(project);
 
                         PsiFile psiFile = psiManager.findFile(virtualFile);

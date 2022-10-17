@@ -43,6 +43,17 @@ import java.util.List;
  */
 public class ClassReferenceParserTest extends LightJavaCodeInsightFixtureTestCase {
 
+	public void testEmptyClassReferenceHighlighting() {
+		myFixture.configureByFiles("emptyClassReference/bnd.bnd");
+
+		List<HighlightInfo> highlightInfos = myFixture.doHighlighting();
+
+		assertFalse(highlightInfos.isEmpty());
+
+		HighlightInfo highlightInfo = highlightInfos.get(0);
+
+		assertEquals(highlightInfo.getDescription(), "Invalid reference");
+	}
 	public void testInvalidClassReferenceHighlighting() {
 		myFixture.configureByFiles("invalidClassReference/bnd.bnd", "com/liferay/test/Foo.java");
 
