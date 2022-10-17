@@ -21,7 +21,7 @@ public class LiferayJspHookFileReferenceHelper extends FileReferenceHelper {
 
     @NotNull
     @Override
-    public Collection<PsiFileSystemItem> getRoots(@NotNull final Module module) {
+    public Collection<PsiFileSystemItem> getRoots(@NotNull final Module module, @NotNull VirtualFile file) {
         final Collection<PsiFileSystemItem> result = new ArrayList<PsiFileSystemItem>();
 
         String fragmentHostPackageName = LiferayModuleComponent.getOsgiFragmentHostPackageName(module);

@@ -1,9 +1,9 @@
 package de.dm.intellij.liferay.util;
 
-import com.intellij.diagnostic.IdeErrorsDialog;
 import com.intellij.ide.DataManager;
 import com.intellij.ide.plugins.IdeaPluginDescriptor;
-import com.intellij.ide.plugins.PluginManager;
+import com.intellij.ide.plugins.PluginManagerCore;
+import com.intellij.ide.plugins.PluginUtil;
 import com.intellij.idea.IdeaLogger;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import java.awt.Component;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -102,9 +102,9 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
                     body.append("application.version.number: " + appInfo.getMajorVersion() + "." + appInfo.getMinorVersion()).append("\n");
 
                     if (event.getThrowable() != null) {
-                        PluginId pluginId = IdeErrorsDialog.findPluginId(event.getThrowable());
+                        PluginId pluginId = PluginUtil.getInstance().findPluginId(event.getThrowable());
                         if (pluginId != null) {
-                            IdeaPluginDescriptor plugin = PluginManager.getPlugin(pluginId);
+                            IdeaPluginDescriptor plugin = PluginManagerCore.getPlugin(pluginId);
                             if ( (plugin != null) && (plugin.isBundled() == false) ) {
                                 body.append("plugin.name: "  + plugin.getName()).append("\n");
                                 body.append("application.version: " + plugin.getVersion()).append("\n");

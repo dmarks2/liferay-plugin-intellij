@@ -5,6 +5,7 @@ import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider;
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -38,8 +39,12 @@ public class LiferayServiceJavaImplLineMarkerProvider extends RelatedItemLineMar
 
                         Project project = element.getProject();
 
-                        PsiFile[] files = FilenameIndex.getFilesByName(project, "service.xml", GlobalSearchScope.allScope(project));
-                        for (PsiFile psiFile : files) {
+                        PsiManager psiManager = PsiManager.getInstance(project);
+
+                        Collection<VirtualFile> files = FilenameIndex.getVirtualFilesByName("service.xml", GlobalSearchScope.allScope(project));
+                        for (VirtualFile virtualFile : files) {
+                            PsiFile psiFile = psiManager.findFile(virtualFile);
+
                             if (psiFile instanceof XmlFile) {
                                 XmlFile xmlFile = (XmlFile) psiFile;
                                 if (xmlFile.isValid()) {
