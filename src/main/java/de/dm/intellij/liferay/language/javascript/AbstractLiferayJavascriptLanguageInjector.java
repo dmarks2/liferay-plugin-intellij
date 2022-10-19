@@ -32,14 +32,14 @@ public abstract class AbstractLiferayJavascriptLanguageInjector<TagType extends 
                     if (pair.getKey().equals(localName)) {
                         if ("".equals(pair.getValue())) {
                             if (isContextSuitableForBodyInjection(context)) {
-                                injectIntoBody(registrar, tag);
+                                injectIntoBody(registrar, tag, context);
                             }
                         } else {
                             AttributeType[] attributes = getAttributes(context);
                             for (AttributeType attribute : attributes) {
                                 String attributeName = getAttributeName(attribute);
                                 if (pair.getValue().equals(attributeName)) {
-                                    injectIntoAttribute(registrar, attribute);
+                                    injectIntoAttribute(registrar, attribute, context);
                                 }
                             }
                         }
@@ -49,9 +49,9 @@ public abstract class AbstractLiferayJavascriptLanguageInjector<TagType extends 
         }
     }
 
-    protected abstract void injectIntoAttribute(@NotNull MultiHostRegistrar registrar, AttributeType attribute);
+    protected abstract void injectIntoAttribute(@NotNull MultiHostRegistrar registrar, AttributeType attribute, PsiElement context);
 
-    protected abstract void injectIntoBody(@NotNull MultiHostRegistrar registrar, TagType tag);
+    protected abstract void injectIntoBody(@NotNull MultiHostRegistrar registrar, TagType tag, PsiElement context);
 
     @Nullable
     protected abstract TagType getTag(@NotNull PsiElement psiElement);

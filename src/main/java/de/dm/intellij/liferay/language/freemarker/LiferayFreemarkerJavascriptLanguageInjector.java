@@ -65,27 +65,10 @@ public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferay
     @NotNull
     @Override
     protected FtlCompositeElement[] getAttributes(@NotNull PsiElement psiElement) {
-        FtlMacro ftlMacro = getTag(psiElement);
+        FtlCompositeElement ftlCompositeElement = PsiTreeUtil.getParentOfType(psiElement, FtlCompositeElement.class);
 
-        if (ftlMacro != null) {
-            FtlArgumentList argumentList = ftlMacro.getArgumentList();
-            if (argumentList.getNamedArguments().length > 0) {
-                return argumentList.getNamedArguments();
-            } else {
-                FtlExpression[] positionalArguments = argumentList.getPositionalArguments();
-
-                FtlBinaryExpression[] binaryExpressions = new FtlBinaryExpression[positionalArguments.length];
-
-                for (int i = 0; i < positionalArguments.length; i++) {
-                    if (positionalArguments[i] instanceof FtlBinaryExpression) {
-                        binaryExpressions[i] = (FtlBinaryExpression) positionalArguments[i];
-                    } else {
-                        //unknown?
-                        return new FtlCompositeElement[0];
-                    }
-                }
-                return binaryExpressions;
-            }
+        if (ftlCompositeElement != null) {
+            return new FtlCompositeElement[]{ftlCompositeElement};
         }
 
         return new FtlCompositeElement[0];
@@ -113,7 +96,7 @@ public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferay
     }
 
     @Override
-    protected void injectIntoAttribute(@NotNull MultiHostRegistrar registrar, FtlCompositeElement ftlCompositeElement) {
+    protected void injectIntoAttribute(@NotNull MultiHostRegistrar registrar, FtlCompositeElement ftlCompositeElement, PsiElement context) {
         PsiElement valueElement = getValueElement(ftlCompositeElement);
 
         if (valueElement instanceof FtlStringLiteral) {
@@ -145,7 +128,7 @@ public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferay
                 if (!(ranges.isEmpty())) {
                     registrar.startInjecting(JavascriptLanguage.INSTANCE);
                     for (TextRange textRange : ranges) {
-                        registrar.addPlace(null, null, ftlStringLiteral, textRange);
+                        registrar.addPlace(null, null, (PsiLanguageInjectionHost) context, textRange);
                     }
                     registrar.doneInjecting();
                 }
@@ -154,7 +137,7 @@ public class LiferayFreemarkerJavascriptLanguageInjector extends AbstractLiferay
     }
 
     @Override
-    protected void injectIntoBody(@NotNull MultiHostRegistrar registrar, FtlMacro ftlMacro) {
+    protected void injectIntoBody(@NotNull MultiHostRegistrar registrar, FtlMacro ftlMacro, PsiElement context) {
         if (ftlMacro.isValidHost()) {
             TextRange injectionRange = ftlMacro.getInjectionRange();
             if (injectionRange != null) {

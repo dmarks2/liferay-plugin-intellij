@@ -77,7 +77,7 @@ public class LiferayTaglibJavascriptLanguageInjector extends AbstractLiferayJava
     }
 
     @Override
-    protected void injectIntoAttribute(@NotNull MultiHostRegistrar registrar, XmlAttribute xmlAttribute) {
+    protected void injectIntoAttribute(@NotNull MultiHostRegistrar registrar, XmlAttribute xmlAttribute, PsiElement context) {
         if ( (xmlAttribute.getValue() != null) && (xmlAttribute.getValue().trim().length() > 0) ) {
             XmlAttributeValue valueElement = xmlAttribute.getValueElement();
             if (valueElement != null) {
@@ -106,7 +106,7 @@ public class LiferayTaglibJavascriptLanguageInjector extends AbstractLiferayJava
     }
 
     @Override
-    protected void injectIntoBody(@NotNull MultiHostRegistrar registrar, XmlTag xmlTag) {
+    protected void injectIntoBody(@NotNull MultiHostRegistrar registrar, XmlTag xmlTag, PsiElement context) {
         InjectedLanguage javascriptLanguage = InjectedLanguage.create(JavascriptLanguage.INSTANCE.getID(), "", "", true);
 
         //special handling for aui:validator
