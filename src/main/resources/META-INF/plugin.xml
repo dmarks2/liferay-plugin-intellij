@@ -2,7 +2,7 @@
     <id>de.dm.intellij.liferay</id>
     <name>Liferay</name>
     <category>Framework integration</category>
-    <version>0.0.14</version>
+    <version>0.0.15</version>
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
@@ -25,6 +25,10 @@
       ]]></description>
 
     <change-notes><![CDATA[
+        <p>Version 0.0.15</p>
+        <ul>
+        </ul>
+
         <p>Version 0.0.14</p>
         <ul>
             <li>Feature: Resolve Resource Bundles</li>
