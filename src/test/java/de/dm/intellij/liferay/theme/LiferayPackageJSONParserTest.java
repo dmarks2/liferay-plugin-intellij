@@ -50,4 +50,10 @@ public class LiferayPackageJSONParserTest extends BasePlatformTestCase {
 
         assertEquals("unstyled", LiferayModuleComponent.getParentTheme(myFixture.getModule()));
     }
+
+    public void testPackageCustomParentJsonParser() {
+        myFixture.copyFileToProject("package_custom.json", "package.json");
+
+        assertEquals("my-custom-base-theme", LiferayModuleComponent.getParentTheme(myFixture.getModule()));
+    }
 }

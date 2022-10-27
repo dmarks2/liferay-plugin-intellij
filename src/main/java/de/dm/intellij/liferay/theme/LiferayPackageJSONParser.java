@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.theme;
 
+import com.google.gson.stream.JsonToken;
 import com.intellij.openapi.externalSystem.service.project.autoimport.FileChangeListenerBase;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -50,7 +51,23 @@ public class LiferayPackageJSONParser extends FileChangeListenerBase {
                                 while (jsonReaderEx.hasNext()) {
                                     String subname = jsonReaderEx.nextName();
                                     if ("baseTheme".equals(subname)) {
-                                        baseTheme = jsonReaderEx.nextString();
+                                        JsonToken jsonToken = jsonReaderEx.peek();
+
+                                        if (JsonToken.BEGIN_OBJECT.equals(jsonToken)) {
+                                            jsonReaderEx.beginObject();
+                                            while (jsonReaderEx.hasNext()) {
+                                                String subsubname = jsonReaderEx.nextName();
+
+                                                if ("name".equals(subsubname)) {
+                                                    baseTheme = jsonReaderEx.nextString();
+                                                } else {
+                                                    jsonReaderEx.skipValue();
+                                                }
+                                            }
+                                            jsonReaderEx.endObject();
+                                        } else {
+                                            baseTheme = jsonReaderEx.nextString();
+                                        }
                                     } else if ("pathBuild".equals(subname)) {
                                         pathBuild = jsonReaderEx.nextString();
                                     } else if ("pathDist".equals(subname)) {

@@ -1,0 +1,18 @@
+{
+  "name": "my-theme",
+  "version": "1.0.0",
+  "main": "package.json",
+  "liferayTheme": {
+    "baseTheme": {
+      "name": "my-custom-base-theme",
+      "version": "1.0.0"
+    },
+    "screenshot": "",
+    "rubySass": false,
+    "templateLanguage": "ftl",
+    "version": "7.0"
+  },
+  "dependencies": {
+    "my-custom-base-theme": "1.0.0"
+  }
+}
