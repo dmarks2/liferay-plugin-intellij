@@ -7,6 +7,7 @@ CSS / SCSS files
 4. [Compass Support](#compass-support)
 5. [Clay SCSS Variables documentation](#clay-scss-variables-documentation)
 6. [Frontend Token Definition support](#frontend-token-definition-support)
+7. [Compare Theme files with original files](#compare-theme-files-with-original-files)
 
 Theme Image Path reference
 --------------------------
@@ -73,3 +74,11 @@ Additionally, all `label` attributes are references to `Language_xx.properties` 
 look up language keys while editing that file.
 
 *This feature works in IntelliJ Ultimate Edition only.*
+
+Compare Theme files with original files
+---------------------------------------
+
+When you inherit from a parent theme (e.g. `styled` or `unstyled`) you can now 
+compare your files with the original files from the parent theme.
+
+![Compare theme files](compare_theme.png "Compare theme files")

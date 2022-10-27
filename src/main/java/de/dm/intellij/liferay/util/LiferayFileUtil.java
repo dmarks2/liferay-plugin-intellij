@@ -371,6 +371,36 @@ public class LiferayFileUtil {
         return result;
     }
 
+    public static Collection<String> getContentRootRelativePaths(Module module, VirtualFile virtualFile) {
+        Collection<String> result = new ArrayList<>();
+
+        ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
+        for (VirtualFile sourceRoot : moduleRootManager.getContentRoots()) {
+            String relativePath = VfsUtilCore.getRelativePath(virtualFile, sourceRoot);
+
+            if (relativePath != null) {
+                result.add(relativePath);
+            }
+        }
+
+        return result;
+    }
+
+    public static Collection<String> getSourceRootRelativePaths(Module module, VirtualFile virtualFile) {
+        Collection<String> result = new ArrayList<>();
+
+        ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
+        for (VirtualFile sourceRoot : moduleRootManager.getSourceRoots()) {
+            String relativePath = VfsUtilCore.getRelativePath(virtualFile, sourceRoot);
+
+            if (relativePath != null) {
+                result.add(relativePath);
+            }
+        }
+
+        return result;
+    }
+
     public static VirtualFile getChild(VirtualFile parent, String name) {
         int index = name.indexOf('/');
 
