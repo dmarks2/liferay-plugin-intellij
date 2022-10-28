@@ -203,10 +203,10 @@ public class ShowThemeDiffAction extends CompareFilesAction {
                 VirtualFile virtualFile = nodeModuleDirectory.findFileByRelativePath("package.json");
 
                 if (virtualFile != null) {
-                    String parentParentTheme = LiferayPackageJSONParser.getParentTheme(virtualFile);
+                    LiferayPackageJSONParser.PackageJSONInfo packageJSONInfo = LiferayPackageJSONParser.getPackageJSONInfo(virtualFile);
 
-                    if (parentParentTheme != null) {
-                        nodeModuleNames.addAll(collectNodeModules(parentParentTheme, nodeModules));
+                    if (packageJSONInfo != null && packageJSONInfo.baseTheme != null) {
+                        nodeModuleNames.addAll(collectNodeModules(packageJSONInfo.baseTheme, nodeModules));
                     }
                 }
             }

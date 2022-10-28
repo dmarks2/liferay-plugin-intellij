@@ -28,83 +28,33 @@ import java.util.Collections;
  */
 public class LiferayPackageJSONParser extends FileChangeListenerBase {
 
+    public static class PackageJSONInfo {
+        public String baseTheme;
+        public String pathBuild = "build";
+        public String pathDist = "dist";
+    }
+
     public static void handleChange(Project project, VirtualFile virtualFile) {
         final Module module = ModuleUtil.findModuleForFile(virtualFile, project);
         if (module != null) {
             LiferayModuleComponent component = module.getService(LiferayModuleComponent.class);
+
             if (component != null) {
-
                 try {
-                    String fileText = FileUtil.loadTextAndClose(virtualFile.getInputStream());
+                    PackageJSONInfo packageJSONInfo = getPackageJSONInfo(virtualFile);
 
-                    if (StringUtil.isNotEmpty(fileText)) {
-
-                        String baseTheme = null;
-                        String pathBuild = "build";
-                        String pathDist = "dist";
-
-                        JsonReaderEx jsonReaderEx = new JsonReaderEx(fileText);
-                        jsonReaderEx.beginObject();
-                        while (jsonReaderEx.hasNext()) {
-                            String name = jsonReaderEx.nextName();
-                            if ("liferayTheme".equals(name)) {
-                                jsonReaderEx.beginObject();
-                                while (jsonReaderEx.hasNext()) {
-                                    String subname = jsonReaderEx.nextName();
-                                    if ("baseTheme".equals(subname)) {
-                                        JsonToken jsonToken = jsonReaderEx.peek();
-
-                                        if (JsonToken.BEGIN_OBJECT.equals(jsonToken)) {
-                                            jsonReaderEx.beginObject();
-                                            while (jsonReaderEx.hasNext()) {
-                                                String subsubname = jsonReaderEx.nextName();
-
-                                                if ("name".equals(subsubname)) {
-                                                    baseTheme = jsonReaderEx.nextString();
-                                                } else {
-                                                    jsonReaderEx.skipValue();
-                                                }
-                                            }
-                                            jsonReaderEx.endObject();
-                                        } else {
-                                            baseTheme = jsonReaderEx.nextString();
-                                        }
-                                    } else if ("pathBuild".equals(subname)) {
-                                        pathBuild = jsonReaderEx.nextString();
-                                    } else if ("pathDist".equals(subname)) {
-                                        pathDist = jsonReaderEx.nextString();
-                                    } else {
-                                        jsonReaderEx.skipValue();
-                                    }
-                                }
-                                jsonReaderEx.endObject();
-                            } else {
-                                jsonReaderEx.skipValue();
-                            }
-                        }
-                        jsonReaderEx.endObject();
-
-                        if (StringUtil.isNotEmpty(baseTheme)) {
-                            baseTheme = StringUtil.unquoteString(baseTheme);
-
-                            component.setParentTheme(baseTheme);
-                        }
-
-                        if (pathBuild.startsWith("./")) {
-                            pathBuild = pathBuild.substring(3);
-                        }
-
-                        if (pathDist.startsWith("./")) {
-                            pathDist = pathDist.substring(3);
+                    if (packageJSONInfo != null) {
+                        if (StringUtil.isNotEmpty(packageJSONInfo.baseTheme)) {
+                            component.setParentTheme(packageJSONInfo.baseTheme);
                         }
 
                         ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
 
                         for (VirtualFile sourceRoot : moduleRootManager.getContentRoots()) {
-                            Collection<String> excludeFolders = new ArrayList<String>();
+                            Collection<String> excludeFolders = new ArrayList<>();
 
-                            VirtualFile pathBuildFile = sourceRoot.findFileByRelativePath(pathBuild);
-                            VirtualFile pathDistFile = sourceRoot.findFileByRelativePath(pathDist);
+                            VirtualFile pathBuildFile = sourceRoot.findFileByRelativePath(packageJSONInfo.pathBuild);
+                            VirtualFile pathDistFile = sourceRoot.findFileByRelativePath(packageJSONInfo.pathDist);
                             if (pathBuildFile != null) {
                                 excludeFolders.add(pathBuildFile.getUrl());
                             }
@@ -120,7 +70,6 @@ public class LiferayPackageJSONParser extends FileChangeListenerBase {
                             ));
                         }
                     }
-
                 } catch (Exception e) {
                     //unparseable json?
                 }
@@ -132,11 +81,11 @@ public class LiferayPackageJSONParser extends FileChangeListenerBase {
         return path.endsWith("package.json");
     }
 
-    public static String getParentTheme(VirtualFile packageJsonFile) throws IOException {
+    public static PackageJSONInfo getPackageJSONInfo(VirtualFile packageJsonFile) throws IOException {
         String fileText = FileUtil.loadTextAndClose(packageJsonFile.getInputStream());
 
         if (StringUtil.isNotEmpty(fileText)) {
-            String baseTheme = null;
+            PackageJSONInfo packageJSONInfo = new PackageJSONInfo();
 
             try (JsonReaderEx jsonReaderEx = new JsonReaderEx(fileText)) {
                 jsonReaderEx.beginObject();
@@ -155,15 +104,19 @@ public class LiferayPackageJSONParser extends FileChangeListenerBase {
                                         String subsubname = jsonReaderEx.nextName();
 
                                         if ("name".equals(subsubname)) {
-                                            baseTheme = jsonReaderEx.nextString();
+                                            packageJSONInfo.baseTheme = jsonReaderEx.nextString();
                                         } else {
                                             jsonReaderEx.skipValue();
                                         }
                                     }
                                     jsonReaderEx.endObject();
                                 } else {
-                                    baseTheme = jsonReaderEx.nextString();
+                                    packageJSONInfo.baseTheme = jsonReaderEx.nextString();
                                 }
+                            } else if ("pathBuild".equals(subname)) {
+                                packageJSONInfo.pathBuild = jsonReaderEx.nextString();
+                            } else if ("pathDist".equals(subname)) {
+                                packageJSONInfo.pathDist = jsonReaderEx.nextString();
                             } else {
                                 jsonReaderEx.skipValue();
                             }
@@ -176,11 +129,19 @@ public class LiferayPackageJSONParser extends FileChangeListenerBase {
                 jsonReaderEx.endObject();
             }
 
-            if (StringUtil.isNotEmpty(baseTheme)) {
-                baseTheme = StringUtil.unquoteString(baseTheme);
+            if (StringUtil.isNotEmpty(packageJSONInfo.baseTheme)) {
+                packageJSONInfo.baseTheme = StringUtil.unquoteString(packageJSONInfo.baseTheme);
             }
 
-            return baseTheme;
+            if (packageJSONInfo.pathBuild.startsWith("./")) {
+                packageJSONInfo.pathBuild = packageJSONInfo.pathBuild.substring(3);
+            }
+
+            if (packageJSONInfo.pathDist.startsWith("./")) {
+                packageJSONInfo.pathDist = packageJSONInfo.pathDist.substring(3);
+            }
+
+            return packageJSONInfo;
         }
 
         return null;
