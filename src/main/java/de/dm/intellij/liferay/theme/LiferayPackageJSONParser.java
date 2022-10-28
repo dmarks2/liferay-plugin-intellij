@@ -16,6 +16,7 @@ import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.io.JsonReaderEx;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -129,6 +130,60 @@ public class LiferayPackageJSONParser extends FileChangeListenerBase {
 
     public static boolean isRelevantFile(String path) {
         return path.endsWith("package.json");
+    }
+
+    public static String getParentTheme(VirtualFile packageJsonFile) throws IOException {
+        String fileText = FileUtil.loadTextAndClose(packageJsonFile.getInputStream());
+
+        if (StringUtil.isNotEmpty(fileText)) {
+            String baseTheme = null;
+
+            try (JsonReaderEx jsonReaderEx = new JsonReaderEx(fileText)) {
+                jsonReaderEx.beginObject();
+                while (jsonReaderEx.hasNext()) {
+                    String name = jsonReaderEx.nextName();
+                    if ("liferayTheme".equals(name)) {
+                        jsonReaderEx.beginObject();
+                        while (jsonReaderEx.hasNext()) {
+                            String subname = jsonReaderEx.nextName();
+                            if ("baseTheme".equals(subname)) {
+                                JsonToken jsonToken = jsonReaderEx.peek();
+
+                                if (JsonToken.BEGIN_OBJECT.equals(jsonToken)) {
+                                    jsonReaderEx.beginObject();
+                                    while (jsonReaderEx.hasNext()) {
+                                        String subsubname = jsonReaderEx.nextName();
+
+                                        if ("name".equals(subsubname)) {
+                                            baseTheme = jsonReaderEx.nextString();
+                                        } else {
+                                            jsonReaderEx.skipValue();
+                                        }
+                                    }
+                                    jsonReaderEx.endObject();
+                                } else {
+                                    baseTheme = jsonReaderEx.nextString();
+                                }
+                            } else {
+                                jsonReaderEx.skipValue();
+                            }
+                        }
+                        jsonReaderEx.endObject();
+                    } else {
+                        jsonReaderEx.skipValue();
+                    }
+                }
+                jsonReaderEx.endObject();
+            }
+
+            if (StringUtil.isNotEmpty(baseTheme)) {
+                baseTheme = StringUtil.unquoteString(baseTheme);
+            }
+
+            return baseTheme;
+        }
+
+        return null;
     }
 
     @Override

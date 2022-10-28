@@ -76,6 +76,35 @@ public class ShowThemeDiffActionNodeModulesTest extends LightJavaCodeInsightFixt
         assertTrue("Diff action should be available for scss file from styled theme", action.isAvailable(event));
     }
 
+    public void testCustomBaseThemeScssFileFromNodeModules() {
+        myFixture.configureByFiles(
+                "css/_custom.scss",
+                "node_modules/my-custom-base-theme/src/css/_custom.scss",
+                "node_modules/my-custom-base-theme/package.json"
+        );
+
+        LiferayModuleComponent liferayModuleComponent = myFixture.getModule().getService(LiferayModuleComponent.class);
+
+        liferayModuleComponent.setParentTheme("my-custom-base-theme");
+
+        PsiFile psiFile = myFixture.getFile();
+
+        VirtualFile virtualFile = psiFile.getVirtualFile();
+
+        ShowThemeDiffAction action = new ShowThemeDiffAction();
+
+        AnActionEvent event = new AnActionEvent(
+                null,
+                new VirtualFilesDataProvider(myFixture.getProject(), virtualFile),
+                "",
+                action.getTemplatePresentation().clone(),
+                ActionManager.getInstance(),
+                0
+        );
+
+        assertTrue("Diff action should be available for scss file from custom base theme", action.isAvailable(event));
+    }
+
     private static final class VirtualFilesDataProvider extends TestDataProvider {
         private VirtualFile[] virtualFiles;
 

@@ -17,13 +17,14 @@ import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileSystem;
-import de.dm.intellij.liferay.client.LiferayServicesUtil;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
+import de.dm.intellij.liferay.theme.LiferayPackageJSONParser;
 import de.dm.intellij.liferay.util.LiferayFileUtil;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -133,47 +134,85 @@ public class ShowThemeDiffAction extends CompareFilesAction {
                 log.debug("(node_modules) parent theme is: " + parentTheme);
             }
 
-            Collection<String> nodeModuleNames = new ArrayList<>();
+            try {
+                Collection<String> nodeModuleNames = collectNodeModules(parentTheme, nodeModules);
 
-            //TODO custom parents?
+                Collection<String> sourceRootRelativePaths = LiferayFileUtil.getSourceRootRelativePaths(module, selectedFile);
 
-            if ("unstyled".equals(parentTheme)) {
-                nodeModuleNames.add("liferay-frontend-theme-unstyled");
-            } else if ("styled".equals(parentTheme)) {
-                nodeModuleNames.add("liferay-frontend-theme-styled");
-                nodeModuleNames.add("liferay-frontend-theme-unstyled");
-            }
-
-            Collection<String> sourceRootRelativePaths = LiferayFileUtil.getSourceRootRelativePaths(module, selectedFile);
-
-            for (String nodeModuleName : nodeModuleNames) {
-                if (log.isDebugEnabled()) {
-                    log.debug("examine node module " + nodeModuleName);
-                }
-
-                VirtualFile nodeModuleDirectory = LiferayFileUtil.getChild(nodeModules, nodeModuleName);
-
-                if (nodeModuleDirectory != null) {
+                for (String nodeModuleName : nodeModuleNames) {
                     if (log.isDebugEnabled()) {
-                        log.debug("found node module " + nodeModuleDirectory);
+                        log.debug("examine node module " + nodeModuleName);
                     }
 
-                    for (String relativePath : sourceRootRelativePaths) {
-                        VirtualFile virtualFile = nodeModuleDirectory.findFileByRelativePath(relativePath);
+                    VirtualFile nodeModuleDirectory = LiferayFileUtil.getChild(nodeModules, nodeModuleName);
 
+                    if (nodeModuleDirectory != null) {
                         if (log.isDebugEnabled()) {
-                            log.debug("try to find " + relativePath + " in " + nodeModuleDirectory.getPath());
+                            log.debug("found node module " + nodeModuleDirectory);
                         }
 
-                        if (virtualFile != null) {
-                            return virtualFile;
+                        for (String relativePath : sourceRootRelativePaths) {
+                            VirtualFile virtualFile = nodeModuleDirectory.findFileByRelativePath(relativePath);  //build dir
+
+                            if (log.isDebugEnabled()) {
+                                log.debug("try to find " + relativePath + " in " + nodeModuleDirectory.getPath());
+                            }
+
+                            if (virtualFile == null) {
+                                virtualFile = nodeModuleDirectory.findFileByRelativePath("src/" + relativePath);   //src dir
+
+                                if (log.isDebugEnabled()) {
+                                    log.debug("try to find src/" + relativePath + " in " + nodeModuleDirectory.getPath());
+                                }
+                            }
+
+                            if (virtualFile != null) {
+                                return virtualFile;
+                            }
                         }
                     }
+                }
+            } catch (IOException e) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Unable to get parent themes: " + e.getMessage(), e);
                 }
             }
         }
 
         return null;
+    }
+
+    private static Collection<String> collectNodeModules(String parentTheme, VirtualFile nodeModules) throws IOException {
+        Collection<String> nodeModuleNames = new ArrayList<>();
+
+        if ("unstyled".equals(parentTheme)) {
+            nodeModuleNames.add("liferay-frontend-theme-unstyled");
+        } else if ("styled".equals(parentTheme)) {
+            nodeModuleNames.add("liferay-frontend-theme-styled");
+            nodeModuleNames.add("liferay-frontend-theme-unstyled");
+        } else {
+            nodeModuleNames.add(parentTheme);
+
+            VirtualFile nodeModuleDirectory = LiferayFileUtil.getChild(nodeModules, parentTheme);
+
+            if (nodeModuleDirectory != null) {
+                if (log.isDebugEnabled()) {
+                    log.debug("found node module " + nodeModuleDirectory);
+                }
+
+                VirtualFile virtualFile = nodeModuleDirectory.findFileByRelativePath("package.json");
+
+                if (virtualFile != null) {
+                    String parentParentTheme = LiferayPackageJSONParser.getParentTheme(virtualFile);
+
+                    if (parentParentTheme != null) {
+                        nodeModuleNames.addAll(collectNodeModules(parentParentTheme, nodeModules));
+                    }
+                }
+            }
+        }
+
+        return nodeModuleNames;
     }
 
     private static VirtualFile getOriginalFileFromJar(Module module, VirtualFile selectedFile) {
