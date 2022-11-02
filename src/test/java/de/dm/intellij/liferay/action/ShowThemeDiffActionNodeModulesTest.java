@@ -6,11 +6,8 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
-import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.TestDataProvider;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
-import de.dm.intellij.liferay.module.LiferayModuleComponent;
-import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 import org.jetbrains.annotations.NotNull;
 
 public class ShowThemeDiffActionNodeModulesTest extends LightJavaCodeInsightFixtureTestCase {
@@ -53,10 +50,7 @@ public class ShowThemeDiffActionNodeModulesTest extends LightJavaCodeInsightFixt
                 "css/_taglib.scss",
                 "node_modules/liferay-frontend-theme-styled/css/_taglib.scss"
         );
-
-        LiferayModuleComponent liferayModuleComponent = myFixture.getModule().getService(LiferayModuleComponent.class);
-
-        liferayModuleComponent.setParentTheme("styled");
+        myFixture.copyFileToProject("package_styled.json", "package.json");
 
         PsiFile psiFile = myFixture.getFile();
 
@@ -82,10 +76,7 @@ public class ShowThemeDiffActionNodeModulesTest extends LightJavaCodeInsightFixt
                 "node_modules/my-custom-base-theme/src/css/_custom.scss",
                 "node_modules/my-custom-base-theme/package.json"
         );
-
-        LiferayModuleComponent liferayModuleComponent = myFixture.getModule().getService(LiferayModuleComponent.class);
-
-        liferayModuleComponent.setParentTheme("my-custom-base-theme");
+        myFixture.copyFileToProject("package_custom.json", "package.json");
 
         PsiFile psiFile = myFixture.getFile();
 

@@ -9,6 +9,13 @@
         <JsonSchema.ProviderFactory implementation="de.dm.intellij.liferay.schema.LiferayJsonSchemaProviderFactory"/>
     </extensions>
 
+    <actions>
+        <action id="de.dm.intellij.liferay.action.ShowThemeDiffAction"
+                class="de.dm.intellij.liferay.action.ShowThemeDiffAction" icon="/com/liferay/icons/liferay.png">
+            <add-to-group group-id="ProjectViewPopupMenu" relative-to-action="CompareFileWithEditor" anchor="after"/>
+        </action>
+    </actions>
+
     <projectListeners>
         <listener class="de.dm.intellij.liferay.module.LiferayGulpModuleListener" topic="com.intellij.openapi.project.ModuleListener" />
     </projectListeners>
@@ -16,4 +23,5 @@
         <listener class="de.dm.intellij.liferay.language.gulp.LiferayGulpfileParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
     </applicationListeners>
 
+    <resource-bundle>messages.BasicActionsBundle</resource-bundle>
 </idea-plugin>

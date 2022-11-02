@@ -311,13 +311,6 @@
         <projectResolve implementation="de.dm.intellij.liferay.gradle.LiferayBundleSupportGradleProjectResolver" />
     </extensions>
 
-    <actions>
-        <action id="de.dm.intellij.liferay.action.ShowThemeDiffAction"
-                class="de.dm.intellij.liferay.action.ShowThemeDiffAction" icon="/com/liferay/icons/liferay.png">
-            <add-to-group group-id="ProjectViewPopupMenu" relative-to-action="CompareFileWithEditor" anchor="after"/>
-        </action>
-    </actions>
-
     <projectListeners>
         <listener class="de.dm.intellij.liferay.module.LiferayModuleListener" topic="com.intellij.openapi.project.ModuleListener" />
         <listener class="de.dm.intellij.liferay.resourcesimporter.LiferayAdvancedResourcesImporterServiceCallModuleListener" topic="com.intellij.openapi.project.ModuleListener" />
@@ -332,6 +325,4 @@
         <listener class="de.dm.intellij.liferay.resourcesimporter.LiferayAdvancedResourcesImporterBndParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
         <listener class="de.dm.intellij.liferay.resourcesimporter.LiferayAdvancedResourcesImporterServiceCallWatcher" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
     </applicationListeners>
-
-    <resource-bundle>messages.BasicActionsBundle</resource-bundle>
 </idea-plugin>

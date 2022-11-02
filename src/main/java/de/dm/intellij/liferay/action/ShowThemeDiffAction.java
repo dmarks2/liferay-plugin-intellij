@@ -4,6 +4,8 @@ import com.intellij.diff.DiffManager;
 import com.intellij.diff.DiffRequestFactory;
 import com.intellij.diff.actions.CompareFilesAction;
 import com.intellij.diff.requests.DiffRequest;
+import com.intellij.javascript.nodejs.CompletionModuleInfo;
+import com.intellij.javascript.nodejs.reference.NodeModuleManager;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -33,10 +35,10 @@ public class ShowThemeDiffAction extends CompareFilesAction {
     private final static Logger log = Logger.getInstance(ShowThemeDiffAction.class);
 
     @Override
-    public void actionPerformed(AnActionEvent e) {
-        Project project = e.getProject();
+    public void actionPerformed(AnActionEvent actionEvent) {
+        Project project = actionEvent.getProject();
 
-        DiffRequest diffRequest = getDiffRequest(e);
+        DiffRequest diffRequest = getDiffRequest(actionEvent);
         if (diffRequest == null) {
             return;
         }
@@ -45,21 +47,21 @@ public class ShowThemeDiffAction extends CompareFilesAction {
     }
 
     @Override
-    public void update(AnActionEvent e) {
-        Presentation presentation = e.getPresentation();
-        boolean isAvailable = isAvailable(e);
+    public void update(AnActionEvent actionEvent) {
+        Presentation presentation = actionEvent.getPresentation();
+        boolean isAvailable = isAvailable(actionEvent);
         presentation.setEnabled(isAvailable);
-        if (ActionPlaces.isPopupPlace(e.getPlace())) {
+        if (ActionPlaces.isPopupPlace(actionEvent.getPlace())) {
             presentation.setVisible(isAvailable);
         }
     }
 
     @Override
-    protected DiffRequest getDiffRequest(@NotNull AnActionEvent e) {
-        Project project = e.getProject();
+    protected DiffRequest getDiffRequest(@NotNull AnActionEvent actionEvent) {
+        Project project = actionEvent.getProject();
 
-        VirtualFile selectedFile = getSelectedFile(e);
-        VirtualFile originalFile = getOriginalFile(e);
+        VirtualFile selectedFile = getSelectedFile(actionEvent);
+        VirtualFile originalFile = getOriginalFile(actionEvent);
 
         if ((selectedFile != null) && (originalFile != null)) {
             return DiffRequestFactory.getInstance().createFromFiles(project, selectedFile, originalFile);
@@ -69,21 +71,25 @@ public class ShowThemeDiffAction extends CompareFilesAction {
     }
 
     @Override
-    protected boolean isAvailable(@NotNull AnActionEvent e) {
-        VirtualFile selectedFile = getSelectedFile(e);
+    protected boolean isAvailable(@NotNull AnActionEvent actionEvent) {
+        VirtualFile selectedFile = getSelectedFile(actionEvent);
         if (selectedFile == null) {
             return false;
         }
 
-        Module module = ModuleUtil.findModuleForFile(selectedFile, e.getProject());
+        Project project = actionEvent.getProject();
 
-        if ( (module != null) && (! (module.isDisposed())) ) {
-            String parentTheme = LiferayModuleComponent.getParentTheme(module);
+        if (project != null) {
+            Module module = ModuleUtil.findModuleForFile(selectedFile, project);
 
-            if (parentTheme != null) {
-                VirtualFile originalFile = getOriginalFile(e);
+            if ((module != null) && (!(module.isDisposed()))) {
+                String parentTheme = LiferayModuleComponent.getParentTheme(module);
 
-                return originalFile != null;
+                if (parentTheme != null) {
+                    VirtualFile originalFile = getOriginalFile(actionEvent);
+
+                    return originalFile != null;
+                }
             }
         }
 
@@ -91,22 +97,24 @@ public class ShowThemeDiffAction extends CompareFilesAction {
     }
 
     @Nullable
-    private static VirtualFile getSelectedFile(@NotNull AnActionEvent e) {
-        VirtualFile[] array = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
-        if (array == null || array.length != 1 || array[0].isDirectory()) {
+    private static VirtualFile getSelectedFile(@NotNull AnActionEvent actionEvent) {
+        VirtualFile[] virtualFiles = actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
+        if (virtualFiles == null || virtualFiles.length != 1 || virtualFiles[0].isDirectory()) {
             return null;
         }
 
-        return array[0];
+        return virtualFiles[0];
     }
 
     @Nullable
-    private static VirtualFile getOriginalFile(@NotNull AnActionEvent e) {
-        Project project = e.getProject();
+    private static VirtualFile getOriginalFile(@NotNull AnActionEvent actionEvent) {
+        Project project = actionEvent.getProject();
 
-        VirtualFile selectedFile = getSelectedFile(e);
-        if (selectedFile != null) {
+        VirtualFile selectedFile = getSelectedFile(actionEvent);
+
+        if (selectedFile != null && project != null) {
             Module module = ModuleUtil.findModuleForFile(selectedFile, project);
+
             if ( (module != null) && (! (module.isDisposed())) ) {
                 VirtualFile virtualFile = getOriginalFileFromNodeModules(module, selectedFile);
 
@@ -121,68 +129,60 @@ public class ShowThemeDiffAction extends CompareFilesAction {
     }
 
     private static VirtualFile getOriginalFileFromNodeModules(Module module, VirtualFile selectedFile) {
-        VirtualFile nodeModules = LiferayFileUtil.getFileInContentRoot(module, "node_modules");
+        String parentTheme = LiferayModuleComponent.getParentTheme(module);
 
         if (log.isDebugEnabled()) {
-            log.debug("node_modules found: " + nodeModules);
+            log.debug("(node_modules) parent theme is: " + parentTheme);
         }
 
-        if (nodeModules != null) {
-            String parentTheme = LiferayModuleComponent.getParentTheme(module);
+        try {
+            Collection<String> nodeModuleNames = collectNodeModules(parentTheme, module.getProject(), selectedFile);
 
-            if (log.isDebugEnabled()) {
-                log.debug("(node_modules) parent theme is: " + parentTheme);
-            }
+            Collection<String> sourceRootRelativePaths = LiferayFileUtil.getSourceRootRelativePaths(module, selectedFile);
 
-            try {
-                Collection<String> nodeModuleNames = collectNodeModules(parentTheme, nodeModules);
+            for (String nodeModuleName : nodeModuleNames) {
+                if (log.isDebugEnabled()) {
+                    log.debug("examine node module " + nodeModuleName);
+                }
 
-                Collection<String> sourceRootRelativePaths = LiferayFileUtil.getSourceRootRelativePaths(module, selectedFile);
+                VirtualFile nodeModuleDirectory = getNodeModuleDirectory(nodeModuleName, module.getProject(), selectedFile);
 
-                for (String nodeModuleName : nodeModuleNames) {
+                if (nodeModuleDirectory != null) {
                     if (log.isDebugEnabled()) {
-                        log.debug("examine node module " + nodeModuleName);
+                        log.debug("found node module " + nodeModuleDirectory);
                     }
 
-                    VirtualFile nodeModuleDirectory = LiferayFileUtil.getChild(nodeModules, nodeModuleName);
+                    for (String relativePath : sourceRootRelativePaths) {
+                        VirtualFile virtualFile = nodeModuleDirectory.findFileByRelativePath(relativePath);  //build dir
 
-                    if (nodeModuleDirectory != null) {
                         if (log.isDebugEnabled()) {
-                            log.debug("found node module " + nodeModuleDirectory);
+                            log.debug("try to find " + relativePath + " in " + nodeModuleDirectory.getPath());
                         }
 
-                        for (String relativePath : sourceRootRelativePaths) {
-                            VirtualFile virtualFile = nodeModuleDirectory.findFileByRelativePath(relativePath);  //build dir
+                        if (virtualFile == null) {
+                            virtualFile = nodeModuleDirectory.findFileByRelativePath("src/" + relativePath);   //src dir
 
                             if (log.isDebugEnabled()) {
-                                log.debug("try to find " + relativePath + " in " + nodeModuleDirectory.getPath());
+                                log.debug("try to find src/" + relativePath + " in " + nodeModuleDirectory.getPath());
                             }
+                        }
 
-                            if (virtualFile == null) {
-                                virtualFile = nodeModuleDirectory.findFileByRelativePath("src/" + relativePath);   //src dir
-
-                                if (log.isDebugEnabled()) {
-                                    log.debug("try to find src/" + relativePath + " in " + nodeModuleDirectory.getPath());
-                                }
-                            }
-
-                            if (virtualFile != null) {
-                                return virtualFile;
-                            }
+                        if (virtualFile != null) {
+                            return virtualFile;
                         }
                     }
                 }
-            } catch (IOException e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Unable to get parent themes: " + e.getMessage(), e);
-                }
+            }
+        } catch (IOException ioException) {
+            if (log.isDebugEnabled()) {
+                log.debug("Unable to get parent themes: " + ioException.getMessage(), ioException);
             }
         }
 
         return null;
     }
 
-    private static Collection<String> collectNodeModules(String parentTheme, VirtualFile nodeModules) throws IOException {
+    private static Collection<String> collectNodeModules(String parentTheme, Project project, VirtualFile requester) throws IOException {
         Collection<String> nodeModuleNames = new ArrayList<>();
 
         if ("unstyled".equals(parentTheme)) {
@@ -193,7 +193,7 @@ public class ShowThemeDiffAction extends CompareFilesAction {
         } else {
             nodeModuleNames.add(parentTheme);
 
-            VirtualFile nodeModuleDirectory = LiferayFileUtil.getChild(nodeModules, parentTheme);
+            VirtualFile nodeModuleDirectory = getNodeModuleDirectory(parentTheme, project, requester); // LiferayFileUtil.getChild(nodeModules, parentTheme);
 
             if (nodeModuleDirectory != null) {
                 if (log.isDebugEnabled()) {
@@ -206,13 +206,29 @@ public class ShowThemeDiffAction extends CompareFilesAction {
                     LiferayPackageJSONParser.PackageJSONInfo packageJSONInfo = LiferayPackageJSONParser.getPackageJSONInfo(virtualFile);
 
                     if (packageJSONInfo != null && packageJSONInfo.baseTheme != null) {
-                        nodeModuleNames.addAll(collectNodeModules(packageJSONInfo.baseTheme, nodeModules));
+                        nodeModuleNames.addAll(collectNodeModules(packageJSONInfo.baseTheme, project, requester));
                     }
                 }
             }
         }
 
         return nodeModuleNames;
+    }
+
+    private static VirtualFile getNodeModuleDirectory(String nodeModuleName, Project project, VirtualFile requester) {
+        NodeModuleManager nodeModuleManager = NodeModuleManager.getInstance(project);
+
+        Collection<CompletionModuleInfo> completionModuleInfos = nodeModuleManager.collectVisibleNodeModules(requester);
+
+        CompletionModuleInfo moduleInfo = completionModuleInfos.stream().filter(
+                completionModuleInfo -> completionModuleInfo.getName().equals(nodeModuleName)
+        ).findFirst().orElse(null);
+
+        if (moduleInfo != null) {
+            return moduleInfo.getVirtualFile();
+        }
+
+        return null;
     }
 
     private static VirtualFile getOriginalFileFromJar(Module module, VirtualFile selectedFile) {
