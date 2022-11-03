@@ -28,6 +28,7 @@
         <p>Version 0.0.15</p>
         <ul>
             <li>Feature: Ability to compare theme files with the original files from the parent theme</li>
+            <li>Feature: Resolve configurationPid OSGi properties to configuration interface classes</li>
         </ul>
 
         <p>Version 0.0.14</p>
@@ -290,6 +291,8 @@
         <runLineMarkerContributor language="Groovy" implementationClass="de.dm.intellij.liferay.language.groovy.LiferayServerGroovyRunLineMarkerProvider" />
 
         <psi.referenceContributor implementation="de.dm.intellij.liferay.workflow.LiferayWorkflowXmlReferenceContributor"/>
+
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationReferenceContributor"/>
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">

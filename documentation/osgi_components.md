@@ -5,6 +5,7 @@ OSGi components
 2. [Component annotation code completion](#component-annotation-code-completion)
 3. [Implicit usage for Reference annotations](#implicit-usage-for-reference-annotations)
 4. [Inspections of service class inheritance](#inspections-of-service-class-inheritance)
+5. Resolve configurationPid properties to configuration interfaces
 
 Syntax Highlighting for BND files
 ----------------------------------
@@ -208,3 +209,10 @@ An inspection checks if these conditions are given and offers a quick fix.
 ![OSGi inspection](osgi_inspection.png "OSGi inspection")
 
 *Works for Liferay 7.x, works in IntelliJ Community Edition and Ultimate Edition*
+
+Resolve configurationPid properties to configuration interfaces
+---------------------------------------------------------------
+
+For classes using configurations you can use a `configurationPid` OSGi property. The plugin is 
+able to resolve those IDs against configuration interfaces, so you can resolve or code complete
+those properties.
