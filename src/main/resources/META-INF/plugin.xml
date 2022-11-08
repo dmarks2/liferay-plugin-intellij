@@ -293,6 +293,10 @@
         <psi.referenceContributor implementation="de.dm.intellij.liferay.workflow.LiferayWorkflowXmlReferenceContributor"/>
 
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationReferenceContributor"/>
+
+        <lang.findUsagesProvider language="JAVA" implementationClass="de.dm.intellij.liferay.language.osgi.MetaConfigurationFindUsagesProvider" />
+        <referencesSearch implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationReferencesSearch" />
+        <usageTargetProvider implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationUsageTargetProvider" />
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">
