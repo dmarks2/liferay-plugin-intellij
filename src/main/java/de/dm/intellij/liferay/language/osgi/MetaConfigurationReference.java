@@ -6,14 +6,12 @@ import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.JavaTokenType;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiAnnotationMemberValue;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementResolveResult;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiJavaToken;
 import com.intellij.psi.PsiPolyVariantReference;
 import com.intellij.psi.PsiReferenceBase;
 import com.intellij.psi.ResolveResult;
@@ -52,18 +50,10 @@ public class MetaConfigurationReference extends PsiReferenceBase<PsiElement> imp
                             PsiAnnotationMemberValue attributeValue = annotation.findAttributeValue("id");
 
                             if (attributeValue != null) {
-                                for (PsiElement psiElement : attributeValue.getChildren()) {
-                                    if (psiElement instanceof PsiJavaToken) {
-                                        if (JavaTokenType.STRING_LITERAL.equals(((PsiJavaToken)psiElement).getTokenType())) {
-                                            String value = StringUtil.unquoteString(psiElement.getText());
+                                String value = StringUtil.unquoteString(attributeValue.getText());
 
-                                            if (StringUtil.equals(value, configurationPid)) {
-                                                results.add(psiElement);
-
-                                                break;
-                                            }
-                                        }
-                                    }
+                                if (StringUtil.equals(value, configurationPid)) {
+                                    results.add(attributeValue);
                                 }
                             }
                         }

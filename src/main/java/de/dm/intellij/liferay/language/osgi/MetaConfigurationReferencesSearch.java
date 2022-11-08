@@ -4,6 +4,7 @@ import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.PsiNameValuePair;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.search.PsiSearchHelper;
@@ -22,31 +23,35 @@ public class MetaConfigurationReferencesSearch implements QueryExecutor<PsiRefer
     }
 
     private static boolean doExecute(ReferencesSearch.SearchParameters queryParameters, Processor<? super PsiReference> consumer) {
-        final PsiElement element = queryParameters.getElementToSearch();
+        PsiElement element = queryParameters.getElementToSearch();
 
-        PsiNameValuePair nameValuePair = PsiTreeUtil.getParentOfType(element, PsiNameValuePair.class);
+        final PsiElement literalExpression = PsiTreeUtil.getParentOfType(element, PsiLiteralExpression.class);
 
-        if (nameValuePair != null && "id".equals(nameValuePair.getName())) {
-            PsiAnnotation annotation = PsiTreeUtil.getParentOfType(nameValuePair, PsiAnnotation.class);
+        if (literalExpression != null) {
+            PsiNameValuePair nameValuePair = PsiTreeUtil.getParentOfType(element, PsiNameValuePair.class);
 
-            if (annotation != null && "aQute.bnd.annotation.metatype.Meta.OCD".equals(annotation.getQualifiedName())) {
-                PsiSearchHelper searchHelper = PsiSearchHelper.getInstance(element.getProject());
+            if (nameValuePair != null && "id".equals(nameValuePair.getName())) {
+                PsiAnnotation annotation = PsiTreeUtil.getParentOfType(nameValuePair, PsiAnnotation.class);
 
-                String id = StringUtil.unquoteString(element.getText());
+                if (annotation != null && "aQute.bnd.annotation.metatype.Meta.OCD".equals(annotation.getQualifiedName())) {
+                    PsiSearchHelper searchHelper = PsiSearchHelper.getInstance(element.getProject());
 
-                return searchHelper.processElementsWithWord((psiElement, offsetInElement) -> {
-                    final PsiReference[] references = psiElement.getReferences();
+                    String id = StringUtil.unquoteString(element.getText());
 
-                    for (PsiReference reference : references) {
-                        if(reference instanceof MetaConfigurationReference && reference.isReferenceTo(element)) {
-                            if (! consumer.process(reference)) {
-                                return false;
+                    return searchHelper.processElementsWithWord((psiElement, offsetInElement) -> {
+                        final PsiReference[] references = psiElement.getReferences();
+
+                        for (PsiReference reference : references) {
+                            if (reference instanceof MetaConfigurationReference && reference.isReferenceTo(literalExpression)) {
+                                if (!consumer.process(reference)) {
+                                    return false;
+                                }
                             }
                         }
-                    }
 
-                    return true;
-                }, queryParameters.getEffectiveSearchScope(), id, UsageSearchContext.IN_STRINGS, true);
+                        return true;
+                    }, queryParameters.getEffectiveSearchScope(), id, UsageSearchContext.IN_STRINGS, true);
+                }
             }
         }
 

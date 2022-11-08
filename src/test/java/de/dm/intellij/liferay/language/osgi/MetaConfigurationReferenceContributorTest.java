@@ -2,17 +2,29 @@ package de.dm.intellij.liferay.language.osgi;
 
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.psi.PsiElement;
+import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
+import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class MetaConfigurationReferenceContributorTest extends LightJavaCodeInsightFixtureTestCase {
 
+    private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/osgi/MetaConfigurationReferenceContributorTest";
+
     @Override
     protected String getTestDataPath() {
-        return "testdata/de/dm/intellij/liferay/language/osgi/MetaConfigurationReferenceContributorTest";
+        return TEST_DATA_PATH;
     }
 
+    @NotNull
+    @Override
+    protected LightProjectDescriptor getProjectDescriptor() {
+        return new LightProjectDescriptorBuilder()
+                .library("com.liferay:com.liferay.document.library.api", TEST_DATA_PATH, "com.liferay.document.library.api.jar")
+                .build();
+    }
     public void testConfigurationPidCompletion() {
         myFixture.configureByFiles(
                 "de/dm/action/MyConfigurableAction.java",
@@ -37,6 +49,18 @@ public class MetaConfigurationReferenceContributorTest extends LightJavaCodeInsi
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
         assertTrue(strings.contains("de.dm.configuration.MyConfiguration"));
+    }
+
+    public void testConfigurationPidFromLibraryCompletion() {
+        myFixture.configureByFiles(
+                "de/dm/action/MyConfigurableAction.java",
+                "aQute/bnd/annotation/metatype/Meta.java",
+                "org/osgi/service/component/annotations/Component.java"
+        );
+
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+        assertTrue(strings.contains("com.liferay.document.library.configuration.DLConfiguration"));
     }
 
     public void testResolvePidReference() {
@@ -66,6 +90,20 @@ public class MetaConfigurationReferenceContributorTest extends LightJavaCodeInsi
 
         assertNotNull(resolve);
     }
+
+    public void testResolvePidReferenceFromLibrary() {
+        myFixture.configureByFiles(
+                "de/dm/action/MyLibraryConfigurableReferenceAction.java",
+                "aQute/bnd/annotation/metatype/Meta.java",
+                "org/osgi/service/component/annotations/Component.java"
+        );
+
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement resolve = element.getReferences()[0].resolve();
+
+        assertNotNull(resolve);
+    }
+
 
     /*
     public void testRenameConfigurationPid() {
