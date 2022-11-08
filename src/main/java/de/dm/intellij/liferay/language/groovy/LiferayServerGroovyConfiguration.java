@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
@@ -143,7 +144,7 @@ public class LiferayServerGroovyConfiguration extends LocatableConfigurationBase
 
     @Override
     public @NotNull Map<String, String> getEnvs() {
-        return null;
+        return Collections.emptyMap();
     }
 
     @Override
