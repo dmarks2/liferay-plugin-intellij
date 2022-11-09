@@ -12,12 +12,15 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementResolveResult;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiLiteralExpression;
+import com.intellij.psi.PsiNameValuePair;
 import com.intellij.psi.PsiPolyVariantReference;
 import com.intellij.psi.PsiReferenceBase;
 import com.intellij.psi.ResolveResult;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.ProjectScope;
 import com.intellij.psi.search.searches.AnnotatedElementsSearch;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.Query;
 import de.dm.intellij.liferay.util.Icons;
 import org.jetbrains.annotations.NotNull;
@@ -100,6 +103,38 @@ public class MetaConfigurationReference extends PsiReferenceBase<PsiElement> imp
         }
 
         return result.toArray(new Object[0]);
+    }
+
+    @Override
+    public boolean isReferenceTo(@NotNull PsiElement element) {
+        if (element instanceof PsiLiteralExpression) {
+            PsiLiteralExpression literalExpression = (PsiLiteralExpression) element;
+
+            if (isMetaConfigurationIdElement(literalExpression)) {
+                return StringUtil.equals(literalExpression.getText(), getElement().getText());
+            }
+        }
+        return super.isReferenceTo(element);
+    }
+
+    public static boolean isMetaConfigurationIdElement(PsiElement element) {
+        if (element instanceof PsiLiteralExpression) {
+            PsiLiteralExpression literalExpression = (PsiLiteralExpression) element;
+
+            PsiNameValuePair nameValuePair = PsiTreeUtil.getParentOfType(literalExpression, PsiNameValuePair.class);
+
+            if (nameValuePair != null) {
+                if ("id".equals(nameValuePair.getName())) {
+                    PsiAnnotation annotation = PsiTreeUtil.getParentOfType(nameValuePair, PsiAnnotation.class);
+
+                    if (annotation != null) {
+                        return ("aQute.bnd.annotation.metatype.Meta.OCD".equals(annotation.getQualifiedName()));
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     public static Query<PsiClass> findAnnotatedClasses(Project project, PsiElement element, String qualifiedName) {
