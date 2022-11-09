@@ -57,7 +57,7 @@ public class CustomResourceBundleReference extends ResourceBundleReference {
 
     @Override
     public Object @NotNull [] getVariants() {
-        final ProjectFileIndex projectFileIndex = ProjectFileIndex.SERVICE.getInstance(getElement().getProject());
+        final ProjectFileIndex projectFileIndex = ProjectFileIndex.getInstance(getElement().getProject());
         final PropertiesReferenceManager referenceManager = PropertiesReferenceManager.getInstance(getElement().getProject());
 
         final Set<String> bundleNames = new HashSet<>();

@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 ## 0.0.15
 - Feature: Ability to compare theme files with the original files from the parent theme
 - Feature: Resolve configurationPid OSGi properties to configuration interface classes
+- Bugfix: Fix compatibility with IntelliJ 2022.2.3+
 
 ## 0.0.14
 - Feature: Resolve Resource Bundles

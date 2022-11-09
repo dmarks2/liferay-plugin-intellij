@@ -29,6 +29,7 @@
         <ul>
             <li>Feature: Ability to compare theme files with the original files from the parent theme</li>
             <li>Feature: Resolve configurationPid OSGi properties to configuration interface classes</li>
+            <li>Bugfix: Fix compatibility with IntelliJ 2022.2.3+</li>
         </ul>
 
         <p>Version 0.0.14</p>
