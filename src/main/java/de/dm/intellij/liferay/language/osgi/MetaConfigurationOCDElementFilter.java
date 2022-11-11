@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class MetaConfigurationElementFilter implements ElementFilter {
+public class MetaConfigurationOCDElementFilter implements ElementFilter {
     @Override
     public boolean isAcceptable(Object element, @Nullable PsiElement context) {
         if (element instanceof PsiElement) {
@@ -18,10 +18,10 @@ public class MetaConfigurationElementFilter implements ElementFilter {
             PsiAnnotation annotation = PsiTreeUtil.getParentOfType(psiElement, PsiAnnotation.class);
 
             if (annotation != null) {
-                if (annotation.hasQualifiedName("org.osgi.service.component.annotations.Component")) {
+                if (annotation.hasQualifiedName("aQute.bnd.annotation.metatype.Meta.OCD")) {
                     PsiNameValuePair nameValuePair = PsiTreeUtil.getParentOfType(psiElement, PsiNameValuePair.class);
 
-                    return (nameValuePair != null && Objects.equals(nameValuePair.getName(), "configurationPid"));
+                    return (nameValuePair != null && Objects.equals(nameValuePair.getName(), "id"));
                 }
             }
         }

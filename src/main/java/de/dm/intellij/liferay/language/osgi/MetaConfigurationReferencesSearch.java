@@ -25,7 +25,7 @@ public class MetaConfigurationReferencesSearch implements QueryExecutor<PsiRefer
     private static boolean doExecute(ReferencesSearch.SearchParameters queryParameters, Processor<? super PsiReference> consumer) {
         PsiElement element = queryParameters.getElementToSearch();
 
-        final PsiElement literalExpression = PsiTreeUtil.getParentOfType(element, PsiLiteralExpression.class);
+        final PsiElement literalExpression = element instanceof PsiLiteralExpression ? element : PsiTreeUtil.getParentOfType(element, PsiLiteralExpression.class);
 
         if (literalExpression != null) {
             PsiNameValuePair nameValuePair = PsiTreeUtil.getParentOfType(element, PsiNameValuePair.class);

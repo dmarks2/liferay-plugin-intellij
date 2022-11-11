@@ -298,6 +298,9 @@
         <lang.findUsagesProvider language="JAVA" implementationClass="de.dm.intellij.liferay.language.osgi.MetaConfigurationFindUsagesProvider" />
         <referencesSearch implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationReferencesSearch" />
         <usageTargetProvider implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationUsageTargetProvider" />
+        <renamePsiElementProcessor implementation="de.dm.intellij.liferay.language.osgi.RenameMetaConfigurationProcessor" />
+        <renameHandler implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationRenameHandler"/>
+        <renameInputValidator implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationRenameInputValidator" />
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">
