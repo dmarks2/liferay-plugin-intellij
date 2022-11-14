@@ -9,7 +9,8 @@ public class ComponentInspectionToolProvider implements InspectionToolProvider {
     public Class[] getInspectionClasses() {
         return new Class[] {
                 ComponentServiceInheritanceInspection.class,
-                ReferenceWithoutComponentInspection.class
+                ReferenceWithoutComponentInspection.class,
+                MetaConfigurationInvalidIdInspection.class
         };
     }
 }

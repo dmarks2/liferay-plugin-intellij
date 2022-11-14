@@ -6,6 +6,7 @@ OSGi components
 3. [Implicit usage for Reference annotations](#implicit-usage-for-reference-annotations)
 4. [Inspections of service class inheritance](#inspections-of-service-class-inheritance)
 5. Resolve configurationPid properties to configuration interfaces
+6. Inspection for Meta Configuration ID
 
 Syntax Highlighting for BND files
 ----------------------------------
@@ -216,3 +217,10 @@ Resolve configurationPid properties to configuration interfaces
 For classes using configurations you can use a `configurationPid` OSGi property. The plugin is 
 able to resolve those IDs against configuration interfaces, so you can resolve or code complete
 those properties.
+
+Inspection for Meta Configuration ID
+------------------------------------
+
+According to the Liferay documentation the ID of a Meta Configuration must match
+the full qualified classname of the Interface class. An Inspection checks if this is the
+case and offers a Quick Fix to rename the ID.
