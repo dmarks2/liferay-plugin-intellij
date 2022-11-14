@@ -36,7 +36,7 @@ public class RenameMetaConfigurationProcessor extends RenamePsiElementProcessor 
                 if ("org.osgi.service.component.annotations.Component".equals(annotation.getQualifiedName())) {
                     PsiExpression expression = PsiElementFactory.getInstance(element.getProject()).createExpressionFromText(quotedName, null);
 
-                    annotation.setDeclaredAttributeValue("configurationPid", expression);
+                    usageElement.replace(expression);
                 }
             }
         }

@@ -29,4 +29,24 @@ public class RenameMetaConfigurationProcessorTest extends LightJavaCodeInsightFi
                 "de/dm/action/MyRenameableConfigurableAction.java", "de/dm/action/MyRenameableConfigurableAction_expected.java", false);
 
     }
+
+    public void testRenameMultipleConfigurationPid() {
+        myFixture.configureByFiles(
+                "de/dm/configuration/MyRenameableConfiguration.java",
+                "de/dm/action/MyRenameableMultipleConfigurableAction.java",
+                "aQute/bnd/annotation/metatype/Meta.java",
+                "org/osgi/service/component/annotations/Component.java"
+        );
+
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+
+        myFixture.renameElement(element, "de.dm.configuration.UpdatedConfiguration");
+
+        myFixture.checkResultByFile(
+                "de/dm/configuration/MyRenameableConfiguration.java", "de/dm/configuration/MyRenameableConfiguration_expected.java", false);
+
+        myFixture.checkResultByFile(
+                "de/dm/action/MyRenameableMultipleConfigurableAction.java", "de/dm/action/MyRenameableMultipleConfigurableAction_expected.java", false);
+
+    }
 }
