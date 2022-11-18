@@ -302,6 +302,7 @@
         <renamePsiElementProcessor implementation="de.dm.intellij.liferay.language.osgi.RenameMetaConfigurationProcessor" />
         <renameHandler implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationRenameHandler"/>
         <renameInputValidator implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationRenameInputValidator" />
+        <elementDescriptionProvider implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationElementDescriptionProvider" />
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">
