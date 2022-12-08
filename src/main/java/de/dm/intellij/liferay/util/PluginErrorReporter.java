@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.util;
 
+import com.google.gson.JsonObject;
 import com.intellij.ide.DataManager;
 import com.intellij.ide.plugins.IdeaPluginDescriptor;
 import com.intellij.ide.plugins.PluginManagerCore;
@@ -26,9 +27,6 @@ import com.intellij.util.ExceptionUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -114,13 +112,12 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
 
                     body.append("last.action: " + IdeaLogger.ourLastActionId).append("\n");
 
-                    JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
-                    objectBuilder.add("title", "Bug Report in Plugin [automatically created]");
-                    objectBuilder.add("body", body.toString());
+                    JsonObject jsonObject = new JsonObject();
 
-                    JsonObject result = objectBuilder.build();
+                    jsonObject.addProperty("title", "Bug Report in Plugin [automatically created]");
+                    jsonObject.addProperty("body", body.toString());
 
-                    byte[] bytes = result.toString().getBytes(Charset.forName("UTF-8"));
+                    byte[] bytes = jsonObject.toString().getBytes(Charset.forName("UTF-8"));
 
                     OutputStream outputStream = httpURLConnection.getOutputStream();
                     try {

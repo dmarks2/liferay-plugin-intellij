@@ -14,7 +14,6 @@ import com.intellij.xdebugger.XDebugSession;
 import com.intellij.xdebugger.XDebuggerManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -48,7 +47,7 @@ public class FreemarkerAttachDebuggerRunner extends GenericDebuggerRunner {
 
                     try {
                         return new FreemarkerAttachDebugProcess(session, freemarkerAttachExecutionResult);
-                    } catch (IOException | JSONException | URISyntaxException e) {
+                    } catch (IOException | URISyntaxException e) {
                         throw new ExecutionException(e.getMessage(), e);
                     }
                 }

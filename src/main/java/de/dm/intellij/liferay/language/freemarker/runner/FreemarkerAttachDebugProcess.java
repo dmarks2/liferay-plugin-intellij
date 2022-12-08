@@ -20,7 +20,6 @@ import freemarker.debug.Debugger;
 import freemarker.debug.DebuggerClient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -44,7 +43,7 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
 
     private Breakpoint steppingBreakpoint;
 
-    public FreemarkerAttachDebugProcess(XDebugSession session, FreemarkerAttachExecutionResult freemarkerAttachExecutionResult) throws IOException, JSONException, URISyntaxException {
+    public FreemarkerAttachDebugProcess(XDebugSession session, FreemarkerAttachExecutionResult freemarkerAttachExecutionResult) throws IOException, URISyntaxException {
         super(session);
 
         this.freemarkerAttachDebugConfiguration = freemarkerAttachExecutionResult.getFreemarkerAttachDebugConfiguration();

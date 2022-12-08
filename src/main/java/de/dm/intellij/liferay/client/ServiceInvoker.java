@@ -1,58 +1,75 @@
 package de.dm.intellij.liferay.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsonorg.JsonOrgModule;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.intellij.openapi.util.text.StringUtil;
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.client.ClientProperties;
-import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
-import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
-import org.glassfish.jersey.media.multipart.FormDataBodyPart;
-import org.glassfish.jersey.media.multipart.MultiPart;
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
-import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
+import org.apache.http.util.EntityUtils;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Iterator;
 import java.util.Map;
 
 public class ServiceInvoker {
 
-    private final WebTarget invokeTarget;
-    private final WebTarget jsonwsTarget;
-    private final ObjectMapper mapper;
+    //TODO rewrite to Apache Http and Google gson
+
+    private final URI invokeTarget;
+    private final URI jsonwsTarget;
+
+    private final HttpClient httpClient;
 
     public ServiceInvoker(URI endpoint) {
         this(endpoint, null, null);
     }
 
     public ServiceInvoker(URI endpoint, String username, String password) {
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.register(MultiPartFeature.class);
-
-        Client client = ClientBuilder.newClient(clientConfig);
+        HttpClientBuilder httpClientBuilder = HttpClientBuilder
+                .create()
+                .setRoutePlanner(new SystemDefaultRoutePlanner(null));
 
         if ( (StringUtil.isNotEmpty(username)) && (StringUtil.isNotEmpty(password)) ) {
-            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(username, password);
-            client.register(feature);
+            CredentialsProvider provider = new BasicCredentialsProvider();
+
+            UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
+
+            provider.setCredentials(AuthScope.ANY, credentials);
+
+            httpClientBuilder.setDefaultCredentialsProvider(provider);
         }
 
-        client.property(ClientProperties.CONNECT_TIMEOUT, 3000);
-        client.property(ClientProperties.READ_TIMEOUT, 3000);
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectTimeout(3000)
+                .setSocketTimeout(3000)
+                .setConnectionRequestTimeout(3000)
+                .build();
 
+        httpClientBuilder.setDefaultRequestConfig(requestConfig);
+
+        httpClient = httpClientBuilder.build();
+
+        //clientConfig.register(MultiPartFeature.class);
+
+        /*
         mapper = new ObjectMapper();
         mapper.registerModule(new JsonOrgModule());
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
@@ -60,91 +77,105 @@ public class ServiceInvoker {
         JacksonJsonProvider provider = new JacksonJsonProvider(mapper);
         client.register(provider);
 
-        jsonwsTarget =  client.target(endpoint);
-        invokeTarget = jsonwsTarget.path(Constants.PATH_INVOKE);
+         */
+
+        jsonwsTarget = endpoint;
+        invokeTarget = jsonwsTarget.resolve(Constants.PATH_INVOKE);
     }
 
-    public <T> T invoke(String command, JSONObject params, Class<T> clazz) throws JSONException, IOException {
+    public <T> T invoke(String command, JsonObject params, Class<T> clazz) throws IOException {
         return invoke(command, params, clazz, null);
     }
 
-    public <T> T invoke(String command, JSONObject params, Class<T> clazz, Map<String, File> files) throws JSONException, IOException {
-        JSONObject commandObject = new JSONObject();
-        commandObject.put(command, params);
+    public <T> T invoke(String command, JsonObject params, Class<T> clazz, Map<String, File> files) throws IOException {
+        JsonObject commandObject = new JsonObject();
+        commandObject.add(command, params);
 
-        Invocation.Builder builder;
-        Response clientResponse;
+        //Invocation.Builder builder;
+
+        HttpResponse response;
 
         if (files != null) {
-            MultiPart multiPart = new MultiPart().type(MediaType.MULTIPART_FORM_DATA_TYPE);
+            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+
+            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
             for (Map.Entry<String, File> entry : files.entrySet()) {
                 if (entry.getValue().exists()) {
-                    FileDataBodyPart fileDataBodyPart = new FileDataBodyPart(entry.getKey(), entry.getValue(), MediaType.APPLICATION_OCTET_STREAM_TYPE);
-                    multiPart.bodyPart(fileDataBodyPart);
+                    FileBody fileBody = new FileBody(entry.getValue(), ContentType.APPLICATION_OCTET_STREAM, entry.getKey());
+
+                    builder.addPart(entry.getKey(), fileBody);
                 }
             }
-            Iterator<String> it = params.keys();
-            while (it.hasNext()) {
-                String key = it.next();
-                Object value = params.opt(key);
+
+            for (String key : params.keySet()) {
+                Object value = params.get(key);
 
                 if ("serviceContext".equals(key)) {
-                    FormDataBodyPart formDataBodyPart = new FormDataBodyPart("+serviceContext", "com.liferay.portal.kernel.service.ServiceContext");
-                    multiPart.bodyPart(formDataBodyPart);
+                    StringBody formDataBodyPart = new StringBody("com.liferay.portal.kernel.service.ServiceContext", ContentType.MULTIPART_FORM_DATA);
+                    builder.addPart("+serviceContext", formDataBodyPart);
 
-                    JSONObject serviceContext = (JSONObject)value;
-                    JSONObject attributes = serviceContext.getJSONObject("attributes");
+                    JsonObject serviceContext = (JsonObject) value;
+
+                    JsonObject attributes = serviceContext.getAsJsonObject("attributes");
+
                     if (attributes != null) {
-                        Iterator<String> attributesIterator = attributes.keys();
-                        while (attributesIterator.hasNext()) {
-                            String attributeName = attributesIterator.next();
-                            Object attributeValue = attributes.opt(attributeName);
+                        for (String attributeName : attributes.keySet()) {
+                            JsonElement attributeValue = attributes.get(attributeName);
 
-                            String attributeValueString;
+                            String attributeValueString = attributeValue.getAsString();
+
+                            /*
                             if (attributeValue instanceof String[]) {
-                                attributeValueString = "[" + StringUtil.join((String[])attributeValue) + "]";
+                                attributeValueString = "[" + StringUtil.join((String[]) attributeValue) + "]";
                             } else {
                                 attributeValueString = String.valueOf(attributeValue);
                             }
+                            */
 
-                            formDataBodyPart = new FormDataBodyPart("serviceContext.attributes." + attributeName, attributeValueString);
-                            multiPart.bodyPart(formDataBodyPart);
+                            formDataBodyPart = new StringBody(attributeValueString, ContentType.MULTIPART_FORM_DATA);
+                            builder.addPart("serviceContext.attributes." + attributeName, formDataBodyPart);
                         }
                     }
 
                 } else {
-                    FormDataBodyPart formDataBodyPart = new FormDataBodyPart(key, String.valueOf(value));
-                    multiPart.bodyPart(formDataBodyPart);
+                    StringBody formDataBodyPart = new StringBody( String.valueOf(value), ContentType.MULTIPART_FORM_DATA);
+                    builder.addPart(key, formDataBodyPart);
                 }
             }
-            builder = jsonwsTarget.path(command).request(MediaType.MULTIPART_FORM_DATA);
 
-            clientResponse = builder.post(Entity.entity(multiPart, multiPart.getMediaType()));
+            HttpPost httpPost = new HttpPost(jsonwsTarget.resolve(command));
+            HttpEntity entity = builder.build();
+            httpPost.setEntity(entity);
+
+            response = httpClient.execute(httpPost);
         } else {
-            builder = invokeTarget.request(MediaType.APPLICATION_JSON);
+            HttpPost httpPost = new HttpPost(invokeTarget);
 
-            Entity<String> entity = Entity.entity(mapper.writeValueAsString(commandObject), MediaType.APPLICATION_JSON);
+            httpPost.setEntity(new StringEntity(commandObject.toString(), ContentType.APPLICATION_JSON));
 
-            clientResponse = builder.post(entity);
+            response = httpClient.execute(httpPost);
         }
 
-        String response = clientResponse.readEntity(String.class);
-        if ( (response != null) && (response.length() > 0) ) {
+        HttpEntity entity = response.getEntity();
+        String result = EntityUtils.toString(entity);
+
+        if (StringUtil.isNotEmpty(result)) {
             if (clazz == String.class) {
                 return (T) response;
             } else if (clazz == Long.class) {
-                return (T) Long.valueOf(response);
-            } else if (clazz == JSONObject.class) {
-                return (T)mapper.readValue(response, JSONObject.class);
-            } else if (clazz == JSONArray.class) {
-                return (T)mapper.readValue(response, JSONArray.class);
+                return (T) Long.valueOf(result);
+            } else if (clazz == JsonObject.class) {
+                return (T)new Gson().fromJson(result, JsonObject.class);
+            } else if (clazz == JsonArray.class) {
+                return (T)new Gson().fromJson(result, JsonArray.class);
             } else {
                 return null;
             }
-        } else {
-            return null;
         }
+
+        return null;
+
     }
 
 }

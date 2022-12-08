@@ -53,20 +53,27 @@ repositories {
     mavenCentral()
 }
 
+//https://github.com/JetBrains/intellij-community/tree/master/.idea/libraries
+
 dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.11'
     //compileOnly 'org.jetbrains.plugins:maven-server-api:2016.3'
     compileOnly 'com.github.adedayo.intellij.sdk:maven-server-api:142.1'
-    implementation 'org.glassfish:javax.json:1.1'
+
+//    compileOnly 'org.apache.httpcomponents:httpclient:4.5.13'
+//    compileOnly 'com.google.code.gson:gson:2.10'
+
+//    implementation 'org.glassfish:javax.json:1.1'
 //    compile files(org.gradle.internal.jvm.Jvm.current().toolsJar)
     implementation 'org.freemarker:freemarker:2.3.28'
 
-    implementation 'org.glassfish.jersey.core:jersey-client:2.26'
-    implementation 'org.glassfish.jersey.media:jersey-media-multipart:2.26'
-    implementation 'org.glassfish.jersey.media:jersey-media-json-jackson:2.26'
-    implementation 'org.glassfish.jersey.inject:jersey-hk2:2.26'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.9.0'
-    implementation 'org.json:json:20171018'
+//    implementation 'org.glassfish.jersey.core:jersey-client:2.26'
+//    implementation 'org.glassfish.jersey.media:jersey-media-multipart:2.26'
+//    implementation 'org.glassfish.jersey.media:jersey-media-json-jackson:2.26'
+//    implementation 'org.glassfish.jersey.inject:jersey-hk2:2.26'
+//    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.9.0'
+//    implementation 'org.json:json:20171018'
+
 }
 
 intellij {
