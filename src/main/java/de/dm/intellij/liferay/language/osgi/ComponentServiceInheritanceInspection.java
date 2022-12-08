@@ -85,7 +85,6 @@ public class ComponentServiceInheritanceInspection extends AbstractBaseJavaLocal
                             List<LocalQuickFix> quickFixes = new ArrayList<>();
 
                             LocalQuickFix quickFix = new ChangeSuperClassFix(
-                                    aClass,
                                     serviceClass,
                                     aClass.getSuperClass(),
                                     0,
@@ -104,7 +103,6 @@ public class ComponentServiceInheritanceInspection extends AbstractBaseJavaLocal
                                     if ((!isAnonymousClass(psiClass)) && (!isLocalClass(psiClass))) {
                                         quickFixes.add(
                                                 new ChangeSuperClassFix(
-                                                        aClass,
                                                         psiClass,
                                                         aClass.getSuperClass(),
                                                         i++,
