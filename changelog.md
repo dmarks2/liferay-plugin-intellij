@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Ability to compare theme files with the original files from the parent theme
 - Feature: Resolve configurationPid OSGi properties to configuration interface classes
 - Feature: Add inspection to check if a Meta Configuration ID matches the full qualified classname of the interface
-- Bugfix: Fix compatibility with IntelliJ 2022.2.3+
+- Change: Update support for IntelliJ 2022.3, dropped support for older versions
 
 ## 0.0.14
 - Feature: Resolve Resource Bundles
