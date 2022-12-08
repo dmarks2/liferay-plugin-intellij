@@ -25,20 +25,16 @@ import com.intellij.testFramework.fixtures.IdeaProjectTestFixture;
 import com.intellij.testFramework.fixtures.IdeaTestFixtureFactory;
 import com.intellij.testFramework.fixtures.JavaTestFixtureFactory;
 import com.intellij.testFramework.fixtures.TestFixtureBuilder;
-import gnu.trove.THashSet;
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.idea.maven.indices.MavenIndicesManager;
 import org.jetbrains.idea.maven.project.MavenArtifactDownloader;
 import org.jetbrains.idea.maven.project.MavenGeneralSettings;
 import org.jetbrains.idea.maven.project.MavenImportingSettings;
 import org.jetbrains.idea.maven.project.MavenProjectsManager;
-import org.jetbrains.idea.maven.project.MavenUnlinkedProjectAware;
 import org.jetbrains.idea.maven.project.MavenWorkspaceSettings;
 import org.jetbrains.idea.maven.project.MavenWorkspaceSettingsComponent;
 import org.jetbrains.idea.maven.server.MavenServerManager;
-import org.jetbrains.idea.maven.utils.MavenUtil;
 import org.jetbrains.idea.maven.utils.MavenWslUtil;
 
 import java.io.File;
@@ -469,12 +465,6 @@ public abstract class MavenTestCase extends UsefulTestCase {
   protected static <T> void assertUnorderedElementsAreEqual(Collection<T> actual, Collection<T> expected) {
     assertEquals(new HashSet<>(expected), new HashSet<>(actual));
   }
-
-  protected static void assertUnorderedPathsAreEqual(Collection<String> actual, Collection<String> expected) {
-    assertEquals(new SetWithToString<>(new THashSet<>(expected, FileUtil.PATH_HASHING_STRATEGY)),
-                 new SetWithToString<>(new THashSet<>(actual, FileUtil.PATH_HASHING_STRATEGY)));
-  }
-
   protected static <T> void assertUnorderedElementsAreEqual(T[] actual, T... expected) {
     assertUnorderedElementsAreEqual(Arrays.asList(actual), expected);
   }

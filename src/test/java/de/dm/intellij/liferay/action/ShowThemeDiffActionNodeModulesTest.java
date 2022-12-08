@@ -3,6 +3,8 @@ package de.dm.intellij.liferay.action;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
@@ -33,9 +35,11 @@ public class ShowThemeDiffActionNodeModulesTest extends LightJavaCodeInsightFixt
 
         ShowThemeDiffAction action = new ShowThemeDiffAction();
 
+        DataContext dataContext = ((EditorEx)myFixture.getEditor()).getDataContext();
+
         AnActionEvent event = new AnActionEvent(
                 null,
-                new VirtualFilesDataProvider(myFixture.getProject(), virtualFile),
+                dataContext, //new VirtualFilesDataProvider(myFixture.getProject(), virtualFile),
                 "",
                 action.getTemplatePresentation().clone(),
                 ActionManager.getInstance(),
@@ -58,9 +62,11 @@ public class ShowThemeDiffActionNodeModulesTest extends LightJavaCodeInsightFixt
 
         ShowThemeDiffAction action = new ShowThemeDiffAction();
 
+        DataContext dataContext = ((EditorEx)myFixture.getEditor()).getDataContext();
+
         AnActionEvent event = new AnActionEvent(
                 null,
-                new VirtualFilesDataProvider(myFixture.getProject(), virtualFile),
+                dataContext, //new VirtualFilesDataProvider(myFixture.getProject(), virtualFile),
                 "",
                 action.getTemplatePresentation().clone(),
                 ActionManager.getInstance(),
@@ -84,9 +90,11 @@ public class ShowThemeDiffActionNodeModulesTest extends LightJavaCodeInsightFixt
 
         ShowThemeDiffAction action = new ShowThemeDiffAction();
 
+        DataContext dataContext = ((EditorEx)myFixture.getEditor()).getDataContext();
+
         AnActionEvent event = new AnActionEvent(
                 null,
-                new VirtualFilesDataProvider(myFixture.getProject(), virtualFile),
+                dataContext, //new VirtualFilesDataProvider(myFixture.getProject(), virtualFile),
                 "",
                 action.getTemplatePresentation().clone(),
                 ActionManager.getInstance(),

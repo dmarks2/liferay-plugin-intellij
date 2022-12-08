@@ -3,6 +3,8 @@ package de.dm.intellij.liferay.action;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
@@ -38,9 +40,11 @@ public class ShowHookFragmentDiffActionTestFragment extends LightJavaCodeInsight
 
         ShowHookFragmentDiffAction action = new ShowHookFragmentDiffAction();
 
+        DataContext dataContext = ((EditorEx)myFixture.getEditor()).getDataContext();
+
         AnActionEvent event = new AnActionEvent(
                 null,
-                new VirtualFilesDataProvider(myFixture.getProject(), initJsp),
+                dataContext, //new VirtualFilesDataProvider(myFixture.getProject(), initJsp),
                 "",
                 action.getTemplatePresentation().clone(),
                 ActionManager.getInstance(),
@@ -59,9 +63,11 @@ public class ShowHookFragmentDiffActionTestFragment extends LightJavaCodeInsight
 
         ShowHookFragmentDiffAction action = new ShowHookFragmentDiffAction();
 
+        DataContext dataContext = ((EditorEx)myFixture.getEditor()).getDataContext();
+
         AnActionEvent event = new AnActionEvent(
                 null,
-                new VirtualFilesDataProvider(myFixture.getProject(), additionalJsp),
+                dataContext, //new VirtualFilesDataProvider(myFixture.getProject(), additionalJsp),
                 "",
                 action.getTemplatePresentation().clone(),
                 ActionManager.getInstance(),
@@ -80,9 +86,11 @@ public class ShowHookFragmentDiffActionTestFragment extends LightJavaCodeInsight
 
         ShowHookFragmentDiffAction action = new ShowHookFragmentDiffAction();
 
+        DataContext dataContext = ((EditorEx)myFixture.getEditor()).getDataContext();
+
         AnActionEvent event = new AnActionEvent(
                 null,
-                new VirtualFilesDataProvider(myFixture.getProject(), arbitraryFile),
+                dataContext, //new VirtualFilesDataProvider(myFixture.getProject(), arbitraryFile),
                 "",
                 action.getTemplatePresentation().clone(),
                 ActionManager.getInstance(),

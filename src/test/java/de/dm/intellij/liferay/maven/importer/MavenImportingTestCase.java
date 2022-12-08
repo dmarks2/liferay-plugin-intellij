@@ -11,12 +11,10 @@ import com.intellij.openapi.roots.CompilerModuleExtension;
 import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.ContentFolder;
 import com.intellij.openapi.roots.DependencyScope;
-import com.intellij.openapi.roots.JavadocOrderRootType;
 import com.intellij.openapi.roots.LibraryOrderEntry;
 import com.intellij.openapi.roots.ModuleOrderEntry;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.OrderEntry;
-import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.RootPolicy;
 import com.intellij.openapi.roots.SourceFolder;
 import com.intellij.openapi.roots.libraries.Library;
@@ -35,7 +33,6 @@ import com.intellij.testFramework.builders.JavaModuleFixtureBuilder;
 import com.intellij.testFramework.fixtures.ModuleFixture;
 import com.intellij.util.PathUtil;
 import com.intellij.util.ui.UIUtil;
-import org.apache.commons.io.FileUtils;
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.idea.maven.model.MavenExplicitProfiles;
@@ -43,7 +40,6 @@ import org.jetbrains.idea.maven.project.MavenGeneralSettings;
 import org.jetbrains.idea.maven.project.MavenProject;
 import org.jetbrains.idea.maven.project.MavenProjectsManager;
 import org.jetbrains.idea.maven.project.MavenProjectsTree;
-import org.jetbrains.idea.maven.project.MavenWorkspaceSettingsComponent;
 import org.jetbrains.idea.maven.server.MavenServerManager;
 import org.jetbrains.idea.maven.utils.MavenWslUtil;
 import org.jetbrains.jps.model.java.JavaResourceRootType;
@@ -103,19 +99,6 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     }
 
     assertUnorderedElementsAreEqual(actualNames, expectedNames);
-  }
-
-  protected void assertContentRoots(String moduleName, String... expectedRoots) {
-    List<String> actual = new ArrayList<>();
-    for (ContentEntry e : getContentRoots(moduleName)) {
-      actual.add(e.getUrl());
-    }
-
-    for (int i = 0; i < expectedRoots.length; i++) {
-      expectedRoots[i] = VfsUtilCore.pathToUrl(expectedRoots[i]);
-    }
-
-    assertUnorderedPathsAreEqual(actual, Arrays.asList(expectedRoots));
   }
 
   protected void assertSources(String moduleName, String... expectedSources) {
@@ -200,41 +183,6 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
   protected CompilerModuleExtension getCompilerExtension(String module) {
     ModuleRootManager m = getRootManager(module);
     return CompilerModuleExtension.getInstance(m.getModule());
-  }
-
-  protected void assertModuleLibDep(String moduleName, String depName) {
-    assertModuleLibDep(moduleName, depName, null);
-  }
-
-  protected void assertModuleLibDep(String moduleName, String depName, String classesPath) {
-    assertModuleLibDep(moduleName, depName, classesPath, null, null);
-  }
-
-  protected void assertModuleLibDep(String moduleName, String depName, String classesPath, String sourcePath, String javadocPath) {
-    LibraryOrderEntry lib = getModuleLibDep(moduleName, depName);
-
-    assertModuleLibDepPath(lib, OrderRootType.CLASSES, classesPath == null ? null : Collections.singletonList(classesPath));
-    assertModuleLibDepPath(lib, OrderRootType.SOURCES, sourcePath == null ? null : Collections.singletonList(sourcePath));
-    assertModuleLibDepPath(lib, JavadocOrderRootType.getInstance(), javadocPath == null ? null : Collections.singletonList(javadocPath));
-  }
-
-  protected void assertModuleLibDep(String moduleName,
-                                    String depName,
-                                    List<String> classesPaths,
-                                    List<String> sourcePaths,
-                                    List<String> javadocPaths) {
-    LibraryOrderEntry lib = getModuleLibDep(moduleName, depName);
-
-    assertModuleLibDepPath(lib, OrderRootType.CLASSES, classesPaths);
-    assertModuleLibDepPath(lib, OrderRootType.SOURCES, sourcePaths);
-    assertModuleLibDepPath(lib, JavadocOrderRootType.getInstance(), javadocPaths);
-  }
-
-  private static void assertModuleLibDepPath(LibraryOrderEntry lib, OrderRootType type, List<String> paths) {
-    if (paths == null) return;
-    assertUnorderedPathsAreEqual(Arrays.asList(lib.getRootUrls(type)), paths);
-    // also check the library because it may contain slight different set of urls (e.g. with duplicates)
-    assertUnorderedPathsAreEqual(Arrays.asList(lib.getLibrary().getUrls(type)), paths);
   }
 
   protected void assertModuleLibDepScope(String moduleName, String depName, DependencyScope scope) {
