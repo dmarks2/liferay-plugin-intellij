@@ -86,7 +86,7 @@ public class ProjectUtils {
 
     public static void removeLibrary(@NotNull final Module module, String name) {
         if (!module.isDisposed()) {
-            final ModifiableModelsProvider modelsProvider = ModifiableModelsProvider.SERVICE.getInstance();
+            final ModifiableModelsProvider modelsProvider = ModifiableModelsProvider.getInstance();
             final ModifiableRootModel model = modelsProvider.getModuleModifiableModel(module);
 
             final LibraryOrderEntry libraryEntry = getLibraryIntern(name, model);
@@ -133,7 +133,7 @@ public class ProjectUtils {
 
     public static void updateLibrary(@NotNull final Module module, final String name, @NotNull final Collection<? extends VirtualFile> importRoots) {
         if (!module.isDisposed()) {
-            final ModifiableModelsProvider modelsProvider = ModifiableModelsProvider.SERVICE.getInstance();
+            final ModifiableModelsProvider modelsProvider = ModifiableModelsProvider.getInstance();
             final ModifiableRootModel model = modelsProvider.getModuleModifiableModel(module);
             final LibraryOrderEntry libraryEntry = getLibraryIntern(name, model);
             ApplicationManager.getApplication().runWriteAction(

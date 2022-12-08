@@ -3,7 +3,6 @@ package de.dm.intellij.liferay.language.sql;
 import com.intellij.lang.injection.MultiHostInjector;
 import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.Trinity;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -39,7 +38,7 @@ public class LiferayCustomSQLLanguageInjector implements MultiHostInjector {
                 if ("sql".equals(tagName)) {
                     InjectedLanguage sqlLanguage = InjectedLanguage.create(SqlLanguage.INSTANCE.getID(), "", "", true);
 
-                    List<Trinity<PsiLanguageInjectionHost, InjectedLanguage, TextRange>> list = new ArrayList<Trinity<PsiLanguageInjectionHost, InjectedLanguage, TextRange>>();
+                    List<InjectorUtils.InjectionInfo> list = new ArrayList<>();
 
                     PsiElement[] myChildren = xmlTag.getChildren();
 
@@ -59,7 +58,7 @@ public class LiferayCustomSQLLanguageInjector implements MultiHostInjector {
                                     }
 
                                     list.add(
-                                            Trinity.create(
+                                            new InjectorUtils.InjectionInfo(
                                                     ((PsiLanguageInjectionHost) child),
                                                     sqlLanguage,
                                                     textRange
@@ -73,8 +72,8 @@ public class LiferayCustomSQLLanguageInjector implements MultiHostInjector {
                     if (!list.isEmpty()) {
                         InjectorUtils.registerInjection(
                                 SqlLanguage.INSTANCE,
-                                list,
                                 xmlTag.getContainingFile(),
+                                list,
                                 registrar
                         );
                     }

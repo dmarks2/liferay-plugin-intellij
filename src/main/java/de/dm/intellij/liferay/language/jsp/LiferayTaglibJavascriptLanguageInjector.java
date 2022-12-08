@@ -2,8 +2,6 @@ package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.lang.javascript.JavascriptLanguage;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.Trinity;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
@@ -131,7 +129,7 @@ public class LiferayTaglibJavascriptLanguageInjector extends AbstractLiferayJava
             }
         }
 
-        List<Trinity<PsiLanguageInjectionHost, InjectedLanguage, TextRange>> list = new ArrayList<Trinity<PsiLanguageInjectionHost, InjectedLanguage, TextRange>>();
+        List<InjectorUtils.InjectionInfo> list = new ArrayList<>();
 
         PsiElement[] myChildren = xmlTag.getChildren();
         for (PsiElement child : myChildren) {
@@ -139,7 +137,7 @@ public class LiferayTaglibJavascriptLanguageInjector extends AbstractLiferayJava
                 if (((PsiLanguageInjectionHost)child).isValidHost()) {
                     //only inject if <aui:script> contains reqular content
                     list.add(
-                            Trinity.create(
+                            new InjectorUtils.InjectionInfo(
                                     ((PsiLanguageInjectionHost) child),
                                     javascriptLanguage,
                                     ElementManipulators.getManipulator(child).getRangeInElement(child)
@@ -151,8 +149,8 @@ public class LiferayTaglibJavascriptLanguageInjector extends AbstractLiferayJava
         if (!list.isEmpty()) {
             InjectorUtils.registerInjection(
                 JavascriptLanguage.INSTANCE,
-                list,
                 xmlTag.getContainingFile(),
+                list,
                 registrar
             );
         }

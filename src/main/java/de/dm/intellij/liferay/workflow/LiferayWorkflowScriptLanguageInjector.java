@@ -4,7 +4,6 @@ import com.intellij.lang.Language;
 import com.intellij.lang.injection.MultiHostInjector;
 import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.Trinity;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
@@ -82,7 +81,7 @@ public class LiferayWorkflowScriptLanguageInjector implements MultiHostInjector 
                             if (language != null) {
                                 InjectedLanguage injectedLanguage = InjectedLanguage.create(mappedLanguage, "", "", true);
 
-                                List<Trinity<PsiLanguageInjectionHost, InjectedLanguage, TextRange>> list = new ArrayList<>();
+                                List<InjectorUtils.InjectionInfo> list = new ArrayList<>();
 
                                 PsiElement[] myChildren = xmlTag.getChildren();
                                 for (PsiElement child : myChildren) {
@@ -101,7 +100,7 @@ public class LiferayWorkflowScriptLanguageInjector implements MultiHostInjector 
                                                 }
 
                                                 list.add(
-                                                        Trinity.create(
+                                                        new InjectorUtils.InjectionInfo(
                                                                 ((PsiLanguageInjectionHost) child),
                                                                 injectedLanguage,
                                                                 textRange
@@ -115,8 +114,8 @@ public class LiferayWorkflowScriptLanguageInjector implements MultiHostInjector 
                                 if (!list.isEmpty()) {
                                     InjectorUtils.registerInjection(
                                             language,
-                                            list,
                                             xmlTag.getContainingFile(),
+                                            list,
                                             registrar
                                     );
                                 }

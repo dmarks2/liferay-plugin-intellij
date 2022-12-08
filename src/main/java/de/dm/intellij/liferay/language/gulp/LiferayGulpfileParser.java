@@ -78,7 +78,7 @@ public class LiferayGulpfileParser extends FileChangeListenerBase {
 
                                     if (sourceRootVirtualFile != null) {
 
-                                        final ModifiableModelsProvider modelsProvider = ModifiableModelsProvider.SERVICE.getInstance();
+                                        final ModifiableModelsProvider modelsProvider = ModifiableModelsProvider.getInstance();
                                         final ModifiableRootModel model = modelsProvider.getModuleModifiableModel(module);
 
                                         ApplicationManager.getApplication().runWriteAction(
