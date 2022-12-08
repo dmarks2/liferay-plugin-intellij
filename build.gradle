@@ -7,7 +7,7 @@ buildscript {
 }
 
 plugins {
-    id "org.jetbrains.intellij" version "1.6.0"
+    id "org.jetbrains.intellij" version "1.10.0"
     id 'de.undercouch.download' version '5.2.1'
 }
 
@@ -17,7 +17,7 @@ apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
 
-sourceCompatibility = 1.11
+sourceCompatibility = 1.17
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -79,14 +79,15 @@ intellij {
 //    version.set("IU-2021.1")
 //    version.set("IU-2021.2")
 //    version.set("IU-2021.3")
-    version.set("IU-2022.1.2")
+//    version.set("IU-2022.1.2")
+    version.set("IU-2022.3")
     type.set('IU')
     pluginName.set('Liferay IntelliJ Plugin')
     plugins.set([
-            'JavaScriptLanguage', 'Tomcat', 'Velocity', 'FreeMarker', 'maven', 'properties', 'java-i18n', 'CSS', 'sass', 'JavaEE', 'Web', 'jsp', 'gradle',
-            'IntelliLang', 'uml', 'java',
+            'JavaScript', 'Tomcat', 'com.intellij.velocity', 'com.intellij.freemarker', 'maven', 'properties', 'java-i18n', 'com.intellij.css', 'sass', 'JavaEE', 'com.intellij.javaee.web', 'com.intellij.jsp', 'gradle',
+            'org.intellij.intelliLang', 'uml', 'java',
             //test only?
-            'Groovy', 'junit', 'PersistenceSupport', 'DatabaseTools'
+            'Groovy', 'junit', 'com.intellij.persistence', 'DatabaseTools'
     ])
     updateSinceUntilBuild.set(false)
 }
