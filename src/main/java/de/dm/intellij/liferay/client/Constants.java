@@ -6,7 +6,7 @@ import java.util.Map;
 public class Constants {
 
     public static final String ENDPOINT_JSONWS = "/api/jsonws";
-    public static final String PATH_INVOKE = "invoke";
+    public static final String PATH_INVOKE = "/invoke";
 
     public static final String CLASS_NAME_JOURNAL_ARTICLE_7_0 = "com.liferay.journal.model.JournalArticle";
     public static final String CLASS_NAME_DDM_STRUCTURE_7_0 = "com.liferay.dynamic.data.mapping.model.DDMStructure";
