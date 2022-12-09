@@ -45,7 +45,7 @@ public class LiferayGulpfileParserTest extends BasePlatformTestCase {
 
         VirtualFile[] sourceRoots = moduleRootManager.getSourceRoots();
 
-        final ModifiableModelsProvider modelsProvider = ModifiableModelsProvider.SERVICE.getInstance();
+        final ModifiableModelsProvider modelsProvider = ModifiableModelsProvider.getInstance();
         final ModifiableRootModel model = modelsProvider.getModuleModifiableModel(module);
 
         ApplicationManager.getApplication().runWriteAction(new Runnable() {
