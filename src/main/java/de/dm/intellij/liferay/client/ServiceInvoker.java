@@ -5,11 +5,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.intellij.openapi.util.text.StringUtil;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
@@ -19,20 +18,20 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Map;
 
 public class ServiceInvoker {
-
-    //TODO rewrite to Apache Http and Google gson
-
     private final URI invokeTarget;
     private final URI jsonwsTarget;
 
@@ -48,13 +47,11 @@ public class ServiceInvoker {
                 .setRoutePlanner(new SystemDefaultRoutePlanner(null));
 
         if ( (StringUtil.isNotEmpty(username)) && (StringUtil.isNotEmpty(password)) ) {
-            CredentialsProvider provider = new BasicCredentialsProvider();
+            byte[] credentials = Base64.encodeBase64((username + ":" + password).getBytes(StandardCharsets.UTF_8));
 
-            UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
+            Header header = new BasicHeader("Authorization", "Basic " + new String(credentials, StandardCharsets.UTF_8));
 
-            provider.setCredentials(AuthScope.ANY, credentials);
-
-            httpClientBuilder.setDefaultCredentialsProvider(provider);
+            httpClientBuilder.setDefaultHeaders(List.of(header));
         }
 
         RequestConfig requestConfig = RequestConfig.custom()
@@ -67,20 +64,12 @@ public class ServiceInvoker {
 
         httpClient = httpClientBuilder.build();
 
-        //clientConfig.register(MultiPartFeature.class);
-
-        /*
-        mapper = new ObjectMapper();
-        mapper.registerModule(new JsonOrgModule());
-        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-
-        JacksonJsonProvider provider = new JacksonJsonProvider(mapper);
-        client.register(provider);
-
-         */
-
         jsonwsTarget = endpoint;
-        invokeTarget = jsonwsTarget.resolve(Constants.PATH_INVOKE);
+        try {
+            invokeTarget = new URI(jsonwsTarget.toString() + Constants.PATH_INVOKE);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public <T> T invoke(String command, JsonObject params, Class<T> clazz) throws IOException {
@@ -90,8 +79,6 @@ public class ServiceInvoker {
     public <T> T invoke(String command, JsonObject params, Class<T> clazz, Map<String, File> files) throws IOException {
         JsonObject commandObject = new JsonObject();
         commandObject.add(command, params);
-
-        //Invocation.Builder builder;
 
         HttpResponse response;
 
@@ -162,7 +149,7 @@ public class ServiceInvoker {
 
         if (StringUtil.isNotEmpty(result)) {
             if (clazz == String.class) {
-                return (T) response;
+                return (T) result;
             } else if (clazz == Long.class) {
                 return (T) Long.valueOf(result);
             } else if (clazz == JsonObject.class) {
