@@ -188,6 +188,7 @@ public class StructureFtlVariable extends FtlLightVariable {
             return this.myDelegate.execute(element, state);
         }
 
+        @SuppressWarnings("unchecked")
         public <T> T getHint(@NotNull Key<T> hintKey) {
             return hintKey == NameHint.KEY && this.myNameHint != null ? (T) this : null;
         }

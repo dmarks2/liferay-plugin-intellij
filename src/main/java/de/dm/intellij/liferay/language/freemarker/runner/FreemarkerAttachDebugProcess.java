@@ -156,6 +156,7 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void stop() {
         try {
             Collection<DebuggedEnvironment> suspendedEnvironments = (Collection<DebuggedEnvironment>) this.debugger.getSuspendedEnvironments();

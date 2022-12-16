@@ -1,12 +1,14 @@
 package de.dm.intellij.liferay.language.service;
 
 import com.intellij.codeInspection.InspectionToolProvider;
+import com.intellij.codeInspection.LocalInspectionTool;
 import org.jetbrains.annotations.NotNull;
 
 public class LiferayServiceXMLInspectionToolProvider implements InspectionToolProvider {
     @NotNull
     @Override
-    public Class[] getInspectionClasses() {
+    @SuppressWarnings("unchecked")
+    public Class<? extends LocalInspectionTool> @NotNull [] getInspectionClasses() {
         return new Class[] {
             LiferayServiceXMLExceptionNameInspection.class,
             LiferayServiceXMLNamespaceInspection.class,

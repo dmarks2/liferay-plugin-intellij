@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 public class LiferayThemeTemplateVelocityContextType extends TemplateContextType {
 
     protected LiferayThemeTemplateVelocityContextType() {
-        super("LIFERAY THEME TEMPLATE VELOCITY", "Liferay theme template (velocity)");
+        super("Liferay theme template (velocity)");
     }
 
     @Override

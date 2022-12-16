@@ -20,9 +20,12 @@
         <gotoDeclarationHandler implementation="de.dm.intellij.liferay.language.freemarker.staticfieldgetter.StaticFieldGetterFieldNameGotoDeclarationHandler" />
 
         <!-- Add Template Contexts for creating Live Templates -->
-        <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayJournalTemplateFreemarkerContextType"/>
-        <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayApplicationDisplayTemplateFreemarkerContextType"/>
-        <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayThemeTemplateFreemarkerContextType"/>
+        <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayJournalTemplateFreemarkerContextType"
+                             contextId="LIFERAY JOURNAL TEMPLATES FREEMARKER"/>
+        <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayApplicationDisplayTemplateFreemarkerContextType"
+                             contextId="LIFERAY APPLICATION DISPLAY TEMPLATES FREEMARKER"/>
+        <liveTemplateContext implementation="de.dm.intellij.liferay.language.freemarker.LiferayThemeTemplateFreemarkerContextType"
+                             contextId="LIFERAY THEME TEMPLATE FREEMARKER"/>
 
         <!-- Add Live Templates for specific contexts -->
         <defaultLiveTemplates file="/liveTemplates/Journal.xml"/>

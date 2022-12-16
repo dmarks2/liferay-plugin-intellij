@@ -149,13 +149,13 @@ public class ServiceInvoker {
 
         if (StringUtil.isNotEmpty(result)) {
             if (clazz == String.class) {
-                return (T) result;
+                return clazz.cast(result);
             } else if (clazz == Long.class) {
-                return (T) Long.valueOf(result);
+                return clazz.cast(Long.valueOf(result));
             } else if (clazz == JsonObject.class) {
-                return (T)new Gson().fromJson(result, JsonObject.class);
+                return clazz.cast(new Gson().fromJson(result, JsonObject.class));
             } else if (clazz == JsonArray.class) {
-                return (T)new Gson().fromJson(result, JsonArray.class);
+                return clazz.cast(new Gson().fromJson(result, JsonArray.class));
             } else {
                 return null;
             }

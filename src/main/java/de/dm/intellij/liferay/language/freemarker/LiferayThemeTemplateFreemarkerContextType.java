@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 public class LiferayThemeTemplateFreemarkerContextType extends TemplateContextType {
 
     protected LiferayThemeTemplateFreemarkerContextType() {
-        super("LIFERAY THEME TEMPLATE FREEMARKER", "Liferay theme template (freemarker)");
+        super("Liferay theme template (freemarker)");
     }
 
     @Override

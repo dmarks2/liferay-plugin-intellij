@@ -15,6 +15,7 @@ import java.util.Collections;
 
 public class TemplateMacroProcessorUtil {
 
+    @SuppressWarnings("unchecked")
     public static <F extends PsiFile, T extends PsiNamedElement> Collection<T> getGlobalMacros(TemplateMacroProcessor<F, T> templateMacroProcessor, F file) {
         F templateFile = (F)file.getOriginalFile();
 

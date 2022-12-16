@@ -36,7 +36,7 @@ public class LiferayWorkflowDiagramModel extends DiagramDataModel<XmlTag> {
     @NotNull
     @Override
     public Collection<? extends DiagramEdge<XmlTag>> getEdges() {
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
 
     @NotNull

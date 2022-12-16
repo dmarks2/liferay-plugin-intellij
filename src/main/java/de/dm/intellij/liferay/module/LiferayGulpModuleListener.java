@@ -11,14 +11,17 @@ import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.List;
 
 public class LiferayGulpModuleListener implements ModuleListener {
 
     @Override
-    public void moduleAdded(@NotNull Project project, @NotNull Module module) {
-        ProjectUtils.runDumbAware(project, () -> {
-            handleModuleFiles(project, module, "gulpfile.js");
-        });
+    public void modulesAdded(@NotNull Project project, @NotNull List<Module> modules) {
+        for (Module module : modules) {
+            ProjectUtils.runDumbAware(project, () -> {
+                handleModuleFiles(project, module, "gulpfile.js");
+            });
+        }
     }
 
     private void handleModuleFiles(@NotNull Project project, @NotNull Module module, String filenamePattern) {

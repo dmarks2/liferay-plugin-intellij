@@ -6,6 +6,7 @@ import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.LocatableConfigurationBase;
 import com.intellij.execution.configurations.RefactoringListenerProvider;
+import com.intellij.execution.configurations.RunConfigurationOptions;
 import com.intellij.execution.configurations.RunProfileState;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.openapi.options.SettingsEditor;
@@ -25,7 +26,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
-public class LiferayServerGroovyConfiguration extends LocatableConfigurationBase implements CommonJavaRunConfigurationParameters, RefactoringListenerProvider {
+public class LiferayServerGroovyConfiguration extends LocatableConfigurationBase<RunConfigurationOptions> implements CommonJavaRunConfigurationParameters, RefactoringListenerProvider {
 
     protected LiferayServerGroovyConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory, @Nullable String name) {
         super(project, factory, name);

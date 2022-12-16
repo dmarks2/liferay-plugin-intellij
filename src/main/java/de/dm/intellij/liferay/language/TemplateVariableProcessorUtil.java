@@ -33,13 +33,11 @@ import java.util.regex.Pattern;
 public class TemplateVariableProcessorUtil {
     public static final Pattern IMPLICIT_VAR_DECL_PATTERN = Pattern.compile("(.*?)@vtlvariable [ ]*name=\"([^\"]+)\"[ \t\n]+type=\"([^\"]*)\"([ \t\n]+file=\"([^\"]*)\")?(.*)");
 
+    @SuppressWarnings("unchecked")
     public static <F extends PsiFile, T extends PsiNamedElement> List<T> getGlobalVariables(TemplateVariableProcessor<F, T> templateVariableProcessor, F file) {
         //During Completion Contribution the file is copied and a placeholder is added at the current cursor position.
         //So examine the original file in this case...
-        F templateFile = file;
-        if (file.getOriginalFile() != null) {
-            templateFile = (F) file.getOriginalFile();
-        }
+        F templateFile = (F) file.getOriginalFile();
 
         final Module module = ModuleUtil.findModuleForPsiElement(templateFile);
         if (module == null) {

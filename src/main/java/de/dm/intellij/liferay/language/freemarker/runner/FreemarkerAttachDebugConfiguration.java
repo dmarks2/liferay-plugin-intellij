@@ -7,6 +7,7 @@ import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.LocatableConfigurationBase;
 import com.intellij.execution.configurations.RunConfiguration;
+import com.intellij.execution.configurations.RunConfigurationOptions;
 import com.intellij.execution.configurations.RunProfileState;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.execution.runners.RunConfigurationWithSuppressedDefaultRunAction;
@@ -20,7 +21,7 @@ import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class FreemarkerAttachDebugConfiguration extends LocatableConfigurationBase implements RunConfigurationWithSuppressedDefaultRunAction {
+public class FreemarkerAttachDebugConfiguration extends LocatableConfigurationBase<RunConfigurationOptions> implements RunConfigurationWithSuppressedDefaultRunAction {
 
     private String host;
     private int port = 7011;

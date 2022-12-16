@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 public class LiferayJournalTemplateVelocityContextType extends TemplateContextType {
 
     protected LiferayJournalTemplateVelocityContextType() {
-        super("LIFERAY JOURNAL TEMPLATES VELOCITY", "Liferay journal templates (velocity)");
+        super("Liferay journal templates (velocity)");
     }
 
     @Override

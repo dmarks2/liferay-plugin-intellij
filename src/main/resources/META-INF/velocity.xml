@@ -7,10 +7,14 @@
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.TemplateVariableReferenceContributor"/>
 
         <!-- Add Template Contexts for creating Live Templates -->
-        <liveTemplateContext implementation="de.dm.intellij.liferay.language.velocity.LiferayJournalTemplateVelocityContextType"/>
-        <liveTemplateContext implementation="de.dm.intellij.liferay.language.velocity.LiferayApplicationDisplayTemplateVelocityContextType"/>
-        <liveTemplateContext implementation="de.dm.intellij.liferay.language.velocity.LiferayThemeTemplateVelocityContextType"/>
-        <liveTemplateContext implementation="de.dm.intellij.liferay.language.velocity.LiferayLayoutTemplateVelocityContextType"/>
+        <liveTemplateContext implementation="de.dm.intellij.liferay.language.velocity.LiferayJournalTemplateVelocityContextType"
+                             contextId="LIFERAY JOURNAL TEMPLATES VELOCITY" />
+        <liveTemplateContext implementation="de.dm.intellij.liferay.language.velocity.LiferayApplicationDisplayTemplateVelocityContextType"
+                             contextId="LIFERAY APPLICATION DISPLAY TEMPLATES VELOCITY"/>
+        <liveTemplateContext implementation="de.dm.intellij.liferay.language.velocity.LiferayThemeTemplateVelocityContextType"
+                             contextId="LIFERAY THEME TEMPLATE VELOCITY"/>
+        <liveTemplateContext implementation="de.dm.intellij.liferay.language.velocity.LiferayLayoutTemplateVelocityContextType"
+                             contextId="LIFERAY LAYOUT TEMPLATE VELOCITY"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij.velocity">

@@ -29,7 +29,7 @@ public class LiferayLibraryRootsComponentDescriptor extends DefaultLibraryRootsC
     public List<? extends AttachRootButtonDescriptor> createAttachButtons() {
         //TODO Attach Sources
         //TODO Attach Javadoc
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
 
     private class LiferayRootDetector extends RootDetector {
@@ -41,7 +41,7 @@ public class LiferayLibraryRootsComponentDescriptor extends DefaultLibraryRootsC
         @NotNull
         @Override
         public Collection<VirtualFile> detectRoots(@NotNull final VirtualFile rootCandidate, @NotNull final ProgressIndicator progressIndicator) {
-            final List<VirtualFile> result = new ArrayList();
+            final List<VirtualFile> result = new ArrayList<>();
 
                 VfsUtilCore.visitChildrenRecursively(rootCandidate, new VirtualFileVisitor(new VirtualFileVisitor.Option[0]) {
                     public boolean visitFile(@NotNull VirtualFile file) {

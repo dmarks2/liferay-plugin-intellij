@@ -172,7 +172,7 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
 
   private static String getAbsolutePath(String path) {
     path = VfsUtil.urlToPath(path);
-    path = PathUtil.getCanonicalPath(path);
+    path = FileUtil.toCanonicalPath(path);
     return FileUtil.toSystemIndependentName(path);
   }
 
@@ -246,6 +246,8 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     return actual;
   }
 
+
+  @SuppressWarnings("unchecked")
   private <T> T getModuleDep(String moduleName, String depName, Class<T> clazz) {
     T dep = null;
 
