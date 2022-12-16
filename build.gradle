@@ -19,7 +19,7 @@ apply plugin: 'java'
 
 sourceCompatibility = 1.17
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
@@ -103,7 +103,7 @@ runIde {
     jvmArgs '-Xmx2048m'
 }
 
-task generateLiferayPortalPropertiesFiles {
+tasks.register('generateLiferayPortalPropertiesFiles') {
     doLast {
         def target70 = new File(generatedResources, "com/liferay/properties/70");
         def target71 = new File(generatedResources, "com/liferay/properties/71");
@@ -154,7 +154,7 @@ task generateLiferayPortalPropertiesFiles {
     }
 }
 
-task generateLiferayTemplateHelperFiles {
+tasks.register('generateLiferayTemplateHelperFiles') {
     doLast {
         def targetVtl = new File(generatedResources, "com/liferay/vtl");
         def targetFtl = new File(generatedResources, "com/liferay/ftl");
@@ -233,7 +233,7 @@ task generateLiferayTemplateHelperFiles {
         }
     }
 }
-task generateLiferayDefinitions {
+tasks.register('generateLiferayDefinitions') {
     doLast {
         def target = new File(generatedResources, "com/liferay/definitions");
         target.mkdirs();
@@ -350,7 +350,7 @@ task generateLiferayDefinitions {
     }
 }
 
-task generateTaglibDefinitions {
+tasks.register('generateTaglibDefinitions') {
     doLast {
         def target70 = new File(generatedResources, "com/liferay/tld/70");
         def target71 = new File(generatedResources, "com/liferay/tld/71");
@@ -564,7 +564,7 @@ task generateTaglibDefinitions {
     }
 }
 
-task downloadCompass0122(type: Download) {
+tasks.register('downloadCompass0122', Download) {
     src 'https://github.com/Compass/compass/archive/v0.12.2.zip'
     acceptAnyCertificate true
     overwrite true
@@ -572,7 +572,8 @@ task downloadCompass0122(type: Download) {
     dest new File(tempDir, 'compass-0.12.2.zip')
 }
 
-task unzipCompass0122Stylesheets(dependsOn: downloadCompass0122, type: Copy) {
+tasks.register('unzipCompass0122Stylesheets', Copy) {
+    from downloadCompass0122
     from zipTree(downloadCompass0122.dest)
     include 'compass-0.12.2/frameworks/compass/stylesheets/**'
     into generatedResources + '/compass-0.12.2/stylesheets'
@@ -582,7 +583,8 @@ task unzipCompass0122Stylesheets(dependsOn: downloadCompass0122, type: Copy) {
     includeEmptyDirs false
 }
 
-task unzipCompass0122SassExtensions(dependsOn: downloadCompass0122, type: Copy) {
+tasks.register('unzipCompass0122SassExtensions', Copy) {
+    from downloadCompass0122
     from zipTree(downloadCompass0122.dest)
     include 'compass-0.12.2/lib/compass/sass_extensions/**'
     into generatedResources + '/compass-0.12.2/sass_extensions'
@@ -592,7 +594,7 @@ task unzipCompass0122SassExtensions(dependsOn: downloadCompass0122, type: Copy) 
     includeEmptyDirs false
 }
 
-task downloadIntelliJCommunityMockJDK11() {
+tasks.register('downloadIntelliJCommunityMockJDK11') {
     doLast {
         new File(mockDir, "bin").mkdirs();
 
@@ -618,7 +620,7 @@ task downloadIntelliJCommunityMockJDK11() {
     }
 }
 
-task downloadSchemaDefinitions() {
+tasks.register('downloadSchemaDefinitions') {
     doLast {
         def target = new File(generatedResources, "com/liferay/schema74");
 
