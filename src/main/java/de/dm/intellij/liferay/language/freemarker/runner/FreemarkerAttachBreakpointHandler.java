@@ -237,7 +237,7 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
                     }
                 }
             } else if (LiferayFileUtil.isApplicationDisplayTemplateFile(psiFile)) {
-                String templateName = virtualFile.getNameWithoutExtension();
+                String templateKey = getKey(virtualFile.getNameWithoutExtension());
                 String type = LiferayFileUtil.getApplicationDisplayTemplateType(psiFile);
 
                 String groupName = GroupConstants.GLOBAL;
@@ -252,10 +252,10 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
 
                 try {
                     if (log.isDebugEnabled()) {
-                        log.debug("Trying to find Application Display Template for file " + virtualFile.getName() + " with Template name " + templateName + " and Type " + type + " in Group " + groupName + " ...");
+                        log.debug("Trying to find Application Display Template for file " + virtualFile.getName() + " with Template key " + templateKey + " and Type " + type + " in Group " + groupName + " ...");
                     }
 
-                    return liferayServicesUtil.getFreemarkerApplicationDisplayTemplateName(type, templateName, groupName);
+                    return liferayServicesUtil.getFreemarkerApplicationDisplayTemplateName(type, templateKey, groupName);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

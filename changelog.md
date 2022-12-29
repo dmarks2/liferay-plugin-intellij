@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 - Feature: Add inspection to check if a Meta Configuration ID matches the full qualified classname of the interface
 - Change: Remove inspection about aui:fieldset must be inside an aui:fieldset-group (tag has been removed in Liferay lately)
 - Change: Update support for IntelliJ 2022.3, dropped support for older versions
+- Change: Disabled gradle importers for bundle-support and theme plugins (no longer working with Java 17)
+- Bugfix: Setting Freemarker Breakpoint in Application Display Templates with filenames containing spaces did not work
 
 ## 0.0.14
 - Feature: Resolve Resource Bundles

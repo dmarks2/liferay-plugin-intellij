@@ -368,7 +368,7 @@ public class LiferayServicesUtil {
 
         return null;
     }
-    public String getFreemarkerApplicationDisplayTemplateName(String type, String templateName, String groupName) throws IOException {
+    public String getFreemarkerApplicationDisplayTemplateName(String type, String templateKey, String groupName) throws IOException {
         String className = Constants.APPLICATION_DISPLAY_TEMPLATE_TYPES_7_0.get(type);
         if (className == null) {
             className = Constants.APPLICATION_DISPLAY_TEMPLATE_TYPES_7_3.get(type);
@@ -382,7 +382,7 @@ public class LiferayServicesUtil {
                 long companyId = getDefaultCompanyId();
                 long groupId = getGroupId(groupName);
 
-                JsonObject ddmTemplate = getDDMTemplate_70(companyId, groupId, classNameId, portletDisplayTemplateClassNameId, 0, templateName);
+                JsonObject ddmTemplate = getDDMTemplate_70(companyId, groupId, classNameId, portletDisplayTemplateClassNameId, 0, templateKey);
 
                 if (ddmTemplate != null) {
                     //Identifier contains companyGroupId if rendered within a request
