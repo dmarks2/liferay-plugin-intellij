@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.maven.importer;
 
+import com.intellij.ide.util.projectWizard.ModuleBuilder;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.externalSystem.service.project.IdeModifiableModelsProvider;
 import com.intellij.openapi.module.Module;
@@ -168,7 +169,7 @@ public class LiferayVersionMavenImporter extends MavenImporter {
     }
 
     @Override
-    public @NotNull ModuleType getModuleType() {
+    public @NotNull ModuleType<? extends ModuleBuilder> getModuleType() {
         return ModuleTypeManager.getInstance().findByID("JAVA_MODULE");
     }
 }
