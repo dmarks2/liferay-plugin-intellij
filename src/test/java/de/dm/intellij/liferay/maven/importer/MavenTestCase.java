@@ -465,13 +465,6 @@ public abstract class MavenTestCase extends UsefulTestCase {
   protected static <T> void assertUnorderedElementsAreEqual(Collection<T> actual, Collection<T> expected) {
     assertEquals(new HashSet<>(expected), new HashSet<>(actual));
   }
-  protected static <T> void assertUnorderedElementsAreEqual(T[] actual, T... expected) {
-    assertUnorderedElementsAreEqual(Arrays.asList(actual), expected);
-  }
-
-  protected static <T> void assertUnorderedElementsAreEqual(Collection<T> actual, T... expected) {
-    assertUnorderedElementsAreEqual(actual, Arrays.asList(expected));
-  }
 
   protected static <T, U> void assertOrderedElementsAreEqual(Collection<U> actual, T... expected) {
     String s = "\nexpected: " + Arrays.asList(expected) + "\nactual: " + new ArrayList<>(actual);
@@ -494,17 +487,6 @@ public abstract class MavenTestCase extends UsefulTestCase {
     List<T> actualCopy = new ArrayList<>(actual);
     actualCopy.removeAll(Arrays.asList(expected));
     assertEquals(actual.toString(), actualCopy.size(), actual.size());
-  }
-
-  protected static void assertUnorderedLinesWithFile(String filePath, String expectedText) {
-    try {
-      assertSameLinesWithFile(filePath, expectedText);
-    }
-    catch (FileComparisonFailure e) {
-      String expected = e.getExpected();
-      String actual = e.getActual();
-      assertUnorderedElementsAreEqual(expected.split("\n"), actual.split("\n"));
-    }
   }
 
   protected boolean ignore() {

@@ -90,17 +90,6 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     removeFromLocalRepository("test");
   }
 
-  protected void assertModules(String... expectedNames) {
-    Module[] actual = ModuleManager.getInstance(myProject).getModules();
-    List<String> actualNames = new ArrayList<>();
-
-    for (Module m : actual) {
-      actualNames.add(m.getName());
-    }
-
-    assertUnorderedElementsAreEqual(actualNames, expectedNames);
-  }
-
   protected void assertSources(String moduleName, String... expectedSources) {
     doAssertContentFolders(moduleName, JavaSourceRootType.SOURCE, expectedSources);
   }
@@ -198,26 +187,6 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     assertModuleDeps(moduleName, LibraryOrderEntry.class, expectedDeps);
   }
 
-  protected void assertExportedDeps(String moduleName, String... expectedDeps) {
-    final List<String> actual = new ArrayList<>();
-
-    getRootManager(moduleName).orderEntries().withoutSdk().withoutModuleSourceEntries().exportedOnly().process(new RootPolicy<Object>() {
-      @Override
-      public Object visitModuleOrderEntry(@NotNull ModuleOrderEntry e, Object value) {
-        actual.add(e.getModuleName());
-        return null;
-      }
-
-      @Override
-      public Object visitLibraryOrderEntry(@NotNull LibraryOrderEntry e, Object value) {
-        actual.add(e.getLibraryName());
-        return null;
-      }
-    }, null);
-
-    assertOrderedElementsAreEqual(actual, expectedDeps);
-  }
-
   protected void assertModuleModuleDeps(String moduleName, String... expectedDeps) {
     assertModuleDeps(moduleName, ModuleOrderEntry.class, expectedDeps);
   }
@@ -260,27 +229,6 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
                   + "\namong: " + collectModuleDepsNames(moduleName, clazz),
                   dep);
     return dep;
-  }
-
-  public void assertProjectLibraries(String... expectedNames) {
-    List<String> actualNames = new ArrayList<>();
-    for (Library each : LibraryTablesRegistrar.getInstance().getLibraryTable(myProject).getLibraries()) {
-      String name = each.getName();
-      actualNames.add(name == null ? "<unnamed>" : name);
-    }
-    assertUnorderedElementsAreEqual(actualNames, expectedNames);
-  }
-
-  protected void assertModuleGroupPath(String moduleName, String... expected) {
-    String[] path = ModuleManager.getInstance(myProject).getModuleGroupPath(getModule(moduleName));
-
-    if (expected.length == 0) {
-      assertNull(path);
-    }
-    else {
-      assertNotNull(path);
-      assertOrderedElementsAreEqual(Arrays.asList(path), expected);
-    }
   }
 
   protected Module getModule(final String name) {
