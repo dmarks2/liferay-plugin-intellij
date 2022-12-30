@@ -143,7 +143,6 @@ The warning (inspection) can be disabled if desired.
 
 The following tags are checked for the right context:
 
-    <aui:fieldset>
     <aui:input>
     <aui:nav-bar-search>
     <aui:nav-item>
