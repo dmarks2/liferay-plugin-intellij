@@ -295,9 +295,11 @@
         <runConfigurationProducer implementation="de.dm.intellij.liferay.language.groovy.LiferayServerGroovyConfigurationProducer" />
         <runLineMarkerContributor language="Groovy" implementationClass="de.dm.intellij.liferay.language.groovy.LiferayServerGroovyRunLineMarkerProvider" />
 
-        <psi.referenceContributor implementation="de.dm.intellij.liferay.workflow.LiferayWorkflowXmlReferenceContributor"/>
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.workflow.LiferayWorkflowXmlReferenceContributor"
+                                  language="XML"/>
 
-        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationReferenceContributor"/>
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationReferenceContributor"
+                                  language="JAVA"/>
 
         <lang.findUsagesProvider language="JAVA" implementationClass="de.dm.intellij.liferay.language.osgi.MetaConfigurationFindUsagesProvider" />
         <referencesSearch implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationReferencesSearch" />
