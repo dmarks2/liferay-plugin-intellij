@@ -7,22 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface PoshiVariableAssignment extends PsiElement {
 
-  @Nullable
-  PoshiInvocations getInvocations();
+  @NotNull
+  List<PoshiInvocations> getInvocationsList();
 
-  @Nullable
-  PoshiStringQuotedDouble getStringQuotedDouble();
-
-  @Nullable
-  PsiElement getArithmeticOperator();
+  @NotNull
+  List<PoshiStringQuotedDouble> getStringQuotedDoubleList();
 
   @NotNull
   PsiElement getIdentifier();
-
-  @Nullable
-  PsiElement getNumericConstant();
-
-  @Nullable
-  PsiElement getVariableReference();
 
 }

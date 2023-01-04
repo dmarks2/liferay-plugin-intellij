@@ -52,8 +52,8 @@
         BLOCK_COMMENT = "regexp:/\*.*?\*/"
         LINE_COMMENT = "regexp://.*"
 
-        DOUBLE_QUOTED_STRING = "regexp:(\"(.*?)\")"
-        SINGLE_QUOTED_STRING = "regexp:('(.*?)')"
+        DOUBLE_QUOTED_STRING = "regexp:(\"[^\"]*\")"
+        SINGLE_QUOTED_STRING = "regexp:('.*?')"
 
         COMPARISION_OPERATOR = "regexp:[!=]="
         ARITHMETIC_OPERATOR = "regexp:(\-|\+|\*/)"
@@ -114,6 +114,6 @@ structures ::= structure-keywords CURLY_LBRACE [poshi-code*] CURLY_RBRACE
 
 structure-keywords ::= DEFINITION | SET_UP | TEAR_DOWN
 
-variable-assignment ::= IDENTIFIER EQUALS (invocations | string-quoted-double | VARIABLE_REFERENCE | ARITHMETIC_OPERATOR | NUMERIC_CONSTANT) //TODO https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-vscode/syntaxes/poshi.tmLanguage.json#L463
+variable-assignment ::= IDENTIFIER EQUALS (invocations | string-quoted-double | VARIABLE_REFERENCE | ARITHMETIC_OPERATOR | NUMERIC_CONSTANT)* //TODO https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-vscode/syntaxes/poshi.tmLanguage.json#L463
 
 variables ::= [STATIC] VAR variable-assignment

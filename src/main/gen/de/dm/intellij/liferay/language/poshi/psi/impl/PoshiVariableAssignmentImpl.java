@@ -28,39 +28,21 @@ public class PoshiVariableAssignmentImpl extends ASTWrapperPsiElement implements
   }
 
   @Override
-  @Nullable
-  public PoshiInvocations getInvocations() {
-    return findChildByClass(PoshiInvocations.class);
+  @NotNull
+  public List<PoshiInvocations> getInvocationsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiInvocations.class);
   }
 
   @Override
-  @Nullable
-  public PoshiStringQuotedDouble getStringQuotedDouble() {
-    return findChildByClass(PoshiStringQuotedDouble.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getArithmeticOperator() {
-    return findChildByType(ARITHMETIC_OPERATOR);
+  @NotNull
+  public List<PoshiStringQuotedDouble> getStringQuotedDoubleList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiStringQuotedDouble.class);
   }
 
   @Override
   @NotNull
   public PsiElement getIdentifier() {
     return findNotNullChildByType(IDENTIFIER);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getNumericConstant() {
-    return findChildByType(NUMERIC_CONSTANT);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getVariableReference() {
-    return findChildByType(VARIABLE_REFERENCE);
   }
 
 }

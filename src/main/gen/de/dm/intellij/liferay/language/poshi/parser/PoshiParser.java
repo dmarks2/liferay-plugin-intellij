@@ -439,7 +439,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER EQUALS (invocations | string-quoted-double | VARIABLE_REFERENCE | ARITHMETIC_OPERATOR | NUMERIC_CONSTANT)
+  // IDENTIFIER EQUALS (invocations | string-quoted-double | VARIABLE_REFERENCE | ARITHMETIC_OPERATOR | NUMERIC_CONSTANT)*
   public static boolean variable_assignment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_assignment")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
@@ -451,9 +451,20 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // invocations | string-quoted-double | VARIABLE_REFERENCE | ARITHMETIC_OPERATOR | NUMERIC_CONSTANT
+  // (invocations | string-quoted-double | VARIABLE_REFERENCE | ARITHMETIC_OPERATOR | NUMERIC_CONSTANT)*
   private static boolean variable_assignment_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_assignment_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!variable_assignment_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "variable_assignment_2", c)) break;
+    }
+    return true;
+  }
+
+  // invocations | string-quoted-double | VARIABLE_REFERENCE | ARITHMETIC_OPERATOR | NUMERIC_CONSTANT
+  private static boolean variable_assignment_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_assignment_2_0")) return false;
     boolean r;
     r = invocations(b, l + 1);
     if (!r) r = string_quoted_double(b, l + 1);
