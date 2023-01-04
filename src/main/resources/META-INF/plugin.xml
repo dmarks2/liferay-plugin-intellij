@@ -323,6 +323,11 @@
             implementationClass="de.dm.intellij.liferay.language.poshi.parser.PoshiParserDefinition"
         />
 
+        <lang.syntaxHighlighterFactory
+            language="Poshi"
+            implementationClass="de.dm.intellij.liferay.language.poshi.highlighting.PoshiSyntaxHighlighterFactory"
+        />
+
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">
