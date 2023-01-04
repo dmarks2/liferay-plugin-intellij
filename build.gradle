@@ -41,13 +41,13 @@ test {
 sourceSets {
     main {
         java {
-            srcDirs = ['src/main/java']
+            srcDirs = ['src/main/java', 'src/main/gen']
         }
         resources {
             srcDirs = ['src/main/resources']
         }
 
-        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'generateLiferayPortalPropertiesFiles', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions', 'downloadIntelliJCommunityMockJDK11', "downloadSchemaDefinitions"])
+        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'generateLiferayPortalPropertiesFiles', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions', 'downloadIntelliJCommunityMockJDK11', "downloadSchemaDefinitions", "downloadPoshiGrammar"])
     }
 }
 
@@ -654,6 +654,39 @@ tasks.register('downloadSchemaDefinitions') {
     }
 }
 */
+
+tasks.register('downloadPoshiGrammar') {
+    doLast {
+        def target = new File(generatedResources, "com/liferay/poshi");
+        def syntaxes = new File(target, "syntaxes");
+
+        target.mkdirs();
+
+        download.run {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/test/poshi/poshi-vscode/package.json'
+            dest new File(target, "package.json")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+
+        download.run {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/test/poshi/poshi-vscode/language-configuration.json'
+            dest new File(target, "language-configuration.json")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+
+        download.run {
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/test/poshi/poshi-vscode/syntaxes/poshi.tmLanguage.json'
+            dest new File(syntaxes, "poshi.tmLanguage.json")
+            acceptAnyCertificate true
+            overwrite true
+            onlyIfNewer true
+        }
+    }
+}
 
 group 'de.dm.intellij.liferay'
 version '0.0.15'

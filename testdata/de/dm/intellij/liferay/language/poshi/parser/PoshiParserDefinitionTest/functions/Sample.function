@@ -1,0 +1,7 @@
+definition {
+
+	function goBack {
+		selenium.goBack();
+	}
+
+}

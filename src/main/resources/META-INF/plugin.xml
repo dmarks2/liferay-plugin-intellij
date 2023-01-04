@@ -308,6 +308,21 @@
         <renameHandler implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationRenameHandler"/>
         <renameInputValidator implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationRenameInputValidator" />
         <elementDescriptionProvider implementation="de.dm.intellij.liferay.language.osgi.MetaConfigurationElementDescriptionProvider" />
+
+        <!-- POSHI -->
+        <fileType
+                name="Poshi File"
+                implementationClass="de.dm.intellij.liferay.language.poshi.PoshiFileType"
+                fieldName="INSTANCE"
+                language="Poshi"
+                extensions="testcase;function;macro"
+        />
+
+        <lang.parserDefinition
+            language="Poshi"
+            implementationClass="de.dm.intellij.liferay.language.poshi.parser.PoshiParserDefinition"
+        />
+
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">
