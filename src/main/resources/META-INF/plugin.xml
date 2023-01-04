@@ -328,6 +328,11 @@
             implementationClass="de.dm.intellij.liferay.language.poshi.highlighting.PoshiSyntaxHighlighterFactory"
         />
 
+        <lang.braceMatcher
+            language="Poshi"
+            implementationClass="de.dm.intellij.liferay.language.poshi.highlighting.PoshiBraceMatcher"
+        />
+
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">
