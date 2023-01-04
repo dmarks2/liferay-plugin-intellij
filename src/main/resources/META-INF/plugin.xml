@@ -333,6 +333,10 @@
             implementationClass="de.dm.intellij.liferay.language.poshi.highlighting.PoshiBraceMatcher"
         />
 
+        <lang.commenter
+            language="Poshi"
+            implementationClass="de.dm.intellij.liferay.language.poshi.commenter.PoshiCommenter"
+        />
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">

@@ -1,0 +1,7 @@
+definition {
+
+	setUp {
+//		Default.Open(locator1 = "http://localhost:8080");
+	}
+
+}

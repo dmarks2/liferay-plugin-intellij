@@ -1,0 +1,7 @@
+definition {
+
+	setUp {
+		<selection>Default.Open(locator1 = "http://localhost:8080");</selection>
+	}
+
+}
