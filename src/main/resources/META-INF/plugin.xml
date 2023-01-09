@@ -337,6 +337,11 @@
             language="Poshi"
             implementationClass="de.dm.intellij.liferay.language.poshi.commenter.PoshiCommenter"
         />
+
+        <completion.contributor
+            language="Poshi"
+            implementationClass="de.dm.intellij.liferay.language.poshi.completion.PoshiCompletionContributor"
+        />
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">

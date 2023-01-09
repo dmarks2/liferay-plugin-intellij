@@ -410,14 +410,15 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   // structure-keywords CURLY_LBRACE [poshi-code*] CURLY_RBRACE
   public static boolean structures(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structures")) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, STRUCTURES, "<structures>");
     r = structure_keywords(b, l + 1);
-    r = r && consumeToken(b, CURLY_LBRACE);
-    r = r && structures_2(b, l + 1);
-    r = r && consumeToken(b, CURLY_RBRACE);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, consumeToken(b, CURLY_LBRACE));
+    r = p && report_error_(b, structures_2(b, l + 1)) && r;
+    r = p && consumeToken(b, CURLY_RBRACE) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // [poshi-code*]
