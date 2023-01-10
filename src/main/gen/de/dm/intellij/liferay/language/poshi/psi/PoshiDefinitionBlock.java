@@ -22,4 +22,7 @@ public interface PoshiDefinitionBlock extends PsiElement {
   @NotNull
   List<PoshiStructureBlock> getStructureBlockList();
 
+  @NotNull
+  List<PoshiVariable> getVariableList();
+
 }

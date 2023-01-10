@@ -8,11 +8,11 @@ import com.intellij.psi.PsiNamedElement;
 
 public interface PoshiVariableAssignment extends PsiNamedElement {
 
-  @Nullable
-  PoshiInvocation getInvocation();
+  @NotNull
+  List<PoshiInvocation> getInvocationList();
 
-  @Nullable
-  PoshiStringQuotedDouble getStringQuotedDouble();
+  @NotNull
+  List<PoshiStringQuotedDouble> getStringQuotedDoubleList();
 
   @NotNull
   PsiElement getIdentifier();

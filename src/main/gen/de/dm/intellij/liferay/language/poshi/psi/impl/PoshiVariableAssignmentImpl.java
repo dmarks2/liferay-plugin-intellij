@@ -28,15 +28,15 @@ public class PoshiVariableAssignmentImpl extends ASTWrapperPsiElement implements
   }
 
   @Override
-  @Nullable
-  public PoshiInvocation getInvocation() {
-    return findChildByClass(PoshiInvocation.class);
+  @NotNull
+  public List<PoshiInvocation> getInvocationList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiInvocation.class);
   }
 
   @Override
-  @Nullable
-  public PoshiStringQuotedDouble getStringQuotedDouble() {
-    return findChildByClass(PoshiStringQuotedDouble.class);
+  @NotNull
+  public List<PoshiStringQuotedDouble> getStringQuotedDoubleList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiStringQuotedDouble.class);
   }
 
   @Override

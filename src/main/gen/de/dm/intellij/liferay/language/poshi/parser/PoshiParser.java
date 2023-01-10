@@ -282,7 +282,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation*] DEFINITION [CURLY_LBRACE {structure-block | command-block | property-instruction | comments}* CURLY_RBRACE]
+  // [annotation*] DEFINITION [CURLY_LBRACE {structure-block | command-block | property-instruction | variable | comments}* CURLY_RBRACE]
   public static boolean definition_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "definition_block")) return false;
     if (!nextTokenIs(b, "<definition block>", ANNOTATION_NAME, DEFINITION)) return false;
@@ -313,14 +313,14 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // [CURLY_LBRACE {structure-block | command-block | property-instruction | comments}* CURLY_RBRACE]
+  // [CURLY_LBRACE {structure-block | command-block | property-instruction | variable | comments}* CURLY_RBRACE]
   private static boolean definition_block_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "definition_block_2")) return false;
     definition_block_2_0(b, l + 1);
     return true;
   }
 
-  // CURLY_LBRACE {structure-block | command-block | property-instruction | comments}* CURLY_RBRACE
+  // CURLY_LBRACE {structure-block | command-block | property-instruction | variable | comments}* CURLY_RBRACE
   private static boolean definition_block_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "definition_block_2_0")) return false;
     boolean r;
@@ -332,7 +332,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // {structure-block | command-block | property-instruction | comments}*
+  // {structure-block | command-block | property-instruction | variable | comments}*
   private static boolean definition_block_2_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "definition_block_2_0_1")) return false;
     while (true) {
@@ -343,13 +343,14 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // structure-block | command-block | property-instruction | comments
+  // structure-block | command-block | property-instruction | variable | comments
   private static boolean definition_block_2_0_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "definition_block_2_0_1_0")) return false;
     boolean r;
     r = structure_block(b, l + 1);
     if (!r) r = command_block(b, l + 1);
     if (!r) r = property_instruction(b, l + 1);
+    if (!r) r = variable(b, l + 1);
     if (!r) r = comments(b, l + 1);
     return r;
   }
@@ -617,24 +618,49 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER EQUALS (string-quoted-double | invocation)
+  // IDENTIFIER EQUALS variable-assignment-inner {ARITHMETIC_OPERATOR variable-assignment-inner}*
   public static boolean variable_assignment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_assignment")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, IDENTIFIER, EQUALS);
-    r = r && variable_assignment_2(b, l + 1);
+    r = r && variable_assignment_inner(b, l + 1);
+    r = r && variable_assignment_3(b, l + 1);
     exit_section_(b, m, VARIABLE_ASSIGNMENT, r);
     return r;
   }
 
-  // string-quoted-double | invocation
-  private static boolean variable_assignment_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "variable_assignment_2")) return false;
+  // {ARITHMETIC_OPERATOR variable-assignment-inner}*
+  private static boolean variable_assignment_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_assignment_3")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!variable_assignment_3_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "variable_assignment_3", c)) break;
+    }
+    return true;
+  }
+
+  // ARITHMETIC_OPERATOR variable-assignment-inner
+  private static boolean variable_assignment_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_assignment_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ARITHMETIC_OPERATOR);
+    r = r && variable_assignment_inner(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // string-quoted-double | invocation | NUMERIC_CONSTANT
+  static boolean variable_assignment_inner(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_assignment_inner")) return false;
     boolean r;
     r = string_quoted_double(b, l + 1);
     if (!r) r = invocation(b, l + 1);
+    if (!r) r = consumeToken(b, NUMERIC_CONSTANT);
     return r;
   }
 

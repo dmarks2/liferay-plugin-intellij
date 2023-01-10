@@ -57,4 +57,10 @@ public class PoshiDefinitionBlockImpl extends ASTWrapperPsiElement implements Po
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiStructureBlock.class);
   }
 
+  @Override
+  @NotNull
+  public List<PoshiVariable> getVariableList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariable.class);
+  }
+
 }
