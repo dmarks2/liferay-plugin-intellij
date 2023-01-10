@@ -11,14 +11,14 @@ import static de.dm.intellij.liferay.language.poshi.psi.PoshiTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.dm.intellij.liferay.language.poshi.psi.*;
 
-public class PoshiAnnotationsImpl extends ASTWrapperPsiElement implements PoshiAnnotations {
+public class PoshiStructureBlockImpl extends ASTWrapperPsiElement implements PoshiStructureBlock {
 
-  public PoshiAnnotationsImpl(@NotNull ASTNode node) {
+  public PoshiStructureBlockImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PoshiVisitor visitor) {
-    visitor.visitAnnotations(this);
+    visitor.visitStructureBlock(this);
   }
 
   @Override
@@ -28,15 +28,9 @@ public class PoshiAnnotationsImpl extends ASTWrapperPsiElement implements PoshiA
   }
 
   @Override
-  @Nullable
-  public PoshiStringQuotedDouble getStringQuotedDouble() {
-    return findChildByClass(PoshiStringQuotedDouble.class);
-  }
-
-  @Override
   @NotNull
-  public PsiElement getAnnotationName() {
-    return findNotNullChildByType(ANNOTATION_NAME);
+  public List<PoshiInvocation> getInvocationList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiInvocation.class);
   }
 
 }

@@ -25,16 +25,15 @@ import static de.dm.intellij.liferay.language.poshi.psi.PoshiTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
+LINE_COMMENT="//".*
+BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
+DOUBLE_QUOTED_STRING=\"([^\\\"\r\n]|\\[^\r\n])*\"?
+SINGLE_QUOTED_STRING=('.*?')
 ANNOTATION_NAME=(@[\s]*[a-z0-9]+)
 IDENTIFIER=([A-z][\w-]*)+
-VARIABLE_REFERENCE=(\$\{[\w-]+\})
-BLOCK_COMMENT="/"\*.*?\*"/"
-LINE_COMMENT="//".*
-DOUBLE_QUOTED_STRING=(\"[^\"]*\")
-SINGLE_QUOTED_STRING=('.*?')
-COMPARISION_OPERATOR=[!=]=
 ARITHMETIC_OPERATOR=(\-|\+|\*"/")
 NUMERIC_CONSTANT=[0-9]+
+COMPARISION_OPERATOR=[!=]=
 TESTING_WHITESPACE=[ \n\t\r\f]+
 
 %%
@@ -44,12 +43,12 @@ TESTING_WHITESPACE=[ \n\t\r\f]+
   "definition"                { return DEFINITION; }
   "setUp"                     { return SET_UP; }
   "tearDown"                  { return TEAR_DOWN; }
-  "static"                    { return STATIC; }
-  "var"                       { return VAR; }
-  "property"                  { return PROPERTY; }
   "function"                  { return FUNCTION; }
   "macro"                     { return MACRO; }
   "test"                      { return TEST; }
+  "property"                  { return PROPERTY; }
+  "static"                    { return STATIC; }
+  "var"                       { return VAR; }
   "if"                        { return IF; }
   "else if"                   { return ELSE_IF; }
   "else"                      { return ELSE; }
@@ -63,21 +62,19 @@ TESTING_WHITESPACE=[ \n\t\r\f]+
   "["                         { return SQUARE_LBRACE; }
   "]"                         { return SQUARE_RBRACE; }
   "."                         { return PERIOD; }
-  ";"                         { return SEMICOLON; }
-  "="                         { return EQUALS; }
-  "\""                        { return DOUBLE_QUOTE; }
   ","                         { return COMMA; }
+  "="                         { return EQUALS; }
+  ";"                         { return SEMICOLON; }
 
-  {ANNOTATION_NAME}           { return ANNOTATION_NAME; }
-  {IDENTIFIER}                { return IDENTIFIER; }
-  {VARIABLE_REFERENCE}        { return VARIABLE_REFERENCE; }
-  {BLOCK_COMMENT}             { return BLOCK_COMMENT; }
   {LINE_COMMENT}              { return LINE_COMMENT; }
+  {BLOCK_COMMENT}             { return BLOCK_COMMENT; }
   {DOUBLE_QUOTED_STRING}      { return DOUBLE_QUOTED_STRING; }
   {SINGLE_QUOTED_STRING}      { return SINGLE_QUOTED_STRING; }
-  {COMPARISION_OPERATOR}      { return COMPARISION_OPERATOR; }
+  {ANNOTATION_NAME}           { return ANNOTATION_NAME; }
+  {IDENTIFIER}                { return IDENTIFIER; }
   {ARITHMETIC_OPERATOR}       { return ARITHMETIC_OPERATOR; }
   {NUMERIC_CONSTANT}          { return NUMERIC_CONSTANT; }
+  {COMPARISION_OPERATOR}      { return COMPARISION_OPERATOR; }
   {TESTING_WHITESPACE}        { return TESTING_WHITESPACE; }
 
 }

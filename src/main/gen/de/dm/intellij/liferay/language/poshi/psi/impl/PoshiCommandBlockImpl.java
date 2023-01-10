@@ -11,14 +11,14 @@ import static de.dm.intellij.liferay.language.poshi.psi.PoshiTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.dm.intellij.liferay.language.poshi.psi.*;
 
-public class PoshiVariableAssignmentImpl extends ASTWrapperPsiElement implements PoshiVariableAssignment {
+public class PoshiCommandBlockImpl extends ASTWrapperPsiElement implements PoshiCommandBlock {
 
-  public PoshiVariableAssignmentImpl(@NotNull ASTNode node) {
+  public PoshiCommandBlockImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PoshiVisitor visitor) {
-    visitor.visitVariableAssignment(this);
+    visitor.visitCommandBlock(this);
   }
 
   @Override
@@ -28,15 +28,39 @@ public class PoshiVariableAssignmentImpl extends ASTWrapperPsiElement implements
   }
 
   @Override
-  @Nullable
-  public PoshiInvocation getInvocation() {
-    return findChildByClass(PoshiInvocation.class);
+  @NotNull
+  public List<PoshiAnnotation> getAnnotationList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiAnnotation.class);
   }
 
   @Override
-  @Nullable
-  public PoshiStringQuotedDouble getStringQuotedDouble() {
-    return findChildByClass(PoshiStringQuotedDouble.class);
+  @NotNull
+  public List<PoshiComments> getCommentsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiComments.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PoshiControlBlock> getControlBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiControlBlock.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PoshiInvocation> getInvocationList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiInvocation.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PoshiPropertyInstruction> getPropertyInstructionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiPropertyInstruction.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PoshiVariable> getVariableList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariable.class);
   }
 
   @Override

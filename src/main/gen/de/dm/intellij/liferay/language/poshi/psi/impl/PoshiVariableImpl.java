@@ -11,14 +11,14 @@ import static de.dm.intellij.liferay.language.poshi.psi.PoshiTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.dm.intellij.liferay.language.poshi.psi.*;
 
-public class PoshiPropertiesImpl extends ASTWrapperPsiElement implements PoshiProperties {
+public class PoshiVariableImpl extends ASTWrapperPsiElement implements PoshiVariable {
 
-  public PoshiPropertiesImpl(@NotNull ASTNode node) {
+  public PoshiVariableImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PoshiVisitor visitor) {
-    visitor.visitProperties(this);
+    visitor.visitVariable(this);
   }
 
   @Override
@@ -29,14 +29,8 @@ public class PoshiPropertiesImpl extends ASTWrapperPsiElement implements PoshiPr
 
   @Override
   @NotNull
-  public PoshiStringQuotedDouble getStringQuotedDouble() {
-    return findNotNullChildByClass(PoshiStringQuotedDouble.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public PoshiVariableAssignment getVariableAssignment() {
+    return findNotNullChildByClass(PoshiVariableAssignment.class);
   }
 
 }

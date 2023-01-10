@@ -11,14 +11,14 @@ import static de.dm.intellij.liferay.language.poshi.psi.PoshiTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.dm.intellij.liferay.language.poshi.psi.*;
 
-public class PoshiControlBlocksImpl extends ASTWrapperPsiElement implements PoshiControlBlocks {
+public class PoshiControlBlockImpl extends ASTWrapperPsiElement implements PoshiControlBlock {
 
-  public PoshiControlBlocksImpl(@NotNull ASTNode node) {
+  public PoshiControlBlockImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PoshiVisitor visitor) {
-    visitor.visitControlBlocks(this);
+    visitor.visitControlBlock(this);
   }
 
   @Override
@@ -29,44 +29,26 @@ public class PoshiControlBlocksImpl extends ASTWrapperPsiElement implements Posh
 
   @Override
   @NotNull
-  public List<PoshiAnnotations> getAnnotationsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiAnnotations.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PoshiCommandBlocks> getCommandBlocksList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiCommandBlocks.class);
-  }
-
-  @Override
-  @NotNull
   public List<PoshiComments> getCommentsList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiComments.class);
   }
 
   @Override
   @NotNull
-  public List<PoshiControlBlocks> getControlBlocksList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiControlBlocks.class);
+  public List<PoshiControlBlock> getControlBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiControlBlock.class);
   }
 
   @Override
   @NotNull
-  public List<PoshiInvocations> getInvocationsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiInvocations.class);
+  public List<PoshiInvocation> getInvocationList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiInvocation.class);
   }
 
   @Override
   @NotNull
-  public List<PoshiKeywords> getKeywordsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiKeywords.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PoshiProperties> getPropertiesList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiProperties.class);
+  public List<PoshiPropertyInstruction> getPropertyInstructionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiPropertyInstruction.class);
   }
 
   @Override
@@ -77,20 +59,14 @@ public class PoshiControlBlocksImpl extends ASTWrapperPsiElement implements Posh
 
   @Override
   @NotNull
-  public List<PoshiStructures> getStructuresList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiStructures.class);
+  public List<PoshiVariable> getVariableList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariable.class);
   }
 
   @Override
   @NotNull
   public List<PoshiVariableAssignment> getVariableAssignmentList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariableAssignment.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PoshiVariables> getVariablesList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariables.class);
   }
 
 }

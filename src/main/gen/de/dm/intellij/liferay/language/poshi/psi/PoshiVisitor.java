@@ -4,15 +4,16 @@ package de.dm.intellij.liferay.language.poshi.psi;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiNamedElement;
 
 public class PoshiVisitor extends PsiElementVisitor {
 
-  public void visitAnnotations(@NotNull PoshiAnnotations o) {
+  public void visitAnnotation(@NotNull PoshiAnnotation o) {
     visitPsiElement(o);
   }
 
-  public void visitCommandBlocks(@NotNull PoshiCommandBlocks o) {
-    visitPsiElement(o);
+  public void visitCommandBlock(@NotNull PoshiCommandBlock o) {
+    visitPsiNamedElement(o);
   }
 
   public void visitCommentBlock(@NotNull PoshiCommentBlock o) {
@@ -23,19 +24,19 @@ public class PoshiVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitControlBlocks(@NotNull PoshiControlBlocks o) {
+  public void visitControlBlock(@NotNull PoshiControlBlock o) {
     visitPsiElement(o);
   }
 
-  public void visitInvocations(@NotNull PoshiInvocations o) {
+  public void visitDefinitionBlock(@NotNull PoshiDefinitionBlock o) {
     visitPsiElement(o);
   }
 
-  public void visitKeywords(@NotNull PoshiKeywords o) {
+  public void visitInvocation(@NotNull PoshiInvocation o) {
     visitPsiElement(o);
   }
 
-  public void visitProperties(@NotNull PoshiProperties o) {
+  public void visitPropertyInstruction(@NotNull PoshiPropertyInstruction o) {
     visitPsiElement(o);
   }
 
@@ -43,20 +44,20 @@ public class PoshiVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitStructureKeywords(@NotNull PoshiStructureKeywords o) {
+  public void visitStructureBlock(@NotNull PoshiStructureBlock o) {
     visitPsiElement(o);
   }
 
-  public void visitStructures(@NotNull PoshiStructures o) {
+  public void visitVariable(@NotNull PoshiVariable o) {
     visitPsiElement(o);
   }
 
   public void visitVariableAssignment(@NotNull PoshiVariableAssignment o) {
-    visitPsiElement(o);
+    visitPsiNamedElement(o);
   }
 
-  public void visitVariables(@NotNull PoshiVariables o) {
-    visitPsiElement(o);
+  public void visitPsiNamedElement(@NotNull PsiNamedElement o) {
+    visitElement(o);
   }
 
   public void visitPsiElement(@NotNull PsiElement o) {

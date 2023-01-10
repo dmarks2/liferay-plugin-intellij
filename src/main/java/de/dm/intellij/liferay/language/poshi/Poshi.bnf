@@ -1,6 +1,6 @@
-//Poshi Script documentation: https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-script.markdown
 {
    parserClass="de.dm.intellij.liferay.language.poshi.parser.PoshiParser"
+   parserUtilClass="de.dm.intellij.liferay.language.poshi.parser.PoshiParserUtil"
 
    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
@@ -13,107 +13,100 @@
    elementTypeClass="de.dm.intellij.liferay.language.poshi.psi.PoshiElementType"
    tokenTypeClass="de.dm.intellij.liferay.language.poshi.psi.PoshiTokenType"
 
+   psiImplUtilClass="de.dm.intellij.liferay.language.poshi.psi.impl.PoshiPsiImplUtil"
+
    tokens = [
-        //keywords
-        DEFINITION = "definition"
-        SET_UP = "setUp"
-        TEAR_DOWN = "tearDown"
-        STATIC = "static"
-        VAR = "var"
-        PROPERTY = "property"
-        FUNCTION = "function"
-        MACRO = "macro"
-        TEST = "test"
-        IF = "if"
-        ELSE_IF = "else if"
-        ELSE = "else"
-        TASK = "task"
-        WHILE = "while"
-        RETURN = "return"
+           //keywords
+           DEFINITION = "definition"
+           SET_UP = "setUp"
+           TEAR_DOWN = "tearDown"
+           FUNCTION = "function"
+           MACRO = "macro"
+           TEST = "test"
+           PROPERTY = "property"
+           STATIC = "static"
+           VAR = "var"
+           IF = "if"
+           ELSE_IF = "else if"
+           ELSE = "else"
+           TASK = "task"
+           WHILE = "while"
+           RETURN = "return"
 
-        //declarations
-        ANNOTATION_NAME = "regexp:(@[\s]*[a-z0-9]+)"
-        IDENTIFIER = "regexp:([A-z][\w-]*)+"
-        VARIABLE_REFERENCE = "regexp:(\$\{[\w-]+\})"
+           CURLY_LBRACE = "{"
+           CURLY_RBRACE = "}"
+           ROUND_LBRACE = "("
+           ROUND_RBRACE = ")"
+           SQUARE_LBRACE = "["
+           SQUARE_RBRACE = "]"
+           PERIOD = "."
+           COMMA = ","
+           EQUALS = "="
+           SEMICOLON = ";"
 
-        //operators and other tokens
-        CURLY_LBRACE = "{"
-        CURLY_RBRACE = "}"
-        ROUND_LBRACE = "("
-        ROUND_RBRACE = ")"
-        SQUARE_LBRACE = "["
-        SQUARE_RBRACE = "]"
-        PERIOD = "."
-        SEMICOLON = ";"
-        EQUALS = "="
-        DOUBLE_QUOTE = '"'
-        COMMA = ","
+           LINE_COMMENT = "regexp://.*"
+           BLOCK_COMMENT = "regexp:/\*([^*]|\*+[^*/])*(\*+/)?"
 
-        BLOCK_COMMENT = "regexp:/\*.*?\*/"
-        LINE_COMMENT = "regexp://.*"
+           DOUBLE_QUOTED_STRING="regexp:\"([^\\\"\r\n]|\\[^\r\n])*\"?"
+           SINGLE_QUOTED_STRING = "regexp:('.*?')"
+           ANNOTATION_NAME = "regexp:(@[\s]*[a-z0-9]+)"
+           IDENTIFIER = "regexp:([A-z][\w-]*)+"
 
-        DOUBLE_QUOTED_STRING = "regexp:(\"[^\"]*\")"
-        SINGLE_QUOTED_STRING = "regexp:('.*?')"
+           ARITHMETIC_OPERATOR = "regexp:(\-|\+|\*/)"
+           NUMERIC_CONSTANT = "regexp:[0-9]+"
 
-        COMPARISION_OPERATOR = "regexp:[!=]="
-        ARITHMETIC_OPERATOR = "regexp:(\-|\+|\*/)"
-        NUMERIC_CONSTANT = "regexp:[0-9]+"
+           COMPARISION_OPERATOR = "regexp:[!=]="
 
-        TESTING_WHITESPACE = "regexp:[ \n\t\r\f]+"
+           TESTING_WHITESPACE = "regexp:[ \n\t\r\f]+"
+   ]
 
-    ]
+   implements("command-block|variable-assignment")=[
+    "com.intellij.psi.PsiNamedElement"
+   ]
 }
 
 // Root
 
-poshi-file ::= { poshi-code* }
+poshi-file ::= definition-block | comments
 
-// Identifiers
+definition-block ::= [annotation*] DEFINITION [CURLY_LBRACE {structure-block | command-block | property-instruction | comments}* CURLY_RBRACE]
 
-private poshi-code ::= { annotations | command-blocks | comments | control-blocks | invocations | keywords | properties | structures | variables}
+structure-block ::= (SET_UP | TEAR_DOWN) [CURLY_LBRACE [invocation*] CURLY_RBRACE]
 
-annotations ::= (ANNOTATION_NAME [EQUALS string-quoted-double])  //TODO https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-vscode/syntaxes/poshi.tmLanguage.json#L29
+command-block ::= [annotation*] (FUNCTION | MACRO | TEST) IDENTIFIER [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE] {
+    methods=[getName setName]
+}
 
-command-blocks ::= { (FUNCTION | MACRO | TEST) IDENTIFIER CURLY_LBRACE [poshi-code*] CURLY_RBRACE}
+invocation ::= IDENTIFIER [PERIOD IDENTIFIER] [ROUND_LBRACE [invocation-inner-list] ROUND_RBRACE] [SEMICOLON]
 
-comment-block ::= BLOCK_COMMENT
+private invocation-inner-list ::= invocation-inner [COMMA invocation-inner]
 
-comments ::= comment-block | LINE_COMMENT
+private invocation-inner ::= variable-assignment | IDENTIFIER | string-quoted-double
 
-control-blocks ::= (control-block-with-condition | control-block-without-condition) CURLY_LBRACE [poshi-code*] CURLY_RBRACE //TODO https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-vscode/syntaxes/poshi.tmLanguage.json#L104
+variable-assignment ::= IDENTIFIER EQUALS (string-quoted-double | invocation) {
+    methods=[getName setName]
+}
+
+string-quoted-double ::= DOUBLE_QUOTED_STRING
+
+annotation ::= ANNOTATION_NAME [EQUALS string-quoted-double]
+
+property-instruction ::= PROPERTY IDENTIFIER {PERIOD IDENTIFIER}* EQUALS (string-quoted-double) [SEMICOLON]
+
+variable ::= [STATIC] VAR variable-assignment [SEMICOLON]
+
+control-block ::= (control-block-with-condition | control-block-without-condition) CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE
 
 private control-block-with-condition ::= (IF | ELSE_IF | TASK | WHILE) ROUND_LBRACE control-block-inner* ROUND_RBRACE
 
 private control-block-without-condition ::= (ELSE)
 
-private control-block-inner ::= invocations | string-quoted-double | variable-assignment | COMPARISION_OPERATOR
+private control-block-inner ::= invocation | string-quoted-double | variable-assignment | COMPARISION_OPERATOR
 
-//TODO https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-vscode/syntaxes/poshi.tmLanguage.json#L110
+comments ::= comment-block | LINE_COMMENT
 
-invocations ::= IDENTIFIER [PERIOD IDENTIFIER] ROUND_LBRACE [invocation-inner-list] ROUND_RBRACE
+comment-block ::= BLOCK_COMMENT
 
-private invocation-inner-list ::= invocation-inner (COMMA invocation-inner)* {pin(".*")=0}
-
-private invocation-inner ::= [variable-assignment | IDENTIFIER | string-quoted-double]
-
-keywords ::= (SEMICOLON | COMPARISION_OPERATOR | RETURN)
-
-//TODO https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-vscode/syntaxes/poshi.tmLanguage.json#L172
-
-//TODO https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-vscode/syntaxes/poshi.tmLanguage.json#L188
-
-properties ::= PROPERTY IDENTIFIER EQUALS (string-quoted-double)
-
-string-quoted-double ::= DOUBLE_QUOTED_STRING  //TODO not applied, required? https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-vscode/syntaxes/poshi.tmLanguage.json#L332
-
-//TODO https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-vscode/syntaxes/poshi.tmLanguage.json#L400
-
-//TODO https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-vscode/syntaxes/poshi.tmLanguage.json#L420
-
-structures ::= structure-keywords CURLY_LBRACE [poshi-code*] CURLY_RBRACE
-
-structure-keywords ::= DEFINITION | SET_UP | TEAR_DOWN
-
-variable-assignment ::= IDENTIFIER EQUALS (invocations | string-quoted-double | VARIABLE_REFERENCE | ARITHMETIC_OPERATOR | NUMERIC_CONSTANT)* //TODO https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-vscode/syntaxes/poshi.tmLanguage.json#L463
-
-variables ::= [STATIC] VAR variable-assignment
+//TODO: arithmetic operators
+//TODO: for loops
+//TODO: escaped strings with '''

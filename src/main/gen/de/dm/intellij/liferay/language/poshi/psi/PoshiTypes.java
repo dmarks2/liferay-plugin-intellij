@@ -8,18 +8,17 @@ import de.dm.intellij.liferay.language.poshi.psi.impl.*;
 
 public interface PoshiTypes {
 
-  IElementType ANNOTATIONS = new PoshiElementType("ANNOTATIONS");
-  IElementType COMMAND_BLOCKS = new PoshiElementType("COMMAND_BLOCKS");
+  IElementType ANNOTATION = new PoshiElementType("ANNOTATION");
+  IElementType COMMAND_BLOCK = new PoshiElementType("COMMAND_BLOCK");
   IElementType COMMENTS = new PoshiElementType("COMMENTS");
   IElementType COMMENT_BLOCK = new PoshiElementType("COMMENT_BLOCK");
-  IElementType CONTROL_BLOCKS = new PoshiElementType("CONTROL_BLOCKS");
-  IElementType INVOCATIONS = new PoshiElementType("INVOCATIONS");
-  IElementType KEYWORDS = new PoshiElementType("KEYWORDS");
-  IElementType PROPERTIES = new PoshiElementType("PROPERTIES");
+  IElementType CONTROL_BLOCK = new PoshiElementType("CONTROL_BLOCK");
+  IElementType DEFINITION_BLOCK = new PoshiElementType("DEFINITION_BLOCK");
+  IElementType INVOCATION = new PoshiElementType("INVOCATION");
+  IElementType PROPERTY_INSTRUCTION = new PoshiElementType("PROPERTY_INSTRUCTION");
   IElementType STRING_QUOTED_DOUBLE = new PoshiElementType("STRING_QUOTED_DOUBLE");
-  IElementType STRUCTURES = new PoshiElementType("STRUCTURES");
-  IElementType STRUCTURE_KEYWORDS = new PoshiElementType("STRUCTURE_KEYWORDS");
-  IElementType VARIABLES = new PoshiElementType("VARIABLES");
+  IElementType STRUCTURE_BLOCK = new PoshiElementType("STRUCTURE_BLOCK");
+  IElementType VARIABLE = new PoshiElementType("VARIABLE");
   IElementType VARIABLE_ASSIGNMENT = new PoshiElementType("VARIABLE_ASSIGNMENT");
 
   IElementType ANNOTATION_NAME = new PoshiTokenType("ANNOTATION_NAME");
@@ -30,7 +29,6 @@ public interface PoshiTypes {
   IElementType CURLY_LBRACE = new PoshiTokenType("{");
   IElementType CURLY_RBRACE = new PoshiTokenType("}");
   IElementType DEFINITION = new PoshiTokenType("definition");
-  IElementType DOUBLE_QUOTE = new PoshiTokenType("\"");
   IElementType DOUBLE_QUOTED_STRING = new PoshiTokenType("DOUBLE_QUOTED_STRING");
   IElementType ELSE = new PoshiTokenType("else");
   IElementType ELSE_IF = new PoshiTokenType("else if");
@@ -56,17 +54,16 @@ public interface PoshiTypes {
   IElementType TEAR_DOWN = new PoshiTokenType("tearDown");
   IElementType TEST = new PoshiTokenType("test");
   IElementType VAR = new PoshiTokenType("var");
-  IElementType VARIABLE_REFERENCE = new PoshiTokenType("VARIABLE_REFERENCE");
   IElementType WHILE = new PoshiTokenType("while");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == ANNOTATIONS) {
-        return new PoshiAnnotationsImpl(node);
+      if (type == ANNOTATION) {
+        return new PoshiAnnotationImpl(node);
       }
-      else if (type == COMMAND_BLOCKS) {
-        return new PoshiCommandBlocksImpl(node);
+      else if (type == COMMAND_BLOCK) {
+        return new PoshiCommandBlockImpl(node);
       }
       else if (type == COMMENTS) {
         return new PoshiCommentsImpl(node);
@@ -74,29 +71,26 @@ public interface PoshiTypes {
       else if (type == COMMENT_BLOCK) {
         return new PoshiCommentBlockImpl(node);
       }
-      else if (type == CONTROL_BLOCKS) {
-        return new PoshiControlBlocksImpl(node);
+      else if (type == CONTROL_BLOCK) {
+        return new PoshiControlBlockImpl(node);
       }
-      else if (type == INVOCATIONS) {
-        return new PoshiInvocationsImpl(node);
+      else if (type == DEFINITION_BLOCK) {
+        return new PoshiDefinitionBlockImpl(node);
       }
-      else if (type == KEYWORDS) {
-        return new PoshiKeywordsImpl(node);
+      else if (type == INVOCATION) {
+        return new PoshiInvocationImpl(node);
       }
-      else if (type == PROPERTIES) {
-        return new PoshiPropertiesImpl(node);
+      else if (type == PROPERTY_INSTRUCTION) {
+        return new PoshiPropertyInstructionImpl(node);
       }
       else if (type == STRING_QUOTED_DOUBLE) {
         return new PoshiStringQuotedDoubleImpl(node);
       }
-      else if (type == STRUCTURES) {
-        return new PoshiStructuresImpl(node);
+      else if (type == STRUCTURE_BLOCK) {
+        return new PoshiStructureBlockImpl(node);
       }
-      else if (type == STRUCTURE_KEYWORDS) {
-        return new PoshiStructureKeywordsImpl(node);
-      }
-      else if (type == VARIABLES) {
-        return new PoshiVariablesImpl(node);
+      else if (type == VARIABLE) {
+        return new PoshiVariableImpl(node);
       }
       else if (type == VARIABLE_ASSIGNMENT) {
         return new PoshiVariableAssignmentImpl(node);

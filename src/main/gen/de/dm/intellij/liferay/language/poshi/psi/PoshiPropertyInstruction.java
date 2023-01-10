@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PoshiAnnotations extends PsiElement {
-
-  @Nullable
-  PoshiStringQuotedDouble getStringQuotedDouble();
+public interface PoshiPropertyInstruction extends PsiElement {
 
   @NotNull
-  PsiElement getAnnotationName();
+  PoshiStringQuotedDouble getStringQuotedDouble();
 
 }

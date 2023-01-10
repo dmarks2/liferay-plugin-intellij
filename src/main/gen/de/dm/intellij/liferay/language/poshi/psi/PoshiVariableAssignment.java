@@ -4,16 +4,21 @@ package de.dm.intellij.liferay.language.poshi.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiNamedElement;
 
-public interface PoshiVariableAssignment extends PsiElement {
+public interface PoshiVariableAssignment extends PsiNamedElement {
 
-  @NotNull
-  List<PoshiInvocations> getInvocationsList();
+  @Nullable
+  PoshiInvocation getInvocation();
 
-  @NotNull
-  List<PoshiStringQuotedDouble> getStringQuotedDoubleList();
+  @Nullable
+  PoshiStringQuotedDouble getStringQuotedDouble();
 
   @NotNull
   PsiElement getIdentifier();
+
+  String getName();
+
+  PsiElement setName(String newName);
 
 }

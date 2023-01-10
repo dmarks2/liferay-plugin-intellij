@@ -11,20 +11,26 @@ import static de.dm.intellij.liferay.language.poshi.psi.PoshiTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.dm.intellij.liferay.language.poshi.psi.*;
 
-public class PoshiStructureKeywordsImpl extends ASTWrapperPsiElement implements PoshiStructureKeywords {
+public class PoshiPropertyInstructionImpl extends ASTWrapperPsiElement implements PoshiPropertyInstruction {
 
-  public PoshiStructureKeywordsImpl(@NotNull ASTNode node) {
+  public PoshiPropertyInstructionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PoshiVisitor visitor) {
-    visitor.visitStructureKeywords(this);
+    visitor.visitPropertyInstruction(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof PoshiVisitor) accept((PoshiVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public PoshiStringQuotedDouble getStringQuotedDouble() {
+    return findNotNullChildByClass(PoshiStringQuotedDouble.class);
   }
 
 }

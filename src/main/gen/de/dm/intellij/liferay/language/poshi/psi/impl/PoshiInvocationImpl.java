@@ -11,14 +11,14 @@ import static de.dm.intellij.liferay.language.poshi.psi.PoshiTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.dm.intellij.liferay.language.poshi.psi.*;
 
-public class PoshiInvocationsImpl extends ASTWrapperPsiElement implements PoshiInvocations {
+public class PoshiInvocationImpl extends ASTWrapperPsiElement implements PoshiInvocation {
 
-  public PoshiInvocationsImpl(@NotNull ASTNode node) {
+  public PoshiInvocationImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PoshiVisitor visitor) {
-    visitor.visitInvocations(this);
+    visitor.visitInvocation(this);
   }
 
   @Override

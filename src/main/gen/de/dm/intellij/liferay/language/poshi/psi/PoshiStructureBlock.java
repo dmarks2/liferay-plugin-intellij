@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PoshiInvocations extends PsiElement {
+public interface PoshiStructureBlock extends PsiElement {
 
   @NotNull
-  List<PoshiStringQuotedDouble> getStringQuotedDoubleList();
-
-  @NotNull
-  List<PoshiVariableAssignment> getVariableAssignmentList();
+  List<PoshiInvocation> getInvocationList();
 
 }
