@@ -1,0 +1,6 @@
+definition{
+macro _login{
+Default.Click(locator1=    "Page#SIGN_IN_LINK",
+value1="foo");
+}
+}

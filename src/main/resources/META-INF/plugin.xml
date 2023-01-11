@@ -342,6 +342,12 @@
             language="Poshi"
             implementationClass="de.dm.intellij.liferay.language.poshi.completion.PoshiCompletionContributor"
         />
+
+        <lang.formatter
+            language="Poshi"
+            implementationClass="de.dm.intellij.liferay.language.poshi.formatting.PoshiFormattingModelBuilder"
+        />
+
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">
