@@ -318,6 +318,14 @@
                 extensions="testcase;function;macro"
         />
 
+        <fileType
+                name="Poshi Path File"
+                implementationClass="de.dm.intellij.liferay.language.poshi.PoshiPathFileType"
+                fieldName="INSTANCE"
+                language="HTML"
+                extensions="path"
+        />
+
         <lang.parserDefinition
             language="Poshi"
             implementationClass="de.dm.intellij.liferay.language.poshi.parser.PoshiParserDefinition"
