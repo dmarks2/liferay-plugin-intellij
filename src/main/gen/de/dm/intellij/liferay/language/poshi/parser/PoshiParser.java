@@ -544,7 +544,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (SET_UP | TEAR_DOWN) [CURLY_LBRACE [invocation*] CURLY_RBRACE]
+  // (SET_UP | TEAR_DOWN) [CURLY_LBRACE {invocation | comments}* CURLY_RBRACE]
   public static boolean structure_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block")) return false;
     if (!nextTokenIs(b, "<structure block>", SET_UP, TEAR_DOWN)) return false;
@@ -565,14 +565,14 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [CURLY_LBRACE [invocation*] CURLY_RBRACE]
+  // [CURLY_LBRACE {invocation | comments}* CURLY_RBRACE]
   private static boolean structure_block_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block_1")) return false;
     structure_block_1_0(b, l + 1);
     return true;
   }
 
-  // CURLY_LBRACE [invocation*] CURLY_RBRACE
+  // CURLY_LBRACE {invocation | comments}* CURLY_RBRACE
   private static boolean structure_block_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block_1_0")) return false;
     boolean r;
@@ -584,22 +584,24 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [invocation*]
+  // {invocation | comments}*
   private static boolean structure_block_1_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block_1_0_1")) return false;
-    structure_block_1_0_1_0(b, l + 1);
+    while (true) {
+      int c = current_position_(b);
+      if (!structure_block_1_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "structure_block_1_0_1", c)) break;
+    }
     return true;
   }
 
-  // invocation*
+  // invocation | comments
   private static boolean structure_block_1_0_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block_1_0_1_0")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!invocation(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "structure_block_1_0_1_0", c)) break;
-    }
-    return true;
+    boolean r;
+    r = invocation(b, l + 1);
+    if (!r) r = comments(b, l + 1);
+    return r;
   }
 
   /* ********************************************************** */

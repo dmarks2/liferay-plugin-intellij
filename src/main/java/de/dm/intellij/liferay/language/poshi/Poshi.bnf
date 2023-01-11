@@ -71,7 +71,7 @@ poshi-file ::= definition-block | comments
 
 definition-block ::= [annotation*] DEFINITION [CURLY_LBRACE {structure-block | command-block | property-instruction | variable | comments}* CURLY_RBRACE]
 
-structure-block ::= (SET_UP | TEAR_DOWN) [CURLY_LBRACE [invocation*] CURLY_RBRACE]
+structure-block ::= (SET_UP | TEAR_DOWN) [CURLY_LBRACE {invocation | comments}* CURLY_RBRACE]
 
 command-block ::= [annotation*] (FUNCTION | MACRO | TEST) IDENTIFIER [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE] {
     methods=[getName setName]

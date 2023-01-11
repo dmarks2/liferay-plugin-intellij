@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface PoshiStructureBlock extends PsiElement {
 
   @NotNull
+  List<PoshiComments> getCommentsList();
+
+  @NotNull
   List<PoshiInvocation> getInvocationList();
 
 }
