@@ -356,7 +356,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER [PERIOD IDENTIFIER] [ROUND_LBRACE [invocation-inner-list] ROUND_RBRACE] [SEMICOLON]
+  // IDENTIFIER {PERIOD IDENTIFIER}* [ROUND_LBRACE [invocation-inner-list] ROUND_RBRACE] [SEMICOLON]
   public static boolean invocation(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "invocation")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
@@ -370,11 +370,25 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [PERIOD IDENTIFIER]
+  // {PERIOD IDENTIFIER}*
   private static boolean invocation_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "invocation_1")) return false;
-    parseTokens(b, 0, PERIOD, IDENTIFIER);
+    while (true) {
+      int c = current_position_(b);
+      if (!invocation_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "invocation_1", c)) break;
+    }
     return true;
+  }
+
+  // PERIOD IDENTIFIER
+  private static boolean invocation_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "invocation_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, PERIOD, IDENTIFIER);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   // [ROUND_LBRACE [invocation-inner-list] ROUND_RBRACE]
