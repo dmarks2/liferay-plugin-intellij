@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static de.dm.intellij.liferay.language.poshi.psi.PoshiTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.dm.intellij.liferay.language.poshi.psi.*;
+import com.intellij.psi.PsiReference;
 
 public class PoshiStringQuotedDoubleImpl extends ASTWrapperPsiElement implements PoshiStringQuotedDouble {
 
@@ -31,6 +32,11 @@ public class PoshiStringQuotedDoubleImpl extends ASTWrapperPsiElement implements
   @NotNull
   public PsiElement getDoubleQuotedString() {
     return findNotNullChildByType(DOUBLE_QUOTED_STRING);
+  }
+
+  @Override
+  public PsiReference @NotNull [] getReferences() {
+    return PoshiPsiImplUtil.getReferences(this);
   }
 
 }

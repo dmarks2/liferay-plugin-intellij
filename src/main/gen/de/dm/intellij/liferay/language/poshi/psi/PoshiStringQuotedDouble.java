@@ -4,10 +4,13 @@ package de.dm.intellij.liferay.language.poshi.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiReference;
 
 public interface PoshiStringQuotedDouble extends PsiElement {
 
   @NotNull
   PsiElement getDoubleQuotedString();
+
+  PsiReference @NotNull [] getReferences();
 
 }

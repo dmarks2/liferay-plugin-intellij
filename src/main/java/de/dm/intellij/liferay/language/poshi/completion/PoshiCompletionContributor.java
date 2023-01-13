@@ -52,7 +52,10 @@ public class PoshiCompletionContributor extends CompletionContributor {
                         }
 
                         result.addAllElements(lookups);
-                        result.stopHere();
+
+                        if (! lookups.isEmpty()) {
+                            result.stopHere();
+                        }
                     }
 
                 }
