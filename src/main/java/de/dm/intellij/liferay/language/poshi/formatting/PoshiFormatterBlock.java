@@ -15,6 +15,7 @@ import com.intellij.psi.formatter.common.AbstractBlock;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiCommandBlock;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiInvocation;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiStructureBlock;
+import de.dm.intellij.liferay.language.poshi.psi.PoshiVariable;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiVariableAssignment;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,6 +46,10 @@ public class PoshiFormatterBlock extends AbstractBlock {
         }
 
         if (psi instanceof PoshiInvocation) {
+            return Indent.getNormalIndent();
+        }
+
+        if (psi instanceof PoshiVariable) {
             return Indent.getNormalIndent();
         }
 
