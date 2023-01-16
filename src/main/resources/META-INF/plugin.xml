@@ -364,6 +364,14 @@
             implementation="de.dm.intellij.liferay.language.poshi.runner.PoshiTestcaseRunner"
         />
 
+        <runConfigurationProducer
+            implementation="de.dm.intellij.liferay.language.poshi.runner.PoshiTestcaseConfigurationProducer"
+        />
+
+        <runLineMarkerContributor
+            language="Poshi"
+            implementationClass="de.dm.intellij.liferay.language.poshi.runner.PoshiTestcaseRunLineMarkerContributor"
+        />
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">
