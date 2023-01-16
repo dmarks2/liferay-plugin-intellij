@@ -11,6 +11,14 @@ plugins {
     id 'de.undercouch.download' version '5.2.1'
 }
 
+configurations {
+    poshi
+}
+
+repositories {
+    maven { url "https://repository-cdn.liferay.com/nexus/content/groups/public/" }
+}
+
 import de.undercouch.gradle.tasks.download.Download
 
 apply plugin: 'idea'
@@ -47,7 +55,12 @@ sourceSets {
             srcDirs = ['src/main/resources']
         }
 
-        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'generateLiferayPortalPropertiesFiles', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions', 'downloadIntelliJCommunityMockJDK11', "downloadSchemaDefinitions", "downloadPoshiGrammar"])
+        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'generateLiferayPortalPropertiesFiles', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions', 'downloadIntelliJCommunityMockJDK11', "downloadSchemaDefinitions", "downloadPoshiGrammar", "downloadPoshi"])
+    }
+    poshi {
+        java {
+            srcDirs = ['src/main/poshi']
+        }
     }
 }
 
@@ -76,6 +89,12 @@ dependencies {
 //    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.9.0'
 //    implementation 'org.json:json:20171018'
 
+    poshiImplementation 'com.liferay:com.liferay.poshi.runner.resources:1.0.14'
+    poshiImplementation('com.liferay:com.liferay.poshi.runner:1.0.396') {
+        exclude group: 'org.arquillian.rusheye', module: 'rusheye-api'
+        exclude group: 'org.arquillian.rusheye', module: 'rusheye-impl'
+    }
+    poshiImplementation 'io.github.bonigarcia:webdrivermanager:5.3.1'
 }
 
 intellij {
@@ -688,5 +707,24 @@ tasks.register('downloadPoshiGrammar') {
     }
 }
 
+tasks.register('compilePoshi', JavaCompile) {
+    sourceCompatibility = 11
+    targetCompatibility = 11
+
+    source = sourceSets.poshi.java.srcDirs
+
+    destinationDirectory = file('build/classes/java/main')
+    classpath = sourceSets.poshi.compileClasspath
+}
+
+tasks.register('downloadPoshi', Copy) {
+    from configurations.poshiImplementation
+    into generatedResources + '/lib'
+}
+
 group 'de.dm.intellij.liferay'
 version '0.0.15'
+
+configurations.poshiImplementation.setCanBeResolved(true)
+
+build.dependsOn compilePoshi

@@ -356,6 +356,14 @@
             implementationClass="de.dm.intellij.liferay.language.poshi.formatting.PoshiFormattingModelBuilder"
         />
 
+        <configurationType
+            implementation="de.dm.intellij.liferay.language.poshi.runner.PoshiTestcaseConfigurationType"
+        />
+
+        <programRunner
+            implementation="de.dm.intellij.liferay.language.poshi.runner.PoshiTestcaseRunner"
+        />
+
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">
