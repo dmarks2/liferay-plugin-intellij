@@ -544,7 +544,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (SET_UP | TEAR_DOWN) [CURLY_LBRACE {invocation | comments}* CURLY_RBRACE]
+  // (SET_UP | TEAR_DOWN) [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE]
   public static boolean structure_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block")) return false;
     if (!nextTokenIs(b, "<structure block>", SET_UP, TEAR_DOWN)) return false;
@@ -565,14 +565,14 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [CURLY_LBRACE {invocation | comments}* CURLY_RBRACE]
+  // [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE]
   private static boolean structure_block_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block_1")) return false;
     structure_block_1_0(b, l + 1);
     return true;
   }
 
-  // CURLY_LBRACE {invocation | comments}* CURLY_RBRACE
+  // CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE
   private static boolean structure_block_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block_1_0")) return false;
     boolean r;
@@ -584,7 +584,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // {invocation | comments}*
+  // {invocation | property-instruction | variable | control-block | comments}*
   private static boolean structure_block_1_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block_1_0_1")) return false;
     while (true) {
@@ -595,11 +595,14 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // invocation | comments
+  // invocation | property-instruction | variable | control-block | comments
   private static boolean structure_block_1_0_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block_1_0_1_0")) return false;
     boolean r;
     r = invocation(b, l + 1);
+    if (!r) r = property_instruction(b, l + 1);
+    if (!r) r = variable(b, l + 1);
+    if (!r) r = control_block(b, l + 1);
     if (!r) r = comments(b, l + 1);
     return r;
   }

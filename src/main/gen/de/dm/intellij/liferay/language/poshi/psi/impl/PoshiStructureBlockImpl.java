@@ -35,8 +35,26 @@ public class PoshiStructureBlockImpl extends ASTWrapperPsiElement implements Pos
 
   @Override
   @NotNull
+  public List<PoshiControlBlock> getControlBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiControlBlock.class);
+  }
+
+  @Override
+  @NotNull
   public List<PoshiInvocation> getInvocationList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiInvocation.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PoshiPropertyInstruction> getPropertyInstructionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiPropertyInstruction.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PoshiVariable> getVariableList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariable.class);
   }
 
 }

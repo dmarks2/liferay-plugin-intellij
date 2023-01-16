@@ -11,6 +11,15 @@ public interface PoshiStructureBlock extends PsiElement {
   List<PoshiComments> getCommentsList();
 
   @NotNull
+  List<PoshiControlBlock> getControlBlockList();
+
+  @NotNull
   List<PoshiInvocation> getInvocationList();
+
+  @NotNull
+  List<PoshiPropertyInstruction> getPropertyInstructionList();
+
+  @NotNull
+  List<PoshiVariable> getVariableList();
 
 }
