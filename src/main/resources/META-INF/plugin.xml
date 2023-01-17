@@ -224,6 +224,7 @@
     <depends optional="true" config-file="groovy.xml">org.intellij.groovy</depends>
     <depends optional="true" config-file="uml.xml">com.intellij.diagram</depends>
     <depends optional="true" config-file="properties.xml">com.intellij.properties</depends>
+    <depends optional="true" config-file="xpath.xml">XPathView</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <moduleService serviceImplementation="de.dm.intellij.liferay.module.LiferayModuleComponent" />
