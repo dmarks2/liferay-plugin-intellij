@@ -5,13 +5,12 @@ import com.intellij.execution.actions.RunConfigurationProducer;
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.ConfigurationType;
 import com.intellij.execution.configurations.ConfigurationTypeUtil;
-import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import de.dm.intellij.liferay.language.poshi.psi.PoshiCommandBlock;
-import de.dm.intellij.liferay.language.poshi.psi.PoshiTypes;
+import de.dm.intellij.liferay.language.poshi.constants.PoshiConstants;
+import de.dm.intellij.liferay.language.poshi.psi.PoshiTestDefinition;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -30,24 +29,19 @@ public class PoshiTestcaseConfigurationProducer extends RunConfigurationProducer
         if (psiElement != null && psiElement.getContainingFile() != null) {
             PsiFile psiFile = (psiElement.getContainingFile());
 
-            if (psiFile.getName().endsWith(".testcase")) {
-                if (psiElement instanceof PoshiCommandBlock poshiCommandBlock) {
-                    ASTNode testNode = poshiCommandBlock.getNode().findChildByType(PoshiTypes.TEST);
+            if (psiFile.getName().endsWith(PoshiConstants.TESTCASE_EXTENSION)) {
+                if (psiElement instanceof PoshiTestDefinition poshiTestDefinition) {
+                    String testName = poshiTestDefinition.getName();
 
-                    if (testNode != null) {
-                        String testName = poshiCommandBlock.getName();
+                    VirtualFile virtualFile = psiFile.getVirtualFile();
 
-                        VirtualFile virtualFile = psiFile.getVirtualFile();
+                    if (virtualFile != null && virtualFile.exists() && "testcase".equals(virtualFile.getExtension())) {
+                        configuration.setScriptName(new File(virtualFile.getPath()).getAbsolutePath());
+                        configuration.setTestName(testName);
 
-                        if (virtualFile != null && virtualFile.exists() && "testcase".equals(virtualFile.getExtension())) {
-                            configuration.setScriptName(new File(virtualFile.getPath()).getAbsolutePath());
-                            configuration.setTestName(testName);
+                        configuration.setName(virtualFile.getNameWithoutExtension() + "#" + testName);
 
-                            configuration.setName(virtualFile.getNameWithoutExtension() + "#" + testName);
-
-                            return true;
-                        }
-
+                        return true;
                     }
                 }
             }
@@ -67,16 +61,12 @@ public class PoshiTestcaseConfigurationProducer extends RunConfigurationProducer
             VirtualFile virtualFile = psiFile.getVirtualFile();
 
             if (virtualFile != null) {
-                if (psiElement instanceof PoshiCommandBlock poshiCommandBlock) {
-                    ASTNode testNode = poshiCommandBlock.getNode().findChildByType(PoshiTypes.TEST);
+                if (psiElement instanceof PoshiTestDefinition poshiTestDefinition) {
+                    String testName = poshiTestDefinition.getName();
 
-                    if (testNode != null) {
-                        String testName = poshiCommandBlock.getName();
-
-                        return
-                                new File(virtualFile.getPath()).getAbsolutePath().equals(configuration.getScriptName()) &&
-                                Objects.equals(testName, configuration.getTestName());
-                    }
+                    return
+                            new File(virtualFile.getPath()).getAbsolutePath().equals(configuration.getScriptName()) &&
+                                    Objects.equals(testName, configuration.getTestName());
                 }
             }
         }

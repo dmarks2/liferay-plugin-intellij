@@ -1,0 +1,7 @@
+definition {
+
+    setUp {
+        My<caret>Class.Open(locator1 = "http://localhost:8080");
+    }
+
+}

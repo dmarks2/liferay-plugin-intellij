@@ -4,9 +4,8 @@ package de.dm.intellij.liferay.language.poshi.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiNamedElement;
 
-public interface PoshiCommandBlock extends PsiNamedElement {
+public interface PoshiCommandBlock extends PsiElement {
 
   @NotNull
   List<PoshiAnnotation> getAnnotationList();
@@ -18,6 +17,9 @@ public interface PoshiCommandBlock extends PsiNamedElement {
   List<PoshiControlBlock> getControlBlockList();
 
   @NotNull
+  PoshiDefinitionBase getDefinitionBase();
+
+  @NotNull
   List<PoshiInvocation> getInvocationList();
 
   @NotNull
@@ -25,12 +27,5 @@ public interface PoshiCommandBlock extends PsiNamedElement {
 
   @NotNull
   List<PoshiVariable> getVariableList();
-
-  @NotNull
-  PsiElement getIdentifier();
-
-  String getName();
-
-  PsiElement setName(String newName);
 
 }

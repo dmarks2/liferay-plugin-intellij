@@ -13,11 +13,16 @@ public interface PoshiTypes {
   IElementType COMMENTS = new PoshiElementType("COMMENTS");
   IElementType COMMENT_BLOCK = new PoshiElementType("COMMENT_BLOCK");
   IElementType CONTROL_BLOCK = new PoshiElementType("CONTROL_BLOCK");
+  IElementType DEFINITION_BASE = new PoshiElementType("DEFINITION_BASE");
   IElementType DEFINITION_BLOCK = new PoshiElementType("DEFINITION_BLOCK");
+  IElementType FUNCTION_DEFINITION = new PoshiElementType("FUNCTION_DEFINITION");
   IElementType INVOCATION = new PoshiElementType("INVOCATION");
+  IElementType MACRO_DEFINITION = new PoshiElementType("MACRO_DEFINITION");
+  IElementType METHOD_CALL = new PoshiElementType("METHOD_CALL");
   IElementType PROPERTY_INSTRUCTION = new PoshiElementType("PROPERTY_INSTRUCTION");
   IElementType STRING_QUOTED_DOUBLE = new PoshiElementType("STRING_QUOTED_DOUBLE");
   IElementType STRUCTURE_BLOCK = new PoshiElementType("STRUCTURE_BLOCK");
+  IElementType TEST_DEFINITION = new PoshiElementType("TEST_DEFINITION");
   IElementType VARIABLE = new PoshiElementType("VARIABLE");
   IElementType VARIABLE_ASSIGNMENT = new PoshiElementType("VARIABLE_ASSIGNMENT");
 
@@ -77,8 +82,17 @@ public interface PoshiTypes {
       else if (type == DEFINITION_BLOCK) {
         return new PoshiDefinitionBlockImpl(node);
       }
+      else if (type == FUNCTION_DEFINITION) {
+        return new PoshiFunctionDefinitionImpl(node);
+      }
       else if (type == INVOCATION) {
         return new PoshiInvocationImpl(node);
+      }
+      else if (type == MACRO_DEFINITION) {
+        return new PoshiMacroDefinitionImpl(node);
+      }
+      else if (type == METHOD_CALL) {
+        return new PoshiMethodCallImpl(node);
       }
       else if (type == PROPERTY_INSTRUCTION) {
         return new PoshiPropertyInstructionImpl(node);
@@ -88,6 +102,9 @@ public interface PoshiTypes {
       }
       else if (type == STRUCTURE_BLOCK) {
         return new PoshiStructureBlockImpl(node);
+      }
+      else if (type == TEST_DEFINITION) {
+        return new PoshiTestDefinitionImpl(node);
       }
       else if (type == VARIABLE) {
         return new PoshiVariableImpl(node);

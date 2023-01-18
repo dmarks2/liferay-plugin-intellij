@@ -1,0 +1,7 @@
+definition {
+
+    setUp {
+        MyClass.c<caret>lick();
+    }
+
+}

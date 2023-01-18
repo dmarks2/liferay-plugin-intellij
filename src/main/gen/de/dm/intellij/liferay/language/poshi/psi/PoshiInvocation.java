@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface PoshiInvocation extends PsiElement {
 
   @NotNull
+  PoshiMethodCall getMethodCall();
+
+  @NotNull
   List<PoshiStringQuotedDouble> getStringQuotedDoubleList();
 
   @NotNull

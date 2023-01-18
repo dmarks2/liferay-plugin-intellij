@@ -47,6 +47,12 @@ public class PoshiCommandBlockImpl extends ASTWrapperPsiElement implements Poshi
 
   @Override
   @NotNull
+  public PoshiDefinitionBase getDefinitionBase() {
+    return findNotNullChildByClass(PoshiDefinitionBase.class);
+  }
+
+  @Override
+  @NotNull
   public List<PoshiInvocation> getInvocationList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiInvocation.class);
   }
@@ -61,22 +67,6 @@ public class PoshiCommandBlockImpl extends ASTWrapperPsiElement implements Poshi
   @NotNull
   public List<PoshiVariable> getVariableList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariable.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
-  }
-
-  @Override
-  public String getName() {
-    return PoshiPsiImplUtil.getName(this);
-  }
-
-  @Override
-  public PsiElement setName(String newName) {
-    return PoshiPsiImplUtil.setName(this, newName);
   }
 
 }

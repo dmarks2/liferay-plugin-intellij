@@ -10,15 +10,16 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static de.dm.intellij.liferay.language.poshi.psi.PoshiTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.dm.intellij.liferay.language.poshi.psi.*;
+import com.intellij.psi.PsiReference;
 
-public class PoshiInvocationImpl extends ASTWrapperPsiElement implements PoshiInvocation {
+public class PoshiMethodCallImpl extends ASTWrapperPsiElement implements PoshiMethodCall {
 
-  public PoshiInvocationImpl(@NotNull ASTNode node) {
+  public PoshiMethodCallImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PoshiVisitor visitor) {
-    visitor.visitInvocation(this);
+    visitor.visitMethodCall(this);
   }
 
   @Override
@@ -28,21 +29,8 @@ public class PoshiInvocationImpl extends ASTWrapperPsiElement implements PoshiIn
   }
 
   @Override
-  @NotNull
-  public PoshiMethodCall getMethodCall() {
-    return findNotNullChildByClass(PoshiMethodCall.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PoshiStringQuotedDouble> getStringQuotedDoubleList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiStringQuotedDouble.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PoshiVariableAssignment> getVariableAssignmentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariableAssignment.class);
+  public PsiReference @NotNull [] getReferences() {
+    return PoshiPsiImplUtil.getReferences(this);
   }
 
 }

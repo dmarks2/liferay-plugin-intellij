@@ -31,7 +31,9 @@ public class PoshiFormattingModelBuilder implements FormattingModelBuilder {
 
         SpacingBuilder spacingBuilder = new SpacingBuilder(settings, psiFile.getLanguage())
                 .between(PoshiTypes.DEFINITION, PoshiTypes.CURLY_LBRACE).spaces(1)
-                .between(PoshiTypes.IDENTIFIER, PoshiTypes.CURLY_LBRACE).spaces(1)
+                .between(PoshiTypes.MACRO_DEFINITION, PoshiTypes.CURLY_LBRACE).spaces(1)
+                .between(PoshiTypes.FUNCTION_DEFINITION, PoshiTypes.CURLY_LBRACE).spaces(1)
+                .between(PoshiTypes.TEST_DEFINITION, PoshiTypes.CURLY_LBRACE).spaces(1)
                 .between(PoshiTypes.IDENTIFIER, PoshiTypes.EQUALS).spaces(1)
                 .between(PoshiTypes.EQUALS, PoshiTypes.STRING_QUOTED_DOUBLE).spaces(1)
                 .between(PoshiTypes.COMMA, PoshiTypes.VARIABLE_ASSIGNMENT).spaces(1)

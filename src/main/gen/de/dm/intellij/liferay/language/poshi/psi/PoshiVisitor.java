@@ -13,7 +13,7 @@ public class PoshiVisitor extends PsiElementVisitor {
   }
 
   public void visitCommandBlock(@NotNull PoshiCommandBlock o) {
-    visitPsiNamedElement(o);
+    visitPsiElement(o);
   }
 
   public void visitCommentBlock(@NotNull PoshiCommentBlock o) {
@@ -28,11 +28,29 @@ public class PoshiVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDefinitionBase(@NotNull PoshiDefinitionBase o) {
+    visitPsiElement(o);
+  }
+
   public void visitDefinitionBlock(@NotNull PoshiDefinitionBlock o) {
     visitPsiElement(o);
   }
 
+  public void visitFunctionDefinition(@NotNull PoshiFunctionDefinition o) {
+    visitDefinitionBase(o);
+    // visitPsiNamedElement(o);
+  }
+
   public void visitInvocation(@NotNull PoshiInvocation o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMacroDefinition(@NotNull PoshiMacroDefinition o) {
+    visitDefinitionBase(o);
+    // visitPsiNamedElement(o);
+  }
+
+  public void visitMethodCall(@NotNull PoshiMethodCall o) {
     visitPsiElement(o);
   }
 
@@ -46,6 +64,11 @@ public class PoshiVisitor extends PsiElementVisitor {
 
   public void visitStructureBlock(@NotNull PoshiStructureBlock o) {
     visitPsiElement(o);
+  }
+
+  public void visitTestDefinition(@NotNull PoshiTestDefinition o) {
+    visitDefinitionBase(o);
+    // visitPsiNamedElement(o);
   }
 
   public void visitVariable(@NotNull PoshiVariable o) {

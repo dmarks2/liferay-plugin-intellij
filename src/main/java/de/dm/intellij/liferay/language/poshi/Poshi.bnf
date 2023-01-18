@@ -60,9 +60,11 @@
            TESTING_WHITESPACE = "regexp:[ \n\t\r\f]+"
    ]
 
-   implements("command-block|variable-assignment")=[
+   implements("function-definition|macro-definition|test-definition|variable-assignment")=[
     "com.intellij.psi.PsiNamedElement"
    ]
+
+   extends(".*-definition") = definition-base
 }
 
 // Root
@@ -73,11 +75,23 @@ definition-block ::= [annotation*] DEFINITION [CURLY_LBRACE {structure-block | c
 
 structure-block ::= (SET_UP | TEAR_DOWN) [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE]
 
-command-block ::= [annotation*] (FUNCTION | MACRO | TEST) IDENTIFIER [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE] {
+command-block ::= [annotation*] definition-base [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE]
+
+definition-base ::= function-definition | macro-definition | test-definition {
     methods=[getName setName]
 }
 
-invocation ::= IDENTIFIER {PERIOD IDENTIFIER}* [ROUND_LBRACE [invocation-inner-list] ROUND_RBRACE] [SEMICOLON]
+function-definition ::= FUNCTION IDENTIFIER
+
+macro-definition ::= MACRO IDENTIFIER
+
+test-definition ::= TEST IDENTIFIER
+
+method-call ::= IDENTIFIER {PERIOD IDENTIFIER}* {
+    methods=[getReferences]
+}
+
+invocation ::= method-call [ROUND_LBRACE [invocation-inner-list] ROUND_RBRACE] [SEMICOLON]
 
 private invocation-inner-list ::= invocation-inner [COMMA invocation-inner]
 
