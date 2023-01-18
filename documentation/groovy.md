@@ -43,3 +43,5 @@ The results of the script executions are shown in the console.
 
 If an error occurs and your script prints a stacktrace you can also click on the
 error message in the console to directly open your script file at the erroneous location. 
+
+*This feature requires Java 11 or higher.*

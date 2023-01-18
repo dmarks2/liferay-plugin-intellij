@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Change: Update support for IntelliJ 2022.3, dropped support for older versions
 - Change: Disabled gradle importers for bundle-support and theme plugins (no longer working with Java 17)
 - Bugfix: Setting Freemarker Breakpoint in Application Display Templates with filenames containing spaces did not work
+- Bugfix: Execution of Liferay groovy scripts required Java 17 (now Java 11 is enough)
 
 ## 0.0.14
 - Feature: Resolve Resource Bundles

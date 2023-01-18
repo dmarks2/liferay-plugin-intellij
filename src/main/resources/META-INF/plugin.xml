@@ -34,6 +34,7 @@
             <li>Change: Update support for IntelliJ 2022.3, dropped support for older versions</li>
             <li>Change: Disabled gradle importers for bundle-support and theme plugins (no longer working with Java 17)</li>
             <li>Bugfix: Setting Freemarker Breakpoint in Application Display Templates with filenames containing spaces did not work</li>
+            <li>Bugfix: Execution of Liferay groovy scripts required Java 17 (now Java 11 is enough)</li>
         </ul>
 
         <p>Version 0.0.14</p>
