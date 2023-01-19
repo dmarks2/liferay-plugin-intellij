@@ -8,6 +8,8 @@ import de.dm.intellij.liferay.language.poshi.psi.PoshiClassReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiDefinitionBase;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiMethodCall;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiMethodReference;
+import de.dm.intellij.liferay.language.poshi.psi.PoshiPathLocatorReference;
+import de.dm.intellij.liferay.language.poshi.psi.PoshiPathReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiStringQuotedDouble;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiTypes;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiVariableAssignment;
@@ -22,6 +24,9 @@ import java.util.regex.Pattern;
 public class PoshiPsiImplUtil {
 
     private static final Pattern VARIABLE_REFERENCE_PATTERN = Pattern.compile("\\$\\{([\\w-]*?)\\s*?}");
+    private static final Pattern PATH_REFERENCE_PATTERN = Pattern.compile("([A-Z][A-Za-z]+)[#]?");
+    private static final Pattern PATH_LOCATOR_REFERENCE_PATTERN = Pattern.compile("[#]([A-Z][A-Z_-]+)");
+
     private static final Pattern CLASS_REFERENCE_PATTERN = Pattern.compile("^([A-Z][A-Za-z]+)[(.]?");
     private static final Pattern METHOD_REFERENCE_PATTERN = Pattern.compile("[\\.]([A-Za-z_][A-Za-z]+)");
 
@@ -74,6 +79,26 @@ public class PoshiPsiImplUtil {
             String variableName = matcher.group(1);
 
             psiReferences.add(new PoshiVariableReference(element, variableName, TextRange.create(matcher.start(1), matcher.end(1))));
+        }
+
+        matcher = PATH_REFERENCE_PATTERN.matcher(valueString);
+
+        if (matcher.find()) {
+            String pathName = matcher.group(1);
+
+            int start = matcher.start(1);
+            int end = matcher.end(1);
+
+            psiReferences.add(new PoshiPathReference(element, pathName, TextRange.create(start, end)));
+
+            matcher = PATH_LOCATOR_REFERENCE_PATTERN.matcher(valueString);
+
+            if (matcher.find(end)) {
+                String locatorName = matcher.group(1);
+
+                psiReferences.add(new PoshiPathLocatorReference(element, pathName, locatorName, TextRange.create(matcher.start(1), matcher.end(1))));
+            }
+
         }
 
         return psiReferences.toArray(new PsiReference[0]);

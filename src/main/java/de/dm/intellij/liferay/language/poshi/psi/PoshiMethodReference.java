@@ -68,19 +68,21 @@ public class PoshiMethodReference extends PsiReferenceBase<PsiElement> implement
 
     @Override
     public Object @NotNull [] getVariants() {
-        List<Object> result = new ArrayList<Object>();
+        List<Object> result = new ArrayList<>();
 
         List<PsiFile> psiFiles = PoshiClassReference.getClassFiles(getElement().getContainingFile().getOriginalFile());
 
         for (PsiFile psiFile : psiFiles) {
-            if (psiFile instanceof PoshiFile) {
-                PoshiFile poshiFile = (PoshiFile) psiFile;
+            if (FileUtil.getNameWithoutExtension(psiFile.getName()).equals(className)) {
+                if (psiFile instanceof PoshiFile) {
+                    PoshiFile poshiFile = (PoshiFile) psiFile;
 
-                Collection<? extends PoshiDefinitionBase> definitions = PsiTreeUtil.findChildrenOfAnyType(poshiFile, PoshiFunctionDefinition.class, PoshiMacroDefinition.class);
+                    Collection<? extends PoshiDefinitionBase> definitions = PsiTreeUtil.findChildrenOfAnyType(poshiFile, PoshiFunctionDefinition.class, PoshiMacroDefinition.class);
 
-                for (PoshiDefinitionBase definition : definitions) {
-                    if (definition.getName() != null) {
-                        result.add(LookupElementBuilder.create(definition.getName()).withPsiElement(definition).withIcon(Icons.LIFERAY_ICON));
+                    for (PoshiDefinitionBase definition : definitions) {
+                        if (definition.getName() != null) {
+                            result.add(LookupElementBuilder.create(definition.getName()).withPsiElement(definition).withIcon(Icons.LIFERAY_ICON));
+                        }
                     }
                 }
             }

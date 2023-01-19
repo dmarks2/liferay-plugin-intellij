@@ -1,0 +1,7 @@
+definition {
+
+    setUp {
+        Default.Click(locator1 = "Homepage#NO_RES<caret>ULTS_MESSAGE");
+    }
+
+}
