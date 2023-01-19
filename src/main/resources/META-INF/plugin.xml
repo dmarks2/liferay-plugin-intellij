@@ -374,6 +374,23 @@
             language="Poshi"
             implementationClass="de.dm.intellij.liferay.language.poshi.runner.PoshiTestcaseRunLineMarkerContributor"
         />
+        
+        <internalFileTemplate
+            name="Poshi Path File"
+        />
+
+        <internalFileTemplate
+            name="Poshi Function"
+        />
+
+        <internalFileTemplate
+            name="Poshi Macro"
+        />
+
+        <internalFileTemplate
+            name="Poshi Testcase"
+        />
+
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">
@@ -415,4 +432,12 @@
         <listener class="de.dm.intellij.liferay.resourcesimporter.LiferayAdvancedResourcesImporterBndParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
         <listener class="de.dm.intellij.liferay.resourcesimporter.LiferayAdvancedResourcesImporterServiceCallWatcher" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
     </applicationListeners>
+
+    <actions>
+        <!-- POSHI -->
+
+        <action id="NewPoshiScriptFile" class="de.dm.intellij.liferay.language.poshi.actions.CreatePoshiScriptFileAction">
+            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFromTemplate"/>
+        </action>
+    </actions>
 </idea-plugin>

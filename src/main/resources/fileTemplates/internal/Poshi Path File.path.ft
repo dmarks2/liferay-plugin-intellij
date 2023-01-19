@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>${NAME}</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+    <thead>
+    <tr><td rowspan="1" colspan="3">${NAME}</td></tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>${END}</td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>
+
+</table>
+</body>
+</html>
