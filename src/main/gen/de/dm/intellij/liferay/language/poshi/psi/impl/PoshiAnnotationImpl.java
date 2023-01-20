@@ -39,4 +39,14 @@ public class PoshiAnnotationImpl extends ASTWrapperPsiElement implements PoshiAn
     return findNotNullChildByType(ANNOTATION_NAME);
   }
 
+  @Override
+  public String getName() {
+    return PoshiPsiImplUtil.getName(this);
+  }
+
+  @Override
+  public String getValue() {
+    return PoshiPsiImplUtil.getValue(this);
+  }
+
 }

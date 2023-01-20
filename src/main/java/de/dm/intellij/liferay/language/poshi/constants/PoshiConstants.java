@@ -11,4 +11,6 @@ public class PoshiConstants {
     public static final String MACRO_EXTENSION = ".macro";
     public static final String PATH_EXTENSION = ".path";
     public static final String TESTCASE_EXTENSION = ".testcase";
+
+    public static final String DEFAULT_ANNOTATION = "@default";
 }

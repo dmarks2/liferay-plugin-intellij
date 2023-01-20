@@ -4,6 +4,7 @@ import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
+import de.dm.intellij.liferay.language.poshi.psi.PoshiAnnotation;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiClassReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiDefinitionBase;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiMethodCall;
@@ -133,7 +134,25 @@ public class PoshiPsiImplUtil {
         }
 
         return psiReferences.toArray(new PsiReference[0]);
+    }
 
+    public static String getName(PoshiAnnotation annotation) {
+        PsiElement annotationName = annotation.getAnnotationName();
 
+        if (annotationName != null) {
+            return annotationName.getText();
+        }
+
+        return null;
+    }
+
+    public static String getValue(PoshiAnnotation annotation) {
+        PsiElement stringQuotedDouble = annotation.getStringQuotedDouble();
+
+        if (stringQuotedDouble != null) {
+            return stringQuotedDouble.getText();
+        }
+
+        return null;
     }
 }

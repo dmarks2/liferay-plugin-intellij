@@ -1,0 +1,7 @@
+definition {
+
+    setUp {
+        My<caret>Function(locator1 = "http://localhost:8080");
+    }
+
+}

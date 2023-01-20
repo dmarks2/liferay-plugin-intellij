@@ -1,0 +1,6 @@
+@default = "foo"
+definition {
+    function foo {
+
+    }
+}

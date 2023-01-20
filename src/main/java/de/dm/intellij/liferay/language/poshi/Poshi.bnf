@@ -1,3 +1,4 @@
+//Poshi Script documentation: https://github.com/yichenroy/com-liferay-poshi-runner/blob/master/poshi-script.markdown
 {
    parserClass="de.dm.intellij.liferay.language.poshi.parser.PoshiParser"
    parserUtilClass="de.dm.intellij.liferay.language.poshi.parser.PoshiParserUtil"
@@ -107,7 +108,9 @@ string-quoted-double ::= DOUBLE_QUOTED_STRING {
     methods=[getReferences]
 }
 
-annotation ::= ANNOTATION_NAME [EQUALS string-quoted-double]
+annotation ::= ANNOTATION_NAME [EQUALS string-quoted-double] {
+    methods=[getName getValue]
+}
 
 property-instruction ::= PROPERTY IDENTIFIER {PERIOD IDENTIFIER}* EQUALS (string-quoted-double) [SEMICOLON]
 

@@ -3,6 +3,7 @@ package de.dm.intellij.liferay.language.poshi.psi;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.io.FileUtil;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementResolveResult;
@@ -40,7 +41,17 @@ public class PoshiClassReference extends PsiReferenceBase<PsiElement> implements
 
         for (PsiFile psiFile : psiFiles) {
             if (FileUtil.getNameWithoutExtension(psiFile.getName()).equals(className)) {
-                results.add(psiFile);
+                if (psiFile.getName().endsWith(PoshiConstants.FUNCTION_EXTENSION)) {
+                    PoshiFunctionDefinition defaultFunction = getDefaultFunction(psiFile);
+
+                    if (defaultFunction != null) {
+                        results.add(defaultFunction);
+                    } else {
+                        results.add(psiFile);
+                    }
+                } else {
+                    results.add(psiFile);
+                }
             }
         }
 
@@ -69,6 +80,40 @@ public class PoshiClassReference extends PsiReferenceBase<PsiElement> implements
         }
 
         return result.toArray(new Object[0]);
+    }
+
+    private static PoshiFunctionDefinition getDefaultFunction(@NotNull PsiFile functionFile) {
+        if (functionFile instanceof PoshiFile) {
+            PoshiFile poshiFile = (PoshiFile) functionFile;
+
+            PoshiDefinitionBlock definitionBlock = PsiTreeUtil.getChildOfType(poshiFile, PoshiDefinitionBlock.class);
+
+            if (definitionBlock != null) {
+                List<PoshiAnnotation> annotations = definitionBlock.getAnnotationList();
+
+                for (PoshiAnnotation annotation : annotations) {
+                    String name = annotation.getName();
+
+                    if (PoshiConstants.DEFAULT_ANNOTATION.equals(name)) {
+                        String value = annotation.getValue();
+
+                        value = StringUtil.unquoteString(value);
+
+                        if (StringUtil.isNotEmpty(value)) {
+                            Collection<PoshiFunctionDefinition> functionDefinitions = PsiTreeUtil.findChildrenOfAnyType(poshiFile, PoshiFunctionDefinition.class);
+
+                            for (PoshiFunctionDefinition functionDefinition : functionDefinitions) {
+                                if (value.equals(functionDefinition.getName())) {
+                                    return functionDefinition;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
     public static List<PsiFile> getClassFiles(@NotNull PsiFile testcaseFile) {

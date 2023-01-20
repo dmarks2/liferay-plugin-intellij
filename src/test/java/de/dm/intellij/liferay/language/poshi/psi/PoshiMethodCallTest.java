@@ -53,4 +53,14 @@ public class PoshiMethodCallTest extends BasePlatformTestCase {
 
         assertTrue(strings.contains("click"));
     }
+
+    public void testDefaultFunctionReference() {
+        myFixture.configureByFiles("testcases/DefaultFunction.testcase", "functions/MyFunction.function");
+
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement resolve = element.getReferences()[0].resolve();
+
+        assertTrue("MyFunction should be resolvable", (resolve != null));
+        assertTrue("MyFunction should resolve to function foo", resolve instanceof PoshiFunctionDefinition && ((PoshiFunctionDefinition)resolve).getName().equals("foo"));
+    }
 }
