@@ -1,7 +1,10 @@
 package de.dm.intellij.liferay.language.poshi.psi.impl;
 
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.paths.GlobalPathReferenceProvider;
+import com.intellij.openapi.paths.WebReference;
 import com.intellij.openapi.util.TextRange;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiAnnotation;
@@ -99,7 +102,12 @@ public class PoshiPsiImplUtil {
 
                 psiReferences.add(new PoshiPathLocatorReference(element, pathName, locatorName, TextRange.create(matcher.start(1), matcher.end(1))));
             }
+        }
 
+        String text = StringUtil.unquoteString(valueString);
+
+        if (GlobalPathReferenceProvider.isWebReferenceUrl(text)) {
+            psiReferences.add(new WebReference(element, new TextRange(valueRange.getStartOffset() + 1, valueRange.getEndOffset() - 1)));
         }
 
         return psiReferences.toArray(new PsiReference[0]);
