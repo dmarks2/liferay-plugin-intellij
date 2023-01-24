@@ -1,9 +1,11 @@
 package de.dm.intellij.liferay.language.poshi.psi;
 
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementResolveResult;
 import com.intellij.psi.PsiManager;
@@ -35,13 +37,7 @@ public class PoshiNamespaceReference extends PsiReferenceBase<PsiElement> implem
         Collection<PsiElement> results = new ArrayList<>();
 
         if (PoshiConstants.DEFAULT_NAMESPACE.equals(namespace)) {
-            ClassLoader classLoader = PoshiNamespaceReference.class.getClassLoader();
-
-            URL resource = classLoader.getResource(PoshiConstants.DEFAULT_TEST_FUNCTIONAL_PATH);
-
-            VirtualFile virtualFile = VfsUtil.findFileByURL(resource);
-
-            results.add(PsiManager.getInstance(getElement().getProject()).findDirectory(virtualFile));
+            results.add(getDefaultTestFunctionalDirectory(getElement().getProject()));
         }
 
         return PsiElementResolveResult.createResults(results);
@@ -64,8 +60,26 @@ public class PoshiNamespaceReference extends PsiReferenceBase<PsiElement> implem
 
         //TODO only "Default" supported by now...
 
-        result.add(LookupElementBuilder.create("Default").withIcon(Icons.LIFERAY_ICON));
+        result.add(LookupElementBuilder.create("Default").withPsiElement(getDefaultTestFunctionalDirectory(getElement().getProject())).withIcon(Icons.LIFERAY_ICON));
 
         return result.toArray(new Object[0]);
+    }
+
+    @Nullable
+    public static PsiDirectory getDefaultTestFunctionalDirectory(@NotNull Project project) {
+        ClassLoader classLoader = PoshiNamespaceReference.class.getClassLoader();
+
+        URL resource = classLoader.getResource(PoshiConstants.DEFAULT_TEST_FUNCTIONAL_PATH);
+
+        if (resource != null) {
+
+            VirtualFile virtualFile = VfsUtil.findFileByURL(resource);
+
+            if (virtualFile != null) {
+                return PsiManager.getInstance(project).findDirectory(virtualFile);
+            }
+        }
+
+        return null;
     }
 }

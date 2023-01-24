@@ -1,0 +1,7 @@
+definition {
+
+    setUp {
+        Default.Open.openIn<caret>TheNewTab(locator1 = "http://localhost:8080");
+    }
+
+}

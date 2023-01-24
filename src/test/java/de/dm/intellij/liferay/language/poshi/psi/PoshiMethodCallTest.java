@@ -137,4 +137,52 @@ public class PoshiMethodCallTest extends BasePlatformTestCase {
 
         assertTrue(strings.contains("Default"));
     }
+
+    public void testNamespacedClassReference() {
+        myFixture.configureByFiles("testcases/NamespacedClassReference.testcase", "macros/MyClass.macro");
+
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+
+        boolean resolved = false;
+
+        for (PsiReference psiReference : element.getReferences()) {
+            if (psiReference instanceof PoshiClassReference) {
+                PoshiClassReference poshiClassReference = (PoshiClassReference) psiReference;
+
+                PsiElement resolve = poshiClassReference.resolve();
+
+                if (resolve != null) {
+                    assertTrue("Default.Open should resolve to Open.function", resolve instanceof PsiFile && ((PsiFile)resolve).getName().equals("Open.function"));
+
+                    resolved = true;
+                }
+            }
+        }
+
+        assertTrue("Default.Open should be resolvable", resolved);
+    }
+
+    public void testNamespacedMethodReference() {
+        myFixture.configureByFiles("testcases/NamespacedMethodReference.testcase", "macros/MyClass.macro");
+
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+
+        boolean resolved = false;
+
+        for (PsiReference psiReference : element.getReferences()) {
+            if (psiReference instanceof PoshiMethodReference) {
+                PoshiMethodReference poshiMethodReference = (PoshiMethodReference) psiReference;
+
+                PsiElement resolve = poshiMethodReference.resolve();
+
+                if (resolve != null) {
+                    assertTrue("Default.Open.openInTheNewTab should resolve to function openInTheNewTab", resolve instanceof PoshiFunctionDefinition && ((PoshiFunctionDefinition)resolve).getName().equals("openInTheNewTab"));
+
+                    resolved = true;
+                }
+            }
+        }
+
+        assertTrue("Default.Open.openInTheNewTab should be resolvable", resolved);
+    }
 }

@@ -36,8 +36,7 @@ public class PoshiMethodReference extends PsiReferenceBase<PsiElement> implement
     public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
         Collection<PsiElement> results = new ArrayList<>();
 
-        //TODO check namespace
-        List<PsiFile> psiFiles = PoshiClassReference.getClassFiles(getElement().getContainingFile().getOriginalFile());
+        List<PsiFile> psiFiles = PoshiClassReference.getClassFiles(namespace, getElement().getContainingFile().getOriginalFile());
 
         for (PsiFile psiFile : psiFiles) {
             if (FileUtil.getNameWithoutExtension(psiFile.getName()).equals(className)) {
@@ -73,8 +72,7 @@ public class PoshiMethodReference extends PsiReferenceBase<PsiElement> implement
     public Object @NotNull [] getVariants() {
         List<Object> result = new ArrayList<>();
 
-        //TODO check namespace
-        List<PsiFile> psiFiles = PoshiClassReference.getClassFiles(getElement().getContainingFile().getOriginalFile());
+        List<PsiFile> psiFiles = PoshiClassReference.getClassFiles(namespace, getElement().getContainingFile().getOriginalFile());
 
         for (PsiFile psiFile : psiFiles) {
             if (FileUtil.getNameWithoutExtension(psiFile.getName()).equals(className)) {

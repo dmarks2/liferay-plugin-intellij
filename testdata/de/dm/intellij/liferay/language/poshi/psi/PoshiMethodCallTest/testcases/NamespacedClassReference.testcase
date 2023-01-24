@@ -1,0 +1,7 @@
+definition {
+
+    setUp {
+        Default.O<caret>pen(locator1 = "http://localhost:8080");
+    }
+
+}

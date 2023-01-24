@@ -39,8 +39,7 @@ public class PoshiClassReference extends PsiReferenceBase<PsiElement> implements
     public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
         Collection<PsiElement> results = new ArrayList<>();
 
-        //TODO check namespace
-        List<PsiFile> psiFiles = getClassFiles(getElement().getContainingFile().getOriginalFile());
+        List<PsiFile> psiFiles = getClassFiles(namespace, getElement().getContainingFile().getOriginalFile());
 
         for (PsiFile psiFile : psiFiles) {
             if (FileUtil.getNameWithoutExtension(psiFile.getName()).equals(className)) {
@@ -76,8 +75,7 @@ public class PoshiClassReference extends PsiReferenceBase<PsiElement> implements
     public Object @NotNull [] getVariants() {
         List<Object> result = new ArrayList<Object>();
 
-        //TODO check namespace
-        List<PsiFile> psiFiles = getClassFiles(getElement().getContainingFile().getOriginalFile());
+        List<PsiFile> psiFiles = getClassFiles(namespace, getElement().getContainingFile().getOriginalFile());
 
         for (PsiFile psiFile : psiFiles) {
             result.add(LookupElementBuilder.create(FileUtil.getNameWithoutExtension(psiFile.getName())).withPsiElement(psiFile).withIcon(Icons.LIFERAY_ICON));
@@ -120,23 +118,29 @@ public class PoshiClassReference extends PsiReferenceBase<PsiElement> implements
         return null;
     }
 
-    public static List<PsiFile> getClassFiles(@NotNull PsiFile testcaseFile) {
+    public static List<PsiFile> getClassFiles(@Nullable String namespace, @NotNull PsiFile testcaseFile) {
         List<PsiFile> result = new ArrayList<>();
 
-        PsiDirectory parent = testcaseFile.getParent();
+        PsiDirectory parent;
 
-        if (parent != null) {
-            parent = parent.getParent();
+        if (PoshiConstants.DEFAULT_NAMESPACE.equals(namespace)) {
+            parent = PoshiNamespaceReference.getDefaultTestFunctionalDirectory(testcaseFile.getProject());
+        } else {
+            parent = testcaseFile.getParent();
 
             if (parent != null) {
-                for (String classDirectory : CLASS_DIRECTORIES) {
-                    PsiDirectory subdirectory = parent.findSubdirectory(classDirectory);
+                parent = parent.getParent();
+            }
+        }
 
-                    if (subdirectory != null) {
-                        for (PsiFile psiFile : subdirectory.getFiles()) {
-                            if (psiFile.getName().endsWith(PoshiConstants.FUNCTION_EXTENSION) || psiFile.getName().endsWith(PoshiConstants.MACRO_EXTENSION)) {
-                                result.add(psiFile);
-                            }
+        if (parent != null) {
+            for (String classDirectory : CLASS_DIRECTORIES) {
+                PsiDirectory subdirectory = parent.findSubdirectory(classDirectory);
+
+                if (subdirectory != null) {
+                    for (PsiFile psiFile : subdirectory.getFiles()) {
+                        if (psiFile.getName().endsWith(PoshiConstants.FUNCTION_EXTENSION) || psiFile.getName().endsWith(PoshiConstants.MACRO_EXTENSION)) {
+                            result.add(psiFile);
                         }
                     }
                 }
