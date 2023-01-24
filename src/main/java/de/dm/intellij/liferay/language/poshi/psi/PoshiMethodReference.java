@@ -20,12 +20,14 @@ import java.util.List;
 
 public class PoshiMethodReference extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference {
 
+    private final String namespace;
     private final String className;
     private final String methodName;
 
-    public PoshiMethodReference(@NotNull PsiElement element, String className, String methodName, TextRange textRange) {
+    public PoshiMethodReference(@NotNull PsiElement element, String namespace, String className, String methodName, TextRange textRange) {
         super(element, textRange);
 
+        this.namespace = namespace;
         this.className = className;
         this.methodName = methodName;
     }
@@ -34,6 +36,7 @@ public class PoshiMethodReference extends PsiReferenceBase<PsiElement> implement
     public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
         Collection<PsiElement> results = new ArrayList<>();
 
+        //TODO check namespace
         List<PsiFile> psiFiles = PoshiClassReference.getClassFiles(getElement().getContainingFile().getOriginalFile());
 
         for (PsiFile psiFile : psiFiles) {
@@ -70,6 +73,7 @@ public class PoshiMethodReference extends PsiReferenceBase<PsiElement> implement
     public Object @NotNull [] getVariants() {
         List<Object> result = new ArrayList<>();
 
+        //TODO check namespace
         List<PsiFile> psiFiles = PoshiClassReference.getClassFiles(getElement().getContainingFile().getOriginalFile());
 
         for (PsiFile psiFile : psiFiles) {

@@ -89,6 +89,8 @@ dependencies {
 //    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.9.0'
 //    implementation 'org.json:json:20171018'
 
+    implementation 'com.liferay:com.liferay.poshi.runner.resources:1.0.14'
+
     poshiImplementation 'com.liferay:com.liferay.poshi.runner.resources:1.0.14'
     poshiImplementation('com.liferay:com.liferay.poshi.runner:1.0.396') {
         exclude group: 'org.arquillian.rusheye', module: 'rusheye-api'

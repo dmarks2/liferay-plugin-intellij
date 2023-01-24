@@ -26,10 +26,12 @@ public class PoshiClassReference extends PsiReferenceBase<PsiElement> implements
     private static final String[] CLASS_DIRECTORIES = {PoshiConstants.FUNCTIONS_DIRECTORY, PoshiConstants.MACROS_DIRECTORY};
 
     private final String className;
+    private final String namespace;
 
-    public PoshiClassReference(@NotNull PsiElement element, String className, TextRange textRange) {
+    public PoshiClassReference(@NotNull PsiElement element, String namespace, String className, TextRange textRange) {
         super(element, textRange);
 
+        this.namespace = namespace;
         this.className = className;
     }
 
@@ -37,6 +39,7 @@ public class PoshiClassReference extends PsiReferenceBase<PsiElement> implements
     public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
         Collection<PsiElement> results = new ArrayList<>();
 
+        //TODO check namespace
         List<PsiFile> psiFiles = getClassFiles(getElement().getContainingFile().getOriginalFile());
 
         for (PsiFile psiFile : psiFiles) {
@@ -73,6 +76,7 @@ public class PoshiClassReference extends PsiReferenceBase<PsiElement> implements
     public Object @NotNull [] getVariants() {
         List<Object> result = new ArrayList<Object>();
 
+        //TODO check namespace
         List<PsiFile> psiFiles = getClassFiles(getElement().getContainingFile().getOriginalFile());
 
         for (PsiFile psiFile : psiFiles) {

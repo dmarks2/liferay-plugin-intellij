@@ -9,6 +9,7 @@ import com.intellij.execution.util.JavaParametersUtil;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.util.PathsList;
 import de.dm.intellij.liferay.language.groovy.LiferayServerGroovyConsoleLinkFilter;
+import de.dm.intellij.liferay.language.poshi.constants.PoshiConstants;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -62,7 +63,7 @@ public class PoshiTestcaseCommandLineState extends BaseJavaApplicationCommandLin
         addClassPath(classPath, "byte-buddy-1.8.15.jar");
         addClassPath(classPath, "checker-qual-3.5.0.jar");
         addClassPath(classPath, "com.liferay.poshi.core-1.0.87.jar");
-        addClassPath(classPath, "com.liferay.poshi.runner.resources-1.0.14.jar");
+        addClassPath(classPath, PoshiConstants.DEFAULT_RESOURCES_LIBRARY);
         addClassPath(classPath, "com.liferay.poshi.runner-1.0.396.jar");
         addClassPath(classPath, "commons-codec-1.15.jar");
         addClassPath(classPath, "commons-compress-1.21.jar");

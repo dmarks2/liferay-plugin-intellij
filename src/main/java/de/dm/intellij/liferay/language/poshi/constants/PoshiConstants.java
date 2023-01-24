@@ -13,4 +13,9 @@ public class PoshiConstants {
     public static final String TESTCASE_EXTENSION = ".testcase";
 
     public static final String DEFAULT_ANNOTATION = "@default";
+    public static final String DEFAULT_NAMESPACE = "Default";
+
+    public static final String DEFAULT_TEST_FUNCTIONAL_PATH = "default/testFunctional";
+
+    public static final String DEFAULT_RESOURCES_LIBRARY = "com.liferay.poshi.runner.resources-1.0.14.jar";
 }

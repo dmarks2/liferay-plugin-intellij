@@ -3,6 +3,7 @@ package de.dm.intellij.liferay.language.poshi.psi;
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiReference;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 import java.util.List;
@@ -18,10 +19,24 @@ public class PoshiMethodCallTest extends BasePlatformTestCase {
         myFixture.configureByFiles("testcases/ClassReference.testcase", "macros/MyClass.macro");
 
         PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
-        PsiElement resolve = element.getReferences()[0].resolve();
 
-        assertTrue("MyClass should be resolvable", (resolve != null));
-        assertTrue("MyClass should resolve to MyClass.macro", resolve instanceof PsiFile && ((PsiFile)resolve).getName().equals("MyClass.macro"));
+        boolean resolved = false;
+
+        for (PsiReference psiReference : element.getReferences()) {
+            if (psiReference instanceof PoshiClassReference) {
+                PoshiClassReference poshiClassReference = (PoshiClassReference) psiReference;
+
+                PsiElement resolve = poshiClassReference.resolve();
+
+                if (resolve != null) {
+                    assertTrue("MyClass should resolve to MyClass.macro", resolve instanceof PsiFile && ((PsiFile)resolve).getName().equals("MyClass.macro"));
+
+                    resolved = true;
+                }
+            }
+        }
+
+        assertTrue("MyClass should be resolvable", resolved);
     }
 
     public void testClassCompletion() {
@@ -38,10 +53,24 @@ public class PoshiMethodCallTest extends BasePlatformTestCase {
         myFixture.configureByFiles("testcases/MethodReference.testcase", "macros/MyClass.macro");
 
         PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
-        PsiElement resolve = element.getReferences()[1].resolve();
 
-        assertTrue("MyClass.click() should be resolvable", (resolve != null));
-        assertTrue("MyClass.click() should resolve to a definition", (resolve instanceof PoshiDefinitionBase));
+        boolean resolved = false;
+
+        for (PsiReference psiReference : element.getReferences()) {
+            if (psiReference instanceof PoshiMethodReference) {
+                PoshiMethodReference poshiMethodReference = (PoshiMethodReference) psiReference;
+
+                PsiElement resolve = poshiMethodReference.resolve();
+
+                if (resolve != null) {
+                    assertTrue("MyClass.click() should resolve to a definition", (resolve instanceof PoshiDefinitionBase));
+                    resolved = true;
+                }
+            }
+        }
+
+        assertTrue("MyClass.click() should be resolvable", resolved);
+
     }
 
     public void testMethodCompletion() {
@@ -58,9 +87,54 @@ public class PoshiMethodCallTest extends BasePlatformTestCase {
         myFixture.configureByFiles("testcases/DefaultFunction.testcase", "functions/MyFunction.function");
 
         PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
-        PsiElement resolve = element.getReferences()[0].resolve();
 
-        assertTrue("MyFunction should be resolvable", (resolve != null));
-        assertTrue("MyFunction should resolve to function foo", resolve instanceof PoshiFunctionDefinition && ((PoshiFunctionDefinition)resolve).getName().equals("foo"));
+        boolean resolved = false;
+
+        for (PsiReference psiReference : element.getReferences()) {
+            if (psiReference instanceof PoshiClassReference) {
+                PoshiClassReference poshiClassReference = (PoshiClassReference) psiReference;
+
+                PsiElement resolve = poshiClassReference.resolve();
+
+                if (resolve != null) {
+                    assertTrue("MyFunction should resolve to function foo", resolve instanceof PoshiFunctionDefinition && ((PoshiFunctionDefinition)resolve).getName().equals("foo"));
+                    resolved = true;
+                }
+            }
+        }
+
+        assertTrue("MyFunction should be resolvable", resolved);
+    }
+
+    public void testNamespaceReference() {
+        myFixture.configureByFile("testcases/DefaultNamespaceReference.testcase");
+
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+
+        boolean resolved = false;
+
+        for (PsiReference psiReference : element.getReferences()) {
+            if (psiReference instanceof PoshiNamespaceReference) {
+                PoshiNamespaceReference poshiNamespaceReference = (PoshiNamespaceReference) psiReference;
+
+                PsiElement resolve = poshiNamespaceReference.resolve();
+
+                if (resolve != null) {
+                    resolved = true;
+                }
+            }
+        }
+
+        assertTrue("Default should be resolvable", resolved);
+    }
+
+    public void testNamespaceCompletion() {
+        myFixture.configureByFiles("testcases/NamespaceCompletion.testcase", "macros/MyClass.macro", "macros/MyOtherClass.macro");
+
+        myFixture.complete(CompletionType.BASIC, 1);
+
+        List<String> strings = myFixture.getLookupElementStrings();
+
+        assertTrue(strings.contains("Default"));
     }
 }

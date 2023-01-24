@@ -1,0 +1,7 @@
+definition {
+
+    setUp {
+        Def<caret>ault.Open(locator1 = "http://localhost:8080");
+    }
+
+}

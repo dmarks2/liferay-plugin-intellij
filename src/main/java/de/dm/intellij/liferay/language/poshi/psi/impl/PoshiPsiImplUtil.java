@@ -11,6 +11,7 @@ import de.dm.intellij.liferay.language.poshi.psi.PoshiAnnotation;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiClassReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiDefinitionBase;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiMethodCall;
+import de.dm.intellij.liferay.language.poshi.psi.PoshiMethodCallReferenceSet;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiMethodReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiPathLocatorReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiPathReference;
@@ -114,34 +115,7 @@ public class PoshiPsiImplUtil {
     }
 
     public static PsiReference @NotNull [] getReferences(PoshiMethodCall poshiMethodCall) {
-        List<PsiReference> psiReferences = new ArrayList<>();
-
-        TextRange originalRange = poshiMethodCall.getTextRange();
-
-        TextRange valueRange = TextRange.create(0, originalRange.getLength());
-
-        String valueString = valueRange.substring(poshiMethodCall.getText());
-
-        Matcher matcher = CLASS_REFERENCE_PATTERN.matcher(valueString);
-
-        if (matcher.find()) {
-            String className = matcher.group(1);
-
-            int start = matcher.start(1);
-            int end = matcher.end(1);
-
-            psiReferences.add(new PoshiClassReference(poshiMethodCall, className, TextRange.create(start, end)));
-
-            matcher = METHOD_REFERENCE_PATTERN.matcher(valueString);
-
-            if (matcher.find(end)) {
-                String methodName = matcher.group(1);
-
-                psiReferences.add(new PoshiMethodReference(poshiMethodCall, className, methodName, TextRange.create(matcher.start(1), matcher.end(1))));
-            }
-        }
-
-        return psiReferences.toArray(new PsiReference[0]);
+        return (new PoshiMethodCallReferenceSet(poshiMethodCall)).getAllReferences();
     }
 
     public static String getName(PoshiAnnotation annotation) {
