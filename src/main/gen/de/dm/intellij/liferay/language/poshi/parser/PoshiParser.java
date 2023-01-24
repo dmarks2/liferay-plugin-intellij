@@ -433,7 +433,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // invocation-inner [COMMA invocation-inner]
+  // invocation-inner {COMMA invocation-inner}*
   static boolean invocation_inner_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "invocation_inner_list")) return false;
     if (!nextTokenIs(b, "", DOUBLE_QUOTED_STRING, IDENTIFIER)) return false;
@@ -445,10 +445,14 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [COMMA invocation-inner]
+  // {COMMA invocation-inner}*
   private static boolean invocation_inner_list_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "invocation_inner_list_1")) return false;
-    invocation_inner_list_1_0(b, l + 1);
+    while (true) {
+      int c = current_position_(b);
+      if (!invocation_inner_list_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "invocation_inner_list_1", c)) break;
+    }
     return true;
   }
 

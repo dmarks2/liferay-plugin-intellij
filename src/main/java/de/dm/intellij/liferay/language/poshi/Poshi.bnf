@@ -95,7 +95,7 @@ method-call ::= IDENTIFIER {PERIOD IDENTIFIER}* {
 
 invocation ::= method-call [ROUND_LBRACE [invocation-inner-list] ROUND_RBRACE] [SEMICOLON]
 
-private invocation-inner-list ::= invocation-inner [COMMA invocation-inner]
+private invocation-inner-list ::= invocation-inner {COMMA invocation-inner}*
 
 private invocation-inner ::= variable-assignment | IDENTIFIER | string-quoted-double
 
