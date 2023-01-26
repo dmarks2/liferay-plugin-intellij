@@ -13,6 +13,7 @@ import com.intellij.psi.TokenType;
 import com.intellij.psi.codeStyle.CodeStyleSettings;
 import com.intellij.psi.formatter.common.AbstractBlock;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiCommandBlock;
+import de.dm.intellij.liferay.language.poshi.psi.PoshiControlBlock;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiInvocation;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiStructureBlock;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiVariable;
@@ -41,7 +42,7 @@ public class PoshiFormatterBlock extends AbstractBlock {
     public Indent getIndent() {
         PsiElement psi = myNode.getPsi();
 
-        if (psi instanceof PoshiCommandBlock || psi instanceof PoshiStructureBlock) {
+        if (psi instanceof PoshiCommandBlock || psi instanceof PoshiStructureBlock || psi instanceof PoshiControlBlock) {
             return Indent.getNormalIndent();
         }
 
