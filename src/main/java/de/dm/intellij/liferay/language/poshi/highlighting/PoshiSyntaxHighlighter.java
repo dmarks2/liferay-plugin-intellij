@@ -29,6 +29,7 @@ public class PoshiSyntaxHighlighter extends SyntaxHighlighterBase {
         typeTextAttributesMap.put(PoshiTypes.NUMERIC_CONSTANT, PoshiHighlightingColors.NUMBER);
         typeTextAttributesMap.put(PoshiTypes.DOUBLE_QUOTED_STRING, PoshiHighlightingColors.STRING);
         typeTextAttributesMap.put(PoshiTypes.SINGLE_QUOTED_STRING, PoshiHighlightingColors.STRING);
+        typeTextAttributesMap.put(PoshiTypes.SINGLE_QUOTED_MULTILINE, PoshiHighlightingColors.STRING);
         typeTextAttributesMap.put(PoshiTypes.LINE_COMMENT, PoshiHighlightingColors.COMMENT);
         typeTextAttributesMap.put(PoshiTypes.BLOCK_COMMENT, PoshiHighlightingColors.COMMENT);
         typeTextAttributesMap.put(PoshiTypes.IDENTIFIER, PoshiHighlightingColors.IDENTIFIER);
