@@ -41,6 +41,18 @@ public class PoshiVariableAssignmentImpl extends ASTWrapperPsiElement implements
 
   @Override
   @NotNull
+  public List<PoshiStringQuotedSingle> getStringQuotedSingleList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiStringQuotedSingle.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PoshiStringQuotedSingleMultiline> getStringQuotedSingleMultilineList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiStringQuotedSingleMultiline.class);
+  }
+
+  @Override
+  @NotNull
   public PsiElement getIdentifier() {
     return findNotNullChildByType(IDENTIFIER);
   }

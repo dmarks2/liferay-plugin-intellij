@@ -152,7 +152,7 @@ public class PoshiMethodCallTest extends BasePlatformTestCase {
                 PsiElement resolve = poshiClassReference.resolve();
 
                 if (resolve != null) {
-                    assertTrue("Default.Open should resolve to Open.function", resolve instanceof PsiFile && ((PsiFile)resolve).getName().equals("Open.function"));
+                    assertTrue("Default.Open should resolve to default funtion open() inside Open.function", resolve instanceof PoshiFunctionDefinition && ((PoshiFunctionDefinition)resolve).getName().equals("open"));
 
                     resolved = true;
                 }

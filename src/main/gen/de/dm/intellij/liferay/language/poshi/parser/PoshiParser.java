@@ -421,14 +421,13 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // variable-assignment | IDENTIFIER | string-quoted-double
+  // variable-assignment | IDENTIFIER | strings
   static boolean invocation_inner(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "invocation_inner")) return false;
-    if (!nextTokenIs(b, "", DOUBLE_QUOTED_STRING, IDENTIFIER)) return false;
     boolean r;
     r = variable_assignment(b, l + 1);
     if (!r) r = consumeToken(b, IDENTIFIER);
-    if (!r) r = string_quoted_double(b, l + 1);
+    if (!r) r = strings(b, l + 1);
     return r;
   }
 
@@ -436,7 +435,6 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   // invocation-inner {COMMA invocation-inner}*
   static boolean invocation_inner_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "invocation_inner_list")) return false;
-    if (!nextTokenIs(b, "", DOUBLE_QUOTED_STRING, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = invocation_inner(b, l + 1);
@@ -590,6 +588,41 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // SINGLE_QUOTED_STRING
+  public static boolean string_quoted_single(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "string_quoted_single")) return false;
+    if (!nextTokenIs(b, SINGLE_QUOTED_STRING)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, SINGLE_QUOTED_STRING);
+    exit_section_(b, m, STRING_QUOTED_SINGLE, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // SINGLE_QUOTED_MULTILINE
+  public static boolean string_quoted_single_multiline(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "string_quoted_single_multiline")) return false;
+    if (!nextTokenIs(b, SINGLE_QUOTED_MULTILINE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, SINGLE_QUOTED_MULTILINE);
+    exit_section_(b, m, STRING_QUOTED_SINGLE_MULTILINE, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // string-quoted-double | string-quoted-single-multiline | string-quoted-single
+  static boolean strings(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "strings")) return false;
+    boolean r;
+    r = string_quoted_double(b, l + 1);
+    if (!r) r = string_quoted_single_multiline(b, l + 1);
+    if (!r) r = string_quoted_single(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
   // (SET_UP | TEAR_DOWN) [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE]
   public static boolean structure_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block")) return false;
@@ -731,11 +764,11 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // string-quoted-double | invocation | NUMERIC_CONSTANT
+  // strings | invocation | NUMERIC_CONSTANT
   static boolean variable_assignment_inner(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_assignment_inner")) return false;
     boolean r;
-    r = string_quoted_double(b, l + 1);
+    r = strings(b, l + 1);
     if (!r) r = invocation(b, l + 1);
     if (!r) r = consumeToken(b, NUMERIC_CONSTANT);
     return r;

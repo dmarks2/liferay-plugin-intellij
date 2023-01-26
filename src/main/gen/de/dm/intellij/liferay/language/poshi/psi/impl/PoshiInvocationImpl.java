@@ -41,6 +41,18 @@ public class PoshiInvocationImpl extends ASTWrapperPsiElement implements PoshiIn
 
   @Override
   @NotNull
+  public List<PoshiStringQuotedSingle> getStringQuotedSingleList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiStringQuotedSingle.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PoshiStringQuotedSingleMultiline> getStringQuotedSingleMultilineList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiStringQuotedSingleMultiline.class);
+  }
+
+  @Override
+  @NotNull
   public List<PoshiVariableAssignment> getVariableAssignmentList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariableAssignment.class);
   }

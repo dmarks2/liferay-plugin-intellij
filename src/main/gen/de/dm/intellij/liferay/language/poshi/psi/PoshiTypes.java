@@ -21,6 +21,8 @@ public interface PoshiTypes {
   IElementType METHOD_CALL = new PoshiElementType("METHOD_CALL");
   IElementType PROPERTY_INSTRUCTION = new PoshiElementType("PROPERTY_INSTRUCTION");
   IElementType STRING_QUOTED_DOUBLE = new PoshiElementType("STRING_QUOTED_DOUBLE");
+  IElementType STRING_QUOTED_SINGLE = new PoshiElementType("STRING_QUOTED_SINGLE");
+  IElementType STRING_QUOTED_SINGLE_MULTILINE = new PoshiElementType("STRING_QUOTED_SINGLE_MULTILINE");
   IElementType STRUCTURE_BLOCK = new PoshiElementType("STRUCTURE_BLOCK");
   IElementType TEST_DEFINITION = new PoshiElementType("TEST_DEFINITION");
   IElementType VARIABLE = new PoshiElementType("VARIABLE");
@@ -51,6 +53,7 @@ public interface PoshiTypes {
   IElementType ROUND_RBRACE = new PoshiTokenType(")");
   IElementType SEMICOLON = new PoshiTokenType(";");
   IElementType SET_UP = new PoshiTokenType("setUp");
+  IElementType SINGLE_QUOTED_MULTILINE = new PoshiTokenType("SINGLE_QUOTED_MULTILINE");
   IElementType SINGLE_QUOTED_STRING = new PoshiTokenType("SINGLE_QUOTED_STRING");
   IElementType SQUARE_LBRACE = new PoshiTokenType("[");
   IElementType SQUARE_RBRACE = new PoshiTokenType("]");
@@ -99,6 +102,12 @@ public interface PoshiTypes {
       }
       else if (type == STRING_QUOTED_DOUBLE) {
         return new PoshiStringQuotedDoubleImpl(node);
+      }
+      else if (type == STRING_QUOTED_SINGLE) {
+        return new PoshiStringQuotedSingleImpl(node);
+      }
+      else if (type == STRING_QUOTED_SINGLE_MULTILINE) {
+        return new PoshiStringQuotedSingleMultilineImpl(node);
       }
       else if (type == STRUCTURE_BLOCK) {
         return new PoshiStructureBlockImpl(node);

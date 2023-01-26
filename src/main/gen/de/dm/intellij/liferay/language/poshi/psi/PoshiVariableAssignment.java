@@ -15,6 +15,12 @@ public interface PoshiVariableAssignment extends PsiNamedElement {
   List<PoshiStringQuotedDouble> getStringQuotedDoubleList();
 
   @NotNull
+  List<PoshiStringQuotedSingle> getStringQuotedSingleList();
+
+  @NotNull
+  List<PoshiStringQuotedSingleMultiline> getStringQuotedSingleMultilineList();
+
+  @NotNull
   PsiElement getIdentifier();
 
   String getName();

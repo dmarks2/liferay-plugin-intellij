@@ -62,6 +62,14 @@ public class PoshiVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitStringQuotedSingle(@NotNull PoshiStringQuotedSingle o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStringQuotedSingleMultiline(@NotNull PoshiStringQuotedSingleMultiline o) {
+    visitPsiElement(o);
+  }
+
   public void visitStructureBlock(@NotNull PoshiStructureBlock o) {
     visitPsiElement(o);
   }

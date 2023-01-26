@@ -14,6 +14,12 @@ public interface PoshiInvocation extends PsiElement {
   List<PoshiStringQuotedDouble> getStringQuotedDoubleList();
 
   @NotNull
+  List<PoshiStringQuotedSingle> getStringQuotedSingleList();
+
+  @NotNull
+  List<PoshiStringQuotedSingleMultiline> getStringQuotedSingleMultilineList();
+
+  @NotNull
   List<PoshiVariableAssignment> getVariableAssignmentList();
 
 }
