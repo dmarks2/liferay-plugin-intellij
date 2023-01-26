@@ -178,11 +178,11 @@ public class _PoshiLexer implements FlexLexer {
 
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\1\2\2\1\1\3\1\4\2\1\1\5"+
-    "\1\6\1\1\1\7\13\4\1\10\1\11\1\12\1\13"+
-    "\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\3"+
-    "\2\0\1\23\1\0\1\24\1\25\3\4\1\26\11\4"+
-    "\1\0\2\23\14\4\1\27\1\22\2\0\1\23\1\4"+
-    "\1\30\1\4\1\31\1\4\1\32\6\4\1\0\1\23"+
+    "\1\6\1\7\1\10\13\4\1\11\1\12\1\13\1\14"+
+    "\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\3"+
+    "\2\0\1\24\1\0\1\25\1\7\3\4\1\26\11\4"+
+    "\1\0\2\24\14\4\1\27\1\23\2\0\1\24\1\4"+
+    "\1\30\1\4\1\31\1\4\1\32\6\4\1\0\1\24"+
     "\1\4\1\0\2\4\1\33\3\4\1\34\1\35\1\0"+
     "\1\36\1\4\1\0\2\4\1\37\1\4\1\40\1\36"+
     "\1\4\1\41\4\4\1\42\1\43\1\44\1\4\1\45";
@@ -750,77 +750,77 @@ public class _PoshiLexer implements FlexLexer {
             // fall through
           case 43: break;
           case 7: 
-            { return EQUALS;
+            { return COMPARISION_OPERATOR;
             } 
             // fall through
           case 44: break;
           case 8: 
-            { return CURLY_LBRACE;
+            { return EQUALS;
             } 
             // fall through
           case 45: break;
           case 9: 
-            { return CURLY_RBRACE;
+            { return CURLY_LBRACE;
             } 
             // fall through
           case 46: break;
           case 10: 
-            { return ROUND_LBRACE;
+            { return CURLY_RBRACE;
             } 
             // fall through
           case 47: break;
           case 11: 
-            { return ROUND_RBRACE;
+            { return ROUND_LBRACE;
             } 
             // fall through
           case 48: break;
           case 12: 
-            { return SQUARE_LBRACE;
+            { return ROUND_RBRACE;
             } 
             // fall through
           case 49: break;
           case 13: 
-            { return SQUARE_RBRACE;
+            { return SQUARE_LBRACE;
             } 
             // fall through
           case 50: break;
           case 14: 
-            { return PERIOD;
+            { return SQUARE_RBRACE;
             } 
             // fall through
           case 51: break;
           case 15: 
-            { return COMMA;
+            { return PERIOD;
             } 
             // fall through
           case 52: break;
           case 16: 
-            { return SEMICOLON;
+            { return COMMA;
             } 
             // fall through
           case 53: break;
           case 17: 
-            { return LINE_COMMENT;
+            { return SEMICOLON;
             } 
             // fall through
           case 54: break;
           case 18: 
-            { return BLOCK_COMMENT;
+            { return LINE_COMMENT;
             } 
             // fall through
           case 55: break;
           case 19: 
-            { return SINGLE_QUOTED_STRING;
+            { return BLOCK_COMMENT;
             } 
             // fall through
           case 56: break;
           case 20: 
-            { return ANNOTATION_NAME;
+            { return SINGLE_QUOTED_STRING;
             } 
             // fall through
           case 57: break;
           case 21: 
-            { return COMPARISION_OPERATOR;
+            { return ANNOTATION_NAME;
             } 
             // fall through
           case 58: break;

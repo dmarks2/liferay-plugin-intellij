@@ -61,7 +61,7 @@
            ARITHMETIC_OPERATOR = "regexp:(\-|\+|\*/)"
            NUMERIC_CONSTANT = "regexp:[0-9]+"
 
-           COMPARISION_OPERATOR = "regexp:[!=]="
+           COMPARISION_OPERATOR = "regexp:(\!|\!=|==)"
 
            TESTING_WHITESPACE = "regexp:[ \n\t\r\f]+"
    ]
@@ -133,7 +133,7 @@ private control-block-with-condition ::= (IF | ELSE_IF | TASK | WHILE) ROUND_LBR
 
 private control-block-without-condition ::= (ELSE)
 
-private control-block-inner ::= invocation | string-quoted-double | variable-assignment | COMPARISION_OPERATOR
+private control-block-inner ::= invocation | string-quoted-double | variable-assignment | COMPARISION_OPERATOR | ROUND_LBRACE control-block-inner* ROUND_RBRACE
 
 comments ::= comment-block | LINE_COMMENT
 
