@@ -3,6 +3,7 @@ package de.dm.intellij.liferay.language.poshi.psi;
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
@@ -184,5 +185,49 @@ public class PoshiMethodCallTest extends BasePlatformTestCase {
         }
 
         assertTrue("Default.Open.openInTheNewTab should be resolvable", resolved);
+    }
+
+    public void testSeleniumReference() {
+        myFixture.configureByFiles("testcases/SeleniumReference.testcase");
+
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+
+        boolean resolved = false;
+
+        for (PsiReference psiReference : element.getReferences()) {
+            if (psiReference instanceof PoshiSeleniumReference) {
+                PoshiSeleniumReference seleniumReference = (PoshiSeleniumReference) psiReference;
+
+                PsiElement psiElement = seleniumReference.resolve();
+
+                assertNotNull(psiElement);
+
+                if (psiElement instanceof PsiNamedElement) {
+                    PsiNamedElement psiNamedElement = (PsiNamedElement) psiElement;
+
+                    assertEquals("selenium", psiNamedElement.getName());
+
+                    resolved = true;
+                }
+            }
+        }
+
+        assertTrue("selenium should be resolvable", resolved);
+    }
+
+    public void testSeleniumCompletion() {
+        myFixture.configureByFiles("testcases/SeleniumCompletion.testcase");
+
+        myFixture.complete(CompletionType.BASIC, 1);
+
+        List<String> strings = myFixture.getLookupElementStrings();
+
+        if (strings != null) {
+            //multiple lookup items
+            assertTrue(strings.contains("selenium"));
+        } else {
+            //one lookup item automatically inserted
+            myFixture.checkResultByFile("testcases/SeleniumCompletionExpected.testcase");
+        }
     }
 }

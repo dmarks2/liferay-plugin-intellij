@@ -18,4 +18,8 @@ public class PoshiConstants {
     public static final String DEFAULT_TEST_FUNCTIONAL_PATH = "default/testFunctional";
 
     public static final String DEFAULT_RESOURCES_LIBRARY = "com.liferay.poshi.runner.resources-1.0.14.jar";
+
+    public static final String SELENIUM_KEYWORD = "selenium";
+
+    public static final String LIFERAY_SELENIUM_DRIVER_CLASS_NAME = "com.liferay.poshi.runner.selenium.BaseWebDriverImpl";
 }

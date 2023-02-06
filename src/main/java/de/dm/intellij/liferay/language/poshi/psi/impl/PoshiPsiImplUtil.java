@@ -8,13 +8,12 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiAnnotation;
-import de.dm.intellij.liferay.language.poshi.psi.PoshiClassReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiDefinitionBase;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiMethodCall;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiMethodCallReferenceSet;
-import de.dm.intellij.liferay.language.poshi.psi.PoshiMethodReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiPathLocatorReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiPathReference;
+import de.dm.intellij.liferay.language.poshi.psi.PoshiSeleniumReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiStringQuotedDouble;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiTypes;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiVariableAssignment;
@@ -31,9 +30,6 @@ public class PoshiPsiImplUtil {
     private static final Pattern VARIABLE_REFERENCE_PATTERN = Pattern.compile("\\$\\{([\\w-]*?)\\s*?}");
     private static final Pattern PATH_REFERENCE_PATTERN = Pattern.compile("([A-Z][A-Za-z]+)[#]?");
     private static final Pattern PATH_LOCATOR_REFERENCE_PATTERN = Pattern.compile("[#]([A-Z][A-Z_-]+)");
-
-    private static final Pattern CLASS_REFERENCE_PATTERN = Pattern.compile("^([A-Z][A-Za-z]+)[(.]?");
-    private static final Pattern METHOD_REFERENCE_PATTERN = Pattern.compile("[\\.]([A-Za-z_][A-Za-z]+)");
 
     public static String getName(PoshiVariableAssignment poshiVariableAssignment) {
         return poshiVariableAssignment.getIdentifier().getText();
@@ -115,7 +111,11 @@ public class PoshiPsiImplUtil {
     }
 
     public static PsiReference @NotNull [] getReferences(PoshiMethodCall poshiMethodCall) {
-        return (new PoshiMethodCallReferenceSet(poshiMethodCall)).getAllReferences();
+        List<PsiReference> references = new ArrayList<>(List.of((new PoshiMethodCallReferenceSet(poshiMethodCall)).getAllReferences()));
+
+        references.add(new PoshiSeleniumReference(poshiMethodCall));
+
+        return references.toArray(new PsiReference[0]);
     }
 
     public static String getName(PoshiAnnotation annotation) {
