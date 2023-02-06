@@ -14,6 +14,7 @@ import de.dm.intellij.liferay.language.poshi.psi.PoshiMethodCallReferenceSet;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiPathLocatorReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiPathReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiSeleniumReference;
+import de.dm.intellij.liferay.language.poshi.psi.PoshiSeleniumReferenceSet;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiStringQuotedDouble;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiTypes;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiVariableAssignment;
@@ -113,7 +114,7 @@ public class PoshiPsiImplUtil {
     public static PsiReference @NotNull [] getReferences(PoshiMethodCall poshiMethodCall) {
         List<PsiReference> references = new ArrayList<>(List.of((new PoshiMethodCallReferenceSet(poshiMethodCall)).getAllReferences()));
 
-        references.add(new PoshiSeleniumReference(poshiMethodCall));
+        references.addAll(List.of((new PoshiSeleniumReferenceSet(poshiMethodCall)).getAllReferences()));
 
         return references.toArray(new PsiReference[0]);
     }

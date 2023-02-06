@@ -202,13 +202,7 @@ public class PoshiMethodCallTest extends BasePlatformTestCase {
 
                 assertNotNull(psiElement);
 
-                if (psiElement instanceof PsiNamedElement) {
-                    PsiNamedElement psiNamedElement = (PsiNamedElement) psiElement;
-
-                    assertEquals("selenium", psiNamedElement.getName());
-
-                    resolved = true;
-                }
+                resolved = true;
             }
         }
 
@@ -229,5 +223,37 @@ public class PoshiMethodCallTest extends BasePlatformTestCase {
             //one lookup item automatically inserted
             myFixture.checkResultByFile("testcases/SeleniumCompletionExpected.testcase");
         }
+    }
+
+    public void testSeleniumMethodCompletion() {
+        myFixture.configureByFiles("testcases/SeleniumMethodCompletion.testcase");
+
+        myFixture.complete(CompletionType.BASIC, 1);
+
+        List<String> strings = myFixture.getLookupElementStrings();
+
+        assertTrue(strings.contains("goBack"));
+    }
+
+    public void testSeleniumMethodReference() {
+        myFixture.configureByFiles("testcases/SeleniumMethodReference.testcase");
+
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+
+        boolean resolved = false;
+
+        for (PsiReference psiReference : element.getReferences()) {
+            if (psiReference instanceof PoshiSeleniumMethodReference) {
+                PoshiSeleniumMethodReference seleniumMethodReference = (PoshiSeleniumMethodReference) psiReference;
+
+                PsiElement psiElement = seleniumMethodReference.resolve();
+
+                assertNotNull(psiElement);
+
+                resolved = true;
+            }
+        }
+
+        assertTrue("selenium.goBack() should be resolvable", resolved);
     }
 }

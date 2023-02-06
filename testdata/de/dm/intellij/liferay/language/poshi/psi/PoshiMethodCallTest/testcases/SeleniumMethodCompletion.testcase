@@ -1,0 +1,7 @@
+definition {
+
+    setUp {
+        selenium.go<caret>
+    }
+
+}

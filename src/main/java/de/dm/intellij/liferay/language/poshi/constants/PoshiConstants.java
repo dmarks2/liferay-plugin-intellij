@@ -21,5 +21,5 @@ public class PoshiConstants {
 
     public static final String SELENIUM_KEYWORD = "selenium";
 
-    public static final String LIFERAY_SELENIUM_DRIVER_CLASS_NAME = "com.liferay.poshi.runner.selenium.BaseWebDriverImpl";
+    public static final String LIFERAY_SELENIUM_FILE_PATH = "/com/liferay/poshi/core/selenium/LiferaySelenium.java";
 }
