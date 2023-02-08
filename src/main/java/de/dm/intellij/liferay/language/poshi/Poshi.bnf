@@ -101,7 +101,7 @@ invocation ::= method-call [ROUND_LBRACE [invocation-inner-list] ROUND_RBRACE] [
 
 private invocation-inner-list ::= invocation-inner {COMMA invocation-inner}*
 
-private invocation-inner ::= variable-assignment | IDENTIFIER | strings
+private invocation-inner ::= variable-assignment | IDENTIFIER | strings {ARITHMETIC_OPERATOR invocation-inner}*
 
 variable-assignment ::= IDENTIFIER EQUALS variable-assignment-inner {ARITHMETIC_OPERATOR variable-assignment-inner}* {
     methods=[getName setName]
@@ -141,6 +141,4 @@ comments ::= comment-block | LINE_COMMENT
 
 comment-block ::= BLOCK_COMMENT
 
-//TODO: arithmetic operators
 //TODO: for loops
-//TODO: escaped strings with '''
