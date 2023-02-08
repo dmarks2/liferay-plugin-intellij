@@ -11,14 +11,14 @@ import static de.dm.intellij.liferay.language.poshi.psi.PoshiTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.dm.intellij.liferay.language.poshi.psi.*;
 
-public class PoshiStructureBlockImpl extends ASTWrapperPsiElement implements PoshiStructureBlock {
+public class PoshiForLoopImpl extends ASTWrapperPsiElement implements PoshiForLoop {
 
-  public PoshiStructureBlockImpl(@NotNull ASTNode node) {
+  public PoshiForLoopImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PoshiVisitor visitor) {
-    visitor.visitStructureBlock(this);
+    visitor.visitForLoop(this);
   }
 
   @Override
@@ -59,8 +59,38 @@ public class PoshiStructureBlockImpl extends ASTWrapperPsiElement implements Pos
 
   @Override
   @NotNull
+  public List<PoshiReturnStatement> getReturnStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiReturnStatement.class);
+  }
+
+  @Override
+  @Nullable
+  public PoshiStringQuotedDouble getStringQuotedDouble() {
+    return findChildByClass(PoshiStringQuotedDouble.class);
+  }
+
+  @Override
+  @Nullable
+  public PoshiStringQuotedSingle getStringQuotedSingle() {
+    return findChildByClass(PoshiStringQuotedSingle.class);
+  }
+
+  @Override
+  @Nullable
+  public PoshiStringQuotedSingleMultiline getStringQuotedSingleMultiline() {
+    return findChildByClass(PoshiStringQuotedSingleMultiline.class);
+  }
+
+  @Override
+  @NotNull
   public List<PoshiVariable> getVariableList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariable.class);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

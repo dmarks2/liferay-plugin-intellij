@@ -56,6 +56,8 @@ TESTING_WHITESPACE=[ \n\t\r\f]+
   "task"                         { return TASK; }
   "while"                        { return WHILE; }
   "return"                       { return RETURN; }
+  "for"                          { return FOR; }
+  "list"                         { return LIST; }
   "{"                            { return CURLY_LBRACE; }
   "}"                            { return CURLY_RBRACE; }
   "("                            { return ROUND_LBRACE; }
@@ -65,6 +67,7 @@ TESTING_WHITESPACE=[ \n\t\r\f]+
   "."                            { return PERIOD; }
   ","                            { return COMMA; }
   "="                            { return EQUALS; }
+  ":"                            { return COLON; }
   ";"                            { return SEMICOLON; }
 
   {LINE_COMMENT}                 { return LINE_COMMENT; }

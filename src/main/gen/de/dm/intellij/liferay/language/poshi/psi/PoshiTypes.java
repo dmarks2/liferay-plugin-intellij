@@ -15,6 +15,7 @@ public interface PoshiTypes {
   IElementType CONTROL_BLOCK = new PoshiElementType("CONTROL_BLOCK");
   IElementType DEFINITION_BASE = new PoshiElementType("DEFINITION_BASE");
   IElementType DEFINITION_BLOCK = new PoshiElementType("DEFINITION_BLOCK");
+  IElementType FOR_LOOP = new PoshiElementType("FOR_LOOP");
   IElementType FUNCTION_DEFINITION = new PoshiElementType("FUNCTION_DEFINITION");
   IElementType INVOCATION = new PoshiElementType("INVOCATION");
   IElementType MACRO_DEFINITION = new PoshiElementType("MACRO_DEFINITION");
@@ -32,6 +33,7 @@ public interface PoshiTypes {
   IElementType ANNOTATION_NAME = new PoshiTokenType("ANNOTATION_NAME");
   IElementType ARITHMETIC_OPERATOR = new PoshiTokenType("ARITHMETIC_OPERATOR");
   IElementType BLOCK_COMMENT = new PoshiTokenType("BLOCK_COMMENT");
+  IElementType COLON = new PoshiTokenType(":");
   IElementType COMMA = new PoshiTokenType(",");
   IElementType COMPARISION_OPERATOR = new PoshiTokenType("COMPARISION_OPERATOR");
   IElementType CURLY_LBRACE = new PoshiTokenType("{");
@@ -41,10 +43,12 @@ public interface PoshiTypes {
   IElementType ELSE = new PoshiTokenType("else");
   IElementType ELSE_IF = new PoshiTokenType("else if");
   IElementType EQUALS = new PoshiTokenType("=");
+  IElementType FOR = new PoshiTokenType("for");
   IElementType FUNCTION = new PoshiTokenType("function");
   IElementType IDENTIFIER = new PoshiTokenType("IDENTIFIER");
   IElementType IF = new PoshiTokenType("if");
   IElementType LINE_COMMENT = new PoshiTokenType("LINE_COMMENT");
+  IElementType LIST = new PoshiTokenType("list");
   IElementType MACRO = new PoshiTokenType("macro");
   IElementType NUMERIC_CONSTANT = new PoshiTokenType("NUMERIC_CONSTANT");
   IElementType PERIOD = new PoshiTokenType(".");
@@ -85,6 +89,9 @@ public interface PoshiTypes {
       }
       else if (type == DEFINITION_BLOCK) {
         return new PoshiDefinitionBlockImpl(node);
+      }
+      else if (type == FOR_LOOP) {
+        return new PoshiForLoopImpl(node);
       }
       else if (type == FUNCTION_DEFINITION) {
         return new PoshiFunctionDefinitionImpl(node);

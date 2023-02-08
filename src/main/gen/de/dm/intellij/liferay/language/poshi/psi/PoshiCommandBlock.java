@@ -20,6 +20,9 @@ public interface PoshiCommandBlock extends PsiElement {
   PoshiDefinitionBase getDefinitionBase();
 
   @NotNull
+  List<PoshiForLoop> getForLoopList();
+
+  @NotNull
   List<PoshiInvocation> getInvocationList();
 
   @NotNull

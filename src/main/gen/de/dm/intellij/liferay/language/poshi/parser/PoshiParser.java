@@ -71,7 +71,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation*] definition-base [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments | return-statement}* CURLY_RBRACE]
+  // [annotation*] definition-base [CURLY_LBRACE {command-inner}* CURLY_RBRACE]
   public static boolean command_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "command_block")) return false;
     boolean r;
@@ -101,14 +101,14 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments | return-statement}* CURLY_RBRACE]
+  // [CURLY_LBRACE {command-inner}* CURLY_RBRACE]
   private static boolean command_block_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "command_block_2")) return false;
     command_block_2_0(b, l + 1);
     return true;
   }
 
-  // CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments | return-statement}* CURLY_RBRACE
+  // CURLY_LBRACE {command-inner}* CURLY_RBRACE
   private static boolean command_block_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "command_block_2_0")) return false;
     boolean r;
@@ -120,7 +120,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // {invocation | property-instruction | variable | control-block | comments | return-statement}*
+  // {command-inner}*
   private static boolean command_block_2_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "command_block_2_0_1")) return false;
     while (true) {
@@ -131,15 +131,22 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // invocation | property-instruction | variable | control-block | comments | return-statement
+  // {command-inner}
   private static boolean command_block_2_0_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "command_block_2_0_1_0")) return false;
     boolean r;
-    r = invocation(b, l + 1);
-    if (!r) r = property_instruction(b, l + 1);
-    if (!r) r = variable(b, l + 1);
-    if (!r) r = control_block(b, l + 1);
-    if (!r) r = comments(b, l + 1);
+    Marker m = enter_section_(b);
+    r = command_inner(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // structure-inner | return-statement
+  static boolean command_inner(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "command_inner")) return false;
+    boolean r;
+    r = structure_inner(b, l + 1);
     if (!r) r = return_statement(b, l + 1);
     return r;
   }
@@ -170,7 +177,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (control-block-with-condition | control-block-without-condition) CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE
+  // (control-block-with-condition | control-block-without-condition) CURLY_LBRACE {command-inner}* CURLY_RBRACE
   public static boolean control_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "control_block")) return false;
     boolean r;
@@ -192,7 +199,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // {invocation | property-instruction | variable | control-block | comments}*
+  // {command-inner}*
   private static boolean control_block_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "control_block_2")) return false;
     while (true) {
@@ -203,15 +210,13 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // invocation | property-instruction | variable | control-block | comments
+  // {command-inner}
   private static boolean control_block_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "control_block_2_0")) return false;
     boolean r;
-    r = invocation(b, l + 1);
-    if (!r) r = property_instruction(b, l + 1);
-    if (!r) r = variable(b, l + 1);
-    if (!r) r = control_block(b, l + 1);
-    if (!r) r = comments(b, l + 1);
+    Marker m = enter_section_(b);
+    r = command_inner(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -385,6 +390,43 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     if (!r) r = property_instruction(b, l + 1);
     if (!r) r = variable(b, l + 1);
     if (!r) r = comments(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // FOR ROUND_LBRACE VAR IDENTIFIER COLON LIST strings ROUND_RBRACE CURLY_LBRACE {command-inner}* CURLY_RBRACE
+  public static boolean for_loop(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "for_loop")) return false;
+    if (!nextTokenIs(b, FOR)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, FOR, ROUND_LBRACE, VAR, IDENTIFIER, COLON, LIST);
+    r = r && strings(b, l + 1);
+    r = r && consumeTokens(b, 0, ROUND_RBRACE, CURLY_LBRACE);
+    r = r && for_loop_9(b, l + 1);
+    r = r && consumeToken(b, CURLY_RBRACE);
+    exit_section_(b, m, FOR_LOOP, r);
+    return r;
+  }
+
+  // {command-inner}*
+  private static boolean for_loop_9(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "for_loop_9")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!for_loop_9_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "for_loop_9", c)) break;
+    }
+    return true;
+  }
+
+  // {command-inner}
+  private static boolean for_loop_9_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "for_loop_9_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = command_inner(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -727,7 +769,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (SET_UP | TEAR_DOWN) [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE]
+  // (SET_UP | TEAR_DOWN) [CURLY_LBRACE {structure-inner}* CURLY_RBRACE]
   public static boolean structure_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block")) return false;
     if (!nextTokenIs(b, "<structure block>", SET_UP, TEAR_DOWN)) return false;
@@ -748,14 +790,14 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE]
+  // [CURLY_LBRACE {structure-inner}* CURLY_RBRACE]
   private static boolean structure_block_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block_1")) return false;
     structure_block_1_0(b, l + 1);
     return true;
   }
 
-  // CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE
+  // CURLY_LBRACE {structure-inner}* CURLY_RBRACE
   private static boolean structure_block_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block_1_0")) return false;
     boolean r;
@@ -767,7 +809,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // {invocation | property-instruction | variable | control-block | comments}*
+  // {structure-inner}*
   private static boolean structure_block_1_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block_1_0_1")) return false;
     while (true) {
@@ -778,15 +820,27 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // invocation | property-instruction | variable | control-block | comments
+  // {structure-inner}
   private static boolean structure_block_1_0_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "structure_block_1_0_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = structure_inner(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // invocation | property-instruction | variable | control-block | comments | for-loop
+  static boolean structure_inner(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "structure_inner")) return false;
     boolean r;
     r = invocation(b, l + 1);
     if (!r) r = property_instruction(b, l + 1);
     if (!r) r = variable(b, l + 1);
     if (!r) r = control_block(b, l + 1);
     if (!r) r = comments(b, l + 1);
+    if (!r) r = for_loop(b, l + 1);
     return r;
   }
 

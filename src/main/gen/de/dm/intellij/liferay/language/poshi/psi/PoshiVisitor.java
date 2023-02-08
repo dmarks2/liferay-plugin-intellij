@@ -36,6 +36,10 @@ public class PoshiVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitForLoop(@NotNull PoshiForLoop o) {
+    visitPsiElement(o);
+  }
+
   public void visitFunctionDefinition(@NotNull PoshiFunctionDefinition o) {
     visitDefinitionBase(o);
     // visitPsiNamedElement(o);

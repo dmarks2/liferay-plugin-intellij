@@ -41,6 +41,12 @@ public class PoshiControlBlockImpl extends ASTWrapperPsiElement implements Poshi
 
   @Override
   @NotNull
+  public List<PoshiForLoop> getForLoopList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiForLoop.class);
+  }
+
+  @Override
+  @NotNull
   public List<PoshiInvocation> getInvocationList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiInvocation.class);
   }
@@ -49,6 +55,12 @@ public class PoshiControlBlockImpl extends ASTWrapperPsiElement implements Poshi
   @NotNull
   public List<PoshiPropertyInstruction> getPropertyInstructionList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiPropertyInstruction.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PoshiReturnStatement> getReturnStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiReturnStatement.class);
   }
 
   @Override

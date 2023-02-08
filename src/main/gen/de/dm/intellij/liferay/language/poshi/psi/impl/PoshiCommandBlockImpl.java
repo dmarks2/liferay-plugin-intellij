@@ -53,6 +53,12 @@ public class PoshiCommandBlockImpl extends ASTWrapperPsiElement implements Poshi
 
   @Override
   @NotNull
+  public List<PoshiForLoop> getForLoopList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiForLoop.class);
+  }
+
+  @Override
+  @NotNull
   public List<PoshiInvocation> getInvocationList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiInvocation.class);
   }

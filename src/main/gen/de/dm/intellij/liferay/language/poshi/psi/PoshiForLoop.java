@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PoshiStructureBlock extends PsiElement {
+public interface PoshiForLoop extends PsiElement {
 
   @NotNull
   List<PoshiComments> getCommentsList();
@@ -23,6 +23,21 @@ public interface PoshiStructureBlock extends PsiElement {
   List<PoshiPropertyInstruction> getPropertyInstructionList();
 
   @NotNull
+  List<PoshiReturnStatement> getReturnStatementList();
+
+  @Nullable
+  PoshiStringQuotedDouble getStringQuotedDouble();
+
+  @Nullable
+  PoshiStringQuotedSingle getStringQuotedSingle();
+
+  @Nullable
+  PoshiStringQuotedSingleMultiline getStringQuotedSingleMultiline();
+
+  @NotNull
   List<PoshiVariable> getVariableList();
+
+  @NotNull
+  PsiElement getIdentifier();
 
 }

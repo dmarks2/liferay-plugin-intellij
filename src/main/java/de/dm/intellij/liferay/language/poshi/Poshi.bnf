@@ -34,6 +34,8 @@
            TASK = "task"
            WHILE = "while"
            RETURN = "return"
+           FOR = "for"
+           LIST = "list"
 
            CURLY_LBRACE = "{"
            CURLY_RBRACE = "}"
@@ -44,6 +46,7 @@
            PERIOD = "."
            COMMA = ","
            EQUALS = "="
+           COLON = ":"
            SEMICOLON = ";"
 
            LINE_COMMENT = "regexp://.*"
@@ -79,9 +82,13 @@ poshi-file ::= definition-block | comments
 
 definition-block ::= [annotation*] DEFINITION [CURLY_LBRACE {structure-block | command-block | property-instruction | variable | comments}* CURLY_RBRACE]
 
-structure-block ::= (SET_UP | TEAR_DOWN) [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE]
+structure-block ::= (SET_UP | TEAR_DOWN) [CURLY_LBRACE {structure-inner}* CURLY_RBRACE]
 
-command-block ::= [annotation*] definition-base [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments | return-statement}* CURLY_RBRACE]
+command-block ::= [annotation*] definition-base [CURLY_LBRACE {command-inner}* CURLY_RBRACE]
+
+private structure-inner ::= invocation | property-instruction | variable | control-block | comments | for-loop
+
+private command-inner ::= structure-inner | return-statement
 
 definition-base ::= function-definition | macro-definition | test-definition {
     methods=[getName setName]
@@ -129,7 +136,7 @@ property-instruction ::= PROPERTY IDENTIFIER {PERIOD IDENTIFIER}* EQUALS (string
 
 variable ::= [STATIC] VAR variable-assignment [SEMICOLON]
 
-control-block ::= (control-block-with-condition | control-block-without-condition) CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE
+control-block ::= (control-block-with-condition | control-block-without-condition) CURLY_LBRACE {command-inner}* CURLY_RBRACE
 
 private control-block-with-condition ::= (IF | ELSE_IF | TASK | WHILE) ROUND_LBRACE control-block-inner* ROUND_RBRACE
 
@@ -141,4 +148,6 @@ comments ::= comment-block | LINE_COMMENT
 
 comment-block ::= BLOCK_COMMENT
 
-//TODO: for loops
+for-loop ::= FOR ROUND_LBRACE VAR IDENTIFIER COLON LIST strings ROUND_RBRACE CURLY_LBRACE {command-inner}* CURLY_RBRACE
+
+//TODO while-loop

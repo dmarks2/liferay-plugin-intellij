@@ -14,10 +14,16 @@ public interface PoshiControlBlock extends PsiElement {
   List<PoshiControlBlock> getControlBlockList();
 
   @NotNull
+  List<PoshiForLoop> getForLoopList();
+
+  @NotNull
   List<PoshiInvocation> getInvocationList();
 
   @NotNull
   List<PoshiPropertyInstruction> getPropertyInstructionList();
+
+  @NotNull
+  List<PoshiReturnStatement> getReturnStatementList();
 
   @NotNull
   List<PoshiStringQuotedDouble> getStringQuotedDoubleList();
