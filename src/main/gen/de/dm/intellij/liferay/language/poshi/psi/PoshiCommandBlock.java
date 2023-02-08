@@ -26,6 +26,9 @@ public interface PoshiCommandBlock extends PsiElement {
   List<PoshiPropertyInstruction> getPropertyInstructionList();
 
   @NotNull
+  List<PoshiReturnStatement> getReturnStatementList();
+
+  @NotNull
   List<PoshiVariable> getVariableList();
 
 }

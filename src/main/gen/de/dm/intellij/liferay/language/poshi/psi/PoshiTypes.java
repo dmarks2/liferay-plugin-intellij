@@ -20,6 +20,7 @@ public interface PoshiTypes {
   IElementType MACRO_DEFINITION = new PoshiElementType("MACRO_DEFINITION");
   IElementType METHOD_CALL = new PoshiElementType("METHOD_CALL");
   IElementType PROPERTY_INSTRUCTION = new PoshiElementType("PROPERTY_INSTRUCTION");
+  IElementType RETURN_STATEMENT = new PoshiElementType("RETURN_STATEMENT");
   IElementType STRING_QUOTED_DOUBLE = new PoshiElementType("STRING_QUOTED_DOUBLE");
   IElementType STRING_QUOTED_SINGLE = new PoshiElementType("STRING_QUOTED_SINGLE");
   IElementType STRING_QUOTED_SINGLE_MULTILINE = new PoshiElementType("STRING_QUOTED_SINGLE_MULTILINE");
@@ -99,6 +100,9 @@ public interface PoshiTypes {
       }
       else if (type == PROPERTY_INSTRUCTION) {
         return new PoshiPropertyInstructionImpl(node);
+      }
+      else if (type == RETURN_STATEMENT) {
+        return new PoshiReturnStatementImpl(node);
       }
       else if (type == STRING_QUOTED_DOUBLE) {
         return new PoshiStringQuotedDoubleImpl(node);

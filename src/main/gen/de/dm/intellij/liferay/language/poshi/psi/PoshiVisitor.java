@@ -58,6 +58,10 @@ public class PoshiVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitReturnStatement(@NotNull PoshiReturnStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitStringQuotedDouble(@NotNull PoshiStringQuotedDouble o) {
     visitPsiElement(o);
   }

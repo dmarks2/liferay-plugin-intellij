@@ -81,7 +81,7 @@ definition-block ::= [annotation*] DEFINITION [CURLY_LBRACE {structure-block | c
 
 structure-block ::= (SET_UP | TEAR_DOWN) [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE]
 
-command-block ::= [annotation*] definition-base [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE]
+command-block ::= [annotation*] definition-base [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments | return-statement}* CURLY_RBRACE]
 
 definition-base ::= function-definition | macro-definition | test-definition {
     methods=[getName setName]
@@ -108,6 +108,8 @@ variable-assignment ::= IDENTIFIER EQUALS variable-assignment-inner {ARITHMETIC_
 }
 
 private variable-assignment-inner ::= (strings | invocation | NUMERIC_CONSTANT)
+
+return-statement ::= RETURN {strings}* [SEMICOLON]
 
 private strings ::= string-quoted-double | string-quoted-single-multiline | string-quoted-single
 

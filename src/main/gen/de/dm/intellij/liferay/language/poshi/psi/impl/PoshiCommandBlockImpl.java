@@ -65,6 +65,12 @@ public class PoshiCommandBlockImpl extends ASTWrapperPsiElement implements Poshi
 
   @Override
   @NotNull
+  public List<PoshiReturnStatement> getReturnStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiReturnStatement.class);
+  }
+
+  @Override
+  @NotNull
   public List<PoshiVariable> getVariableList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariable.class);
   }

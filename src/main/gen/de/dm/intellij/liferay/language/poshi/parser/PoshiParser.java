@@ -71,7 +71,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation*] definition-base [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE]
+  // [annotation*] definition-base [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments | return-statement}* CURLY_RBRACE]
   public static boolean command_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "command_block")) return false;
     boolean r;
@@ -101,14 +101,14 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE]
+  // [CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments | return-statement}* CURLY_RBRACE]
   private static boolean command_block_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "command_block_2")) return false;
     command_block_2_0(b, l + 1);
     return true;
   }
 
-  // CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments}* CURLY_RBRACE
+  // CURLY_LBRACE {invocation | property-instruction | variable | control-block | comments | return-statement}* CURLY_RBRACE
   private static boolean command_block_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "command_block_2_0")) return false;
     boolean r;
@@ -120,7 +120,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // {invocation | property-instruction | variable | control-block | comments}*
+  // {invocation | property-instruction | variable | control-block | comments | return-statement}*
   private static boolean command_block_2_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "command_block_2_0_1")) return false;
     while (true) {
@@ -131,7 +131,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // invocation | property-instruction | variable | control-block | comments
+  // invocation | property-instruction | variable | control-block | comments | return-statement
   private static boolean command_block_2_0_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "command_block_2_0_1_0")) return false;
     boolean r;
@@ -140,6 +140,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     if (!r) r = variable(b, l + 1);
     if (!r) r = control_block(b, l + 1);
     if (!r) r = comments(b, l + 1);
+    if (!r) r = return_statement(b, l + 1);
     return r;
   }
 
@@ -597,6 +598,48 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   // [SEMICOLON]
   private static boolean property_instruction_5(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property_instruction_5")) return false;
+    consumeToken(b, SEMICOLON);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // RETURN {strings}* [SEMICOLON]
+  public static boolean return_statement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "return_statement")) return false;
+    if (!nextTokenIs(b, RETURN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, RETURN);
+    r = r && return_statement_1(b, l + 1);
+    r = r && return_statement_2(b, l + 1);
+    exit_section_(b, m, RETURN_STATEMENT, r);
+    return r;
+  }
+
+  // {strings}*
+  private static boolean return_statement_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "return_statement_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!return_statement_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "return_statement_1", c)) break;
+    }
+    return true;
+  }
+
+  // {strings}
+  private static boolean return_statement_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "return_statement_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = strings(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [SEMICOLON]
+  private static boolean return_statement_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "return_statement_2")) return false;
     consumeToken(b, SEMICOLON);
     return true;
   }
