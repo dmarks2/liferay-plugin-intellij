@@ -61,7 +61,7 @@
            ARITHMETIC_OPERATOR = "regexp:(\-|\+|\*/)"
            NUMERIC_CONSTANT = "regexp:[0-9]+"
 
-           COMPARISION_OPERATOR = "regexp:(\!|\!=|==)"
+           COMPARISION_OPERATOR = "regexp:(\!=|==|\!)"
 
            TESTING_WHITESPACE = "regexp:[ \n\t\r\f]+"
    ]
