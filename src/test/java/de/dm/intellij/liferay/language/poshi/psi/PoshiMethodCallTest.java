@@ -256,4 +256,94 @@ public class PoshiMethodCallTest extends BasePlatformTestCase {
 
         assertTrue("selenium.goBack() should be resolvable", resolved);
     }
+
+    public void testPoshiUtilsReference() {
+        myFixture.configureByFiles("testcases/PoshiUtilsReference.testcase");
+
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+
+        boolean resolved = false;
+
+        for (PsiReference psiReference : element.getReferences()) {
+            if (psiReference instanceof PoshiUtilsReference) {
+                PoshiUtilsReference poshiUtilsReference = (PoshiUtilsReference) psiReference;
+
+                PsiElement psiElement = poshiUtilsReference.resolve();
+
+                assertNotNull(psiElement);
+
+                resolved = true;
+            }
+        }
+
+        assertTrue("PropsUtil should be resolvable", resolved);
+    }
+
+    public void testPoshiUtilsCompletion() {
+        myFixture.configureByFiles("testcases/PoshiUtilsCompletion.testcase");
+
+        myFixture.complete(CompletionType.BASIC, 1);
+
+        List<String> strings = myFixture.getLookupElementStrings();
+
+        assertTrue(strings.contains("PropsUtil"));
+    }
+
+    public void testPoshiUtilsMethodReference() {
+        myFixture.configureByFiles("testcases/PoshiUtilsMethodReference.testcase");
+
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+
+        boolean resolved = false;
+
+        for (PsiReference psiReference : element.getReferences()) {
+            if (psiReference instanceof PoshiUtilsMethodReference) {
+                PoshiUtilsMethodReference poshiUtilsMethodReference = (PoshiUtilsMethodReference) psiReference;
+
+                PsiElement psiElement = poshiUtilsMethodReference.resolve();
+
+                assertNotNull(psiElement);
+
+                resolved = true;
+            }
+        }
+
+        assertTrue("PropsUtil.get() should be resolvable", resolved);
+    }
+
+    public void testPoshiUtilsMethodReferenceOther() {
+        myFixture.configureByFiles("testcases/PoshiUtilsMethodReferenceOther.testcase");
+
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+
+        boolean resolved = false;
+
+        for (PsiReference psiReference : element.getReferences()) {
+            if (psiReference instanceof PoshiUtilsMethodReference) {
+                PoshiUtilsMethodReference poshiUtilsMethodReference = (PoshiUtilsMethodReference) psiReference;
+
+                PsiElement psiElement = poshiUtilsMethodReference.resolve();
+
+                if (psiElement != null) {
+                    resolved = true;
+
+                    break;
+                }
+            }
+        }
+
+        assertFalse("PropsUtil.getBodyText() should not be resolvable, because it is no method of PropsUtil", resolved);
+    }
+
+    public void testPoshiUtilsMethodCompletion() {
+        myFixture.configureByFiles("testcases/PoshiUtilsMethodCompletion.testcase");
+
+        myFixture.complete(CompletionType.BASIC, 1);
+
+        List<String> strings = myFixture.getLookupElementStrings();
+
+        assertTrue(strings.contains("get"));
+        assertTrue(strings.contains("getEnvironmentVariable"));
+        assertFalse(strings.contains("getBodyText"));
+    }
 }

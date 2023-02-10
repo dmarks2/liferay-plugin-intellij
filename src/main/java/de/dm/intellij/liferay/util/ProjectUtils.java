@@ -197,8 +197,8 @@ public class ProjectUtils {
                 PsiModifierList modifierList = psiField.getModifierList();
                 if (modifierList != null) {
                     if (
-                        modifierList.hasModifierProperty(PsiModifier.PUBLIC) &&
-                            modifierList.hasModifierProperty(PsiModifier.STATIC)
+                            modifierList.hasModifierProperty(PsiModifier.PUBLIC) &&
+                                    modifierList.hasModifierProperty(PsiModifier.STATIC)
                     ) {
                         result.add(psiField);
                     }
@@ -269,8 +269,8 @@ public class ProjectUtils {
                     String qualifiedName = psiImportStatement.getQualifiedName();
                     if (qualifiedName != null) {
                         if (
-                            (className.equals(qualifiedName)) ||
-                            (className.equals(StringUtil.getShortName(qualifiedName)))
+                                (className.equals(qualifiedName)) ||
+                                        (className.equals(StringUtil.getShortName(qualifiedName)))
                         ) {
                             return qualifiedName;
                         }

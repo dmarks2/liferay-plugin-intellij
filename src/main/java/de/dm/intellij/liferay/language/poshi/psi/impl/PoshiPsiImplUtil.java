@@ -13,10 +13,10 @@ import de.dm.intellij.liferay.language.poshi.psi.PoshiMethodCall;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiMethodCallReferenceSet;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiPathLocatorReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiPathReference;
-import de.dm.intellij.liferay.language.poshi.psi.PoshiSeleniumReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiSeleniumReferenceSet;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiStringQuotedDouble;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiTypes;
+import de.dm.intellij.liferay.language.poshi.psi.PoshiUtilsReferenceSet;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiVariableAssignment;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiVariableReference;
 import org.jetbrains.annotations.NotNull;
@@ -115,6 +115,8 @@ public class PoshiPsiImplUtil {
         List<PsiReference> references = new ArrayList<>(List.of((new PoshiMethodCallReferenceSet(poshiMethodCall)).getAllReferences()));
 
         references.addAll(List.of((new PoshiSeleniumReferenceSet(poshiMethodCall)).getAllReferences()));
+
+        references.addAll(List.of((new PoshiUtilsReferenceSet(poshiMethodCall)).getAllReferences()));
 
         return references.toArray(new PsiReference[0]);
     }

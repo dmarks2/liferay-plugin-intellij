@@ -1,0 +1,7 @@
+definition {
+
+    setUp {
+        var liferayHome = Props<caret>Util.get("liferay.home.dir.name");
+    }
+
+}

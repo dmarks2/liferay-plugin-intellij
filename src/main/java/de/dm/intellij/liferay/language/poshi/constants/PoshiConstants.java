@@ -22,4 +22,24 @@ public class PoshiConstants {
     public static final String SELENIUM_KEYWORD = "selenium";
 
     public static final String LIFERAY_SELENIUM_FILE_PATH = "/com/liferay/poshi/core/selenium/LiferaySelenium.java";
+
+    public static final String POSHI_UTILS_PATH = "/com/liferay/poshi/core/util";
+
+    public static final String[] POSHI_UTILS_CLASSES = new String[] {
+            "CharPool.java",
+            "Dom4JUtil.java",
+            "ExternalMethod.java",
+            "FileUtil.java",
+            "GetterUtil.java",
+            "ListUtil.java",
+            "MathUtil.java",
+            "NaturalOrderStringComparator.java",
+            "OSDetector.java",
+            "PropsUtil.java",
+            "PropsValues.java",
+            "RegexUtil.java",
+            "StringPool.java",
+            "StringUtil.java",
+            "Validator.java"
+    };
 }
