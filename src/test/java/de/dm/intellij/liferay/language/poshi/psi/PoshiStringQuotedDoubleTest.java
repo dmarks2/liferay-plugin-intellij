@@ -30,7 +30,9 @@ public class PoshiStringQuotedDoubleTest extends BasePlatformTestCase {
 
         List<String> strings = myFixture.getLookupElementStrings();
 
-        assertTrue(strings.contains("myVar"));
+        assertTrue("myVar should be found, is declared at root level.", strings.contains("myVar"));
+        assertTrue("myInsideVar should be found, is declared on method level.", strings.contains("myVarInside"));
+        assertFalse("myOtherVar should not be found, because it is declared after the current instruction.", strings.contains("myOtherVar"));
     }
 
     public void testPathClassReference() {

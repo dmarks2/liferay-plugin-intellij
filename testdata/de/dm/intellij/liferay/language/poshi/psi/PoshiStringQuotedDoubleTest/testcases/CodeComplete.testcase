@@ -3,7 +3,11 @@ definition {
     var myVar = "http://localhost:8080";
 
     setUp {
+        var myVarInside = "bar";
+
         Default.Open(locator1 = "${<caret>}");
+
+        var myOtherVar = "foo";
     }
 
 }

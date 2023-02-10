@@ -4,13 +4,12 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReferenceBase;
-import com.intellij.psi.util.PsiTreeUtil;
 import de.dm.intellij.liferay.util.Icons;
+import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class PoshiVariableReference extends PsiReferenceBase<PsiElement> {
@@ -25,9 +24,7 @@ public class PoshiVariableReference extends PsiReferenceBase<PsiElement> {
 
     @Override
     public @Nullable PsiElement resolve() {
-        Collection<PoshiVariable> variables = PsiTreeUtil.findChildrenOfType(getElement().getContainingFile(), PoshiVariable.class);
-
-        //TODO only previous siblings or up the hierarchy...
+        List<PoshiVariable> variables = ProjectUtils.getPreviousSiblingsOrParentOfType(getElement(), PoshiVariable.class);
 
         return variables.stream().filter(variable -> (this.variableName.equals(variable.getVariableAssignment().getName()))).findFirst().orElse(null);
     }
@@ -36,7 +33,7 @@ public class PoshiVariableReference extends PsiReferenceBase<PsiElement> {
     public Object @NotNull [] getVariants() {
         List<Object> result = new ArrayList<Object>();
 
-        Collection<PoshiVariable> variables = PsiTreeUtil.findChildrenOfType(getElement().getContainingFile(), PoshiVariable.class);
+        List<PoshiVariable> variables = ProjectUtils.getPreviousSiblingsOrParentOfType(getElement(), PoshiVariable.class);
 
         variables.forEach(variable -> result.add(LookupElementBuilder.create(variable.getVariableAssignment().getName()).withPsiElement(variable).withIcon(Icons.LIFERAY_ICON)));
 
