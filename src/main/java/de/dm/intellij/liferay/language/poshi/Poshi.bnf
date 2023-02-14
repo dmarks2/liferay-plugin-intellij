@@ -37,6 +37,9 @@
            FOR = "for"
            LIST = "list"
 
+           DOUBLE_AMPERSAND = "&&"
+           DOUBLE_BAR = "||"
+
            CURLY_LBRACE = "{"
            CURLY_RBRACE = "}"
            ROUND_LBRACE = "("
@@ -142,7 +145,7 @@ private control-block-with-condition ::= (IF | ELSE_IF | TASK | WHILE) ROUND_LBR
 
 private control-block-without-condition ::= (ELSE)
 
-private control-block-inner ::= invocation | string-quoted-double | variable-assignment | COMPARISION_OPERATOR | ROUND_LBRACE control-block-inner* ROUND_RBRACE
+private control-block-inner ::= invocation | string-quoted-double | variable-assignment | COMPARISION_OPERATOR | ROUND_LBRACE control-block-inner* ROUND_RBRACE | (DOUBLE_AMPERSAND | DOUBLE_BAR) control-block-inner
 
 comments ::= comment-block | LINE_COMMENT
 
@@ -151,3 +154,4 @@ comment-block ::= BLOCK_COMMENT
 for-loop ::= FOR ROUND_LBRACE VAR IDENTIFIER COLON LIST strings ROUND_RBRACE CURLY_LBRACE {command-inner}* CURLY_RBRACE
 
 //TODO while-loop
+//TODO variable references ${var} in code

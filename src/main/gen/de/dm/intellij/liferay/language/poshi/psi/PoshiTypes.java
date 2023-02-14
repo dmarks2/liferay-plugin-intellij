@@ -39,6 +39,8 @@ public interface PoshiTypes {
   IElementType CURLY_LBRACE = new PoshiTokenType("{");
   IElementType CURLY_RBRACE = new PoshiTokenType("}");
   IElementType DEFINITION = new PoshiTokenType("definition");
+  IElementType DOUBLE_AMPERSAND = new PoshiTokenType("&&");
+  IElementType DOUBLE_BAR = new PoshiTokenType("||");
   IElementType DOUBLE_QUOTED_STRING = new PoshiTokenType("DOUBLE_QUOTED_STRING");
   IElementType ELSE = new PoshiTokenType("else");
   IElementType ELSE_IF = new PoshiTokenType("else if");

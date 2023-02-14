@@ -58,6 +58,8 @@ TESTING_WHITESPACE=[ \n\t\r\f]+
   "return"                       { return RETURN; }
   "for"                          { return FOR; }
   "list"                         { return LIST; }
+  "&&"                           { return DOUBLE_AMPERSAND; }
+  "||"                           { return DOUBLE_BAR; }
   "{"                            { return CURLY_LBRACE; }
   "}"                            { return CURLY_RBRACE; }
   "("                            { return ROUND_LBRACE; }

@@ -221,7 +221,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // invocation | string-quoted-double | variable-assignment | COMPARISION_OPERATOR | ROUND_LBRACE control-block-inner* ROUND_RBRACE
+  // invocation | string-quoted-double | variable-assignment | COMPARISION_OPERATOR | ROUND_LBRACE control-block-inner* ROUND_RBRACE | (DOUBLE_AMPERSAND | DOUBLE_BAR) control-block-inner
   static boolean control_block_inner(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "control_block_inner")) return false;
     boolean r;
@@ -231,6 +231,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     if (!r) r = variable_assignment(b, l + 1);
     if (!r) r = consumeToken(b, COMPARISION_OPERATOR);
     if (!r) r = control_block_inner_4(b, l + 1);
+    if (!r) r = control_block_inner_5(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -256,6 +257,26 @@ public class PoshiParser implements PsiParser, LightPsiParser {
       if (!empty_element_parsed_guard_(b, "control_block_inner_4_1", c)) break;
     }
     return true;
+  }
+
+  // (DOUBLE_AMPERSAND | DOUBLE_BAR) control-block-inner
+  private static boolean control_block_inner_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "control_block_inner_5")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = control_block_inner_5_0(b, l + 1);
+    r = r && control_block_inner(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // DOUBLE_AMPERSAND | DOUBLE_BAR
+  private static boolean control_block_inner_5_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "control_block_inner_5_0")) return false;
+    boolean r;
+    r = consumeToken(b, DOUBLE_AMPERSAND);
+    if (!r) r = consumeToken(b, DOUBLE_BAR);
+    return r;
   }
 
   /* ********************************************************** */
