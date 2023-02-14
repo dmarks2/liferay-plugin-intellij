@@ -57,7 +57,7 @@
 
            DOUBLE_QUOTED_STRING = "regexp:\"([^\\\"\r\n]|\\[^\r\n])*\"?"
 
-           SINGLE_QUOTED_MULTILINE = "regexp:'''(.|\n)*'''"
+           SINGLE_QUOTED_MULTILINE = "regexp:'''[\"\$\(\{\)\}\[\]\:\,\.\-\_\/\\\@\;\?\s\w\d]*'''"
 
            SINGLE_QUOTED_STRING = "regexp:'.*'"
 
