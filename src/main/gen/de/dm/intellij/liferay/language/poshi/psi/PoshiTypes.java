@@ -67,7 +67,6 @@ public interface PoshiTypes {
   IElementType STATIC = new PoshiTokenType("static");
   IElementType TASK = new PoshiTokenType("task");
   IElementType TEAR_DOWN = new PoshiTokenType("tearDown");
-  IElementType TEST = new PoshiTokenType("test");
   IElementType VAR = new PoshiTokenType("var");
   IElementType WHILE = new PoshiTokenType("while");
 

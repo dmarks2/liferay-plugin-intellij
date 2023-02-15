@@ -24,7 +24,6 @@
            TEAR_DOWN = "tearDown"
            FUNCTION = "function"
            MACRO = "macro"
-           TEST = "test"
            PROPERTY = "property"
            STATIC = "static"
            VAR = "var"
@@ -101,7 +100,7 @@ function-definition ::= FUNCTION IDENTIFIER
 
 macro-definition ::= MACRO IDENTIFIER
 
-test-definition ::= TEST IDENTIFIER
+test-definition ::= 'TEST' IDENTIFIER
 
 method-call ::= IDENTIFIER {PERIOD IDENTIFIER}* {
     methods=[getReferences]

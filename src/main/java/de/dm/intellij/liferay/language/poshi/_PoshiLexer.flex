@@ -28,7 +28,7 @@ WHITE_SPACE=\s+
 LINE_COMMENT="//".*
 BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
 DOUBLE_QUOTED_STRING=\"([^\\\"\r\n]|\\[^\r\n])*\"?
-SINGLE_QUOTED_MULTILINE='''[\"\$\(\{\)\}\[\]\:\,\.\-\_\/\\\@\;\s\w\d]*'''
+SINGLE_QUOTED_MULTILINE='''[\"\$\(\{\)\}\[\]\:\,\.\-\_\/\\\@\;\?\s\w\d]*'''
 SINGLE_QUOTED_STRING='.*'
 ANNOTATION_NAME=(@[\s]*[a-z0-9-]+)
 IDENTIFIER=([A-z][\w-]*)+
@@ -46,7 +46,6 @@ TESTING_WHITESPACE=[ \n\t\r\f]+
   "tearDown"                     { return TEAR_DOWN; }
   "function"                     { return FUNCTION; }
   "macro"                        { return MACRO; }
-  "test"                         { return TEST; }
   "property"                     { return PROPERTY; }
   "static"                       { return STATIC; }
   "var"                          { return VAR; }

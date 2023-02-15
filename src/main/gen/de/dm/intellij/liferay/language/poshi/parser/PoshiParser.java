@@ -866,14 +866,14 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TEST IDENTIFIER
+  // 'TEST' IDENTIFIER
   public static boolean test_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "test_definition")) return false;
-    if (!nextTokenIs(b, TEST)) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, TEST, IDENTIFIER);
-    exit_section_(b, m, TEST_DEFINITION, r);
+    Marker m = enter_section_(b, l, _NONE_, TEST_DEFINITION, "<test definition>");
+    r = consumeToken(b, "TEST");
+    r = r && consumeToken(b, IDENTIFIER);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
