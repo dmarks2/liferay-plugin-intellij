@@ -53,6 +53,12 @@ public class PoshiVariableAssignmentImpl extends ASTWrapperPsiElement implements
 
   @Override
   @NotNull
+  public List<PoshiVariableRef> getVariableRefList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariableRef.class);
+  }
+
+  @Override
+  @NotNull
   public PsiElement getIdentifier() {
     return findNotNullChildByType(IDENTIFIER);
   }

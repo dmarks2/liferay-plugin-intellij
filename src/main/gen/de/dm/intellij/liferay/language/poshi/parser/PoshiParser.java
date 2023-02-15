@@ -511,43 +511,44 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // variable-assignment | IDENTIFIER | strings {ARITHMETIC_OPERATOR invocation-inner}*
+  // variable-assignment | IDENTIFIER | strings | variable-ref {ARITHMETIC_OPERATOR invocation-inner}*
   static boolean invocation_inner(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "invocation_inner")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = variable_assignment(b, l + 1);
     if (!r) r = consumeToken(b, IDENTIFIER);
-    if (!r) r = invocation_inner_2(b, l + 1);
+    if (!r) r = strings(b, l + 1);
+    if (!r) r = invocation_inner_3(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // strings {ARITHMETIC_OPERATOR invocation-inner}*
-  private static boolean invocation_inner_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "invocation_inner_2")) return false;
+  // variable-ref {ARITHMETIC_OPERATOR invocation-inner}*
+  private static boolean invocation_inner_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "invocation_inner_3")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = strings(b, l + 1);
-    r = r && invocation_inner_2_1(b, l + 1);
+    r = variable_ref(b, l + 1);
+    r = r && invocation_inner_3_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // {ARITHMETIC_OPERATOR invocation-inner}*
-  private static boolean invocation_inner_2_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "invocation_inner_2_1")) return false;
+  private static boolean invocation_inner_3_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "invocation_inner_3_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!invocation_inner_2_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "invocation_inner_2_1", c)) break;
+      if (!invocation_inner_3_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "invocation_inner_3_1", c)) break;
     }
     return true;
   }
 
   // ARITHMETIC_OPERATOR invocation-inner
-  private static boolean invocation_inner_2_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "invocation_inner_2_1_0")) return false;
+  private static boolean invocation_inner_3_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "invocation_inner_3_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, ARITHMETIC_OPERATOR);
@@ -942,13 +943,26 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // strings | invocation | NUMERIC_CONSTANT
+  // strings | invocation | NUMERIC_CONSTANT | variable-ref
   static boolean variable_assignment_inner(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable_assignment_inner")) return false;
     boolean r;
     r = strings(b, l + 1);
     if (!r) r = invocation(b, l + 1);
     if (!r) r = consumeToken(b, NUMERIC_CONSTANT);
+    if (!r) r = variable_ref(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // DOLLAR CURLY_LBRACE IDENTIFIER CURLY_RBRACE
+  public static boolean variable_ref(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variable_ref")) return false;
+    if (!nextTokenIs(b, DOLLAR)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, DOLLAR, CURLY_LBRACE, IDENTIFIER, CURLY_RBRACE);
+    exit_section_(b, m, VARIABLE_REF, r);
     return r;
   }
 

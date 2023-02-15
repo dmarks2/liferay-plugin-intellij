@@ -50,6 +50,7 @@
            EQUALS = "="
            COLON = ":"
            SEMICOLON = ";"
+           DOLLAR = "$"
 
            LINE_COMMENT = "regexp://.*"
            BLOCK_COMMENT = "regexp:/\*([^*]|\*+[^*/])*(\*+/)?"
@@ -110,13 +111,17 @@ invocation ::= method-call [ROUND_LBRACE [invocation-inner-list] ROUND_RBRACE] [
 
 private invocation-inner-list ::= invocation-inner {COMMA invocation-inner}*
 
-private invocation-inner ::= variable-assignment | IDENTIFIER | strings {ARITHMETIC_OPERATOR invocation-inner}*
+private invocation-inner ::= variable-assignment | IDENTIFIER | strings | variable-ref {ARITHMETIC_OPERATOR invocation-inner}*
 
 variable-assignment ::= IDENTIFIER EQUALS variable-assignment-inner {ARITHMETIC_OPERATOR variable-assignment-inner}* {
     methods=[getName setName]
 }
 
-private variable-assignment-inner ::= (strings | invocation | NUMERIC_CONSTANT)
+private variable-assignment-inner ::= (strings | invocation | NUMERIC_CONSTANT | variable-ref)
+
+variable-ref ::= DOLLAR CURLY_LBRACE IDENTIFIER CURLY_RBRACE {
+    methods=[getReferences]
+}
 
 return-statement ::= RETURN {strings}* [SEMICOLON]
 
@@ -151,5 +156,3 @@ comments ::= comment-block | LINE_COMMENT
 comment-block ::= BLOCK_COMMENT
 
 for-loop ::= FOR ROUND_LBRACE VAR IDENTIFIER COLON LIST strings ROUND_RBRACE CURLY_LBRACE {command-inner}* CURLY_RBRACE
-
-//TODO variable references ${var} in code

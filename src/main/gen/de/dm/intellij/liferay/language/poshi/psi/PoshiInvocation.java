@@ -22,4 +22,7 @@ public interface PoshiInvocation extends PsiElement {
   @NotNull
   List<PoshiVariableAssignment> getVariableAssignmentList();
 
+  @NotNull
+  List<PoshiVariableRef> getVariableRefList();
+
 }

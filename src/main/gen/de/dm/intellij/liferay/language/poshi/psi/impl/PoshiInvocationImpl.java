@@ -57,4 +57,10 @@ public class PoshiInvocationImpl extends ASTWrapperPsiElement implements PoshiIn
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariableAssignment.class);
   }
 
+  @Override
+  @NotNull
+  public List<PoshiVariableRef> getVariableRefList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariableRef.class);
+  }
+
 }

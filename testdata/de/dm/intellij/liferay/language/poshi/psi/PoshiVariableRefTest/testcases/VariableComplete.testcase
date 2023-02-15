@@ -1,0 +1,13 @@
+definition {
+
+    var myVar = "http://localhost:8080";
+
+    setUp {
+        var myVarInside = "bar";
+
+        var foo = ${m<caret>}
+
+        var myOtherVar = "foo";
+    }
+
+}

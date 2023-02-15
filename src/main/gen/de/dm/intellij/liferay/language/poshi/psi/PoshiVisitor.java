@@ -95,6 +95,10 @@ public class PoshiVisitor extends PsiElementVisitor {
     visitPsiNamedElement(o);
   }
 
+  public void visitVariableRef(@NotNull PoshiVariableRef o) {
+    visitPsiElement(o);
+  }
+
   public void visitPsiNamedElement(@NotNull PsiNamedElement o) {
     visitElement(o);
   }

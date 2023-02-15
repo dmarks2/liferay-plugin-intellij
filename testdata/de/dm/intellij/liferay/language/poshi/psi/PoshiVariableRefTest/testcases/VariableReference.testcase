@@ -1,0 +1,9 @@
+definition {
+
+    var myVar = "http://localhost:8080";
+
+    setUp {
+         var foo = ${myV<caret>ar}
+    }
+
+}

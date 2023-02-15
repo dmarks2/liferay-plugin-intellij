@@ -29,6 +29,7 @@ public interface PoshiTypes {
   IElementType TEST_DEFINITION = new PoshiElementType("TEST_DEFINITION");
   IElementType VARIABLE = new PoshiElementType("VARIABLE");
   IElementType VARIABLE_ASSIGNMENT = new PoshiElementType("VARIABLE_ASSIGNMENT");
+  IElementType VARIABLE_REF = new PoshiElementType("VARIABLE_REF");
 
   IElementType ANNOTATION_NAME = new PoshiTokenType("ANNOTATION_NAME");
   IElementType ARITHMETIC_OPERATOR = new PoshiTokenType("ARITHMETIC_OPERATOR");
@@ -39,6 +40,7 @@ public interface PoshiTypes {
   IElementType CURLY_LBRACE = new PoshiTokenType("{");
   IElementType CURLY_RBRACE = new PoshiTokenType("}");
   IElementType DEFINITION = new PoshiTokenType("definition");
+  IElementType DOLLAR = new PoshiTokenType("$");
   IElementType DOUBLE_AMPERSAND = new PoshiTokenType("&&");
   IElementType DOUBLE_BAR = new PoshiTokenType("||");
   IElementType DOUBLE_QUOTED_STRING = new PoshiTokenType("DOUBLE_QUOTED_STRING");
@@ -132,6 +134,9 @@ public interface PoshiTypes {
       }
       else if (type == VARIABLE_ASSIGNMENT) {
         return new PoshiVariableAssignmentImpl(node);
+      }
+      else if (type == VARIABLE_REF) {
+        return new PoshiVariableRefImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

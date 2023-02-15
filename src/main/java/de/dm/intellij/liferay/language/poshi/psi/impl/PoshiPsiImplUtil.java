@@ -18,6 +18,7 @@ import de.dm.intellij.liferay.language.poshi.psi.PoshiStringQuotedDouble;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiTypes;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiUtilsReferenceSet;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiVariableAssignment;
+import de.dm.intellij.liferay.language.poshi.psi.PoshiVariableRef;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiVariableReference;
 import org.jetbrains.annotations.NotNull;
 
@@ -64,6 +65,20 @@ public class PoshiPsiImplUtil {
         }
 
         return poshiDefinition;
+    }
+
+    public static PsiReference @NotNull [] getReferences(PoshiVariableRef element) {
+        List<PsiReference> psiReferences = new ArrayList<>();
+
+        TextRange originalRange = element.getTextRange();
+
+        TextRange valueRange = TextRange.create(2, originalRange.getLength() - 1);
+
+        String valueString = valueRange.substring(element.getText());
+
+        psiReferences.add(new PoshiVariableReference(element, valueString, valueRange));
+
+        return psiReferences.toArray(new PsiReference[0]);
     }
 
     public static PsiReference @NotNull [] getReferences(PoshiStringQuotedDouble element) {

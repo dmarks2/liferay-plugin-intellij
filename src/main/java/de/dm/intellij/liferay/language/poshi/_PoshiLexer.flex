@@ -70,6 +70,7 @@ TESTING_WHITESPACE=[ \n\t\r\f]+
   "="                            { return EQUALS; }
   ":"                            { return COLON; }
   ";"                            { return SEMICOLON; }
+  "$"                            { return DOLLAR; }
 
   {LINE_COMMENT}                 { return LINE_COMMENT; }
   {BLOCK_COMMENT}                { return BLOCK_COMMENT; }
