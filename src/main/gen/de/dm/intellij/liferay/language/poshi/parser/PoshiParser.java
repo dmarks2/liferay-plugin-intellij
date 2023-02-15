@@ -647,7 +647,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // PROPERTY IDENTIFIER {PERIOD IDENTIFIER}* EQUALS (string-quoted-double) [SEMICOLON]
+  // PROPERTY IDENTIFIER {PERIOD IDENTIFIER}* EQUALS (string-quoted-double | string-quoted-single-multiline) [SEMICOLON]
   public static boolean property_instruction(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property_instruction")) return false;
     if (!nextTokenIs(b, PROPERTY)) return false;
@@ -683,13 +683,12 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (string-quoted-double)
+  // string-quoted-double | string-quoted-single-multiline
   private static boolean property_instruction_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property_instruction_4")) return false;
     boolean r;
-    Marker m = enter_section_(b);
     r = string_quoted_double(b, l + 1);
-    exit_section_(b, m, null, r);
+    if (!r) r = string_quoted_single_multiline(b, l + 1);
     return r;
   }
 

@@ -56,7 +56,7 @@
 
            DOUBLE_QUOTED_STRING = "regexp:\"([^\\\"\r\n]|\\[^\r\n])*\"?"
 
-           SINGLE_QUOTED_MULTILINE = "regexp:'''[\"\$\(\{\)\}\[\]\:\,\.\-\_\/\\\@\;\?\s\w\d]*'''"
+           SINGLE_QUOTED_MULTILINE = "regexp:'''[\"\$\(\{\)\}\[\]\:\,\.\-\_\/\\\@\;\?\<\>\=\s\w\d]*'''"
 
            SINGLE_QUOTED_STRING = "regexp:'.*'"
 
@@ -134,7 +134,7 @@ annotation ::= ANNOTATION_NAME [EQUALS string-quoted-double] {
     methods=[getName getValue]
 }
 
-property-instruction ::= PROPERTY IDENTIFIER {PERIOD IDENTIFIER}* EQUALS (string-quoted-double) [SEMICOLON]
+property-instruction ::= PROPERTY IDENTIFIER {PERIOD IDENTIFIER}* EQUALS (string-quoted-double | string-quoted-single-multiline) [SEMICOLON]
 
 variable ::= [STATIC] VAR variable-assignment [SEMICOLON]
 

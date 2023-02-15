@@ -28,9 +28,15 @@ public class PoshiPropertyInstructionImpl extends ASTWrapperPsiElement implement
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PoshiStringQuotedDouble getStringQuotedDouble() {
-    return findNotNullChildByClass(PoshiStringQuotedDouble.class);
+    return findChildByClass(PoshiStringQuotedDouble.class);
+  }
+
+  @Override
+  @Nullable
+  public PoshiStringQuotedSingleMultiline getStringQuotedSingleMultiline() {
+    return findChildByClass(PoshiStringQuotedSingleMultiline.class);
   }
 
 }

@@ -7,7 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PoshiPropertyInstruction extends PsiElement {
 
-  @NotNull
+  @Nullable
   PoshiStringQuotedDouble getStringQuotedDouble();
+
+  @Nullable
+  PoshiStringQuotedSingleMultiline getStringQuotedSingleMultiline();
 
 }
