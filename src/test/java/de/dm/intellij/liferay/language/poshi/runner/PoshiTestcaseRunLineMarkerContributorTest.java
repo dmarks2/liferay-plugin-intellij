@@ -13,7 +13,7 @@ public class PoshiTestcaseRunLineMarkerContributorTest extends BasePlatformTestC
     public void testPoshiTestcaseRunLineMarker() {
         myFixture.configureByFile("testcases/Liferay.testcase");
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
 
         assertNotNull(new PoshiTestcaseRunLineMarkerContributor().getInfo(element));
     }

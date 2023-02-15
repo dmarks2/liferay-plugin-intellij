@@ -7,6 +7,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import de.dm.intellij.liferay.language.poshi.constants.PoshiConstants;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiTestDefinition;
+import de.dm.intellij.liferay.language.poshi.psi.PoshiTypes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,8 +17,10 @@ public class PoshiTestcaseRunLineMarkerContributor extends RunLineMarkerContribu
         PsiFile psiFile = element.getContainingFile().getOriginalFile();
 
         if (psiFile.getName().endsWith(PoshiConstants.TESTCASE_EXTENSION)) {
-            if (element instanceof PoshiTestDefinition) {
-                return new RunLineMarkerContributor.Info(AllIcons.RunConfigurations.TestState.Run, ExecutorAction.getActions(1), RUN_TEST_TOOLTIP_PROVIDER);
+            if (PoshiTypes.IDENTIFIER.equals(element.getNode().getElementType())) {
+                if (element.getParent() instanceof PoshiTestDefinition) {
+                    return new RunLineMarkerContributor.Info(AllIcons.RunConfigurations.TestState.Run, ExecutorAction.getActions(1), RUN_TEST_TOOLTIP_PROVIDER);
+                }
             }
         }
 
