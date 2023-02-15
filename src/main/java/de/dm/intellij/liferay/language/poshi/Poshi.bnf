@@ -152,5 +152,4 @@ comment-block ::= BLOCK_COMMENT
 
 for-loop ::= FOR ROUND_LBRACE VAR IDENTIFIER COLON LIST strings ROUND_RBRACE CURLY_LBRACE {command-inner}* CURLY_RBRACE
 
-//TODO while-loop
 //TODO variable references ${var} in code

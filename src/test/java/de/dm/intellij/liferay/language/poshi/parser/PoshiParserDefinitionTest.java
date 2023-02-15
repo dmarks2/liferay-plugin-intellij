@@ -26,6 +26,16 @@ public class PoshiParserDefinitionTest extends BasePlatformTestCase {
         assertTrue("Liferay.testcases should show no syntax errors", highlightInfos.isEmpty());
     }
 
+    public void testPoshiScriptTestcaseFile() {
+        //see https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-core/src/test/resources/com/liferay/poshi/core/dependencies/elements/PoshiScript.testcase
+        myFixture.configureByFiles("testcases/PoshiScript.testcase");
+
+        List<HighlightInfo> highlightInfos = myFixture.doHighlighting();
+
+        assertTrue("Official PoshiScript.testcase file should be parseable without syntax errors.", highlightInfos.isEmpty());
+    }
+
+
     public void testValidPoshiFunctionFile() {
         myFixture.configureByFiles("functions/Sample.function");
 
