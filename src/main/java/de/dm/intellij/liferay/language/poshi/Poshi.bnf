@@ -135,7 +135,7 @@ string-quoted-single-multiline ::= SINGLE_QUOTED_MULTILINE
 
 string-quoted-single ::= SINGLE_QUOTED_STRING
 
-annotation ::= ANNOTATION_NAME [EQUALS string-quoted-double] {
+annotation ::= ANNOTATION_NAME [EQUALS (string-quoted-double | NUMERIC_CONSTANT)] {
     methods=[getName getValue]
 }
 

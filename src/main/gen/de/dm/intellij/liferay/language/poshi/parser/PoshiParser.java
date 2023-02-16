@@ -40,7 +40,7 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   };
 
   /* ********************************************************** */
-  // ANNOTATION_NAME [EQUALS string-quoted-double]
+  // ANNOTATION_NAME [EQUALS (string-quoted-double | NUMERIC_CONSTANT)]
   public static boolean annotation(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation")) return false;
     if (!nextTokenIs(b, ANNOTATION_NAME)) return false;
@@ -52,21 +52,30 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [EQUALS string-quoted-double]
+  // [EQUALS (string-quoted-double | NUMERIC_CONSTANT)]
   private static boolean annotation_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_1")) return false;
     annotation_1_0(b, l + 1);
     return true;
   }
 
-  // EQUALS string-quoted-double
+  // EQUALS (string-quoted-double | NUMERIC_CONSTANT)
   private static boolean annotation_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, EQUALS);
-    r = r && string_quoted_double(b, l + 1);
+    r = r && annotation_1_0_1(b, l + 1);
     exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // string-quoted-double | NUMERIC_CONSTANT
+  private static boolean annotation_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "annotation_1_0_1")) return false;
+    boolean r;
+    r = string_quoted_double(b, l + 1);
+    if (!r) r = consumeToken(b, NUMERIC_CONSTANT);
     return r;
   }
 

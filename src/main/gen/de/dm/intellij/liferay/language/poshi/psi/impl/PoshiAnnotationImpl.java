@@ -40,6 +40,12 @@ public class PoshiAnnotationImpl extends ASTWrapperPsiElement implements PoshiAn
   }
 
   @Override
+  @Nullable
+  public PsiElement getNumericConstant() {
+    return findChildByType(NUMERIC_CONSTANT);
+  }
+
+  @Override
   public String getName() {
     return PoshiPsiImplUtil.getName(this);
   }

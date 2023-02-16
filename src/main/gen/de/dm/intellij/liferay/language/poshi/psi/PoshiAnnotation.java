@@ -13,6 +13,9 @@ public interface PoshiAnnotation extends PsiElement {
   @NotNull
   PsiElement getAnnotationName();
 
+  @Nullable
+  PsiElement getNumericConstant();
+
   String getName();
 
   String getValue();

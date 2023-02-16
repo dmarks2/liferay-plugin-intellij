@@ -37,9 +37,7 @@ definition {
         PortalInstances.tearDownCP(testPortalInstance = PropsUtil.get("test.portal.instance"));
     }
 
-    //TODO annotations can have numeric values?
-    //@priority = 4
-
+    @priority = 4
     @description = "Ensure that a user can add multiple Blogs Entries."
     @simple-annotation
     test AddBlogsEntries {
@@ -80,8 +78,7 @@ definition {
         var portalInstanceIds = StringUtil.regexReplaceAll(${portalInstanceIds}, "[\[\]\"]", "");
     }
 
-    //TODO annotations can have numeric values?
-    //@priority = 5
+    @priority = 5
     test AddUser {
 
         // This is a comment
@@ -177,8 +174,7 @@ definition {
         }
     }
 
-    //TODO annotations can have numeric values?
-    //@priority = 5
+    @priority = 5
     @description = "Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages."
 
     test Smoke {
