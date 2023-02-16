@@ -424,18 +424,27 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // FOR ROUND_LBRACE VAR IDENTIFIER COLON LIST strings ROUND_RBRACE CURLY_LBRACE {command-inner}* CURLY_RBRACE
+  // FOR ROUND_LBRACE VAR IDENTIFIER COLON LIST (strings | variable-ref) ROUND_RBRACE CURLY_LBRACE {command-inner}* CURLY_RBRACE
   public static boolean for_loop(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "for_loop")) return false;
     if (!nextTokenIs(b, FOR)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, FOR, ROUND_LBRACE, VAR, IDENTIFIER, COLON, LIST);
-    r = r && strings(b, l + 1);
+    r = r && for_loop_6(b, l + 1);
     r = r && consumeTokens(b, 0, ROUND_RBRACE, CURLY_LBRACE);
     r = r && for_loop_9(b, l + 1);
     r = r && consumeToken(b, CURLY_RBRACE);
     exit_section_(b, m, FOR_LOOP, r);
+    return r;
+  }
+
+  // strings | variable-ref
+  private static boolean for_loop_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "for_loop_6")) return false;
+    boolean r;
+    r = strings(b, l + 1);
+    if (!r) r = variable_ref(b, l + 1);
     return r;
   }
 

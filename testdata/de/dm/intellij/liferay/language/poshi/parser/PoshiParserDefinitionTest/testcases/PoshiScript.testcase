@@ -91,8 +91,7 @@ definition {
 
         property portal.release = "false";
 
-        //TODO special Char escaping
-        //var specialCharacters = "\"\\"";
+        var specialCharacters = "\"\\";
         var userEmailAddress = "userea@liferay.com";
         var userFirstName = "userfn";
 
@@ -106,8 +105,7 @@ definition {
 
         echo("This is a message.");
 
-        //TODO variable reference as list variable
-        //for (var breadcrumbName : list ${breadcrumbListVisible}) {
+        for (var breadcrumbName : list ${breadcrumbListVisible}) {
             var key_breadcrumbName = ${breadcrumbName};
             var breadcrumbNameUppercase = StringUtil.upperCase(${breadcrumbName});
             var historyVersion = selenium.getText("Staging#HISTORY_VERSION");
@@ -116,12 +114,11 @@ definition {
             locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
             value1 = ${breadcrumbNameUppercase});
 
-            //TODO variable references as list variable
-                //for (var breadcrumbName : list ${breadcrumbListVisible}) {
-                AssertTextEquals(
-                                locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-                                value1 = ${breadcrumbNameUppercase});
-                //}
+            for (var breadcrumbName : list ${breadcrumbListVisible}) {
+            AssertTextEquals(
+                locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+                value1 = ${breadcrumbNameUppercase});
+            }
 
             AssertTextEquals(
                 locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
@@ -147,7 +144,7 @@ definition {
 
         // This is a comment
 
-        //}
+        }
 
         for (var breadcrumbName : list "Breadcrumb: 1, Breadcrumb: 2") {
             AssertTextEquals(

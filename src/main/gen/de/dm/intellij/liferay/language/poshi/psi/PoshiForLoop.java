@@ -37,6 +37,9 @@ public interface PoshiForLoop extends PsiElement {
   @NotNull
   List<PoshiVariable> getVariableList();
 
+  @Nullable
+  PoshiVariableRef getVariableRef();
+
   @NotNull
   PsiElement getIdentifier();
 

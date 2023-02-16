@@ -155,4 +155,4 @@ comments ::= comment-block | LINE_COMMENT
 
 comment-block ::= BLOCK_COMMENT
 
-for-loop ::= FOR ROUND_LBRACE VAR IDENTIFIER COLON LIST strings ROUND_RBRACE CURLY_LBRACE {command-inner}* CURLY_RBRACE
+for-loop ::= FOR ROUND_LBRACE VAR IDENTIFIER COLON LIST (strings | variable-ref) ROUND_RBRACE CURLY_LBRACE {command-inner}* CURLY_RBRACE

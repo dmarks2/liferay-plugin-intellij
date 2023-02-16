@@ -88,6 +88,12 @@ public class PoshiForLoopImpl extends ASTWrapperPsiElement implements PoshiForLo
   }
 
   @Override
+  @Nullable
+  public PoshiVariableRef getVariableRef() {
+    return findChildByClass(PoshiVariableRef.class);
+  }
+
+  @Override
   @NotNull
   public PsiElement getIdentifier() {
     return findNotNullChildByType(IDENTIFIER);
