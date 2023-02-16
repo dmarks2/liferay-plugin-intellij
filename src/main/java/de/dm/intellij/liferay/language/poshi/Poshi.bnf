@@ -149,7 +149,7 @@ private control-block-with-condition ::= (IF | ELSE_IF | TASK | WHILE) ROUND_LBR
 
 private control-block-without-condition ::= (ELSE)
 
-private control-block-inner ::= invocation | string-quoted-double | variable-assignment | COMPARISION_OPERATOR | ROUND_LBRACE control-block-inner* ROUND_RBRACE | (DOUBLE_AMPERSAND | DOUBLE_BAR) control-block-inner
+private control-block-inner ::= invocation | string-quoted-double | variable-assignment | variable-ref | COMPARISION_OPERATOR | ROUND_LBRACE control-block-inner* ROUND_RBRACE | (DOUBLE_AMPERSAND | DOUBLE_BAR) control-block-inner
 
 comments ::= comment-block | LINE_COMMENT
 

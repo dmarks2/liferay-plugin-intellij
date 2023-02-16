@@ -204,10 +204,9 @@ definition {
             }
         }
 
-        //TODO variable references in if statements
-        //if (${check} == "true") {
+        if (${check} == "true") {
              Alert.viewSuccessMessage();
-        //}
+        }
 
         if (IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) {
             Alert.viewSuccessMessage();
@@ -220,23 +219,20 @@ definition {
             fail("Element not present");
         }
 
-        //TODO variable references in if statements
-        //if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) && (${check} == "true") && isSet(duplicate)) {
+        if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) && (${check} == "true") && isSet(duplicate)) {
 			Alert.viewSuccessMessage();
-		//}
+		}
 
-        //TODO variable references in if statements
-		//if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) || (${check} == "true") || isSet(duplicate)) {
+ 		if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) || (${check} == "true") || isSet(duplicate)) {
 			Alert.viewSuccessMessage();
-		//}
+		}
 
         if (IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) {
             Alert.viewSuccessMessage();
         }
-        //TODO variable references in if statements
-        //else if (${check} == "true") {
+        else if (${check} == "true") {
 			Alert.viewErrorMessage();
-		//}
+		}
 
         if (contains("testing", "test")) {
             echo("String contains substring");

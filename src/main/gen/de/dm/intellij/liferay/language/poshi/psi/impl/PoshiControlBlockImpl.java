@@ -81,4 +81,10 @@ public class PoshiControlBlockImpl extends ASTWrapperPsiElement implements Poshi
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariableAssignment.class);
   }
 
+  @Override
+  @NotNull
+  public List<PoshiVariableRef> getVariableRefList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PoshiVariableRef.class);
+  }
+
 }
