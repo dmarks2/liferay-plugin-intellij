@@ -7,6 +7,7 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
+import com.intellij.psi.tree.TokenSet;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiAnnotation;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiDefinitionBase;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiMethodCall;
@@ -15,6 +16,7 @@ import de.dm.intellij.liferay.language.poshi.psi.PoshiPathLocatorReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiPathReference;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiSeleniumReferenceSet;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiStringQuotedDouble;
+import de.dm.intellij.liferay.language.poshi.psi.PoshiTestDefinition;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiTypes;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiUtilsReferenceSet;
 import de.dm.intellij.liferay.language.poshi.psi.PoshiVariableAssignment;
@@ -48,10 +50,24 @@ public class PoshiPsiImplUtil {
     }
 
     public static String getName(PoshiDefinitionBase poshiDefinition) {
+        if (poshiDefinition instanceof PoshiTestDefinition) {
+            return getName((PoshiTestDefinition) poshiDefinition);
+        }
+
         ASTNode identifierNode = poshiDefinition.getNode().findChildByType(PoshiTypes.IDENTIFIER);
 
         if (identifierNode != null) {
             return identifierNode.getText();
+        }
+
+        return null;
+    }
+
+    public static String getName(PoshiTestDefinition poshiTestDefinition) {
+        ASTNode @NotNull [] identifierNodes = poshiTestDefinition.getNode().getChildren(TokenSet.create(PoshiTypes.IDENTIFIER));
+
+        if (identifierNodes.length > 1) {
+            return identifierNodes[1].getText();
         }
 
         return null;

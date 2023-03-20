@@ -30,7 +30,7 @@ public class PoshiTestcaseConfigurationProducer extends RunConfigurationProducer
             PsiFile psiFile = (psiElement.getContainingFile());
 
             if (psiFile.getName().endsWith(PoshiConstants.TESTCASE_EXTENSION)) {
-                if (psiElement instanceof PoshiTestDefinition poshiTestDefinition) {
+                if (psiElement.getParent() instanceof PoshiTestDefinition poshiTestDefinition) {
                     String testName = poshiTestDefinition.getName();
 
                     VirtualFile virtualFile = psiFile.getVirtualFile();
@@ -61,7 +61,7 @@ public class PoshiTestcaseConfigurationProducer extends RunConfigurationProducer
             VirtualFile virtualFile = psiFile.getVirtualFile();
 
             if (virtualFile != null) {
-                if (psiElement instanceof PoshiTestDefinition poshiTestDefinition) {
+                if (psiElement.getParent() instanceof PoshiTestDefinition poshiTestDefinition) {
                     String testName = poshiTestDefinition.getName();
 
                     return

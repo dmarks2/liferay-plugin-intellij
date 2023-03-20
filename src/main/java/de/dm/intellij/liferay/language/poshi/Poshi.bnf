@@ -101,7 +101,7 @@ function-definition ::= FUNCTION IDENTIFIER
 
 macro-definition ::= MACRO IDENTIFIER
 
-test-definition ::= 'TEST' IDENTIFIER
+test-definition ::= 'test' IDENTIFIER
 
 method-call ::= IDENTIFIER {PERIOD IDENTIFIER}* {
     methods=[getReferences]
