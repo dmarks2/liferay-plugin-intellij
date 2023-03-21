@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Ability to compare theme files with the original files from the parent theme
 - Feature: Resolve configurationPid OSGi properties to configuration interface classes
 - Feature: Add inspection to check if a Meta Configuration ID matches the full qualified classname of the interface
+- Feature: Experimental Poshi support
 - Change: Remove inspection about aui:fieldset must be inside an aui:fieldset-group (tag has been removed in Liferay lately)
 - Change: Update support for IntelliJ 2022.3, dropped support for older versions
 - Change: Disabled gradle importers for bundle-support and theme plugins (no longer working with Java 17)
