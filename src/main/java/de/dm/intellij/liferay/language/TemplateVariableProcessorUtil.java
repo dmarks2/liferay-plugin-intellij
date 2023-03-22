@@ -163,12 +163,13 @@ public class TemplateVariableProcessorUtil {
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_0) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
-                            (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
-                            (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
                             (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                             ) { //Liferay 7.0
                         //see https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/collaboration/blogs/blogs-web/src/main/java/com/liferay/blogs/web/internal/template/BlogsPortletDisplayTemplateHandler.java
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_blogs_entry_70.vm"));
+                    } else if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3 || portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
+                        //see https://github.com/liferay/liferay-portal/blob/master/modules/apps/blogs/blogs-web/src/main/java/com/liferay/blogs/web/internal/portlet/display/template/BlogsPortletDisplayTemplateHandler.java
+                        variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_blogs_entry_73.vm"));
                     }
                 } else if ("bread_crumb".equals(applicationDisplayTemplateFileType)) {
                     if (

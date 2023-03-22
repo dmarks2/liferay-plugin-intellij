@@ -1,0 +1,15 @@
+#* @vtlvariable name="blogsEntryAssetEntryUtil" type="com.liferay.blogs.web.internal.util.BlogsEntryAssetEntryUtil" *#
+#* @vtlvariable name="blogsEntryPermission" type="com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission" *#
+#* @vtlvariable name="blogsEntryUtil" type="com.liferay.blogs.web.internal.util.BlogsEntryUtil" *#
+#* @vtlvariable name="blogsPortletInstanceConfiguration" type="com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration" *#
+#* @vtlvariable name="blogsPortletInstanceSettingsHelper" type="com.liferay.blogs.web.internal.display.context.BlogsPortletInstanceSettingsHelper" *#
+#* @vtlvariable name="blogsEntryLocalService" type="com.liferay.blogs.service.BlogsEntryLocalService" *#
+#* @vtlvariable name="blogsEntryService" type="com.liferay.blogs.service.BlogsEntryService" *#
+#* @vtlvariable name="commentManager" type="com.liferay.portal.kernel.comment.CommentManager" *#
+#* @vtlvariable name="class_name_id" type="java.lang.Long" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#
+#* @vtlvariable name="entries" type="java.util.List<com.liferay.blogs.model.BlogsEntry>" *#
+#* @vtlvariable name="language" type="com.liferay.portal.kernel.language.Language" *#
+#* @vtlvariable name="permissionsURLTag" type="com.liferay.taglib.security.PermissionsURLTag" *#
+#* @vtlvariable name="template_id" type="java.lang.Long" *#
+#* @vtlvariable name="trashHelper" type="com.liferay.trash.TrashHelper" *#

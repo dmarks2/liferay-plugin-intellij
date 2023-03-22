@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - Bugfix: Setting Freemarker Breakpoint in Application Display Templates with filenames containing spaces did not work
 - Bugfix: Execution of Liferay groovy scripts required Java 17 (now Java 11 is enough)
 - Bugfix: Freemarker debugging did not work ins some Application Display Templates due to API changes in newer Liferay versions
+- Bugfix: Implicit variables for Blog Application Display Templates in newer Liferay versions
 
 ## 0.0.14
 - Feature: Resolve Resource Bundles
