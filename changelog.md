@@ -8,11 +8,13 @@ All notable changes to this project will be documented in this file.
 - Feature: Resolve configurationPid OSGi properties to configuration interface classes
 - Feature: Add inspection to check if a Meta Configuration ID matches the full qualified classname of the interface
 - Feature: Experimental Poshi support
+- Feature: Add Freemarker debugging support in Application Display Templates for the Similar Results portlet
 - Change: Remove inspection about aui:fieldset must be inside an aui:fieldset-group (tag has been removed in Liferay lately)
 - Change: Update support for IntelliJ 2022.3, dropped support for older versions
 - Change: Disabled gradle importers for bundle-support and theme plugins (no longer working with Java 17)
 - Bugfix: Setting Freemarker Breakpoint in Application Display Templates with filenames containing spaces did not work
 - Bugfix: Execution of Liferay groovy scripts required Java 17 (now Java 11 is enough)
+- Bugfix: Freemarker debugging did not work ins some Application Display Templates due to API changes in newer Liferay versions
 
 ## 0.0.14
 - Feature: Resolve Resource Bundles

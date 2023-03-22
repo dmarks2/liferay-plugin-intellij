@@ -369,26 +369,30 @@ public class LiferayServicesUtil {
         return null;
     }
     public String getFreemarkerApplicationDisplayTemplateName(String type, String templateKey, String groupName) throws IOException {
-        String className = Constants.APPLICATION_DISPLAY_TEMPLATE_TYPES_7_0.get(type);
-        if (className == null) {
-            className = Constants.APPLICATION_DISPLAY_TEMPLATE_TYPES_7_3.get(type);
+        String[] classNames = Constants.APPLICATION_DISPLAY_TEMPLATE_TYPES_7_0.get(type);
+        if (classNames == null) {
+            classNames = Constants.APPLICATION_DISPLAY_TEMPLATE_TYPES_7_3.get(type);
         }
-        if (className != null) {
-            long classNameId = getClassNameId(className);
+        if (classNames != null) {
+            for (String className : classNames) {
+                long classNameId = getClassNameId(className);
 
-            if (classNameId > 0) {
-                long portletDisplayTemplateClassNameId = getClassNameId(Constants.CLASS_NAME_PORTLET_DISPLAY_TEMPLATE_7_0);
+                if (classNameId > 0) {
+                    long portletDisplayTemplateClassNameId = getClassNameId(Constants.CLASS_NAME_PORTLET_DISPLAY_TEMPLATE_7_0);
 
-                long companyId = getDefaultCompanyId();
-                long groupId = getGroupId(groupName);
+                    long companyId = getDefaultCompanyId();
+                    long groupId = getGroupId(groupName);
 
-                JsonObject ddmTemplate = getDDMTemplate_70(companyId, groupId, classNameId, portletDisplayTemplateClassNameId, 0, templateKey);
+                    JsonObject ddmTemplate = getDDMTemplate_70(companyId, groupId, classNameId, portletDisplayTemplateClassNameId, 0, templateKey);
 
-                if (ddmTemplate != null) {
-                    //Identifier contains companyGroupId if rendered within a request
-                    long companyGroupId = getCompanyGroupId();
+                    if (ddmTemplate != null) {
+                        //Identifier contains companyGroupId if rendered within a request
+                        long companyGroupId = getCompanyGroupId();
 
-                    return ddmTemplate.get("companyId").getAsLong() + "#" + companyGroupId + "#" + ddmTemplate.get("templateId").getAsLong();
+                        return ddmTemplate.get("companyId").getAsLong() + "#" + companyGroupId + "#" + ddmTemplate.get("templateId").getAsLong();
+                    }
+
+                    break;
                 }
             }
         }
