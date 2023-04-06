@@ -6,8 +6,7 @@
   
 Liferay Plugin for IntelliJ
 ===========================
-
-[![Build Status](https://app.travis-ci.com/dmarks2/liferay-plugin-intellij.svg?branch=master)](https://app.travis-ci.com/github/dmarks2/liferay-plugin-intellij)
+![Build Status](https://github.com/dmarks2/liferay-plugin-intellij/actions/workflows/liferay-plugin-intellij.yml/badge.svg)
 
 Description
 -----------
