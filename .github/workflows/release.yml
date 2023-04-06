@@ -3,7 +3,7 @@ name: Release Liferay Plugin IntelliJ
 on:
   push:
     tags:
-      - '*'
+      - 'v*'
 
 permissions:
   contents: read
