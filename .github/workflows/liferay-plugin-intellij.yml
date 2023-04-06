@@ -1,6 +1,9 @@
 name: Build Liferay Plugin IntelliJ
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 permissions:
   contents: read
