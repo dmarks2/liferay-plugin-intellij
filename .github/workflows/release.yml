@@ -36,4 +36,4 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           draft: true
           files: |
-            "build/distributions/Liferay IntelliJ Plugin-${{ github.ref }}.zip"
+            "build/distributions/Liferay IntelliJ Plugin-*.zip"
