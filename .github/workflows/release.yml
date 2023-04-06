@@ -31,20 +31,9 @@ jobs:
           path: build/distributions/
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
           draft: true
-      - name: Upload Release Asset
-        id: upload_release_asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/distributions/Liferay IntelliJ Plugin-${{ github.ref }}.zip
-          asset_name: Liferay IntelliJ Plugin-${{ github.ref }}.zip
-          asset_content_type: application/zip
+          files: |
+            "build/distributions/Liferay IntelliJ Plugin-${{ github.ref }}.zip"
