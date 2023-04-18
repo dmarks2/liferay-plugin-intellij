@@ -3,6 +3,9 @@ Liferay Plugin for IntelliJ
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.17
+- Change: Update support for IntelliJ 2023.1, dropped support for older versions
+
 ## 0.0.16
 - Feature: Experimental Poshi support
 - Feature: Add Freemarker debugging support in Application Display Templates for the Similar Results portlet

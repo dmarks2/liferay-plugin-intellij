@@ -49,7 +49,7 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
     }
 
     @Override
-    public boolean submit(IdeaLoggingEvent[] events, @Nullable String additionalInfo, @NotNull Component parentComponent, @NotNull final Consumer<? super SubmittedReportInfo> consumer) {
+    public boolean submit(IdeaLoggingEvent @NotNull [] events, @Nullable String additionalInfo, @NotNull Component parentComponent, @NotNull final Consumer<? super SubmittedReportInfo> consumer) {
         IdeaLoggingEvent event = events[0];
 
         DataContext dataContext = DataManager.getInstance().getDataContext(parentComponent);

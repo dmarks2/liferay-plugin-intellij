@@ -5,6 +5,9 @@ import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 import com.intellij.util.containers.ContainerUtil;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public class BndFormattingTest extends BasePlatformTestCase {
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/bndtools/formatting/BndFormattingTest";
@@ -22,7 +25,7 @@ public class BndFormattingTest extends BasePlatformTestCase {
 
                     codeStyleManager.reformatText(
                             myFixture.getFile(),
-                            ContainerUtil.newArrayList(myFixture.getFile().getTextRange())
+                            Collections.singletonList(myFixture.getFile().getTextRange())
                     );
                 }
         );

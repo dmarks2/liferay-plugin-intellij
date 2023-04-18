@@ -86,12 +86,12 @@ public class LiferayBundleSupportMavenImporter extends MavenImporter {
     }
 
     @Override
-    public void getSupportedPackagings(Collection<String> result) {
+    public void getSupportedPackagings(Collection<? super String> result) {
         result.add("pom");
     }
 
     @Override
-    public void getSupportedDependencyTypes(Collection<String> result, SupportedRequestType type) {
+    public void getSupportedDependencyTypes(Collection<? super String> result, SupportedRequestType type) {
         getSupportedPackagings(result);
     }
 }

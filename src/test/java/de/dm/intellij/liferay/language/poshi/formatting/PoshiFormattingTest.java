@@ -5,6 +5,9 @@ import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 import com.intellij.util.containers.ContainerUtil;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public class PoshiFormattingTest extends BasePlatformTestCase {
 
     @Override
@@ -20,7 +23,7 @@ public class PoshiFormattingTest extends BasePlatformTestCase {
 
                     codeStyleManager.reformatText(
                             myFixture.getFile(),
-                            ContainerUtil.newArrayList(myFixture.getFile().getTextRange())
+                            Collections.singletonList(myFixture.getFile().getTextRange())
                     );
                 }
         );

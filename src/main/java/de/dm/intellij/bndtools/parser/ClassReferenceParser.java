@@ -15,6 +15,7 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiType;
+import com.intellij.psi.PsiTypes;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.JavaClassReferenceProvider;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.ProjectScope;
@@ -142,7 +143,7 @@ public class ClassReferenceParser extends BndHeaderParser {
 
     private static boolean hasInstrumenterMethod(PsiClass psiClass, String methodName) {
         for (PsiMethod method : psiClass.findMethodsByName(methodName, false)) {
-            if (PsiType.VOID.equals(method.getReturnType()) &&
+            if (PsiTypes.voidType().equals(method.getReturnType()) &&
                 method.hasModifierProperty(PsiModifier.PUBLIC) &&
                 method.hasModifierProperty(PsiModifier.STATIC)) {
                 return true;

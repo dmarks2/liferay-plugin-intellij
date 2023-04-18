@@ -7,7 +7,7 @@ buildscript {
 }
 
 plugins {
-    id "org.jetbrains.intellij" version "1.11.0"
+    id "org.jetbrains.intellij" version "1.13.3"
     id 'de.undercouch.download' version '5.2.1'
 }
 
@@ -110,7 +110,8 @@ intellij {
 //    version.set("IU-2021.2")
 //    version.set("IU-2021.3")
 //    version.set("IU-2022.1.2")
-    version.set("IU-2022.3")
+//    version.set("IU-2022.3")
+    version.set("IU-2023.1")
     type.set('IU')
     pluginName.set('Liferay IntelliJ Plugin')
     plugins.set([
@@ -725,7 +726,7 @@ tasks.register('downloadPoshi', Copy) {
 }
 
 group 'de.dm.intellij.liferay'
-version '0.0.16'
+version '0.0.17'
 
 configurations.poshiImplementation.setCanBeResolved(true)
 

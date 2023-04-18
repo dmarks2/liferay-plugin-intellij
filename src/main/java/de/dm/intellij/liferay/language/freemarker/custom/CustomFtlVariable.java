@@ -8,7 +8,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiClassType;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiSubstitutor;
-import com.intellij.psi.PsiType;
+import com.intellij.psi.PsiTypes;
 import com.intellij.psi.ResolveState;
 import com.intellij.psi.scope.NameHint;
 import com.intellij.psi.scope.PsiScopeProcessor;
@@ -91,12 +91,12 @@ public class CustomFtlVariable extends FtlLightVariable {
         }
 
         if (hint != null && !((FtlVariantsProcessor) processor).isMethodCall()) {
-            String isAccessor = PropertyUtil.suggestGetterName(hint, PsiType.BOOLEAN);
+            String isAccessor = PropertyUtil.suggestGetterName(hint, PsiTypes.booleanType());
             if (!psiClass.processDeclarations(new PsiMemberProcessor(processor, isAccessor), newState, (PsiElement) null, place)) {
                 return false;
             }
 
-            String getAccessor = PropertyUtil.suggestGetterName(hint, PsiType.INT);
+            String getAccessor = PropertyUtil.suggestGetterName(hint, PsiTypes.intType());
             if (!psiClass.processDeclarations(new PsiMemberProcessor(processor, getAccessor), newState, (PsiElement) null, place)) {
                 return false;
             }

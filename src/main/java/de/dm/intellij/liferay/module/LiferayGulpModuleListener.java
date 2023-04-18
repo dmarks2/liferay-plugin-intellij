@@ -16,7 +16,7 @@ import java.util.List;
 public class LiferayGulpModuleListener implements ModuleListener {
 
     @Override
-    public void modulesAdded(@NotNull Project project, @NotNull List<Module> modules) {
+    public void modulesAdded(@NotNull Project project, @NotNull List<? extends Module> modules) {
         for (Module module : modules) {
             ProjectUtils.runDumbAware(project, () -> {
                 handleModuleFiles(project, module, "gulpfile.js");
