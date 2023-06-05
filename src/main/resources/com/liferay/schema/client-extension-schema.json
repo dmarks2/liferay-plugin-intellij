@@ -1,0 +1,660 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/liferay-extension-types.json",
+  "title": "Liferay Client Extension Type",
+  "definitions": {
+    "AssembleItem": {
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "into": {
+          "type": "string"
+        }
+      }
+    },
+    "BaseElement": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "title": "Type",
+          "description": "Defines the type of the client extension",
+          "enum": [
+            "customElement",
+            "fdsCellRenderer",
+            "globalCSS",
+            "globalJS",
+            "iframe",
+            "jsImportMapsEntry",
+            "staticContent",
+            "themeCSS",
+            "themeFavicon",
+            "themeJS",
+            "themeSpritemap",
+            "objectAction",
+            "workflowAction",
+            "notificationType",
+            "oAuthApplicationUserAgent",
+            "oAuthApplicationHeadlessServer",
+            "batch"
+          ],
+          "x-intellij-enum-metadata": {
+            "customElement": {
+              "description": "Custom Element"
+            },
+            "fdsCellRenderer": {
+              "description": "Frontend data set cell renderer"
+            },
+            "globalCSS": {
+              "description": "Global CSS"
+            },
+            "globalJS": {
+              "description": "Global JS"
+            },
+            "iframe": {
+              "description": "IFrame"
+            },
+            "jsImportMapsEntry": {
+              "description": "JS Importmaps Entry"
+            },
+            "staticContent": {
+              "description": "Static content"
+            },
+            "themeCSS": {
+              "description": "Theme CSS"
+            },
+            "themeFavicon": {
+              "description": "Theme Favicon"
+            },
+            "themeJS": {
+              "description": "Theme JS"
+            },
+            "themeSpritemap": {
+              "description": "Theme Sprite Map"
+            },
+            "objectAction": {
+              "description": "Object Action"
+            },
+            "workflowAction": {
+              "description": "Workflow Action"
+            },
+            "notificationType": {
+              "description": "Notification Type"
+            },
+            "oAuthApplicationUserAgent": {
+              "description": "OAuth User Agent"
+            },
+            "oAuthApplicationHeadlessServer": {
+              "description": "OAuth Headless Server"
+            },
+            "batch": {
+              "description": "Batch"
+            }
+          }
+        },
+        "baseURL": {
+          "type": "string",
+          "description": "The base path from which all of the client extension’s defined resources are served."
+        },
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "description": "The client extension’s name (as it appears in the UI). A name is required for front-end client extensions."
+        },
+        "description": {
+          "type": "string",
+          "title": "Description",
+          "description": "The client extension’s description."
+        },
+        "sourceCodeURL": {
+          "type": "string",
+          "default": "https://www.liferay.com",
+          "title": "Source Code URL",
+          "description": "The address to the client extension’s source repository."
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ]
+    },
+    "CustomElement": {
+      "title": "Custom Element Client Extension",
+      "description": "Custom element defines CSS and JavaScript resources that will be rendered into a provided HTML <custom-element>. This provides full integration with the Liferay host page. Each custom element client extension is made available as a widget.",
+      "x-intellij-html-description": "Custom element defines CSS and JavaScript resources that will be rendered into a provided HTML &lt;custom-element&gt;. This provides full integration with the Liferay host page. Each custom element client extension is made available as a widget. <a href='https://learn.liferay.com/dxp/latest/en/building-applications/client-extensions/front-end-client-extensions/understanding-custom-element-and-iframe-client-extensions.html#using-the-custom-element-type'>Learn more about custom element client extensions.</a>",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "customElement"
+        },
+        "htmlElementName": {
+          "type": "string",
+          "title": "HTML Element Name",
+          "description": "The HTML element name that refers to the custom element, which is rendered in the page markup."
+        },
+        "useESM": {
+          "type": "boolean",
+          "default": false,
+          "title": "Use ES Modules",
+          "description": "Whether the JavaScript code uses ESM format. When true, the JavaScript is added to the page with the type=\"module\" property."
+        },
+        "urls": {
+          "type": "array",
+          "title": "JavaScript URL",
+          "description": "List of paths to JavaScript resources that are added to the HTML head when the widget is used on a page. One of these resources must contain the custom element initialization code. This combines with baseURL to form a complete URL.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cssURLs": {
+          "type": "array",
+          "title": "CSS URL",
+          "description": "List of CSS paths added to the HTML head when the custom element is used on a page.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "instanceable": {
+          "type": "boolean",
+          "default": false,
+          "title": "Instanceable",
+          "description": "Whether the custom element widget can appear multiple times on a page."
+        },
+        "portletCategoryName": {
+          "type": "string",
+          "default": "category.client-extensions",
+          "title": "Portlet Category Name",
+          "description": "The menu category of the custom element widget."
+        },
+        "friendlyURLMapping": {
+          "type": "string",
+          "title": "Friendly URL Mapping",
+          "description": "Mapping of a friendly URL prefix to the specific custom element widget."
+        },
+        "properties": {
+          "type": "array",
+          "title": "Properties",
+          "description": "Properties to append as attributes to the custom HTML element. They use a newline as a separator and are processed as Java properties.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "htmlElementName",
+        "urls"
+      ],
+      "additionalProperties": true
+    },
+    "FdsCellRenderer": {
+      "title": "Frontend data set cell renderer Client Extension",
+      "description": "Frontend data set cell renderer defines a JavaScript function that can render a frontend data set cell content.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "fdsCellRenderer"
+        },
+        "htmlElementName": {
+          "type": "string",
+          "title": "HTML Element Name"
+        },
+        "url": {
+          "type": "string",
+          "title": "URL"
+        }
+      },
+      "additionalProperties": true
+    },
+    "GlobalCSS": {
+      "title": "CSS Client Extension",
+      "description": "CSS defines a CSS resource that will be included after theme CSS resources.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "globalCSS"
+        },
+        "url": {
+          "type": "string",
+          "title": "URL",
+          "description": "The path to the JavaScript file added to the HEAD of the page when the client extension is enabled. The complete URI is prefixed by the baseURL value."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": true
+    },
+    "GlobalJS": {
+      "title": "JavaScript Client Extension",
+      "description": "JS defines a JavaScript resource that will be included after theme JavaScript resources.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "globalJS"
+        },
+        "url": {
+          "type": "string",
+          "title": "JavaScript URL",
+          "description": "The path to the JavaScript file added to the HEAD of the page when the client extension is enabled. The complete URI is prefixed by the baseURL value."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": true
+    },
+    "IFrame": {
+      "title": "IFrame Client Extension",
+      "description": "IFrame defines an application URL that will be rendered into an <iframe> element. This provides limited integration with the host page using Liferay's optional client SDK API. Each IFrame client extension is made available as a widget.",
+      "x-intellij-html-description": "IFrame defines an application URL that will be rendered into an &lt;iframe&gt; element. This provides limited integration with the host page using Liferay's optional client SDK API. Each IFrame client extension is made available as a widget. <a href='https://learn.liferay.com/en/w/dxp/building-applications/client-extensions/front-end-client-extensions/understanding-custom-element-and-iframe-client-extensions#using-the-iframe-type'>Learn more about IFrame client extensions.</a>",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "iframe"
+        },
+        "friendlyURLMapping": {
+          "type": "string",
+          "title": "Friendly URL Mapping",
+          "description": "The mapping of a friendly URL prefix to the specific IFrame widget."
+        },
+        "htmlElementName": {
+          "type": "string",
+          "title": "HTML Element Name"
+        },
+        "portletCategoryName": {
+          "type": "string",
+          "title": "Widget Category Name",
+          "description": "The menu category of the IFrame widget."
+        },
+        "url": {
+          "type": "string",
+          "title": "URL",
+          "description": "The complete URL to the HTML page to embed within the IFrame widget."
+        },
+        "instanceable": {
+          "type": "boolean",
+          "default": false,
+          "title": "Instanceable",
+          "description": "Whether the IFrame widget can appear multiple times on a page."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": true
+    },
+    "JSImportMapsEntry": {
+      "description": "JS Importmaps Entry defines a JavaScript module to be exported through the import maps as a bare identifier. Please make sure to reload the page to update your current browser's import maps after publishing this client extension.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "jsImportMapsEntry"
+        },
+        "bareSpecifier": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "title": "URL"
+        }
+      },
+      "additionalProperties": true
+    },
+    "StaticContent": {
+      "title": "Static content",
+      "description": "Static content defines a URL containing static content.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "staticContent"
+        },
+        "url": {
+          "type": "string",
+          "title": "URL"
+        }
+      },
+      "additionalProperties": true
+    },
+    "ThemeCSS": {
+      "title": "Theme CSS Client Extension",
+      "description": "Theme CSS defines CSS resources to override those provided by the theme.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "themeCSS"
+        },
+        "clayURL": {
+          "type": "string",
+          "title": "Clay CSS URL",
+          "description": "The path to the CSS file representing the clay.css file of a Liferay theme. The complete URI is prefixed by the baseURL value."
+        },
+        "mainURL": {
+          "type": "string",
+          "title": "Main CSS URL",
+          "description": "The path to the CSS file representing the main.css file of a Liferay theme. The complete URI is prefixed by the baseURL value."
+        }
+      },
+      "additionalProperties": true
+    },
+    "ThemeFavicon": {
+      "title": "Theme Favicon Client Extension",
+      "description": "Favicon defines an icon resource to override the favicon provided by the theme.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "themeFavicon"
+        },
+        "url": {
+          "type": "string",
+          "title": "URL",
+          "description": "The path to the icon image file. The complete URI is prefixed by the baseURL value."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": true
+    },
+    "ThemeJS": {
+      "title": "Theme JavaScript Client Extension",
+      "description": "Theme JavaScript defines a JavaScript resource to override the one provided by the theme.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "themeJS"
+        },
+        "url": {
+          "type": "string",
+          "title": "URL",
+          "description": "The path to the JavaScript file that is added to the HEAD of the page. The complete URI is prefixed by the baseURL value."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": true
+    },
+    "ThemeSpritemap": {
+      "title": "Theme Sprite Map Client Extension",
+      "description": "Theme SVG defines a spritemap resource containing icons to override those provided by the theme.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "themeSpritemap"
+        },
+        "url": {
+          "type": "string",
+          "title": "URL",
+          "description": "A path to the .svg sprite map that replaces the one for your existing Liferay theme. The complete URI is prefixed by the baseURL value."
+        },
+        "enableSVG4Everybody": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": true
+    },
+    "ObjectAction": {
+      "title": "Object Action Client Extension",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "objectAction"
+        },
+        "resourcePath": {
+          "type": "string",
+          "description": "The path to the object action handler. This value is combined with the OAuth2 application profile’s homePageURL value for a complete URL."
+        },
+        "oAuth2ApplicationExternalReferenceCode": {
+          "type": "string",
+          "description": "The external reference code for an OAuth2 application profile, needed for securing requests."
+        }
+      },
+      "required": [
+        "resourcePath",
+        "oAuth2ApplicationExternalReferenceCode"
+      ],
+      "additionalProperties": true
+    },
+    "WorkflowAction": {
+      "title": "Workflow Action Client Extension",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "workflowAction"
+        },
+        "resourcePath": {
+          "type": "string",
+          "description": "The path to the workflow action handler. This value is combined with the OAauth2 application profile’s homePageURL value for a complete URL."
+        },
+        "oAuth2ApplicationExternalReferenceCode": {
+          "type": "string",
+          "description": "The external reference code for an OAuth2 application profile, needed for securing requests."
+        }
+      },
+      "required": [
+        "resourcePath",
+        "oAuth2ApplicationExternalReferenceCode"
+      ],
+      "additionalProperties": true
+    },
+    "NotificationType": {
+      "title": "Notification Type Client Extension",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "notificationType"
+        },
+        "resourcePath": {
+          "type": "string",
+          "description": "The path to the notification handler. This value is combined with the OAauth2 application profile’s homePageURL value for a complete URL"
+        },
+        "oAuth2ApplicationExternalReferenceCode": {
+          "type": "string",
+          "description": "The external reference code for an OAuth2 application profile, needed for securing requests."
+        }
+      },
+      "required": [
+        "resourcePath",
+        "oAuth2ApplicationExternalReferenceCode"
+      ],
+      "additionalProperties": true
+    },
+    "OAuthApplicationUserAgent": {
+      "title": "OAuth User Agent Client Extension",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "oAuthApplicationUserAgent"
+        },
+        "homePageURL": {
+          "type": "string",
+          "default": "https://$[conf:ext.lxc.liferay.com.mainDomain]",
+          "description": "The base address of the OAuth2 application profile’s resource server."
+        },
+        "privacyPolicyURL": {
+          "type": "string",
+          "description": "The URL for the OAuth2 application profile’s privacy policy."
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "An array of scopes that are associated with the OAuth2 application profile."
+        }
+      },
+      "additionalProperties": true
+    },
+    "OAuthApplicationHeadlessServer": {
+      "title": "OAuth Headless Server Client Extension",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "oAuthApplicationHeadlessServer"
+        },
+        "homePageURL": {
+          "type": "string",
+          "default": "https://$[conf:ext.lxc.liferay.com.mainDomain]",
+          "description": "The base address of the OAuth2 application profile’s resource server."
+        },
+        "privacyPolicyURL": {
+          "type": "string",
+          "description": "The URL for the OAuth2 application profile’s privacy policy."
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "An array of scopes that are associated with the OAuth2 application profile."
+        },
+        "userAccountEmailAddress": {
+          "type": "string",
+          "description": "The email address for the user account associated with this OAuth2 application profile. This is only used if the userAccountScreenName property is undefined."
+        },
+        "userAccountScreenName": {
+          "type": "string",
+          "description": "The screen name for the user account associated with the OAuth2 application profile. This overrides the value for userAccountEmailAddress."
+        }
+      },
+      "additionalProperties": true
+    },
+    "Batch": {
+      "title": "Batch Client Extension",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseElement"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "batch"
+        },
+        "oAuthApplicationHeadlessServer": {
+          "type": "string",
+          "description": "The identity (externalReferenceCode) of an OAuth2 application headless server profile."
+        }
+      },
+      "required": [
+        "oAuthApplicationHeadlessServer"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "type": "object",
+  "properties": {
+    "assemble": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/AssembleItem"
+      }
+    }
+  },
+  "additionalProperties": {
+    "pattern": "(\\w|\\-)+",
+    "type": "object",
+    "anyOf": [
+      { "$ref": "#/definitions/CustomElement" },
+      { "$ref": "#/definitions/FdsCellRenderer" },
+      { "$ref": "#/definitions/GlobalCSS" },
+      { "$ref": "#/definitions/GlobalJS" },
+      { "$ref": "#/definitions/IFrame" },
+      { "$ref": "#/definitions/JSImportMapsEntry" },
+      { "$ref": "#/definitions/StaticContent" },
+      { "$ref": "#/definitions/ThemeCSS" },
+      { "$ref": "#/definitions/ThemeFavicon" },
+      { "$ref": "#/definitions/ThemeJS" },
+      { "$ref": "#/definitions/ThemeSpritemap" },
+      { "$ref": "#/definitions/ObjectAction" },
+      { "$ref": "#/definitions/WorkflowAction" },
+      { "$ref": "#/definitions/NotificationType" },
+      { "$ref": "#/definitions/OAuthApplicationUserAgent" },
+      { "$ref": "#/definitions/OAuthApplicationHeadlessServer" },
+      { "$ref": "#/definitions/Batch" }
+    ]
+  }
+}

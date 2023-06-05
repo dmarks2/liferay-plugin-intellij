@@ -5,8 +5,8 @@ OSGi components
 2. [Component annotation code completion](#component-annotation-code-completion)
 3. [Implicit usage for Reference annotations](#implicit-usage-for-reference-annotations)
 4. [Inspections of service class inheritance](#inspections-of-service-class-inheritance)
-5. Resolve configurationPid properties to configuration interfaces
-6. Inspection for Meta Configuration ID
+5. [Resolve configurationPid properties to configuration interfaces](#resolve-configurationpid-properties-to-configuration-interfaces)
+6. [Inspection for Meta Configuration ID](#inspection-for-meta-configuration-id)
 
 Syntax Highlighting for BND files
 ----------------------------------

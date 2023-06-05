@@ -32,11 +32,12 @@ for the plugin. Just have a look at the following topics to see which areas have
 * Support for [developing fragments](documentation/fragments.md) is integrated.
 * Resource Bundle files can be resolved for [Language Support](documentation/language_support.md)
 * Support for [Testing frameworks](documentation/testing.md)
+* Developing [Client Extensions](documentation/client_extensions.md)
 
 Supported IDEs
 --------------
-* IntelliJ 2022.3 and above (Community)
-* IntelliJ 2022.3 and above (Ultimate)
+* IntelliJ 2023.1 and above (Community)
+* IntelliJ 2023.1 and above (Ultimate)
 
 Supported Liferay Versions
 --------------------------

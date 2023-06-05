@@ -3,6 +3,7 @@ package de.dm.intellij.liferay.schema;
 import com.intellij.openapi.project.Project;
 import com.jetbrains.jsonSchema.extension.JsonSchemaFileProvider;
 import com.jetbrains.jsonSchema.extension.JsonSchemaProviderFactory;
+import de.dm.intellij.liferay.language.clientextension.ClientExtensionYamlSchemaFileProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -23,7 +24,8 @@ public class LiferayJsonSchemaProviderFactory implements JsonSchemaProviderFacto
             new LiferayFrontendTokenDefinitionJsonSchemaFileProvider(project),
             new LiferayFragmentCollectionSchemaFileProvider(),
             new LiferayFragmentConfigurationSchemaFileProvider(),
-            new LiferayFragmentFragmentSchemaFileProvider()
+            new LiferayFragmentFragmentSchemaFileProvider(),
+            new ClientExtensionYamlSchemaFileProvider()
         );
     }
 }

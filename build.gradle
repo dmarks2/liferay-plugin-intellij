@@ -118,7 +118,7 @@ intellij {
             'JavaScript', 'Tomcat', 'com.intellij.velocity', 'com.intellij.freemarker', 'maven', 'properties', 'java-i18n', 'com.intellij.css', 'sass', 'JavaEE', 'com.intellij.javaee.web', 'com.intellij.jsp', 'gradle',
             'org.intellij.intelliLang', 'uml', 'java', 'XPathView',
             //test only?
-            'Groovy', 'junit', 'com.intellij.persistence', 'DatabaseTools'
+            'Groovy', 'junit', 'com.intellij.persistence', 'DatabaseTools', 'yaml'
     ])
     updateSinceUntilBuild.set(false)
 }
