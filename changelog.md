@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.17
 - Feature: Code completion features for client-extensions.yaml
+- Feature: Code completion features for rest-config.yaml
 - Change: Update support for IntelliJ 2023.1, dropped support for older versions
 
 ## 0.0.16

@@ -1,0 +1,11 @@
+apiDir: "../guestbook-rest-api/src/main/java"
+apiPackagePath: "foo.bar.traininig.guestbook"
+application:
+  baseURI: "/guestbook"
+  className: "GuestbookApplication"
+  name: "Guestbook"
+author: "John Doe"
+forcePredictableOperationId: false
+forcePredictableSchemaPropertyName: false
+generateBatch: false
+generateGraphQL: false

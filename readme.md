@@ -33,6 +33,7 @@ for the plugin. Just have a look at the following topics to see which areas have
 * Resource Bundle files can be resolved for [Language Support](documentation/language_support.md)
 * Support for [Testing frameworks](documentation/testing.md)
 * Developing [Client Extensions](documentation/client_extensions.md)
+* Implementing functionality using [Headless API](documentation/headless.md)
 
 Supported IDEs
 --------------

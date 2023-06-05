@@ -1,0 +1,173 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/liferay-rest-config.json",
+  "title": "Liferay REST Config",
+  "definitions": {
+    "Application": {
+      "type": "object",
+      "properties": {
+        "baseURI": {
+          "type": "string",
+          "description": "the context URL for all APIs in this project"
+        },
+        "className": {
+          "type": "string",
+          "description": "the Java class name for the root resource class (used by JAX-RS)"
+        },
+        "name": {
+          "type": "string",
+          "description": "the JAX-RS name of the API"
+        },
+        "security": {
+          "$ref": "#/definitions/Security",
+          "description": "Information about application security"
+        }
+      },
+      "required": [
+        "baseURI",
+        "className",
+        "name"
+      ]
+    },
+    "Security": {
+      "type": "object",
+      "properties": {
+        "basicAuth": {
+          "type": "string",
+          "description": "Basic authentication"
+        },
+        "guestAllowed": {
+          "type": "string",
+          "description": "Allow guest access"
+        },
+        "oAuth2": {
+          "type": "string",
+          "description": "oAuth authentication"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "apiDir": {
+      "type": "string",
+      "description": "your Java source code folder"
+    },
+    "apiPackagePath": {
+      "type": "string",
+      "description": "the starting Java package path where REST Builder generates code across all modules"
+    },
+    "application": {
+      "$ref": "#/definitions/Application",
+      "description": "Information about the application"
+    },
+    "author": {
+      "type": "string",
+      "description": "Author name"
+    },
+    "clientDir": {
+      "type": "string",
+      "description": "Directory of the JAVA client module. If it is not set, the client will not be generated."
+    },
+    "clientMavenGroupId": {
+      "type": "string",
+      "description": "Group identifier of the client module"
+    },
+    "compatibilityVersion": {
+      "type": "integer",
+      "default": 1
+    },
+    "forceClientVersionDescription": {
+      "type": "boolean",
+      "default": true,
+      "description": "Force adding a message to the description that reflects the last version of the client. Defaults to true"
+    },
+    "forcePredictableContentApplicationXML": {
+      "type": "boolean",
+      "default": true,
+      "description": "Force the usage of XML media type in operation request bodies and responses. If no XML definition is provided, JSON definition will be used. Defaults to true"
+    },
+    "forcePredictableOperationId": {
+      "type": "boolean",
+      "default": true,
+      "description": "Setting value to false prevents the REST Builder to automatically rename operationId (using path elements). Default value is true."
+    },
+    "forcePredictableSchemaPropertyName": {
+      "type": "boolean",
+      "default": true,
+      "description": "Setting value to false prevents the REST Builder to automatically rename fields typed as object array or referencing schema.org types. Default value is true."
+    },
+    "generateBatch": {
+      "type": "boolean",
+      "default": true,
+      "description": "Generate batch endpoints. Defaults to true"
+    },
+    "generateGraphQL": {
+      "type": "boolean",
+      "default": true,
+      "description": " Generate GraphQL endpoints. Defaults to true"
+    },
+    "generateOpenAPI": {
+      "type": "boolean",
+      "default": true
+    },
+    "generateREST": {
+      "type": "boolean",
+      "default": true,
+      "description": "Generate REST endpoints. Defaults to true"
+    },
+    "graphQLNamespace": {
+      "type": "string"
+    },
+    "implDir": {
+      "type": "string",
+      "default": "src/main/java",
+      "description": " Directory where the generated code will be stored inside each module. Defaults to src/main/java"
+    },
+    "licenseName": {
+      "type": "string",
+      "default": "Apache 2.0",
+      "description": "Application license name. Defaults to Apache 2.0"
+    },
+    "licenseURL": {
+      "type": "string",
+      "default": "http://www.apache.org/licenses/LICENSE-2.0.html",
+      "description": "License URL. Defaults to http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "liferayEnterpriseApp": {
+      "type": "boolean"
+    },
+    "resourceApplicationSelect": {
+      "type": "string"
+    },
+    "testDir": {
+      "type": "string",
+      "description": "Directory of the integration test module. If it is not set, the integration tests will not be generated"
+    },
+    "warningsEnabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Enable warnings during the REST Builder execution. Defaults to true"
+    }
+  },
+  "required": [
+    "apiDir",
+    "apiPackagePath",
+    "application",
+    "author"
+  ],
+  "examples": [
+    {
+      "apiDir": "../guestbook-api/src/main/java",
+      "apiPackagePath": "com.liferay.guestbook",
+      "application": {
+        "baseURI": "/guestbook",
+        "className": "GuestbookApplication",
+        "name": "Guestbook"
+      },
+      "author": "John Doe",
+      "clientDir": "../guestbook-client/src/main/java",
+      "testDir": "../guestbook-test/src/testIntegration/java"
+    }
+  ]
+}
