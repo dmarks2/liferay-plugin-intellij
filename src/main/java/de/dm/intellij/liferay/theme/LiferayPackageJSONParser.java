@@ -62,12 +62,14 @@ public class LiferayPackageJSONParser extends FileChangeListenerBase {
                                 excludeFolders.add(pathDistFile.getUrl());
                             }
 
-                            ProjectUtils.runDumbAwareLater(project, () -> ModuleRootModificationUtil.updateExcludedFolders(
-                                    module,
-                                    sourceRoot,
-                                    Collections.<String>emptyList(),
-                                    excludeFolders
-                            ));
+                            if (! module.isDisposed()) {
+                                ProjectUtils.runDumbAwareLater(project, () -> ModuleRootModificationUtil.updateExcludedFolders(
+                                        module,
+                                        sourceRoot,
+                                        Collections.<String>emptyList(),
+                                        excludeFolders
+                                ));
+                            }
                         }
                     }
                 } catch (Exception e) {
