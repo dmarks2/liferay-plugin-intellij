@@ -28,6 +28,9 @@
         <!-- Reference completion for resource command names -->
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibResourceCommandNameReferenceContributor"/>
 
+        <!-- Reference completion for javascript components -->
+        <psi.referenceContributor implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibJavascriptFileReferenceContributor" />
+
         <!-- inspections -->
         <inspectionToolProvider implementation="de.dm.intellij.liferay.language.jsp.LiferayTaglibInspectionToolProvider"/>
 

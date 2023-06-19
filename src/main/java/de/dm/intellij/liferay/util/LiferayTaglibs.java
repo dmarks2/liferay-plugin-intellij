@@ -26,6 +26,7 @@ public class LiferayTaglibs {
     public static final String TAGLIB_URI_LIFERAY_FORM = "http://liferay.com/tld/form";
     public static final String TAGLIB_URI_LIFERAY_FRAGMENT = "http://liferay.com/tld/fragment";
     public static final String TAGLIB_URI_LIFERAY_FRONTEND = "http://liferay.com/tld/frontend";
+    public static final String TAGLIB_URI_LIFERAY_FRONTEND_DATA_SET = "http://liferay.com/tld/frontend-data-set";
     public static final String TAGLIB_URI_LIFERAY_ITEM_SELECTOR = "http://liferay.com/tld/item-selector";
     public static final String TAGLIB_URI_LIFERAY_INFO = "http://liferay.com/tld/info";
     public static final String TAGLIB_URI_LIFERAY_JOURNAL = "http://liferay.com/tld/journal";

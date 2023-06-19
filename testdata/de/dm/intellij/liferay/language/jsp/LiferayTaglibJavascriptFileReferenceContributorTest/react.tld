@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<taglib
+		version="2.1"
+		xmlns="http://java.sun.com/xml/ns/javaee"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+>
+	<tlib-version>1.0</tlib-version>
+	<short-name>react</short-name>
+	<uri>http://liferay.com/tld/react</uri>
+	<tag>
+		<name>component</name>
+		<tag-class>com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>An ID for the component instance that can be referenced with <![CDATA[<code>Liferay.component()</code>]]>.</description>
+			<name>componentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Deprecated as of 7.3.0, replaced by the attribute <![CDATA[<code>props</code>]]>.</description>
+			<name>data</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The AMD module that contains the component's JavaScript.</description>
+			<name>module</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The chosen template's props.</description>
+			<name>props</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The servlet context used to resolve JS packages. The default value is the current portlet's servlet context.</description>
+			<name>servletContext</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

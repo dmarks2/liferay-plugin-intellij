@@ -76,11 +76,18 @@ Additionally, you can auto-complete action commands, render command and resource
 
 ![action_commands](actioncommands.png "action commands")
 
+When using Javascript/react components, several taglibs have attributes to define the Javascript 
+module to be loaded. For example, you can use `<react:component module="yourModule" />`. For those
+attributes the appropriate javascript modules are suggested (code completion) and you can refer to the
+files (ctrl + click).
+
 The following tag libraries are supported:
  
     <aui:>
     <clay:>
     <portlet:>
+    <react:>
+    <soy:>
     <liferay-adaptive-media:>
     <liferay-asset:>  
     <liferay-comment:>
@@ -91,6 +98,7 @@ The following tag libraries are supported:
     <liferay-export-import-changeset:>
     <liferay-flags:>
     <liferay-frontend:>
+    <liferay-frontend-data-set:>
     <liferay-item-selector:>
     <liferay-journal:>
     <liferay-portlet:>

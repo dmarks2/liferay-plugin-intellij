@@ -16,6 +16,7 @@ public class LiferayTaglibAttributes {
     public static Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> TAGLIB_ATTRIBUTES_CSS = new HashMap<>();
     public static Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> TAGLIB_ATTRIBUTES_CLASS_NAME = new HashMap<>();
     public static Map<String, Collection<AbstractMap.SimpleImmutableEntry<String, String>>> TAGLIB_SUGGESTED_PARENTS = new HashMap<>();
+    public static Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> TAGLIB_JAVASCRIPT_FILES = new HashMap<>();
 
     //TAGLIB_ATTRIBUTES_JAVASCRIPT
     static {
@@ -559,6 +560,49 @@ public class LiferayTaglibAttributes {
         ));
 
         //c.tld -> when inside choose
+    }
+
+    static {
+        TAGLIB_JAVASCRIPT_FILES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_REACT, Arrays.asList(
+                new AbstractMap.SimpleEntry<>("component", "module")
+        ));
+        TAGLIB_JAVASCRIPT_FILES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_SOY, Arrays.asList(
+                new AbstractMap.SimpleEntry<>("template-renderer","module")
+        ));
+        TAGLIB_JAVASCRIPT_FILES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND, Arrays.asList(
+                new AbstractMap.SimpleEntry<>("component","module"),
+                new AbstractMap.SimpleEntry<>("empty-result-message","buttonPropsTransformer"),
+                new AbstractMap.SimpleEntry<>("empty-result-message","defaultEventHandler"),
+                new AbstractMap.SimpleEntry<>("empty-result-message","propsTransformer")
+        ));
+        TAGLIB_JAVASCRIPT_FILES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_CLAY, Arrays.asList(
+                new AbstractMap.SimpleEntry<>("button","propsTransformer"),
+                new AbstractMap.SimpleEntry<>("checkbox","defaultEventHandler"),
+                new AbstractMap.SimpleEntry<>("dropdown-actions","propsTransformer"),
+                new AbstractMap.SimpleEntry<>("dropdown-menu","propsTransformer"),
+                new AbstractMap.SimpleEntry<>("file-card","defaultEventHandler"),
+                new AbstractMap.SimpleEntry<>("file-card","propsTransformer"),
+                new AbstractMap.SimpleEntry<>("horizontal-card","defaultEventHandler"),
+                new AbstractMap.SimpleEntry<>("horizontal-card","propsTransformer"),
+                new AbstractMap.SimpleEntry<>("image-card","defaultEventHandler"),
+                new AbstractMap.SimpleEntry<>("image-card","propsTransformer"),
+                new AbstractMap.SimpleEntry<>("link","propsTransformer"),
+                new AbstractMap.SimpleEntry<>("management-toolbar","defaultEventHandler"),
+                new AbstractMap.SimpleEntry<>("management-toolbar","propsTransformer"),
+                new AbstractMap.SimpleEntry<>("multiselect","propsTransformer"),
+                new AbstractMap.SimpleEntry<>("navigation-card","propsTransformer"),
+                new AbstractMap.SimpleEntry<>("pagination-bar","propsTransformer"),
+                new AbstractMap.SimpleEntry<>("select","defaultEventHandler"),
+                new AbstractMap.SimpleEntry<>("select","propsTransformer"),
+                new AbstractMap.SimpleEntry<>("user-card","defaultEventHandler"),
+                new AbstractMap.SimpleEntry<>("user-card","propsTransformer"),
+                new AbstractMap.SimpleEntry<>("vertical-card","defaultEventHandler"),
+                new AbstractMap.SimpleEntry<>("vertical-card","propsTransformer")
+        ));
+        TAGLIB_JAVASCRIPT_FILES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND_DATA_SET, Arrays.asList(
+                new AbstractMap.SimpleEntry<>("frontend-data-set", "propsTransformer"),
+                new AbstractMap.SimpleEntry<>("headless-display", "propsTransformer")
+        ));
     }
 
 }
