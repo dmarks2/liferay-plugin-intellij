@@ -23,7 +23,7 @@ public class LiferayAdvancedResourcesImporterServiceCallWatcher extends FileChan
 
             if (component != null) {
                 ProjectUtils.runDumbAwareLater(project, () -> {
-                    if (virtualFile.isValid()) {
+                    if (virtualFile.exists() && virtualFile.isValid()) {
                         PsiManager psiManager = PsiManager.getInstance(project);
 
                         PsiFile psiFile = psiManager.findFile(virtualFile);
