@@ -6,12 +6,15 @@ import com.intellij.lang.javascript.frameworks.modules.JSModuleFileReferenceSet;
 import com.intellij.lang.javascript.frameworks.modules.resolver.JSDefaultFileReferenceContext;
 import com.intellij.lang.typescript.tsconfig.TypeScriptConfigUtil;
 import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiReferenceProvider;
 import com.intellij.util.ProcessingContext;
+import de.dm.intellij.liferay.util.LiferayFileUtil;
 import de.dm.intellij.liferay.util.LiferayTaglibAttributes;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.AbstractMap;
 import java.util.Collection;
@@ -39,6 +42,11 @@ public class LiferayTaglibJavascriptFileReferenceContributor extends AbstractLif
 				JSDefaultFileReferenceContext jsDefaultFileReferenceContext = new JSDefaultFileReferenceContext(modulePath, element, TypeScriptConfigUtil.getConfigForPsiFile(element.getContainingFile(), true)) {
 					public boolean isUrlEncoded() {
 						return scheme != null;
+					}
+
+					@Override
+					public @Nullable VirtualFile baseUrl() {
+						return LiferayFileUtil.getWebContextForFile(element.getContainingFile().getOriginalFile());
 					}
 				};
 

@@ -47,4 +47,30 @@ public class LiferayTaglibJavascriptFileReferenceContributorTest extends BasePla
 		assertTrue(referenceResolved);
 	}
 
+	public void testReferenceInWebContextRoot() {
+		myFixture.configureByFiles("META-INF/resources/sample/view.jsp", "react.tld", "META-INF/resources/js/SampleModule.js");
+
+		PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+
+		boolean referenceResolved = false;
+
+		if (element != null) {
+			PsiReference[] references = element.getReferences();
+
+			for (PsiReference reference : references) {
+				PsiElement resolve = reference.resolve();
+
+				if (resolve == null) {
+					referenceResolved = false;
+
+					break;
+				} else {
+					referenceResolved = true;
+				}
+			}
+		}
+
+		assertTrue(referenceResolved);
+	}
+
 }

@@ -655,4 +655,36 @@ public class LiferayFileUtil {
         return false;
     }
 
+    public static VirtualFile getWebContextForFile(PsiFile psiFile) {
+        final Module module = ModuleUtil.findModuleForPsiElement(psiFile);
+
+        if ( (module != null) && (psiFile.getVirtualFile() != null) ) {
+            VirtualFile virtualFile = psiFile.getVirtualFile();
+
+            Collection<WebFacet> webFacets = WebFacet.getInstances(module);
+
+            if (! webFacets.isEmpty()) {
+                for (WebFacet webFacet : webFacets) {
+                    List<WebRoot> webRoots = webFacet.getWebRoots();
+
+                    for (WebRoot webRoot : webRoots) {
+                        if ("/".equals(webRoot.getRelativePath())) {
+                            VirtualFile webRootFile = webRoot.getFile();
+
+                            if ( (webRootFile != null) && (webRootFile.isValid()) ) {
+                                String relativePath = VfsUtilCore.getRelativePath(virtualFile, webRootFile);
+
+                                if (relativePath != null) {
+                                    return webRootFile;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
 }
