@@ -19,13 +19,17 @@ public class LiferayFreemarkerTaglibs {
         FTL_MACRO_PREFIXES.put("clay", LiferayTaglibs.TAGLIB_URI_LIFERAY_CLAY);
         FTL_MACRO_PREFIXES.put("liferay_asset", LiferayTaglibs.TAGLIB_URI_LIFERAY_ASSET);
         FTL_MACRO_PREFIXES.put("liferay_aui", LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI);
+        FTL_MACRO_PREFIXES.put("liferay_captcha", LiferayTaglibs.TAGLIB_URI_LIFERAY_CAPTCHA);
         FTL_MACRO_PREFIXES.put("liferay_comment", LiferayTaglibs.TAGLIB_URI_LIFERAY_COMMENT);
+        FTL_MACRO_PREFIXES.put("liferay_commerce_product", LiferayTaglibs.TAGLIB_URI_LIFERAY_COMMERCE_PRODUCT);
         FTL_MACRO_PREFIXES.put("liferay_document_library", LiferayTaglibs.TAGLIB_URI_LIFERAY_DOCUMENT_LIBRARY);
         FTL_MACRO_PREFIXES.put("liferay_editor", LiferayTaglibs.TAGLIB_URI_LIFERAY_EDITOR);
         FTL_MACRO_PREFIXES.put("liferay_expando", LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPANDO);
         FTL_MACRO_PREFIXES.put("liferay_flags", LiferayTaglibs.TAGLIB_URI_LIFERAY_FLAGS);
         FTL_MACRO_PREFIXES.put("liferay-fragment", LiferayTaglibs.TAGLIB_URI_LIFERAY_FRAGMENT);
+        FTL_MACRO_PREFIXES.put("liferay_friendly_url", LiferayTaglibs.TAGLIB_URI_LIFERAY_FRIENDLY_URL);
         FTL_MACRO_PREFIXES.put("liferay_frontend", LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND);
+        FTL_MACRO_PREFIXES.put("frontend_data_set", LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND_DATA_SET);
         FTL_MACRO_PREFIXES.put("liferay_item_selector", LiferayTaglibs.TAGLIB_URI_LIFERAY_ITEM_SELECTOR);
         FTL_MACRO_PREFIXES.put("liferay_journal", LiferayTaglibs.TAGLIB_URI_LIFERAY_JOURNAL);
         FTL_MACRO_PREFIXES.put("liferay_layout", LiferayTaglibs.TAGLIB_URI_LIFERAY_LAYOUT);

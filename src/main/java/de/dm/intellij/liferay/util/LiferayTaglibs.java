@@ -14,6 +14,7 @@ public class LiferayTaglibs {
     public static final String TAGLIB_URI_LIFERAY_CLAY = "http://liferay.com/tld/clay";
     public static final String TAGLIB_URI_LIFERAY_COMMENT = "http://liferay.com/tld/comment";
     public static final String TAGLIB_URI_LIFERAY_COMMERCE = "http://liferay.com/tld/commerce";
+    public static final String TAGLIB_URI_LIFERAY_COMMERCE_PRODUCT = "http://liferay.com/tld/commerce-product";
     public static final String TAGLIB_URI_LIFERAY_COMMERCE_UI = "http://liferay.com/tld/commerce-ui";
     public static final String TAGLIB_URI_LIFERAY_DATA_ENGINE = "http://liferay.com/tld/data-engine";
     public static final String TAGLIB_URI_LIFERAY_DDM = "http://liferay.com/tld/ddm";
@@ -25,8 +26,10 @@ public class LiferayTaglibs {
     public static final String TAGLIB_URI_LIFERAY_FLAGS = "http://liferay.com/tld/flags";
     public static final String TAGLIB_URI_LIFERAY_FORM = "http://liferay.com/tld/form";
     public static final String TAGLIB_URI_LIFERAY_FRAGMENT = "http://liferay.com/tld/fragment";
+    public static final String TAGLIB_URI_LIFERAY_FRIENDLY_URL = "http://liferay.com/tld/friendly-url";
     public static final String TAGLIB_URI_LIFERAY_FRONTEND = "http://liferay.com/tld/frontend";
     public static final String TAGLIB_URI_LIFERAY_FRONTEND_DATA_SET = "http://liferay.com/tld/frontend-data-set";
+    public static final String TAGLIB_URI_LIFERAY_FRONTEND_DYNAMIC_SECTION = "http://liferay.com/tld/dynamic-section";
     public static final String TAGLIB_URI_LIFERAY_ITEM_SELECTOR = "http://liferay.com/tld/item-selector";
     public static final String TAGLIB_URI_LIFERAY_INFO = "http://liferay.com/tld/info";
     public static final String TAGLIB_URI_LIFERAY_JOURNAL = "http://liferay.com/tld/journal";
