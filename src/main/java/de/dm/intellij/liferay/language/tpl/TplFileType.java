@@ -2,8 +2,8 @@ package de.dm.intellij.liferay.language.tpl;
 
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import com.intellij.openapi.fileTypes.TemplateLanguageFileType;
-import com.intellij.velocity.Icons;
 import com.intellij.velocity.psi.VtlLanguage;
+import de.dm.intellij.liferay.util.Icons;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -36,7 +36,7 @@ public class TplFileType extends LanguageFileType implements TemplateLanguageFil
 
     @Nullable
     public Icon getIcon() {
-        return Icons.VTL_ICON;
+        return Icons.VELOCITY_ICON;
     }
 
 }

@@ -560,7 +560,6 @@ tasks.register('generateTaglibDefinitions') {
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/expando/expando-taglib/src/main/resources/META-INF/liferay-expando.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/export-import/export-import-changeset-taglib/src/main/resources/META-INF/resources/liferay-export-import-changeset.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/flags/flags-taglib/src/main/resources/META-INF/liferay-flags.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/fragment/fragment-taglib/src/main/resources/META-INF/liferay-fragment.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/friendly-url/friendly-url-taglib/src/main/resources/META-INF/liferay-friendly-url.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/frontend-data-set/frontend-data-set-taglib/src/main/resources/META-INF/frontend-data-set.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/frontend-editor/frontend-editor-taglib/src/main/resources/META-INF/liferay-editor.tld',
