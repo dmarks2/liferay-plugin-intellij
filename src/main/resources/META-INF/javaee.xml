@@ -20,5 +20,7 @@
         <xml.elementDescriptorProvider implementation="de.dm.intellij.liferay.language.fragment.FragmentTagNameProvider" order="first" />
         <xml.attributeDescriptorsProvider implementation="de.dm.intellij.liferay.language.fragment.FragmentAttributeDescriptorsProvider" order="first" />
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.fragment.FragmentFragmentJsonFileReferenceContributor" />
+
+        <javaee.web.customServletReferenceProvider implementation="de.dm.intellij.liferay.theme.LiferayThemeServletReferenceProvider" />
     </extensions>
 </idea-plugin>
