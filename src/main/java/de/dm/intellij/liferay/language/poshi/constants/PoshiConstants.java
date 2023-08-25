@@ -32,6 +32,7 @@ public class PoshiConstants {
             "FileUtil.java",
             "GetterUtil.java",
             "ListUtil.java",
+            "MapUtil.java",
             "MathUtil.java",
             "NaturalOrderStringComparator.java",
             "OSDetector.java",

@@ -77,6 +77,36 @@ public class StringUtil {
 		return s;
 	}
 
+	public static void assertContains(String expectedText, String actualText) {
+		if (!contains(expectedText, actualText)) {
+			throw new RuntimeException(
+				"Expected text \"" + expectedText +
+					"\" does not contain atual text\"" + actualText + "\"");
+		}
+	}
+
+	public static void assertEquals(String expectedText, String actualText) {
+		if (!equals(expectedText, actualText)) {
+			throw new RuntimeException(
+				"Expected text \"" + expectedText +
+					"\" does not equal actual text \"" + actualText + "\"");
+		}
+	}
+
+	public static String capitalize(String s) {
+		if ((s == null) || s.isEmpty()) {
+			return "";
+		}
+
+		char firstChar = s.charAt(0);
+
+		if (Character.isLowerCase(firstChar)) {
+			s = Character.toUpperCase(firstChar) + s.substring(1);
+		}
+
+		return s;
+	}
+
 	public static String center(String s, String size) {
 		return StringUtils.center(s, GetterUtil.getInteger(size));
 	}

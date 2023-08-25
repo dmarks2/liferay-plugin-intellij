@@ -1,5 +1,7 @@
 //Poshi Script documentation: https://github.com/yichenroy/com-liferay-poshi-runner/blob/master/poshi-script.markdown
 //Poshi testcases: https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-core/src/test/resources/com/liferay/poshi/core/dependencies/elements/PoshiSyntax.testcase
+//TODO add support for break & continue & return statemens in while/for loops
+//TODO add support for macro/function parameter declarations, e.g. https://github.com/liferay/liferay-portal/commit/3678de74e5021f184a3a01fe8294e5fc4c3ca378
 {
    parserClass="de.dm.intellij.liferay.language.poshi.parser.PoshiParser"
    parserUtilClass="de.dm.intellij.liferay.language.poshi.parser.PoshiParserUtil"
