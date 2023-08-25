@@ -8,8 +8,9 @@ All notable changes to this project will be documented in this file.
 - Feature: Code completion features for rest-config.yaml
 - Feature: Code completion and references for JSP taglibs refering to javascript modules (e.g. react:component)
 - Bugfix: Fix "Module already disposed" when unloading a module
-- Change: Update support for IntelliJ 2023.1, dropped support for older versions
 - Bugfix: fix support for IntelliJ 2023.2
+- Change: Update support for IntelliJ 2023.1, dropped support for older versions
+- Change: Update Poshi to 1.0.453
 
 ## 0.0.16
 - Feature: Experimental Poshi support

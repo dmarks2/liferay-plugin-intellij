@@ -89,14 +89,18 @@ dependencies {
 //    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.9.0'
 //    implementation 'org.json:json:20171018'
 
-    implementation 'com.liferay:com.liferay.poshi.runner.resources:1.0.14'
+    implementation 'com.liferay:com.liferay.poshi.runner.resources:1.0.17'
 
-    poshiImplementation 'com.liferay:com.liferay.poshi.runner.resources:1.0.14'
-    poshiImplementation('com.liferay:com.liferay.poshi.runner:1.0.396') {
+    poshiImplementation 'com.liferay:com.liferay.poshi.runner.resources:1.0.17'
+    poshiImplementation('com.liferay:com.liferay.poshi.runner:1.0.453') {
         exclude group: 'org.arquillian.rusheye', module: 'rusheye-api'
         exclude group: 'org.arquillian.rusheye', module: 'rusheye-impl'
+        exclude group: 'org.seleniumhq.selenium', module: 'selenium:selenium-java'
+        exclude group: 'io.netty', module: 'netty-all'
     }
-    poshiImplementation 'io.github.bonigarcia:webdrivermanager:5.3.1'
+    poshiImplementation 'org.seleniumhq.selenium:selenium-java:4.11.0'
+    poshiImplementation 'io.github.bonigarcia:webdrivermanager:5.4.1'
+    poshiImplementation 'org.slf4j:slf4j-simple:2.0.7'
 }
 
 intellij {

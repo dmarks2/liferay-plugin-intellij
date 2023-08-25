@@ -32,6 +32,12 @@ public class PoshiStandaloneRunner {
         File parent = scriptFile.getParentFile();
 
         if ("testcases".equals(parent.getName())) {
+            Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
+				System.err.println("Error while executing " + thread.getName() + ": " + throwable.getClass().getName() + ": " + throwable.getMessage());
+
+				throwable.printStackTrace();
+			});
+
             String baseDirName = parent.getParent();
 
             String namespacedClassCommandName = "LocalFile." + PoshiGetterUtil.getClassNameFromFilePath(scriptName) + "#" + testName;
@@ -39,11 +45,18 @@ public class PoshiStandaloneRunner {
             _initialize(baseDirName);
 
             PoshiRunner poshiRunner = new PoshiRunner(namespacedClassCommandName);
-
             try {
-                poshiRunner.setUp();
+                try {
+                    poshiRunner.setUp();
 
-                poshiRunner.test();
+                    poshiRunner.test();
+                } catch (Throwable throwable) {
+                    System.err.println("Error executing " + scriptName + "." + testName + ": " + throwable.getMessage());
+
+                    throwable.printStackTrace();
+
+                    throw throwable;
+                }
             } finally {
                 poshiRunner.tearDown();
             }
