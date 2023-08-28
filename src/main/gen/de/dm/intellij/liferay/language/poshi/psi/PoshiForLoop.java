@@ -8,7 +8,13 @@ import com.intellij.psi.PsiElement;
 public interface PoshiForLoop extends PsiElement {
 
   @NotNull
+  List<PoshiBreakStatement> getBreakStatementList();
+
+  @NotNull
   List<PoshiComments> getCommentsList();
+
+  @NotNull
+  List<PoshiContinueStatement> getContinueStatementList();
 
   @NotNull
   List<PoshiControlBlock> getControlBlockList();

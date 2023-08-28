@@ -9,9 +9,11 @@ import de.dm.intellij.liferay.language.poshi.psi.impl.*;
 public interface PoshiTypes {
 
   IElementType ANNOTATION = new PoshiElementType("ANNOTATION");
+  IElementType BREAK_STATEMENT = new PoshiElementType("BREAK_STATEMENT");
   IElementType COMMAND_BLOCK = new PoshiElementType("COMMAND_BLOCK");
   IElementType COMMENTS = new PoshiElementType("COMMENTS");
   IElementType COMMENT_BLOCK = new PoshiElementType("COMMENT_BLOCK");
+  IElementType CONTINUE_STATEMENT = new PoshiElementType("CONTINUE_STATEMENT");
   IElementType CONTROL_BLOCK = new PoshiElementType("CONTROL_BLOCK");
   IElementType DEFINITION_BASE = new PoshiElementType("DEFINITION_BASE");
   IElementType DEFINITION_BLOCK = new PoshiElementType("DEFINITION_BLOCK");
@@ -34,9 +36,11 @@ public interface PoshiTypes {
   IElementType ANNOTATION_NAME = new PoshiTokenType("ANNOTATION_NAME");
   IElementType ARITHMETIC_OPERATOR = new PoshiTokenType("ARITHMETIC_OPERATOR");
   IElementType BLOCK_COMMENT = new PoshiTokenType("BLOCK_COMMENT");
+  IElementType BREAK = new PoshiTokenType("break");
   IElementType COLON = new PoshiTokenType(":");
   IElementType COMMA = new PoshiTokenType(",");
   IElementType COMPARISION_OPERATOR = new PoshiTokenType("COMPARISION_OPERATOR");
+  IElementType CONTINUE = new PoshiTokenType("continue");
   IElementType CURLY_LBRACE = new PoshiTokenType("{");
   IElementType CURLY_RBRACE = new PoshiTokenType("}");
   IElementType DEFINITION = new PoshiTokenType("definition");
@@ -78,6 +82,9 @@ public interface PoshiTypes {
       if (type == ANNOTATION) {
         return new PoshiAnnotationImpl(node);
       }
+      else if (type == BREAK_STATEMENT) {
+        return new PoshiBreakStatementImpl(node);
+      }
       else if (type == COMMAND_BLOCK) {
         return new PoshiCommandBlockImpl(node);
       }
@@ -86,6 +93,9 @@ public interface PoshiTypes {
       }
       else if (type == COMMENT_BLOCK) {
         return new PoshiCommentBlockImpl(node);
+      }
+      else if (type == CONTINUE_STATEMENT) {
+        return new PoshiContinueStatementImpl(node);
       }
       else if (type == CONTROL_BLOCK) {
         return new PoshiControlBlockImpl(node);

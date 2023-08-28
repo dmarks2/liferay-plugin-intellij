@@ -80,6 +80,26 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // BREAK [SEMICOLON]
+  public static boolean break_statement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "break_statement")) return false;
+    if (!nextTokenIs(b, BREAK)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, BREAK);
+    r = r && break_statement_1(b, l + 1);
+    exit_section_(b, m, BREAK_STATEMENT, r);
+    return r;
+  }
+
+  // [SEMICOLON]
+  private static boolean break_statement_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "break_statement_1")) return false;
+    consumeToken(b, SEMICOLON);
+    return true;
+  }
+
+  /* ********************************************************** */
   // [annotation*] definition-base [CURLY_LBRACE {command-inner}* CURLY_RBRACE]
   public static boolean command_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "command_block")) return false;
@@ -151,12 +171,14 @@ public class PoshiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // structure-inner | return-statement
+  // structure-inner | return-statement | break-statement | continue-statement
   static boolean command_inner(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "command_inner")) return false;
     boolean r;
     r = structure_inner(b, l + 1);
     if (!r) r = return_statement(b, l + 1);
+    if (!r) r = break_statement(b, l + 1);
+    if (!r) r = continue_statement(b, l + 1);
     return r;
   }
 
@@ -183,6 +205,26 @@ public class PoshiParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, LINE_COMMENT);
     exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  /* ********************************************************** */
+  // CONTINUE [SEMICOLON]
+  public static boolean continue_statement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "continue_statement")) return false;
+    if (!nextTokenIs(b, CONTINUE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, CONTINUE);
+    r = r && continue_statement_1(b, l + 1);
+    exit_section_(b, m, CONTINUE_STATEMENT, r);
+    return r;
+  }
+
+  // [SEMICOLON]
+  private static boolean continue_statement_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "continue_statement_1")) return false;
+    consumeToken(b, SEMICOLON);
+    return true;
   }
 
   /* ********************************************************** */

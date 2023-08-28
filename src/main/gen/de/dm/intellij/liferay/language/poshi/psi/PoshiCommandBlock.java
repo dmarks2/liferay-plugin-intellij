@@ -11,7 +11,13 @@ public interface PoshiCommandBlock extends PsiElement {
   List<PoshiAnnotation> getAnnotationList();
 
   @NotNull
+  List<PoshiBreakStatement> getBreakStatementList();
+
+  @NotNull
   List<PoshiComments> getCommentsList();
+
+  @NotNull
+  List<PoshiContinueStatement> getContinueStatementList();
 
   @NotNull
   List<PoshiControlBlock> getControlBlockList();

@@ -37,6 +37,8 @@
            RETURN = "return"
            FOR = "for"
            LIST = "list"
+           BREAK = "break"
+           CONTINUE = "continue"
 
            DOUBLE_AMPERSAND = "&&"
            DOUBLE_BAR = "||"
@@ -93,7 +95,7 @@ command-block ::= [annotation*] definition-base [CURLY_LBRACE {command-inner}* C
 
 private structure-inner ::= invocation | property-instruction | variable | control-block | comments | for-loop
 
-private command-inner ::= structure-inner | return-statement
+private command-inner ::= structure-inner | return-statement | break-statement | continue-statement
 
 definition-base ::= function-definition | macro-definition | test-definition {
     methods=[getName setName]
@@ -126,6 +128,10 @@ variable-ref ::= DOLLAR CURLY_LBRACE IDENTIFIER CURLY_RBRACE {
 }
 
 return-statement ::= RETURN {strings}* [SEMICOLON]
+
+break-statement ::= BREAK [SEMICOLON]
+
+continue-statement ::= CONTINUE [SEMICOLON]
 
 private strings ::= string-quoted-double | string-quoted-single-multiline | string-quoted-single
 

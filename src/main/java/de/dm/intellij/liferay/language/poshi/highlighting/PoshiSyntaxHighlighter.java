@@ -22,6 +22,8 @@ public class PoshiSyntaxHighlighter extends SyntaxHighlighterBase {
         typeTextAttributesMap.put(PoshiTypes.ELSE_IF, PoshiHighlightingColors.KEYWORD);
         typeTextAttributesMap.put(PoshiTypes.IF, PoshiHighlightingColors.KEYWORD);
         typeTextAttributesMap.put(PoshiTypes.RETURN, PoshiHighlightingColors.KEYWORD);
+        typeTextAttributesMap.put(PoshiTypes.CONTINUE, PoshiHighlightingColors.KEYWORD);
+        typeTextAttributesMap.put(PoshiTypes.BREAK, PoshiHighlightingColors.KEYWORD);
         typeTextAttributesMap.put(PoshiTypes.STATIC, PoshiHighlightingColors.KEYWORD);
         typeTextAttributesMap.put(PoshiTypes.TASK, PoshiHighlightingColors.KEYWORD);
         typeTextAttributesMap.put(PoshiTypes.VAR, PoshiHighlightingColors.KEYWORD);

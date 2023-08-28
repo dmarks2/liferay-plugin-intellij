@@ -12,6 +12,10 @@ public class PoshiVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitBreakStatement(@NotNull PoshiBreakStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitCommandBlock(@NotNull PoshiCommandBlock o) {
     visitPsiElement(o);
   }
@@ -21,6 +25,10 @@ public class PoshiVisitor extends PsiElementVisitor {
   }
 
   public void visitComments(@NotNull PoshiComments o) {
+    visitPsiElement(o);
+  }
+
+  public void visitContinueStatement(@NotNull PoshiContinueStatement o) {
     visitPsiElement(o);
   }
 

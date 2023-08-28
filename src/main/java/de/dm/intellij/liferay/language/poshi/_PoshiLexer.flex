@@ -39,50 +39,52 @@ TESTING_WHITESPACE=[ \n\t\r\f]+
 
 %%
 <YYINITIAL> {
-  {WHITE_SPACE}                  { return WHITE_SPACE; }
+  {WHITE_SPACE}                   { return WHITE_SPACE; }
 
-  "definition"                   { return DEFINITION; }
-  "setUp"                        { return SET_UP; }
-  "tearDown"                     { return TEAR_DOWN; }
-  "function"                     { return FUNCTION; }
-  "macro"                        { return MACRO; }
-  "property"                     { return PROPERTY; }
-  "static"                       { return STATIC; }
-  "var"                          { return VAR; }
-  "if"                           { return IF; }
-  "else if"                      { return ELSE_IF; }
-  "else"                         { return ELSE; }
-  "task"                         { return TASK; }
-  "while"                        { return WHILE; }
-  "return"                       { return RETURN; }
-  "for"                          { return FOR; }
-  "list"                         { return LIST; }
-  "&&"                           { return DOUBLE_AMPERSAND; }
-  "||"                           { return DOUBLE_BAR; }
-  "{"                            { return CURLY_LBRACE; }
-  "}"                            { return CURLY_RBRACE; }
-  "("                            { return ROUND_LBRACE; }
-  ")"                            { return ROUND_RBRACE; }
-  "["                            { return SQUARE_LBRACE; }
-  "]"                            { return SQUARE_RBRACE; }
-  "."                            { return PERIOD; }
-  ","                            { return COMMA; }
-  "="                            { return EQUALS; }
-  ":"                            { return COLON; }
-  ";"                            { return SEMICOLON; }
-  "$"                            { return DOLLAR; }
+  "definition"                    { return DEFINITION; }
+  "setUp"                         { return SET_UP; }
+  "tearDown"                      { return TEAR_DOWN; }
+  "function"                      { return FUNCTION; }
+  "macro"                         { return MACRO; }
+  "property"                      { return PROPERTY; }
+  "static"                        { return STATIC; }
+  "var"                           { return VAR; }
+  "if"                            { return IF; }
+  "else if"                       { return ELSE_IF; }
+  "else"                          { return ELSE; }
+  "task"                          { return TASK; }
+  "while"                         { return WHILE; }
+  "return"                        { return RETURN; }
+  "for"                           { return FOR; }
+  "list"                          { return LIST; }
+  "break"                         { return BREAK; }
+  "continue"                      { return CONTINUE; }
+  "&&"                            { return DOUBLE_AMPERSAND; }
+  "||"                            { return DOUBLE_BAR; }
+  "{"                             { return CURLY_LBRACE; }
+  "}"                             { return CURLY_RBRACE; }
+  "("                             { return ROUND_LBRACE; }
+  ")"                             { return ROUND_RBRACE; }
+  "["                             { return SQUARE_LBRACE; }
+  "]"                             { return SQUARE_RBRACE; }
+  "."                             { return PERIOD; }
+  ","                             { return COMMA; }
+  "="                             { return EQUALS; }
+  ":"                             { return COLON; }
+  ";"                             { return SEMICOLON; }
+  "$"                             { return DOLLAR; }
 
-  {LINE_COMMENT}                 { return LINE_COMMENT; }
-  {BLOCK_COMMENT}                { return BLOCK_COMMENT; }
-  {DOUBLE_QUOTED_STRING}         { return DOUBLE_QUOTED_STRING; }
-  {SINGLE_QUOTED_MULTILINE}      { return SINGLE_QUOTED_MULTILINE; }
-  {SINGLE_QUOTED_STRING}         { return SINGLE_QUOTED_STRING; }
-  {ANNOTATION_NAME}              { return ANNOTATION_NAME; }
-  {IDENTIFIER}                   { return IDENTIFIER; }
-  {ARITHMETIC_OPERATOR}          { return ARITHMETIC_OPERATOR; }
-  {NUMERIC_CONSTANT}             { return NUMERIC_CONSTANT; }
-  {COMPARISION_OPERATOR}         { return COMPARISION_OPERATOR; }
-  {TESTING_WHITESPACE}           { return TESTING_WHITESPACE; }
+  {LINE_COMMENT}                  { return LINE_COMMENT; }
+  {BLOCK_COMMENT}                 { return BLOCK_COMMENT; }
+  {DOUBLE_QUOTED_STRING}          { return DOUBLE_QUOTED_STRING; }
+  {SINGLE_QUOTED_MULTILINE}       { return SINGLE_QUOTED_MULTILINE; }
+  {SINGLE_QUOTED_STRING}          { return SINGLE_QUOTED_STRING; }
+  {ANNOTATION_NAME}               { return ANNOTATION_NAME; }
+  {IDENTIFIER}                    { return IDENTIFIER; }
+  {ARITHMETIC_OPERATOR}           { return ARITHMETIC_OPERATOR; }
+  {NUMERIC_CONSTANT}              { return NUMERIC_CONSTANT; }
+  {COMPARISION_OPERATOR}          { return COMPARISION_OPERATOR; }
+  {TESTING_WHITESPACE}            { return TESTING_WHITESPACE; }
 
 }
 
