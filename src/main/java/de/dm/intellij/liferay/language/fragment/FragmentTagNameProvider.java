@@ -29,7 +29,7 @@ public class FragmentTagNameProvider implements XmlTagNameProvider, XmlElementDe
     //https://learn.liferay.com/dxp/latest/en/site-building/developer-guide/reference/fragments/fragment-specific-tags-reference.html
     public static final Collection<AbstractMap.SimpleEntry<String, FragmentAttributeInformationHolder>> COMMON_FRAGMENT_ATTRIBUTES = Arrays.asList(
             new AbstractMap.SimpleEntry<>("data-lfr-editable-id", new FragmentAttributeInformationHolder.Builder().idType(true).typeName("String").build()),
-            new AbstractMap.SimpleEntry<>("data-lfr-editable-type", new FragmentAttributeInformationHolder.Builder().typeName("String").attributeValues(new String[]{"text", "html", "rich-text", "image", "link", "background-image"}).build()),
+            new AbstractMap.SimpleEntry<>("data-lfr-editable-type", new FragmentAttributeInformationHolder.Builder().typeName("String").attributeValues(new String[]{"text", "html", "rich-text", "image", "link", "background-image", "date-time"}).build()),
             new AbstractMap.SimpleEntry<>("data-lfr-background-image-id", new FragmentAttributeInformationHolder.Builder().typeName("String").idRefType(true).build())
         );
 

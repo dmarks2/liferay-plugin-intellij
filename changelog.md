@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Code completion features for client-extensions.yaml
 - Feature: Code completion features for rest-config.yaml
 - Feature: Code completion and references for JSP taglibs refering to javascript modules (e.g. react:component)
+- Feature: Add support for date-time in data-lfr-editable-type (see LPS-154775)
 - Bugfix: Fix "Module already disposed" when unloading a module
 - Bugfix: fix support for IntelliJ 2023.2
 - Change: Update support for IntelliJ 2023.1, dropped support for older versions
