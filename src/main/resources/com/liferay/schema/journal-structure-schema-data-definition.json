@@ -65,6 +65,7 @@
             "checkbox_multiple",
             "color",
             "date",
+            "date_time",
             "document_library",
             "fieldset",
             "geolocation",
