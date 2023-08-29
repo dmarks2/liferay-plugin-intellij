@@ -88,13 +88,9 @@ the proper plugin for that language.
 
 The following languages are supported for `<script-language>`:
 
-* javascript
 * groovy
 * java
-* beanshell
 * drl
-* python
-* ruby
 
 The following languages are supported for `<template-language>`:
 

@@ -23,13 +23,9 @@ public class LiferayWorkflowScriptLanguageInjector implements MultiHostInjector 
 
     private static final Map<String, String> SCRIPT_LANGUAGE_MAPPING = new HashMap<>();
     static {
-        SCRIPT_LANGUAGE_MAPPING.put("javascript", "JavaScript");
         SCRIPT_LANGUAGE_MAPPING.put("groovy", "Groovy");
         SCRIPT_LANGUAGE_MAPPING.put("java", "JAVA");
-        SCRIPT_LANGUAGE_MAPPING.put("beanshell", "Beanshell");
         SCRIPT_LANGUAGE_MAPPING.put("drl", "Drools");
-        SCRIPT_LANGUAGE_MAPPING.put("python", "Python");
-        SCRIPT_LANGUAGE_MAPPING.put("ruby", "ruby");
     }
 
     private static final Map<String, String> TEMPLATE_LANGUAGE_MAPPING = new HashMap<>();

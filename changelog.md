@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Bugfix: fix support for IntelliJ 2023.2
 - Change: Update support for IntelliJ 2023.1, dropped support for older versions
 - Change: Update Poshi to 1.0.453
+- Change: Remove unsupported languages in workflow scripts (see LPS-187594)
 
 ## 0.0.16
 - Feature: Experimental Poshi support
