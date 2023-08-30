@@ -12,7 +12,8 @@ public class LiferayTaglibInspectionToolProvider implements InspectionToolProvid
         return new Class[] {
                 LiferayTaglibStrictQuoteEscapingInspection.class,
                 LiferayTaglibStringConcatInspection.class,
-                LiferayTaglibNestingInspection.class
+                LiferayTaglibNestingInspection.class,
+                LiferayTaglibDeprecationInspection.class
         };
     }
 }

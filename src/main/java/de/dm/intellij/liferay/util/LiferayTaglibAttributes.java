@@ -603,6 +603,9 @@ public class LiferayTaglibAttributes {
                 new AbstractMap.SimpleEntry<>("frontend-data-set", "propsTransformer"),
                 new AbstractMap.SimpleEntry<>("headless-display", "propsTransformer")
         ));
+
     }
+
+
 
 }

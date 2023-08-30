@@ -8,6 +8,7 @@ JSP files
 5. [JSP inspections](#jsp-inspections)
 6. [Debugger support for JSPs](#debugger-support-for-jsps) 
 7. [Suggested Parents](#suggested-parent)
+7. [Deprecations](#deprecations)
 
 Resolve includes to JSPs inside JSP Hooks
 -----------------------------------------
@@ -168,3 +169,10 @@ The following tags are checked for the right context:
     <liferay-ui:user-group-search-container-results>
     <liferay-ui:user-search-container-results>
     <liferay-portlet:param>
+
+Deprecations
+------------
+
+Some taglibs or attributes may be deprecated or removed in specific Liferay versions. 
+
+Depending on the Liferay version some inspections are shown if deprecated or removed taglibs/attributes are detected.

@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Code completion and references for JSP taglibs refering to javascript modules (e.g. react:component)
 - Feature: Add support for date-time in data-lfr-editable-type (see LPS-154775)
 - Feature: Add date_time field type for web content structures (see LPS-178624)
+- Feature: show deprecation warnings for deprecated or removed taglibs or attributes in JSP files
 - Bugfix: Fix "Module already disposed" when unloading a module
 - Bugfix: fix support for IntelliJ 2023.2
 - Change: Update support for IntelliJ 2023.1, dropped support for older versions
