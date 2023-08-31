@@ -227,6 +227,57 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 						"flash"
 				)
 		);
+		TAGLIB_DEPRECATIONS.addAll(
+				createTags(7.4f, TAGLIB_URI_LIFERAY_AUI, "The tags `<aui:fieldset-group>` and `<liferay-frontend:fieldset-group>` added unnecessary markup to the page and caused accessibility issues, so they have been removed", "LPS-168309",
+						"fieldset-group"
+				)
+		);
+		TAGLIB_DEPRECATIONS.addAll(
+				createTags(7.4f, TAGLIB_URI_LIFERAY_FRONTEND, "The tags `<aui:fieldset-group>` and `<liferay-frontend:fieldset-group>` added unnecessary markup to the page and caused accessibility issues, so they have been removed", "LPS-168309",
+						"fieldset-group"
+				)
+		);
+		TAGLIB_DEPRECATIONS.addAll(
+				createTags(7.4f, TAGLIB_URI_LIFERAY_FRONTEND, "Obsolete frontend taglibs that don't follow lexicon patterns and have an obsolete markup have been removed", "LPS-158461",
+						"add-menu",
+						"add-menu-item",
+						"info-bar",
+						"info-bar-button",
+						"horizontal-card",
+						"horizontal-card-col",
+						"horizontal-card-icon",
+						"html-vertical-card",
+						"icon-vertical-card",
+						"image-card",
+						"management-bar",
+						"management-bar-action-buttons",
+						"management-bar-button",
+						"management-bar-buttons",
+						"management-bar-display-buttons",
+						"management-bar-filter",
+						"management-bar-filter-item",
+						"management-bar-filters",
+						"management-bar-navigation",
+						"management-bar-sidenav-toggler-button",
+						"management-bar-sort",
+						"user-vertical-card",
+						"vertical-card",
+						"vertical-card-footer",
+						"vertical-card-header",
+						"vertical-card-small-image",
+						"vertical-card-sticker-bottom"
+				)
+		);
+		TAGLIB_DEPRECATIONS.addAll(
+				createTags(7.4f, TAGLIB_URI_LIFERAY_AUI, "The tags <aui:container> is deprecated, use <clay:container> instead", "LPS-166546",
+						"container"
+				)
+		);
+		TAGLIB_DEPRECATIONS.addAll(
+				createTags(7.4f, TAGLIB_URI_LIFERAY_AUI, "The tags <aui:component>, <aui:spacer> and <aui:panel> are obsolete and have been removed", "LPS-166546",
+						"component", "spacer", "panel"
+				)
+		);
 	}
 
 
