@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.jsp;
 
+import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
@@ -26,6 +27,8 @@ public class LiferayTaglibDeprecationInfoHolder {
 	private String myMessage;
 
 	private String myTicket;
+
+	private LocalQuickFix[] quickFixes;
 
 	//newNamespace
 	//newLocalName
@@ -110,6 +113,12 @@ public class LiferayTaglibDeprecationInfoHolder {
 		return this;
 	}
 
+	public LiferayTaglibDeprecationInfoHolder quickfix(LocalQuickFix... quickFixes) {
+		this.quickFixes = quickFixes;
+
+		return this;
+	}
+
 	public void visitXmlTag(@NotNull ProblemsHolder holder, @NotNull XmlTag xmlTag) {
 		if (
 				(isApplicableLiferayVersion(xmlTag)) &&
@@ -117,7 +126,7 @@ public class LiferayTaglibDeprecationInfoHolder {
 				(Objects.equals(xmlTag.getLocalName(), myLocalName)) &&
 				(StringUtil.isEmpty(myAttribute))
 		) {
-			holder.registerProblem(xmlTag, getDeprecationMessage());
+			holder.registerProblem(xmlTag, getDeprecationMessage(), quickFixes);
 		}
 	}
 
@@ -131,7 +140,7 @@ public class LiferayTaglibDeprecationInfoHolder {
 				(Objects.equals(xmlTag.getLocalName(), myLocalName)) &&
 				(Objects.equals(attribute.getLocalName(), myAttribute))
 		) {
-			holder.registerProblem(attribute, getDeprecationMessage());
+			holder.registerProblem(attribute, getDeprecationMessage(), quickFixes);
 		}
 	}
 

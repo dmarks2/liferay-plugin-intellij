@@ -1,27 +1,44 @@
 package de.dm.intellij.liferay.language.jsp;
 
+import com.intellij.codeInspection.LocalQuickFix;
+import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
+import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.XmlElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import com.intellij.xml.XmlNamespaceHelper;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import static de.dm.intellij.liferay.language.jsp.LiferayTaglibDeprecationInfoHolder.createAttribute;
 import static de.dm.intellij.liferay.language.jsp.LiferayTaglibDeprecationInfoHolder.createAttributes;
+import static de.dm.intellij.liferay.language.jsp.LiferayTaglibDeprecationInfoHolder.createTag;
 import static de.dm.intellij.liferay.language.jsp.LiferayTaglibDeprecationInfoHolder.createTags;
+import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_ASSET;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI;
+import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_CAPTCHA;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_CLAY;
+import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPANDO;
+import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_FLAGS;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_SECURITY;
+import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_SITE_NAVIGATION;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_SOY;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_THEME;
+import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_TRASH;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_UI;
 
 public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectionTool {
@@ -34,31 +51,41 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 						"mbMessages", "fileEntryTuples"
 				)
 		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:asset-categories-navigation Tag and Replaced with liferay-asset:asset-categories-navigation.", "LPS-60753",
+		TAGLIB_DEPRECATIONS.add(
+				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:asset-categories-navigation Tag and Replaced with liferay-asset:asset-categories-navigation.", "LPS-60753",
 						"asset-categories-navigation"
-				)
-		);//TODO add quickfix rename namespace
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_AUI, "Removed the aui:button-item Tag and Replaced with aui:button.", "LPS-62922",
+				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_ASSET, "liferay-asset"))
+		);
+		TAGLIB_DEPRECATIONS.add(
+				createTag(7.0f, TAGLIB_URI_LIFERAY_AUI, "Removed the aui:button-item Tag and Replaced with aui:button.", "LPS-62922",
 						"button-item"
-				)
-		);//TODO add quickfix rename tag
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_AUI, "The aui:column taglib has been removed and replaced with aui:col taglib.", "LPS-62208",
+				).quickfix(renameXmlTag("button"))
+		);
+		TAGLIB_DEPRECATIONS.add(
+				createTag(7.0f, TAGLIB_URI_LIFERAY_AUI, "The aui:column taglib has been removed and replaced with aui:col taglib.", "LPS-62208",
 						"column"
-				)
-		);//TODO add quickfix rename tag
+				).quickfix(renameXmlTag("col"))
+		);
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.0f, TAGLIB_URI_LIFERAY_AUI, "Deprecated the aui:tool Tag with No Direct Replacement.", "LPS-70422",
 						"tool"
 				)
 		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_UI, "Moved the Expando Custom Field Tags to liferay-expando Taglib.", "LPS-69400",
-						"custom-attribute", "custom-attribute-list", "custom-attributes-available"
-				)
-		);//TODO add quickfix rename namespace
+		TAGLIB_DEPRECATIONS.add(
+				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Moved the Expando Custom Field Tags to liferay-expando Taglib.", "LPS-69400",
+						"custom-attribute"
+				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_EXPANDO, "liferay-expando"))
+		);
+		TAGLIB_DEPRECATIONS.add(
+				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Moved the Expando Custom Field Tags to liferay-expando Taglib.", "LPS-69400",
+						"custom-attribute-list"
+				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_EXPANDO, "liferay-expando"))
+		);
+		TAGLIB_DEPRECATIONS.add(
+				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Moved the Expando Custom Field Tags to liferay-expando Taglib.", "LPS-69400",
+						 "custom-attributes-available"
+				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_EXPANDO, "liferay-expando"))
+		);
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.0f, TAGLIB_URI_LIFERAY_PORTLET, "Deprecated the liferay-portlet:icon-back Tag with No Direct Replacement.", "LPS-63101",
 						"icon-back"
@@ -69,36 +96,36 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 						"encrypt"
 				)
 		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_UI, "Deprecated the liferay-ui:captcha Tag and Replaced with liferay-captcha:captcha.", "LPS-69383",
+		TAGLIB_DEPRECATIONS.add(
+				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Deprecated the liferay-ui:captcha Tag and Replaced with liferay-captcha:captcha.", "LPS-69383",
 						"captcha"
-				)
-		);//TODO add quickfix rename namespace
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:trash-empty Tag and Replaced with liferay-trash:empty.", "LPS-60779",
+				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_CAPTCHA, "liferay-captcha"))
+		);
+		TAGLIB_DEPRECATIONS.add(
+				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:trash-empty Tag and Replaced with liferay-trash:empty.", "LPS-60779",
 						"trash-empty"
-				)
-		);//TODO add quickfix rename namespace
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:trash-undo Tag and Replaced with liferay-trash:undo.", "LPS-60779",
+				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_TRASH, "liferay-trash"))
+		);
+		TAGLIB_DEPRECATIONS.add(
+				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:trash-undo Tag and Replaced with liferay-trash:undo.", "LPS-60779",
 						"trash-undo"
-				)
-		);//TODO add quickfix rename namespace
+				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_TRASH, "liferay-trash"))
+		);
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:journal-article Tag.", "LPS-69321",
 						"journal-article"
 				)
 		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_UI, "Deprecated the liferay-ui:flags Tag and Replaced with liferay-flags:flags.", "LPS-60967",
+		TAGLIB_DEPRECATIONS.add(
+				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Deprecated the liferay-ui:flags Tag and Replaced with liferay-flags:flags.", "LPS-60967",
 						"flags"
-				)
-		);//TODO add quickfix rename namespace
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:navigation Tag and Replaced with liferay-site-navigation:navigation Tag.", "LPS-60328",
+				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_FLAGS, "liferay-flags"))
+		);
+		TAGLIB_DEPRECATIONS.add(
+				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:navigation Tag and Replaced with liferay-site-navigation:navigation Tag.", "LPS-60328",
 						"navigation"
-				)
-		);//TODO add quickfix rename namespace
+				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_SITE_NAVIGATION, "liferay-site-navigation"))
+		);
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.0f, TAGLIB_URI_LIFERAY_PORTLET, "Removed the Tags that Start with portlet:icon-.", "LPS-54620",
 						"icon-close", "icon-configuration", "icon-edit",
@@ -136,11 +163,17 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 				)
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "button", "The attributes ariaLabel, componentId, contributorKey, data, defaultEventHandler, disabled, elementClasses, iconAlignment, name, size, spritemap, style, title, type, value in `clay:button` tag was removed.", "LPS-125256",
-						"ariaLabel", "componentId", "contributorKey", "data", "defaultEventHandler", "disabled", "elementClasses",
+				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "button", "The attributes componentId, contributorKey, data, defaultEventHandler, disabled, elementClasses, iconAlignment, name, size, spritemap, style, title, type, value in `clay:button` tag was removed.", "LPS-125256",
+						 "componentId", "contributorKey", "data", "defaultEventHandler", "disabled", "elementClasses",
 						"iconAlignment", "name", "size", "spritemap", "style", "title", "type", "value"
 				)
-		);//TODO add quickfix rename ariaLabel to aria-label
+		);
+		TAGLIB_DEPRECATIONS.add(
+				createAttribute(7.4f, TAGLIB_URI_LIFERAY_CLAY, "button", "The attribute ariaLabel in `clay:button` tag was removed, use aria-label instead", "LPS-125256",
+						"ariaLabel"
+				).quickfix(renameXmlAttribute("aria-label"))
+		);
+
 
 		TAGLIB_DEPRECATIONS.addAll(
 				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "dropdown-actions", "The attributes buttonLabel, buttonStyle, buttonType, componentId, contributorKey, data, defaultEventHandler, elementClasses, expanded, itemsIconAlignment, searchable, showToggleIcon, spritemap, style, triggerCssClasses, triggerTitle, type in `clay:dropdown-actions` tag was removed.", "LPS-125256",
@@ -268,10 +301,10 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 						"vertical-card-sticker-bottom"
 				)
 		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.4f, TAGLIB_URI_LIFERAY_AUI, "The tags <aui:container> is deprecated, use <clay:container> instead", "LPS-166546",
+		TAGLIB_DEPRECATIONS.add(
+				createTag(7.4f, TAGLIB_URI_LIFERAY_AUI, "The tags <aui:container> is deprecated, use <clay:container> instead", "LPS-166546",
 						"container"
-				)
+				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_CLAY, "clay"))
 		);
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.4f, TAGLIB_URI_LIFERAY_AUI, "The tags <aui:component>, <aui:spacer> and <aui:panel> are obsolete and have been removed", "LPS-166546",
@@ -330,6 +363,178 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 				}
 			}
 		};
+	}
+
+	private static LocalQuickFix renameXmlAttribute(String newName) {
+		return new RenameXmlAttributeQuickFix(newName);
+	}
+
+	private static LocalQuickFix renameXmlTag(String newName) {
+		return new RenameXmlTagQuickFix(newName);
+	}
+
+	private static LocalQuickFix renameXmlNamespace(String newNamespace, String newPrefix) {
+		return new RenameXmlNamespaceQuickFix(newNamespace, newPrefix);
+	}
+
+	private static class RenameXmlAttributeQuickFix implements LocalQuickFix {
+		private String newName;
+
+		public RenameXmlAttributeQuickFix(String newName) {
+			this.newName = newName;
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Rename Attribute";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Rename Attribute to " + newName;
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			XmlAttribute attribute;
+
+			if (psiElement instanceof XmlAttribute) {
+				attribute = (XmlAttribute) psiElement;
+			} else {
+				attribute = PsiTreeUtil.getParentOfType(psiElement, XmlAttribute.class);
+			}
+
+			if (attribute == null) {
+				return;
+			}
+
+			attribute.setName(newName);
+		}
+	}
+	private static class RenameXmlTagQuickFix implements LocalQuickFix {
+		private String newName;
+
+		public RenameXmlTagQuickFix(String newName) {
+			this.newName = newName;
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Rename Tag";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Rename Tag to " + newName;
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			XmlTag currentTag;
+
+			if (psiElement instanceof XmlTag) {
+				currentTag = (XmlTag) psiElement;
+			} else {
+				currentTag = PsiTreeUtil.getParentOfType(psiElement, XmlTag.class, false);
+			}
+
+			if (currentTag == null) {
+				return;
+			}
+
+			XmlTag parentTag = currentTag.getParentTag();
+
+			if (parentTag == null) {
+				return;
+			}
+
+			XmlTag newTag = parentTag.createChildTag(newName, currentTag.getNamespace(), currentTag.isEmpty() ? null : currentTag.getValue().getText(),true);
+
+			for (XmlAttribute attr : currentTag.getAttributes()) {
+				newTag.setAttribute(attr.getLocalName(), attr.getNamespace(), attr.getValue());
+			}
+
+			currentTag.replace(newTag);
+		}
+	}
+
+	private static class RenameXmlNamespaceQuickFix implements LocalQuickFix {
+		private String newNamespace;
+		private String newPrefix;
+
+		public RenameXmlNamespaceQuickFix(String newNamespace, String newPrefix) {
+			this.newNamespace = newNamespace;
+			this.newPrefix = newPrefix;
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Rename Namespace";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Change Namespace to " + newNamespace;
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			XmlTag currentTag;
+
+			if (psiElement instanceof XmlTag) {
+				currentTag = (XmlTag) psiElement;
+			} else {
+				currentTag = PsiTreeUtil.getParentOfType(psiElement, XmlTag.class, false);
+			}
+
+			if (currentTag == null) {
+				return;
+			}
+
+			XmlTag parentTag = currentTag.getParentTag();
+
+			if (parentTag == null) {
+				return;
+			}
+
+			String namespacePrefix = currentTag.getPrefixByNamespace(newNamespace);
+
+			if (namespacePrefix == null) {
+				final PsiFile file = currentTag.getContainingFile();
+
+				final XmlNamespaceHelper extension = XmlNamespaceHelper.getHelper(file);
+
+				final XmlFile xmlFile = (XmlFile)file;
+
+				extension.insertNamespaceDeclaration(xmlFile, null, Collections.singleton(newNamespace), newPrefix, null);
+			}
+
+			XmlTag newTag = parentTag.createChildTag(currentTag.getLocalName(), newNamespace, currentTag.isEmpty() ? null : currentTag.getValue().getText(),true);
+
+			for (XmlAttribute attr : currentTag.getAttributes()) {
+				newTag.setAttribute(attr.getLocalName(), attr.getNamespace(), attr.getValue());
+			}
+
+			currentTag.replace(newTag);
+		}
 	}
 
 }
