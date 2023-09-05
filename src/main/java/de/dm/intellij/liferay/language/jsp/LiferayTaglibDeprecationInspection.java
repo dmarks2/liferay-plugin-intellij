@@ -52,15 +52,15 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 		TAGLIB_DEPRECATIONS.addAll(
 				createAttributes(7.0f, TAGLIB_URI_LIFERAY_UI, "app-view-search-entry", "Removed mbMessages and fileEntryTuples Attributes from app-view-search-entry Tag.", "LPS-55886",
 						"mbMessages", "fileEntryTuples"
-				)
+				).quickfix(removeXmlAttribute())
 		);
 		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:asset-categories-navigation Tag and Replaced with liferay-asset:asset-categories-navigation.", "LPS-60753",
+				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:asset-categories-navigation Tag and replaced with liferay-asset:asset-categories-navigation.", "LPS-60753",
 						"asset-categories-navigation"
 				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_ASSET, "liferay-asset"))
 		);
 		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_AUI, "Removed the aui:button-item Tag and Replaced with aui:button.", "LPS-62922",
+				createTag(7.0f, TAGLIB_URI_LIFERAY_AUI, "Removed the aui:button-item Tag and replaced with aui:button.", "LPS-62922",
 						"button-item"
 				).quickfix(renameXmlTag("button"))
 		);
@@ -70,9 +70,9 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 				).quickfix(renameXmlTag("col"))
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_AUI, "Deprecated the aui:tool Tag with No Direct Replacement.", "LPS-70422",
+				createTags(7.0f, TAGLIB_URI_LIFERAY_AUI, "Deprecated the aui:tool Tag with no direct Replacement.", "LPS-70422",
 						"tool"
-				)
+				).quickfix(removeXmlTag())
 		);
 		TAGLIB_DEPRECATIONS.add(
 				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Moved the Expando Custom Field Tags to liferay-expando Taglib.", "LPS-69400",
@@ -90,86 +90,91 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_EXPANDO, "liferay-expando"))
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_PORTLET, "Deprecated the liferay-portlet:icon-back Tag with No Direct Replacement.", "LPS-63101",
+				createTags(7.0f, TAGLIB_URI_LIFERAY_PORTLET, "Deprecated the liferay-portlet:icon-back Tag with no direct Replacement.", "LPS-63101",
 						"icon-back"
-				)
+				).quickfix(removeXmlTag())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_SECURITY, "Deprecated the liferay-security:encrypt Tag with No Direct Replacement.", "LPS-63106",
+				createTags(7.0f, TAGLIB_URI_LIFERAY_SECURITY, "Deprecated the liferay-security:encrypt Tag with no direct Replacement.", "LPS-63106",
 						"encrypt"
-				)
+				).quickfix(removeXmlTag())
 		);
 		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Deprecated the liferay-ui:captcha Tag and Replaced with liferay-captcha:captcha.", "LPS-69383",
+				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Deprecated the liferay-ui:captcha Tag and replaced with liferay-captcha:captcha.", "LPS-69383",
 						"captcha"
 				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_CAPTCHA, "liferay-captcha"))
 		);
 		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:trash-empty Tag and Replaced with liferay-trash:empty.", "LPS-60779",
+				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:trash-empty Tag and replaced with liferay-trash:empty.", "LPS-60779",
 						"trash-empty"
 				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_TRASH, "liferay-trash"))
 		);
 		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:trash-undo Tag and Replaced with liferay-trash:undo.", "LPS-60779",
+				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:trash-undo Tag and replaced with liferay-trash:undo.", "LPS-60779",
 						"trash-undo"
 				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_TRASH, "liferay-trash"))
 		);
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:journal-article Tag.", "LPS-69321",
 						"journal-article"
-				)
+				).quickfix(removeXmlTag())
 		);
 		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Deprecated the liferay-ui:flags Tag and Replaced with liferay-flags:flags.", "LPS-60967",
+				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Deprecated the liferay-ui:flags Tag and replaced with liferay-flags:flags.", "LPS-60967",
 						"flags"
 				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_FLAGS, "liferay-flags"))
 		);
 		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:navigation Tag and Replaced with liferay-site-navigation:navigation Tag.", "LPS-60328",
+				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:navigation Tag and replaced with liferay-site-navigation:navigation Tag.", "LPS-60328",
 						"navigation"
 				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_SITE_NAVIGATION, "liferay-site-navigation"))
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_PORTLET, "Removed the Tags that Start with portlet:icon-.", "LPS-54620",
+				createTags(7.0f, TAGLIB_URI_LIFERAY_PORTLET, "Removed the Tags that start with portlet:icon-.", "LPS-54620",
 						"icon-close", "icon-configuration", "icon-edit",
 						"icon-edit-defaults", "icon-edit-guest", "icon-export-import",
 						"icon-help", "icon-maximize", "icon-minimize",
 						"icon-portlet-css", "icon-print", "icon-refresh",
 						"icon-staging"
-				)
+				).quickfix(removeXmlTag())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_AUI, "Removed the aui:layout Tag with No Direct Replacement.", "LPS-62935",
+				createTags(7.0f, TAGLIB_URI_LIFERAY_AUI, "Removed the aui:layout Tag with no direct Replacement.", "LPS-62935",
 						"layout"
-				)
+				).quickfix(removeXmlTag())
 		);
 
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "Removed liferay-frontend:cards-treeview Tag", "LPS-106899",
 						"cards-treeview"
-				)
+				).quickfix(removeXmlTag())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "The `liferay-frontend:contextual-sidebar` tag was removed.", "LPS-100146",
 						"contextual-sidebar"
-				)
+				).quickfix(removeXmlTag())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "alert", "The attributes closeable, componentId, contributorKey, data, defaultEventHandler, destroyOnHide, elementClasses, spritemap, style, type in `clay:alert` tag was removed.", "LPS-125256",
+				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "alert", "The attributes closeable, componentId, contributorKey, data, defaultEventHandler, destroyOnHide, elementClasses, spritemap, style, type in `clay:alert` tag were removed.", "LPS-125256",
 						"closeable", "componentId", "contributorKey", "data", "defaultEventHandler", "destroyOnHide", "elementClasses",
 						"spritemap", "style", "type"
-				)
+				).quickfix(removeXmlAttribute())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "badge", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses, style in `clay:badge` tag was replaced by displayType.", "LPS-125256",
-						"componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses", "style"
-				)
+				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "badge", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses in `clay:badge` tag were removed.", "LPS-125256",
+						"componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses"
+				).quickfix(removeXmlAttribute())
+		);
+		TAGLIB_DEPRECATIONS.add(
+				createAttribute(7.4f, TAGLIB_URI_LIFERAY_CLAY, "badge", "The attribute style in `clay:badge` tag was replaced by displayType.", "LPS-125256",
+						"style"
+				).quickfix(renameXmlAttribute("displayType"))
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "button", "The attributes componentId, contributorKey, data, defaultEventHandler, disabled, elementClasses, iconAlignment, name, size, spritemap, style, title, type, value in `clay:button` tag was removed.", "LPS-125256",
+				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "button", "The attributes componentId, contributorKey, data, defaultEventHandler, disabled, elementClasses, iconAlignment, name, size, spritemap, style, title, type, value in `clay:button` tag were removed.", "LPS-125256",
 						 "componentId", "contributorKey", "data", "defaultEventHandler", "disabled", "elementClasses",
 						"iconAlignment", "name", "size", "spritemap", "style", "title", "type", "value"
-				)
+				).quickfix(removeXmlAttribute())
 		);
 		TAGLIB_DEPRECATIONS.add(
 				createAttribute(7.4f, TAGLIB_URI_LIFERAY_CLAY, "button", "The attribute ariaLabel in `clay:button` tag was removed, use aria-label instead", "LPS-125256",
@@ -179,71 +184,81 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 
 
 		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "dropdown-actions", "The attributes buttonLabel, buttonStyle, buttonType, componentId, contributorKey, data, defaultEventHandler, elementClasses, expanded, itemsIconAlignment, searchable, showToggleIcon, spritemap, style, triggerCssClasses, triggerTitle, type in `clay:dropdown-actions` tag was removed.", "LPS-125256",
+				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "dropdown-actions", "The attributes buttonLabel, buttonStyle, buttonType, componentId, contributorKey, data, defaultEventHandler, elementClasses, expanded, itemsIconAlignment, searchable, showToggleIcon, spritemap, style, triggerCssClasses, triggerTitle, type in `clay:dropdown-actions` tag were removed.", "LPS-125256",
 						"buttonLabel", "buttonStyle", "buttonType", "componentId", "contributorKey", "data", "defaultEventHandler",
 						"elementClasses", "expanded", "itemsIconAlignment", "searchable", "showToggleIcon", "spritemap", "style",
 						"triggerCssClasses", "triggerTitle", "type"
-				)
+				).quickfix(removeXmlAttribute())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "dropdown-menu", "The attributes buttonLabel, buttonStyle, buttonType, componentId, contributorKey, data, defaultEventHandler, elementClasses, expanded, itemsIconAlignment, searchable, showToggleIcon, spritemap, style, triggerCssClasses, triggerTitle, type in `clay:dropdown-menu` tag was removed.", "LPS-125256",
+				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "dropdown-menu", "The attributes buttonLabel, buttonStyle, buttonType, componentId, contributorKey, data, defaultEventHandler, elementClasses, expanded, itemsIconAlignment, searchable, showToggleIcon, spritemap, style, triggerCssClasses, triggerTitle, type in `clay:dropdown-menu` tag were removed.", "LPS-125256",
 						"buttonLabel", "buttonStyle", "buttonType", "componentId", "contributorKey", "data", "defaultEventHandler",
 						"elementClasses", "expanded", "itemsIconAlignment", "searchable", "showToggleIcon", "spritemap", "style",
 						"triggerCssClasses", "triggerTitle", "type"
-				)
+				).quickfix(removeXmlAttribute())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "icon", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses, monospaced, spritemap in `clay:icon` tag was removed.", "LPS-125256",
+				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "icon", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses, monospaced, spritemap in `clay:icon` tag were removed.", "LPS-125256",
 						"componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses", "monospaced", "spritemap"
-				)
+				).quickfix(removeXmlAttribute())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "label", "The attributes closeable, componentId, contributorKey, data, defaultEventHandler, elementClasses, href, message, size, spritemap, style in `clay:label` tag was removed.", "LPS-125256",
+				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "label", "The attributes closeable, componentId, contributorKey, data, defaultEventHandler, elementClasses, href, message, size, spritemap, style in `clay:label` tag were removed.", "LPS-125256",
 						"closeable", "componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses", "href",
 						"message", "size", "spritemap", "style"
-				)
+				).quickfix(removeXmlAttribute())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "link", "The attributes ariaLabel, buttonStyle, componentId, contributorKey, data, defaultEventHandler, elementClasses, iconAlignment, spritemap, style, target, title in `clay:link` tag was replaced by aria-label.", "LPS-125256",
-						"ariaLabel", "buttonStyle", "componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses",
+				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "link", "The attributes buttonStyle, componentId, contributorKey, data, defaultEventHandler, elementClasses, iconAlignment, spritemap, style, target, title in `clay:link` tag were removed.", "LPS-125256",
+						"buttonStyle", "componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses",
 						"iconAlignment", "spritemap", "style", "target", "title"
-				)
+				).quickfix(removeXmlAttribute())
+		);
+		TAGLIB_DEPRECATIONS.add(
+				createAttribute(7.4f, TAGLIB_URI_LIFERAY_CLAY, "link", "The attribute ariaLabel `clay:link` tag has been replaced by aria-label.", "LPS-125256",
+						"ariaLabel"
+				).quickfix(renameXmlAttribute("aria-label"))
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "navigation-bar", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses, spritemap in `clay:navigation-bar` tag was removed.", "LPS-125256",
+				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "navigation-bar", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses, spritemap in `clay:navigation-bar` tag were removed.", "LPS-125256",
 						"componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses", "spritemap"
-				)
+				).quickfix(removeXmlAttribute())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "progressbar", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses, spritemap in `clay:navigation-bar` tag was removed.", "LPS-125256",
+				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "progressbar", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses, spritemap in `clay:navigation-bar` tag were removed.", "LPS-125256",
 						"componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses", "spritemap"
-				)
+				).quickfix(removeXmlAttribute())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "radio", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses in `clay:radio` tag was removed.", "LPS-125256",
+				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "radio", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses in `clay:radio` tag were removed.", "LPS-125256",
 						"componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses"
-				)
+				).quickfix(removeXmlAttribute())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "sticker", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses, spritemap, style in `clay:sticker` tag was replaced by displayType.", "LPS-125256",
-						"componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses", "spritemap", "style"
-				)
+				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "sticker", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses, spritemap in `clay:sticker` tag were removed.", "LPS-125256",
+						"componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses", "spritemap"
+				).quickfix(removeXmlAttribute())
+		);
+		TAGLIB_DEPRECATIONS.add(
+				createAttribute(7.4f, TAGLIB_URI_LIFERAY_CLAY, "sticker", "The attribute style in `clay:sticker` tag was replaced by displayType.", "LPS-125256",
+						 "style"
+				).quickfix(renameXmlAttribute("displayType"))
 		);
 		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "stripe", "The attributes closeable, componentId, contributorKey, data, defaultEventHandler, destroyOnHide, elementClasses, spritemap, style, type in `clay:stripe` tag was removed.", "LPS-125256",
+				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "stripe", "The attributes closeable, componentId, contributorKey, data, defaultEventHandler, destroyOnHide, elementClasses, spritemap, style, type in `clay:stripe` tag were removed.", "LPS-125256",
 						"closeable", "componentId", "contributorKey", "data", "defaultEventHandler", "destroyOnHide", "elementClasses",
 						"spritemap", "style", "type"
-				)
+				).quickfix(removeXmlAttribute())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.4f, TAGLIB_URI_LIFERAY_SOY, "Deprecate soy:component and soy:template renderer tags", "LPS-122966",
 						"template-renderer", "component-renderer"
-				)
+				).quickfix(removeXmlTag())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.4f, TAGLIB_URI_LIFERAY_CLAY, "A series of deprecated and unused JSP tags have been removed and are no longer available", "LPS-112476",
 						"table"
-				)
+				).quickfix(removeXmlTag())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.4f, TAGLIB_URI_LIFERAY_UI, "A series of deprecated and unused JSP tags have been removed and are no longer available", "LPS-112476",
@@ -251,27 +266,27 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 						"organization-search-container-results", "organization-search-form", "ratings",
 						"search-speed", "table-iterator", "toggle-area", "toggle",
 						"user-search-container-results", "user-search-form"
-				)
+				).quickfix(removeXmlTag())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.4f, TAGLIB_URI_LIFERAY_THEME, "A series of deprecated and unused JSP tags have been removed and are no longer available", "LPS-112476",
 						"layout-icon", "param"
-				)
+				).quickfix(removeXmlTag())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.4f, TAGLIB_URI_LIFERAY_UI, "The tag liferay-ui:flash has been deleted and is no longer available", "LPS-121732",
 						"flash"
-				)
+				).quickfix(removeXmlTag())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.4f, TAGLIB_URI_LIFERAY_AUI, "The tags `<aui:fieldset-group>` and `<liferay-frontend:fieldset-group>` added unnecessary markup to the page and caused accessibility issues, so they have been removed", "LPS-168309",
 						"fieldset-group"
-				)
+				).quickfix(removeXmlTag())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.4f, TAGLIB_URI_LIFERAY_FRONTEND, "The tags `<aui:fieldset-group>` and `<liferay-frontend:fieldset-group>` added unnecessary markup to the page and caused accessibility issues, so they have been removed", "LPS-168309",
 						"fieldset-group"
-				)
+				).quickfix(removeXmlTag())
 		);
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.4f, TAGLIB_URI_LIFERAY_FRONTEND, "Obsolete frontend taglibs that don't follow lexicon patterns and have an obsolete markup have been removed", "LPS-158461",
@@ -302,7 +317,7 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 						"vertical-card-header",
 						"vertical-card-small-image",
 						"vertical-card-sticker-bottom"
-				)
+				).quickfix(removeXmlTag())
 		);
 		TAGLIB_DEPRECATIONS.add(
 				createTag(7.4f, TAGLIB_URI_LIFERAY_AUI, "The tags <aui:container> is deprecated, use <clay:container> instead", "LPS-166546",
@@ -312,7 +327,7 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 		TAGLIB_DEPRECATIONS.addAll(
 				createTags(7.4f, TAGLIB_URI_LIFERAY_AUI, "The tags <aui:component>, <aui:spacer> and <aui:panel> are obsolete and have been removed", "LPS-166546",
 						"component", "spacer", "panel"
-				)
+				).quickfix(removeXmlTag())
 		);
 	}
 
@@ -378,6 +393,13 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 
 	private static LocalQuickFix renameXmlNamespace(String newNamespace, String newPrefix) {
 		return new RenameXmlNamespaceQuickFix(newNamespace, newPrefix);
+	}
+
+	private static LocalQuickFix removeXmlAttribute() {
+		return new RemoveXmlAttributeQuickFix();
+	}
+	private static LocalQuickFix removeXmlTag() {
+		return new RemoveXmlTagQuickFix();
 	}
 
 	private static class RenameXmlAttributeQuickFix implements LocalQuickFix {
@@ -472,7 +494,6 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 			currentTag.replace(newTag);
 		}
 	}
-
 	private static class RenameXmlNamespaceQuickFix implements LocalQuickFix {
 		private String newNamespace;
 		private String newPrefix;
@@ -549,6 +570,75 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 						currentTag.replace(newTag);
 					}
 			);
+		}
+	}
+
+	private static class RemoveXmlAttributeQuickFix implements LocalQuickFix {
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Remove Attribute";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Remove Attribute";
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			XmlAttribute attribute;
+
+			if (psiElement instanceof XmlAttribute) {
+				attribute = (XmlAttribute) psiElement;
+			} else {
+				attribute = PsiTreeUtil.getParentOfType(psiElement, XmlAttribute.class);
+			}
+
+			if (attribute == null) {
+				return;
+			}
+
+			attribute.getParent().setAttribute(attribute.getName(), null);
+		}
+	}
+	private static class RemoveXmlTagQuickFix implements LocalQuickFix {
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Remove Tag";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Remove Tag";
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			XmlTag tag;
+
+			if (psiElement instanceof XmlTag) {
+				tag = (XmlTag) psiElement;
+			} else {
+				tag = PsiTreeUtil.getParentOfType(psiElement, XmlTag.class);
+			}
+
+			if (tag == null) {
+				return;
+			}
+
+			tag.delete();
 		}
 	}
 

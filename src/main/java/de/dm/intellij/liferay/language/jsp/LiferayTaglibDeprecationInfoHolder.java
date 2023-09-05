@@ -30,12 +30,6 @@ public class LiferayTaglibDeprecationInfoHolder {
 
 	private LocalQuickFix[] quickFixes;
 
-	//newNamespace
-	//newLocalName
-	//newAttribute
-
-	//todo add quickfixes for renaming, e.g. XmlAttributeRenameFix
-
 	public static LiferayTaglibDeprecationInfoHolder createTag(float majorLiferayVersion, String namespace, String message, String ticket, String localName) {
 		return
 				new LiferayTaglibDeprecationInfoHolder()
@@ -46,14 +40,14 @@ public class LiferayTaglibDeprecationInfoHolder {
 						.ticket(ticket);
 	}
 
-	public static List<LiferayTaglibDeprecationInfoHolder> createTags(float majorLiferayVersion, String namespace, String message, String ticket, String... localNames) {
+	public static ListWrapper createTags(float majorLiferayVersion, String namespace, String message, String ticket, String... localNames) {
 		List<LiferayTaglibDeprecationInfoHolder> result = new ArrayList<>();
 
 		for (String localName : localNames) {
 			result.add(createTag(majorLiferayVersion, namespace, message, ticket, localName));
 		}
 
-		return result;
+		return new ListWrapper(result);
 	}
 
 	public static LiferayTaglibDeprecationInfoHolder createAttribute(float majorLiferayVersion, String namespace, String localName, String message, String ticket, String attribute) {
@@ -67,14 +61,14 @@ public class LiferayTaglibDeprecationInfoHolder {
 						.ticket(ticket);
 	}
 
-	public static List<LiferayTaglibDeprecationInfoHolder> createAttributes(float majorLiferayVersion, String namespace, String localName, String message, String ticket, String... attributes) {
+	public static ListWrapper createAttributes(float majorLiferayVersion, String namespace, String localName, String message, String ticket, String... attributes) {
 		List<LiferayTaglibDeprecationInfoHolder> result = new ArrayList<>();
 
 		for (String attribute : attributes) {
 			result.add(createAttribute(majorLiferayVersion, namespace, localName, message, ticket, attribute));
 		}
 
-		return result;
+		return new ListWrapper(result);
 	}
 
 	public LiferayTaglibDeprecationInfoHolder namespace(String namespace) {
@@ -158,5 +152,17 @@ public class LiferayTaglibDeprecationInfoHolder {
 		}
 
 		return false;
+	}
+
+	public static class ListWrapper extends ArrayList<LiferayTaglibDeprecationInfoHolder> {
+		public ListWrapper(List<LiferayTaglibDeprecationInfoHolder> list) {
+			super(list);
+		}
+
+		public ListWrapper quickfix(LocalQuickFix... quickFixes) {
+			this.replaceAll(liferayTaglibDeprecationInfoHolder -> liferayTaglibDeprecationInfoHolder.quickfix(quickFixes));
+
+			return this;
+		}
 	}
 }

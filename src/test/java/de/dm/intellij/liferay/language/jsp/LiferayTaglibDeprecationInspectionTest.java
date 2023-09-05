@@ -38,6 +38,33 @@ public class LiferayTaglibDeprecationInspectionTest extends LightJavaCodeInsight
 		);
 
 		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Remove Attribute")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("view-expected.jsp");
+	}
+
+	public void testAuiToolTagDeprecation() {
+		myFixture.configureByFiles(
+				"aui-tool.jsp",
+				"liferay-aui.tld"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Remove Tag")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("aui-tool-expected.jsp");
 	}
 
 	public void testClayButtonAttributeDeprecationQuickFix() {
