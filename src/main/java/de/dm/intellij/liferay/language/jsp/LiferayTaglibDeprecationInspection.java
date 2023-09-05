@@ -1,9 +1,11 @@
 package de.dm.intellij.liferay.language.jsp;
 
+import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
@@ -15,6 +17,7 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlNamespaceHelper;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
+import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
@@ -494,6 +497,11 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 		}
 
 		@Override
+		public @NotNull IntentionPreviewInfo generatePreview(@NotNull Project project, @NotNull ProblemDescriptor previewDescriptor) {
+			return IntentionPreviewInfo.EMPTY;
+		}
+
+		@Override
 		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
 			PsiElement psiElement = descriptor.getPsiElement();
 
@@ -517,23 +525,30 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 
 			String namespacePrefix = currentTag.getPrefixByNamespace(newNamespace);
 
-			if (namespacePrefix == null) {
-				final PsiFile file = currentTag.getContainingFile();
+			ProjectUtils.runWriteAction(
+					project,
+					() -> {
+						if (namespacePrefix == null) {
+							PsiFile file = currentTag.getContainingFile();
 
-				final XmlNamespaceHelper extension = XmlNamespaceHelper.getHelper(file);
+							file = file.getOriginalFile();
 
-				final XmlFile xmlFile = (XmlFile)file;
+							XmlNamespaceHelper extension = XmlNamespaceHelper.getHelper(file);
 
-				extension.insertNamespaceDeclaration(xmlFile, null, Collections.singleton(newNamespace), newPrefix, null);
-			}
+							XmlFile xmlFile = (XmlFile)file;
 
-			XmlTag newTag = parentTag.createChildTag(currentTag.getLocalName(), newNamespace, currentTag.isEmpty() ? null : currentTag.getValue().getText(),true);
+							extension.insertNamespaceDeclaration(xmlFile, null, Collections.singleton(newNamespace), newPrefix, null);
+						}
 
-			for (XmlAttribute attr : currentTag.getAttributes()) {
-				newTag.setAttribute(attr.getLocalName(), attr.getNamespace(), attr.getValue());
-			}
+						XmlTag newTag = parentTag.createChildTag(currentTag.getLocalName(), newNamespace, currentTag.isEmpty() ? null : currentTag.getValue().getText(),true);
 
-			currentTag.replace(newTag);
+						for (XmlAttribute attr : currentTag.getAttributes()) {
+							newTag.setAttribute(attr.getLocalName(), attr.getNamespace(), attr.getValue());
+						}
+
+						currentTag.replace(newTag);
+					}
+			);
 		}
 	}
 

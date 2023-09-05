@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.util;
 
+import com.intellij.openapi.application.Application;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.module.ModifiableModuleModel;
 import com.intellij.openapi.module.Module;
@@ -70,6 +71,16 @@ public class ProjectUtils {
             ApplicationManager.getApplication().invokeLater(r);
         } else {
             DumbService.getInstance(project).smartInvokeLater(DisposeAwareRunnable.create(r, project));
+        }
+    }
+
+    public static void runWriteAction(@NotNull final Project project, @NotNull final Runnable writeAction) {
+        Application application = ApplicationManager.getApplication();
+
+        if (application.isDispatchThread()) {
+            application.runWriteAction(writeAction);
+        } else {
+            runDumbAwareLater(project, writeAction);
         }
     }
 
