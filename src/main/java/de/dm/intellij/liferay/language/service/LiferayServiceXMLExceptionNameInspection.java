@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.service;
 
+import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemHighlightType;
@@ -84,6 +85,11 @@ public class LiferayServiceXMLExceptionNameInspection extends XmlSuppressableIns
         @Override
         public String getFamilyName() {
             return "Remove Exception suffix";
+        }
+
+        @Override
+        public @NotNull IntentionPreviewInfo generatePreview(@NotNull Project project, @NotNull ProblemDescriptor previewDescriptor) {
+            return IntentionPreviewInfo.EMPTY;
         }
 
         @Override

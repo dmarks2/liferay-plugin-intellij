@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.osgi;
 
+import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo;
 import com.intellij.codeInspection.LocalInspectionTool;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
@@ -81,6 +82,11 @@ public class MetaConfigurationInvalidIdInspection extends LocalInspectionTool {
                                             @Override
                                             public @IntentionFamilyName @NotNull String getFamilyName() {
                                                 return "Rename";
+                                            }
+
+                                            @Override
+                                            public @NotNull IntentionPreviewInfo generatePreview(@NotNull Project project, @NotNull ProblemDescriptor previewDescriptor) {
+                                                return IntentionPreviewInfo.EMPTY;
                                             }
 
                                             @Override

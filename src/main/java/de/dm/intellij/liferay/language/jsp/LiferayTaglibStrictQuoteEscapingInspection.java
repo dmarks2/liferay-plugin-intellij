@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.jsp;
 
+import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemHighlightType;
@@ -129,6 +130,11 @@ public class LiferayTaglibStrictQuoteEscapingInspection extends XmlSuppressableI
         @Override
         public String getFamilyName() {
             return "Use single quotes";
+        }
+
+        @Override
+        public @NotNull IntentionPreviewInfo generatePreview(@NotNull Project project, @NotNull ProblemDescriptor previewDescriptor) {
+            return IntentionPreviewInfo.EMPTY;
         }
 
         @Override

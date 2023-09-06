@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.jsp;
 
+import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemHighlightType;
@@ -135,6 +136,11 @@ public class LiferayTaglibStringConcatInspection extends XmlSuppressableInspecti
         @Override
         public String getFamilyName() {
             return "Wrap in JSP expression";
+        }
+
+        @Override
+        public @NotNull IntentionPreviewInfo generatePreview(@NotNull Project project, @NotNull ProblemDescriptor previewDescriptor) {
+            return IntentionPreviewInfo.EMPTY;
         }
 
         @Override
