@@ -8,7 +8,7 @@ buildscript {
 
 plugins {
     id "org.jetbrains.intellij" version "1.13.3"
-    id 'de.undercouch.download' version '5.2.1'
+    id 'de.undercouch.download' version '5.5.0'
 }
 
 configurations {
@@ -148,36 +148,41 @@ tasks.register('generateLiferayPortalPropertiesFiles') {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/portal-impl/src/portal.properties'
             dest new File(target70, "portal.properties")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
         download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/portal-impl/src/portal.properties'
             dest new File(target71, "portal.properties")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
         download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/portal-impl/src/portal.properties'
             dest new File(target72, "portal.properties")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
         download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/portal-impl/src/portal.properties'
             dest new File(target73, "portal.properties")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
         download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-impl/src/portal.properties'
             dest new File(target74, "portal.properties")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
     }
 }
@@ -193,71 +198,81 @@ tasks.register('generateLiferayTemplateHelperFiles') {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-impl/src/VM_liferay.vm'
             dest new File(targetVtl, "VM_liferay_61.vm")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
         download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-impl/src/VM_liferay.vm'
             dest new File(targetVtl, "VM_liferay_62.vm")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
         download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/foundation/portal-template/portal-template-velocity/src/main/resources/VM_liferay.vm'
             dest new File(targetVtl, "VM_liferay_70.vm")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
         download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-impl/src/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_61.ftl")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
         download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-impl/src/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_62.ftl")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
         download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/foundation/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_70.ftl")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
         download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_71.ftl")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
         download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_72.ftl")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
         download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_73.ftl")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
         download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_74.ftl")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
     }
 }
@@ -268,7 +283,6 @@ tasks.register('generateLiferayDefinitions') {
 
         download.run {
             src([
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-ddm-structure_6_2_0.xsd',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-ddm-structure_6_2_0.xsd',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-display_6_1_0.dtd',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/definitions/liferay-display_6_2_0.dtd',
@@ -372,8 +386,9 @@ tasks.register('generateLiferayDefinitions') {
             ])
             dest target
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
     }
 }
@@ -415,8 +430,9 @@ tasks.register('generateTaglibDefinitions') {
             ])
             dest target70
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
 
         download.run {
@@ -453,8 +469,9 @@ tasks.register('generateTaglibDefinitions') {
             ])
             dest target71
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
 
         download.run {
@@ -493,8 +510,9 @@ tasks.register('generateTaglibDefinitions') {
             ])
             dest target72
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
 
         download.run {
@@ -533,8 +551,9 @@ tasks.register('generateTaglibDefinitions') {
             ])
             dest target73
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
 
         download.run {
@@ -596,8 +615,9 @@ tasks.register('generateTaglibDefinitions') {
             ])
             dest target74
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
     }
 }
@@ -605,8 +625,9 @@ tasks.register('generateTaglibDefinitions') {
 tasks.register('downloadCompass0122', Download) {
     src 'https://github.com/Compass/compass/archive/v0.12.2.zip'
     acceptAnyCertificate true
-    overwrite true
-    onlyIfNewer true
+    overwrite false
+    onlyIfModified true
+    useETag "all"
     dest new File(tempDir, 'compass-0.12.2.zip')
 }
 
@@ -641,19 +662,21 @@ tasks.register('downloadIntelliJCommunityMockJDK11') {
         target.mkdirs();
 
         download.run {
-            src 'https://github.com/JetBrains/intellij-community/blob/master/java/mockJDK-11/jre/lib/annotations.jar?raw=true'
+            src 'https://raw.githubusercontent.com/JetBrains/intellij-community/master/java/mockJDK-11/jre/lib/annotations.jar'
             dest new File(target, "annotations.jar")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
 
         download.run {
-            src 'https://github.com/JetBrains/intellij-community/blob/master/java/mockJDK-11/jre/lib/rt.jar?raw=true'
+            src 'https://raw.githubusercontent.com/JetBrains/intellij-community/master/java/mockJDK-11/jre/lib/rt.jar'
             dest new File(target, "rt.jar")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
     }
 }
@@ -668,8 +691,9 @@ tasks.register('downloadSchemaDefinitions') {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/fragment/fragment-service/src/main/resources/com/liferay/fragment/internal/validator/dependencies/configuration-json-schema.json'
             dest new File(target, "configuration-json-schema.json")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
     }
 }
@@ -683,8 +707,8 @@ tasks.register('downloadSchemaDefinitions') {
             src 'https://raw.githubusercontent.com/lpireyn/intellij-filetypes/master/filetypes/BND%20files.xml'
             dest new File(target, "bnd.xml")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
         }
 
     }
@@ -702,24 +726,27 @@ tasks.register('downloadPoshiGrammar') {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/test/poshi/poshi-vscode/package.json'
             dest new File(target, "package.json")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
 
         download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/test/poshi/poshi-vscode/language-configuration.json'
             dest new File(target, "language-configuration.json")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
 
         download.run {
             src 'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/test/poshi/poshi-vscode/syntaxes/poshi.tmLanguage.json'
             dest new File(syntaxes, "poshi.tmLanguage.json")
             acceptAnyCertificate true
-            overwrite true
-            onlyIfNewer true
+            overwrite false
+            onlyIfModified true
+            useETag "all"
         }
     }
 }
