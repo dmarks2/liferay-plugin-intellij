@@ -173,6 +173,10 @@ The following tags are checked for the right context:
 Deprecations
 ------------
 
-Some taglibs or attributes may be deprecated or removed in specific Liferay versions. 
+Some taglibs or attributes may have been deprecated or removed in specific Liferay versions. 
 
-Depending on the Liferay version some inspections are shown if deprecated or removed taglibs/attributes are detected.
+Depending on the Liferay version inspections are shown if deprecated or removed taglibs/attributes are detected. Depending on the
+type of deprecation or removal quickfixes are offered. Those may be
+
+* Remove the attribute or tag
+* Rename the attribute, tag or namespace to a replacement for the deprecation
