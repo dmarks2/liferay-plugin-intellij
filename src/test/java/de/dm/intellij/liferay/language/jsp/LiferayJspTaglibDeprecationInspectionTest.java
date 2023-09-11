@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class LiferayTaglibDeprecationInspectionTest extends LightJavaCodeInsightFixtureTestCase {
+public class LiferayJspTaglibDeprecationInspectionTest extends LightJavaCodeInsightFixtureTestCase {
 
 	@NotNull
 	@Override
@@ -23,12 +23,12 @@ public class LiferayTaglibDeprecationInspectionTest extends LightJavaCodeInsight
 	protected void setUp() throws Exception {
 		super.setUp();
 
-		myFixture.enableInspections(new LiferayTaglibDeprecationInspection());
+		myFixture.enableInspections(new LiferayJspTaglibDeprecationInspection());
 	}
 
 	@Override
 	protected String getTestDataPath() {
-		return "testdata/de/dm/intellij/liferay/language/jsp/LiferayTaglibDeprecationInspectionTest";
+		return "testdata/de/dm/intellij/liferay/language/jsp/LiferayJspTaglibDeprecationInspectionTest";
 	}
 
 	public void testClayAlertAttributeDeprecation() {

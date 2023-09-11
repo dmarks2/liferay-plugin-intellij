@@ -1,0 +1,1 @@
+<@clay.alert <warning descr="The attributes closeable, componentId, contributorKey, data, defaultEventHandler, destroyOnHide, elementClasses, spritemap, style, type in `clay:alert` tag were removed. (see LPS-125256)">closeable="true"</warning> />

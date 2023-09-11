@@ -39,6 +39,8 @@
 
         <fileTypeOverrider implementation="de.dm.intellij.liferay.language.fragment.FragmentFreemarkerHtmlFileTypeOverrider" />
         <lang.substitutor language="FTL" implementationClass="de.dm.intellij.liferay.language.fragment.FragmentFreemarkerHtmlLanguageSubstitutor" />
+
+        <inspectionToolProvider implementation="de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerInspectionToolProvider"/>
     </extensions>
 
 </idea-plugin>

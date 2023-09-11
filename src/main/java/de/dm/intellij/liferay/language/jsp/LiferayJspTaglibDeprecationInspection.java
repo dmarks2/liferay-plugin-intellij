@@ -4,8 +4,6 @@ import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.codeInspection.XmlSuppressableInspectionTool;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
@@ -25,10 +23,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static de.dm.intellij.liferay.language.jsp.LiferayTaglibDeprecationInfoHolder.createAttribute;
-import static de.dm.intellij.liferay.language.jsp.LiferayTaglibDeprecationInfoHolder.createAttributes;
-import static de.dm.intellij.liferay.language.jsp.LiferayTaglibDeprecationInfoHolder.createTag;
-import static de.dm.intellij.liferay.language.jsp.LiferayTaglibDeprecationInfoHolder.createTags;
+import static de.dm.intellij.liferay.language.jsp.LiferayJspTaglibDeprecationInfoHolder.createAttribute;
+import static de.dm.intellij.liferay.language.jsp.LiferayJspTaglibDeprecationInfoHolder.createAttributes;
+import static de.dm.intellij.liferay.language.jsp.LiferayJspTaglibDeprecationInfoHolder.createTag;
+import static de.dm.intellij.liferay.language.jsp.LiferayJspTaglibDeprecationInfoHolder.createTags;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_ASSET;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_CAPTCHA;
@@ -44,9 +42,9 @@ import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_THEM
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_TRASH;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_UI;
 
-public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectionTool {
+public class LiferayJspTaglibDeprecationInspection extends AbstractLiferayDeprecationInspection<LiferayJspTaglibDeprecationInfoHolder> {
 
-	private static final List<LiferayTaglibDeprecationInfoHolder> TAGLIB_DEPRECATIONS = new ArrayList<>();
+	private static final List<LiferayJspTaglibDeprecationInfoHolder> TAGLIB_DEPRECATIONS = new ArrayList<>();
 
 	static {
 		TAGLIB_DEPRECATIONS.addAll(
@@ -331,29 +329,16 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 		);
 	}
 
-
-	@Override
-	public boolean isEnabledByDefault() {
-		return true;
-	}
-
 	@Nls
 	@NotNull
 	@Override
 	public String getDisplayName() {
-		return "Liferay taglib deprecations inspection";
+		return "Liferay JSP taglib deprecations inspection";
 	}
 
 	@Override
 	public String getStaticDescription() {
-		return "Check for deprecated Liferay taglibs.";
-	}
-
-	@Nls
-	@NotNull
-	@Override
-	public String getGroupDisplayName() {
-		return LiferayInspectionsGroupNames.LIFERAY_GROUP_NAME;
+		return "Check for deprecated Liferay JSP taglibs.";
 	}
 
 	@Override
@@ -364,19 +349,23 @@ public class LiferayTaglibDeprecationInspection extends XmlSuppressableInspectio
 		};
 	}
 
-	@NotNull
 	@Override
-	public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
+	protected List<LiferayJspTaglibDeprecationInfoHolder> getInspectionInfoHolders() {
+		return TAGLIB_DEPRECATIONS;
+	}
+
+	@Override
+	protected PsiElementVisitor doBuildVisitor(ProblemsHolder holder, boolean isOnTheFly, List<LiferayJspTaglibDeprecationInfoHolder> inspectionInfoHolders) {
 		return new XmlElementVisitor() {
 			@Override
 			public void visitXmlTag(@NotNull XmlTag xmlTag) {
-				for (LiferayTaglibDeprecationInfoHolder infoHolder : TAGLIB_DEPRECATIONS) {
+				for (LiferayJspTaglibDeprecationInfoHolder infoHolder : inspectionInfoHolders) {
 					infoHolder.visitXmlTag(holder, xmlTag);
 				}
 			}
 
 			public void visitXmlAttribute(@NotNull XmlAttribute attribute) {
-				for (LiferayTaglibDeprecationInfoHolder infoHolder : TAGLIB_DEPRECATIONS) {
+				for (LiferayJspTaglibDeprecationInfoHolder infoHolder : inspectionInfoHolders) {
 					infoHolder.visitXmlAttribute(holder, attribute);
 				}
 			}
