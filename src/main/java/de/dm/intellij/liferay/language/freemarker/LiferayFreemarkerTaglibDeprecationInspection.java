@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.freemarker;
 
+import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemsHolder;
@@ -313,6 +314,11 @@ public class LiferayFreemarkerTaglibDeprecationInspection extends AbstractLifera
 		}
 
 		@Override
+		public @NotNull IntentionPreviewInfo generatePreview(@NotNull Project project, @NotNull ProblemDescriptor previewDescriptor) {
+			return IntentionPreviewInfo.EMPTY;
+		}
+
+		@Override
 		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
 			PsiElement psiElement = descriptor.getPsiElement();
 
@@ -349,6 +355,11 @@ public class LiferayFreemarkerTaglibDeprecationInspection extends AbstractLifera
 		@Override
 		public String getName() {
 			return "Change Namespace to " + newNamespace;
+		}
+
+		@Override
+		public @NotNull IntentionPreviewInfo generatePreview(@NotNull Project project, @NotNull ProblemDescriptor previewDescriptor) {
+			return IntentionPreviewInfo.EMPTY;
 		}
 
 		@Override
