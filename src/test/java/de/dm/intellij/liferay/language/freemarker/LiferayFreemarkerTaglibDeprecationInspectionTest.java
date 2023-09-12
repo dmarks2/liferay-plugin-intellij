@@ -1,10 +1,12 @@
-package de.dm.intellij.liferay.language.jsp;
+package de.dm.intellij.liferay.language.freemarker;
 
+import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
-import de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerTaglibDeprecationInspection;
 import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class LiferayFreemarkerTaglibDeprecationInspectionTest extends LightJavaCodeInsightFixtureTestCase {
 
@@ -35,5 +37,14 @@ public class LiferayFreemarkerTaglibDeprecationInspectionTest extends LightJavaC
 		);
 
 		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Remove Attribute")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("alert-expected.ftl");
 	}
 }

@@ -23,310 +23,109 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static de.dm.intellij.liferay.language.jsp.LiferayJspTaglibDeprecationInfoHolder.createAttribute;
 import static de.dm.intellij.liferay.language.jsp.LiferayJspTaglibDeprecationInfoHolder.createAttributes;
-import static de.dm.intellij.liferay.language.jsp.LiferayJspTaglibDeprecationInfoHolder.createTag;
 import static de.dm.intellij.liferay.language.jsp.LiferayJspTaglibDeprecationInfoHolder.createTags;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_100146_CONTEXTUAL_SIDEBAR;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_106899_CARDS_TREEVIEW;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_112476_CLAY;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_112476_LIFERAY_THEME;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_112476_LIFERAY_UI;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_121732_FLASH;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_122966_LIFERAY_SOY;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_ALERT;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_BADGE;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_BADGE_STYLE;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_BUTTON;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_BUTTON_ARIA_LABEL;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_DROPDOWN_ACTIONS;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_DROPDOWN_MENU;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_ICON;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_LABEL;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_LINK;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_LINK_ARIA_LABEL;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_NAVIGATION_BAR;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_PROGRESSBAR;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_RADIO;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_STICKER;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_STICKER_STYLE;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_125256_CLAY_STRIPE;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_158461_LIFERAY_FRONTEND;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_166546_AUI_CONTAINER;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_166546_LIFERAY_AUI;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_168309_LIFERAY_AUI;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_168309_LIFERAY_FRONTEND;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_54620_PORTLET_ICON;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_55886_APP_VIEW_SEARCH_ENTRY;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_60328_NAVIGATION;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_60753_ASSET_CATEGORIES_NAVIGATION;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_60779_LIFERAY_TRASH;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_60967_FLAGS;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_62208_AUI_COLUMN;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_62922_BUTTON_ITEM;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_62935_AUI_LAYOUT;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_63101_ICON_BACK;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_63106_ENCRYPT;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_69321_JOURNAL_ARTICLE;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_69383_CAPTCHA;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_69400_LIFERAY_EXPANDO;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_70442_AUI_TOOL;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_ASSET;
-import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_CAPTCHA;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_CLAY;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPANDO;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_FLAGS;
-import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND;
-import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET;
-import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_SECURITY;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_SITE_NAVIGATION;
-import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_SOY;
-import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_THEME;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_TRASH;
-import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_UI;
 
 public class LiferayJspTaglibDeprecationInspection extends AbstractLiferayDeprecationInspection<LiferayJspTaglibDeprecationInfoHolder> {
 
 	private static final List<LiferayJspTaglibDeprecationInfoHolder> TAGLIB_DEPRECATIONS = new ArrayList<>();
 
 	static {
-		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.0f, TAGLIB_URI_LIFERAY_UI, "app-view-search-entry", "Removed mbMessages and fileEntryTuples Attributes from app-view-search-entry Tag.", "LPS-55886",
-						"mbMessages", "fileEntryTuples"
-				).quickfix(removeXmlAttribute())
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:asset-categories-navigation Tag and replaced with liferay-asset:asset-categories-navigation.", "LPS-60753",
-						"asset-categories-navigation"
-				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_ASSET, "liferay-asset"))
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_AUI, "Removed the aui:button-item Tag and replaced with aui:button.", "LPS-62922",
-						"button-item"
-				).quickfix(renameXmlTag("button"))
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_AUI, "The aui:column taglib has been removed and replaced with aui:col taglib.", "LPS-62208",
-						"column"
-				).quickfix(renameXmlTag("col"))
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_AUI, "Deprecated the aui:tool Tag with no direct Replacement.", "LPS-70422",
-						"tool"
-				).quickfix(removeXmlTag())
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Moved the Expando Custom Field Tags to liferay-expando Taglib.", "LPS-69400",
-						"custom-attribute"
-				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_EXPANDO, "liferay-expando"))
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Moved the Expando Custom Field Tags to liferay-expando Taglib.", "LPS-69400",
-						"custom-attribute-list"
-				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_EXPANDO, "liferay-expando"))
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Moved the Expando Custom Field Tags to liferay-expando Taglib.", "LPS-69400",
-						 "custom-attributes-available"
-				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_EXPANDO, "liferay-expando"))
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_PORTLET, "Deprecated the liferay-portlet:icon-back Tag with no direct Replacement.", "LPS-63101",
-						"icon-back"
-				).quickfix(removeXmlTag())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_SECURITY, "Deprecated the liferay-security:encrypt Tag with no direct Replacement.", "LPS-63106",
-						"encrypt"
-				).quickfix(removeXmlTag())
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Deprecated the liferay-ui:captcha Tag and replaced with liferay-captcha:captcha.", "LPS-69383",
-						"captcha"
-				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_CAPTCHA, "liferay-captcha"))
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:trash-empty Tag and replaced with liferay-trash:empty.", "LPS-60779",
-						"trash-empty"
-				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_TRASH, "liferay-trash"))
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:trash-undo Tag and replaced with liferay-trash:undo.", "LPS-60779",
-						"trash-undo"
-				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_TRASH, "liferay-trash"))
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:journal-article Tag.", "LPS-69321",
-						"journal-article"
-				).quickfix(removeXmlTag())
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Deprecated the liferay-ui:flags Tag and replaced with liferay-flags:flags.", "LPS-60967",
-						"flags"
-				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_FLAGS, "liferay-flags"))
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createTag(7.0f, TAGLIB_URI_LIFERAY_UI, "Removed the liferay-ui:navigation Tag and replaced with liferay-site-navigation:navigation Tag.", "LPS-60328",
-						"navigation"
-				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_SITE_NAVIGATION, "liferay-site-navigation"))
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_PORTLET, "Removed the Tags that start with portlet:icon-.", "LPS-54620",
-						"icon-close", "icon-configuration", "icon-edit",
-						"icon-edit-defaults", "icon-edit-guest", "icon-export-import",
-						"icon-help", "icon-maximize", "icon-minimize",
-						"icon-portlet-css", "icon-print", "icon-refresh",
-						"icon-staging"
-				).quickfix(removeXmlTag())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.0f, TAGLIB_URI_LIFERAY_AUI, "Removed the aui:layout Tag with no direct Replacement.", "LPS-62935",
-						"layout"
-				).quickfix(removeXmlTag())
-		);
-
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "Removed liferay-frontend:cards-treeview Tag", "LPS-106899",
-						"cards-treeview"
-				).quickfix(removeXmlTag())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "The `liferay-frontend:contextual-sidebar` tag was removed.", "LPS-100146",
-						"contextual-sidebar"
-				).quickfix(removeXmlTag())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "alert", "The attributes closeable, componentId, contributorKey, data, defaultEventHandler, destroyOnHide, elementClasses, spritemap, style, type in `clay:alert` tag were removed.", "LPS-125256",
-						"closeable", "componentId", "contributorKey", "data", "defaultEventHandler", "destroyOnHide", "elementClasses",
-						"spritemap", "style", "type"
-				).quickfix(removeXmlAttribute())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "badge", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses in `clay:badge` tag were removed.", "LPS-125256",
-						"componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses"
-				).quickfix(removeXmlAttribute())
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createAttribute(7.4f, TAGLIB_URI_LIFERAY_CLAY, "badge", "The attribute style in `clay:badge` tag was replaced by displayType.", "LPS-125256",
-						"style"
-				).quickfix(renameXmlAttribute("displayType"))
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "button", "The attributes componentId, contributorKey, data, defaultEventHandler, disabled, elementClasses, iconAlignment, name, size, spritemap, style, title, type, value in `clay:button` tag were removed.", "LPS-125256",
-						 "componentId", "contributorKey", "data", "defaultEventHandler", "disabled", "elementClasses",
-						"iconAlignment", "name", "size", "spritemap", "style", "title", "type", "value"
-				).quickfix(removeXmlAttribute())
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createAttribute(7.4f, TAGLIB_URI_LIFERAY_CLAY, "button", "The attribute ariaLabel in `clay:button` tag was removed, use aria-label instead", "LPS-125256",
-						"ariaLabel"
-				).quickfix(renameXmlAttribute("aria-label"))
-		);
-
-
-		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "dropdown-actions", "The attributes buttonLabel, buttonStyle, buttonType, componentId, contributorKey, data, defaultEventHandler, elementClasses, expanded, itemsIconAlignment, searchable, showToggleIcon, spritemap, style, triggerCssClasses, triggerTitle, type in `clay:dropdown-actions` tag were removed.", "LPS-125256",
-						"buttonLabel", "buttonStyle", "buttonType", "componentId", "contributorKey", "data", "defaultEventHandler",
-						"elementClasses", "expanded", "itemsIconAlignment", "searchable", "showToggleIcon", "spritemap", "style",
-						"triggerCssClasses", "triggerTitle", "type"
-				).quickfix(removeXmlAttribute())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "dropdown-menu", "The attributes buttonLabel, buttonStyle, buttonType, componentId, contributorKey, data, defaultEventHandler, elementClasses, expanded, itemsIconAlignment, searchable, showToggleIcon, spritemap, style, triggerCssClasses, triggerTitle, type in `clay:dropdown-menu` tag were removed.", "LPS-125256",
-						"buttonLabel", "buttonStyle", "buttonType", "componentId", "contributorKey", "data", "defaultEventHandler",
-						"elementClasses", "expanded", "itemsIconAlignment", "searchable", "showToggleIcon", "spritemap", "style",
-						"triggerCssClasses", "triggerTitle", "type"
-				).quickfix(removeXmlAttribute())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "icon", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses, monospaced, spritemap in `clay:icon` tag were removed.", "LPS-125256",
-						"componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses", "monospaced", "spritemap"
-				).quickfix(removeXmlAttribute())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "label", "The attributes closeable, componentId, contributorKey, data, defaultEventHandler, elementClasses, href, message, size, spritemap, style in `clay:label` tag were removed.", "LPS-125256",
-						"closeable", "componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses", "href",
-						"message", "size", "spritemap", "style"
-				).quickfix(removeXmlAttribute())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "link", "The attributes buttonStyle, componentId, contributorKey, data, defaultEventHandler, elementClasses, iconAlignment, spritemap, style, target, title in `clay:link` tag were removed.", "LPS-125256",
-						"buttonStyle", "componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses",
-						"iconAlignment", "spritemap", "style", "target", "title"
-				).quickfix(removeXmlAttribute())
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createAttribute(7.4f, TAGLIB_URI_LIFERAY_CLAY, "link", "The attribute ariaLabel `clay:link` tag has been replaced by aria-label.", "LPS-125256",
-						"ariaLabel"
-				).quickfix(renameXmlAttribute("aria-label"))
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "navigation-bar", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses, spritemap in `clay:navigation-bar` tag were removed.", "LPS-125256",
-						"componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses", "spritemap"
-				).quickfix(removeXmlAttribute())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "progressbar", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses, spritemap in `clay:navigation-bar` tag were removed.", "LPS-125256",
-						"componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses", "spritemap"
-				).quickfix(removeXmlAttribute())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "radio", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses in `clay:radio` tag were removed.", "LPS-125256",
-						"componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses"
-				).quickfix(removeXmlAttribute())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "sticker", "The attributes componentId, contributorKey, data, defaultEventHandler, elementClasses, spritemap in `clay:sticker` tag were removed.", "LPS-125256",
-						"componentId", "contributorKey", "data", "defaultEventHandler", "elementClasses", "spritemap"
-				).quickfix(removeXmlAttribute())
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createAttribute(7.4f, TAGLIB_URI_LIFERAY_CLAY, "sticker", "The attribute style in `clay:sticker` tag was replaced by displayType.", "LPS-125256",
-						 "style"
-				).quickfix(renameXmlAttribute("displayType"))
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "stripe", "The attributes closeable, componentId, contributorKey, data, defaultEventHandler, destroyOnHide, elementClasses, spritemap, style, type in `clay:stripe` tag were removed.", "LPS-125256",
-						"closeable", "componentId", "contributorKey", "data", "defaultEventHandler", "destroyOnHide", "elementClasses",
-						"spritemap", "style", "type"
-				).quickfix(removeXmlAttribute())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.4f, TAGLIB_URI_LIFERAY_SOY, "Deprecate soy:component and soy:template renderer tags", "LPS-122966",
-						"template-renderer", "component-renderer"
-				).quickfix(removeXmlTag())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.4f, TAGLIB_URI_LIFERAY_CLAY, "A series of deprecated and unused JSP tags have been removed and are no longer available", "LPS-112476",
-						"table"
-				).quickfix(removeXmlTag())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.4f, TAGLIB_URI_LIFERAY_UI, "A series of deprecated and unused JSP tags have been removed and are no longer available", "LPS-112476",
-						"alert", "input-scheduler",
-						"organization-search-container-results", "organization-search-form", "ratings",
-						"search-speed", "table-iterator", "toggle-area", "toggle",
-						"user-search-container-results", "user-search-form"
-				).quickfix(removeXmlTag())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.4f, TAGLIB_URI_LIFERAY_THEME, "A series of deprecated and unused JSP tags have been removed and are no longer available", "LPS-112476",
-						"layout-icon", "param"
-				).quickfix(removeXmlTag())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.4f, TAGLIB_URI_LIFERAY_UI, "The tag liferay-ui:flash has been deleted and is no longer available", "LPS-121732",
-						"flash"
-				).quickfix(removeXmlTag())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.4f, TAGLIB_URI_LIFERAY_AUI, "The tags `<aui:fieldset-group>` and `<liferay-frontend:fieldset-group>` added unnecessary markup to the page and caused accessibility issues, so they have been removed", "LPS-168309",
-						"fieldset-group"
-				).quickfix(removeXmlTag())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.4f, TAGLIB_URI_LIFERAY_FRONTEND, "The tags `<aui:fieldset-group>` and `<liferay-frontend:fieldset-group>` added unnecessary markup to the page and caused accessibility issues, so they have been removed", "LPS-168309",
-						"fieldset-group"
-				).quickfix(removeXmlTag())
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.4f, TAGLIB_URI_LIFERAY_FRONTEND, "Obsolete frontend taglibs that don't follow lexicon patterns and have an obsolete markup have been removed", "LPS-158461",
-						"add-menu",
-						"add-menu-item",
-						"info-bar",
-						"info-bar-button",
-						"horizontal-card",
-						"horizontal-card-col",
-						"horizontal-card-icon",
-						"html-vertical-card",
-						"icon-vertical-card",
-						"image-card",
-						"management-bar",
-						"management-bar-action-buttons",
-						"management-bar-button",
-						"management-bar-buttons",
-						"management-bar-display-buttons",
-						"management-bar-filter",
-						"management-bar-filter-item",
-						"management-bar-filters",
-						"management-bar-navigation",
-						"management-bar-sidenav-toggler-button",
-						"management-bar-sort",
-						"user-vertical-card",
-						"vertical-card",
-						"vertical-card-footer",
-						"vertical-card-header",
-						"vertical-card-small-image",
-						"vertical-card-sticker-bottom"
-				).quickfix(removeXmlTag())
-		);
-		TAGLIB_DEPRECATIONS.add(
-				createTag(7.4f, TAGLIB_URI_LIFERAY_AUI, "The tags <aui:container> is deprecated, use <clay:container> instead", "LPS-166546",
-						"container"
-				).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_CLAY, "clay"))
-		);
-		TAGLIB_DEPRECATIONS.addAll(
-				createTags(7.4f, TAGLIB_URI_LIFERAY_AUI, "The tags <aui:component>, <aui:spacer> and <aui:panel> are obsolete and have been removed", "LPS-166546",
-						"component", "spacer", "panel"
-				).quickfix(removeXmlTag())
-		);
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_55886_APP_VIEW_SEARCH_ENTRY).quickfix(removeXmlAttribute()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_60753_ASSET_CATEGORIES_NAVIGATION).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_ASSET, "liferay-asset")));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_62922_BUTTON_ITEM).quickfix(renameXmlTag("button")));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_62208_AUI_COLUMN).quickfix(renameXmlTag("col")));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_70442_AUI_TOOL).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_69400_LIFERAY_EXPANDO).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_EXPANDO, "liferay-expando")));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_63101_ICON_BACK).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_63106_ENCRYPT).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_69383_CAPTCHA).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_CAPTCHA, "liferay-captcha")));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_60779_LIFERAY_TRASH).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_TRASH, "liferay-trash")));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_69321_JOURNAL_ARTICLE).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_60967_FLAGS).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_FLAGS, "liferay-flags")));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_60328_NAVIGATION).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_SITE_NAVIGATION, "liferay-site-navigation")));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_54620_PORTLET_ICON).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_62935_AUI_LAYOUT).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_100146_CONTEXTUAL_SIDEBAR).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_106899_CARDS_TREEVIEW).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_ALERT).quickfix(removeXmlAttribute()));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_BADGE).quickfix(removeXmlAttribute()));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_BADGE_STYLE).quickfix(renameXmlAttribute("displayType")));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_BUTTON).quickfix(removeXmlAttribute()));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_BUTTON_ARIA_LABEL).quickfix(renameXmlAttribute("aria-label")));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_DROPDOWN_ACTIONS).quickfix(removeXmlAttribute()));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_DROPDOWN_MENU).quickfix(removeXmlAttribute()));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_ICON).quickfix(removeXmlAttribute()));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_LABEL).quickfix(removeXmlAttribute()));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_LINK).quickfix(removeXmlAttribute()));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_LINK_ARIA_LABEL).quickfix(renameXmlAttribute("aria-label")));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_NAVIGATION_BAR).quickfix(removeXmlAttribute()));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_PROGRESSBAR).quickfix(removeXmlAttribute()));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_RADIO).quickfix(removeXmlAttribute()));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_STICKER).quickfix(removeXmlAttribute()));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_STICKER_STYLE).quickfix(renameXmlAttribute("displayType")));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPS_125256_CLAY_STRIPE).quickfix(removeXmlAttribute()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_122966_LIFERAY_SOY).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_112476_CLAY).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_112476_LIFERAY_UI).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_112476_LIFERAY_THEME).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_121732_FLASH).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_168309_LIFERAY_AUI).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_168309_LIFERAY_FRONTEND).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_158461_LIFERAY_FRONTEND).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_166546_AUI_CONTAINER).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_CLAY, "clay")));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_166546_LIFERAY_AUI).quickfix(removeXmlTag()));
 	}
 
 	@Nls

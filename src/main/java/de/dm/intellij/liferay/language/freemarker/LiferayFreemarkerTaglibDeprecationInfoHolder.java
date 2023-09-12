@@ -5,6 +5,8 @@ import com.intellij.freemarker.psi.FtlNameValuePair;
 import com.intellij.freemarker.psi.directives.FtlMacro;
 import com.intellij.psi.util.PsiTreeUtil;
 import de.dm.intellij.liferay.language.jsp.AbstractLiferayInspectionInfoHolder;
+import de.dm.intellij.liferay.language.jsp.LiferayJspTaglibDeprecationInfoHolder;
+import de.dm.intellij.liferay.util.LiferayTaglibAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ public class LiferayFreemarkerTaglibDeprecationInfoHolder extends AbstractLifera
 	private String myLocalName;
 	private String myAttribute;
 
-	public static LiferayFreemarkerTaglibDeprecationInfoHolder createTag(float majorLiferayVersion, String namespace, String message, String ticket, String localName) {
+	private static LiferayFreemarkerTaglibDeprecationInfoHolder createTag(float majorLiferayVersion, String namespace, String message, String ticket, String localName) {
 		return
 				new LiferayFreemarkerTaglibDeprecationInfoHolder()
 						.namespace(namespace)
@@ -26,17 +28,17 @@ public class LiferayFreemarkerTaglibDeprecationInfoHolder extends AbstractLifera
 						.ticket(ticket);
 	}
 
-	public static ListWrapper<LiferayFreemarkerTaglibDeprecationInfoHolder> createTags(float majorLiferayVersion, String namespace, String message, String ticket, String... localNames) {
+	public static ListWrapper<LiferayFreemarkerTaglibDeprecationInfoHolder> createTags(LiferayTaglibAttributes.TaglibDeprecationTags tags) {
 		List<LiferayFreemarkerTaglibDeprecationInfoHolder> result = new ArrayList<>();
 
-		for (String localName : localNames) {
-			result.add(createTag(majorLiferayVersion, namespace, message, ticket, localName));
+		for (String localName : tags.localNames()) {
+			result.add(createTag(tags.majorLiferayVersion(), tags.namespace(), tags.message(), tags.ticket(), localName));
 		}
 
 		return new ListWrapper<>(result);
 	}
 
-	public static LiferayFreemarkerTaglibDeprecationInfoHolder createAttribute(float majorLiferayVersion, String namespace, String localName, String message, String ticket, String attribute) {
+	private static LiferayFreemarkerTaglibDeprecationInfoHolder createAttribute(float majorLiferayVersion, String namespace, String localName, String message, String ticket, String attribute) {
 		return
 				new LiferayFreemarkerTaglibDeprecationInfoHolder()
 						.namespace(namespace)
@@ -47,15 +49,16 @@ public class LiferayFreemarkerTaglibDeprecationInfoHolder extends AbstractLifera
 						.ticket(ticket);
 	}
 
-	public static ListWrapper<LiferayFreemarkerTaglibDeprecationInfoHolder> createAttributes(float majorLiferayVersion, String namespace, String localName, String message, String ticket, String... attributes) {
+	public static ListWrapper<LiferayFreemarkerTaglibDeprecationInfoHolder> createAttributes(LiferayTaglibAttributes.TaglibDeprecationAttributes attributes) {
 		List<LiferayFreemarkerTaglibDeprecationInfoHolder> result = new ArrayList<>();
 
-		for (String attribute : attributes) {
-			result.add(createAttribute(majorLiferayVersion, namespace, localName, message, ticket, attribute));
+		for (String attribute : attributes.attributes()) {
+			result.add(createAttribute(attributes.majorLiferayVersion(), attributes.namespace(), attributes.localName(), attributes.message(), attributes.ticket(), attribute));
 		}
 
 		return new ListWrapper<>(result);
 	}
+
 	public LiferayFreemarkerTaglibDeprecationInfoHolder namespace(String namespace) {
 		this.myNamespace = namespace;
 

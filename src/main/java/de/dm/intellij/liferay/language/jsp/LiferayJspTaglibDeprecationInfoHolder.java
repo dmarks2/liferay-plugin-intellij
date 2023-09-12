@@ -5,6 +5,7 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
+import de.dm.intellij.liferay.util.LiferayTaglibAttributes;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class LiferayJspTaglibDeprecationInfoHolder extends AbstractLiferayInspec
 	private String myLocalName;
 	private String myAttribute;
 
-	public static LiferayJspTaglibDeprecationInfoHolder createTag(float majorLiferayVersion, String namespace, String message, String ticket, String localName) {
+	private static LiferayJspTaglibDeprecationInfoHolder createTag(float majorLiferayVersion, String namespace, String message, String ticket, String localName) {
 		return
 				new LiferayJspTaglibDeprecationInfoHolder()
 						.namespace(namespace)
@@ -27,17 +28,17 @@ public class LiferayJspTaglibDeprecationInfoHolder extends AbstractLiferayInspec
 						.ticket(ticket);
 	}
 
-	public static ListWrapper<LiferayJspTaglibDeprecationInfoHolder> createTags(float majorLiferayVersion, String namespace, String message, String ticket, String... localNames) {
+	public static ListWrapper<LiferayJspTaglibDeprecationInfoHolder> createTags(LiferayTaglibAttributes.TaglibDeprecationTags tags) {
 		List<LiferayJspTaglibDeprecationInfoHolder> result = new ArrayList<>();
 
-		for (String localName : localNames) {
-			result.add(createTag(majorLiferayVersion, namespace, message, ticket, localName));
+		for (String localName : tags.localNames()) {
+			result.add(createTag(tags.majorLiferayVersion(), tags.namespace(), tags.message(), tags.ticket(), localName));
 		}
 
 		return new ListWrapper<>(result);
 	}
 
-	public static LiferayJspTaglibDeprecationInfoHolder createAttribute(float majorLiferayVersion, String namespace, String localName, String message, String ticket, String attribute) {
+	private static LiferayJspTaglibDeprecationInfoHolder createAttribute(float majorLiferayVersion, String namespace, String localName, String message, String ticket, String attribute) {
 		return
 				new LiferayJspTaglibDeprecationInfoHolder()
 						.namespace(namespace)
@@ -48,11 +49,11 @@ public class LiferayJspTaglibDeprecationInfoHolder extends AbstractLiferayInspec
 						.ticket(ticket);
 	}
 
-	public static ListWrapper<LiferayJspTaglibDeprecationInfoHolder> createAttributes(float majorLiferayVersion, String namespace, String localName, String message, String ticket, String... attributes) {
+	public static ListWrapper<LiferayJspTaglibDeprecationInfoHolder> createAttributes(LiferayTaglibAttributes.TaglibDeprecationAttributes attributes) {
 		List<LiferayJspTaglibDeprecationInfoHolder> result = new ArrayList<>();
 
-		for (String attribute : attributes) {
-			result.add(createAttribute(majorLiferayVersion, namespace, localName, message, ticket, attribute));
+		for (String attribute : attributes.attributes()) {
+			result.add(createAttribute(attributes.majorLiferayVersion(), attributes.namespace(), attributes.localName(), attributes.message(), attributes.ticket(), attribute));
 		}
 
 		return new ListWrapper<>(result);
