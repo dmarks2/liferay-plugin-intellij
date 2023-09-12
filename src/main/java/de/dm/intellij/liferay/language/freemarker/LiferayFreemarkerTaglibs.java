@@ -1,7 +1,11 @@
 package de.dm.intellij.liferay.language.freemarker;
 
 import com.intellij.freemarker.psi.directives.FtlMacro;
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import de.dm.intellij.liferay.util.LiferayTaglibs;
 
 import java.util.HashMap;
@@ -124,6 +128,24 @@ public class LiferayFreemarkerTaglibs {
 
     }
 
+    public static String getPrefix(FtlMacro ftlMacro) {
+        String directiveName = ftlMacro.getDirectiveName();
+
+        if (directiveName.contains(".")) {
+            String[] split = directiveName.split("\\.");
+            if (split.length == 2) {
+                return split[0];
+            }
+        } else if (directiveName.contains("[")) {
+            String[] split = directiveName.split("\\[");
+            if (split.length == 2) {
+                return split[0];
+            }
+        }
+
+        return null;
+    }
+
     public static String getNamespace(FtlMacro ftlMacro) {
         String directiveName = ftlMacro.getDirectiveName();
 
@@ -149,6 +171,44 @@ public class LiferayFreemarkerTaglibs {
         return "";
     }
 
+    public static void setNamespace(FtlMacro ftlMacro, String newNamespace) {
+        String directiveName = ftlMacro.getDirectiveName();
+
+        String styleStart = ".";
+        String styleEnd = "";
+
+        int index = directiveName.indexOf('.');
+
+        if (index < 0) {
+            index = directiveName.indexOf('[');
+
+            styleStart = "[\"";
+            styleEnd = "\"]";
+        }
+
+        if (index >= 0) {
+            for (Map.Entry<String, String> macroPrefix : LiferayFreemarkerTaglibs.FTL_MACRO_PREFIXES.entrySet()) {
+                if (macroPrefix.getValue().equals(newNamespace)) {
+                    PsiElement startTagNameElement = ftlMacro.getStartTagNameElement();
+
+                    if (startTagNameElement != null) {
+                        directiveName = macroPrefix.getKey() + styleStart + getLocalName(ftlMacro) + styleEnd;
+
+                        PsiFile file = startTagNameElement.getContainingFile();
+
+                        file = file.getOriginalFile();
+
+                        Document document = file.getViewProvider().getDocument();
+
+                        TextRange range = startTagNameElement.getTextRange();
+
+                        document.replaceString(range.getStartOffset(), range.getEndOffset(), directiveName);
+                    }
+                }
+            }
+        }
+    }
+
     public static String getLocalName(FtlMacro ftlMacro) {
         String directiveName = ftlMacro.getDirectiveName();
         if (directiveName.contains(".")) {
@@ -171,5 +231,39 @@ public class LiferayFreemarkerTaglibs {
         }
 
         return "";
+    }
+
+    public static void setLocalName(FtlMacro ftlMacro, String newName) {
+        String directiveName = ftlMacro.getDirectiveName();
+
+        String styleStart = ".";
+        String styleEnd = "";
+
+        int index = directiveName.indexOf('.');
+
+        if (index < 0) {
+            index = directiveName.indexOf('[');
+
+            styleStart = "[\"";
+            styleEnd = "\"]";
+        }
+
+        if (index >= 0) {
+            PsiElement startTagNameElement = ftlMacro.getStartTagNameElement();
+
+            if (startTagNameElement != null) {
+                directiveName = getPrefix(ftlMacro) + styleStart + newName + styleEnd;
+
+                PsiFile file = startTagNameElement.getContainingFile();
+
+                file = file.getOriginalFile();
+
+                Document document = file.getViewProvider().getDocument();
+
+                TextRange range = startTagNameElement.getTextRange();
+
+                document.replaceString(range.getStartOffset(), range.getEndOffset(), directiveName);
+            }
+        }
     }
 }

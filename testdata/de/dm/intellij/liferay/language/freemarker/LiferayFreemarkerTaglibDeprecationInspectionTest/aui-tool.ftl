@@ -1,0 +1,1 @@
+<warning descr="Deprecated the aui:tool Tag with no direct Replacement. (see LPS-70422)"><@liferay_aui.tool /></warning>

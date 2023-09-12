@@ -1,0 +1,1 @@
+<warning descr="Removed the liferay-ui:asset-categories-navigation Tag and replaced with liferay-asset:asset-categories-navigation. (see LPS-60753)"><@liferay_ui["asset-categories-navigation"] /></warning>

@@ -3,10 +3,13 @@ package de.dm.intellij.liferay.language.freemarker;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.freemarker.psi.FtlNameValuePair;
 import com.intellij.freemarker.psi.directives.FtlMacro;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.psi.xml.XmlTag;
 import de.dm.intellij.liferay.language.jsp.AbstractLiferayInspectionInfoHolder;
 import de.dm.intellij.liferay.language.jsp.LiferayJspTaglibDeprecationInfoHolder;
 import de.dm.intellij.liferay.util.LiferayTaglibAttributes;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,4 +94,14 @@ public class LiferayFreemarkerTaglibDeprecationInfoHolder extends AbstractLifera
 		}
 	}
 
+	public void visitFtlMacro(ProblemsHolder holder, FtlMacro ftlMacro) {
+		if (
+				(isApplicableLiferayVersion(ftlMacro)) &&
+				(Objects.equals(LiferayFreemarkerTaglibs.getNamespace(ftlMacro), myNamespace)) &&
+				(Objects.equals(LiferayFreemarkerTaglibs.getLocalName(ftlMacro), myLocalName)) &&
+				(StringUtil.isEmpty(myAttribute))
+		) {
+			holder.registerProblem(ftlMacro, getDeprecationMessage(), quickFixes);
+		}
+	}
 }
