@@ -1,4 +1,4 @@
-package de.dm.intellij.liferay.language.java;
+package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.testFramework.LightProjectDescriptor;
@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class LiferayJavaDeprecationInspectionTest extends LightJavaCodeInsightFixtureTestCase {
+public class LiferayJspJavaDeprecationInspectionTest extends LightJavaCodeInsightFixtureTestCase {
 
 	@NotNull
 	@Override
@@ -23,17 +23,17 @@ public class LiferayJavaDeprecationInspectionTest extends LightJavaCodeInsightFi
 	protected void setUp() throws Exception {
 		super.setUp();
 
-		myFixture.enableInspections(new LiferayJavaDeprecationInspection());
+		myFixture.enableInspections(new LiferayJspJavaDeprecationInspection());
 	}
 
 	@Override
 	protected String getTestDataPath() {
-		return "testdata/de/dm/intellij/liferay/language/java/LiferayJavaDeprecationInspectionTest";
+		return "testdata/de/dm/intellij/liferay/language/jsp/LiferayJspJavaDeprecationInspectionTest";
 	}
 
-	public void testActionCommandImportDeprecation() {
+	public void testMVCPortletInsideJSPImportDeprecation() {
 		myFixture.configureByFiles(
-				"MyActionCommand.java"
+				"view.jsp"
 		);
 
 		myFixture.checkHighlighting();
@@ -45,7 +45,7 @@ public class LiferayJavaDeprecationInspectionTest extends LightJavaCodeInsightFi
 			}
 		}
 
-		myFixture.checkResultByFile("MyActionCommand_expected.java");
+		myFixture.checkResultByFile("view_expected.jsp");
 	}
 
 }
