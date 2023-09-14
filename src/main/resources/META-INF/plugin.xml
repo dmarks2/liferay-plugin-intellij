@@ -317,7 +317,8 @@
 
         <!-- inspections -->
         <inspectionToolProvider implementation="de.dm.intellij.liferay.language.osgi.ComponentInspectionToolProvider"/>
-        
+        <inspectionToolProvider implementation="de.dm.intellij.liferay.language.java.LiferayJavaInspectionToolProvider"/>
+
         <pluginReplacement implementation="de.dm.intellij.LiferayPluginReplacement" />
 
         <configurationType implementation="de.dm.intellij.liferay.language.groovy.LiferayServerGroovyConfigurationType"/>
