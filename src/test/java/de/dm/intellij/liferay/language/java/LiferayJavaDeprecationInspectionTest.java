@@ -3,6 +3,7 @@ package de.dm.intellij.liferay.language.java;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
+import de.dm.intellij.liferay.language.jsp.LiferayJspJavaDeprecationInspection;
 import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,7 +24,7 @@ public class LiferayJavaDeprecationInspectionTest extends LightJavaCodeInsightFi
 	protected void setUp() throws Exception {
 		super.setUp();
 
-		myFixture.enableInspections(new LiferayJavaDeprecationInspection());
+		myFixture.enableInspections(new LiferayJavaDeprecationInspection(), new LiferayJspJavaDeprecationInspection());
 	}
 
 	@Override
@@ -46,5 +47,22 @@ public class LiferayJavaDeprecationInspectionTest extends LightJavaCodeInsightFi
 		}
 
 		myFixture.checkResultByFile("MyActionCommand_expected.java");
+	}
+
+	public void testMVCPortletInsideJSPImportDeprecation() {
+		myFixture.configureByFiles(
+				"view.jsp"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Rename Import Statement")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("view_expected.jsp");
 	}
 }
