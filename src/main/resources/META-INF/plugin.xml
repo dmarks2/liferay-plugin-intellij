@@ -2,7 +2,7 @@
     <id>de.dm.intellij.liferay</id>
     <name>Liferay</name>
     <category>Framework integration</category>
-    <version>0.0.17</version>
+    <version>0.0.18</version>
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
@@ -25,6 +25,11 @@
       ]]></description>
 
     <change-notes><![CDATA[
+        <p>Version 0.0.18</p>
+        <ul>
+            <li>Feature: add freemarker taglib deprecation inspections</li>
+        </ul>
+
         <p>Version 0.0.17</p>
         <ul>
             <li>Feature: Code completion features for client-extensions.yaml</li>
@@ -39,6 +44,7 @@
             <li>Change: Update Poshi to 1.0.453</li>
             <li>Change: Remove unsupported languages in workflow scripts (see LPS-187594)</li>
         </ul>
+
         <p>Version 0.0.16</p>
         <ul>
             <li>Feature: Experimental Poshi support</li>

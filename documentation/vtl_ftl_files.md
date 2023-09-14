@@ -10,6 +10,7 @@ Velocity and Freemarker
 7. [Freemarker Debugger](#freemarker-debugger)
 8. [Freemarker Imports](#freemarker-imports)
 9. [Gulpfile](#gulpfile)
+10. [Deprecations](#deprecations)
 
 Liferay Layout Templates
 ------------------------
@@ -170,3 +171,14 @@ configured a different source folder using the option `pathSrc` option that fold
 Source Folder in your project. By default, the folder `src` is used.
 
 By this code completions should work inside those modules, too.
+
+Deprecations
+------------
+
+Some taglibs or attributes may have been deprecated or removed in specific Liferay versions.
+
+Depending on the Liferay version inspections are shown if deprecated or removed taglibs/attributes are detected inside
+Freemarker files. Depending on the type of deprecation or removal quickfixes are offered. Those may be
+
+* Remove the attribute or tag
+* Rename the attribute, tag or namespace to a replacement for the deprecation
