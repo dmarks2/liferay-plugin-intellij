@@ -47,7 +47,7 @@ public class LiferayJavaDeprecationInfoHolder extends AbstractLiferayInspectionI
 			) {
 				deprecationInfoHolder = deprecationInfoHolder.quickfix(renameImport(importDeprecation.newImportStatements()[i]));
 			} else {
-				//TODO remove import quickfix?
+				deprecationInfoHolder = deprecationInfoHolder.quickfix(removeImport());
 			}
 
 			result.add(deprecationInfoHolder);
@@ -129,7 +129,47 @@ public class LiferayJavaDeprecationInfoHolder extends AbstractLiferayInspectionI
 		}
 	}
 
-	protected static PsiJavaFile createDummyJavaFile(Project project, String text) {
+	private static LocalQuickFix removeImport() {
+		return new RemoveImportStatementQuickFix();
+	}
+
+	private static class RemoveImportStatementQuickFix implements LocalQuickFix {
+
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Remove Import Statement";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Remove Import Statement";
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			PsiImportStatement statement;
+
+			if (psiElement instanceof PsiImportStatement) {
+				statement = (PsiImportStatement) psiElement;
+			} else {
+				statement = PsiTreeUtil.getParentOfType(psiElement, PsiImportStatement.class);
+			}
+
+			if (statement == null) {
+				return;
+			}
+
+			statement.delete();
+		}
+	}
+
+	private static PsiJavaFile createDummyJavaFile(Project project, String text) {
 		return (PsiJavaFile) PsiFileFactory.getInstance(project).createFileFromText("_Dummy_." + JavaFileType.INSTANCE.getDefaultExtension(), JavaFileType.INSTANCE, text);
 	}
 

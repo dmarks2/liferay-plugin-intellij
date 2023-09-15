@@ -47,5 +47,21 @@ public class LiferayJavaDeprecationInspectionTest extends LightJavaCodeInsightFi
 
 		myFixture.checkResultByFile("MyActionCommand_expected.java");
 	}
+	public void testUserImporterUtilDeprecationRemove() {
+		myFixture.configureByFiles(
+				"MyUserImporterUtil.java"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Remove Import Statement")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("MyUserImporterUtil_expected.java");
+	}
 
 }

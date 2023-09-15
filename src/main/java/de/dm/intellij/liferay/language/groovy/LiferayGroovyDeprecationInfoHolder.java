@@ -46,7 +46,7 @@ public class LiferayGroovyDeprecationInfoHolder extends AbstractLiferayInspectio
 			) {
 				deprecationInfoHolder = deprecationInfoHolder.quickfix(renameImport(importDeprecation.newImportStatements()[i]));
 			} else {
-				//TODO remove import quickfix?
+				deprecationInfoHolder = deprecationInfoHolder.quickfix(removeImport());
 			}
 
 			result.add(deprecationInfoHolder);
@@ -122,6 +122,46 @@ public class LiferayGroovyDeprecationInfoHolder extends AbstractLiferayInspectio
 
 				statement.replace(newStatement);
 			}
+		}
+	}
+
+	private static LocalQuickFix removeImport() {
+		return new RemoveImportStatementQuickFix();
+	}
+
+	private static class RemoveImportStatementQuickFix implements LocalQuickFix {
+
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Remove Import Statement";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Remove Import Statement";
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			GrImportStatement statement;
+
+			if (psiElement instanceof GrImportStatement) {
+				statement = (GrImportStatement) psiElement;
+			} else {
+				statement = PsiTreeUtil.getParentOfType(psiElement, GrImportStatement.class);
+			}
+
+			if (statement == null) {
+				return;
+			}
+
+			statement.delete();
 		}
 	}
 

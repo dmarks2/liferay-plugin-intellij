@@ -48,4 +48,21 @@ public class LiferayGroovyDeprecationInspectionTest extends LightJavaCodeInsight
 		myFixture.checkResultByFile("script_expected.groovy");
 	}
 
+	public void testUserImporterUtilDeprecationRemove() {
+		myFixture.configureByFiles(
+				"myimport.groovy"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Remove Import Statement")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("myimport_expected.groovy");
+	}
+
 }

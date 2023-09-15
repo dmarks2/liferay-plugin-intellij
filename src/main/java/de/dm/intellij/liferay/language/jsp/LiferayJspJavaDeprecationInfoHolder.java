@@ -6,14 +6,11 @@ import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiImportStatement;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
-import de.dm.intellij.liferay.language.java.LiferayJavaDeprecationInfoHolder;
 import de.dm.intellij.liferay.language.java.LiferayJavaDeprecations;
-import de.dm.intellij.liferay.util.LiferayTaglibAttributes;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
@@ -46,7 +43,7 @@ public class LiferayJspJavaDeprecationInfoHolder extends AbstractLiferayInspecti
 			) {
 				deprecationInfoHolder = deprecationInfoHolder.quickfix(renameImport(importDeprecation.newImportStatements()[i]));
 			} else {
-				//TODO remove import quickfix?
+				deprecationInfoHolder = deprecationInfoHolder.quickfix(removeImport());
 			}
 
 			result.add(deprecationInfoHolder);
@@ -117,6 +114,50 @@ public class LiferayJspJavaDeprecationInfoHolder extends AbstractLiferayInspecti
 
 			if (xmlAttribute != null) {
 				xmlAttribute.setValue(newName);
+			}
+		}
+	}
+
+	private static LocalQuickFix removeImport() {
+		return new RemoveImportStatementQuickFix();
+	}
+
+	private static class RemoveImportStatementQuickFix implements LocalQuickFix {
+
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Remove Import Statement";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Remove Import Statement";
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			XmlAttributeValue value;
+
+			if (psiElement instanceof XmlAttributeValue) {
+				value = (XmlAttributeValue) psiElement;
+			} else {
+				value = PsiTreeUtil.getParentOfType(psiElement, XmlAttributeValue.class);
+			}
+
+			if (value == null) {
+				return;
+			}
+
+			XmlTag xmlTag = PsiTreeUtil.getParentOfType(value, XmlTag.class);
+
+			if (xmlTag != null) {
+				xmlTag.delete();
 			}
 		}
 	}

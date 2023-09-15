@@ -48,4 +48,21 @@ public class LiferayJspJavaDeprecationInspectionTest extends LightJavaCodeInsigh
 		myFixture.checkResultByFile("view_expected.jsp");
 	}
 
+	public void testUserImporterUtilDeprecationRemove() {
+		myFixture.configureByFiles(
+				"myimport.jsp"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Remove Import Statement")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("myimport_expected.jsp");
+	}
+
 }
