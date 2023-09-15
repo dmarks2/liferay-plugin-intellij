@@ -180,3 +180,5 @@ type of deprecation or removal quickfixes are offered. Those may be
 
 * Remove the attribute or tag
 * Rename the attribute, tag or namespace to a replacement for the deprecation
+
+Deprecated imports for moved java classes are detected, too (in JSP files and in Java files).

@@ -20,6 +20,7 @@ public class LiferayJavaDeprecationInspection extends AbstractLiferayDeprecation
 
 	static {
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_50156_UTIL_BRIDGES));
+		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_55364_CONTACT_NAME_EXCEPTION));
 	}
 
 	@Nls
