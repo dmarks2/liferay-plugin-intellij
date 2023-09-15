@@ -121,8 +121,12 @@ public class LiferayJavaDeprecations {
 			"Many classes from former portal-service.jar from Liferay Portal 6.x have been moved into application and framework API modules.",
 			"",
 			"/com/liferay/java/Modularization_Imports_72.csv");
-
-
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_100144_ASSET_TAGS_SELECTOR_TAG = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.3f,
+			"Removed java class AssetTagsSelectorTag.",
+			"LPS-100144",
+			new String[] {"com.liferay.asset.taglib.servlet.taglib.soy.AssetTagsSelectorTag"},
+			new String[0] );
 
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
