@@ -57,11 +57,72 @@ public class LiferayJavaDeprecations {
 			new String[] {"com.liferay.portal.kernel.security.exportimport.UserImporter", "com.liferay.portal.kernel.security.exportimport.UserExporter", "com.liferay.portal.kernel.security.exportimport.UserOperation", "com.liferay.portal.kernel.security.exportimport.UserImporterUtil", "com.liferay.portal.kernel.security.exportimport.UserExporterUtil"},
 			new String[] {"com.liferay.portal.security.exportimport.UserImporter", "com.liferay.portal.security.exportimport.UserExporter", "com.liferay.portal.security.exportimport.UserOperation"});
 
-	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_NONE_MODULARIZATION = new LiferayJavaDeprecations.JavaImportDeprecation(
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_NONE_MODULARIZATION_70 = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.0f,
 			"Many classes from former portal-service.jar from Liferay Portal 6.x have been moved into application and framework API modules.",
 			"",
-			"/com/liferay/java/Modularization_Imports.csv");
+			"/com/liferay/java/Modularization_Imports_70.csv");
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_NONE_MODULARIZATION_71 = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.1f,
+			"Many classes from former portal-service.jar from Liferay Portal 6.x have been moved into application and framework API modules.",
+			"",
+			"/com/liferay/java/Modularization_Imports_71.csv");
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_88912_INVOKABLE_SERVICE = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.2f,
+			"The InvokableService and InvokableLocalService interfaces in package com.liferay.portal.kernel.service were removed.",
+			"LPS-88912",
+			new String[] {"com.liferay.portal.kernel.service.InvokableService", "com.liferay.portal.kernel.service.InvokableLocalService"},
+			new String[0] );
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_88913_SERVICE_LOADER_CONDITION = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.2f,
+			"The interface ServiceLoaderCondition and its implementation DefaultServiceLoaderCondition in package com.liferay.portal.kernel.util were removed.",
+			"LPS-88913",
+			new String[] {"com.liferay.portal.kernel.util.DefaultServiceLoaderCondition", "com.liferay.portal.kernel.util.ServiceLoaderCondition"},
+			new String[0] );
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_88869_TERMS_OF_USE = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.2f,
+			"The TermsOfUseContentProvider interface's package changed.",
+			"LPS-88869",
+			new String[] {"com.liferay.portal.kernel.util.TermsOfUseContentProvider", "com.liferay.portal.kernel.util.TermsOfUseContentProviderRegistryUtil"},
+			new String[] {"com.liferay.portal.kernel.terms.of.use.TermsOfUseContentProvider"});
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_88870_CONVERTER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.2f,
+			"The interface com.liferay.portal.kernel.util.Converter and its implementation com.liferay.portal.spring.hibernate.HibernateConfigurationConverter were removed.",
+			"LPS-88870",
+			new String[] {"com.liferay.portal.spring.hibernate.HibernateConfigurationConverter", "com.liferay.portal.kernel.util.Converter"},
+			new String[0] );
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_89223_OSGI_SERVICE_UTILS = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.2f,
+			"The com.liferay.portal.osgi.util.test.OSGiServiceUtil class was removed. Also, the following interfaces were removed from the com.liferay.portal.kernel.util package: UnsafeConsumer, UnsafeFunction, UnsafeRunnable.",
+			"LPS-89223",
+			new String[] {"com.liferay.portal.osgi.util.test.OSGiServiceUtil", "com.liferay.portal.kernel.util.UnsafeConsumer", "com.liferay.portal.kernel.util.UnsafeFunction", "com.liferay.portal.kernel.util.UnsafeRunnable"},
+			new String[0] );
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_89139_PREDICATE_FILTER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.2f,
+			"The interface com.liferay.portal.kernel.util.PredicateFilter was removed and replaced with java.util.function.Predicate.",
+			"LPS-89139",
+			new String[] {"com.liferay.portal.kernel.util.PredicateFilter", "com.liferay.portal.kernel.util.AggregatePredicateFilter",
+					"com.liferay.portal.kernel.util.PrefixPredicateFilter",
+					"com.liferay.portal.kernel.portlet.JavaScriptPortletResourcePredicateFilter",
+					"com.liferay.dynamic.data.mapping.form.values.query.internal.model.DDMFormFieldValuePredicateFilter"},
+			new String[] {"java.util.function.Predicate"} );
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_88911_FUNCTION_SUPPLIER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.2f,
+			"The Function and Supplier interfaces in package com.liferay.portal.kernel.util were removed. Their usages were replaced with java.util.function.Function and java.util.function.Supplier.",
+			"LPS-88911",
+			new String[] {"com.liferay.portal.kernel.util.Function", "com.liferay.portal.kernel.util.Supplier"},
+			new String[] {"java.util.function.Function", "java.util.function.Supplier"} );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_NONE_MODULARIZATION_72 = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.2f,
+			"Many classes from former portal-service.jar from Liferay Portal 6.x have been moved into application and framework API modules.",
+			"",
+			"/com/liferay/java/Modularization_Imports_72.csv");
+
+
 
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
@@ -81,10 +142,17 @@ public class LiferayJavaDeprecations {
 				newImportStatements = new String[lines.length];
 
 				for (int i = 0; i < lines.length; i++) {
-					String[] values = lines[i].split(",");
+					if (lines[i].contains(",")) {
+						String[] values = lines[i].split(",");
 
-					importStatements[i] = values[0];
-					newImportStatements[i] = values[1];
+						importStatements[i] = values[0];
+						newImportStatements[i] = values[1];
+					} else if (lines[i].contains("=")) {
+						String[] values = lines[i].split("=");
+
+						importStatements[i] = values[0];
+						newImportStatements[i] = values[1];
+					}
 				}
 			}
 		} catch (Exception exception) {
