@@ -3,6 +3,7 @@ package de.dm.intellij.liferay.language.jsp;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 
@@ -44,7 +45,11 @@ public abstract class AbstractLiferayInspectionInfoHolder<T> {
 	}
 
 	protected String getDeprecationMessage() {
-		return "<html><body>" + myMessage + " (see <a href=\"https://liferay.atlassian.net/browse/" + myTicket + "\">" + myTicket + "</a>)</body></html>";
+		if (StringUtil.isNotEmpty(myTicket)) {
+			return "<html><body>" + myMessage + " (see <a href=\"https://liferay.atlassian.net/browse/" + myTicket + "\">" + myTicket + "</a>)</body></html>";
+		} else {
+			return myMessage;
+		}
 	}
 
 	protected boolean isApplicableLiferayVersion(PsiElement psiElement) {
