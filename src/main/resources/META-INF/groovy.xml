@@ -3,4 +3,9 @@
         <!-- Implicit Groovy variables -->
         <membersContributor implementation="de.dm.intellij.liferay.language.groovy.GroovyScriptingImplicitMembersContributor" />
     </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <inspectionToolProvider implementation="de.dm.intellij.liferay.language.groovy.LiferayGroovyInspectionToolProvider"/>
+    </extensions>
+
 </idea-plugin>
