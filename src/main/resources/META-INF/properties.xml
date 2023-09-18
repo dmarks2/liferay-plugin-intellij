@@ -9,5 +9,7 @@
         <lang.documentationProvider order="first" language="Properties" implementationClass="de.dm.intellij.liferay.language.properties.LiferayPortalPropertiesDocumentationProvider" />
 
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.resourcebundle.ResourceBundleReferenceContributor"/>
+
+        <inspectionToolProvider implementation="de.dm.intellij.liferay.language.properties.LiferayPropertiesInspectionToolProvider"/>
     </extensions>
 </idea-plugin>

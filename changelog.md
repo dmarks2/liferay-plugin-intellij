@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.18
 - Feature: add freemarker taglib deprecation inspections
+- Feature: add java, jsp, groovy code deprecation inspections
+- Feature: add property file deprecation inspections
 
 ## 0.0.17
 - Feature: Code completion features for client-extensions.yaml
