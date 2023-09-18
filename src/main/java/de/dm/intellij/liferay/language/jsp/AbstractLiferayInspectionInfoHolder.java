@@ -91,5 +91,10 @@ public abstract class AbstractLiferayInspectionInfoHolder<T> {
 
 			return this;
 		}
+		public AbstractLiferayInspectionInfoHolder.ListWrapper<E> version(String version) {
+			this.replaceAll(liferayTaglibDeprecationInfoHolder -> ((AbstractLiferayInspectionInfoHolder<E>)liferayTaglibDeprecationInfoHolder).version(version));
+
+			return this;
+		}
 	}
 }

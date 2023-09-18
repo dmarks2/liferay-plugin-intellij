@@ -51,6 +51,23 @@ public class LiferayTaglibAttributes {
 	public static TaglibDeprecationTags LPS_70442_AUI_TOOL = new TaglibDeprecationTags(7.0f, TAGLIB_URI_LIFERAY_AUI, "Deprecated the aui:tool Tag with no direct Replacement.", "LPS-70422", "tool");
 	public static TaglibDeprecationTags LPS_100146_CONTEXTUAL_SIDEBAR = new TaglibDeprecationTags(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "The `liferay-frontend:contextual-sidebar` tag was removed.", "LPS-100146", "contextual-sidebar");
 	public static TaglibDeprecationTags LPS_106899_CARDS_TREEVIEW = new TaglibDeprecationTags(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "Removed liferay-frontend:cards-treeview Tag", "LPS-106899","cards-treeview");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_BADGE_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "badge", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_COL_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "col", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_CONTAINER_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "container", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_CONTENT_COL_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "content-col", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_CONTENT_ROW_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "content-row", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_CONTENT_SECTION_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "content-section", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_ICON_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "icon", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_LABEL_ITEM_AFTER_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "label-item-after", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_LABEL_ITEM_BEFORE_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "label-item-before", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_LABEL_ITEM_EXPAND_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "label-item-expand", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_LABEL_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "label", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_ROW_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "row", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_SHEET_FOOTER_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "sheet-footer", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_SHEET_HEADER_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "sheet-header", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_SHEET_SECTION_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "sheet-section", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_SHEET_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "sheet", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
+	public static TaglibDeprecationAttributes LPS_112464_CLAY_STICKER_CSS_CLASS = new TaglibDeprecationAttributes(7.3f, TAGLIB_URI_LIFERAY_FRONTEND, "sticker", "Renamed Clay taglib attribute className to cssClass to follow JSP tag pattern.", "LPS-112464 ","className");
 	public static TaglibDeprecationAttributes LPS_125256_CLAY_ALERT = new TaglibDeprecationAttributes(7.4f, TAGLIB_URI_LIFERAY_CLAY, "alert", "The attributes closeable, componentId, contributorKey, data, defaultEventHandler, destroyOnHide, elementClasses, spritemap, style, type in `clay:alert` tag were removed.", "LPS-125256",
 			"closeable", "componentId", "contributorKey", "data", "defaultEventHandler", "destroyOnHide", "elementClasses",
 			"spritemap", "style", "type");
@@ -397,16 +414,22 @@ public class LiferayTaglibAttributes {
 
 		TAGLIB_ATTRIBUTES_CSS.put(TAGLIB_URI_LIFERAY_CLAY, Arrays.asList(
 				new AbstractMap.SimpleEntry<String, String>("alert", "elementClasses"),
+				new AbstractMap.SimpleEntry<String, String>("badge", "cssClass"),
 				new AbstractMap.SimpleEntry<String, String>("badge", "elementClasses"),
 				new AbstractMap.SimpleEntry<String, String>("button", "elementClasses"),
 				new AbstractMap.SimpleEntry<String, String>("button", "icon"),
 				new AbstractMap.SimpleEntry<String, String>("checkbox", "elementClasses"),
 				new AbstractMap.SimpleEntry<String, String>("col", "className"),
+				new AbstractMap.SimpleEntry<String, String>("col", "cssClass"),
 				new AbstractMap.SimpleEntry<String, String>("container", "className"),
+				new AbstractMap.SimpleEntry<String, String>("container", "cssClass"),
 				new AbstractMap.SimpleEntry<String, String>("container-fluid", "className"),
 				new AbstractMap.SimpleEntry<String, String>("content-col", "className"),
+				new AbstractMap.SimpleEntry<String, String>("content-col", "cssClass"),
 				new AbstractMap.SimpleEntry<String, String>("content-row", "className"),
+				new AbstractMap.SimpleEntry<String, String>("content-row", "cssClass"),
 				new AbstractMap.SimpleEntry<String, String>("content-section", "className"),
+				new AbstractMap.SimpleEntry<String, String>("content-section", "cssClass"),
 				new AbstractMap.SimpleEntry<String, String>("dropdown-actions", "elementClasses"),
 				new AbstractMap.SimpleEntry<String, String>("dropdown-actions", "triggerCssClasses"),
 				new AbstractMap.SimpleEntry<String, String>("dropdown-menu", "elementClasses"),
@@ -417,11 +440,16 @@ public class LiferayTaglibAttributes {
 				new AbstractMap.SimpleEntry<String, String>("file-card", "stickerCssClass"),
 				new AbstractMap.SimpleEntry<String, String>("horizontal-card", "elementClasses"),
 				new AbstractMap.SimpleEntry<String, String>("horizontal-card", "icon"),
+				new AbstractMap.SimpleEntry<String, String>("icon", "cssClass"),
 				new AbstractMap.SimpleEntry<String, String>("icon", "elementClasses"),
 				new AbstractMap.SimpleEntry<String, String>("icon", "symbol"),
 				new AbstractMap.SimpleEntry<String, String>("image-card", "elementClasses"),
 				new AbstractMap.SimpleEntry<String, String>("image-card", "icon"),
 				new AbstractMap.SimpleEntry<String, String>("image-card", "stickerCssClass"),
+				new AbstractMap.SimpleEntry<String, String>("label-item-after", "cssClass"),
+				new AbstractMap.SimpleEntry<String, String>("label-item-before", "cssClass"),
+				new AbstractMap.SimpleEntry<String, String>("label-item-expand", "cssClass"),
+				new AbstractMap.SimpleEntry<String, String>("label", "cssClass"),
 				new AbstractMap.SimpleEntry<String, String>("label", "elementClasses"),
 				new AbstractMap.SimpleEntry<String, String>("link", "elementClasses"),
 				new AbstractMap.SimpleEntry<String, String>("link", "icon"),
@@ -430,12 +458,17 @@ public class LiferayTaglibAttributes {
 				new AbstractMap.SimpleEntry<String, String>("navigation-bar", "elementClasses"),
 				new AbstractMap.SimpleEntry<String, String>("progressbar", "elementClasses"),
 				new AbstractMap.SimpleEntry<String, String>("radio", "elementClasses"),
+				new AbstractMap.SimpleEntry<String, String>("row", "cssClass"),
 				new AbstractMap.SimpleEntry<String, String>("row", "className"),
 				new AbstractMap.SimpleEntry<String, String>("select", "elementClasses"),
 				new AbstractMap.SimpleEntry<String, String>("sheet", "className"),
 				new AbstractMap.SimpleEntry<String, String>("sheet-footer", "className"),
+				new AbstractMap.SimpleEntry<String, String>("sheet-footer", "cssClass"),
 				new AbstractMap.SimpleEntry<String, String>("sheet-header", "className"),
+				new AbstractMap.SimpleEntry<String, String>("sheet-header", "cssClass"),
 				new AbstractMap.SimpleEntry<String, String>("sheet-section", "className"),
+				new AbstractMap.SimpleEntry<String, String>("sheet-section", "cssClass"),
+				new AbstractMap.SimpleEntry<String, String>("sticker", "cssClass"),
 				new AbstractMap.SimpleEntry<String, String>("sticker", "elementClasses"),
 				new AbstractMap.SimpleEntry<String, String>("sticker", "icon"),
 				new AbstractMap.SimpleEntry<String, String>("stripe", "elementClasses"),
