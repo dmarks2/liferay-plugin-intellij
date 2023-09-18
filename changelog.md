@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Feature: add freemarker taglib deprecation inspections
 - Feature: add java, jsp, groovy code deprecation inspections
 - Feature: add property file deprecation inspections
+- Feature: add changes from LPS-112464 (className changed to cssClass in Clay taglibs)
 
 ## 0.0.17
 - Feature: Code completion features for client-extensions.yaml
