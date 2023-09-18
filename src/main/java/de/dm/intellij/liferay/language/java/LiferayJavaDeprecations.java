@@ -149,10 +149,10 @@ public class LiferayJavaDeprecations {
 			new String[0] );
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_124898_OPEN_ID_CONNECT_SERVICE_HANDLER = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.4f,
-			"OpenIdConnectServiceHandler interface removed.",
+			"The OpenIdConnectServiceHandler interface has been removed and replaced by the OpenIdConnectAuthenticationHandler interface.",
 			"LPS-124898",
 			new String[] {"com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandler"},
-			new String[0] );
+			new String[] {"portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler"});
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_122956_SOY = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.4f,
 			"Some modules and the classes they exported to allow Soy rendering server-side have been removed.",
@@ -226,10 +226,16 @@ public class LiferayJavaDeprecations {
 			new String[0] );
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_133200_OPEN_ID_CONNECT_SERVICE_HANDLER = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.4f,
-			"The StringBundler class in package com.liferay.portal.kernel.util were removed.",
+			"The StringBundler class in package com.liferay.portal.kernel.util has been deprecated.",
 			"LPS-133200",
 			new String[] {"com.liferay.portal.kernel.util.StringBundler"},
-			new String[0] );
+			new String[] {"com.liferay.petra.string.StringBundler"} );
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_181233_CTSQL_MODE_THREAD_LOCAL = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"Moved CTSQLModeThreadLocal to portal-kernel and Changed Package.",
+			"LPS-181233",
+			new String[] {"com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal"},
+			new String[] {"com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal"} );
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
 		String[] newImportStatements = new String[0];

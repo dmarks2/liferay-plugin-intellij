@@ -199,6 +199,14 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 				"dl.store.antivirus.impl").quickfix(removeProperty()));
 		PROPERTY_DEPRECATIONS.addAll(createProperties(7.4f, "The X-Xss-Protection header is not supported by modern browsers.", "LPS-134188",
 				"http.header.secure.x.xss.protection").quickfix(removeProperty()));
+		PROPERTY_DEPRECATIONS.addAll(createProperties(7.4f, "The buffered.increment.enabled portal property has been removed and the view.count.enabled moved to OSGi configurations.", "LPS-120626",
+				"buffered.increment.enabled", "view.count.enabled").quickfix(removeProperty()).version("7.3.6"));
+		PROPERTY_DEPRECATIONS.addAll(createProperties(7.4f, "Portal property module.framework.properties.file.install.optionalImportRefreshScope has been removed.", "LPS-122008",
+				"module.framework.properties.file.install.optionalImportRefreshScope").quickfix(removeProperty()));
+		PROPERTY_DEPRECATIONS.addAll(createProperties(7.4f, "Redirect URL configuration is no longer configurable via portal properties and have been moved to OSGi configurations.", "LPS-128837",
+				"redirect.url.domains.allowed", "redirect.url.ips.allowed", "redirect.url.security.mode").quickfix(removeProperty()));
+		PROPERTY_DEPRECATIONS.addAll(createProperties(7.4f, "The properties tika.config, text.extraction.fork.process.enabled and text.extraction.fork.process.mime.types have been moved to OSGi configurations.", "LPS-147938",
+				"tika.config", "text.extraction.fork.process.enabled", "text.extraction.fork.process.mime.types").quickfix(removeProperty()));
 
 
 	}
@@ -277,6 +285,52 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 			}
 
 			property.delete();
+		}
+	}
+
+	private static LocalQuickFix renameProperty(String newName) {
+		return new RenamePropertyQuickFix(newName);
+	}
+
+	private static class RenamePropertyQuickFix implements LocalQuickFix {
+
+		private String newName;
+
+		public RenamePropertyQuickFix(String newName) {
+			this.newName = newName;
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Rename Property";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Rename Property to " + newName;
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			PropertyImpl property;
+
+			if (psiElement instanceof PropertyImpl) {
+				property = (PropertyImpl) psiElement;
+			} else {
+				property = PsiTreeUtil.getParentOfType(psiElement, PropertyImpl.class);
+			}
+
+			if (property == null) {
+				return;
+			}
+
+			property.setName(newName);
 		}
 	}
 
