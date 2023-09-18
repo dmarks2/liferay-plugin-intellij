@@ -6,6 +6,7 @@ import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
+import de.dm.intellij.liferay.util.Version;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.List;
 public abstract class AbstractLiferayInspectionInfoHolder<T> {
 
 	protected float myMajorLiferayVersion;
+
+	protected String myLiferayVersion;
 
 	protected String myMessage;
 
@@ -44,6 +47,12 @@ public abstract class AbstractLiferayInspectionInfoHolder<T> {
 		return (T)this;
 	}
 
+	public T version(String version) {
+		this.myLiferayVersion = version;
+
+		return (T)this;
+	}
+
 	protected String getDeprecationMessage() {
 		if (StringUtil.isNotEmpty(myTicket)) {
 			return "<html><body>" + myMessage + " (see <a href=\"https://liferay.atlassian.net/browse/" + myTicket + "\">" + myTicket + "</a>)</body></html>";
@@ -58,7 +67,15 @@ public abstract class AbstractLiferayInspectionInfoHolder<T> {
 		if ((module != null) && (!module.isDisposed())) {
 			float version = LiferayModuleComponent.getPortalMajorVersion(module);
 
-			return version >= myMajorLiferayVersion;
+			if (version > myMajorLiferayVersion) {
+				return true;
+			} else if (version == myMajorLiferayVersion) {
+				if (StringUtil.isEmpty(myLiferayVersion)) {
+					return true;
+				}
+
+				return Version.compare(LiferayModuleComponent.getLiferayVersion(module), myLiferayVersion) >= 0;
+			}
 		}
 
 		return false;
