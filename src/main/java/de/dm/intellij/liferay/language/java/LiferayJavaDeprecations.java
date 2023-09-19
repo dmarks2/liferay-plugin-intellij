@@ -240,18 +240,54 @@ public class LiferayJavaDeprecations {
 			new String[] {"com.liferay.portal.kernel.util.StringBundler"},
 			new String[] {"com.liferay.petra.string.StringBundler"} );
 
-	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_162437_PHONE = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_162437_ADDRESS = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
 			7.4f,
-			"Phone column typeId has been renamed to listTypeId.",
+			"Adress column typeId has been renamed to listTypeId.",
 			"LPS-162437",
-			new String[] {"com.liferay.portal.kernel.model.Phone.getTypeId()", "com.liferay.portal.kernel.model.Phone.getType()"},
-			new String[] {"getListTypeId", "getListType"} );
+			new String[] {
+					"com.liferay.portal.kernel.model.Address.getTypeId()", "com.liferay.portal.kernel.model.Address.getType()", "com.liferay.portal.kernel.model.Address.setTypeId()",
+					"com.liferay.portal.kernel.service.AddressLocalService.getTypeAddresses()", "com.liferay.portal.kernel.service.AddressLocalServiceUtil.getTypeAddresses()",
+			},
+			new String[] {
+					"getListTypeId", "getListType", "setListTypeId",
+					"getListTypeAddresses", "getListTypeAddresses"
+			} );
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_163821_EMAIL_ADDRESS = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"EmailAddress column typeId has been renamed to listTypeId.",
+			"LPS-163821",
+			new String[] {"com.liferay.portal.kernel.model.EmailAddress.getTypeId()", "com.liferay.portal.kernel.model.EmailAddress.getType()", "com.liferay.portal.kernel.model.EmailAddress.setTypeId()"},
+			new String[] {"getListTypeId", "getListType", "setListTypeId"} );
 	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_162450_PHONE = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
 			7.4f,
 			"Phone column typeId has been renamed to listTypeId.",
 			"LPS-162450",
 			new String[] {"com.liferay.portal.kernel.model.Phone.getTypeId()", "com.liferay.portal.kernel.model.Phone.getType()", "com.liferay.portal.kernel.model.Phone.setTypeId()"},
 			new String[] {"getListTypeId", "getListType", "setListTypeId"} );
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_164415_WEBSITE = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"Website column typeId has been renamed to listTypeId.",
+			"LPS-164415",
+			new String[] {"com.liferay.portal.kernel.model.Website.getTypeId()", "com.liferay.portal.kernel.model.Website.getType()", "com.liferay.portal.kernel.model.Website.setTypeId()"},
+			new String[] {"getListTypeId", "getListType", "setListTypeId"} );
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_164522_CONTACT = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"Contact columns prefixId and suffixId have been renamed to prefixListTypeId and suffixListTypeId.",
+			"LPS-164522",
+			new String[] {"com.liferay.portal.kernel.model.Contact.getPrefixId()", "com.liferay.portal.kernel.model.Contact.setPrefixId()", "com.liferay.portal.kernel.model.Contact.getSuffixId()", "com.liferay.portal.kernel.model.Contact.setSuffixId()"},
+			new String[] {"getPrefixListTypeId", "setPrefixListTypeId", "getSuffixListTypeId", "setSuffixListTypeId"} );
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_165244_ORGANIZATION = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"Organization column statusId has been renamed to statusListTypeId.",
+			"LPS-65244",
+			new String[] {"com.liferay.portal.kernel.model.Organization.getStatusId()", "com.liferay.portal.kernel.model.Contact.setStatusId()"},
+			new String[] {"getStatusListTypeId", "setStatusListTypeId"} );
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_165685_ORG_LABOR = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"OrgLabor column typeId has been renamed to listTypeId.",
+			"LPS-65244",
+			new String[] {"com.liferay.portal.kernel.model.OrgLabor.getTypeId()", "com.liferay.portal.kernel.model.OrgLabor.setTypeId()", "com.liferay.portal.kernel.model.OrgLabor.getType()"},
+			new String[] {"getListTypeId", "setListTypeId", "getListType"} );
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_181233_CTSQL_MODE_THREAD_LOCAL = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.4f,
 			"Moved CTSQLModeThreadLocal to portal-kernel and Changed Package.",
