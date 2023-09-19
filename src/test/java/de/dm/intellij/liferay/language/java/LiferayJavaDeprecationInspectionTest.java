@@ -64,4 +64,40 @@ public class LiferayJavaDeprecationInspectionTest extends LightJavaCodeInsightFi
 		myFixture.checkResultByFile("MyUserImporterUtil_expected.java");
 	}
 
+	public void testPhoneMethodCallChange() {
+		myFixture.configureByFiles(
+				"MyPhoneUtil.java",
+				"com/liferay/portal/kernel/model/Phone.java"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Rename Method Call")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("MyPhoneUtil_expected.java");
+	}
+
+	public void testPhoneMethodCallSetterChange() {
+		myFixture.configureByFiles(
+				"MyPhoneUtilSetter.java",
+				"com/liferay/portal/kernel/model/Phone.java"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Rename Method Call")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("MyPhoneUtilSetter_expected.java");
+	}
+
 }

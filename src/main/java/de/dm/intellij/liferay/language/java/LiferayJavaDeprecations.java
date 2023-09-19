@@ -15,6 +15,8 @@ public class LiferayJavaDeprecations {
 		}
 	}
 
+	public record JavaMethodCallDeprecation(float majorLiferayVersion, String message, String ticket, String[] methodSignatures, String[] newNames) {}
+
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_50156_UTIL_BRIDGES = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.0f,
 			"The classes from package com.liferay.util.bridges.mvc in util-bridges.jar were moved to a new package com.liferay.portal.kernel.portlet.bridges.mvc in portal-service.jar.",
@@ -127,6 +129,13 @@ public class LiferayJavaDeprecations {
 			"LPS-100144",
 			new String[] {"com.liferay.asset.taglib.servlet.taglib.soy.AssetTagsSelectorTag"},
 			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_106167_PORTAL_KERNEL = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.3f,
+			"Deprecated portal-kernel classes have been moved to Petra libraries.",
+			"LPS-106167",
+			new String[] {"com.liferay.portal.kernel.util.StringPool", "com.liferay.portal.kernel.util.HashUtil", "com.liferay.portal.kernel.upload.UploadHandler", "com.liferay.portal.kernel.upload.BaseUploadHandler"},
+			new String[] {"com.liferay.petra.string.StringPool", "com.liferay.petra.lang.HashUtil"});
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_89065_ASSET_CATEGORIES_TABLE = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.4f,
 			"Removed the AssetEntries_AssetCategories Table and Corresponding Code.",
@@ -230,12 +239,28 @@ public class LiferayJavaDeprecations {
 			"LPS-133200",
 			new String[] {"com.liferay.portal.kernel.util.StringBundler"},
 			new String[] {"com.liferay.petra.string.StringBundler"} );
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_162437_PHONE = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"Phone column typeId has been renamed to listTypeId.",
+			"LPS-162437",
+			new String[] {"com.liferay.portal.kernel.model.Phone.getTypeId()", "com.liferay.portal.kernel.model.Phone.getType()"},
+			new String[] {"getListTypeId", "getListType"} );
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_162450_PHONE = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"Phone column typeId has been renamed to listTypeId.",
+			"LPS-162450",
+			new String[] {"com.liferay.portal.kernel.model.Phone.getTypeId()", "com.liferay.portal.kernel.model.Phone.getType()", "com.liferay.portal.kernel.model.Phone.setTypeId()"},
+			new String[] {"getListTypeId", "getListType", "setListTypeId"} );
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_181233_CTSQL_MODE_THREAD_LOCAL = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.4f,
 			"Moved CTSQLModeThreadLocal to portal-kernel and Changed Package.",
 			"LPS-181233",
 			new String[] {"com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal"},
 			new String[] {"com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal"} );
+
+
+
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
 		String[] newImportStatements = new String[0];

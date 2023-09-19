@@ -23,6 +23,7 @@ import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiClassType;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiImportList;
@@ -30,12 +31,14 @@ import com.intellij.psi.PsiImportStatement;
 import com.intellij.psi.PsiImportStaticStatement;
 import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiMethodCallExpression;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
 import com.intellij.psi.PsiPackage;
 import com.intellij.psi.PsiPackageStatement;
 import com.intellij.psi.PsiParameter;
 import com.intellij.psi.PsiParameterList;
+import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.impl.JavaConstantExpressionEvaluator;
 import com.intellij.psi.impl.compiled.ClsFieldImpl;
@@ -482,6 +485,22 @@ public class ProjectUtils {
         }
 
         return result;
+    }
+
+    public static String getMethodCallSignature(PsiMethodCallExpression methodCallExpression) {
+        PsiReferenceExpression methodExpression = methodCallExpression.getMethodExpression();
+
+        PsiExpression qualifierExpression = methodExpression.getQualifierExpression();
+
+        if (qualifierExpression != null) {
+            PsiType type = qualifierExpression.getType();
+
+            if (type != null) {
+                return type.getCanonicalText() + "." + methodExpression.getReferenceName() + "()";
+            }
+        }
+
+        return null;
     }
 
 }
