@@ -239,6 +239,70 @@ public class LiferayJavaDeprecations {
 			"LPS-133200",
 			new String[] {"com.liferay.portal.kernel.util.StringBundler"},
 			new String[] {"com.liferay.petra.string.StringBundler"} );
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_147929_PETRA_JSON_VALIDATOR = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"petra-json-validator has been moved to portal-json-validator.",
+			"LPS-147929",
+			new String[] {"com.liferay.petra.json.validator.JSONValidator", "com.liferay.petra.json.validator.JSONValidatorException" },
+			new String[] {"com.liferay.portal.json.validator.JSONValidator", "com.liferay.portal.json.validator.JSONValidatorException" } );
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_148013_PETRA_JSON_WEB_SERVICE_CLIENT = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"petra-json-web-service-client has been moved to portal-json-web-service-client.",
+			"LPS-148013",
+			new String[] {
+					"com.liferay.petra.json.web.service.client.BaseJSONWebServiceClientImpl",
+					"com.liferay.petra.json.web.service.client.JSONWebServiceClient",
+					"com.liferay.petra.json.web.service.client.JSONWebServiceClientFactory",
+					"com.liferay.petra.json.web.service.client.JSONWebServiceException",
+					"com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException",
+					"com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException",
+					"com.liferay.petra.json.web.service.client.JSONWebServiceTransportException"
+			},
+			new String[] {
+					"com.liferay.portal.json.web.service.client.BaseJSONWebServiceClientImpl",
+					"com.liferay.portal.json.web.service.client.JSONWebServiceClient",
+					"com.liferay.portal.json.web.service.client.JSONWebServiceClientFactory",
+					"com.liferay.portal.json.web.service.client.JSONWebServiceException",
+					"com.liferay.portal.json.web.service.client.JSONWebServiceInvocationException",
+					"com.liferay.portal.json.web.service.client.JSONWebServiceSerializeException",
+					"com.liferay.portal.json.web.service.client.JSONWebServiceTransportException"
+			} );
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_148493_PETRA_LOG4J = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"petra-log4j has been moved to portal-log4j.",
+			"LPS-148493",
+			new String[] {"com.liferay.petra.log4j.Levels", "com.liferay.petra.log4j.Log4JUtil" },
+			new String[] {"com.liferay.portal.log4j.Levels", "com.liferay.portal.log4j.Log4JUtil" } );
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_149147_PETRA_CONTENT = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"petra-content has been removed",
+			"LPS-149147",
+			new String[] {"com.liferay.petra.content.ContentUtil" },
+			new String[0] );
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_149460_PETRA_MODEL_ADAPTER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"petra-model-adapter has been moved to portlet-model-adapter",
+			"LPS-149460",
+			new String[] {"com.liferay.petra.model.adapter.util.ModelAdapterUtil" },
+			new String[] {"com.liferay.portal.model.adapter.util.ModelAdapterUtil"});
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_150808_PETRA_HTTP_INVOKER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"petra-http-invoker has been moved to portlet-http-invoker",
+			"LPS-150808",
+			new String[] {"com.liferay.petra.http.invoker.HttpInvoker" },
+			new String[] {"com.liferay.portal.http.invoker.HttpInvoker"});
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_151723_PETRA_ENCRYPTOR = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"petra-encryptor has been moved to portlet-encryptor",
+			"LPS-151723",
+			new String[] {"com.liferay.petra.encryptor.Encryptor" },
+			new String[] {"com.liferay.portal.encryptor.Encryptor"});
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_151632_PETRA_PORTLET_URL_BUILDER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"petra-portlet-url-builder has been moved to portal-kernel.",
+			"LPS-151632",
+			new String[] {"com.liferay.petra.portlet.url.builder.ActionURLBuilder", "com.liferay.petra.portlet.url.builder.PortletURLBuilder", "com.liferay.petra.portlet.url.builder.RenderURLBuilder", "com.liferay.petra.portlet.url.builder.ResourceURLBuilder" },
+			new String[] {"com.liferay.portal.kernel.portlet.url.builder.ActionURLBuilder", "com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder", "com.liferay.portal.kernel.portlet.url.builder.RenderURLBuilder", "com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder" } );
 
 	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_162437_ADDRESS = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
 			7.4f,
