@@ -343,13 +343,13 @@ public class LiferayJavaDeprecations {
 	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_165244_ORGANIZATION = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
 			7.4f,
 			"Organization column statusId has been renamed to statusListTypeId.",
-			"LPS-65244",
+			"LPS-165244",
 			new String[] {"com.liferay.portal.kernel.model.Organization.getStatusId()", "com.liferay.portal.kernel.model.Contact.setStatusId()"},
 			new String[] {"getStatusListTypeId", "setStatusListTypeId"} );
 	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_165685_ORG_LABOR = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
 			7.4f,
 			"OrgLabor column typeId has been renamed to listTypeId.",
-			"LPS-65244",
+			"LPS-165685",
 			new String[] {"com.liferay.portal.kernel.model.OrgLabor.getTypeId()", "com.liferay.portal.kernel.model.OrgLabor.setTypeId()", "com.liferay.portal.kernel.model.OrgLabor.getType()"},
 			new String[] {"getListTypeId", "setListTypeId", "getListType"} );
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_181233_CTSQL_MODE_THREAD_LOCAL = new LiferayJavaDeprecations.JavaImportDeprecation(
@@ -358,6 +358,24 @@ public class LiferayJavaDeprecations {
 			"LPS-181233",
 			new String[] {"com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal"},
 			new String[] {"com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal"} );
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_169777_SCRIPTING_EXECUTOR_EXTENDER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"ScriptingExecutorExtender and ScriptBundleProvider have been removed due to security vulnerabilities.",
+			"LPS-169777",
+			new String[] {"com.liferay.portal.scripting.ScriptBundleProvider", "com.liferay.portal.scripting.executor.internal.constants.ScriptingExecutorConstants", "com.liferay.portal.scripting.executor.internal.extender.ScriptingExecutorExtender"},
+			new String[0] );
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_176640_S3_FILE_CACHE = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"S3FileCache was removed due to design flaws.",
+			"LPS-176640",
+			new String[] {"com.liferay.portal.store.s3.S3FileCache"},
+			new String[0] );
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_194314_SCHEDULER_ENGINE_UNSCHEDULE = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The method unschedule is removed from SchedulerEngine, use delete instead.",
+			"LPS-194314",
+			new String[] {"com.liferay.portal.kernel.scheduler.SchedulerEngine.unschedule()", "com.liferay.portal.kernel.scheduler.SchedulerEngineHelper.unschedule()", "com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil.unschedule()", },
+			new String[] {"delete", "delete", "delete"} );
 
 
 
