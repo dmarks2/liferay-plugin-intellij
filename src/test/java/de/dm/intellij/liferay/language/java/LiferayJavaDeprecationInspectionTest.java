@@ -100,4 +100,22 @@ public class LiferayJavaDeprecationInspectionTest extends LightJavaCodeInsightFi
 		myFixture.checkResultByFile("MyPhoneUtilSetter_expected.java");
 	}
 
+	public void testStaticMethodCallChange() {
+		myFixture.configureByFiles(
+				"MyStaticMethodDeprecation.java",
+				"com/liferay/portal/kernel/service/AddressLocalServiceUtil.java"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Rename Method Call")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("MyStaticMethodDeprecation_expected.java");
+	}
+
 }

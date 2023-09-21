@@ -38,6 +38,7 @@ import com.intellij.psi.PsiPackage;
 import com.intellij.psi.PsiPackageStatement;
 import com.intellij.psi.PsiParameter;
 import com.intellij.psi.PsiParameterList;
+import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.impl.JavaConstantExpressionEvaluator;
@@ -497,6 +498,12 @@ public class ProjectUtils {
 
             if (type != null) {
                 return type.getCanonicalText() + "." + methodExpression.getReferenceName() + "()";
+            } else {
+                PsiReference reference = qualifierExpression.getReference();
+
+                if (reference != null) {
+                    return reference.getCanonicalText() + "." + methodExpression.getReferenceName() + "()";
+                }
             }
         }
 
