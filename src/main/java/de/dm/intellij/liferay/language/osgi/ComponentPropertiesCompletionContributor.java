@@ -115,6 +115,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"model.class.name", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.batch.engine.BatchEngineTaskItemDelegate",
+                new String[][]{
+                        {"batch.engine.task.item.delegate.name", "String"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.bulk.selection.BulkSelectionFactory",
                 new String[][]{
                         {"model.class.name", "String"},
@@ -141,15 +146,65 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"configuration.pid", "String"},
                 });
 
-        COMPONENT_PROPERTIES.put("com.liferay.document.library.preview.DLPreviewRendererProvider",
+        COMPONENT_PROPERTIES.put("com.liferay.data.engine.content.type.DataDefinitionContentType",
                 new String[][]{
                         {"content.type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.data.engine.taglib.servlet.taglib.definition.DataLayoutBuilderDefinition",
+                new String[][]{
+                        {"content.type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.dispatch.executor.DispatchTaskExecutor",
+                new String[][]{
+                        {"dispatch.task.executor.type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.dispatch.metadata.DispatchTriggerMetadataFactory",
+                new String[][]{
+                        {"dispatch.task.executor.name", "String"},
+                        {"dispatch.task.executor.type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.document.library.icon.provider.DLFileEntryTypeIconProvider",
+                new String[][]{
+                        {"file.entry.type.key", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.document.library.item.selector.criterion.DLItemSelectorCriterionCreationMenuRestriction",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.document.library.exportimport.data.handler.DLPluggableContentDataHandler",
+                new String[][]{
+                        {"model.class.name", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.document.library.kernel.store.Store",
                 new String[][]{
                         {"store.type", "String"},
                         {"service.ranking", "Integer"},
+                });
+        COMPONENT_PROPERTIES.put("com.liferay.document.library.kernel.util.DLProcessor",
+                new String[][]{
+                        {"type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.document.library.preview.DLPreviewRendererProvider",
+                new String[][]{
+                        {"content.type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.document.library.versioning.VersioningPolicy",
+                new String[][]{
+                        {"service.ranking", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.document.library.visibility.controller.DLFileEntryTypeVisibilityController",
+                new String[][]{
+                        {"dl.file.entry.type.key", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider",
@@ -199,14 +254,34 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"ddm.form.field.type.name", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer",
+                new String[][]{
+                        {"ddm.form.field.types.serializer.type", "String"},
+                });
+
         //see https://portal.liferay.dev/docs/7-2/frameworks/-/knowledge_base/f/serializing-forms
         COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.io.DDMFormSerializer",
                 new String[][]{
                         {"ddm.form.serializer.type", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.io.DDMFormDeserializer",
+                new String[][]{
+                        {"ddm.form.deserializer.type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriter",
+                new String[][]{
+                        {"ddm.form.instance.record.writer.type", "String"},
+                });
+
         //see https://dev.liferay.com/de/develop/tutorials/-/knowledge_base/7-0/creating-form-field-types
         COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer",
+                new String[][]{
+                        {"ddm.form.field.type.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.report.DDMFormFieldTypeReportProcessor",
                 new String[][]{
                         {"ddm.form.field.type.name", "String"},
                 });
@@ -240,9 +315,16 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"javax.portlet.name", "String"},
                 });
 
-        COMPONENT_PROPERTIES.put("com.liferay.exportimport.content.processor.ExportImportContentProcessor",
+        COMPONENT_PROPERTIES.put("com.liferay.expando.kernel.util.ExpandoValueDeleteHandler",
                 new String[][]{
                         {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.exportimport.content.processor.ExportImportContentProcessor",
+                new String[][]{
+                        {"adaptive.media.format", "String"},
+                        {"model.class.name", "String"},
+                        {"service.ranking", "Integer"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.exportimport.kernel.controller.ExportImportController",
@@ -285,6 +367,41 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.fragment.processor.FragmentEntryProcessor",
                 new String[][] {
                         {"fragment.entry.processor.priority", "Integer"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.friendly.url.info.item.updater.InfoItemFriendlyURLUpdater",
+                new String[][] {
+                        {"item.class.name", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.frontend.css.variables.ScopedCSSVariablesProvider",
+                new String[][]{
+                        {"service.ranking", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.frontend.data.set.filter.FDSFilter",
+                new String[][]{
+                        {"frontend.data.set.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.frontend.data.set.provider.FDSActionProvider",
+                new String[][]{
+                        {"fds.data.provider.key", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.frontend.data.set.provider.FDSDataProvider",
+                new String[][]{
+                        {"frontend.data.set.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.frontend.data.set.view.FDSView",
+                new String[][]{
+                        {"fds.data.provider.key", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.frontend.data.set.view.FDSViewContextContributor",
+                new String[][]{
+                        {"frontend.data.set.view.name", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.frontend.editor.embed.EditorEmbedProvider",
@@ -351,12 +468,33 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"asset.entry.class.name", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider",
+                new String[][]{
+                        {"item.class.name", "String"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.info.display.contributor.field.InfoDisplayContributorField",
                 new String[][]{
                         {"model.class.name", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.info.display.url.provider.InfoEditURLProvider",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.info.item.renderer.InfoItemRenderer",
+                new String[][]{
+                        {"service.ranking", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.item.selector.ItemSelectorReturnTypeResolver",
+                new String[][]{
+                        {"service.ranking", "Integer"},
+                });
+
         //see https://dev.liferay.com/de/develop/tutorials/-/knowledge_base/7-0/creating-custom-item-selector-views
+
         COMPONENT_PROPERTIES.put("com.liferay.item.selector.ItemSelectorView",
                 new String[][]{
                         {"item.selector.view.key", "String"},
@@ -378,9 +516,19 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"layout.template.id", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.mail.reader.mailbox.MailboxFactory",
+                new String[][]{
+                        {"javax.portlet.name", "String"}
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.mentions.matcher.MentionsMatcher",
                 new String[][]{
                         {"model.class.name", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.mentions.strategy.MentionsStrategy",
+                new String[][]{
+                        {"mentions.strategy", "String"}
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandler",
@@ -388,14 +536,34 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"format", "String"}
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider",
+                new String[][]{
+                        {"name", "String"}
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.oauth2.provider.scope.spi.application.descriptor.ApplicationDescriptor",
                 new String[][]{
                         {"osgi.jaxrs.name", "String"}
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.oauth2.provider.scope.spi.scope.descriptor.ScopeDescriptor",
+                new String[][]{
+                        {"default", "boolean"}
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.oauth2.provider.scope.spi.scope.matcher.ScopeMatcherFactory",
                 new String[][]{
-                        {"company.id", "String"}
+                        {"company.id", "String"},
+                        {"default", "boolean"},
+                        {"delimiter", "String"},
+                        {"type", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.aop.AopService",
+                new String[][]{
+                        {"json.web.service.context.name", "String"},
+                        {"json.web.service.context.path", "String"},
+                        {"model.class.name", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener",
@@ -416,6 +584,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"javax.portlet.name", "String"},
                         {"service.ranking", "Integer"},
                 });
+        COMPONENT_PROPERTIES.put("com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener",
+                new String[][]{
+                        {"service.ranking", "Integer"}
+                });
+
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.atom.AtomCollectionAdapter",
                 new String[][]{
@@ -448,8 +621,18 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor",
                 new String[][]{
-                        {"editor.config.key", "String"},
-                        {"javax.portlet.name", "String"},
+                        {"cookies.functional", "String"},
+                        {"cookies.necessary", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.cookies.CookiesManager",
+                new String[][]{
+                        {"key", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.editor.Editor",
+                new String[][]{
+                        {"name", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.events.LifecycleAction",
@@ -600,6 +783,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"javax.portlet.name", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.repository.capabilities.Capability",
+                new String[][]{
+                        {"repository.class.name", "String"}
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.repository.RepositoryFactory",
                 new String[][]{
                         {"repository.target.class.name", "String"}
@@ -689,14 +877,25 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"javax.portlet.name", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic",
                 new String[][]{
                         {"background.task.executor.class.name", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.service.permission.LayoutPrototypePermission",
+                new String[][]{
+                        {"extended", "boolean"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.servlet.taglib.DynamicInclude",
                 new String[][]{
-                        {"portal.settings.authentication.tabs.name", "String"}
+                        {"portal.settings.authentication.tabs.name", "String"},
+                        {"service.ranking", "Integer"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.servlet.taglib.TagDynamicIdFactory",
@@ -752,6 +951,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"model.class.name", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.util.FriendlyURLNormalizer",
+                new String[][]{
+                        {"service.ranking", "Integer"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.workflow.WorkflowEngineManager",
                 new String[][]{
                         {"proxy.bean", "boolean"},
@@ -784,6 +988,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.portal.language.LanguageResources",
                 new String[][]{
                         {"language.id", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.minifier.JavaScriptMinifier",
+                new String[][]{
+                        {"service.ranking", "Integer"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.output.stream.container.OutputStreamContainerFactory",
@@ -830,6 +1039,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor",
+                new String[][]{
+                        {"indexer.class.name", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor",
                 new String[][]{
                         {"indexer.class.name", "String"}
                 });
@@ -915,6 +1129,16 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"service.ranking", "Integer"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.portal.vulcan.dto.converter.DTOConverter",
+                new String[][]{
+                        {"dto.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.workflow.definition.link.update.handler.WorkflowDefinitionLinkUpdateHandler",
+                new String[][]{
+                        {"model.class.name", "String"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator",
                 new String[][]{
                         {"node.type", "String"},
@@ -923,6 +1147,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector",
                 new String[][]{
                         {"assignee.class.name", "String"},
+                        {"scripting.language", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator",
+                new String[][]{
                         {"scripting.language", "String"}
                 });
 
@@ -990,6 +1219,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.reading.time.message.ReadingTimeMessageProvider",
                 new String[][]{
                         {"display.style", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.roles.admin.role.type.contributor.RoleTypeContributor",
+                new String[][]{
+                        {"service.ranking", "Integer"},
                 });
 
         //see https://portal.liferay.dev/docs/7-2/frameworks/-/knowledge_base/f/creating-a-request-context-contributor
@@ -1066,6 +1300,13 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"country", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.upload.AttachmentElementReplacer",
+                new String[][]{
+                        {"format", "String"},
+                        {"html.tag.name", "String"},
+                        {"service.ranking", "Integer"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.wiki.importer.WikiImporter",
                 new String[][]{
                         {"importer", "String"},
@@ -1094,6 +1335,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                 new String[][]{
                         {"jmx.objectname", "String"},
                         {"jmx.objectname.cache.key", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("javax.portlet.PreferencesValidator",
+                new String[][]{
+                        {"javax.portlet.name", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("javax.portlet.Portlet",
@@ -1230,6 +1476,53 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"org.osgi.http.websocket.endpoint.decoders", "String"},
                         {"org.osgi.http.websocket.endpoint.encoders", "String"},
                         {"org.osgi.http.websocket.endpoint.subprotocol", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("javax.ws.rs.core.Application",
+                new String[][]{
+                        {"auth.verifier.auth.verifier.PortalSessionAuthVerifier.urls.includes", "String"},
+                        {"auth.verifier.guest.allowed", "boolean"},
+                        {"liferay.jackson", "boolean"},
+                        {"liferay.oauth2", "boolean"},
+                        {"osgi.jaxrs.application.base", "String"},
+                        {"osgi.jaxrs.extension.select", "String"},
+                        {"osgi.jaxrs.name", "String"}
+                });
+        COMPONENT_PROPERTIES.put("javax.ws.rs.core.Feature",
+                new String[][]{
+                        {"liferay.extension", "String"},
+                        {"osgi.jaxrs.application.base", "String"},
+                        {"osgi.jaxrs.extension.select", "String"},
+                        {"osgi.jaxrs.name", "String"},
+                        {"oauth2.service.access.policy.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("javax.ws.rs.container.ContainerRequestFilter",
+                new String[][]{
+                        {"osgi.jaxrs.application.base", "String"},
+                        {"osgi.jaxrs.extension.select", "String"},
+                        {"osgi.jaxrs.name", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("javax.ws.rs.container.ContainerResponseFilter",
+                new String[][]{
+                        {"osgi.jaxrs.application.base", "String"},
+                        {"osgi.jaxrs.extension.select", "String"},
+                        {"osgi.jaxrs.name", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("javax.ws.rs.ext.ExceptionMapper",
+                new String[][]{
+                        {"osgi.jaxrs.application.select", "String"},
+                        {"osgi.jaxrs.extension", "boolean"},
+                        {"osgi.jaxrs.name", "String"}
+                });
+
+        COMPONENT_PROPERTIES.put("javax.ws.rs.ext.MessageBodyWriter",
+                new String[][]{
+                        {"osgi.jaxrs.application.select", "String"},
+                        {"osgi.jaxrs.extension", "boolean"},
+                        {"osgi.jaxrs.name", "String"}
                 });
 
         COMPONENT_PROPERTIES.put("org.eclipse.osgi.service.urlconversion.URLConverter",
