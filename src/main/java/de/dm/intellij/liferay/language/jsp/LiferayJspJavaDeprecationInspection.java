@@ -2,11 +2,15 @@ package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.jsp.psi.BaseJspUtil;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.PsiMethodCallExpression;
+import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.jsp.JspDirectiveKind;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
+import de.dm.intellij.liferay.language.java.LiferayJavaDeprecationInfoHolder;
 import de.dm.intellij.liferay.language.java.LiferayJavaDeprecations;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import org.jetbrains.annotations.Nls;
@@ -16,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static de.dm.intellij.liferay.language.jsp.LiferayJspJavaDeprecationInfoHolder.createMethodCalls;
 import static de.dm.intellij.liferay.language.jsp.LiferayJspJavaDeprecationInfoHolder.createImportStatements;
 
 public class LiferayJspJavaDeprecationInspection extends AbstractLiferayDeprecationInspection<LiferayJspJavaDeprecationInfoHolder> {
@@ -58,6 +63,15 @@ public class LiferayJspJavaDeprecationInspection extends AbstractLiferayDeprecat
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_181233_CTSQL_MODE_THREAD_LOCAL).version("7.4.3.74"));
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_176640_S3_FILE_CACHE).version("7.4.3.80"));
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_169777_SCRIPTING_EXECUTOR_EXTENDER).version("7.4.3.84"));
+		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_162450_PHONE).version("7.4.3.45"));
+		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_162437_ADDRESS).version("7.4.3.45"));
+		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_163821_EMAIL_ADDRESS).version("7.4.3.48"));
+		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_164415_WEBSITE).version("7.4.3.48"));
+		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_164522_CONTACT).version("7.4.3.50"));
+		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_165244_ORGANIZATION).version("7.4.3.50"));
+		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_165685_ORG_LABOR).version("7.4.3.52"));
+		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_194314_SCHEDULER_ENGINE_UNSCHEDULE).version("7.4.3.95"));
+
 	}
 	@Nls
 	@NotNull
@@ -85,9 +99,25 @@ public class LiferayJspJavaDeprecationInspection extends AbstractLiferayDeprecat
 
 	@Override
 	protected PsiElementVisitor doBuildVisitor(ProblemsHolder holder, boolean isOnTheFly, List<LiferayJspJavaDeprecationInfoHolder> inspectionInfoHolders) {
-		return new XmlElementVisitor() {
+		return new PsiElementVisitor() {
 
 			@Override
+			public void visitElement(@NotNull PsiElement element) {
+				if (element instanceof XmlTag xmlTag) {
+					visitXmlTag(xmlTag);
+				} else if (element instanceof PsiMethodCallExpression methodCallExpression) {
+					visitMethodCallExpression(methodCallExpression);
+				}
+
+				super.visitElement(element);
+			}
+
+			public void visitMethodCallExpression(@NotNull PsiMethodCallExpression methodCallExpression) {
+				for (LiferayJspJavaDeprecationInfoHolder infoHolder : inspectionInfoHolders) {
+					infoHolder.visitMethodCallExpression(holder, methodCallExpression);
+				}
+			}
+
 			public void visitXmlTag(@NotNull XmlTag tag) {
 				XmlAttribute importDirective = getImportDirective(tag);
 
@@ -96,7 +126,6 @@ public class LiferayJspJavaDeprecationInspection extends AbstractLiferayDeprecat
 						infoHolder.visitImportDirective(holder, importDirective);
 					}
 				}
-				super.visitXmlTag(tag);
 			}
 		};
 	}

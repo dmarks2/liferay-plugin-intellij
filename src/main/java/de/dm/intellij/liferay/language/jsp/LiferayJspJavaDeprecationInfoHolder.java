@@ -5,12 +5,18 @@ import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiElementFactory;
+import com.intellij.psi.PsiExpression;
+import com.intellij.psi.PsiMethodCallExpression;
+import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
 import de.dm.intellij.liferay.language.java.LiferayJavaDeprecations;
+import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,10 +28,21 @@ public class LiferayJspJavaDeprecationInfoHolder extends AbstractLiferayInspecti
 
 	private String myImportStatement;
 
+	private String myMethodName;
+
 	private static LiferayJspJavaDeprecationInfoHolder createImportStatement(float majorLiferayVersion, String message, String ticket, String importStatement) {
 		return
 				new LiferayJspJavaDeprecationInfoHolder()
 						.importStatement(importStatement)
+						.majorLiferayVersion(majorLiferayVersion)
+						.message(message)
+						.ticket(ticket);
+	}
+
+	private static LiferayJspJavaDeprecationInfoHolder createMethodCall(float majorLiferayVersion, String message, String ticket, String methodName) {
+		return
+				new LiferayJspJavaDeprecationInfoHolder()
+						.methodName(methodName)
 						.majorLiferayVersion(majorLiferayVersion)
 						.message(message)
 						.ticket(ticket);
@@ -52,8 +69,33 @@ public class LiferayJspJavaDeprecationInfoHolder extends AbstractLiferayInspecti
 		return new ListWrapper<>(result);
 	}
 
+	public static ListWrapper<LiferayJspJavaDeprecationInfoHolder> createMethodCalls(LiferayJavaDeprecations.JavaMethodCallDeprecation methodCallDeprecation) {
+		List<LiferayJspJavaDeprecationInfoHolder> result = new ArrayList<>();
+
+		for (int i = 0; i < methodCallDeprecation.methodSignatures().length; i++) {
+			LiferayJspJavaDeprecationInfoHolder deprecationInfoHolder = createMethodCall(methodCallDeprecation.majorLiferayVersion(), methodCallDeprecation.message(), methodCallDeprecation.ticket(), methodCallDeprecation.methodSignatures()[i]);
+
+			if (
+					(i < methodCallDeprecation.newNames().length) &&
+					(StringUtil.isNotEmpty(methodCallDeprecation.newNames()[i]))
+			) {
+				deprecationInfoHolder = deprecationInfoHolder.quickfix(renameMethodCall(methodCallDeprecation.newNames()[i]));
+			}
+
+			result.add(deprecationInfoHolder);
+		}
+
+		return new ListWrapper<>(result);
+	}
+
 	public LiferayJspJavaDeprecationInfoHolder importStatement(String importStatement) {
 		this.myImportStatement = importStatement;
+
+		return this;
+	}
+
+	public LiferayJspJavaDeprecationInfoHolder methodName(String methodName) {
+		this.myMethodName = methodName;
 
 		return this;
 	}
@@ -66,6 +108,15 @@ public class LiferayJspJavaDeprecationInfoHolder extends AbstractLiferayInspecti
 				(Objects.equals(myImportStatement, StringUtil.unquoteString(importDirective.getValue())))
 		) {
 			holder.registerProblem(importDirective.getValueElement(), getDeprecationMessage(), quickFixes);
+		}
+	}
+
+	public void visitMethodCallExpression(ProblemsHolder holder, PsiMethodCallExpression methodCallExpression) {
+		if (
+				(StringUtil.isNotEmpty(myMethodName)) &&
+				(Objects.equals(myMethodName, ProjectUtils.getMethodCallSignature(methodCallExpression)))
+		) {
+			holder.registerProblem(methodCallExpression, getDeprecationMessage(), quickFixes);
 		}
 	}
 
@@ -162,5 +213,67 @@ public class LiferayJspJavaDeprecationInfoHolder extends AbstractLiferayInspecti
 		}
 	}
 
+	private static LocalQuickFix renameMethodCall(String newName) {
+		return new RenameMethodCallQuickFix(newName);
+	}
+	private static class RenameMethodCallQuickFix implements LocalQuickFix {
+
+		private final String newName;
+
+		private RenameMethodCallQuickFix(String newName) {
+			this.newName = newName;
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Rename Method Call";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Rename Method Call to " + newName;
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			PsiMethodCallExpression methodCallExpression;
+
+			if (psiElement instanceof PsiMethodCallExpression) {
+				methodCallExpression = (PsiMethodCallExpression) psiElement;
+			} else {
+				methodCallExpression = PsiTreeUtil.getParentOfType(psiElement, PsiMethodCallExpression.class);
+			}
+
+			if (methodCallExpression == null) {
+				return;
+			}
+
+			PsiReferenceExpression methodExpression = methodCallExpression.getMethodExpression();
+
+			PsiExpression qualifierExpression = methodExpression.getQualifierExpression();
+
+			if (qualifierExpression != null) {
+				PsiElementFactory factory = JavaPsiFacade.getInstance(project).getElementFactory();
+
+				PsiMethodCallExpression newMethodCallExpression = (PsiMethodCallExpression) factory.createExpressionFromText("var." + newName + "()", null);
+
+				PsiExpression newQualifierExpression = newMethodCallExpression.getMethodExpression().getQualifierExpression();
+
+				if (newQualifierExpression != null) {
+					newQualifierExpression.replace(qualifierExpression);
+				}
+
+				newMethodCallExpression.getArgumentList().replace(methodCallExpression.getArgumentList());
+
+				methodCallExpression.replace(newMethodCallExpression);
+			}
+		}
+	}
 
 }
