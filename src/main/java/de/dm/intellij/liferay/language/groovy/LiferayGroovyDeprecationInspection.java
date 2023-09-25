@@ -2,6 +2,7 @@ package de.dm.intellij.liferay.language.groovy;
 
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.psi.PsiElementVisitor;
+import de.dm.intellij.liferay.language.java.LiferayJavaDeprecationInfoHolder;
 import de.dm.intellij.liferay.language.java.LiferayJavaDeprecations;
 import de.dm.intellij.liferay.language.jsp.AbstractLiferayDeprecationInspection;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
@@ -9,12 +10,14 @@ import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.plugins.groovy.lang.psi.GroovyElementVisitor;
 import org.jetbrains.plugins.groovy.lang.psi.GroovyPsiElementVisitor;
+import org.jetbrains.plugins.groovy.lang.psi.api.statements.expressions.path.GrMethodCallExpression;
 import org.jetbrains.plugins.groovy.lang.psi.api.toplevel.imports.GrImportStatement;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static de.dm.intellij.liferay.language.groovy.LiferayGroovyDeprecationInfoHolder.createImportStatements;
+import static de.dm.intellij.liferay.language.groovy.LiferayGroovyDeprecationInfoHolder.createMethodCalls;
 
 
 public class LiferayGroovyDeprecationInspection extends AbstractLiferayDeprecationInspection<LiferayGroovyDeprecationInfoHolder> {
@@ -57,6 +60,14 @@ public class LiferayGroovyDeprecationInspection extends AbstractLiferayDeprecati
 		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_181233_CTSQL_MODE_THREAD_LOCAL).version("7.4.3.74"));
 		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_176640_S3_FILE_CACHE).version("7.4.3.80"));
 		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_169777_SCRIPTING_EXECUTOR_EXTENDER).version("7.4.3.84"));
+		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_162450_PHONE).version("7.4.3.45"));
+		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_162437_ADDRESS).version("7.4.3.45"));
+		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_163821_EMAIL_ADDRESS).version("7.4.3.48"));
+		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_164415_WEBSITE).version("7.4.3.48"));
+		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_164522_CONTACT).version("7.4.3.50"));
+		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_165244_ORGANIZATION).version("7.4.3.50"));
+		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_165685_ORG_LABOR).version("7.4.3.52"));
+		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_194314_SCHEDULER_ENGINE_UNSCHEDULE).version("7.4.3.95"));
 	}
 
 	@Nls
@@ -93,6 +104,14 @@ public class LiferayGroovyDeprecationInspection extends AbstractLiferayDeprecati
 					infoHolder.visitImportStatement(holder, importStatement);
 				}
 			}
+
+			@Override
+			public void visitMethodCallExpression(@NotNull GrMethodCallExpression methodCallExpression) {
+				for (LiferayGroovyDeprecationInfoHolder infoHolder : inspectionInfoHolders) {
+					infoHolder.visitMethodCallExpression(holder, methodCallExpression);
+				}
+			}
 		});
 	}
+
 }

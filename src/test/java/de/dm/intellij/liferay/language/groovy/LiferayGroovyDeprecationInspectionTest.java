@@ -65,4 +65,56 @@ public class LiferayGroovyDeprecationInspectionTest extends LightJavaCodeInsight
 		myFixture.checkResultByFile("myimport_expected.groovy");
 	}
 
+	public void testPhoneMethodCallChange() {
+		myFixture.configureByFiles(
+				"myphone.groovy",
+				"com/liferay/portal/kernel/model/Phone.java"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Rename Method Call")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("myphone_expected.groovy");
+	}
+
+	public void testPhoneMethodCallSetterChange() {
+		myFixture.configureByFiles(
+				"myphonesetter.groovy",
+				"com/liferay/portal/kernel/model/Phone.java"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Rename Method Call")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("myphonesetter_expected.groovy");
+	}
+	public void testStaticMethodCallChange() {
+		myFixture.configureByFiles(
+				"mystaticmethod.groovy",
+				"com/liferay/portal/kernel/service/AddressLocalServiceUtil.java"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Rename Method Call")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("mystaticmethod_expected.groovy");
+	}
 }
