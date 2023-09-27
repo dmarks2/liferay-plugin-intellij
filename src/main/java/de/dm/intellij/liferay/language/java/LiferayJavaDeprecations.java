@@ -316,6 +316,14 @@ public class LiferayJavaDeprecations {
 					"getListTypeId", "getListType", "setListTypeId",
 					"getListTypeAddresses", "getListTypeAddresses"
 			} );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_162830_CONFIGURATION_BEAN_DECLARATION = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"A ConfigurationBeanDeclaration is no longer neccessary and the class can be removed.",
+			"LPS-162830",
+			new String[] {"com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration" },
+			new String[0] );
+
 	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_163821_EMAIL_ADDRESS = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
 			7.4f,
 			"EmailAddress column typeId has been renamed to listTypeId.",
