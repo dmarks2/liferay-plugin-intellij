@@ -22,5 +22,7 @@
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.fragment.FragmentFragmentJsonFileReferenceContributor" />
 
         <javaee.web.customServletReferenceProvider implementation="de.dm.intellij.liferay.theme.LiferayThemeServletReferenceProvider" />
+
+        <inspectionToolProvider implementation="de.dm.intellij.liferay.language.xml.LiferayXmlInspectionToolProvider"/>
     </extensions>
 </idea-plugin>

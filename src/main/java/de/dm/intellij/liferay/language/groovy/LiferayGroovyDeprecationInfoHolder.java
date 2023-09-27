@@ -108,8 +108,9 @@ public class LiferayGroovyDeprecationInfoHolder extends AbstractLiferayInspectio
 
 	public void visitImportStatement(ProblemsHolder holder, GrImportStatement statement) {
 		if (
+				(isApplicableLiferayVersion(statement)) &&
 				(StringUtil.isNotEmpty(myImportStatement)) &&
-						(Objects.equals(myImportStatement, statement.getImportFqn()))
+				(Objects.equals(myImportStatement, statement.getImportFqn()))
 		) {
 			holder.registerProblem(statement, getDeprecationMessage(), quickFixes);
 		}
@@ -117,6 +118,7 @@ public class LiferayGroovyDeprecationInfoHolder extends AbstractLiferayInspectio
 
 	public void visitMethodCallExpression(ProblemsHolder holder, GrMethodCallExpression methodCallExpression) {
 		if (
+				(isApplicableLiferayVersion(methodCallExpression)) &&
 				(StringUtil.isNotEmpty(myMethodName)) &&
 				(Objects.equals(myMethodName, getMethodCallSignature(methodCallExpression)))
 		) {

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<warning descr="The descriptor XML DTD versions should be matched with the Liferay version"><!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.0.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_0_0.dtd"></warning>
+<resource-action-mapping>
+</resource-action-mapping>

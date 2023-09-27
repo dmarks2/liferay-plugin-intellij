@@ -10,5 +10,6 @@ public interface LiferayInspectionsGroupNames {
     String JSP_GROUP_NAME = "JSP";
     String OSGI_GROUP_NAME = "OSGi";
     String PROPERTIES_GROUP_NAME = "Properties";
+    String XML_GROUP_NAME = "XML";
 
 }

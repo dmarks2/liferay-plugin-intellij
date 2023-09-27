@@ -102,6 +102,7 @@ public class LiferayJspJavaDeprecationInfoHolder extends AbstractLiferayInspecti
 
 	public void visitImportDirective(ProblemsHolder holder, @NotNull XmlAttribute importDirective) {
 		if (
+				(isApplicableLiferayVersion(importDirective)) &&
 				(StringUtil.isNotEmpty(myImportStatement)) &&
 				(importDirective.getValue() != null) &&
 				(importDirective.getValueElement() != null) &&
@@ -113,6 +114,7 @@ public class LiferayJspJavaDeprecationInfoHolder extends AbstractLiferayInspecti
 
 	public void visitMethodCallExpression(ProblemsHolder holder, PsiMethodCallExpression methodCallExpression) {
 		if (
+				(isApplicableLiferayVersion(methodCallExpression)) &&
 				(StringUtil.isNotEmpty(myMethodName)) &&
 				(Objects.equals(myMethodName, ProjectUtils.getMethodCallSignature(methodCallExpression)))
 		) {

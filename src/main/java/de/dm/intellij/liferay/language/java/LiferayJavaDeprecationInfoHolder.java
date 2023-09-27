@@ -107,6 +107,7 @@ public class LiferayJavaDeprecationInfoHolder extends AbstractLiferayInspectionI
 	}
 	public void visitImportStatement(ProblemsHolder holder, PsiImportStatement statement, PsiElement problemElement) {
 		if (
+				(isApplicableLiferayVersion(statement)) &&
 				(StringUtil.isNotEmpty(myImportStatement)) &&
 				(Objects.equals(myImportStatement, statement.getQualifiedName()))
 		) {
@@ -116,6 +117,7 @@ public class LiferayJavaDeprecationInfoHolder extends AbstractLiferayInspectionI
 
 	public void visitMethodCallExpression(ProblemsHolder holder, PsiMethodCallExpression methodCallExpression) {
 		if (
+				(isApplicableLiferayVersion(methodCallExpression)) &&
 				(StringUtil.isNotEmpty(myMethodName)) &&
 				(Objects.equals(myMethodName, ProjectUtils.getMethodCallSignature(methodCallExpression)))
 		) {

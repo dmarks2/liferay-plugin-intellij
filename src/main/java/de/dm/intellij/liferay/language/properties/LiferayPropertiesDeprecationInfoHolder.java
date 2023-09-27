@@ -55,6 +55,7 @@ public class LiferayPropertiesDeprecationInfoHolder extends AbstractLiferayInspe
 
 	public void visitProperty(ProblemsHolder holder, PropertyImpl property) {
 		if (
+				(isApplicableLiferayVersion(property)) &&
 				(StringUtil.isNotEmpty(myPropertyName)) &&
 				(
 					(Objects.equals(myPropertyName, property.getName())) ||
