@@ -3,7 +3,8 @@ Liferay XML files
 
 1. [XML-Schemas and DTD files](#xml-schemas-and-dtd-files)
 2. [File References](#file-references) 
-2. [Liferay Workflow Definitions](#liferay-workflow-definitions) 
+3. [Liferay Workflow Definitions](#liferay-workflow-definitions) 
+4. [Deprecations](#deprecations)
 
 XML-Schemas and DTD files
 -------------------------
@@ -106,3 +107,13 @@ Additionally `<target>`-Tags, e.g. inside `<transition>`-Tags are able to resolv
 workflow definition files, like `<task>` or `<state>` elements.
 
 ![liferay workflow target](workflow_target.png "liferay workflow target")
+
+Deprecations
+------------
+
+Liferay updates may remove or deprecate contents in XML files. Inspections are provided by this Plugin to check for deprecations and removals.
+
+The following issues are detected and can be fixed automatically:
+
+* Wrong DTD definition which do not match the Liferay version
+* Wrong XML Schema references which do not match the Liferay version

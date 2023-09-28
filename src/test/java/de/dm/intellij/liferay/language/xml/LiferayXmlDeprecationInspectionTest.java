@@ -45,6 +45,22 @@ public class LiferayXmlDeprecationInspectionTest extends BasePlatformTestCase {
 		}
 
 		myFixture.checkResultByFile("default_expected.xml");
+	}
 
+	public void testXmlSchemaDeprecation() {
+		myFixture.configureByFiles(
+				"workflow.xml"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Update Namespace")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("workflow_expected.xml");
 	}
 }

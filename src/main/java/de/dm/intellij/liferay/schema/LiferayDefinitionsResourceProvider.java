@@ -201,6 +201,14 @@ public class LiferayDefinitionsResourceProvider implements StandardResourceProvi
     public static final String XML_PUBLIC_ID_LIFERAY_USER_NOTIFICATION_DEFINITIONS_7_3_0 = "-//Liferay//DTD User Notification Definition 7.3.0//EN";
     public static final String XML_PUBLIC_ID_LIFERAY_USER_NOTIFICATION_DEFINITIONS_7_4_0 = "-//Liferay//DTD User Notification Definition 7.4.0//EN";
 
+    public static final String XML_URN_LIFERAY_WORKFLOW_DEFINITION_6_1_0 = "urn:liferay.com:liferay-workflow_6.1.0";
+    public static final String XML_URN_LIFERAY_WORKFLOW_DEFINITION_6_2_0 = "urn:liferay.com:liferay-workflow_6.2.0";
+    public static final String XML_URN_LIFERAY_WORKFLOW_DEFINITION_7_0_0 = "urn:liferay.com:liferay-workflow_7.0.0";
+    public static final String XML_URN_LIFERAY_WORKFLOW_DEFINITION_7_1_0 = "urn:liferay.com:liferay-workflow_7.1.0";
+    public static final String XML_URN_LIFERAY_WORKFLOW_DEFINITION_7_2_0 = "urn:liferay.com:liferay-workflow_7.2.0";
+    public static final String XML_URN_LIFERAY_WORKFLOW_DEFINITION_7_3_0 = "urn:liferay.com:liferay-workflow_7.3.0";
+    public static final String XML_URN_LIFERAY_WORKFLOW_DEFINITION_7_4_0 = "urn:liferay.com:liferay-workflow_7.4.0";
+
 
     public void registerResources(ResourceRegistrar resourceRegistrar) {
         resourceRegistrar.addStdResource(XML_NAMESPACE_LIFERAY_DDM_STRUCTURE_6_2_0, "/com/liferay/definitions/liferay-ddm-structure_6_2_0.xsd", LiferayDefinitionsResourceProvider.class);

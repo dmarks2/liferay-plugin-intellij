@@ -4,6 +4,8 @@ import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.xml.XmlDoctype;
+import com.intellij.psi.xml.XmlDocument;
+import com.intellij.psi.xml.XmlTag;
 import de.dm.intellij.liferay.language.jsp.AbstractLiferayDeprecationInspection;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import org.jetbrains.annotations.Nls;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static de.dm.intellij.liferay.language.xml.LiferayXmlDeprecationInfoHolder.createDtds;
+import static de.dm.intellij.liferay.language.xml.LiferayXmlDeprecationInfoHolder.createNamespaces;
 
 public class LiferayXmlDeprecationInspection extends AbstractLiferayDeprecationInspection<LiferayXmlDeprecationInfoHolder> {
 
@@ -21,6 +24,9 @@ public class LiferayXmlDeprecationInspection extends AbstractLiferayDeprecationI
 	static {
 		for (LiferayXmlDeprecations.DtdDeprecation dtdDeprecation : LiferayXmlDeprecations.XML_DTD_DEPRECATIONS) {
 			XML_DEPRECATIONS.addAll(createDtds(dtdDeprecation));
+		}
+		for (LiferayXmlDeprecations.NamespaceDeprecation namespaceDeprecation : LiferayXmlDeprecations.XML_NAMESPACE_DEPRECATIONS) {
+			XML_DEPRECATIONS.addAll(createNamespaces(namespaceDeprecation));
 		}
 	}
 
@@ -57,6 +63,17 @@ public class LiferayXmlDeprecationInspection extends AbstractLiferayDeprecationI
 			public void visitXmlDoctype(@NotNull XmlDoctype xmlDoctype) {
 				for (LiferayXmlDeprecationInfoHolder infoHolder : inspectionInfoHolders) {
 					infoHolder.visitDoctype(holder, xmlDoctype);
+				}
+			}
+
+			@Override
+			public void visitXmlDocument(@NotNull XmlDocument document) {
+				XmlTag rootTag = document.getRootTag();
+
+				if (rootTag != null) {
+					for (LiferayXmlDeprecationInfoHolder infoHolder : inspectionInfoHolders) {
+						infoHolder.visitNamespaceDeclaration(holder, rootTag);
+					}
 				}
 			}
 		};
