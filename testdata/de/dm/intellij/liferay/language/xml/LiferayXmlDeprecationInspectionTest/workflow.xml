@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
-<warning descr="The XML Schema Location should be matched with the Liferay version"><workflow-definition
+<workflow-definition
 		xmlns="urn:liferay.com:liferay-workflow_7.0.0"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.0.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_0_0.xsd"
+		<warning descr="The XML Schema Location should be matched with the Liferay version">xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.0.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_0_0.xsd"</warning>
 >
 	<name>My Workflow</name>
 	<description>My Workflow</description>
@@ -11,4 +11,4 @@
 	<state>
 		<name>created</name>
 	</state>
-</workflow-definition></warning>
+</workflow-definition>

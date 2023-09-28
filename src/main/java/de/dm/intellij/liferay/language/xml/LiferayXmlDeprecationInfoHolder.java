@@ -110,10 +110,15 @@ public class LiferayXmlDeprecationInfoHolder extends AbstractLiferayInspectionIn
 				(rootTag.hasNamespaceDeclarations()) &&
 				(isApplicableLiferayVersion(rootTag)) &&
 				(StringUtil.isNotEmpty(myUrn)) &&
-				(StringUtil.isNotEmpty(mySchemaLocation)) &&
-				(StringUtil.equals(getSchemaLocationString(rootTag), myUrn + " " + mySchemaLocation))
+				(StringUtil.isNotEmpty(mySchemaLocation))
 		) {
-			holder.registerProblem(rootTag, getDeprecationMessage(), quickFixes);
+			XmlAttribute schemaLocationAttribute = getSchemaLocationAttribute(rootTag);
+
+			if (schemaLocationAttribute != null) {
+				if (StringUtil.equals(schemaLocationAttribute.getValue(), myUrn + " " + mySchemaLocation)) {
+					holder.registerProblem(schemaLocationAttribute, getDeprecationMessage(), quickFixes);
+				}
+			}
 		}
 	}
 
@@ -219,7 +224,7 @@ public class LiferayXmlDeprecationInfoHolder extends AbstractLiferayInspectionIn
 				return;
 			}
 
-			XmlFile xmlFile = createDummyXmlFile(project, "<root />");
+			XmlFile xmlFile = createDummyXmlFile(project, "<root xmlns=\"" + newNamespace.urn() + "\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"" + newNamespace.urn() + " " + newNamespace.schemaLocation() + "\" />");
 
 			XmlDocument document = xmlFile.getDocument();
 
@@ -227,29 +232,25 @@ public class LiferayXmlDeprecationInfoHolder extends AbstractLiferayInspectionIn
 				XmlTag rootTag = document.getRootTag();
 
 				if (rootTag != null) {
-					rootTag.setName(xmlTag.getName());
+					XmlAttribute schemaLocationAttribute = getSchemaLocationAttribute(xmlTag);
+					XmlAttribute newSchemaLocationAttribute = getSchemaLocationAttribute(rootTag);
 
-					for (XmlAttribute attribute : xmlTag.getAttributes()) {
-						if 	(
-								(Objects.equals("http://www.w3.org/2001/XMLSchema-instance", attribute.getNamespace())) &&
-								(Objects.equals("schemaLocation", attribute.getLocalName()))
-						) {
-							rootTag.setAttribute(attribute.getLocalName(), attribute.getNamespace(), newNamespace.urn() + " " + newNamespace.schemaLocation());
-						} else if (
-								(Objects.equals("xmlns", attribute.getLocalName())) &&
-								(StringUtil.isEmpty(attribute.getNamespace()))
-						) {
-							rootTag.setAttribute(attribute.getLocalName(), "", newNamespace.urn());
-						} else {
-							rootTag.setAttribute(attribute.getName(), attribute.getNamespace(), attribute.getValue());
-						}
+					XmlAttribute urnAttribute = getUrnAttribute(xmlTag);
+					XmlAttribute newUrnAttribute = getUrnAttribute(rootTag);
+
+					if (
+							(schemaLocationAttribute != null) &&
+							(newSchemaLocationAttribute != null)
+					) {
+						schemaLocationAttribute.replace(newSchemaLocationAttribute);
 					}
 
-					for (XmlTag child : xmlTag.getSubTags()) {
-						rootTag.add(child);
+					if (
+							(urnAttribute != null) &&
+							(newUrnAttribute != null)
+					) {
+						urnAttribute.replace(newUrnAttribute);
 					}
-
-					xmlTag.replace(rootTag);
 				}
 			}
 		}
@@ -271,13 +272,25 @@ public class LiferayXmlDeprecationInfoHolder extends AbstractLiferayInspectionIn
 		return false;
 	}
 
-	private String getSchemaLocationString(XmlTag rootTag) {
+	private static XmlAttribute getSchemaLocationAttribute(XmlTag rootTag) {
 		for (XmlAttribute attribute : rootTag.getAttributes()) {
 			if (
 					(Objects.equals("http://www.w3.org/2001/XMLSchema-instance", attribute.getNamespace())) &&
 					(Objects.equals("schemaLocation", attribute.getLocalName()))
 			) {
-				return attribute.getValue();
+				return attribute;
+			}
+		}
+
+		return null;
+	}
+	private static XmlAttribute getUrnAttribute(XmlTag rootTag) {
+		for (XmlAttribute attribute : rootTag.getAttributes()) {
+			if (
+					(Objects.equals("xmlns", attribute.getLocalName())) &&
+					(StringUtil.isEmpty(attribute.getNamespace()))
+			) {
+				return attribute;
 			}
 		}
 
