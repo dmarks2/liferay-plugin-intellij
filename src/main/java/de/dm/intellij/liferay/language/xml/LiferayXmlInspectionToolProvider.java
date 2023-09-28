@@ -8,6 +8,8 @@ public class LiferayXmlInspectionToolProvider implements InspectionToolProvider 
 	@Override
 	@SuppressWarnings("unchecked")
 	public Class<? extends LocalInspectionTool> @NotNull [] getInspectionClasses() {
-		return new Class[0];
+		return new Class[] {
+				LiferayXmlDeprecationInspection.class
+		};
 	}
 }
