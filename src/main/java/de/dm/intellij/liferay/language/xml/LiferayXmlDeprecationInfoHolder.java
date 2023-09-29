@@ -240,16 +240,20 @@ public class LiferayXmlDeprecationInfoHolder extends AbstractLiferayInspectionIn
 
 					if (
 							(schemaLocationAttribute != null) &&
-							(newSchemaLocationAttribute != null)
+							(newSchemaLocationAttribute != null) &&
+							(schemaLocationAttribute.getValueElement() != null) &&
+							(newSchemaLocationAttribute.getValueElement() != null)
 					) {
-						schemaLocationAttribute.replace(newSchemaLocationAttribute);
+						schemaLocationAttribute.getValueElement().replace(newSchemaLocationAttribute.getValueElement());
 					}
 
 					if (
 							(urnAttribute != null) &&
-							(newUrnAttribute != null)
+							(newUrnAttribute != null) &&
+							(urnAttribute.getValueElement() != null) &&
+							(newUrnAttribute.getValueElement() != null)
 					) {
-						urnAttribute.replace(newUrnAttribute);
+						urnAttribute.getValueElement().replace(newUrnAttribute.getValueElement());
 					}
 				}
 			}
