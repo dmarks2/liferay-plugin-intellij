@@ -303,6 +303,28 @@ public class LiferayJavaDeprecations {
 			"LPS-151632",
 			new String[] {"com.liferay.petra.portlet.url.builder.ActionURLBuilder", "com.liferay.petra.portlet.url.builder.PortletURLBuilder", "com.liferay.petra.portlet.url.builder.RenderURLBuilder", "com.liferay.petra.portlet.url.builder.ResourceURLBuilder" },
 			new String[] {"com.liferay.portal.kernel.portlet.url.builder.ActionURLBuilder", "com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder", "com.liferay.portal.kernel.portlet.url.builder.RenderURLBuilder", "com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder" } );
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_152089_TRASH_UTIL = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"TrashUtil has been removed from portal-kernel. Use TrashHelper Components instead.",
+			"LPS-152089",
+			new String[] {
+					"com.liferay.trash.kernel.model.TrashEntryConstants",
+					"com.liferay.trash.kernel.util.comparator.EntryCreateDateComparator",
+					"com.liferay.trash.kernel.util.comparator.EntryTypeComparator",
+					"com.liferay.trash.kernel.util.comparator.EntryUserNameComparator",
+					"com.liferay.trash.kernel.util.TrashUtil",
+					"com.liferay.trash.kernel.util.Trash",
+					"com.liferay.portlet.trash.util.TrashImpl"
+			},
+			new String[] {
+					"com.liferay.trash.constants.TrashEntryConstants",
+					"",
+					"",
+					"",
+					"com.liferay.portal.kernel.trash.helper.TrashHelper",
+					"",
+					""
+			});
 
 	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_162437_ADDRESS = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
 			7.4f,
