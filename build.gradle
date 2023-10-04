@@ -90,6 +90,7 @@ dependencies {
 //    implementation 'org.json:json:20171018'
 
     implementation 'com.liferay:com.liferay.poshi.runner.resources:1.0.17'
+    implementation 'com.liferay:com.liferay.poshi.core:1.0.132'
 
     poshiImplementation 'com.liferay:com.liferay.poshi.runner.resources:1.0.17'
     poshiImplementation('com.liferay:com.liferay.poshi.runner:1.0.453') {

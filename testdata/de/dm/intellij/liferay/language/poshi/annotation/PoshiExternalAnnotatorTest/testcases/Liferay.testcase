@@ -1,0 +1,7 @@
+definition {
+
+	test myTest {
+		Default.Open(locator1 = "http://localhost:8080");
+	}
+
+}

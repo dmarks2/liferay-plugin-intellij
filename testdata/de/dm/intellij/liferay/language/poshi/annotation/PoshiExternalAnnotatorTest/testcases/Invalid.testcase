@@ -1,0 +1,9 @@
+definition {
+
+	setUp {
+		Open(locator1 = "http://localhost:8080");
+
+		AssertElementNotPresent(locator1 = "ProductMenu#SITE");
+	}
+
+}
