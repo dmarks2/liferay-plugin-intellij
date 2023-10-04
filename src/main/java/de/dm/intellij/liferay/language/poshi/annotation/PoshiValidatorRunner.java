@@ -35,13 +35,11 @@ public class PoshiValidatorRunner {
 
 		if (PoshiExternalAnnotator.log.isDebugEnabled()) {
 			PoshiExternalAnnotator.log.debug("Exit Code = " + processOutput.getExitCode());
+			PoshiExternalAnnotator.log.debug("Output = " + processOutput.getStdout());
+			PoshiExternalAnnotator.log.debug("Error = " + processOutput.getStderr());
 		}
 
-		if (processOutput.getExitCode() != 0) {
-			return processOutput.getStdout();
-		}
-
-		return null;
+		return processOutput.getStdout();
 	}
 
 	private static GeneralCommandLine getCommandLine(@NotNull Project project, @NotNull File workingDirectory) throws CantRunException {
