@@ -420,7 +420,14 @@
             name="Poshi Testcase"
         />
 
-        <externalAnnotator language="Poshi" implementationClass="de.dm.intellij.liferay.language.poshi.annotation.PoshiExternalAnnotator" />
+        <externalAnnotator
+                language="Poshi"
+                implementationClass="de.dm.intellij.liferay.language.poshi.annotation.PoshiExternalAnnotator"
+        />
+        <externalAnnotator
+                language="HTML"
+                implementationClass="de.dm.intellij.liferay.language.poshi.annotation.PoshiExternalAnnotator"
+        />
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">

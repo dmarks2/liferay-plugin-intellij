@@ -1,0 +1,8 @@
+@default = "myFunction"
+definition {
+
+    function myFunction {
+        selenium.assertPartialTextCaseInsensitive();
+    }
+
+}

@@ -24,7 +24,7 @@ public class PoshiValidatorRunner {
 		}
 	}
 
-	public static String runPoshiValidator(@NotNull Project project, @NotNull File workingDirectory) throws ExecutionException {
+	public static ProcessOutput runPoshiValidator(@NotNull Project project, @NotNull File workingDirectory) throws ExecutionException {
 		GeneralCommandLine commandLine = getCommandLine(project, workingDirectory);
 
 		if (PoshiExternalAnnotator.log.isDebugEnabled()) {
@@ -39,7 +39,7 @@ public class PoshiValidatorRunner {
 			PoshiExternalAnnotator.log.debug("Error = " + processOutput.getStderr());
 		}
 
-		return processOutput.getStdout();
+		return processOutput;
 	}
 
 	private static GeneralCommandLine getCommandLine(@NotNull Project project, @NotNull File workingDirectory) throws CantRunException {
@@ -56,6 +56,8 @@ public class PoshiValidatorRunner {
 		for (String poshiRuntimeLibrary : PoshiConstants.POSHI_RUNTIME_LIBRARIES) {
 			addClassPath(classPath, poshiRuntimeLibrary);
 		}
+
+		simpleJavaParameters.getVMParametersList().add("-Duser.language=en");
 
 		return simpleJavaParameters.toCommandLine();
 	}

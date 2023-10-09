@@ -159,21 +159,26 @@ public class PoshiExternalAnnotatorTest extends JavaProjectTestCase {
 
 		assertNotEmpty(validationHost.errors);
 	}
-	/*
 
-	public void testValidFile() {
-		myFixture.configureByFiles("testcases/Liferay.testcase");
+	public void testWarning() {
+		ApplicationManager.getApplication().runWriteAction(() -> {
+			ProjectRootManager projectRootManager = ProjectRootManager.getInstance(myFixture.getProject());
 
-		myFixture.checkHighlighting();
+			projectRootManager.setProjectSdk(getTestProjectJdk());
+		});
+
+		myFixture.copyFileToProject("functions/Deprecation.function", sourceRootFile.getPath() + "/functions/Deprecation.function");
+
+		PoshiValidatorRunnerParams params = new PoshiValidatorRunnerParams();
+
+		params.project = myFixture.getProject();
+		params.workingDirectory = sourceRootFile;
+
+		PoshiExternalValidationHost validationHost = poshiExternalAnnotator.doAnnotate(params);
+
+		assertNotNull(validationHost);
+
+		assertNotEmpty(validationHost.warnings);
 	}
 
-	public void testInvalidFile() {
-		myFixture.copyFileToProject("testcases/Invalid.testcase", "testcases/Invalid.testcase");
-
-		myFixture.configureByFiles("testcases/Invalid.testcase");
-
-		myFixture.checkHighlighting();
-	}
-
-	 */
 }
