@@ -83,4 +83,21 @@ public class LiferayJspJavaDeprecationInspectionTest extends LightJavaCodeInsigh
 		myFixture.checkResultByFile("myphone_expected.jsp");
 	}
 
+	public void testStaticMethodCallChange() {
+		myFixture.configureByFiles(
+				"mystaticmethoddeprecation.jsp",
+				"com/liferay/portal/kernel/service/AddressLocalServiceUtil.java"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Rename Method Call")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("mystaticmethoddeprecation_expected.jsp");
+	}
 }
