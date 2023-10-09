@@ -117,4 +117,22 @@ public class LiferayGroovyDeprecationInspectionTest extends LightJavaCodeInsight
 
 		myFixture.checkResultByFile("mystaticmethod_expected.groovy");
 	}
+
+	public void testStaticPackageCallChange() {
+		myFixture.configureByFiles(
+				"mystaticpackagecall.groovy",
+				"com/liferay/portal/kernel/util/HttpComponentsUtil.java"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Rename Method Call")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("mystaticpackagecall_expected.groovy");
+	}
 }

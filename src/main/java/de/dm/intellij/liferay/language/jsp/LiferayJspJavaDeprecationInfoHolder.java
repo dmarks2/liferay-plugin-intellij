@@ -263,12 +263,18 @@ public class LiferayJspJavaDeprecationInfoHolder extends AbstractLiferayInspecti
 			if (qualifierExpression != null) {
 				PsiElementFactory factory = JavaPsiFacade.getInstance(project).getElementFactory();
 
-				PsiMethodCallExpression newMethodCallExpression = (PsiMethodCallExpression) factory.createExpressionFromText("var." + newName + "()", null);
+				PsiMethodCallExpression newMethodCallExpression;
 
-				PsiExpression newQualifierExpression = newMethodCallExpression.getMethodExpression().getQualifierExpression();
+				if (StringUtil.contains(newName, ".")) {
+					newMethodCallExpression = (PsiMethodCallExpression) factory.createExpressionFromText(newName + "()", null);
+				} else {
+					newMethodCallExpression = (PsiMethodCallExpression) factory.createExpressionFromText("var." + newName + "()", null);
 
-				if (newQualifierExpression != null) {
-					newQualifierExpression.replace(qualifierExpression);
+					PsiExpression newQualifierExpression = newMethodCallExpression.getMethodExpression().getQualifierExpression();
+
+					if (newQualifierExpression != null) {
+						newQualifierExpression.replace(qualifierExpression);
+					}
 				}
 
 				newMethodCallExpression.getArgumentList().replace(methodCallExpression.getArgumentList());

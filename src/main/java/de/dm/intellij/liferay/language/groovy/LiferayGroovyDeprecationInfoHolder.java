@@ -8,7 +8,6 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFileFactory;
-import com.intellij.psi.PsiMethodCallExpression;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.codeStyle.CodeStyleManager;
@@ -20,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.plugins.groovy.GroovyFileType;
 import org.jetbrains.plugins.groovy.lang.psi.GroovyFile;
 import org.jetbrains.plugins.groovy.lang.psi.GroovyPsiElementFactory;
+import org.jetbrains.plugins.groovy.lang.psi.api.GroovyReference;
 import org.jetbrains.plugins.groovy.lang.psi.api.statements.expressions.GrExpression;
 import org.jetbrains.plugins.groovy.lang.psi.api.statements.expressions.GrReferenceExpression;
 import org.jetbrains.plugins.groovy.lang.psi.api.statements.expressions.path.GrMethodCallExpression;
@@ -135,7 +135,9 @@ public class LiferayGroovyDeprecationInfoHolder extends AbstractLiferayInspectio
 			GrExpression qualifierExpression = referenceExpression.getQualifierExpression();
 
 			if (qualifierExpression instanceof GrReferenceExpression qualifierReferenceExpression) {
-				PsiElement resolve = qualifierReferenceExpression.getStaticReference().resolve();
+				GroovyReference staticReference = qualifierReferenceExpression.getStaticReference();
+
+				PsiElement resolve = staticReference.resolve();
 
 				GroovyMethodCallReference callReference = methodCallExpression.getCallReference();
 
@@ -148,6 +150,8 @@ public class LiferayGroovyDeprecationInfoHolder extends AbstractLiferayInspectio
 						if (type != null) {
 							return type.getCanonicalText() + "." + callReference.getMethodName() + "()";
 						}
+
+						return GroovyUtil.getMatchFromImports(methodCallExpression.getContainingFile(), staticReference.getCanonicalText()) + "." + callReference.getMethodName() + "()";
 					}
 				}
 			}
@@ -304,15 +308,21 @@ public class LiferayGroovyDeprecationInfoHolder extends AbstractLiferayInspectio
 				if (qualifierExpression instanceof GrReferenceExpression) {
 					GroovyPsiElementFactory factory = GroovyPsiElementFactory.getInstance(project);
 
-					GrMethodCallExpression newMethodCallExpression = (GrMethodCallExpression) factory.createExpressionFromText("var." + newName + "()", null);
+					GrMethodCallExpression newMethodCallExpression;
 
-					PsiReference newReference = newMethodCallExpression.getInvokedExpression().getReference();
+					if (StringUtil.contains(newName, ".")) {
+						newMethodCallExpression = (GrMethodCallExpression) factory.createExpressionFromText(newName + "()", null);
+					} else {
+						newMethodCallExpression = (GrMethodCallExpression) factory.createExpressionFromText("var." + newName + "()", null);
 
-					if (newReference instanceof GrReferenceExpression newReferenceExpression) {
-						GrExpression newQualifierExpression = newReferenceExpression.getQualifierExpression();
+						PsiReference newReference = newMethodCallExpression.getInvokedExpression().getReference();
 
-						if (newQualifierExpression != null) {
-							newQualifierExpression.replace(qualifierExpression);
+						if (newReference instanceof GrReferenceExpression newReferenceExpression) {
+							GrExpression newQualifierExpression = newReferenceExpression.getQualifierExpression();
+
+							if (newQualifierExpression != null) {
+								newQualifierExpression.replace(qualifierExpression);
+							}
 						}
 					}
 

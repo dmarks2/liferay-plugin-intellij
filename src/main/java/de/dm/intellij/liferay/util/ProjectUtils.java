@@ -278,21 +278,20 @@ public class ProjectUtils {
         PsiImportList psiImportList = PsiTreeUtil.getChildOfType(psiFile, PsiImportList.class);
         if (psiImportList != null) {
             //search for import statements
-            PsiImportStatement[] psiImportStatements = PsiTreeUtil.getChildrenOfType(psiImportList, PsiImportStatement.class);
-            if (psiImportStatements != null) {
-                for (PsiImportStatement psiImportStatement : psiImportStatements) {
-                    String qualifiedName = psiImportStatement.getQualifiedName();
-                    if (qualifiedName != null) {
-                        if (
-                                (className.equals(qualifiedName)) ||
-                                        (className.equals(StringUtil.getShortName(qualifiedName)))
-                        ) {
-                            return qualifiedName;
-                        }
-                    }
-                }
-            }
-        }
+            PsiImportStatement[] psiImportStatements = psiImportList.getImportStatements();
+
+			for (PsiImportStatement psiImportStatement : psiImportStatements) {
+				String qualifiedName = psiImportStatement.getQualifiedName();
+				if (qualifiedName != null) {
+					if (
+							(className.equals(qualifiedName)) ||
+									(className.equals(StringUtil.getShortName(qualifiedName)))
+					) {
+						return qualifiedName;
+					}
+				}
+			}
+		}
 
         //if not found in import statements and not found in own class and not found in inner classes, it is probably a class in the same package (and implicitly imported)
         if (packageStatement != null) {
@@ -497,12 +496,12 @@ public class ProjectUtils {
             PsiType type = qualifierExpression.getType();
 
             if (type != null) {
-                return type.getCanonicalText() + "." + methodExpression.getReferenceName() + "()";
+                return getMatchFromPackageStatementOrImports(methodCallExpression.getContainingFile(), type.getCanonicalText()) + "." + methodExpression.getReferenceName() + "()";
             } else {
                 PsiReference reference = qualifierExpression.getReference();
 
                 if (reference != null) {
-                    return reference.getCanonicalText() + "." + methodExpression.getReferenceName() + "()";
+                    return getMatchFromPackageStatementOrImports(methodCallExpression.getContainingFile(), reference.getCanonicalText()) + "." + methodExpression.getReferenceName() + "()";
                 }
             }
         }

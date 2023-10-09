@@ -117,5 +117,40 @@ public class LiferayJavaDeprecationInspectionTest extends LightJavaCodeInsightFi
 
 		myFixture.checkResultByFile("MyStaticMethodDeprecation_expected.java");
 	}
+	public void testStaticPackageCallChange() {
+		myFixture.configureByFiles(
+				"MyStaticPackageCall.java",
+				"com/liferay/portal/kernel/util/HttpComponentsUtil.java"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Rename Method Call")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("MyStaticPackageCall_expected.java");
+	}
+
+	public void testInstancePackageCallChange() {
+		myFixture.configureByFiles(
+				"MyInstancePackageCall.java",
+				"com/liferay/portal/kernel/util/HttpComponentsUtil.java"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Rename Method Call")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("MyInstancePackageCall_expected.java");
+	}
 
 }
