@@ -161,7 +161,7 @@ public class LiferayJavaDeprecations {
 			"The OpenIdConnectServiceHandler interface has been removed and replaced by the OpenIdConnectAuthenticationHandler interface.",
 			"LPS-124898",
 			new String[] {"com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandler"},
-			new String[] {"portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler"});
+			new String[] {"com.liferay.portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler"});
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_122956_SOY = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.4f,
 			"Some modules and the classes they exported to allow Soy rendering server-side have been removed.",

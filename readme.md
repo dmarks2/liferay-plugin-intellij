@@ -34,6 +34,7 @@ for the plugin. Just have a look at the following topics to see which areas have
 * Support for [Testing frameworks](documentation/testing.md)
 * Developing [Client Extensions](documentation/client_extensions.md)
 * Implementing functionality using [Headless API](documentation/headless.md)
+* Helping you when [Updating Liferay](documentation/updates.md)
 
 Supported IDEs
 --------------

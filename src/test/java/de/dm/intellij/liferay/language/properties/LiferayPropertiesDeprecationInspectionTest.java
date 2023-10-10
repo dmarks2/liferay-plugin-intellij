@@ -46,4 +46,21 @@ public class LiferayPropertiesDeprecationInspectionTest extends BasePlatformTest
 		myFixture.checkResultByFile("portal-ext-expected.properties");
 	}
 
+	public void testPluginPackageLiferayVersion() {
+		myFixture.configureByFiles(
+				"liferay-plugin-package.properties"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Update Value")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("liferay-plugin-package-expected.properties");
+	}
+
 }

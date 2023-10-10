@@ -55,7 +55,7 @@ public class LiferayXmlDeprecationInfoHolder extends AbstractLiferayInspectionIn
 		List<LiferayXmlDeprecationInfoHolder> result = new ArrayList<>();
 
 		for (LiferayXmlDeprecations.PublicIdDtdUri publicIdDtdUri : dtdDeprecation.dtds()) {
-			LiferayXmlDeprecationInfoHolder deprecationInfoHolder = createDtd(dtdDeprecation.majorLiferayVersion(), "The descriptor XML DTD versions should be matched with the Liferay version",  publicIdDtdUri.publicId(), publicIdDtdUri.dtdUri());
+			LiferayXmlDeprecationInfoHolder deprecationInfoHolder = createDtd(dtdDeprecation.majorLiferayVersion(), "The descriptor XML DTD version should matched the Liferay version",  publicIdDtdUri.publicId(), publicIdDtdUri.dtdUri());
 
 			deprecationInfoHolder = deprecationInfoHolder.quickfix(updateDtd(dtdDeprecation.newDtd()));
 
@@ -69,7 +69,7 @@ public class LiferayXmlDeprecationInfoHolder extends AbstractLiferayInspectionIn
 		List<LiferayXmlDeprecationInfoHolder> result = new ArrayList<>();
 
 		for (LiferayXmlDeprecations.UrnSchemaLocation urnSchemaLocation : namespaceDeprecation.namespaces()) {
-			LiferayXmlDeprecationInfoHolder deprecationInfoHolder = createNamespace(namespaceDeprecation.majorLiferayVersion(), "The XML Schema Location should be matched with the Liferay version",  urnSchemaLocation.urn(), urnSchemaLocation.schemaLocation());
+			LiferayXmlDeprecationInfoHolder deprecationInfoHolder = createNamespace(namespaceDeprecation.majorLiferayVersion(), "The XML Schema Location should matched the Liferay version",  urnSchemaLocation.urn(), urnSchemaLocation.schemaLocation());
 
 			deprecationInfoHolder = deprecationInfoHolder.quickfix(updateNamespace(namespaceDeprecation.newNamespace()));
 

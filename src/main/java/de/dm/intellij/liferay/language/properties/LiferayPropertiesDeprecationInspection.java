@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static de.dm.intellij.liferay.language.properties.LiferayPropertiesDeprecationInfoHolder.createProperties;
+import static de.dm.intellij.liferay.language.properties.LiferayPropertiesDeprecationInfoHolder.createPropertyValues;
 
 public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDeprecationInspection<LiferayPropertiesDeprecationInfoHolder> {
 	public static final List<LiferayPropertiesDeprecationInfoHolder> PROPERTY_DEPRECATIONS = new ArrayList<>();
@@ -207,8 +208,16 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 				"redirect.url.domains.allowed", "redirect.url.ips.allowed", "redirect.url.security.mode").quickfix(removeProperty()));
 		PROPERTY_DEPRECATIONS.addAll(createProperties(7.4f, "The properties tika.config, text.extraction.fork.process.enabled and text.extraction.fork.process.mime.types have been moved to OSGi configurations.", "LPS-147938",
 				"tika.config", "text.extraction.fork.process.enabled", "text.extraction.fork.process.mime.types").quickfix(removeProperty()));
-
-
+		PROPERTY_DEPRECATIONS.addAll(createPropertyValues(7.0f, "The liferay-versions key should match the Liferay version", "", true,
+				"liferay-versions", "6.1.0+", "6.2.0+").quickfix(updateValue("7.0.0+")));
+		PROPERTY_DEPRECATIONS.addAll(createPropertyValues(7.1f, "The liferay-versions key should match the Liferay version", "", true,
+				"liferay-versions", "6.1.0+", "6.2.0+", "7.0.0+").quickfix(updateValue("7.1.0+")));
+		PROPERTY_DEPRECATIONS.addAll(createPropertyValues(7.2f, "The liferay-versions key should match the Liferay version", "", true,
+				"liferay-versions", "6.1.0+", "6.2.0+", "7.0.0+", "7.1.0+").quickfix(updateValue("7.2.0+")));
+		PROPERTY_DEPRECATIONS.addAll(createPropertyValues(7.3f, "The liferay-versions key should match the Liferay version", "", true,
+				"liferay-versions", "6.1.0+", "6.2.0+", "7.0.0+", "7.1.0+", "7.2.0+").quickfix(updateValue("7.3.0+")));
+		PROPERTY_DEPRECATIONS.addAll(createPropertyValues(7.4f, "The liferay-versions key should match the Liferay version", "", true,
+				"liferay-versions", "6.1.0+", "6.2.0+", "7.0.0+", "7.1.0+", "7.2.0+", "7.3.0+").quickfix(updateValue("7.4.0+")));
 	}
 	@Nls
 	@NotNull
@@ -331,6 +340,52 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 			}
 
 			property.setName(newName);
+		}
+	}
+
+	private static LocalQuickFix updateValue(String newValue) {
+		return new UpdateValueQuickFix(newValue);
+	}
+
+	private static class UpdateValueQuickFix implements LocalQuickFix {
+
+		private String newValue;
+
+		public UpdateValueQuickFix(String newValue) {
+			this.newValue = newValue;
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Update Value";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Update Value to " + newValue;
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			PropertyImpl property;
+
+			if (psiElement instanceof PropertyImpl) {
+				property = (PropertyImpl) psiElement;
+			} else {
+				property = PsiTreeUtil.getParentOfType(psiElement, PropertyImpl.class);
+			}
+
+			if (property == null) {
+				return;
+			}
+
+			property.setValue(newValue);
 		}
 	}
 
