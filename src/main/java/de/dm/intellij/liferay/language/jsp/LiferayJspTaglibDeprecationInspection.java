@@ -4,7 +4,12 @@ import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemsHolder;
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.TextRange;
+import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.psi.ElementManipulators;
+import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiFile;
@@ -96,6 +101,8 @@ import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_TRAS
 
 public class LiferayJspTaglibDeprecationInspection extends AbstractLiferayDeprecationInspection<LiferayJspTaglibDeprecationInfoHolder> {
 
+	private static final String XML_TEMPLATE_CHILDREN_PLACEHOLDER = "$$children$$";
+
 	private static final List<LiferayJspTaglibDeprecationInfoHolder> TAGLIB_DEPRECATIONS = new ArrayList<>();
 
 	static {
@@ -155,7 +162,16 @@ public class LiferayJspTaglibDeprecationInspection extends AbstractLiferayDeprec
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_112476_LIFERAY_UI).quickfix(removeXmlTag()));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_112476_LIFERAY_THEME).quickfix(removeXmlTag()));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_121732_FLASH).quickfix(removeXmlTag()));
-		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_168309_LIFERAY_AUI).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_168309_LIFERAY_AUI).quickfix(
+				replaceWithTags(
+						"<div class=\"sheet\">\n" +
+								"    <div class=\"panel-group panel-group-flush\">\n" +
+								"        " + XML_TEMPLATE_CHILDREN_PLACEHOLDER + "\n" +
+								"    </div>\n" +
+								"</div>"
+				)
+		));
+
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_168309_LIFERAY_FRONTEND).quickfix(removeXmlTag()));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_158461_LIFERAY_FRONTEND).quickfix(removeXmlTag()));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_166546_AUI_CONTAINER).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_CLAY, "clay")));
@@ -461,6 +477,63 @@ public class LiferayJspTaglibDeprecationInspection extends AbstractLiferayDeprec
 			}
 
 			tag.delete();
+		}
+	}
+
+	private static LocalQuickFix replaceWithTags(String template) {
+		return new ReplaceWithTags(template);
+	}
+	private static class ReplaceWithTags implements LocalQuickFix {
+
+		private final String template;
+
+		public ReplaceWithTags(String template) {
+			this.template = template;
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Replace With Tags";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Replace with " + template;
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			XmlTag tag;
+
+			if (psiElement instanceof XmlTag) {
+				tag = (XmlTag) psiElement;
+			} else {
+				tag = PsiTreeUtil.getParentOfType(psiElement, XmlTag.class);
+			}
+
+			if (tag == null) {
+				return;
+			}
+
+			String text = ElementManipulators.getValueText(tag);
+
+			TextRange range = tag.getTextRange();
+
+			Document document = PsiDocumentManager.getInstance(project).getDocument(tag.getContainingFile());
+
+			if (document != null) {
+				PsiDocumentManager.getInstance(project).doPostponedOperationsAndUnblockDocument(document);
+
+				document.replaceString(range.getStartOffset(), range.getEndOffset(), StringUtil.replace(template, XML_TEMPLATE_CHILDREN_PLACEHOLDER, text));
+
+				PsiDocumentManager.getInstance(project).commitDocument(document);
+			}
 		}
 	}
 

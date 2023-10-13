@@ -122,4 +122,21 @@ public class LiferayJspTaglibDeprecationInspectionTest extends LightJavaCodeInsi
 		myFixture.checkResultByFile("asset-categories-navigation-expected.jsp");
 	}
 
+	public void testAuiFieldsetGroupDeprecationQuickFix() {
+		myFixture.configureByFiles(
+				"aui-fieldset-group.jsp",
+				"liferay-aui.tld"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Replace with")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("aui-fieldset-group-expected.jsp");
+	}
 }
