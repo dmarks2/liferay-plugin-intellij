@@ -123,6 +123,41 @@ public class LiferayJavaDeprecations {
 			"Many classes from former portal-service.jar from Liferay Portal 6.x have been moved into application and framework API modules.",
 			"",
 			"/com/liferay/java/Modularization_Imports_72.csv");
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_95909_ELASTICSEARCH_7 = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.3f,
+			"Elasticsearch has been updates to Elasticsearch 7.x.",
+			"LPS-88911",
+			new String[] {
+					"com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration",
+					"com.liferay.portal.search.elasticsearch6.configuration.OperationMode",
+					"com.liferay.portal.search.elasticsearch6.constants.ElasticSearchContextAttributes",
+					"com.liferay.portal.search.elasticsearch6.settings.ClientSettingsHelper",
+					"com.liferay.portal.search.elasticsearch6.settings.IndexSettingsContributor",
+					"com.liferay.portal.search.elasticsearch6.settings.IndexSettingsHelper",
+					"com.liferay.portal.search.elasticsearch6.settings.SettingsContributor",
+					"com.liferay.portal.search.elasticsearch6.settings.TypeMappingsHelper",
+					"com.liferay.portal.search.elasticsearch6.settings.XPackSecuritySettings",
+					"com.liferay.portal.search.elasticsearch6.spi.index.IndexDefinition",
+					"com.liferay.portal.search.elasticsearch6.spi.index.IndexRegistrar",
+					"com.liferay.portal.search.elasticsearch6.spi.index.helper.IndexRegistrarHelper",
+					"com.liferay.portal.search.elasticsearch6.spi.index.helper.IndexSettingsDefinition",
+			},
+			new String[] {
+					"com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
+					"com.liferay.portal.search.elasticsearch7.configuration.OperationMode",
+					"com.liferay.portal.search.elasticsearch7.constants.ElasticSearchContextAttributes",
+					"com.liferay.portal.search.elasticsearch7.settings.ClientSettingsHelper",
+					"com.liferay.portal.search.elasticsearch7.settings.IndexSettingsContributor",
+					"com.liferay.portal.search.elasticsearch7.settings.IndexSettingsHelper",
+					"com.liferay.portal.search.elasticsearch7.settings.SettingsContributor",
+					"com.liferay.portal.search.elasticsearch7.settings.TypeMappingsHelper",
+					"com.liferay.portal.search.elasticsearch7.settings.XPackSecuritySettings",
+					"com.liferay.portal.search.elasticsearch7.spi.index.IndexDefinition",
+					"com.liferay.portal.search.elasticsearch7.spi.index.IndexRegistrar",
+					"com.liferay.portal.search.elasticsearch7.spi.index.helper.IndexRegistrarHelper",
+					"com.liferay.portal.search.elasticsearch7.spi.index.helper.IndexSettingsDefinition",
+			});
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_100144_ASSET_TAGS_SELECTOR_TAG = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.3f,
 			"Removed java class AssetTagsSelectorTag.",
