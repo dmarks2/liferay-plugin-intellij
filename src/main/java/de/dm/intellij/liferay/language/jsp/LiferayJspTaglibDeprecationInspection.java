@@ -8,7 +8,6 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
@@ -165,9 +164,9 @@ public class LiferayJspTaglibDeprecationInspection extends AbstractLiferayDeprec
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_168309_LIFERAY_AUI).quickfix(
 				replaceWithTags(
 						"<div class=\"sheet\">\n" +
-								"    <div class=\"panel-group panel-group-flush\">\n" +
-								"        " + XML_TEMPLATE_CHILDREN_PLACEHOLDER + "\n" +
-								"    </div>\n" +
+								"  	<div class=\"panel-group panel-group-flush\">" +
+								XML_TEMPLATE_CHILDREN_PLACEHOLDER +
+								"  	</div>\n" +
 								"</div>"
 				)
 		));
@@ -481,13 +480,13 @@ public class LiferayJspTaglibDeprecationInspection extends AbstractLiferayDeprec
 	}
 
 	private static LocalQuickFix replaceWithTags(String template) {
-		return new ReplaceWithTags(template);
+		return new ReplaceWithTagsQuickFix(template);
 	}
-	private static class ReplaceWithTags implements LocalQuickFix {
+	private static class ReplaceWithTagsQuickFix implements LocalQuickFix {
 
 		private final String template;
 
-		public ReplaceWithTags(String template) {
+		public ReplaceWithTagsQuickFix(String template) {
 			this.template = template;
 		}
 
@@ -521,13 +520,13 @@ public class LiferayJspTaglibDeprecationInspection extends AbstractLiferayDeprec
 				return;
 			}
 
-			String text = ElementManipulators.getValueText(tag);
-
-			TextRange range = tag.getTextRange();
-
 			Document document = PsiDocumentManager.getInstance(project).getDocument(tag.getContainingFile());
 
 			if (document != null) {
+				TextRange range = tag.getTextRange();
+
+				String text = document.getText(tag.getValue().getTextRange());
+
 				PsiDocumentManager.getInstance(project).doPostponedOperationsAndUnblockDocument(document);
 
 				document.replaceString(range.getStartOffset(), range.getEndOffset(), StringUtil.replace(template, XML_TEMPLATE_CHILDREN_PLACEHOLDER, text));

@@ -2,4 +2,8 @@
 
 <warning descr="The tags `` and `` added unnecessary markup to the page and caused accessibility issues, so they have been removed (see LPS-168309)"><aui:fieldset-group>
     <div>Hello World!</div>
+
+    <aui:fieldset label="foo">
+        <h1>Bar</h1>
+    </aui:fieldset>
 </aui:fieldset-group></warning>

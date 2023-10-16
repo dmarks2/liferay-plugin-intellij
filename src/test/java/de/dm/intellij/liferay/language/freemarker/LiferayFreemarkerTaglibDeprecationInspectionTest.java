@@ -114,4 +114,21 @@ public class LiferayFreemarkerTaglibDeprecationInspectionTest extends LightJavaC
 
 		myFixture.checkResultByFile("asset-categories-navigation-expected.ftl");
 	}
+
+	public void testAuiFieldsetGroupDeprecationQuickFix() {
+		myFixture.configureByFiles(
+				"aui-fieldset-group.ftl"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Replace with")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("aui-fieldset-group-expected.ftl");
+	}
 }

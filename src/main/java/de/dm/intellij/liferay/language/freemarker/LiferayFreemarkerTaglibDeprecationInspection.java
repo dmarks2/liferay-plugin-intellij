@@ -4,13 +4,20 @@ import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemsHolder;
+import com.intellij.freemarker.psi.FtlElementTypes;
 import com.intellij.freemarker.psi.FtlNameValuePair;
 import com.intellij.freemarker.psi.directives.FtlMacro;
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.TextRange;
+import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.psi.xml.XmlTag;
 import de.dm.intellij.liferay.language.jsp.AbstractLiferayDeprecationInspection;
+import de.dm.intellij.liferay.language.jsp.LiferayJspTaglibDeprecationInspection;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -91,6 +98,7 @@ import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_TRAS
 
 public class LiferayFreemarkerTaglibDeprecationInspection extends AbstractLiferayDeprecationInspection<LiferayFreemarkerTaglibDeprecationInfoHolder> {
 
+	private static final String XML_TEMPLATE_CHILDREN_PLACEHOLDER = "$$children$$";
 	private static final List<LiferayFreemarkerTaglibDeprecationInfoHolder> TAGLIB_DEPRECATIONS = new ArrayList<>();
 
 	static {
@@ -150,7 +158,15 @@ public class LiferayFreemarkerTaglibDeprecationInspection extends AbstractLifera
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_112476_LIFERAY_UI).quickfix(removeTag()));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_112476_LIFERAY_THEME).quickfix(removeTag()));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_121732_FLASH).quickfix(removeTag()));
-		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_168309_LIFERAY_AUI).quickfix(removeTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_168309_LIFERAY_AUI).quickfix(
+				replaceWithTags(
+						"<div class=\"sheet\">\n" +
+								"  	<div class=\"panel-group panel-group-flush\">" +
+								XML_TEMPLATE_CHILDREN_PLACEHOLDER +
+								"  	</div>\n" +
+								"</div>"
+				)
+		));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_168309_LIFERAY_FRONTEND).quickfix(removeTag()));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_158461_LIFERAY_FRONTEND).quickfix(removeTag()));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_166546_AUI_CONTAINER).quickfix(renameNamespace(TAGLIB_URI_LIFERAY_CLAY)));
@@ -214,6 +230,9 @@ public class LiferayFreemarkerTaglibDeprecationInspection extends AbstractLifera
 	}
 	private static LocalQuickFix renameNamespace(String newNamespace) {
 		return new RenameFreemarkerNamespaceQuickFix(newNamespace);
+	}
+	private static LocalQuickFix replaceWithTags(String template) {
+		return new ReplaceWithTagsQuickFix(template);
 	}
 
 
@@ -413,6 +432,67 @@ public class LiferayFreemarkerTaglibDeprecationInspection extends AbstractLifera
 			}
 
 			LiferayFreemarkerTaglibs.setNamespace(ftlMacro, newNamespace);
+		}
+	}
+
+	private static class ReplaceWithTagsQuickFix implements LocalQuickFix {
+
+		private final String template;
+
+		public ReplaceWithTagsQuickFix(String template) {
+			this.template = template;
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Replace With Tags";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Replace with " + template;
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			FtlMacro ftlMacro;
+
+			if (psiElement instanceof FtlMacro) {
+				ftlMacro = (FtlMacro) psiElement;
+			} else {
+				ftlMacro = PsiTreeUtil.getParentOfType(psiElement, FtlMacro.class);
+			}
+
+			if (ftlMacro == null) {
+				return;
+			}
+
+			Document document = PsiDocumentManager.getInstance(project).getDocument(ftlMacro.getContainingFile());
+
+			if (document != null) {
+				TextRange range = ftlMacro.getTextRange();
+
+				PsiElement startTagEndElement = ftlMacro.getStartTagEndElement();
+
+				if (startTagEndElement != null) {
+					int startOffset = startTagEndElement.getTextRange().getEndOffset();
+					int endOffset = ftlMacro.getLastChild().getStartOffsetInParent();
+
+					String text = document.getText(new TextRange(startOffset, endOffset));
+
+					PsiDocumentManager.getInstance(project).doPostponedOperationsAndUnblockDocument(document);
+
+					document.replaceString(range.getStartOffset(), range.getEndOffset(), StringUtil.replace(template, XML_TEMPLATE_CHILDREN_PLACEHOLDER, text));
+
+					PsiDocumentManager.getInstance(project).commitDocument(document);
+				}
+			}
 		}
 	}
 }
