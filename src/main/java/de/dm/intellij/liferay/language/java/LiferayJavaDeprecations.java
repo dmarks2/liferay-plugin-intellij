@@ -587,6 +587,30 @@ public class LiferayJavaDeprecations {
 			new String[] {"com.liferay.portal.kernel.scheduler.SchedulerEngine.unschedule()", "com.liferay.portal.kernel.scheduler.SchedulerEngineHelper.unschedule()", "com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil.unschedule()", },
 			new String[] {"delete", "delete", "delete"} );
 
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_194337_DESTINATION = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"Removed API to register/unregister MessageListener from Destination",
+			"LPS-194337",
+			new String[] {
+					"com.liferay.portal.kernel.messaging.Destination.copyMessageListeners()",
+					"com.liferay.portal.kernel.messaging.Destination.getMessageListenerCount()",
+					"com.liferay.portal.kernel.messaging.Destination.isRegistered()",
+					"com.liferay.portal.kernel.messaging.Destination.register()",
+					"com.liferay.portal.kernel.messaging.Destination.unregister()",
+				 },
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_195116_DESTINATION_MESSAGE_BUS_EVENT_LISTENER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"Support for DestinationEventListener and MessageBusEventListener has been removed.",
+			"LPS-195116",
+			new String[] {
+					"com.liferay.portal.kernel.messaging.GlobalMessageBusEventListener",
+					"com.liferay.portal.kernel.messaging.MessageBusEventListener",
+					"com.liferay.portal.kernel.messaging.DestinationEventListener",
+			},
+			new String[0] );
+
 
 
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
