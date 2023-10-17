@@ -135,4 +135,22 @@ public class LiferayGroovyDeprecationInspectionTest extends LightJavaCodeInsight
 
 		myFixture.checkResultByFile("mystaticpackagecall_expected.groovy");
 	}
+
+	public void testMethodDeprecationRemove() {
+		myFixture.configureByFiles(
+				"myportalflashdeprecation.groovy",
+				"com/liferay/portal/kernel/theme/ThemeDisplay.java"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Remove Method Call")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("myportalflashdeprecation_expected.groovy");
+	}
 }

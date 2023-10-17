@@ -8,10 +8,12 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFileFactory;
+import com.intellij.psi.PsiMethodCallExpression;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
+import de.dm.intellij.liferay.language.java.LiferayJavaDeprecationInfoHolder;
 import de.dm.intellij.liferay.language.java.LiferayJavaDeprecations;
 import de.dm.intellij.liferay.language.jsp.AbstractLiferayInspectionInfoHolder;
 import org.jetbrains.annotations.Nls;
@@ -86,6 +88,8 @@ public class LiferayGroovyDeprecationInfoHolder extends AbstractLiferayInspectio
 					(StringUtil.isNotEmpty(methodCallDeprecation.newNames()[i]))
 			) {
 				deprecationInfoHolder = deprecationInfoHolder.quickfix(renameMethodCall(methodCallDeprecation.newNames()[i]));
+			} else {
+				deprecationInfoHolder = deprecationInfoHolder.quickfix(removeMethodCall());
 			}
 
 			result.add(deprecationInfoHolder);
@@ -331,6 +335,44 @@ public class LiferayGroovyDeprecationInfoHolder extends AbstractLiferayInspectio
 					methodCallExpression.replace(newMethodCallExpression);
 				}
 			}
+		}
+	}
+
+	private static LocalQuickFix removeMethodCall() {
+		return new RemoveMethodCallQuickFix();
+	}
+	private static class RemoveMethodCallQuickFix implements LocalQuickFix {
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Remove Method Call";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Remove Method Call";
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			GrMethodCallExpression methodCallExpression;
+
+			if (psiElement instanceof GrMethodCallExpression) {
+				methodCallExpression = (GrMethodCallExpression) psiElement;
+			} else {
+				methodCallExpression = PsiTreeUtil.getParentOfType(psiElement, GrMethodCallExpression.class);
+			}
+
+			if (methodCallExpression == null) {
+				return;
+			}
+
+			methodCallExpression.delete();
 		}
 	}
 

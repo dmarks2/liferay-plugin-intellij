@@ -83,6 +83,8 @@ public class LiferayJavaDeprecationInfoHolder extends AbstractLiferayInspectionI
 				(StringUtil.isNotEmpty(methodCallDeprecation.newNames()[i]))
 			) {
 				deprecationInfoHolder = deprecationInfoHolder.quickfix(renameMethodCall(methodCallDeprecation.newNames()[i]));
+			} else {
+				deprecationInfoHolder = deprecationInfoHolder.quickfix(removeMethodCall());
 			}
 
 			result.add(deprecationInfoHolder);
@@ -219,6 +221,45 @@ public class LiferayJavaDeprecationInfoHolder extends AbstractLiferayInspectionI
 			statement.delete();
 		}
 	}
+
+	private static LocalQuickFix removeMethodCall() {
+		return new RemoveMethodCallQuickFix();
+	}
+	private static class RemoveMethodCallQuickFix implements LocalQuickFix {
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Remove Method Call";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Remove Method Call";
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			PsiMethodCallExpression methodCallExpression;
+
+			if (psiElement instanceof PsiMethodCallExpression) {
+				methodCallExpression = (PsiMethodCallExpression) psiElement;
+			} else {
+				methodCallExpression = PsiTreeUtil.getParentOfType(psiElement, PsiMethodCallExpression.class);
+			}
+
+			if (methodCallExpression == null) {
+				return;
+			}
+
+			methodCallExpression.delete();
+		}
+	}
+
 
 	private static LocalQuickFix renameMethodCall(String newName) {
 		return new RenameMethodCallQuickFix(newName);

@@ -550,6 +550,18 @@ public class LiferayJavaDeprecations {
 			"LPS-165685",
 			new String[] {"com.liferay.portal.kernel.model.OrgLabor.getTypeId()", "com.liferay.portal.kernel.model.OrgLabor.setTypeId()", "com.liferay.portal.kernel.model.OrgLabor.getType()"},
 			new String[] {"getListTypeId", "setListTypeId", "getListType"} );
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_121733_THEME_DISPLAY_FLASH = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"Flash support has been removed completely.",
+			"LPS-121733",
+			new String[] {"com.liferay.portal.kernel.theme.ThemeDisplay.setPathFlash()", "com.liferay.portal.kernel.theme.ThemeDisplay.getPathFlash()"},
+			new String[0] );
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_134188_SANITIZED_SERVLET_RESPONSE = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"X-Xss-Protection header based methods have been removed, because it is not supported by modern browsers.",
+			"LPS-134188",
+			new String[] {"com.liferay.portal.kernel.servlet.SanitizedServletResponse.disableXSSAuditor()", "com.liferay.portal.kernel.servlet.SanitizedServletResponse.disableXSSAuditorOnNextRequest()"},
+			new String[0] );
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_181233_CTSQL_MODE_THREAD_LOCAL = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.4f,
 			"Moved CTSQLModeThreadLocal to portal-kernel and Changed Package.",

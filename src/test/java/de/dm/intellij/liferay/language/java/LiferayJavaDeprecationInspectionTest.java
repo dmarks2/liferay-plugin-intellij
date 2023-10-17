@@ -153,4 +153,22 @@ public class LiferayJavaDeprecationInspectionTest extends LightJavaCodeInsightFi
 		myFixture.checkResultByFile("MyInstancePackageCall_expected.java");
 	}
 
+	public void testMethodDeprecationRemove() {
+		myFixture.configureByFiles(
+				"MyPortalFlashDeprecation.java",
+				"com/liferay/portal/kernel/theme/ThemeDisplay.java"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Remove Method Call")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("MyPortalFlashDeprecation_expected.java");
+	}
+
 }

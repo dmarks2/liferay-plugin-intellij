@@ -3,6 +3,7 @@ package de.dm.intellij.liferay.language.jsp;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemsHolder;
+import com.intellij.jsp.java.JspExpressionStatement;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.JavaPsiFacade;
@@ -11,10 +12,12 @@ import com.intellij.psi.PsiElementFactory;
 import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiMethodCallExpression;
 import com.intellij.psi.PsiReferenceExpression;
+import com.intellij.psi.impl.source.jsp.jspJava.JspMethodCall;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
+import de.dm.intellij.liferay.language.java.LiferayJavaDeprecationInfoHolder;
 import de.dm.intellij.liferay.language.java.LiferayJavaDeprecations;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.Nls;
@@ -80,6 +83,8 @@ public class LiferayJspJavaDeprecationInfoHolder extends AbstractLiferayInspecti
 					(StringUtil.isNotEmpty(methodCallDeprecation.newNames()[i]))
 			) {
 				deprecationInfoHolder = deprecationInfoHolder.quickfix(renameMethodCall(methodCallDeprecation.newNames()[i]));
+			} else {
+				deprecationInfoHolder = deprecationInfoHolder.quickfix(removeMethodCall());
 			}
 
 			result.add(deprecationInfoHolder);
@@ -280,6 +285,48 @@ public class LiferayJspJavaDeprecationInfoHolder extends AbstractLiferayInspecti
 				newMethodCallExpression.getArgumentList().replace(methodCallExpression.getArgumentList());
 
 				methodCallExpression.replace(newMethodCallExpression);
+			}
+		}
+	}
+
+	private static LocalQuickFix removeMethodCall() {
+		return new RemoveMethodCallQuickFix();
+	}
+	private static class RemoveMethodCallQuickFix implements LocalQuickFix {
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Remove Method Call";
+		}
+
+		@Nls
+		@NotNull
+		@Override
+		public String getName() {
+			return "Remove Method Call";
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			PsiMethodCallExpression methodCallExpression;
+
+			if (psiElement instanceof PsiMethodCallExpression) {
+				methodCallExpression = (PsiMethodCallExpression) psiElement;
+			} else {
+				methodCallExpression = PsiTreeUtil.getParentOfType(psiElement, PsiMethodCallExpression.class);
+			}
+
+			if (methodCallExpression == null) {
+				return;
+			}
+
+			JspExpressionStatement jspExpressionStatement = PsiTreeUtil.getParentOfType(methodCallExpression, JspExpressionStatement.class);
+
+			if (jspExpressionStatement != null) {
+				jspExpressionStatement.delete();
 			}
 		}
 	}
