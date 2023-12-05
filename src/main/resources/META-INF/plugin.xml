@@ -32,6 +32,7 @@
             <li>Feature: add property file deprecation inspections</li>
             <li>Feature: add changes from LPS-112464 (className changed to cssClass in Clay taglibs)</li>
             <li>Feature: add in-depth validations of Poshi Scripts (using external Poshi Validation)</li>
+            <li>Bugfix: fix encoding when executing Poshi Scripts (UTF-8 instead of system dependant encoding)</li>
         </ul>
 
         <p>Version 0.0.17</p>

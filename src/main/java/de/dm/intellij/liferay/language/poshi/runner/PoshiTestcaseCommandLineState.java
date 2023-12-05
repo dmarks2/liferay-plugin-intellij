@@ -68,6 +68,9 @@ public class PoshiTestcaseCommandLineState extends BaseJavaApplicationCommandLin
 
         javaParameters.setMainClass("de.dm.intellij.liferay.language.poshi.scripts.PoshiStandaloneRunner");
 
+        ParametersList vmParametersList = javaParameters.getVMParametersList();
+        vmParametersList.add("-Dfile.encoding=UTF-8");
+
         File workingDirectory = new File(getConfiguration().getScriptName());
         workingDirectory = workingDirectory.getParentFile();
         workingDirectory = workingDirectory.getParentFile();

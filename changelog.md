@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Feature: add property file deprecation inspections
 - Feature: add changes from LPS-112464 (className changed to cssClass in Clay taglibs)
 - Feature: add in-depth validations of Poshi Scripts (using external Poshi Validation)
+- Bugfix: fix encoding when executing Poshi Scripts (UTF-8 instead of system dependant encoding)
 
 ## 0.0.17
 - Feature: Code completion features for client-extensions.yaml
