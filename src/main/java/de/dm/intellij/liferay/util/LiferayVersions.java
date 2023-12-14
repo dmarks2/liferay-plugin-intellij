@@ -11,4 +11,31 @@ public class LiferayVersions {
     public static final float LIFERAY_VERSION_7_3 = 7.3f;
     public static final float LIFERAY_VERSION_7_4 = 7.4f;
 
+    public static String getGAVersion(String liferayVersion) {
+        int gaVersionIndex = liferayVersion.lastIndexOf('.') + 1;
+        String gaVersion = liferayVersion.substring(gaVersionIndex);
+
+        if (liferayVersion.startsWith("7.4.3")) {
+            return "7.4.3." + gaVersion + "-ga" + gaVersion;
+        } else {
+            int gaVersionInt = Integer.parseInt(gaVersion);
+
+            gaVersionInt++;
+
+            return liferayVersion + "-ga" + gaVersionInt;
+        }
+    }
+
+    public static String minusOne(String version) {
+        int minorVersionIndex = version.lastIndexOf(".") + 1;
+
+        String minorVersion = version.substring(minorVersionIndex);
+
+        int minorVersionInt = Integer.parseInt(minorVersion);
+
+        minorVersionInt--;
+
+        return version.substring(0, minorVersionIndex) + minorVersionInt;
+    }
+
 }

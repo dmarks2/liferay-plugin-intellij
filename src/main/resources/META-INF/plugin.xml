@@ -32,6 +32,8 @@
             <li>Feature: add property file deprecation inspections</li>
             <li>Feature: add changes from LPS-112464 (className changed to cssClass in Clay taglibs)</li>
             <li>Feature: add in-depth validations of Poshi Scripts (using external Poshi Validation)</li>
+            <li>Feature: check if service-builder and rest-builder maven plugins match the used liferay version</li>
+            <li>Feature: check if portal-web dependency matches the used liferay version</li>
             <li>Bugfix: fix encoding when executing Poshi Scripts (UTF-8 instead of system dependant encoding)</li>
         </ul>
 
@@ -432,6 +434,11 @@
         <externalAnnotator
                 language="HTML"
                 implementationClass="de.dm.intellij.liferay.language.poshi.annotation.PoshiExternalAnnotator"
+        />
+
+        <externalAnnotator
+                language="XML"
+                implementationClass="de.dm.intellij.liferay.maven.LiferayMavenDeprecationsExternalAnnotator"
         />
     </extensions>
 

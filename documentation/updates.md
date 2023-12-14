@@ -31,5 +31,8 @@ The following areas are checked
   * Check for matching liferay versions key inside `liferay-plugin-package.properties`
 * XML files
   * Checks for matching DTD or Schema versions based on the used liferay version
+* Maven Dependencies
+  * Checks if `service-builder` and `rest-builder` plugins match the used liferay version
+  * Checks if `portal-web` dependency matches the used liferay version
 
 *Checking for removals or deprecations works for Liferay 7.0 to Liferay 7.4*

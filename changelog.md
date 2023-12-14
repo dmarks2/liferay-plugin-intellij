@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 - Feature: add property file deprecation inspections
 - Feature: add changes from LPS-112464 (className changed to cssClass in Clay taglibs)
 - Feature: add in-depth validations of Poshi Scripts (using external Poshi Validation)
+- Feature: check if service-builder and rest-builder maven plugins match the used liferay version
+- Feature: check if portal-web dependency matches the used liferay version
 - Bugfix: fix encoding when executing Poshi Scripts (UTF-8 instead of system dependant encoding)
 
 ## 0.0.17

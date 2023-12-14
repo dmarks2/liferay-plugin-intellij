@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>de.dm.liferay</groupId>
+	<artifactId>sample</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<properties>
+		<com.liferay.portal.tools.service.builder.version>1.0.0</com.liferay.portal.tools.service.builder.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<<warning descr="Mismatched Service Builder Plugin version (1.0.0 does not match Liferay 7.4.3.55, should be 9.9.9)">plugin</warning>>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.portal.tools.service.builder</artifactId>
+				<version>${com.liferay.portal.tools.service.builder.version}</version>
+			</<warning descr="Mismatched Service Builder Plugin version (1.0.0 does not match Liferay 7.4.3.55, should be 9.9.9)">plugin</warning>>
+		</plugins>
+	</build>
+
+</project>
