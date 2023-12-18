@@ -27,7 +27,8 @@ The following areas are checked
 * Freemarker templates
   * Check for removed or changed Taglibs
 * Property files
-  * Check for removed or changed properties inside `portal-xxx.properties`
+  * Check for obsolete, renamed or moved properties inside `portal-xxx.properties`
+  * Check for obsolete, renamed or moved properties inside `system-xxx.properties`
   * Check for matching liferay versions key inside `liferay-plugin-package.properties`
 * XML files
   * Checks for matching DTD or Schema versions based on the used liferay version

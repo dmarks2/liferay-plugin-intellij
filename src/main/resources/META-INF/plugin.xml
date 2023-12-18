@@ -29,7 +29,7 @@
         <ul>
             <li>Feature: add freemarker taglib deprecation inspections</li>
             <li>Feature: add java, jsp, groovy code deprecation inspections</li>
-            <li>Feature: add property file deprecation inspections</li>
+            <li>Feature: add property file deprecation inspections (portal-ext.properties, system-ext.properties, liferay-plugin-package.properties)</li>
             <li>Feature: add changes from LPS-112464 (className changed to cssClass in Clay taglibs)</li>
             <li>Feature: add in-depth validations of Poshi Scripts (using external Poshi Validation)</li>
             <li>Feature: check if service-builder and rest-builder maven plugins match the used liferay version</li>

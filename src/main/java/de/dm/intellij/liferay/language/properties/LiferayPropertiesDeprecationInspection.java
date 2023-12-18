@@ -3,8 +3,10 @@ package de.dm.intellij.liferay.language.properties;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemsHolder;
+import com.intellij.codeInspection.QuickFix;
 import com.intellij.lang.properties.psi.impl.PropertyImpl;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static de.dm.intellij.liferay.language.properties.LiferayPropertiesDeprecationInfoHolder.createProperties;
+import static de.dm.intellij.liferay.language.properties.LiferayPropertiesDeprecationInfoHolder.createPropertiesWithFilenamePrefix;
 import static de.dm.intellij.liferay.language.properties.LiferayPropertiesDeprecationInfoHolder.createPropertyValues;
 
 public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDeprecationInspection<LiferayPropertiesDeprecationInfoHolder> {
@@ -218,7 +221,59 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 				"liferay-versions", "6.1.0+", "6.2.0+", "7.0.0+", "7.1.0+", "7.2.0+").quickfix(updateValue("7.3.0+")));
 		PROPERTY_DEPRECATIONS.addAll(createPropertyValues(7.4f, "The liferay-versions key should match the Liferay version", "", true,
 				"liferay-versions", "6.1.0+", "6.2.0+", "7.0.0+", "7.1.0+", "7.2.0+", "7.3.0+").quickfix(updateValue("7.4.0+")));
+
+		//see https://github.com/liferay/liferay-portal/blob/master/portal-impl/src/com/liferay/portal/verify/VerifyProperties.java
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.0f, "The system property \"${propertyName}\" is obsolete", "", "system",
+				LiferayPropertiesDeprecationConstants._OBSOLETE_SYSTEM_KEYS_7_0).quickfix(removeProperty()));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.1f, "The system property \"${propertyName}\" is obsolete", "", "system",
+				LiferayPropertiesDeprecationConstants._OBSOLETE_SYSTEM_KEYS_7_1).quickfix(removeProperty()));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.4f, "The system property \"${propertyName}\" is obsolete", "", "system",
+				LiferayPropertiesDeprecationConstants._OBSOLETE_SYSTEM_KEYS_7_4).quickfix(removeProperty()));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.0f, "System property \"${propertyName}\" was migrated to the portal property \"${newPropertyName}\"", "", "system",
+				LiferayPropertiesDeprecationConstants._MIGRATED_SYSTEM_KEYS_7_0));
+
+		LocalQuickFix renamedSystemKeys70 = renameProperty(LiferayPropertiesDeprecationConstants._RENAMED_SYSTEM_KEYS_7_0);
+
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.0f, "System property \"${propertyName}\" was renamed to \"${newPropertyName}\"", "", "system",
+				LiferayPropertiesDeprecationConstants._RENAMED_SYSTEM_KEYS_7_0).quickfix(renamedSystemKeys70));
+
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.0f, "System property \"${propertyName}\" was modularized to \"${newModuleName}\" as \"${newPropertyName}\"", "", "system",
+				LiferayPropertiesDeprecationConstants._MODULARIZED_SYSTEM_KEYS_7_0));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.4f, "System property \"${propertyName}\" was modularized to \"${newModuleName}\" as \"${newPropertyName}\"", "", "system",
+				LiferayPropertiesDeprecationConstants._MODULARIZED_SYSTEM_KEYS_7_4));
+
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.0f, "Portal property \"${propertyName}\" was migrated to the system property \"${newPropertyName}\"", "", "portal",
+				LiferayPropertiesDeprecationConstants._MIGRATED_PORTAL_KEYS_7_0));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.4f, "Portal property \"${propertyName}\" was migrated to the system property \"${newPropertyName}\"", "", "portal",
+				LiferayPropertiesDeprecationConstants._MIGRATED_PORTAL_KEYS_7_4));
+
+		LocalQuickFix renamedPortalKeys70 = renameProperty(LiferayPropertiesDeprecationConstants._RENAMED_PORTAL_KEYS_7_0);
+		LocalQuickFix renamedPortalKeys73 = renameProperty(LiferayPropertiesDeprecationConstants._RENAMED_PORTAL_KEYS_7_3);
+		LocalQuickFix renamedPortalKeys74 = renameProperty(LiferayPropertiesDeprecationConstants._RENAMED_PORTAL_KEYS_7_4);
+
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.0f, "Portal property \"${propertyName}\" was renamed to \"${newPropertyName}\"", "", "portal",
+				LiferayPropertiesDeprecationConstants._RENAMED_PORTAL_KEYS_7_0).quickfix(renamedPortalKeys70));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.3f, "Portal property \"${propertyName}\" was renamed to \"${newPropertyName}\"", "", "portal",
+				LiferayPropertiesDeprecationConstants._RENAMED_PORTAL_KEYS_7_3).quickfix(renamedPortalKeys73));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.4f, "Portal property \"${propertyName}\" was renamed to \"${newPropertyName}\"", "", "portal",
+				LiferayPropertiesDeprecationConstants._RENAMED_PORTAL_KEYS_7_4).quickfix(renamedPortalKeys74));
+
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.0f, "Portal property \"${propertyName}\" is obsolete", "", "portal",
+				LiferayPropertiesDeprecationConstants._OBSOLETE_PORTAL_KEYS_7_0).quickfix(removeProperty()));
+
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.0f, "Portal property \"${propertyName}\" was modularized to \"${newModuleName}\" as \"${newPropertyName}\"", "", "portal",
+				LiferayPropertiesDeprecationConstants._MODULARIZED_PORTAL_KEYS_7_0));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.1f, "Portal property \"${propertyName}\" was modularized to \"${newModuleName}\" as \"${newPropertyName}\"", "", "portal",
+				LiferayPropertiesDeprecationConstants._MODULARIZED_PORTAL_KEYS_7_1));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.2f, "Portal property \"${propertyName}\" was modularized to \"${newModuleName}\" as \"${newPropertyName}\"", "", "portal",
+				LiferayPropertiesDeprecationConstants._MODULARIZED_PORTAL_KEYS_7_2));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.3f, "Portal property \"${propertyName}\" was modularized to \"${newModuleName}\" as \"${newPropertyName}\"", "", "portal",
+				LiferayPropertiesDeprecationConstants._MODULARIZED_PORTAL_KEYS_7_3));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.4f, "Portal property \"${propertyName}\" was modularized to \"${newModuleName}\" as \"${newPropertyName}\"", "", "portal",
+				LiferayPropertiesDeprecationConstants._MODULARIZED_PORTAL_KEYS_7_4));
+
 	}
+
 	@Nls
 	@NotNull
 	@Override
@@ -297,16 +352,16 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 		}
 	}
 
-	private static LocalQuickFix renameProperty(String newName) {
-		return new RenamePropertyQuickFix(newName);
+	private static LocalQuickFix renameProperty(String[][] propertiesList) {
+		return new RenamePropertyQuickFix(propertiesList);
 	}
 
 	private static class RenamePropertyQuickFix implements LocalQuickFix {
 
-		private String newName;
+		private String[][] propertiesList;
 
-		public RenamePropertyQuickFix(String newName) {
-			this.newName = newName;
+		public RenamePropertyQuickFix(String[][] propertiesList) {
+			this.propertiesList = propertiesList;
 		}
 
 		@Nls
@@ -320,7 +375,7 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 		@NotNull
 		@Override
 		public String getName() {
-			return "Rename Property to " + newName;
+			return "Rename Property";
 		}
 
 		@Override
@@ -339,7 +394,15 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 				return;
 			}
 
-			property.setName(newName);
+			String oldName = property.getName();
+
+			for (String[] propertyList : propertiesList) {
+				if (StringUtil.equals(propertyList[0], oldName)) {
+					property.setName(propertyList[1]);
+
+					break;
+				}
+			}
 		}
 	}
 

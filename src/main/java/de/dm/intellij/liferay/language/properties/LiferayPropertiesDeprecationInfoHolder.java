@@ -6,6 +6,7 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import de.dm.intellij.liferay.language.jsp.AbstractLiferayInspectionInfoHolder;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 
@@ -18,6 +19,9 @@ public class LiferayPropertiesDeprecationInfoHolder extends AbstractLiferayInspe
 	private String myPropertyName;
 	private String myPropertyValue;
 	private boolean myMatchVersion;
+	private String myFilenamePrefix;
+	private String myNewPropertyName;
+	private String myNewModuleName;
 
 	private static LiferayPropertiesDeprecationInfoHolder createProperty(float majorLiferayVersion, String message, String ticket, String propertyName) {
 		return
@@ -48,6 +52,33 @@ public class LiferayPropertiesDeprecationInfoHolder extends AbstractLiferayInspe
 
 		return new ListWrapper<>(result);
 	}
+
+	public static ListWrapper<LiferayPropertiesDeprecationInfoHolder> createPropertiesWithFilenamePrefix(float majorLiferayVersion, String message, String ticket, String filenamePrefix, String... properties) {
+		List<LiferayPropertiesDeprecationInfoHolder> result = new ArrayList<>();
+
+		for (String property : properties) {
+			result.add(createProperty(majorLiferayVersion, message, ticket, property).filenamePrefix(filenamePrefix));
+		}
+
+		return new ListWrapper<>(result);
+	}
+
+	public static ListWrapper<LiferayPropertiesDeprecationInfoHolder> createPropertiesWithFilenamePrefix(float majorLiferayVersion, String message, String ticket, String filenamePrefix, String[]... propertiesMap) {
+		List<LiferayPropertiesDeprecationInfoHolder> result = new ArrayList<>();
+
+		for (String[] propertyMap : propertiesMap) {
+			LiferayPropertiesDeprecationInfoHolder property = createProperty(majorLiferayVersion, message, ticket, propertyMap[0]).filenamePrefix(filenamePrefix).newPropertyName(propertyMap[1]);
+
+			if (propertyMap.length > 2) {
+				property = property.newModuleName(propertyMap[2]);
+			}
+
+			result.add(property);
+		}
+
+		return new ListWrapper<>(result);
+	}
+
 	public static ListWrapper<LiferayPropertiesDeprecationInfoHolder> createPropertyValues(float majorLiferayVersion, String message, String ticket, boolean matchVersion, String property, String... values) {
 		List<LiferayPropertiesDeprecationInfoHolder> result = new ArrayList<>();
 
@@ -75,9 +106,43 @@ public class LiferayPropertiesDeprecationInfoHolder extends AbstractLiferayInspe
 		return this;
 	}
 
+	public LiferayPropertiesDeprecationInfoHolder filenamePrefix(String filenamePrefix) {
+		this.myFilenamePrefix = filenamePrefix;
+
+		return this;
+	}
+	public LiferayPropertiesDeprecationInfoHolder newPropertyName(String newPropertyName) {
+		this.myNewPropertyName = newPropertyName;
+
+		return this;
+	}
+	public LiferayPropertiesDeprecationInfoHolder newModuleName(String newModuleName) {
+		this.myNewModuleName = newModuleName;
+
+		return this;
+	}
+
+	@Override
+	protected String getMessage() {
+		String message = super.getMessage();
+
+		message = StringUtil.replace(message, "${propertyName}", myPropertyName);
+
+		if (myNewPropertyName != null) {
+			message = StringUtil.replace(message, "${newPropertyName}", myNewPropertyName);
+		}
+
+		if (myNewModuleName != null) {
+			message = StringUtil.replace(message, "${newModuleName}", myNewModuleName);
+		}
+
+		return message;
+	}
+
 	public void visitProperty(ProblemsHolder holder, PropertyImpl property) {
 		if (
 				(isApplicableLiferayVersion(property)) &&
+				(isApplicableFile(property)) &&
 				(StringUtil.isNotEmpty(myPropertyName)) &&
 				(
 					(Objects.equals(myPropertyName, property.getName())) ||
@@ -107,5 +172,15 @@ public class LiferayPropertiesDeprecationInfoHolder extends AbstractLiferayInspe
 		}
 
 		return false;
+	}
+
+	private boolean isApplicableFile(PsiElement psiElement) {
+		if (StringUtil.isEmpty(myFilenamePrefix)) {
+			return true;
+		}
+
+		PsiFile psiFile = psiElement.getContainingFile().getOriginalFile();
+
+		return (psiFile.getName().startsWith(myFilenamePrefix));
 	}
 }

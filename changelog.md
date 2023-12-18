@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 ## 0.0.18
 - Feature: add freemarker taglib deprecation inspections
 - Feature: add java, jsp, groovy code deprecation inspections
-- Feature: add property file deprecation inspections
+- Feature: add property file deprecation inspections (portal-ext.properties, system-ext.properties, liferay-plugin-package.properties)
 - Feature: add changes from LPS-112464 (className changed to cssClass in Clay taglibs)
 - Feature: add in-depth validations of Poshi Scripts (using external Poshi Validation)
 - Feature: check if service-builder and rest-builder maven plugins match the used liferay version

@@ -53,11 +53,15 @@ public abstract class AbstractLiferayInspectionInfoHolder<T> {
 		return (T)this;
 	}
 
+	protected String getMessage() {
+		return myMessage;
+	}
+
 	protected String getDeprecationMessage() {
 		if (StringUtil.isNotEmpty(myTicket)) {
-			return "<html><body>" + myMessage + " (see <a href=\"https://liferay.atlassian.net/browse/" + myTicket + "\">" + myTicket + "</a>)</body></html>";
+			return "<html><body>" + getMessage() + " (see <a href=\"https://liferay.atlassian.net/browse/" + myTicket + "\">" + myTicket + "</a>)</body></html>";
 		} else {
-			return myMessage;
+			return getMessage();
 		}
 	}
 

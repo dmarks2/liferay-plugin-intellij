@@ -63,4 +63,103 @@ public class LiferayPropertiesDeprecationInspectionTest extends BasePlatformTest
 		myFixture.checkResultByFile("liferay-plugin-package-expected.properties");
 	}
 
+	public void testSystemPropertiesObsolete() {
+		myFixture.configureByFiles(
+				"system-ext.properties"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Remove Property")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("system-ext-expected.properties");
+	}
+
+	public void testSystemPropertiesMigration() {
+		myFixture.configureByFiles(
+				"system-migrated.properties"
+		);
+
+		myFixture.checkHighlighting();
+	}
+
+	public void testSystemPropertiesRename() {
+		myFixture.configureByFiles(
+				"system-renamed.properties"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Rename Property")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("system-renamed-expected.properties");
+	}
+
+	public void testSystemPropertiesModularized() {
+		myFixture.configureByFiles(
+				"system-modularized.properties"
+		);
+
+		myFixture.checkHighlighting();
+	}
+
+	public void testPortalPropertiesMigration() {
+		myFixture.configureByFiles(
+				"portal-migrated.properties"
+		);
+
+		myFixture.checkHighlighting();
+	}
+
+	public void testPortalPropertiesRename() {
+		myFixture.configureByFiles(
+				"portal-renamed.properties"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Rename Property")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("portal-renamed-expected.properties");
+	}
+
+	public void testPortalPropertiesObsolete() {
+		myFixture.configureByFiles(
+				"portal-obsolete.properties"
+		);
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Remove Property")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("portal-obsolete-expected.properties");
+	}
+
+	public void testPortalPropertiesModularized() {
+		myFixture.configureByFiles(
+				"portal-modularized.properties"
+		);
+
+		myFixture.checkHighlighting();
+	}
 }
