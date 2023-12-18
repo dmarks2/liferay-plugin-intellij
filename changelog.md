@@ -16,7 +16,7 @@ All notable changes to this project will be documented in this file.
 ## 0.0.17
 - Feature: Code completion features for client-extensions.yaml
 - Feature: Code completion features for rest-config.yaml
-- Feature: Code completion and references for JSP taglibs refering to javascript modules (e.g. react:component)
+- Feature: Code completion and references for JSP taglibs referring to javascript modules (e.g. react:component)
 - Feature: Add support for date-time in data-lfr-editable-type (see LPS-154775)
 - Feature: Add date_time field type for web content structures (see LPS-178624)
 - Feature: show deprecation warnings for deprecated or removed taglibs or attributes in JSP files
