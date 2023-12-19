@@ -39,6 +39,7 @@ def tempDir = "$buildDir/tmp"
 test {
     testLogging {
         exceptionFormat = 'full'
+        showStandardStreams = true
     }
     scanForTestClasses false
     include "**/*Test.class"
