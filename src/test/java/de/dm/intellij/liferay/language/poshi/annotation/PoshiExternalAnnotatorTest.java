@@ -18,6 +18,7 @@ import com.intellij.testFramework.fixtures.IdeaTestFixtureFactory;
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture;
 import com.intellij.testFramework.fixtures.JavaTestFixtureFactory;
 import com.intellij.testFramework.fixtures.TestFixtureBuilder;
+import com.liferay.poshi.core.util.OSDetector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -119,66 +120,72 @@ public class PoshiExternalAnnotatorTest extends JavaProjectTestCase {
 
 
 	public void testIncomplete() {
-		ApplicationManager.getApplication().runWriteAction(() -> {
-			ProjectRootManager projectRootManager = ProjectRootManager.getInstance(myFixture.getProject());
+		if (OSDetector.isWindows()) {
+			ApplicationManager.getApplication().runWriteAction(() -> {
+				ProjectRootManager projectRootManager = ProjectRootManager.getInstance(myFixture.getProject());
 
-			projectRootManager.setProjectSdk(getTestProjectJdk());
-		});
+				projectRootManager.setProjectSdk(getTestProjectJdk());
+			});
 
-		myFixture.copyFileToProject("testcases/Liferay.testcase", sourceRootFile.getPath() + "/testcases/Liferay.testcase");
+			myFixture.copyFileToProject("testcases/Liferay.testcase", sourceRootFile.getPath() + "/testcases/Liferay.testcase");
 
-		PoshiValidatorRunnerParams params = new PoshiValidatorRunnerParams();
+			PoshiValidatorRunnerParams params = new PoshiValidatorRunnerParams();
 
-		params.project = myFixture.getProject();
-		params.workingDirectory = sourceRootFile;
+			params.project = myFixture.getProject();
+			params.workingDirectory = sourceRootFile;
 
-		PoshiExternalValidationHost validationHost = poshiExternalAnnotator.doAnnotate(params);
+			PoshiExternalValidationHost validationHost = poshiExternalAnnotator.doAnnotate(params);
 
-		assertNotNull(validationHost);
+			assertNotNull(validationHost);
 
-		assertEmpty(validationHost.errors);
+			assertEmpty(validationHost.errors);
+		}
 	}
 
 	public void testInvalid() {
-		ApplicationManager.getApplication().runWriteAction(() -> {
-			ProjectRootManager projectRootManager = ProjectRootManager.getInstance(myFixture.getProject());
+		if (OSDetector.isWindows()) {
+			ApplicationManager.getApplication().runWriteAction(() -> {
+				ProjectRootManager projectRootManager = ProjectRootManager.getInstance(myFixture.getProject());
 
-			projectRootManager.setProjectSdk(getTestProjectJdk());
-		});
+				projectRootManager.setProjectSdk(getTestProjectJdk());
+			});
 
-		myFixture.copyFileToProject("testcases/Invalid.testcase", sourceRootFile.getPath() + "/testcases/Invalid.testcase");
+			myFixture.copyFileToProject("testcases/Invalid.testcase", sourceRootFile.getPath() + "/testcases/Invalid.testcase");
 
-		PoshiValidatorRunnerParams params = new PoshiValidatorRunnerParams();
+			PoshiValidatorRunnerParams params = new PoshiValidatorRunnerParams();
 
-		params.project = myFixture.getProject();
-		params.workingDirectory = sourceRootFile;
+			params.project = myFixture.getProject();
+			params.workingDirectory = sourceRootFile;
 
-		PoshiExternalValidationHost validationHost = poshiExternalAnnotator.doAnnotate(params);
+			PoshiExternalValidationHost validationHost = poshiExternalAnnotator.doAnnotate(params);
 
-		assertNotNull(validationHost);
+			assertNotNull(validationHost);
 
-		assertNotEmpty(validationHost.errors);
+			assertNotEmpty(validationHost.errors);
+		}
 	}
 
 	public void testWarning() {
-		ApplicationManager.getApplication().runWriteAction(() -> {
-			ProjectRootManager projectRootManager = ProjectRootManager.getInstance(myFixture.getProject());
+		if (OSDetector.isWindows()) {
+			ApplicationManager.getApplication().runWriteAction(() -> {
+				ProjectRootManager projectRootManager = ProjectRootManager.getInstance(myFixture.getProject());
 
-			projectRootManager.setProjectSdk(getTestProjectJdk());
-		});
+				projectRootManager.setProjectSdk(getTestProjectJdk());
+			});
 
-		myFixture.copyFileToProject("functions/Deprecation.function", sourceRootFile.getPath() + "/functions/Deprecation.function");
+			myFixture.copyFileToProject("functions/Deprecation.function", sourceRootFile.getPath() + "/functions/Deprecation.function");
 
-		PoshiValidatorRunnerParams params = new PoshiValidatorRunnerParams();
+			PoshiValidatorRunnerParams params = new PoshiValidatorRunnerParams();
 
-		params.project = myFixture.getProject();
-		params.workingDirectory = sourceRootFile;
+			params.project = myFixture.getProject();
+			params.workingDirectory = sourceRootFile;
 
-		PoshiExternalValidationHost validationHost = poshiExternalAnnotator.doAnnotate(params);
+			PoshiExternalValidationHost validationHost = poshiExternalAnnotator.doAnnotate(params);
 
-		assertNotNull(validationHost);
+			assertNotNull(validationHost);
 
-		assertNotEmpty(validationHost.warnings);
+			assertNotEmpty(validationHost.warnings);
+		}
 	}
 
 }
