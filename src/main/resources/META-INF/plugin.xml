@@ -6,7 +6,7 @@
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
-    <idea-version since-build="231" />
+    <idea-version since-build="233" />
 
     <description><![CDATA[
         <p>This plugin adds some features for developing Liferay modules. The following topics have been improved so far</p>
@@ -35,6 +35,7 @@
             <li>Feature: check if service-builder and rest-builder maven plugins match the used liferay version</li>
             <li>Feature: check if portal-web dependency matches the used liferay version</li>
             <li>Bugfix: fix encoding when executing Poshi Scripts (UTF-8 instead of system dependant encoding)</li>
+            <li>Change: Update support for IntelliJ 2023.3, dropped support for older versions</li>
         </ul>
 
         <p>Version 0.0.17</p>

@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Feature: check if service-builder and rest-builder maven plugins match the used liferay version
 - Feature: check if portal-web dependency matches the used liferay version
 - Bugfix: fix encoding when executing Poshi Scripts (UTF-8 instead of system dependant encoding)
+- Change: Update support for IntelliJ 2023.3, dropped support for older versions
 
 ## 0.0.17
 - Feature: Code completion features for client-extensions.yaml

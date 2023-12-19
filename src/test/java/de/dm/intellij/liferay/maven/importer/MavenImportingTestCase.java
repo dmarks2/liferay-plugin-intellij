@@ -40,6 +40,7 @@ import org.jetbrains.idea.maven.project.MavenGeneralSettings;
 import org.jetbrains.idea.maven.project.MavenProject;
 import org.jetbrains.idea.maven.project.MavenProjectsManager;
 import org.jetbrains.idea.maven.project.MavenProjectsTree;
+import org.jetbrains.idea.maven.project.StaticResolvedMavenHomeType;
 import org.jetbrains.idea.maven.server.MavenServerManager;
 import org.jetbrains.idea.maven.utils.MavenWslUtil;
 import org.jetbrains.jps.model.java.JavaResourceRootType;
@@ -64,7 +65,7 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     super.setUp();
 
     MavenGeneralSettings mavenGeneralSettings = getMavenGeneralSettings();
-    File settingsFile =  MavenWslUtil.getGlobalSettings(myProject, mavenGeneralSettings.getMavenHome(), mavenGeneralSettings.getMavenConfig());
+    File settingsFile =  MavenWslUtil.getGlobalSettings(myProject, (StaticResolvedMavenHomeType) mavenGeneralSettings.getMavenHomeType(), mavenGeneralSettings.getMavenConfig());
 
     if (settingsFile != null) {
       VfsRootAccess.allowRootAccess(getTestRootDisposable(), settingsFile.getAbsolutePath());
@@ -300,8 +301,6 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     readProjects(files, profiles);
 
     UIUtil.invokeAndWaitIfNeeded((Runnable)() -> {
-      myProjectsManager.waitForResolvingCompletion();
-      myProjectsManager.scheduleImportInTests(files);
       myProjectsManager.importProjects();
     });
 
@@ -317,10 +316,6 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     waitForReadingCompletion();
   }
 
-  protected void updateProjectsAndImport(VirtualFile... files) {
-    readProjects(files);
-    myProjectsManager.performScheduledImportInTests();
-  }
 
   protected void initProjectsManager(boolean enableEventHandling) {
     myProjectsManager.initForTests();
@@ -328,9 +323,6 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     if (enableEventHandling) myProjectsManager.listenForExternalChanges();
   }
 
-  protected void scheduleResolveAll() {
-    myProjectsManager.scheduleResolveAllInTests();
-  }
 
   protected void waitForReadingCompletion() {
     UIUtil.invokeAndWaitIfNeeded((Runnable)() -> {
@@ -356,26 +348,6 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     waitForReadingCompletion();
   }
 
-  protected void resolveDependenciesAndImport() {
-    UIUtil.invokeAndWaitIfNeeded((Runnable)() -> {
-      myProjectsManager.waitForResolvingCompletion();
-      myProjectsManager.performScheduledImportInTests();
-    });
-  }
-
-  protected void resolveFoldersAndImport() {
-    myProjectsManager.scheduleFoldersResolveForAllProjects();
-    myProjectsManager.waitForFoldersResolvingCompletion();
-    UIUtil.invokeAndWaitIfNeeded((Runnable)() -> myProjectsManager.performScheduledImportInTests());
-  }
-
-  protected void resolvePlugins() {
-    myProjectsManager.waitForPluginsResolvingCompletion();
-  }
-
-  protected void performPostImportTasks() {
-    myProjectsManager.waitForPostImportTasksCompletion();
-  }
 
   protected void removeFromLocalRepository(String relativePath) {
     if (SystemInfo.isWindows) {

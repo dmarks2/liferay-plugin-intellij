@@ -13,6 +13,7 @@ import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.velocity.psi.VtlLightVariable;
 import com.intellij.velocity.psi.VtlVariable;
+import com.intellij.velocity.psi.VtlVariableType;
 import com.intellij.velocity.psi.files.VtlFile;
 import de.dm.intellij.liferay.language.velocity.CustomVtlVariable;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
@@ -72,7 +73,7 @@ public class ThemeSettingsVtlVariable extends VtlLightVariable {
     }
 
     @Override
-    public PsiType getPsiType() {
+    public VtlVariableType getPsiType() {
         return null;
     }
 

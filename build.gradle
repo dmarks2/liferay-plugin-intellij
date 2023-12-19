@@ -7,7 +7,7 @@ buildscript {
 }
 
 plugins {
-    id "org.jetbrains.intellij" version "1.15.0"
+    id "org.jetbrains.intellij" version "1.16.1"
     id 'de.undercouch.download' version '5.5.0'
 }
 
@@ -35,13 +35,11 @@ tasks.withType(JavaCompile).configureEach {
 
 def generatedResources = "$buildDir/generated-resources"
 def tempDir = "$buildDir/tmp"
-def mockDir = "$buildDir/mock"
 
 test {
     testLogging {
         exceptionFormat = 'full'
     }
-    systemProperty "idea.home.path", mockDir
     scanForTestClasses false
     include "**/*Test.class"
 }
@@ -55,7 +53,7 @@ sourceSets {
             srcDirs = ['src/main/resources']
         }
 
-        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'generateLiferayPortalPropertiesFiles', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions', 'downloadIntelliJCommunityMockJDK11', "downloadSchemaDefinitions", "downloadPoshiGrammar", "downloadPoshi"])
+        output.dir(generatedResources, builtBy: ['generateLiferayTemplateHelperFiles', 'generateLiferayDefinitions', 'generateLiferayPortalPropertiesFiles', 'unzipCompass0122Stylesheets', 'unzipCompass0122SassExtensions', 'generateTaglibDefinitions', "downloadSchemaDefinitions", "downloadPoshiGrammar", "downloadPoshi"])
     }
     poshi {
         java {
@@ -116,7 +114,8 @@ intellij {
 //    version.set("IU-2021.3")
 //    version.set("IU-2022.1.2")
 //    version.set("IU-2022.3")
-    version.set("IU-2023.1")
+//    version.set("IU-2023.1")
+    version.set("IU-2023.3")
     type.set('IU')
     pluginName.set('Liferay IntelliJ Plugin')
     plugins.set([
@@ -652,34 +651,6 @@ tasks.register('unzipCompass0122SassExtensions', Copy) {
         fcp.path = fcp.path.replaceFirst("^compass-0.12.2/lib/compass/sass_extensions", '')
     }
     includeEmptyDirs false
-}
-
-tasks.register('downloadIntelliJCommunityMockJDK11') {
-    doLast {
-        new File(mockDir, "bin").mkdirs();
-
-        def target = new File(mockDir, "java/mockJDK-11/jre/lib");
-
-        target.mkdirs();
-
-        download.run {
-            src 'https://raw.githubusercontent.com/JetBrains/intellij-community/master/java/mockJDK-11/jre/lib/annotations.jar'
-            dest new File(target, "annotations.jar")
-            acceptAnyCertificate true
-            overwrite false
-            onlyIfModified true
-            useETag "all"
-        }
-
-        download.run {
-            src 'https://raw.githubusercontent.com/JetBrains/intellij-community/master/java/mockJDK-11/jre/lib/rt.jar'
-            dest new File(target, "rt.jar")
-            acceptAnyCertificate true
-            overwrite false
-            onlyIfModified true
-            useETag "all"
-        }
-    }
 }
 
 tasks.register('downloadSchemaDefinitions') {

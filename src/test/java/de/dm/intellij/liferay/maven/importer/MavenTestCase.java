@@ -34,6 +34,7 @@ import org.jetbrains.idea.maven.project.MavenImportingSettings;
 import org.jetbrains.idea.maven.project.MavenProjectsManager;
 import org.jetbrains.idea.maven.project.MavenWorkspaceSettings;
 import org.jetbrains.idea.maven.project.MavenWorkspaceSettingsComponent;
+import org.jetbrains.idea.maven.project.StaticResolvedMavenHomeType;
 import org.jetbrains.idea.maven.server.MavenServerManager;
 import org.jetbrains.idea.maven.utils.MavenWslUtil;
 
@@ -115,7 +116,6 @@ public abstract class MavenTestCase extends UsefulTestCase {
   protected void tearDown() throws Exception {
     new RunAll(
       () -> MavenServerManager.getInstance().shutdown(true),
-      () -> MavenArtifactDownloader.awaitQuiescence(100, TimeUnit.SECONDS),
       () -> EdtTestUtil.runInEdtAndWait(() -> tearDownFixtures()),
       () -> myProject = null,
       () -> super.tearDown(),
@@ -238,7 +238,7 @@ public abstract class MavenTestCase extends UsefulTestCase {
 
   protected File getRepositoryFile() {
     MavenGeneralSettings mavenGeneralSettings = getMavenGeneralSettings();
-    return MavenWslUtil.getLocalRepo(myProject, mavenGeneralSettings.getLocalRepository(), mavenGeneralSettings.getMavenHome(), mavenGeneralSettings.getUserSettingsFile(), mavenGeneralSettings.getMavenConfig());
+    return MavenWslUtil.getLocalRepo(myProject, mavenGeneralSettings.getLocalRepository(), (StaticResolvedMavenHomeType) mavenGeneralSettings.getMavenHomeType(), mavenGeneralSettings.getUserSettingsFile(), mavenGeneralSettings.getMavenConfig());
   }
 
   protected void setRepositoryPath(String path) {

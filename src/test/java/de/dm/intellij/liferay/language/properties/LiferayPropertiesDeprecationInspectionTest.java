@@ -40,6 +40,8 @@ public class LiferayPropertiesDeprecationInspectionTest extends BasePlatformTest
 		for (IntentionAction quickFix : allQuickFixes) {
 			if (quickFix.getFamilyName().startsWith("Remove Property")) {
 				myFixture.launchAction(quickFix);
+
+				break;
 			}
 		}
 
@@ -57,6 +59,8 @@ public class LiferayPropertiesDeprecationInspectionTest extends BasePlatformTest
 		for (IntentionAction quickFix : allQuickFixes) {
 			if (quickFix.getFamilyName().startsWith("Update Value")) {
 				myFixture.launchAction(quickFix);
+
+				break;
 			}
 		}
 
@@ -74,6 +78,8 @@ public class LiferayPropertiesDeprecationInspectionTest extends BasePlatformTest
 		for (IntentionAction quickFix : allQuickFixes) {
 			if (quickFix.getFamilyName().startsWith("Remove Property")) {
 				myFixture.launchAction(quickFix);
+
+				break;
 			}
 		}
 
@@ -99,6 +105,8 @@ public class LiferayPropertiesDeprecationInspectionTest extends BasePlatformTest
 		for (IntentionAction quickFix : allQuickFixes) {
 			if (quickFix.getFamilyName().startsWith("Rename Property")) {
 				myFixture.launchAction(quickFix);
+
+				break;
 			}
 		}
 
@@ -132,6 +140,8 @@ public class LiferayPropertiesDeprecationInspectionTest extends BasePlatformTest
 		for (IntentionAction quickFix : allQuickFixes) {
 			if (quickFix.getFamilyName().startsWith("Rename Property")) {
 				myFixture.launchAction(quickFix);
+
+				break;
 			}
 		}
 
@@ -149,6 +159,8 @@ public class LiferayPropertiesDeprecationInspectionTest extends BasePlatformTest
 		for (IntentionAction quickFix : allQuickFixes) {
 			if (quickFix.getFamilyName().startsWith("Remove Property")) {
 				myFixture.launchAction(quickFix);
+
+				break;
 			}
 		}
 
