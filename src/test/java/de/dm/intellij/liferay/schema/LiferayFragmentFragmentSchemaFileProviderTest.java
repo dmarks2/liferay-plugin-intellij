@@ -25,6 +25,8 @@ public class LiferayFragmentFragmentSchemaFileProviderTest extends BasePlatformT
         myFixture.configureByFiles("fragment.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("react"));
     }
 }

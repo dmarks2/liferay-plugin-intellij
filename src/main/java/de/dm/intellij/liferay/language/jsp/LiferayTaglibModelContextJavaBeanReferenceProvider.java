@@ -32,9 +32,8 @@ public class LiferayTaglibModelContextJavaBeanReferenceProvider extends Abstract
     private static PsiElement getPrevSiblingOrParent(PsiElement element, String classNameElementNamespace, String classNameElementLocalName) {
         PsiElement sibling = element.getPrevSibling();
         while (sibling != null) {
-            if (sibling instanceof XmlTag) {
-                XmlTag xmlTag = (XmlTag)sibling;
-                String namespace = xmlTag.getNamespace();
+            if (sibling instanceof XmlTag xmlTag) {
+				String namespace = xmlTag.getNamespace();
                 String localName = xmlTag.getLocalName();
 
                 if (classNameElementNamespace.equals(namespace)) {

@@ -18,6 +18,7 @@ public class PoshiPathFileXPathInjectorTest extends BasePlatformTestCase {
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue("<td> inside Poshi path file should support XPath expressions like text()", strings.contains("text()"));
     }
 }

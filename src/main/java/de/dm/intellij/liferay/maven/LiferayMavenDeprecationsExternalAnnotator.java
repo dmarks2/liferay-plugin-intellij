@@ -31,7 +31,6 @@ import org.jetbrains.idea.maven.dom.model.MavenDomProjectModel;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -55,7 +54,7 @@ public class LiferayMavenDeprecationsExternalAnnotator extends ExternalAnnotator
 
 		if (! (MavenDomUtil.isMavenFile(file))) {
 			return null;
-		};
+		}
 
 		if (log.isDebugEnabled()) {
 			log.debug("Examining " + file.getName());
@@ -225,7 +224,7 @@ public class LiferayMavenDeprecationsExternalAnnotator extends ExternalAnnotator
 	}
 
 	private static String getServiceBuilderVersion(String liferayVersion) {
-		//service builder found in 7.4 on github only?
+		//service builder found in 7.4 on GitHub only?
 		if (
 				(liferayVersion.startsWith("7.4"))
 		) {
@@ -236,7 +235,7 @@ public class LiferayMavenDeprecationsExternalAnnotator extends ExternalAnnotator
 	}
 
 	private static String getRestBuilderVersion(String liferayVersion) {
-		//rest builder found in 7.4 on github only?
+		//rest builder found in 7.4 on GitHub only?
 		if (
 				(liferayVersion.startsWith("7.4"))
 		) {

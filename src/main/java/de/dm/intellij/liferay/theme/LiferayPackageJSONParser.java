@@ -23,7 +23,6 @@ import java.util.Collections;
 
 /**
  * Extracts parent Theme name from package.json.
- *
  * Extracts build and dist directories from package.json and add them as excluded directories for the IntelliJ Module.
  */
 public class LiferayPackageJSONParser extends FileChangeListenerBase {

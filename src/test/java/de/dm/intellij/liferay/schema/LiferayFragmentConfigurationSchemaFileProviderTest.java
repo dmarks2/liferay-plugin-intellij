@@ -22,6 +22,8 @@ public class LiferayFragmentConfigurationSchemaFileProviderTest extends BasePlat
         myFixture.configureByFiles("configuration.json", "fragment.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("\"fieldSets\""));
     }
 }

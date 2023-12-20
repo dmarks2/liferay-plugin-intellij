@@ -25,6 +25,8 @@ public class MetaConfigurationFindUsagesProviderTest extends LightJavaCodeInsigh
 
         PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
 
+        assertNotNull(element);
+
         UsageTarget[] usageTargets = UsageTargetUtil.findUsageTargets(element);
 
         assertTrue(usageTargets.length > 0);
@@ -35,6 +37,6 @@ public class MetaConfigurationFindUsagesProviderTest extends LightJavaCodeInsigh
 
         Collection<UsageInfo> usages = myFixture.findUsages(element);
 
-        assertTrue(usages.size() > 0);
+		assertFalse(usages.isEmpty());
     }
 }

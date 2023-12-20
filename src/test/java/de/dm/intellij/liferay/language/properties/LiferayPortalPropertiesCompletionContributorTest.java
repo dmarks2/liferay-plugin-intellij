@@ -33,6 +33,8 @@ public class LiferayPortalPropertiesCompletionContributorTest extends BasePlatfo
         myFixture.configureByFiles("portal-ext.properties");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("admin.email.from.name"));
     }
 

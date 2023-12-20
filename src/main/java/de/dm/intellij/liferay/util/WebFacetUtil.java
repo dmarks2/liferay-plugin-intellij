@@ -8,7 +8,6 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
-import de.dm.intellij.liferay.language.freemarker.runner.FreemarkerAttachBreakpointHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;

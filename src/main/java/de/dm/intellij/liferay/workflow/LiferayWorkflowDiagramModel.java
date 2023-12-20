@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class LiferayWorkflowDiagramModel extends DiagramDataModel<XmlTag> {
 
-    private Map<String, LiferayWorkflowStateNode> states;
+    private final Map<String, LiferayWorkflowStateNode> states;
 
     public LiferayWorkflowDiagramModel(Project project, DiagramProvider<XmlTag> provider, XmlDocument xmlDocument) {
         super(project, provider);
@@ -41,7 +41,7 @@ public class LiferayWorkflowDiagramModel extends DiagramDataModel<XmlTag> {
 
     @NotNull
     @Override
-    public String getNodeName(DiagramNode<XmlTag> diagramNode) {
+    public String getNodeName(@NotNull DiagramNode<XmlTag> diagramNode) {
         if (diagramNode instanceof LiferayWorkflowStateNode) {
             return ((LiferayWorkflowStateNode)diagramNode).getXmlTag().getValue().getText();
         }

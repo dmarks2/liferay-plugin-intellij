@@ -8,7 +8,6 @@ import de.dm.intellij.bndtools.psi.BndHeaderValue;
 import de.dm.intellij.bndtools.psi.BndHeaderValuePart;
 import de.dm.intellij.bndtools.psi.Clause;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class BundleVersionParser extends BndHeaderParser {
 
@@ -18,9 +17,8 @@ public class BundleVersionParser extends BndHeaderParser {
     public boolean annotate(@NotNull BndHeader bndHeader, @NotNull AnnotationHolder annotationHolder) {
         BndHeaderValue value = bndHeader.getBndHeaderValue();
 
-        if (value instanceof Clause) {
-            Clause clause = (Clause)value;
-            value = clause.getValue();
+        if (value instanceof Clause clause) {
+			value = clause.getValue();
         }
 
         if (value instanceof BndHeaderValuePart) {
@@ -43,27 +41,6 @@ public class BundleVersionParser extends BndHeaderParser {
         }
 
         return false;
-    }
-
-    @Nullable
-    @Override
-    public Object getConvertedValue(@NotNull BndHeader bndHeader) {
-        BndHeaderValue value = bndHeader.getBndHeaderValue();
-
-        if (value instanceof Clause) {
-            Clause clause = (Clause)value;
-            value = clause.getValue();
-        }
-
-        if (value instanceof BndHeaderValuePart) {
-            try {
-                return new OsgiVersion(value.getUnwrappedText());
-            }
-            catch (IllegalArgumentException iae) {
-            }
-        }
-
-        return null;
     }
 
     private BundleVersionParser() {

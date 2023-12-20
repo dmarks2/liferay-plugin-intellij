@@ -71,12 +71,9 @@ public class LiferayTaglibCSSClassAttributeReferenceContributor extends PsiRefer
                         PsiElement psiElement = (PsiElement)element;
                         if (CssSupportLoader.isInFileThatSupportsCssResolve(psiElement)) {
                             PsiElement parent = psiElement.getParent();
-                            if (parent instanceof XmlAttribute) {
-                                XmlAttribute xmlAttribute = (XmlAttribute)parent;
-                                String attrName = xmlAttribute.getName();
-                                if (isSuitableAttribute(attrName, xmlAttribute)) {
-                                    return true;
-                                }
+                            if (parent instanceof XmlAttribute xmlAttribute) {
+								String attrName = xmlAttribute.getName();
+								return isSuitableAttribute(attrName, xmlAttribute);
                             }
                         }
 
@@ -108,7 +105,7 @@ public class LiferayTaglibCSSClassAttributeReferenceContributor extends PsiRefer
                 return false;
             }
         };
-        XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, ATTRIBUTE_NAMES.toArray(new String[ATTRIBUTE_NAMES.size()]), htmlClassOrIdReferenceProvider.getFilter(), false, htmlClassOrIdReferenceProvider);
+        XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, ATTRIBUTE_NAMES.toArray(new String[0]), htmlClassOrIdReferenceProvider.getFilter(), false, htmlClassOrIdReferenceProvider);
     }
 
 }

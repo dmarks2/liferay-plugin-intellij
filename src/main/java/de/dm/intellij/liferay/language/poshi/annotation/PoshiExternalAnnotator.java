@@ -12,7 +12,6 @@ import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import de.dm.intellij.liferay.language.poshi.PoshiFileType;
-import de.dm.intellij.liferay.language.poshi.PoshiPathFileType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

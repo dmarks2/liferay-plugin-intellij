@@ -21,8 +21,8 @@ public class LiferaySassFileReferenceHelper extends FileReferenceHelper {
 
     @NotNull
     @Override
-    public Collection<PsiFileSystemItem> getContexts(Project project, @NotNull VirtualFile file) {
-        final Collection<PsiFileSystemItem> result = new ArrayList<PsiFileSystemItem>();
+    public Collection<PsiFileSystemItem> getContexts(@NotNull Project project, @NotNull VirtualFile file) {
+        final Collection<PsiFileSystemItem> result = new ArrayList<>();
 
         final Module module = ModuleUtil.findModuleForFile(file, project);
         if (module != null) {
@@ -32,7 +32,7 @@ public class LiferaySassFileReferenceHelper extends FileReferenceHelper {
             String parentTheme = LiferayModuleComponent.getParentTheme(module);
             float liferayVersion = LiferayModuleComponent.getPortalMajorVersion(module);
 
-            if ( (parentTheme != null) && (parentTheme.trim().length() > 0) ) {
+            if ( (parentTheme != null) && (!parentTheme.trim().isEmpty()) ) {
                 if (liferayVersion == LiferayVersions.LIFERAY_VERSION_6_2) {
                     if (LiferayThemes.THEME_UNSTYLED_UNDERSCORE.equals(parentTheme)) {
                         LiferayFileUtil.addLibraryRoot(result, this, module, "com.liferay.portal:portal-web", "html/themes/_unstyled/css");
@@ -69,7 +69,7 @@ public class LiferaySassFileReferenceHelper extends FileReferenceHelper {
     }
 
     @Override
-    public boolean isMine(Project project, @NotNull VirtualFile file) {
+    public boolean isMine(@NotNull Project project, @NotNull VirtualFile file) {
         return (
                 SCSSFileType.SCSS.equals(file.getFileType()) ||
                 CssFileType.INSTANCE.equals(file.getFileType())

@@ -31,15 +31,15 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
 
     private final static Logger log = Logger.getInstance(FreemarkerAttachDebugProcess.class);
 
-    private FreemarkerAttachDebugConfiguration freemarkerAttachDebugConfiguration;
-    private Debugger debugger;
-    private Object debuggerListenerId;
+    private final FreemarkerAttachDebugConfiguration freemarkerAttachDebugConfiguration;
+    private final Debugger debugger;
+    private final Object debuggerListenerId;
 
-    private FreemarkerAttachBreakpointHandler freemarkerAttachBreakpointHandler;
+    private final FreemarkerAttachBreakpointHandler freemarkerAttachBreakpointHandler;
 
-    private ConsoleView executionConsole;
+    private final ConsoleView executionConsole;
 
-    private XDebuggerEditorsProvider editorsProvider = new FreemarkerAttachDebugEditorsProvider();
+    private final XDebuggerEditorsProvider editorsProvider = new FreemarkerAttachDebugEditorsProvider();
 
     private Breakpoint steppingBreakpoint;
 
@@ -80,36 +80,33 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
                             try {
                                 debuggedEnvironment.resume();
                             } catch (RemoteException e1) {
-                                e1.printStackTrace();
+                               log.error(e1.getMessage(), e1);
                             }
                         }
                     );
                 }
             } else {
                 VirtualFile virtualFile = getVirtualFileFromTemplateName(templateName);
-                if (virtualFile != null) {
-                    if (steppingBreakpoint != null) {
-                        debugger.removeBreakpoint(steppingBreakpoint);
-                        steppingBreakpoint = null;
-                    }
+				if (steppingBreakpoint != null) {
+					debugger.removeBreakpoint(steppingBreakpoint);
+					steppingBreakpoint = null;
+				}
 
-                    XSourcePosition sourcePosition = XDebuggerUtil.getInstance().createPosition(virtualFile, (line - 1));
+                if (virtualFile != null) {
+
+					XSourcePosition sourcePosition = XDebuggerUtil.getInstance().createPosition(virtualFile, (line - 1));
 
                     FreemarkerAttachSuspendContext freemarkerAttachSuspendContext = new FreemarkerAttachSuspendContext(debuggedEnvironment, sourcePosition);
 
                     getSession().positionReached(freemarkerAttachSuspendContext);
                 } else {
-                    if (steppingBreakpoint != null) {
-                        debugger.removeBreakpoint(steppingBreakpoint);
-                        steppingBreakpoint = null;
-                    }
 
-                    ApplicationManager.getApplication().invokeLater(
+					ApplicationManager.getApplication().invokeLater(
                         () -> {
                             try {
                                 debuggedEnvironment.resume();
                             } catch (RemoteException e1) {
-                                e1.printStackTrace();
+                                log.error(e1.getMessage(), e1);
                             }
                         }
                     );
@@ -130,9 +127,8 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
         return executionConsole;
     }
 
-    @NotNull
     @Override
-    public XBreakpointHandler<?>[] getBreakpointHandlers() {
+    public XBreakpointHandler<?> @NotNull [] getBreakpointHandlers() {
         return new XBreakpointHandler[]{freemarkerAttachBreakpointHandler};
     }
 
@@ -140,18 +136,20 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
     public void resume(@Nullable XSuspendContext context) {
         FreemarkerAttachSuspendContext freemarkerAttachSuspendContext = (FreemarkerAttachSuspendContext) context;
 
-        try {
-            DebuggedEnvironment debuggedEnvironment = freemarkerAttachSuspendContext.getDebuggedEnvironment();
+        if (freemarkerAttachSuspendContext != null) {
+            try {
+                DebuggedEnvironment debuggedEnvironment = freemarkerAttachSuspendContext.getDebuggedEnvironment();
 
-            if (steppingBreakpoint != null) {
-                debugger.removeBreakpoint(steppingBreakpoint);
+                if (steppingBreakpoint != null) {
+                    debugger.removeBreakpoint(steppingBreakpoint);
 
-                steppingBreakpoint = null;
+                    steppingBreakpoint = null;
+                }
+
+                debuggedEnvironment.resume();
+            } catch (RemoteException e) {
+                log.error(e.getMessage(), e);
             }
-
-            debuggedEnvironment.resume();
-        } catch (RemoteException e) {
-            e.printStackTrace();
         }
     }
 
@@ -167,13 +165,17 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
             this.debugger.removeDebuggerListener(debuggerListenerId);
             this.debugger.removeBreakpoints();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
     }
 
     @Override
     public void startStepOver(@Nullable XSuspendContext context) {
         FreemarkerAttachSuspendContext freemarkerAttachSuspendContext = (FreemarkerAttachSuspendContext) context;
+
+        if (freemarkerAttachSuspendContext == null) {
+             return;
+        }
 
         XSourcePosition sourcePosition = freemarkerAttachSuspendContext.getSourcePosition();
         VirtualFile virtualFile = sourcePosition.getFile();
@@ -189,7 +191,7 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
 
                 steppingBreakpoint = null;
             } catch (RemoteException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(), e);
             }
         }
 
@@ -223,7 +225,7 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
 
                 resume(context);
             } catch (RemoteException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(), e);
 
                 resume(context);
             }
@@ -246,6 +248,10 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
     public void runToPosition(@NotNull XSourcePosition position, @Nullable XSuspendContext context) {
         FreemarkerAttachSuspendContext freemarkerAttachSuspendContext = (FreemarkerAttachSuspendContext)context;
 
+        if (freemarkerAttachSuspendContext == null) {
+            return;
+        }
+
         try {
             if (steppingBreakpoint != null) {
                 debugger.removeBreakpoint(steppingBreakpoint);
@@ -253,7 +259,7 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
                 steppingBreakpoint = null;
             }
         } catch (RemoteException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
 
         VirtualFile virtualFile = position.getFile();
@@ -286,9 +292,7 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
     }
 
     private VirtualFile getVirtualFileFromTemplateName(String templateName) {
-        VirtualFile virtualFile = freemarkerAttachBreakpointHandler.getVirtualFileByTemplateName(templateName);
-
-        return virtualFile;
+        return freemarkerAttachBreakpointHandler.getVirtualFileByTemplateName(templateName);
     }
 
     public FreemarkerAttachDebugConfiguration getFreemarkerAttachDebugConfiguration() {
@@ -298,13 +302,11 @@ public class FreemarkerAttachDebugProcess extends XDebugProcess {
     @Override
     public String getCurrentStateMessage() {
         try {
-            Collection suspendedEnvironments = debugger.getSuspendedEnvironments();
-
-            if (suspendedEnvironments.size() == 0) {
+            if (debugger.getSuspendedEnvironments().isEmpty()) {
                 return "Connected to Freemarker debugger at " + freemarkerAttachDebugConfiguration.getHost() + ":" + freemarkerAttachDebugConfiguration.getPort();
             }
         } catch (RemoteException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
 
         return super.getCurrentStateMessage();

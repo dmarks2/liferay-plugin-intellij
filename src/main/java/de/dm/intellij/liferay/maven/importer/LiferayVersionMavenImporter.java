@@ -1,7 +1,6 @@
 package de.dm.intellij.liferay.maven.importer;
 
 import com.intellij.ide.util.projectWizard.ModuleBuilder;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.externalSystem.service.project.IdeModifiableModelsProvider;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleType;
@@ -36,9 +35,6 @@ import java.util.Properties;
  * A Maven Importer which tries to find out the target Liferay Version and Parent Theme (Liferay 6.x) based on the pom.xml within your project
  */
 public class LiferayVersionMavenImporter extends MavenImporter {
-
-    private final static Logger log = Logger.getInstance(LiferayVersionMavenImporter.class);
-
     public static final String LIFERAY_MAVEN_GROUP_ID = "com.liferay.maven.plugins";
     public static final String LIFERAY_MAVEN_ARTIFACT_ID = "liferay-maven-plugin";
 

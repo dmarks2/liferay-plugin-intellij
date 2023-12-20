@@ -25,11 +25,11 @@ import java.util.Set;
  */
 public class LiferayCompassSassExtension extends SassExtension {
 
-    private static final Set<String> APPROPRIATE_MODULE_NAMES = ContainerUtil.newHashSet(new String[]{"Compass::SassExtensions::Functions"});
+    private static final Set<String> APPROPRIATE_MODULE_NAMES = ContainerUtil.newHashSet("Compass::SassExtensions::Functions");
 
     public static final String COMPASS_LIBRARY_NAME = "Compass 0.12.2";
 
-    private Map<String, SassExtensionFunctionInfo> customFunctions = new HashMap<String, SassExtensionFunctionInfo>();
+    private final Map<String, SassExtensionFunctionInfo> customFunctions = new HashMap<>();
 
     @Override
     public String getName() {
@@ -62,7 +62,7 @@ public class LiferayCompassSassExtension extends SassExtension {
     @NotNull
     @Override
     public Collection<? extends VirtualFile> getStylesheetsRoots(@NotNull Module module) {
-        Collection<VirtualFile> result = new ArrayList<VirtualFile>();
+        Collection<VirtualFile> result = new ArrayList<>();
 
         URL url = LiferayCompassSassExtension.class.getResource("/compass-0.12.2/stylesheets");
         VirtualFile virtualFile = VfsUtil.findFileByURL(url);

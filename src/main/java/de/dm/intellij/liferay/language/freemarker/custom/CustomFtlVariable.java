@@ -86,18 +86,18 @@ public class CustomFtlVariable extends FtlLightVariable {
 
         ResolveState newState = state.put(PsiSubstitutor.KEY, resolveResult.getSubstitutor());
         String hint = processor instanceof FtlVariantsProcessor ? ((FtlVariantsProcessor) processor).getReferenceName() : null;
-        if (!psiClass.processDeclarations(new PsiMemberProcessor(processor, hint), newState, (PsiElement) null, place)) {
+        if (!psiClass.processDeclarations(new PsiMemberProcessor(processor, hint), newState, null, place)) {
             return false;
         }
 
         if (hint != null && !((FtlVariantsProcessor) processor).isMethodCall()) {
             String isAccessor = PropertyUtil.suggestGetterName(hint, PsiTypes.booleanType());
-            if (!psiClass.processDeclarations(new PsiMemberProcessor(processor, isAccessor), newState, (PsiElement) null, place)) {
+            if (!psiClass.processDeclarations(new PsiMemberProcessor(processor, isAccessor), newState, null, place)) {
                 return false;
             }
 
             String getAccessor = PropertyUtil.suggestGetterName(hint, PsiTypes.intType());
-            if (!psiClass.processDeclarations(new PsiMemberProcessor(processor, getAccessor), newState, (PsiElement) null, place)) {
+            if (!psiClass.processDeclarations(new PsiMemberProcessor(processor, getAccessor), newState, null, place)) {
                 return false;
             }
         }
@@ -118,7 +118,7 @@ public class CustomFtlVariable extends FtlLightVariable {
     }
 
 
-    private class PsiMemberProcessor implements NameHint, PsiScopeProcessor {
+    private static class PsiMemberProcessor implements NameHint, PsiScopeProcessor {
         private final PsiScopeProcessor myDelegate;
         private final String myNameHint;
 

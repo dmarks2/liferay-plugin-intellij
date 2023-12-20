@@ -22,7 +22,7 @@ import java.util.Collection;
 
 public class FragmentFragmentJsonFileReferenceContributor extends PsiReferenceContributor {
 
-    private static Collection<String> FILE_REFERENCE_PROPERTIES = Arrays.asList(
+    private static final Collection<String> FILE_REFERENCE_PROPERTIES = Arrays.asList(
             "cssPath",
             "configurationPath",
             "htmlPath",
@@ -67,14 +67,10 @@ public class FragmentFragmentJsonFileReferenceContributor extends PsiReferenceCo
 
                 @Override
                 public boolean isAcceptable(Object element, @Nullable PsiElement context) {
-                    if (element instanceof PsiElement) {
-                        PsiElement psiElement = (PsiElement) element;
-
-                        if (isFragmentJsonFile(psiElement)) {
-                            if (psiElement instanceof JsonValue) {
-                                JsonValue jsonValue = (JsonValue)psiElement;
-
-                                JsonProperty jsonProperty = (JsonProperty) jsonValue.getParent();
+                    if (element instanceof PsiElement psiElement) {
+						if (isFragmentJsonFile(psiElement)) {
+                            if (psiElement instanceof JsonValue jsonValue) {
+								JsonProperty jsonProperty = (JsonProperty) jsonValue.getParent();
 
                                 String name = JsonPsiImplUtils.getName(jsonProperty);
 

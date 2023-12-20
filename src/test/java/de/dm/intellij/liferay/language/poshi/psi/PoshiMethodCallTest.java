@@ -3,7 +3,6 @@ package de.dm.intellij.liferay.language.poshi.psi;
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
@@ -24,10 +23,8 @@ public class PoshiMethodCallTest extends BasePlatformTestCase {
         boolean resolved = false;
 
         for (PsiReference psiReference : element.getReferences()) {
-            if (psiReference instanceof PoshiClassReference) {
-                PoshiClassReference poshiClassReference = (PoshiClassReference) psiReference;
-
-                PsiElement resolve = poshiClassReference.resolve();
+            if (psiReference instanceof PoshiClassReference poshiClassReference) {
+				PsiElement resolve = poshiClassReference.resolve();
 
                 if (resolve != null) {
                     assertTrue("MyClass should resolve to MyClass.macro", resolve instanceof PsiFile && ((PsiFile)resolve).getName().equals("MyClass.macro"));

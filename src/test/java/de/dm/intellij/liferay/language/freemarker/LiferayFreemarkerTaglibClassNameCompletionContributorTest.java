@@ -2,26 +2,13 @@ package de.dm.intellij.liferay.language.freemarker;
 
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.codeInsight.navigation.actions.GotoDeclarationAction;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
-import com.intellij.openapi.roots.ContentEntry;
-import com.intellij.openapi.roots.LanguageLevelModuleExtension;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.util.Disposer;
-import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
-import com.intellij.pom.java.LanguageLevel;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.testFramework.LightProjectDescriptor;
-import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
-import com.intellij.util.PathUtil;
 import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.net.URL;
 import java.util.List;
 
 public class LiferayFreemarkerTaglibClassNameCompletionContributorTest extends LightJavaCodeInsightFixtureTestCase {
@@ -48,6 +35,8 @@ public class LiferayFreemarkerTaglibClassNameCompletionContributorTest extends L
         myFixture.configureByFiles("portal_normal.ftl", "liferay-aui.tld", "de/dm/MyObject.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("de.dm.MyObject"));
     }
 
@@ -55,6 +44,8 @@ public class LiferayFreemarkerTaglibClassNameCompletionContributorTest extends L
         myFixture.configureByFiles("portal_normal_square_brackets.ftl", "liferay-aui.tld", "de/dm/MyObject.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("de.dm.MyObject"));
     }
 

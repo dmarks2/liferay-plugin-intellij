@@ -31,7 +31,7 @@ public class StaticFieldGetterClassNameCompletionContributor extends CompletionC
             ELEMENT_FILTER,
                 new CompletionProvider<>() {
                     @Override
-                    protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result) {
+                    protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
                         PsiElement originalPosition = parameters.getOriginalPosition();
                         if (originalPosition != null) {
                             PsiFile psiFile = originalPosition.getContainingFile();
@@ -64,9 +64,7 @@ public class StaticFieldGetterClassNameCompletionContributor extends CompletionC
 
             String signature = LiferayFreemarkerUtil.getMethodSignature(ftlMethodCallExpression);
 
-            if ("com.liferay.portal.kernel.util.StaticFieldGetter.getFieldValue".equals(signature)) {
-                return true;
-            }
+			return "com.liferay.portal.kernel.util.StaticFieldGetter.getFieldValue".equals(signature);
         }
         return false;
     }

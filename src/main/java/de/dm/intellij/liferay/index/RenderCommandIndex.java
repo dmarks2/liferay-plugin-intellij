@@ -77,7 +77,7 @@ public class RenderCommandIndex extends FileBasedIndexExtension<CommandKey, Void
         return AbstractCommandKeyIndexer.getPortletClasses(NAME, project, portletName, commandName, scope);
     }
 
-    private class RenderCommandIndexer extends AbstractCommandKeyIndexer {
+    private static class RenderCommandIndexer extends AbstractCommandKeyIndexer {
 
         @NotNull
         @Override

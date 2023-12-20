@@ -25,6 +25,8 @@ public class LiferayJournalStructureJsonSchema_2_0_FileProviderTest extends Base
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/structures/test.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("rich_text"));
 
         assertFalse("\"type\" should not contain \"ddm-journal-article\", because it is schema 2.0", strings.contains("ddm-journal-article"));

@@ -40,39 +40,46 @@ public class LiferayWorkflowXmlTargetReference extends PsiReferenceBase<PsiEleme
     public Object @NotNull [] getVariants() {
         XmlText xmlText = getXmlText();
 
-        List<Object> result = new ArrayList<Object>();
+        List<Object> result = new ArrayList<>();
 
         PsiFile psiFile = xmlText.getContainingFile();
 
         psiFile = psiFile.getOriginalFile();
 
-        if (psiFile instanceof XmlFile) {
-            XmlFile xmlFile = (XmlFile) psiFile;
+        if (psiFile instanceof XmlFile xmlFile) {
 
             XmlDocument xmlDocument = xmlFile.getDocument();
 
-            XmlTag rootTag = xmlDocument.getRootTag();
+            if (xmlDocument != null) {
+                XmlTag rootTag = xmlDocument.getRootTag();
 
-            for (String targetTag : TARGET_TAGS) {
-                XmlTag[] elements = rootTag.findSubTags(targetTag, xmlText.getParentTag().getNamespace());
+                if (rootTag != null) {
+                    for (String targetTag : TARGET_TAGS) {
+                        XmlTag parentTag = xmlText.getParentTag();
 
-                for (XmlTag element : elements) {
-                    XmlTag name = element.findFirstSubTag("name");
+                        if (parentTag != null) {
+                            XmlTag[] elements = rootTag.findSubTags(targetTag, parentTag.getNamespace());
 
-                    if (name != null) {
-                        XmlText text = PsiTreeUtil.getChildOfType(name, XmlText.class);
+                            for (XmlTag element : elements) {
+                                XmlTag name = element.findFirstSubTag("name");
 
-                        if (text != null) {
-                            result.add(
-                                    LookupElementBuilder.create(text.getText()).withPsiElement(text).withIcon(Icons.LIFERAY_ICON).withTypeText(element.getLocalName(), true)
-                            );
+                                if (name != null) {
+                                    XmlText text = PsiTreeUtil.getChildOfType(name, XmlText.class);
+
+                                    if (text != null) {
+                                        result.add(
+                                                LookupElementBuilder.create(text.getText()).withPsiElement(text).withIcon(Icons.LIFERAY_ICON).withTypeText(element.getLocalName(), true)
+                                        );
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
         }
 
-        return result.toArray(new Object[result.size()]);
+        return result.toArray(new Object[0]);
     }
 
     @Override
@@ -85,25 +92,31 @@ public class LiferayWorkflowXmlTargetReference extends PsiReferenceBase<PsiEleme
 
         Collection<PsiElement> results = new ArrayList<>();
 
-        if (psiFile instanceof XmlFile) {
-            XmlFile xmlFile = (XmlFile) psiFile;
+        if (psiFile instanceof XmlFile xmlFile) {
+			XmlDocument xmlDocument = xmlFile.getDocument();
 
-            XmlDocument xmlDocument = xmlFile.getDocument();
+            if (xmlDocument != null) {
+                XmlTag rootTag = xmlDocument.getRootTag();
 
-            XmlTag rootTag = xmlDocument.getRootTag();
+                if (rootTag != null) {
+                    for (String targetTag : TARGET_TAGS) {
+                        XmlTag parentTag = xmlText.getParentTag();
 
-            for (String targetTag : TARGET_TAGS) {
-                XmlTag[] elements = rootTag.findSubTags(targetTag, xmlText.getParentTag().getNamespace());
+                        if (parentTag != null) {
+                            XmlTag[] elements = rootTag.findSubTags(targetTag, parentTag.getNamespace());
 
-                for (XmlTag element : elements) {
-                    XmlTag name = element.findFirstSubTag("name");
+                            for (XmlTag element : elements) {
+                                XmlTag name = element.findFirstSubTag("name");
 
-                    if (name != null) {
-                        XmlText text = PsiTreeUtil.getChildOfType(name, XmlText.class);
+                                if (name != null) {
+                                    XmlText text = PsiTreeUtil.getChildOfType(name, XmlText.class);
 
-                        if (text != null) {
-                            if (getElement().getText().equals(text.getText())) {
-                                results.add(text);
+                                    if (text != null) {
+                                        if (getElement().getText().equals(text.getText())) {
+                                            results.add(text);
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

@@ -92,8 +92,8 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> {
 
             @Override
             public void save(@NotNull DataOutput out, JspKey value) throws IOException {
-                EnumeratorStringDescriptor.INSTANCE.save(out, value.getPortletName());
-                EnumeratorStringDescriptor.INSTANCE.save(out, value.getJspPath());
+                EnumeratorStringDescriptor.INSTANCE.save(out, value.portletName());
+                EnumeratorStringDescriptor.INSTANCE.save(out, value.jspPath());
             }
 
             @Override
@@ -134,9 +134,9 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> {
                     FileBasedIndex.getInstance().processAllKeys(
                         NAME,
                         jspKey -> {
-                            if (jspPath.equals(jspKey.getJspPath())) {
+                            if (jspPath.equals(jspKey.jspPath())) {
                                 //result.add(ProjectUtils.resolveReferencePlaceholder(jspKey.getPortletName(), project, scope));
-                                result.add(jspKey.getPortletName());
+                                result.add(jspKey.portletName());
                             }
                             return true;
                         },

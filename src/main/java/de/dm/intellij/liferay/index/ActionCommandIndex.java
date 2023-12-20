@@ -105,7 +105,7 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
         return AbstractCommandKeyIndexer.getPortletClasses(NAME, project, portletName, commandName, scope);
     }
 
-    private class ActionCommandIndexer extends AbstractCommandKeyIndexer{
+    private static class ActionCommandIndexer extends AbstractCommandKeyIndexer {
 
         @NotNull
         @Override
@@ -152,10 +152,8 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
                                                 if (actionCommand != null) {
                                                     actionCommand = StringUtil.unquoteString(actionCommand);
                                                 }
-                                            } else if (psiNameValuePairValue instanceof PsiReferenceExpression) {
-                                                PsiReferenceExpression psiReferenceExpression = (PsiReferenceExpression) psiNameValuePairValue;
-
-                                                PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(psiReferenceExpression.getProject()).getConstantEvaluationHelper();
+                                            } else if (psiNameValuePairValue instanceof PsiReferenceExpression psiReferenceExpression) {
+												PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(psiReferenceExpression.getProject()).getConstantEvaluationHelper();
 
                                                 actionCommand = (String) constantEvaluationHelper.computeConstantExpression(psiReferenceExpression);
                                             }

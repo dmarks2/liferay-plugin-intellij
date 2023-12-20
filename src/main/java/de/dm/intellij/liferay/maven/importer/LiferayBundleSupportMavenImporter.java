@@ -3,6 +3,7 @@ package de.dm.intellij.liferay.maven.importer;
 import com.intellij.openapi.externalSystem.service.project.IdeModifiableModelsProvider;
 import com.intellij.openapi.module.Module;
 import org.jdom.Element;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.idea.maven.importing.MavenImporter;
 import org.jetbrains.idea.maven.importing.MavenRootModelAdapter;
 import org.jetbrains.idea.maven.model.MavenPlugin;
@@ -33,7 +34,7 @@ public class LiferayBundleSupportMavenImporter extends MavenImporter {
     }
 
     @Override
-    public void process(IdeModifiableModelsProvider ideModifiableModelsProvider, Module module, MavenRootModelAdapter mavenRootModelAdapter, MavenProjectsTree mavenProjectsTree, MavenProject mavenProject, MavenProjectChanges mavenProjectChanges, Map<MavenProject, String> map, List<MavenProjectsProcessorTask> list) {
+    public void process(@NotNull IdeModifiableModelsProvider ideModifiableModelsProvider, @NotNull Module module, @NotNull MavenRootModelAdapter mavenRootModelAdapter, @NotNull MavenProjectsTree mavenProjectsTree, MavenProject mavenProject, @NotNull MavenProjectChanges mavenProjectChanges, @NotNull Map<MavenProject, String> map, @NotNull List<MavenProjectsProcessorTask> list) {
         MavenPlugin plugin = mavenProject.findPlugin(myPluginGroupID, myPluginArtifactID);
         if (plugin != null) {
             String liferayHome = null;

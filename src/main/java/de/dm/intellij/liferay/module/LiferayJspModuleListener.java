@@ -18,9 +18,7 @@ public class LiferayJspModuleListener implements ModuleListener {
     @Override
     public void modulesAdded(@NotNull Project project, @NotNull List<? extends Module> modules) {
         for (Module module : modules) {
-            ProjectUtils.runDumbAware(project, () -> {
-                handleModuleFiles(project, module, "resources");
-            });
+            ProjectUtils.runDumbAware(project, () -> handleModuleFiles(project, module, "resources"));
         }
     }
 

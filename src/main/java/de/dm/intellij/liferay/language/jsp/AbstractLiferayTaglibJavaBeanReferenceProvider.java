@@ -17,10 +17,9 @@ import java.util.List;
 
 public abstract class AbstractLiferayTaglibJavaBeanReferenceProvider extends PsiReferenceProvider {
 
-    @NotNull
     @Override
-    public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
-        List<PsiReference> result = new ArrayList<PsiReference>();
+    public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+        List<PsiReference> result = new ArrayList<>();
 
         String className = getClassName(element);
 
@@ -34,7 +33,7 @@ public abstract class AbstractLiferayTaglibJavaBeanReferenceProvider extends Psi
 
         }
 
-        return result.toArray(new PsiReference[result.size()]);
+        return result.toArray(new PsiReference[0]);
     }
 
     @Nullable

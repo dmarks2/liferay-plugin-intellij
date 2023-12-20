@@ -35,7 +35,7 @@ public class StructureFtlVariable extends FtlLightVariable {
 
     public static final String CLASS_NAME = "com.liferay.portal.kernel.templateparser.TemplateNode";
 
-    private TemplateVariable templateVariable;
+    private final TemplateVariable templateVariable;
 
     private PsiClassType templateNodeClassType;
     private PsiClass templateNodeClass;
@@ -157,18 +157,18 @@ public class StructureFtlVariable extends FtlLightVariable {
 
         ResolveState newState = state.put(PsiSubstitutor.KEY, resolveResult.getSubstitutor());
         String hint = processor instanceof FtlVariantsProcessor ? ((FtlVariantsProcessor) processor).getReferenceName() : null;
-        if (!psiClass.processDeclarations(new StructureFtlVariable.PsiMemberProcessor(processor, hint), newState, (PsiElement) null, place)) {
+        if (!psiClass.processDeclarations(new StructureFtlVariable.PsiMemberProcessor(processor, hint), newState, null, place)) {
             return false;
         }
 
         if (hint != null && !((FtlVariantsProcessor) processor).isMethodCall()) {
             String isAccessor = PropertyUtil.suggestGetterName(hint, PsiTypes.booleanType());
-            if (!psiClass.processDeclarations(new StructureFtlVariable.PsiMemberProcessor(processor, isAccessor), newState, (PsiElement) null, place)) {
+            if (!psiClass.processDeclarations(new StructureFtlVariable.PsiMemberProcessor(processor, isAccessor), newState, null, place)) {
                 return false;
             }
 
             String getAccessor = PropertyUtil.suggestGetterName(hint, PsiTypes.intType());
-            if (!psiClass.processDeclarations(new StructureFtlVariable.PsiMemberProcessor(processor, getAccessor), newState, (PsiElement) null, place)) {
+            if (!psiClass.processDeclarations(new StructureFtlVariable.PsiMemberProcessor(processor, getAccessor), newState, null, place)) {
                 return false;
             }
         }
@@ -176,7 +176,7 @@ public class StructureFtlVariable extends FtlLightVariable {
         return false;
     }
 
-    private class PsiMemberProcessor implements PsiScopeProcessor, NameHint {
+    private static class PsiMemberProcessor implements PsiScopeProcessor, NameHint {
         private final PsiScopeProcessor myDelegate;
         private final String myNameHint;
 

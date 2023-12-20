@@ -5,9 +5,6 @@ import com.intellij.execution.configurations.ConfigurationType;
 import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.openapi.components.BaseState;
 import com.intellij.openapi.project.Project;
-import de.dm.intellij.liferay.language.groovy.LiferayServerGroovyConfiguration;
-import de.dm.intellij.liferay.language.groovy.LiferayServerGroovyConfigurationOptions;
-import de.dm.intellij.liferay.language.groovy.LiferayServerGroovyConfigurationType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

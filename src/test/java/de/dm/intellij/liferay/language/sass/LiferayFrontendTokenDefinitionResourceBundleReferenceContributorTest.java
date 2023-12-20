@@ -27,7 +27,11 @@ public class LiferayFrontendTokenDefinitionResourceBundleReferenceContributorTes
     public void testReference() {
         myFixture.configureByFiles("WEB-INF/frontend-token-definition.json", "Language.properties");
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(caretElement);
+
+        PsiElement element = caretElement.getParent();
         PsiElement resolve = element.getReferences()[0].resolve();
 
         assertTrue("\"primary\" should be resolvable, because it is in Language.properties", (resolve != null));

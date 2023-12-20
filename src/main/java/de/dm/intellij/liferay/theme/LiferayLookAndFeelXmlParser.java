@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.theme;
 
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.externalSystem.service.project.autoimport.FileChangeListenerBase;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -22,6 +23,8 @@ import java.util.Collection;
  * Class to parse liferay-look-and-feel.xml (if present) and to save information into LiferayModuleComponent
  */
 public class LiferayLookAndFeelXmlParser extends FileChangeListenerBase  {
+
+    private final static Logger log = Logger.getInstance(LiferayLookAndFeelXmlParser.class);
 
     public static final String TEMPLATE_EXTENSION = "template-extension";
     public static final String ROOT_PATH = "root-path";
@@ -75,7 +78,7 @@ public class LiferayLookAndFeelXmlParser extends FileChangeListenerBase  {
                             }
                         });
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        log.error(e.getMessage(), e);
                     }
                 }
             }
@@ -83,22 +86,25 @@ public class LiferayLookAndFeelXmlParser extends FileChangeListenerBase  {
     }
 
     public static Collection<Setting> parseSettings(XmlFile xmlFile) {
-        Collection<Setting> result = new ArrayList<Setting>();
+        Collection<Setting> result = new ArrayList<>();
 
         if (xmlFile != null) {
             if (xmlFile.isValid()) {
                 XmlTag rootTag = xmlFile.getRootTag();
-                if ("look-and-feel".equals(rootTag.getLocalName())) {
-                    XmlTag themeTag = rootTag.findFirstSubTag("theme");
-                    if (themeTag != null) {
-                        XmlTag settingsTag = themeTag.findFirstSubTag("settings");
-                        if (settingsTag != null) {
-                            for (XmlTag xmlTag : settingsTag.findSubTags("setting")) {
-                                String key = xmlTag.getAttributeValue("key");
-                                String type = xmlTag.getAttributeValue("type");
 
-                                result.add(new Setting(xmlTag, key, type));
-                                //checkbox=boolean, other=string
+                if (rootTag != null) {
+                    if ("look-and-feel".equals(rootTag.getLocalName())) {
+                        XmlTag themeTag = rootTag.findFirstSubTag("theme");
+                        if (themeTag != null) {
+                            XmlTag settingsTag = themeTag.findFirstSubTag("settings");
+                            if (settingsTag != null) {
+                                for (XmlTag xmlTag : settingsTag.findSubTags("setting")) {
+                                    String key = xmlTag.getAttributeValue("key");
+                                    String type = xmlTag.getAttributeValue("type");
+
+                                    result.add(new Setting(xmlTag, key, type));
+                                    //checkbox=boolean, other=string
+                                }
                             }
                         }
                     }

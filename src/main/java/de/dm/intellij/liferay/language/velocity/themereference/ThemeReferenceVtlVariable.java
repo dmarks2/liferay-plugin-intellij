@@ -13,6 +13,7 @@ import de.dm.intellij.liferay.util.LiferayFileUtil;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import java.util.Objects;
 
 public class ThemeReferenceVtlVariable extends VtlLightVariable {
 
@@ -43,7 +44,7 @@ public class ThemeReferenceVtlVariable extends VtlLightVariable {
             if (module != null) {
                 VirtualFile virtualFile = LiferayFileUtil.getThemeSettingsDirectory(module, themeSetting);
                 if (virtualFile != null) {
-                    return psiFile.getContainingFile().getManager().findDirectory(virtualFile);
+                    return Objects.requireNonNullElse(psiFile.getContainingFile().getManager().findDirectory(virtualFile), super.getNavigationElement());
                 }
             }
         }

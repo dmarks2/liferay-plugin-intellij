@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.freemarker.runner;
 
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.ui.DocumentAdapter;
@@ -18,6 +19,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class FreemarkerAttachDebugConfigurationSettingsEditor extends SettingsEditor<FreemarkerAttachDebugConfiguration> {
+
+    private final static Logger log = Logger.getInstance(FreemarkerAttachDebugConfigurationSettingsEditor.class);
 
     private final JTextField hostField;
     private final PortField portField;
@@ -65,9 +68,9 @@ public class FreemarkerAttachDebugConfigurationSettingsEditor extends SettingsEd
     private void updateArgsText() {
         String text = "";
         if (portField.getNumber() != 7011) {
-            text = text + "-Dfreemarker.debug.port=" + String.valueOf(portField.getNumber()) + " ";
+            text = text + "-Dfreemarker.debug.port=" + portField.getNumber() + " ";
         }
-        if ( (secretField.getText() != null) && (secretField.getText().length() > 0)) {
+        if ( (secretField.getText() != null) && (!secretField.getText().isEmpty())) {
             text = text + "-Dfreemarker.debug.password=" + secretField.getText() + " ";
         }
 
@@ -75,7 +78,7 @@ public class FreemarkerAttachDebugConfigurationSettingsEditor extends SettingsEd
             String host = InetAddress.getLocalHost().getHostName();
             text = text + "-Djava.rmi.server.hostname=" + host;
         } catch (UnknownHostException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
 
         argsArea.setText(text);

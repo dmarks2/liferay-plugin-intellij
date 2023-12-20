@@ -22,7 +22,7 @@ public class ServiceLocatorFtlVariable extends FtlLightVariable {
     public static final String SERVICE_LOCATOR_CLASS_NAME = "com.liferay.portal.template.ServiceLocator";
     public static final String VARIABLE_NAME = "serviceLocator";
 
-    private PsiClass serviceLocatorClass;
+    private final PsiClass serviceLocatorClass;
 
     public ServiceLocatorFtlVariable(@NotNull PsiElement parent) {
         super(VARIABLE_NAME, parent, SERVICE_LOCATOR_CLASS_NAME);

@@ -23,10 +23,8 @@ public class ResourceBundleReferenceElementFilter implements ElementFilter {
 
     @Override
     public boolean isAcceptable(Object element, @Nullable PsiElement context) {
-        if (element instanceof PsiLiteralExpression) {
-            PsiLiteralExpression literalExpression = (PsiLiteralExpression) element;
-
-            PsiExpressionList expressionList = PsiTreeUtil.getParentOfType(literalExpression, PsiExpressionList.class);
+        if (element instanceof PsiLiteralExpression literalExpression) {
+			PsiExpressionList expressionList = PsiTreeUtil.getParentOfType(literalExpression, PsiExpressionList.class);
 
             if (expressionList != null) {
                 int index = ArrayUtil.indexOf(expressionList.getExpressions(), literalExpression);

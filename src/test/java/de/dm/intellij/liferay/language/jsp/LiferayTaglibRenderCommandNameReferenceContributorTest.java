@@ -35,6 +35,8 @@ public class LiferayTaglibRenderCommandNameReferenceContributorTest extends Ligh
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("/my/render"));
     }
 

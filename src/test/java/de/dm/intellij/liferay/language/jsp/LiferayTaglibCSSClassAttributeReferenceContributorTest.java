@@ -21,6 +21,8 @@ public class LiferayTaglibCSSClassAttributeReferenceContributorTest extends Base
         myFixture.configureByFiles("view.jsp", "main.css", "liferay-aui.tld");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("foo"));
     }
 
@@ -28,6 +30,8 @@ public class LiferayTaglibCSSClassAttributeReferenceContributorTest extends Base
         myFixture.configureByFiles("view.jsp", "custom.scss", "liferay-aui.tld");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("foo"));
     }
 }

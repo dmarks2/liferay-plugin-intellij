@@ -17,9 +17,7 @@ public class LiferayAdvancedResourcesImporterServiceCallModuleListener implement
     @Override
     public void modulesAdded(@NotNull Project project, @NotNull List<? extends Module> modules) {
         for (Module module : modules) {
-            ProjectUtils.runDumbAware(project, () -> {
-                handleModuleFiles(project, module);
-            });
+            ProjectUtils.runDumbAware(project, () -> handleModuleFiles(project, module));
         }
     }
 

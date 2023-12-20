@@ -1,9 +1,10 @@
 package de.dm.intellij.liferay.gradle;
 
+import com.intellij.openapi.diagnostic.Logger;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.plugins.gradle.tooling.ErrorMessageBuilder;
+import org.jetbrains.plugins.gradle.tooling.ModelBuilderContext;
 import org.jetbrains.plugins.gradle.tooling.ModelBuilderService;
 
 import java.io.File;
@@ -17,8 +18,11 @@ import java.util.Set;
  */
 public class LiferayBundleSupportGradleTaskModelBuilder implements ModelBuilderService {
 
-    private static ServiceLoader<ModelBuilderService> buildersLoader =
-            ServiceLoader.load(ModelBuilderService.class, LiferayBundleSupportGradleTaskModelBuilder.class.getClassLoader());
+    private static final Logger log = Logger.getInstance(LiferayBundleSupportGradleTaskModelBuilder.class);
+
+    static {
+        ServiceLoader.load(ModelBuilderService.class, LiferayBundleSupportGradleTaskModelBuilder.class.getClassLoader());
+    }
 
 
     public LiferayBundleSupportGradleTaskModelBuilder() {
@@ -59,8 +63,7 @@ public class LiferayBundleSupportGradleTaskModelBuilder implements ModelBuilderS
 
                         result.setLiferayHome(path);
                     } catch (Exception e) {
-                        //ignore
-                        e.printStackTrace();
+                        log.error(e.getMessage(), e);
                     }
                 }
             }
@@ -68,11 +71,9 @@ public class LiferayBundleSupportGradleTaskModelBuilder implements ModelBuilderS
         return result;
     }
 
-
-    @NotNull
     @Override
-    public ErrorMessageBuilder getErrorMessageBuilder(@NotNull Project project, @NotNull Exception e) {
-        return ErrorMessageBuilder.create(project, e, "Gradle import error").withDescription("Unable to import Liferay Bundle Support Task configuration");
+    public void reportErrorMessage(@NotNull String modelName, @NotNull Project project, @NotNull ModelBuilderContext context, @NotNull Exception exception) {
+        context.getMessageReporter().createMessage().withGroup("Gradle import error").withText("Unable to import Liferay Bundle Support Task configuration").withException(exception).reportMessage(project);
     }
 }
 

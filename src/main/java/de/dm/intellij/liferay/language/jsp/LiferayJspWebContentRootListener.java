@@ -1,6 +1,5 @@
 package de.dm.intellij.liferay.language.jsp;
 
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.externalSystem.service.project.autoimport.FileChangeListenerBase;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -19,17 +18,11 @@ import de.dm.intellij.liferay.util.WebFacetUtil;
 
 /**
  * VirtualFileListener that watches files in META-INF/resources.
- *
  * If a directory META-INF/resources containing at least one file is present, this class adds a WebFacet to the project. The WebFacet defines the directory META-INF/resources as Web Root.
- *
  * That way, absolute paths in the JSPs are resolved correctly.
- *
  * The same is done for each CustomJspBag in the project.
  */
 public class LiferayJspWebContentRootListener extends FileChangeListenerBase {
-
-    private static final Logger log = com.intellij.openapi.diagnostic.Logger.getInstance(LiferayJspWebContentRootListener.class.getName());
-
     private static final ThreadLocal<Boolean> changeRunning = new ThreadLocal<>();
 
     public static void handleChange(final Project project, VirtualFile virtualFile) {
@@ -66,10 +59,8 @@ public class LiferayJspWebContentRootListener extends FileChangeListenerBase {
 
                         PsiFile psiFile = psiManager.findFile(virtualFile);
 
-                        if (psiFile instanceof PsiJavaFile) {
-                            PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
-
-                            String customJspDir = LiferayCustomJspBagUtil.getCustomJspDir(psiJavaFile);
+                        if (psiFile instanceof PsiJavaFile psiJavaFile) {
+							String customJspDir = LiferayCustomJspBagUtil.getCustomJspDir(psiJavaFile);
 
                             if (customJspDir != null) {
                                 LiferayModuleComponent liferayModuleComponent = LiferayModuleComponent.getInstance(module);

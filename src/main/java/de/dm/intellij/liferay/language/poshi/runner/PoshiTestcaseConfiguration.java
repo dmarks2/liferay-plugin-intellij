@@ -39,7 +39,7 @@ public class PoshiTestcaseConfiguration extends LocatableConfigurationBase<RunCo
 
     @Override
     public @NotNull SettingsEditor<PoshiTestcaseConfiguration> getConfigurationEditor() {
-        SettingsEditorGroup<PoshiTestcaseConfiguration> group = new SettingsEditorGroup<PoshiTestcaseConfiguration>();
+        SettingsEditorGroup<PoshiTestcaseConfiguration> group = new SettingsEditorGroup<>();
 
         String title = ExecutionBundle.message("run.configuration.configuration.tab.title");
 

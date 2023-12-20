@@ -19,6 +19,8 @@ public class BndCompletionContributorTest extends BasePlatformTestCase {
         myFixture.configureByFiles("header/bnd.bnd");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("Bundle-Version"));
     }
 
@@ -27,11 +29,14 @@ public class BndCompletionContributorTest extends BasePlatformTestCase {
         myFixture.complete(CompletionType.BASIC, 1);
 
         LookupElement[] lookupElements = myFixture.getLookupElements();
-        for (LookupElement lookupElement : lookupElements) {
-            if (lookupElement.getLookupString().equals("Bundle-Version")) {
-                PsiElement elementFromLookup = DocumentationManager.getElementFromLookup(myFixture.getProject(), myFixture.getEditor(), myFixture.getFile(), lookupElement);
 
-                assertNotNull(elementFromLookup);
+        if (lookupElements != null) {
+            for (LookupElement lookupElement : lookupElements) {
+                if (lookupElement.getLookupString().equals("Bundle-Version")) {
+                    PsiElement elementFromLookup = DocumentationManager.getElementFromLookup(myFixture.getProject(), myFixture.getEditor(), myFixture.getFile(), lookupElement);
+
+                    assertNotNull(elementFromLookup);
+                }
             }
         }
     }

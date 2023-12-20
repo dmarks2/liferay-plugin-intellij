@@ -64,10 +64,7 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
             @Override
             public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
                 if (element instanceof XmlAttributeValue) {
-                    XmlAttributeValue xmlAttributeValue = (XmlAttributeValue)element;
-
-                    String value = xmlAttributeValue.getValue();
-                    return new PsiReference[]{
+					return new PsiReference[]{
                             new PsiReferenceBase.Poly<>((XmlAttributeValue) element, ElementManipulators.getValueTextRange(element), true) {
                                 @Override
                                 public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
@@ -111,7 +108,7 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
 
                                 @Override
                                 public Object @NotNull [] getVariants() {
-                                    List<Object> result = new ArrayList<Object>();
+                                    List<Object> result = new ArrayList<>();
 
                                     Project project = getElement().getProject();
 
@@ -138,7 +135,7 @@ public class LiferayTaglibActionCommandNameReferenceContributor extends Abstract
 
                                                 for (String actionCommand : distinctActionCommands) {
                                                     List<PsiFile> portletClasses = ActionCommandIndex.getPortletClasses(project, portletName, actionCommand, GlobalSearchScope.allScope(project));
-                                                    if (portletClasses.size() > 0) {
+                                                    if (!portletClasses.isEmpty()) {
                                                         result.add(
                                                                 LookupElementBuilder.create(actionCommand).
                                                                         withIcon(Icons.LIFERAY_ICON)

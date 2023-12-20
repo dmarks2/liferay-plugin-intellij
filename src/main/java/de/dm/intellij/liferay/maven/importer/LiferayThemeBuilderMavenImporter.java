@@ -4,6 +4,7 @@ import com.intellij.openapi.externalSystem.service.project.IdeModifiableModelsPr
 import com.intellij.openapi.module.Module;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import org.jdom.Element;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.idea.maven.importing.MavenImporter;
 import org.jetbrains.idea.maven.importing.MavenRootModelAdapter;
 import org.jetbrains.idea.maven.model.MavenPlugin;
@@ -33,7 +34,7 @@ public class LiferayThemeBuilderMavenImporter extends MavenImporter {
     }
 
     @Override
-    public void process(IdeModifiableModelsProvider ideModifiableModelsProvider, Module module, MavenRootModelAdapter mavenRootModelAdapter, MavenProjectsTree mavenProjectsTree, MavenProject mavenProject, MavenProjectChanges mavenProjectChanges, Map<MavenProject, String> map, List<MavenProjectsProcessorTask> list) {
+    public void process(@NotNull IdeModifiableModelsProvider ideModifiableModelsProvider, @NotNull Module module, @NotNull MavenRootModelAdapter mavenRootModelAdapter, @NotNull MavenProjectsTree mavenProjectsTree, MavenProject mavenProject, @NotNull MavenProjectChanges mavenProjectChanges, @NotNull Map<MavenProject, String> map, @NotNull List<MavenProjectsProcessorTask> list) {
         MavenPlugin plugin = mavenProject.findPlugin(myPluginGroupID, myPluginArtifactID);
         if (plugin != null) {
             //found the Liferay Maven plugin
@@ -48,7 +49,7 @@ public class LiferayThemeBuilderMavenImporter extends MavenImporter {
                 Element configParentName = configurationElement.getChild(CONFIG_PARENT_NAME);
                 if (configParentName != null) {
                     String parentName = configParentName.getText();
-                    if ( (parentName != null) && (parentName.trim().length() > 0) ) {
+                    if ( (parentName != null) && (!parentName.trim().isEmpty()) ) {
                         LiferayModuleComponent liferayModuleComponent = module.getService(LiferayModuleComponent.class);
                         if (liferayModuleComponent != null) {
                             liferayModuleComponent.setParentTheme(parentName);

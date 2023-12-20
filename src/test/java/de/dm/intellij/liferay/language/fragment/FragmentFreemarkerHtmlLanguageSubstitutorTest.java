@@ -17,6 +17,8 @@ public class FragmentFreemarkerHtmlLanguageSubstitutorTest extends BasePlatformT
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("assign"));
     }
 

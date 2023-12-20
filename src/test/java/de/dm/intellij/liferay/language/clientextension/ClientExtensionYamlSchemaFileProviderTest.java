@@ -41,6 +41,8 @@ public class ClientExtensionYamlSchemaFileProviderTest extends BasePlatformTestC
 		myFixture.configureByFiles("customElement/client-extension-complete.yaml");
 		myFixture.complete(CompletionType.BASIC, 1);
 		List<String> strings = myFixture.getLookupElementStrings();
+
+		assertNotNull(strings);
 		assertTrue(strings.contains("from"));
 	}
 
@@ -48,6 +50,8 @@ public class ClientExtensionYamlSchemaFileProviderTest extends BasePlatformTestC
 		myFixture.configureByFiles("customElement/client-extension-type-completion.yaml");
 		myFixture.complete(CompletionType.BASIC, 1);
 		List<String> strings = myFixture.getLookupElementStrings();
+
+		assertNotNull(strings);
 		assertTrue(strings.contains("customElement"));
 	}
 

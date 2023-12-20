@@ -17,7 +17,11 @@ public class MetaConfigurationElementDescriptionProviderTest extends LightJavaCo
                 "aQute/bnd/annotation/metatype/Meta.java"
         );
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(caretElement);
+
+        PsiElement element = caretElement.getParent();
 
         assertEquals("de.dm.configuration.MyConfiguration", UsageViewUtil.getShortName(element));
     }

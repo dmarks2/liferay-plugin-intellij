@@ -28,6 +28,8 @@ public class GroovyScriptingImplicitMembersContributorTest extends LightJavaCode
         myFixture.configureByFiles("test.groovy");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("userInfo"));
     }
 
@@ -35,6 +37,8 @@ public class GroovyScriptingImplicitMembersContributorTest extends LightJavaCode
         myFixture.configureByFiles("member.groovy");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue("Code completion should offer out.close()", strings.contains("close"));
         assertFalse("Code completion should not offer implicit variables as members (like out.out)", strings.contains("out"));
     }

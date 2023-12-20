@@ -36,9 +36,8 @@ public class LiferayServiceXMLPrimaryKeyColumnInspection extends XmlSuppressable
         return LiferayInspectionsGroupNames.LIFERAY_GROUP_NAME;
     }
 
-    @NotNull
     @Override
-    public String[] getGroupPath() {
+    public String @NotNull [] getGroupPath() {
         return new String[]{
                 getGroupDisplayName(),
                 LiferayInspectionsGroupNames.SERVICE_XML_GROUP_NAME
@@ -56,7 +55,7 @@ public class LiferayServiceXMLPrimaryKeyColumnInspection extends XmlSuppressable
     public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             @Override
-            public void visitXmlAttributeValue(XmlAttributeValue value) {
+            public void visitXmlAttributeValue(@NotNull XmlAttributeValue value) {
                 if (LiferayServiceXMLUtil.isColumnPrimaryAttribute(value)) {
                     String text = value.getValue();
 

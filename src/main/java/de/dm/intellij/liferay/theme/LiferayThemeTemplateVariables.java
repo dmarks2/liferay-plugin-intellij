@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class LiferayThemeTemplateVariables {
 
-    public static final Map<String, String> THEME_TEMPLATE_VARIABLE_DIRECTORY_REFERENCES = new HashMap<String, String>();
+    public static final Map<String, String> THEME_TEMPLATE_VARIABLE_DIRECTORY_REFERENCES = new HashMap<>();
 
     static {
         THEME_TEMPLATE_VARIABLE_DIRECTORY_REFERENCES.put("images_folder", LiferayLookAndFeelXmlParser.IMAGES_PATH);

@@ -6,7 +6,7 @@ import com.intellij.execution.ui.ExecutionConsole;
 
 public class FreemarkerAttachExecutionResult extends DefaultExecutionResult {
 
-    private FreemarkerAttachDebugConfiguration freemarkerAttachDebugConfiguration;
+    private final FreemarkerAttachDebugConfiguration freemarkerAttachDebugConfiguration;
 
     public FreemarkerAttachExecutionResult(ExecutionConsole executionConsole, ProcessHandler processHandler, FreemarkerAttachDebugConfiguration freemarkerAttachDebugConfiguration) {
         super(executionConsole, processHandler);

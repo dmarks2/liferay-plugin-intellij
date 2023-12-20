@@ -18,16 +18,20 @@ public class TemplateVariableXMLParser implements TemplateVariableParser<XmlFile
 
         XmlDocument xmlDocument = xmlFile.getDocument();
 
-        XmlTag rootTag = xmlDocument.getRootTag();
+        if (xmlDocument != null) {
+            XmlTag rootTag = xmlDocument.getRootTag();
 
-        String defaultLanguageId = rootTag.getAttributeValue("default-locale");
+            if (rootTag != null) {
+                String defaultLanguageId = rootTag.getAttributeValue("default-locale");
 
-        XmlTag[] subTags = rootTag.findSubTags("dynamic-element");
+                XmlTag[] subTags = rootTag.findSubTags("dynamic-element");
 
-        for (XmlTag tag : subTags) {
-            TemplateVariable templateVariable = getTemplateVariable(templateFile, xmlFile, tag, defaultLanguageId);
-            if (templateVariable != null) {
-                result.add(templateVariable);
+                for (XmlTag tag : subTags) {
+                    TemplateVariable templateVariable = getTemplateVariable(templateFile, xmlFile, tag, defaultLanguageId);
+                    if (templateVariable != null) {
+                        result.add(templateVariable);
+                    }
+                }
             }
         }
 
@@ -44,12 +48,9 @@ public class TemplateVariableXMLParser implements TemplateVariableParser<XmlFile
 
             templateVariable.setName(name);
 
-            boolean repeatable = false;
-            if ( (xmlTag.getAttribute("repeatable") != null) && "true".equalsIgnoreCase(xmlTag.getAttributeValue("repeatable")) ) {
-                repeatable = true;
-            }
+            boolean repeatable = (xmlTag.getAttribute("repeatable") != null) && "true".equalsIgnoreCase(xmlTag.getAttributeValue("repeatable"));
 
-            String type = xmlTag.getAttributeValue("type");
+			String type = xmlTag.getAttributeValue("type");
 
             XmlTag[] metaDataTags = xmlTag.findSubTags("meta-data");
             for (XmlTag metaDataTag : metaDataTags) {

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class FreemarkerAttachExecutionStack extends XExecutionStack {
 
-    private FreemarkerAttachExecutionStackFrame topFrame;
+    private final FreemarkerAttachExecutionStackFrame topFrame;
 
     protected FreemarkerAttachExecutionStack(DebuggedEnvironment debuggedEnvironment, XSourcePosition xSourcePosition) {
         super("Freemarker");

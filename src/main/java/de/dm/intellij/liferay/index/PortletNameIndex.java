@@ -194,7 +194,7 @@ public class PortletNameIndex extends FileBasedIndexExtension<String, Void> {
     }
 
 
-    private class MyPortletIndexer extends AbstractComponentPropertyIndexer<String> {
+    private static class MyPortletIndexer extends AbstractComponentPropertyIndexer<String> {
 
         @NotNull
         @Override

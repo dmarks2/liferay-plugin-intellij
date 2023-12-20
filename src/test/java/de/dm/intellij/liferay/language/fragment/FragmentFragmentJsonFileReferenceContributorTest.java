@@ -25,6 +25,8 @@ public class FragmentFragmentJsonFileReferenceContributorTest extends BasePlatfo
         myFixture.configureByFiles("fragment.json", "index.html", "other.html");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("index.html"));
     }
 

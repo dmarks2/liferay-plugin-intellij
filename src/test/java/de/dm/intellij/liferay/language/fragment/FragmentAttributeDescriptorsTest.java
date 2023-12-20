@@ -37,6 +37,8 @@ public class FragmentAttributeDescriptorsTest extends BasePlatformTestCase {
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("data-lfr-background-image-id"));
     }
 
@@ -45,6 +47,8 @@ public class FragmentAttributeDescriptorsTest extends BasePlatformTestCase {
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue("value for <div data-lfr-editable-type=\"\"> should provide allowed types like \"text\"", strings.contains("text"));
     }
 }

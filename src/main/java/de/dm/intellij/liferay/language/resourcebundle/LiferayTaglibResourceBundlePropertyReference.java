@@ -19,18 +19,15 @@ public class LiferayTaglibResourceBundlePropertyReference extends PropertyRefere
         super(key, element, bundleName, soft);
     }
 
-    @NotNull
     @Override
-    public ResolveResult[] multiResolve(boolean incompleteCode) {
+    public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
         ResolveResult[] resolveResults = super.multiResolve(incompleteCode);
-        List<ResolveResult> filteredResult = new ArrayList<ResolveResult>();
+        List<ResolveResult> filteredResult = new ArrayList<>();
         for (ResolveResult resolveResult : resolveResults) {
-            if (resolveResult instanceof PsiElementResolveResult) {
-                PsiElementResolveResult psiElementResolveResult = (PsiElementResolveResult)resolveResult;
-                PsiElement psiElement = psiElementResolveResult.getElement();
-                if (psiElement instanceof IProperty) {
-                    IProperty property = (IProperty)psiElement;
-                    PropertiesFile propertiesFile = property.getPropertiesFile();
+            if (resolveResult instanceof PsiElementResolveResult psiElementResolveResult) {
+				PsiElement psiElement = psiElementResolveResult.getElement();
+                if (psiElement instanceof IProperty property) {
+					PropertiesFile propertiesFile = property.getPropertiesFile();
                     if (isLanguageFile(propertiesFile)) {
                         filteredResult.add(resolveResult);
                     }
@@ -38,14 +35,13 @@ public class LiferayTaglibResourceBundlePropertyReference extends PropertyRefere
             }
         }
 
-        return filteredResult.toArray(new ResolveResult[filteredResult.size()]);
+        return filteredResult.toArray(new ResolveResult[0]);
     }
 
     @Override
     protected void addKey(Object propertyObject, Set<Object> variants) {
-        if (propertyObject instanceof IProperty) {
-            IProperty property = (IProperty)propertyObject;
-            PropertiesFile propertiesFile = property.getPropertiesFile();
+        if (propertyObject instanceof IProperty property) {
+			PropertiesFile propertiesFile = property.getPropertiesFile();
             if (isLanguageFile(propertiesFile)) {
                 super.addKey(propertyObject, variants);
             }
@@ -55,10 +51,8 @@ public class LiferayTaglibResourceBundlePropertyReference extends PropertyRefere
     private static boolean isLanguageFile(PropertiesFile propertiesFile) {
         if (propertiesFile != null) {
             String name = propertiesFile.getName();
-            if (name != null) {
-                return (name.startsWith("Language"));
-            }
-        }
+			return (name.startsWith("Language"));
+		}
         return false;
     }
 }

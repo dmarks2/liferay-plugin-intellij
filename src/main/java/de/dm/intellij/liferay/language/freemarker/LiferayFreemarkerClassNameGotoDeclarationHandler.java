@@ -33,10 +33,8 @@ public class LiferayFreemarkerClassNameGotoDeclarationHandler extends GotoDeclar
                     try {
                         Project project = sourceElement.getProject();
                         PsiType targetType = JavaPsiFacade.getInstance(project).getElementFactory().createTypeFromText(text, sourceElement);
-                        if (targetType instanceof PsiClassType) {
-                            PsiClassType psiClassType = (PsiClassType) targetType;
-
-                            PsiClass psiClass = psiClassType.resolve();
+                        if (targetType instanceof PsiClassType psiClassType) {
+							PsiClass psiClass = psiClassType.resolve();
 
                             if (psiClass != null) {
                                 return psiClass;

@@ -25,6 +25,8 @@ public class LiferayJournalStructureJsonSchemaDataDefinitionFileProviderTest ext
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/structures/test.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("dataDefinitionFields"));
     }
 }

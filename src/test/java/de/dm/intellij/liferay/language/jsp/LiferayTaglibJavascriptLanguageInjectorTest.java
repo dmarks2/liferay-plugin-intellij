@@ -21,6 +21,8 @@ public class LiferayTaglibJavascriptLanguageInjectorTest extends BasePlatformTes
         myFixture.configureByFiles("view.jsp", "liferay-aui.tld");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("alert"));
     }
 
@@ -28,6 +30,8 @@ public class LiferayTaglibJavascriptLanguageInjectorTest extends BasePlatformTes
         myFixture.configureByFiles("custom.jsp", "liferay-aui.tld");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("alert"));
     }
 
@@ -36,6 +40,8 @@ public class LiferayTaglibJavascriptLanguageInjectorTest extends BasePlatformTes
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("alert"));
     }
 

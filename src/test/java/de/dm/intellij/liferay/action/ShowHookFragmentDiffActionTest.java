@@ -2,19 +2,14 @@ package de.dm.intellij.liferay.action;
 
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.ex.EditorEx;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
 import com.intellij.testFramework.LightProjectDescriptor;
-import com.intellij.testFramework.TestDataProvider;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 import org.jetbrains.annotations.NotNull;
 
-public class ShowHookFragmentDiffActionTestFragment extends LightJavaCodeInsightFixtureTestCase {
+public class ShowHookFragmentDiffActionTest extends LightJavaCodeInsightFixtureTestCase {
 
     private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/action/ShowHookFragmentDiffActionTest";
 
@@ -33,10 +28,6 @@ public class ShowHookFragmentDiffActionTestFragment extends LightJavaCodeInsight
 
     public void testFragmentJspHook() {
         myFixture.configureByFiles("META-INF/resources/init.jsp", "bnd.bnd");
-
-        PsiFile psiFile = myFixture.getFile();
-
-        VirtualFile initJsp = psiFile.getVirtualFile();
 
         ShowHookFragmentDiffAction action = new ShowHookFragmentDiffAction();
 
@@ -57,10 +48,6 @@ public class ShowHookFragmentDiffActionTestFragment extends LightJavaCodeInsight
     public void testFragmentJspHookAdditionalFile() {
         myFixture.configureByFiles("META-INF/resources/additional.jsp", "bnd.bnd");
 
-        PsiFile psiFile = myFixture.getFile();
-
-        VirtualFile additionalJsp = psiFile.getVirtualFile();
-
         ShowHookFragmentDiffAction action = new ShowHookFragmentDiffAction();
 
         DataContext dataContext = ((EditorEx)myFixture.getEditor()).getDataContext();
@@ -80,10 +67,6 @@ public class ShowHookFragmentDiffActionTestFragment extends LightJavaCodeInsight
     public void testFragmentJspHookArbitraryFile() {
         myFixture.configureByFiles("META-INF/resources/foo.txt", "bnd.bnd");
 
-        PsiFile psiFile = myFixture.getFile();
-
-        VirtualFile arbitraryFile = psiFile.getVirtualFile();
-
         ShowHookFragmentDiffAction action = new ShowHookFragmentDiffAction();
 
         DataContext dataContext = ((EditorEx)myFixture.getEditor()).getDataContext();
@@ -98,24 +81,5 @@ public class ShowHookFragmentDiffActionTestFragment extends LightJavaCodeInsight
         );
 
         assertFalse("Diff action should not be available for arbitrary file", action.isAvailable(event));
-    }
-
-    private static final class VirtualFilesDataProvider extends TestDataProvider {
-        private VirtualFile[] virtualFiles;
-
-        private VirtualFilesDataProvider(@NotNull Project project, VirtualFile... virtualFiles) {
-            super(project);
-
-            this.virtualFiles = virtualFiles;
-        }
-
-        @Override
-        public Object getData(String dataId) {
-            if (CommonDataKeys.VIRTUAL_FILE_ARRAY.is(dataId)) {
-                return virtualFiles;
-            }
-
-            return super.getData(dataId);
-        }
     }
 }

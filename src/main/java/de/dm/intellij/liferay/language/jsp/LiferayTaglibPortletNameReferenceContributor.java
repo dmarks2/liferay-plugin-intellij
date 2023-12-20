@@ -37,11 +37,11 @@ public class LiferayTaglibPortletNameReferenceContributor extends AbstractLifera
 
     static {
         TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET, Arrays.asList(
-                new AbstractMap.SimpleEntry<String, String>("actionURL", "portletName"),
-                new AbstractMap.SimpleEntry<String, String>("preview", "portletName"),
-                new AbstractMap.SimpleEntry<String, String>("renderURL", "portletName"),
-                new AbstractMap.SimpleEntry<String, String>("resourceURL", "portletName"),
-                new AbstractMap.SimpleEntry<String, String>("runtime", "portletName")
+				new AbstractMap.SimpleEntry<>("actionURL", "portletName"),
+				new AbstractMap.SimpleEntry<>("preview", "portletName"),
+				new AbstractMap.SimpleEntry<>("renderURL", "portletName"),
+				new AbstractMap.SimpleEntry<>("resourceURL", "portletName"),
+				new AbstractMap.SimpleEntry<>("runtime", "portletName")
         ));
 
     }
@@ -50,58 +50,47 @@ public class LiferayTaglibPortletNameReferenceContributor extends AbstractLifera
     @Override
     protected PsiReferenceProvider getReferenceProvider() {
         return new PsiReferenceProvider() {
-            @NotNull
             @Override
-            public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+            public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
                 if (element instanceof XmlAttributeValue) {
-                    XmlAttributeValue xmlAttributeValue = (XmlAttributeValue)element;
+					return new PsiReference[]{
+							new PsiReferenceBase.Poly<>((XmlAttributeValue) element, ElementManipulators.getValueTextRange(element), true) {
+								@Override
+								public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
+									Project project = getElement().getProject();
 
-                    String value = xmlAttributeValue.getValue();
-                    if (value != null) {
-                        return new PsiReference[]{
-                                new PsiReferenceBase.Poly<>((XmlAttributeValue) element, ElementManipulators.getValueTextRange(element), true) {
-                                    @NotNull
-                                    @Override
-                                    public ResolveResult[] multiResolve(boolean incompleteCode) {
-                                        Project project = getElement().getProject();
+									String value = getElement().getValue();
 
-                                        String value = getElement().getValue();
-                                        if (value != null) {
-                                            List<PsiFile> portletClasses = PortletNameIndex.getPortletClasses(project, value, GlobalSearchScope.allScope(project));
+									List<PsiFile> portletClasses = PortletNameIndex.getPortletClasses(project, value, GlobalSearchScope.allScope(project));
 
-                                            return PsiElementResolveResult.createResults(portletClasses);
-                                        }
-                                        return new ResolveResult[0];
-                                    }
+									return PsiElementResolveResult.createResults(portletClasses);
+								}
 
-                                    @NotNull
-                                    @Override
-                                    public Object[] getVariants() {
-                                        List<Object> result = new ArrayList<Object>();
+								@Override
+								public Object @NotNull [] getVariants() {
+									List<Object> result = new ArrayList<>();
 
-                                        Project project = getElement().getProject();
+									Project project = getElement().getProject();
 
-                                        List<String> portletNames = PortletNameIndex.getPortletNames(project, GlobalSearchScope.allScope(project));
+									List<String> portletNames = PortletNameIndex.getPortletNames(project, GlobalSearchScope.allScope(project));
 
-                                        Set<String> distinctPortletNames = new TreeSet<>();
-                                        distinctPortletNames.addAll(portletNames);
+									Set<String> distinctPortletNames = new TreeSet<>(portletNames);
 
-                                        for (String portletName : distinctPortletNames) {
-                                            List<PsiFile> portletClasses = PortletNameIndex.getPortletClasses(project, portletName, GlobalSearchScope.allScope(project));
-                                            if (portletClasses.size() > 0) {
-                                                result.add(
-                                                        LookupElementBuilder.create(portletName).
-                                                                withIcon(Icons.LIFERAY_ICON)
-                                                );
-                                            }
-                                        }
+									for (String portletName : distinctPortletNames) {
+										List<PsiFile> portletClasses = PortletNameIndex.getPortletClasses(project, portletName, GlobalSearchScope.allScope(project));
+										if (!portletClasses.isEmpty()) {
+											result.add(
+													LookupElementBuilder.create(portletName).
+															withIcon(Icons.LIFERAY_ICON)
+											);
+										}
+									}
 
-                                        return result.toArray(new Object[result.size()]);
-                                    }
-                                }
-                        };
-                    }
-                }
+									return result.toArray(new Object[0]);
+								}
+							}
+					};
+				}
                 return new PsiReference[0];
             }
         };

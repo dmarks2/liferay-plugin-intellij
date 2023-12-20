@@ -1,4 +1,4 @@
-package de.dm.intellij.liferay.language.jsp;
+package de.dm.intellij.liferay.language.javascript;
 
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.testFramework.LightProjectDescriptor;
@@ -8,15 +8,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class LiferayJspHookFileReferenceHelperTestFragment extends LightJavaCodeInsightFixtureTestCase {
+public class AlloyUIPredefinedLibraryProviderTest extends LightJavaCodeInsightFixtureTestCase {
 
-    private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/jsp/LiferayJspHookFileReferenceHelperTest";
+    private static final String TEST_DATA_PATH = "testdata/de/dm/intellij/liferay/language/javascript/AlloyUIPredefinedLibraryProviderTest";
 
     @NotNull
     @Override
     protected LightProjectDescriptor getProjectDescriptor() {
         return new LightProjectDescriptorBuilder()
-                .library("com.liferay:com.liferay.login.web", TEST_DATA_PATH, "com.liferay.login.web.jar")
+                .library("com.liferay:com.liferay.frontend.js.web", TEST_DATA_PATH, "com.liferay.frontend.js.web.jar")
                 .build();
     }
 
@@ -25,10 +25,12 @@ public class LiferayJspHookFileReferenceHelperTestFragment extends LightJavaCode
         return TEST_DATA_PATH;
     }
 
-    public void testFragmentJspHook() {
-        myFixture.configureByFiles("META-INF/resources/module.jsp", "bnd.bnd");
+    public void testJavascriptLiferay7x() {
+        myFixture.configureByFiles("view7x.jsp");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
-        assertTrue(strings.contains("authType"));
+
+        assertNotNull(strings);
+        assertTrue(strings.contains("Liferay"));
     }
 }

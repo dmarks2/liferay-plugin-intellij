@@ -7,7 +7,7 @@ public interface LiferayBundleSupportGradleTaskModel extends Serializable {
     /**
      * Returns the liferayHome directory (extracted from the bundle support plugin)
      *
-     * @return
+     * @return The liferay home
      */
     String getLiferayHome();
 

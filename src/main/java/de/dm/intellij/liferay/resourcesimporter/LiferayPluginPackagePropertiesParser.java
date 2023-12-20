@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.resourcesimporter;
 
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.externalSystem.service.project.autoimport.FileChangeListenerBase;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -16,6 +17,8 @@ import java.util.Properties;
  * Extracts Resources Importer Information from liferay-plugin-package.properties
  */
 public class LiferayPluginPackagePropertiesParser extends FileChangeListenerBase {
+
+    private final static Logger log = Logger.getInstance(LiferayPluginPackagePropertiesParser.class);
 
     private static final String RESOURCES_IMPORTER_TARGET_CLASS_NAME = "resources-importer-target-class-name";
     private static final String RESOURCES_IMPORTER_TARGET_VALUE = "resources-importer-target-value";
@@ -37,7 +40,7 @@ public class LiferayPluginPackagePropertiesParser extends FileChangeListenerBase
                         component.setResourcesImporterGroupName(targetValue);
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage(), e);
                 }
             }
         }

@@ -35,6 +35,8 @@ public class MetaConfigurationReferenceContributorTest extends LightJavaCodeInsi
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("de.dm.configuration.MyConfiguration"));
     }
 
@@ -48,6 +50,8 @@ public class MetaConfigurationReferenceContributorTest extends LightJavaCodeInsi
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("de.dm.configuration.MyConfiguration"));
     }
 
@@ -60,6 +64,8 @@ public class MetaConfigurationReferenceContributorTest extends LightJavaCodeInsi
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("com.liferay.document.library.configuration.DLConfiguration"));
     }
 
@@ -71,7 +77,11 @@ public class MetaConfigurationReferenceContributorTest extends LightJavaCodeInsi
                 "org/osgi/service/component/annotations/Component.java"
         );
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(caretElement);
+
+        PsiElement element = caretElement.getParent();
         PsiElement resolve = element.getReferences()[0].resolve();
 
         assertNotNull(resolve);
@@ -85,7 +95,11 @@ public class MetaConfigurationReferenceContributorTest extends LightJavaCodeInsi
                 "org/osgi/service/component/annotations/Component.java"
         );
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(caretElement);
+
+        PsiElement element = caretElement.getParent();
         PsiElement resolve = element.getReferences()[0].resolve();
 
         assertNotNull(resolve);
@@ -98,7 +112,11 @@ public class MetaConfigurationReferenceContributorTest extends LightJavaCodeInsi
                 "org/osgi/service/component/annotations/Component.java"
         );
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(caretElement);
+
+        PsiElement element = caretElement.getParent();
         PsiElement resolve = element.getReferences()[0].resolve();
 
         assertNotNull(resolve);

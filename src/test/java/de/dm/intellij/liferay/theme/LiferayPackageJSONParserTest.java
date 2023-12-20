@@ -9,18 +9,19 @@ import de.dm.intellij.liferay.module.LiferayModuleComponent;
 
 public class LiferayPackageJSONParserTest extends BasePlatformTestCase {
 
-    private static final String NEW_TEXT = "{\n" +
-            "  \"name\": \"my-theme\",\n" +
-            "  \"version\": \"1.0.0\",\n" +
-            "  \"main\": \"package.json\",\n" +
-            "  \"liferayTheme\": {\n" +
-            "    \"baseTheme\": \"unstyled\",\n" +
-            "    \"screenshot\": \"\",\n" +
-            "    \"rubySass\": false,\n" +
-            "    \"templateLanguage\": \"ftl\",\n" +
-            "    \"version\": \"7.0\"\n" +
-            "  }\n" +
-            "}";
+    private static final String NEW_TEXT = """
+			{
+			  "name": "my-theme",
+			  "version": "1.0.0",
+			  "main": "package.json",
+			  "liferayTheme": {
+			    "baseTheme": "unstyled",
+			    "screenshot": "",
+			    "rubySass": false,
+			    "templateLanguage": "ftl",
+			    "version": "7.0"
+			  }
+			}""";
 
     @Override
     protected String getTestDataPath() {
@@ -40,9 +41,7 @@ public class LiferayPackageJSONParserTest extends BasePlatformTestCase {
 
         Document document = editor.getDocument();
 
-        WriteCommandAction.runWriteCommandAction(myFixture.getProject(), () -> {
-            document.replaceString(0, document.getTextLength(), NEW_TEXT);
-        });
+        WriteCommandAction.runWriteCommandAction(myFixture.getProject(), () -> document.replaceString(0, document.getTextLength(), NEW_TEXT));
 
         FileDocumentManager fileDocumentManager = FileDocumentManager.getInstance();
 

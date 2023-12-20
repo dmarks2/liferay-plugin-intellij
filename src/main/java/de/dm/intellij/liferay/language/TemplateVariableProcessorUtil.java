@@ -31,7 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TemplateVariableProcessorUtil {
-    public static final Pattern IMPLICIT_VAR_DECL_PATTERN = Pattern.compile("(.*?)@vtlvariable [ ]*name=\"([^\"]+)\"[ \t\n]+type=\"([^\"]*)\"([ \t\n]+file=\"([^\"]*)\")?(.*)");
+    public static final Pattern IMPLICIT_VAR_DECL_PATTERN = Pattern.compile("(.*?)@vtlvariable +name=\"([^\"]+)\"[ \t\n]+type=\"([^\"]*)\"([ \t\n]+file=\"([^\"]*)\")?(.*)");
 
     @SuppressWarnings("unchecked")
     public static <F extends PsiFile, T extends PsiNamedElement> List<T> getGlobalVariables(TemplateVariableProcessor<F, T> templateVariableProcessor, F file) {
@@ -51,7 +51,7 @@ public class TemplateVariableProcessorUtil {
             portalMajorVersion = component.getPortalMajorVersion();
         }
 
-        final List<T> variables = new ArrayList<T>();
+        final List<T> variables = new ArrayList<>();
 
         boolean isJournalTemplateFile = LiferayFileUtil.isJournalTemplateFile(templateFile);
 
@@ -431,7 +431,7 @@ public class TemplateVariableProcessorUtil {
     }
 
     private static <T extends PsiNamedElement, F extends PsiFile> Collection<T> getStructureVariables(TemplateVariableProcessor<F, T> templateVariableProcessor, VirtualFile journalStructureFile, F templateFile, Project project) {
-        Collection<T> result = new ArrayList<T>();
+        Collection<T> result = new ArrayList<>();
 
         PsiFile file = PsiManager.getInstance(project).findFile(journalStructureFile);
 
@@ -455,7 +455,7 @@ public class TemplateVariableProcessorUtil {
     }
 
     private static <F extends PsiFile, T extends PsiNamedElement> Collection<T> getImplicitVariables(TemplateVariableProcessor<F, T> templateVariableProcessor, F sourceFile, String resource) {
-        final List<T> variables = new ArrayList<T>();
+        final List<T> variables = new ArrayList<>();
 
         URL url = TemplateVariableProcessorUtil.class.getResource(resource);
         if (url != null) {
@@ -463,9 +463,8 @@ public class TemplateVariableProcessorUtil {
             if (virtualFile != null) {
                 PsiFile psiFile = PsiManager.getInstance(sourceFile.getProject()).findFile(virtualFile);
                 if (psiFile != null) {
-                    if (psiFile instanceof VtlFile) {
-                        VtlFile vtlFile = (VtlFile) psiFile;
-                        for (PsiElement element : vtlFile.getChildren()) {
+                    if (psiFile instanceof VtlFile vtlFile) {
+						for (PsiElement element : vtlFile.getChildren()) {
                             if (element instanceof PsiComment) {
                                 String commentText = element.getText();
                                 Matcher matcher = IMPLICIT_VAR_DECL_PATTERN.matcher(commentText);

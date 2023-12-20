@@ -76,7 +76,7 @@ public class FreemarkerAttachDebugConfiguration extends LocatableConfigurationBa
     @Nullable
     @Override
     public RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment) throws ExecutionException {
-        return new FreemarkerAttachRunProfileState(environment, this);
+        return new FreemarkerAttachRunProfileState(this);
     }
 
     @Override

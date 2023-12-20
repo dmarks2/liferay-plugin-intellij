@@ -18,6 +18,7 @@ public class LiferayFreemarkerTaglibSimpleAttributesCompletionContributorTest ex
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue("\"lexicon\" should have been suggested as code completion for <@liferay_aui.icon markupView=\"\">", strings.contains("lexicon"));
     }
 
@@ -27,6 +28,7 @@ public class LiferayFreemarkerTaglibSimpleAttributesCompletionContributorTest ex
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue("\"lexicon\" should have been suggested as code completion for <@liferay_aui[\"icon\"] markupView=\"\">", strings.contains("lexicon"));
     }
 

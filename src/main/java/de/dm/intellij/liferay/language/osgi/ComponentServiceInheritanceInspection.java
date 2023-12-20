@@ -10,6 +10,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiAnnotationParameterList;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiIdentifier;
 import com.intellij.psi.PsiTypeParameter;
 import com.intellij.psi.StubBasedPsiElement;
 import com.intellij.psi.impl.java.stubs.PsiClassStub;
@@ -54,9 +55,8 @@ public class ComponentServiceInheritanceInspection extends AbstractBaseJavaLocal
         return LiferayInspectionsGroupNames.LIFERAY_GROUP_NAME;
     }
 
-    @NotNull
     @Override
-    public String[] getGroupPath() {
+    public String @NotNull [] getGroupPath() {
         return new String[] {
                 getGroupDisplayName(),
                 LiferayInspectionsGroupNames.OSGI_GROUP_NAME
@@ -84,51 +84,59 @@ public class ComponentServiceInheritanceInspection extends AbstractBaseJavaLocal
                         if (!isInheritorOrSelf(project, serviceClass, aClass, true)) {
                             List<LocalQuickFix> quickFixes = new ArrayList<>();
 
-                            LocalQuickFix quickFix = new ChangeSuperClassFix(
-                                    serviceClass,
-                                    aClass.getSuperClass(),
-                                    0,
-                                    serviceClass.isInterface() && !aClass.isInterface()
-                            );
+                            PsiClass superClass = aClass.getSuperClass();
 
-                            quickFixes.add(quickFix);
+                            if (superClass != null) {
+                                LocalQuickFix quickFix = new ChangeSuperClassFix(
+                                        serviceClass,
+                                        superClass,
+                                        0,
+                                        serviceClass.isInterface() && !aClass.isInterface()
+                                );
 
-                            SearchScope scope = GlobalSearchScope.allScope(project);
-                            Query<PsiClass> query = ClassInheritorsSearch.search(serviceClass, scope, false);
-                            int i = 1;
+                                quickFixes.add(quickFix);
 
-                            PsiClass[] psiClasses = query.toArray(new PsiClass[0]);
-                            for (PsiClass psiClass : psiClasses) {
-                                if (psiClass.getSuperClass() != null) {
-                                    if ((!isAnonymousClass(psiClass)) && (!isLocalClass(psiClass))) {
-                                        quickFixes.add(
-                                                new ChangeSuperClassFix(
-                                                        psiClass,
-                                                        aClass.getSuperClass(),
-                                                        i++,
-                                                        psiClass.isInterface()
-                                                )
-                                        );
+                                SearchScope scope = GlobalSearchScope.allScope(project);
+                                Query<PsiClass> query = ClassInheritorsSearch.search(serviceClass, scope, false);
+                                int i = 1;
+
+                                PsiClass[] psiClasses = query.toArray(new PsiClass[0]);
+                                for (PsiClass psiClass : psiClasses) {
+                                    if (psiClass.getSuperClass() != null) {
+                                        if ((!isAnonymousClass(psiClass)) && (!isLocalClass(psiClass))) {
+                                            quickFixes.add(
+                                                    new ChangeSuperClassFix(
+                                                            psiClass,
+                                                            superClass,
+                                                            i++,
+                                                            psiClass.isInterface()
+                                                    )
+                                            );
+                                        }
                                     }
                                 }
                             }
 
-                            ProblemDescriptor problemDescriptor = manager.createProblemDescriptor(
-                                    aClass.getNameIdentifier(),
-                                    "Class " + aClass.getQualifiedName() + " is not assignable to specified service " + serviceClass.getQualifiedName(),
-                                    isOnTheFly,
-                                    quickFixes.toArray(new LocalQuickFix[quickFixes.size()]),
-                                    ProblemHighlightType.GENERIC_ERROR
-                            );
+                            PsiIdentifier nameIdentifier = aClass.getNameIdentifier();
 
-                            problemDescriptors.add(problemDescriptor);
+                            if (nameIdentifier != null) {
+                                ProblemDescriptor problemDescriptor = manager.createProblemDescriptor(
+                                        nameIdentifier,
+                                        "Class " + aClass.getQualifiedName() + " is not assignable to specified service " + serviceClass.getQualifiedName(),
+                                        isOnTheFly,
+                                        quickFixes.toArray(new LocalQuickFix[0]),
+                                        ProblemHighlightType.GENERIC_ERROR
+                                );
+
+                                problemDescriptors.add(problemDescriptor);
+                            }
                         }
                     }
                 }
             }
         }
 
-        return problemDescriptors.toArray(new ProblemDescriptor[problemDescriptors.size()]);
+        return problemDescriptors.toArray(new ProblemDescriptor[0]);
     }
 
     private static boolean isInheritorOrSelf(Project project, PsiClass baseClass, PsiClass currentClass, boolean checkDeep) {
@@ -151,10 +159,9 @@ public class ComponentServiceInheritanceInspection extends AbstractBaseJavaLocal
     }
 
     private static boolean isLocalClass(PsiClass psiClass) {
-        if (psiClass instanceof StubBasedPsiElement) {
-            StubBasedPsiElement stubBasedPsiElement = (StubBasedPsiElement)psiClass;
+        if (psiClass instanceof StubBasedPsiElement stubBasedPsiElement) {
 
-            PsiClassStub<?> stub = (PsiClassStub) stubBasedPsiElement.getStub();
+			PsiClassStub<?> stub = (PsiClassStub) stubBasedPsiElement.getStub();
 
             return stub instanceof PsiClassStubImpl && ((PsiClassStubImpl) stub).isLocalClassInner();
         }
@@ -163,10 +170,9 @@ public class ComponentServiceInheritanceInspection extends AbstractBaseJavaLocal
     }
 
     private static boolean isAnonymousClass(PsiClass psiClass) {
-        if (psiClass instanceof StubBasedPsiElement) {
-            StubBasedPsiElement stubBasedPsiElement = (StubBasedPsiElement) psiClass;
+        if (psiClass instanceof StubBasedPsiElement stubBasedPsiElement) {
 
-            PsiClassStub<?> stub = (PsiClassStub) stubBasedPsiElement.getStub();
+			PsiClassStub<?> stub = (PsiClassStub) stubBasedPsiElement.getStub();
             return stub instanceof PsiClassStubImpl && ((PsiClassStubImpl) stub).isAnonymousInner();
         }
         return false;

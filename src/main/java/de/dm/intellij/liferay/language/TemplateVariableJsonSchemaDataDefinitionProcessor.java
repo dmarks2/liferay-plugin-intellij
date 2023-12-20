@@ -31,10 +31,8 @@ public class TemplateVariableJsonSchemaDataDefinitionProcessor implements Templa
         if (jsonProperty != null) {
             JsonValue customProperties = jsonProperty.getValue();
 
-            if (customProperties instanceof JsonObject) {
-                JsonObject customPropertiesObj = (JsonObject) customProperties;
-
-                return customPropertiesObj.findProperty("fieldReference");
+            if (customProperties instanceof JsonObject customPropertiesObj) {
+				return customPropertiesObj.findProperty("fieldReference");
             }
         }
 

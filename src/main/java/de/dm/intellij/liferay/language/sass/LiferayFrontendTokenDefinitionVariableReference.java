@@ -60,7 +60,7 @@ public class LiferayFrontendTokenDefinitionVariableReference extends PsiReferenc
 
     @Override
     public Object @NotNull [] getVariants() {
-        List<Object> result = new ArrayList<Object>();
+        List<Object> result = new ArrayList<>();
 
         Map<String, JsonProperty> cssVariableMap = getCssVariableMap();
 
@@ -101,10 +101,8 @@ public class LiferayFrontendTokenDefinitionVariableReference extends PsiReferenc
 
                 PsiFile psiFile = psiManager.findFile(frontendTokenDefinitionFile);
 
-                if (psiFile instanceof JsonFile) {
-                    JsonFile jsonFile = (JsonFile) psiFile;
-
-                    JsonValue topLevelValue = jsonFile.getTopLevelValue();
+                if (psiFile instanceof JsonFile jsonFile) {
+					JsonValue topLevelValue = jsonFile.getTopLevelValue();
 
                     if (topLevelValue != null) {
                         LiferayFrontendTokenDefinitionJsonElementVisitor liferayFrontendTokenDefinitionJsonElementVisitor = new LiferayFrontendTokenDefinitionJsonElementVisitor();

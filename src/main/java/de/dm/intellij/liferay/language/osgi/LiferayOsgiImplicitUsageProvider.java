@@ -40,13 +40,11 @@ public class LiferayOsgiImplicitUsageProvider implements ImplicitUsageProvider {
 
     @Override
     public boolean isImplicitWrite(@NotNull PsiElement element) {
-        if (element instanceof PsiModifierListOwner) {
-            PsiModifierListOwner modifierListOwner = (PsiModifierListOwner)element;
+        if (element instanceof PsiModifierListOwner modifierListOwner) {
 
-            if (element instanceof PsiMethod && ((PsiMethod)element).isConstructor()) {
-                PsiMethod constructor = (PsiMethod) element;
+			if (element instanceof PsiMethod constructor && ((PsiMethod)element).isConstructor()) {
 
-                PsiClass containingClass = constructor.getContainingClass();
+				PsiClass containingClass = constructor.getContainingClass();
 
                 return containingClass != null && AnnotationUtil.isAnnotated(containingClass, "org.osgi.service.component.annotations.Component", AnnotationUtil.CHECK_TYPE);
             }

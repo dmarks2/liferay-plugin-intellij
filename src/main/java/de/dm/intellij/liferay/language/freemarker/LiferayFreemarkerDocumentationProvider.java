@@ -10,10 +10,8 @@ public class LiferayFreemarkerDocumentationProvider extends AbstractDocumentatio
 
     @Override
     public String generateDoc(PsiElement element, @Nullable PsiElement originalElement) {
-        if (element instanceof StructureFtlVariable) {
-            StructureFtlVariable structureFtlVariable = (StructureFtlVariable)element;
-
-            TemplateVariable templateVariable = structureFtlVariable.getTemplateVariable();
+        if (element instanceof StructureFtlVariable structureFtlVariable) {
+			TemplateVariable templateVariable = structureFtlVariable.getTemplateVariable();
 
             String result = "<b>" + templateVariable.getName() + "</b>";
 

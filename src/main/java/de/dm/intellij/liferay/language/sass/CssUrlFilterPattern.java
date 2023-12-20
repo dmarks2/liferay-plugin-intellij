@@ -16,19 +16,12 @@ public class CssUrlFilterPattern extends FilterPattern {
         super(new ElementFilter() {
             @Override
             public boolean isAcceptable(Object element, @Nullable PsiElement context) {
-                if (element instanceof PsiElement) {
-                    PsiElement psiElement = (PsiElement)element;
+                if (element instanceof PsiElement psiElement) {
 
-                    if (
-                            (
-                                    //Parsed CSS file
-                                    (psiElement.getParent() instanceof CssUri) ||
-                                    //Parsed SCSS file
-                                    ( (psiElement.getParent() instanceof CssTerm) && ("URI".equals( ((CssTerm)psiElement.getParent()).getTermType().toString() ) ) )
-                            )
-                        ) {
-                        return true;
-                    }
+					//Parsed CSS file
+					return (psiElement.getParent() instanceof CssUri) ||
+							//Parsed SCSS file
+							((psiElement.getParent() instanceof CssTerm) && ("URI".equals(((CssTerm) psiElement.getParent()).getTermType().toString())));
                 }
 
                 return false;

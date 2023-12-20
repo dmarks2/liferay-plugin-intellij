@@ -34,9 +34,8 @@ public class LiferayXmlFileReferenceContributor extends PsiReferenceContributor 
                 PlatformPatterns.psiElement(PsiElement.class).and(new LiferayXmlFileReferenceFilterPattern()),
                 new PsiReferenceProvider() {
 
-                    @NotNull
                     @Override
-                    public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+                    public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
                         TextRange originalRange = element.getTextRange();
                         String valueString;
                         int startInElement;

@@ -36,17 +36,15 @@ public class LiferayServiceJavaImplLineMarkerProviderTest extends LightJavaCodeI
         boolean lineMarkerFound = false;
         List<GutterMark> allMarkers = myFixture.findAllGutters();
         for (GutterMark gutterMark : allMarkers) {
-            if (gutterMark instanceof LineMarkerInfo.LineMarkerGutterIconRenderer) {
-                LineMarkerInfo.LineMarkerGutterIconRenderer lineMarkerGutterIconRenderer = (LineMarkerInfo.LineMarkerGutterIconRenderer)gutterMark;
+            if (gutterMark instanceof LineMarkerInfo.LineMarkerGutterIconRenderer lineMarkerGutterIconRenderer) {
 
-                LineMarkerInfo lineMarkerInfo = lineMarkerGutterIconRenderer.getLineMarkerInfo();
+				LineMarkerInfo lineMarkerInfo = lineMarkerGutterIconRenderer.getLineMarkerInfo();
 
-                if (lineMarkerInfo instanceof RelatedItemLineMarkerInfo) {
-                    RelatedItemLineMarkerInfo relatedItemLineMarkerInfo = (RelatedItemLineMarkerInfo)lineMarkerInfo;
+                if (lineMarkerInfo instanceof RelatedItemLineMarkerInfo relatedItemLineMarkerInfo) {
 
-                    Collection<GotoRelatedItem> gotoRelatedItems = relatedItemLineMarkerInfo.createGotoRelatedItems();
+					Collection<GotoRelatedItem> gotoRelatedItems = relatedItemLineMarkerInfo.createGotoRelatedItems();
 
-                    if (gotoRelatedItems.size() > 0) {
+                    if (!gotoRelatedItems.isEmpty()) {
                         GotoRelatedItem gotoRelatedItem = gotoRelatedItems.iterator().next();
 
                         PsiElement element = gotoRelatedItem.getElement();

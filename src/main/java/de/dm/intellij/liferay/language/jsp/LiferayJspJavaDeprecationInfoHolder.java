@@ -12,12 +12,10 @@ import com.intellij.psi.PsiElementFactory;
 import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiMethodCallExpression;
 import com.intellij.psi.PsiReferenceExpression;
-import com.intellij.psi.impl.source.jsp.jspJava.JspMethodCall;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
-import de.dm.intellij.liferay.language.java.LiferayJavaDeprecationInfoHolder;
 import de.dm.intellij.liferay.language.java.LiferayJavaDeprecations;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.Nls;
@@ -132,7 +130,7 @@ public class LiferayJspJavaDeprecationInfoHolder extends AbstractLiferayInspecti
 	}
 
 	private static class RenameImportQuickFix implements LocalQuickFix {
-		private String newName;
+		private final String newName;
 
 		public RenameImportQuickFix(String newName) {
 			this.newName = newName;

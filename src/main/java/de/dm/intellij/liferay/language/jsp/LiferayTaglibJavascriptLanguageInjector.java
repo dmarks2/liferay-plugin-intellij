@@ -76,17 +76,16 @@ public class LiferayTaglibJavascriptLanguageInjector extends AbstractLiferayJava
 
     @Override
     protected void injectIntoAttribute(@NotNull MultiHostRegistrar registrar, XmlAttribute xmlAttribute, PsiElement context) {
-        if ( (xmlAttribute.getValue() != null) && (xmlAttribute.getValue().trim().length() > 0) ) {
+        if ( (xmlAttribute.getValue() != null) && (!xmlAttribute.getValue().trim().isEmpty()) ) {
             XmlAttributeValue valueElement = xmlAttribute.getValueElement();
             if (valueElement != null) {
                 if (((PsiLanguageInjectionHost)valueElement).isValidHost()) {
                     boolean needToInject = false;
                     PsiElement[] myChildren = valueElement.getChildren();
                     for (PsiElement child : myChildren) {
-                        if (child instanceof XmlToken) {
+                        if (child instanceof XmlToken xmlToken) {
                             //only inject if attribute contains regular content (e.g. not for JSP expressions inside the attribute value)
-                            XmlToken xmlToken = (XmlToken) child;
-                            IElementType tokenType = xmlToken.getTokenType();
+							IElementType tokenType = xmlToken.getTokenType();
                             if (XmlTokenType.XML_ATTRIBUTE_VALUE_TOKEN.equals(tokenType)) {
                                 needToInject = true;
                                 break;

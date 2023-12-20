@@ -19,10 +19,8 @@ public class BndDocumentationProvider extends AbstractDocumentationProvider {
     @Nullable
     @Override
     public String generateDoc(PsiElement element, @Nullable PsiElement originalElement) {
-        if (element instanceof BndHeader) {
-            BndHeader bndHeader = (BndHeader) element;
-
-            String name = bndHeader.getName();
+        if (element instanceof BndHeader bndHeader) {
+			String name = bndHeader.getName();
 
             String description = BndDocumentationBundle.message(name);
 
@@ -60,10 +58,8 @@ public class BndDocumentationProvider extends AbstractDocumentationProvider {
 
     @Override
     public @Nullable PsiElement getDocumentationElementForLookupItem(PsiManager psiManager, Object object, PsiElement element) {
-        if (object instanceof String) {
-            String lookupString = (String) object;
-
-            return BndElementFactory.getInstance(psiManager.getProject()).createHeader(lookupString);
+        if (object instanceof String lookupString) {
+			return BndElementFactory.getInstance(psiManager.getProject()).createHeader(lookupString);
         }
 
         return super.getDocumentationElementForLookupItem(psiManager, object, element);

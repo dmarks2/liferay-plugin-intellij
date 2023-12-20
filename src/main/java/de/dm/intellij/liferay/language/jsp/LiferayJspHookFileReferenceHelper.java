@@ -22,7 +22,7 @@ public class LiferayJspHookFileReferenceHelper extends FileReferenceHelper {
     @NotNull
     @Override
     public Collection<PsiFileSystemItem> getRoots(@NotNull final Module module, @NotNull VirtualFile file) {
-        final Collection<PsiFileSystemItem> result = new ArrayList<PsiFileSystemItem>();
+        final Collection<PsiFileSystemItem> result = new ArrayList<>();
 
         String fragmentHostPackageName = LiferayModuleComponent.getOsgiFragmentHostPackageName(module);
 
@@ -42,7 +42,7 @@ public class LiferayJspHookFileReferenceHelper extends FileReferenceHelper {
 
     @NotNull
     @Override
-    public Collection<PsiFileSystemItem> getContexts(Project project, @NotNull VirtualFile file) {
+    public Collection<PsiFileSystemItem> getContexts(@NotNull Project project, @NotNull VirtualFile file) {
         PsiFileSystemItem result = getPsiFileSystemItem(project, file);
         if (result == null) {
             return Collections.emptyList();
@@ -52,7 +52,7 @@ public class LiferayJspHookFileReferenceHelper extends FileReferenceHelper {
     }
 
     @Override
-    public boolean isMine(Project project, @NotNull VirtualFile file) {
+    public boolean isMine(@NotNull Project project, @NotNull VirtualFile file) {
         return NewJspFileType.INSTANCE.equals(file.getFileType());
     }
 }

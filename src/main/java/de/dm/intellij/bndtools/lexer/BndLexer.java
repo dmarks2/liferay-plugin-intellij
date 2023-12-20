@@ -12,20 +12,20 @@ import java.util.Map;
 
 public class BndLexer extends LexerBase {
 
-    private static final Map<Character, IElementType> SPECIAL_CHARACTERS_TOKEN_MAP = new HashMap<Character, IElementType>() {
-        {
-            put(':', BndTokenType.COLON);
-            put(';', BndTokenType.SEMICOLON);
-            put(',', BndTokenType.COMMA);
-            put('=', BndTokenType.EQUALS);
-            put('(', BndTokenType.OPENING_PARENTHESIS_TOKEN);
-            put(')', BndTokenType.CLOSING_PARENTHESIS_TOKEN);
-            put('[', BndTokenType.OPENING_BRACKET_TOKEN);
-            put(']', BndTokenType.CLOSING_BRACKET_TOKEN);
-            put('\"', BndTokenType.QUOTE);
-            put('\\', BndTokenType.BACKSLASH_TOKEN);
-        }
-    };
+    private static final Map<Character, IElementType> SPECIAL_CHARACTERS_TOKEN_MAP = new HashMap<>() {
+		{
+			put(':', BndTokenType.COLON);
+			put(';', BndTokenType.SEMICOLON);
+			put(',', BndTokenType.COMMA);
+			put('=', BndTokenType.EQUALS);
+			put('(', BndTokenType.OPENING_PARENTHESIS_TOKEN);
+			put(')', BndTokenType.CLOSING_PARENTHESIS_TOKEN);
+			put('[', BndTokenType.OPENING_BRACKET_TOKEN);
+			put(']', BndTokenType.CLOSING_BRACKET_TOKEN);
+			put('\"', BndTokenType.QUOTE);
+			put('\\', BndTokenType.BACKSLASH_TOKEN);
+		}
+	};
 
     private CharSequence buffer;
     private int endOffset;
@@ -153,12 +153,12 @@ public class BndLexer extends LexerBase {
                 if (tokenType == BndTokenType.COMMENT) {
                     //end of comment
                     tokenType = BndTokenType.SECTION_END;
-                    tokenEnd = tokenStart + 1;
-                } else {
+				} else {
                     tokenType = BndTokenType.NEWLINE;
-                    tokenEnd = tokenStart + 1;
-                }
-            }
+				}
+
+				tokenEnd = tokenStart + 1;
+			}
             else if ((special = SPECIAL_CHARACTERS_TOKEN_MAP.get(c)) != null) {
                 tokenType = special;
                 tokenEnd = tokenStart + 1;

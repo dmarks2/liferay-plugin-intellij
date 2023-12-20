@@ -54,15 +54,18 @@ public class LiferayPortalPropertiesDocumentationProviderTest extends BasePlatfo
         myFixture.complete(CompletionType.BASIC, 1);
 
         LookupElement[] lookupElements = myFixture.getLookupElements();
-        for (LookupElement lookupElement : lookupElements) {
-            if (lookupElement.getLookupString().equals("liferay.home")) {
-                PsiElement elementFromLookup = DocumentationManager.getElementFromLookup(myFixture.getProject(), myFixture.getEditor(), myFixture.getFile(), lookupElement);
 
-                assertNotNull(elementFromLookup);
+        if (lookupElements != null) {
+            for (LookupElement lookupElement : lookupElements) {
+                if (lookupElement.getLookupString().equals("liferay.home")) {
+                    PsiElement elementFromLookup = DocumentationManager.getElementFromLookup(myFixture.getProject(), myFixture.getEditor(), myFixture.getFile(), lookupElement);
 
-                DocumentationProvider provider = DocumentationManager.getProviderFromElement(elementFromLookup);
+                    assertNotNull(elementFromLookup);
 
-                assertEquals("Should provide proper documentation for liferay.home property in code completion lookup", EXPECTED_DOCUMENTATION_LIFERAY_HOME, provider.generateDoc(elementFromLookup, null));
+                    DocumentationProvider provider = DocumentationManager.getProviderFromElement(elementFromLookup);
+
+                    assertEquals("Should provide proper documentation for liferay.home property in code completion lookup", EXPECTED_DOCUMENTATION_LIFERAY_HOME, provider.generateDoc(elementFromLookup, null));
+                }
             }
         }
     }

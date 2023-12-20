@@ -16,7 +16,7 @@ import java.util.Collection;
 
 public class LiferayPropertiesFileReferenceFilter extends FilterPattern {
 
-    private static Collection<String> FILE_REFERENCE_PROPERTIES = Arrays.asList(
+    private static final Collection<String> FILE_REFERENCE_PROPERTIES = Arrays.asList(
         "calendar.rss.template",
         "custom.sql.configs",
         "include-and-override",
@@ -35,22 +35,17 @@ public class LiferayPropertiesFileReferenceFilter extends FilterPattern {
         super(new ElementFilter() {
                   @Override
                   public boolean isAcceptable(Object element, @Nullable PsiElement context) {
-                      if (element instanceof PsiElement) {
-                          PsiElement psiElement = (PsiElement) element;
+                      if (element instanceof PsiElement psiElement) {
 
-                          if (isPortletPropertiesFile(psiElement)) {
-                              if (psiElement instanceof PropertyValueImpl) {
-                                  PropertyValueImpl propertyValue = (PropertyValueImpl)psiElement;
-
-                                  PropertyImpl property = (PropertyImpl) propertyValue.getParent();
+						  if (isPortletPropertiesFile(psiElement)) {
+                              if (psiElement instanceof PropertyValueImpl propertyValue) {
+								  PropertyImpl property = (PropertyImpl) propertyValue.getParent();
 
                                   if (property != null) {
                                       String key = property.getKey();
 
                                       if (key != null) {
-                                          if (FILE_REFERENCE_PROPERTIES.contains(key)) {
-                                              return true;
-                                          }
+										  return FILE_REFERENCE_PROPERTIES.contains(key);
                                       }
                                   }
                               }

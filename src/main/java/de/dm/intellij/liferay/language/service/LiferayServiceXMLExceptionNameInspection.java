@@ -31,7 +31,7 @@ public class LiferayServiceXMLExceptionNameInspection extends XmlSuppressableIns
     @NotNull
     @Override
     public String getDisplayName() {
-        return "unneccessary service.xml exception suffix";
+        return "unnecessary service.xml exception suffix";
     }
 
     @Nls
@@ -41,9 +41,8 @@ public class LiferayServiceXMLExceptionNameInspection extends XmlSuppressableIns
         return LiferayInspectionsGroupNames.LIFERAY_GROUP_NAME;
     }
 
-    @NotNull
     @Override
-    public String[] getGroupPath() {
+    public String @NotNull[] getGroupPath() {
         return new String[] {
             getGroupDisplayName(),
             LiferayInspectionsGroupNames.SERVICE_XML_GROUP_NAME
@@ -53,7 +52,7 @@ public class LiferayServiceXMLExceptionNameInspection extends XmlSuppressableIns
     @Nullable
     @Override
     public String getStaticDescription() {
-        return "Check for unneccessary Exception suffix at service.xml exception entries.";
+        return "Check for unnecessary Exception suffix at service.xml exception entries.";
     }
 
     @NotNull
@@ -61,7 +60,7 @@ public class LiferayServiceXMLExceptionNameInspection extends XmlSuppressableIns
     public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             @Override
-            public void visitXmlText(XmlText xmlText) {
+            public void visitXmlText(@NotNull XmlText xmlText) {
                 if (LiferayServiceXMLUtil.isExceptionTag(xmlText)) {
                     String text = xmlText.getText();
 
@@ -104,13 +103,16 @@ public class LiferayServiceXMLExceptionNameInspection extends XmlSuppressableIns
             PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
 
             Document document = psiDocumentManager.getDocument(containingFile);
-            psiDocumentManager.doPostponedOperationsAndUnblockDocument(document);
 
-            String oldText = xmlText.getText();
-            String newText = oldText.substring(0, oldText.length() - "Exception".length());
+            if (document != null) {
+                psiDocumentManager.doPostponedOperationsAndUnblockDocument(document);
 
-            document.replaceString(range.getStartOffset(), range.getEndOffset(), newText);
-            psiDocumentManager.commitDocument(document);
+                String oldText = xmlText.getText();
+                String newText = oldText.substring(0, oldText.length() - "Exception".length());
+
+                document.replaceString(range.getStartOffset(), range.getEndOffset(), newText);
+                psiDocumentManager.commitDocument(document);
+            }
         }
     }
 

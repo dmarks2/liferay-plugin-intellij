@@ -19,7 +19,7 @@ public class LiferayServicesUtil {
     private long defaultCompanyId;
     private long globalGroupId;
     private long companyGroupId;
-    private Map<String, Long> classNameIds = new HashMap<>();
+    private final Map<String, Long> classNameIds = new HashMap<>();
 
     public LiferayServicesUtil(URI endpoint) {
         this.serviceInvoker = new ServiceInvoker(endpoint);
@@ -76,7 +76,7 @@ public class LiferayServicesUtil {
     public long getDefaultCompanyId() throws IOException {
         if (defaultCompanyId == 0) {
             JsonArray userSites = getUserSitesGroup();
-            if (userSites.size() > 0) {
+            if (!userSites.isEmpty()) {
                 defaultCompanyId =  userSites.get(0).getAsJsonObject().get("companyId").getAsLong();
             }
         }

@@ -18,13 +18,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LiferayXmlFileReferenceFilterPattern extends FilterPattern {
 
-    private static Map<String, Collection<String>> XML_FILEREFERENCE_TAGS = new HashMap<String, Collection<String>>();
+    private static final Map<String, Collection<String>> XML_FILEREFERENCE_TAGS = new HashMap<>();
 
-    private static Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> XML_FILEREFERENCE_ATTRIBUTES = new HashMap<>();
+    private static final Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> XML_FILEREFERENCE_ATTRIBUTES = new HashMap<>();
 
     static {
         XML_FILEREFERENCE_TAGS.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_HOOK_6_1_0,
@@ -96,9 +97,9 @@ public class LiferayXmlFileReferenceFilterPattern extends FilterPattern {
         XML_FILEREFERENCE_TAGS.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_PORTLET_APP_7_3_0, XML_FILEREFERENCE_TAGS.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_PORTLET_APP_6_1_0));
 
         XML_FILEREFERENCE_ATTRIBUTES.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_RESOURCE_ACTION_MAPPING_6_1_0,
-                Arrays.asList(
-                        new AbstractMap.SimpleEntry<String, String>("resource", "file")
-                )
+				List.of(
+						new AbstractMap.SimpleEntry<>("resource", "file")
+				)
         );
         XML_FILEREFERENCE_ATTRIBUTES.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_RESOURCE_ACTION_MAPPING_6_2_0, XML_FILEREFERENCE_ATTRIBUTES.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_RESOURCE_ACTION_MAPPING_6_1_0));
         XML_FILEREFERENCE_ATTRIBUTES.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_RESOURCE_ACTION_MAPPING_7_0_0, XML_FILEREFERENCE_ATTRIBUTES.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_RESOURCE_ACTION_MAPPING_6_1_0));
@@ -107,9 +108,9 @@ public class LiferayXmlFileReferenceFilterPattern extends FilterPattern {
         XML_FILEREFERENCE_ATTRIBUTES.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_RESOURCE_ACTION_MAPPING_7_3_0, XML_FILEREFERENCE_ATTRIBUTES.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_RESOURCE_ACTION_MAPPING_6_1_0));
 
         XML_FILEREFERENCE_ATTRIBUTES.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_SERVICE_BUILDER_6_1_0,
-                Arrays.asList(
-                        new AbstractMap.SimpleEntry<String, String>("service-builder-import", "file")
-                )
+				List.of(
+						new AbstractMap.SimpleEntry<>("service-builder-import", "file")
+				)
         );
         XML_FILEREFERENCE_ATTRIBUTES.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_SERVICE_BUILDER_6_1_0, XML_FILEREFERENCE_ATTRIBUTES.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_SERVICE_BUILDER_6_1_0));
         XML_FILEREFERENCE_ATTRIBUTES.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_SERVICE_BUILDER_6_2_0, XML_FILEREFERENCE_ATTRIBUTES.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_SERVICE_BUILDER_6_1_0));
@@ -119,9 +120,9 @@ public class LiferayXmlFileReferenceFilterPattern extends FilterPattern {
         XML_FILEREFERENCE_ATTRIBUTES.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_SERVICE_BUILDER_7_3_0, XML_FILEREFERENCE_ATTRIBUTES.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_SERVICE_BUILDER_6_1_0));
 
         XML_FILEREFERENCE_TAGS.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_THEME_LOADER_6_1_0,
-                Arrays.asList(
-                        "themes-path"
-                )
+				List.of(
+						"themes-path"
+				)
         );
         XML_FILEREFERENCE_TAGS.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_THEME_LOADER_6_2_0, XML_FILEREFERENCE_TAGS.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_THEME_LOADER_6_1_0));
         XML_FILEREFERENCE_TAGS.put(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_THEME_LOADER_7_0_0, XML_FILEREFERENCE_TAGS.get(LiferayDefinitionsResourceProvider.XML_NAMESPACE_LIFERAY_THEME_LOADER_6_1_0));
@@ -141,11 +142,9 @@ public class LiferayXmlFileReferenceFilterPattern extends FilterPattern {
         super(new ElementFilter() {
             @Override
             public boolean isAcceptable(Object element, @Nullable PsiElement context) {
-                if (element instanceof XmlElement) {
-                    XmlElement xmlElement = (XmlElement) element;
-                    if (xmlElement.getParent() instanceof XmlText) {
-                        XmlText xmlText = (XmlText) xmlElement.getParent();
-                        XmlTag xmlTag = xmlText.getParentTag();
+                if (element instanceof XmlElement xmlElement) {
+					if (xmlElement.getParent() instanceof XmlText xmlText) {
+						XmlTag xmlTag = xmlText.getParentTag();
                         if (xmlTag != null) {
                             String namespace = xmlTag.getNamespace();
 
@@ -164,11 +163,9 @@ public class LiferayXmlFileReferenceFilterPattern extends FilterPattern {
                                 }
                             }
                         }
-                    } else if (xmlElement instanceof XmlAttributeValue) {
-                        XmlAttributeValue xmlAttributeValue = (XmlAttributeValue) xmlElement;
-                        if (xmlAttributeValue.getParent() instanceof XmlAttribute) {
-                            XmlAttribute xmlAttribute = (XmlAttribute) xmlAttributeValue.getParent();
-                            XmlTag xmlTag = xmlAttribute.getParent();
+                    } else if (xmlElement instanceof XmlAttributeValue xmlAttributeValue) {
+						if (xmlAttributeValue.getParent() instanceof XmlAttribute xmlAttribute) {
+							XmlTag xmlTag = xmlAttribute.getParent();
                             if (xmlTag != null) {
                                 if (XML_FILEREFERENCE_ATTRIBUTES.containsKey(xmlTag.getNamespace())) {
                                     for (AbstractMap.SimpleEntry<String, String> pair : XML_FILEREFERENCE_ATTRIBUTES.get(xmlTag.getNamespace())) {

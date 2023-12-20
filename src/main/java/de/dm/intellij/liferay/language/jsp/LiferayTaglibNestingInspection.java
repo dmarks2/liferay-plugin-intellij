@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringJoiner;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 public class LiferayTaglibNestingInspection extends XmlSuppressableInspectionTool {
 
@@ -49,9 +48,8 @@ public class LiferayTaglibNestingInspection extends XmlSuppressableInspectionToo
         return LiferayInspectionsGroupNames.LIFERAY_GROUP_NAME;
     }
 
-    @NotNull
     @Override
-    public String[] getGroupPath() {
+    public String @NotNull [] getGroupPath() {
         return new String[]{
             getGroupDisplayName(),
             LiferayInspectionsGroupNames.JSP_GROUP_NAME
@@ -63,14 +61,14 @@ public class LiferayTaglibNestingInspection extends XmlSuppressableInspectionToo
     public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             @Override
-            public void visitXmlTag(XmlTag tag) {
+            public void visitXmlTag(@NotNull XmlTag tag) {
                 String namespace = tag.getNamespace();
                 String localName = tag.getLocalName();
 
                 if (LiferayTaglibAttributes.TAGLIB_SUGGESTED_PARENTS.containsKey(namespace)) {
                     Collection<AbstractMap.SimpleImmutableEntry<String, String>> entries = LiferayTaglibAttributes.TAGLIB_SUGGESTED_PARENTS.get(namespace);
 
-                    List<AbstractMap.SimpleImmutableEntry<String, String>> suggestedEntries = entries.stream().filter(e -> e.getKey().equals(localName)).collect(Collectors.toList());
+                    List<AbstractMap.SimpleImmutableEntry<String, String>> suggestedEntries = entries.stream().filter(e -> e.getKey().equals(localName)).toList();
 
                     if (! suggestedEntries.isEmpty()) {
                         Set<String> suggestedNames = new TreeSet<>();
@@ -112,16 +110,12 @@ public class LiferayTaglibNestingInspection extends XmlSuppressableInspectionToo
                                 String finalSuggestedParentLocalName = suggestedParentLocalName;
 
                                 suggestedParentElement = PsiTreeUtil.findFirstParent(tag, true, t -> {
-                                    if (t instanceof XmlTag) {
-                                        XmlTag parentTag = (XmlTag) t;
-
-                                        String parentTagNamespace = parentTag.getNamespace();
+                                    if (t instanceof XmlTag parentTag) {
+										String parentTagNamespace = parentTag.getNamespace();
                                         String parentTagLocalName = parentTag.getLocalName();
 
                                         if (parentTagNamespace.equals(finalSuggestedParentNamespace)) {
-                                            if (parentTagLocalName.equals(finalSuggestedParentLocalName)) {
-                                                return true;
-                                            }
+											return parentTagLocalName.equals(finalSuggestedParentLocalName);
                                         }
                                     }
 
@@ -146,7 +140,7 @@ public class LiferayTaglibNestingInspection extends XmlSuppressableInspectionToo
                             }
 
                             holder.registerProblem(tag,
-                                tag.getName() + " should be inside a " + stringJoiner.toString() + " element",
+                                tag.getName() + " should be inside a " + stringJoiner + " element",
                                 ProblemHighlightType.GENERIC_ERROR_OR_WARNING
                                 /*,
                                 new WrapInTagFix(

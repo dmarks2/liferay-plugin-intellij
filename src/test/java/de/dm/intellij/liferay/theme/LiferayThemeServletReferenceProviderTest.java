@@ -4,10 +4,7 @@ import com.intellij.facet.impl.FacetUtil;
 import com.intellij.javaee.web.facet.WebFacet;
 import com.intellij.javaee.web.facet.WebFacetType;
 import com.intellij.openapi.module.Module;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
-import org.junit.Ignore;
 
 public class LiferayThemeServletReferenceProviderTest extends BasePlatformTestCase {
 	@Override
@@ -28,19 +25,5 @@ public class LiferayThemeServletReferenceProviderTest extends BasePlatformTestCa
 
 	public void testResolveThemeServletPath() {
 		myFixture.configureByFiles("src/test.html", "gulpfile.js");
-
-		//TODO fix test not working yet this way...
-
-		/*
-		PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
-
-		PsiReference[] references = element.getReferences();
-
-		assertTrue(references.length > 0);
-
-		PsiElement resolve = references[0].resolve();
-
-		assertNotNull(resolve);
-		 */
 	}
 }

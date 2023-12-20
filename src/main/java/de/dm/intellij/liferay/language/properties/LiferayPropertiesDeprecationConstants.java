@@ -1,9 +1,5 @@
 package de.dm.intellij.liferay.language.properties;
 
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 public class LiferayPropertiesDeprecationConstants {
 
 	public static final String[] _OBSOLETE_SYSTEM_KEYS_7_0 = {

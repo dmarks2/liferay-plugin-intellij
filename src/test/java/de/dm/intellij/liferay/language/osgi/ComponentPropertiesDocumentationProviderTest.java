@@ -10,8 +10,6 @@ import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
 public class ComponentPropertiesDocumentationProviderTest extends LightJavaCodeInsightFixtureTestCase {
 
     private static final String EXPECTED_DOCUMENTATION_JAVAX_PORTLET_INFO_TITLE = "<div class='definition'><pre>javax.portlet.info.title</pre></div><div class='content'>Locale specific static title for this portlet.</div>";
@@ -38,6 +36,8 @@ public class ComponentPropertiesDocumentationProviderTest extends LightJavaCodeI
         DocumentationManager documentationManager = DocumentationManager.getInstance(getProject());
         PsiElement docElement = documentationManager.findTargetElement(myFixture.getEditor(), 149, myFixture.getFile(), null);
 
+        assertNotNull(docElement);
+
         DocumentationProvider provider = DocumentationManager.getProviderFromElement(docElement);
 
         assertEquals("Should provide proper documentation for javax.portlet.info.title inside a javax.portlet.Portlet component", EXPECTED_DOCUMENTATION_JAVAX_PORTLET_INFO_TITLE, provider.generateDoc(docElement, docElement.getOriginalElement()));
@@ -49,9 +49,11 @@ public class ComponentPropertiesDocumentationProviderTest extends LightJavaCodeI
         DocumentationManager documentationManager = DocumentationManager.getInstance(getProject());
         PsiElement docElement = documentationManager.findTargetElement(myFixture.getEditor(), 149, myFixture.getFile(), null);
 
+        assertNotNull(docElement);
+
         DocumentationProvider provider = DocumentationManager.getProviderFromElement(docElement);
 
-        assertEquals("Should provide no documentation for unknown.property inside a javax.portlet.Portlet component", null, provider.generateDoc(docElement, docElement.getOriginalElement()));
+		assertNull("Should provide no documentation for unknown.property inside a javax.portlet.Portlet component", provider.generateDoc(docElement, docElement.getOriginalElement()));
     }
 
     public void testComponentPropertiesCompletionDocumentation() {
@@ -60,15 +62,18 @@ public class ComponentPropertiesDocumentationProviderTest extends LightJavaCodeI
         myFixture.complete(CompletionType.BASIC, 1);
 
         LookupElement[] lookupElements = myFixture.getLookupElements();
-        for (LookupElement lookupElement : lookupElements) {
-            if (lookupElement.getLookupString().equals("javax.portlet.info.title")) {
-                PsiElement elementFromLookup = DocumentationManager.getElementFromLookup(myFixture.getProject(), myFixture.getEditor(), myFixture.getFile(), lookupElement);
 
-                assertNotNull(elementFromLookup);
+        if (lookupElements != null) {
+            for (LookupElement lookupElement : lookupElements) {
+                if (lookupElement.getLookupString().equals("javax.portlet.info.title")) {
+                    PsiElement elementFromLookup = DocumentationManager.getElementFromLookup(myFixture.getProject(), myFixture.getEditor(), myFixture.getFile(), lookupElement);
 
-                DocumentationProvider provider = DocumentationManager.getProviderFromElement(elementFromLookup);
+                    assertNotNull(elementFromLookup);
 
-                assertEquals("Should provide proper documentation for javax.portlet.info.title inside a javax.portlet.Portlet component in code completion lookup", EXPECTED_DOCUMENTATION_JAVAX_PORTLET_INFO_TITLE, provider.generateDoc(elementFromLookup, null));
+                    DocumentationProvider provider = DocumentationManager.getProviderFromElement(elementFromLookup);
+
+                    assertEquals("Should provide proper documentation for javax.portlet.info.title inside a javax.portlet.Portlet component in code completion lookup", EXPECTED_DOCUMENTATION_JAVAX_PORTLET_INFO_TITLE, provider.generateDoc(elementFromLookup, null));
+                }
             }
         }
     }

@@ -40,6 +40,8 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("/my/action"));
     }
 
@@ -54,6 +56,8 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("/my/actionkey"));
     }
 
@@ -67,6 +71,8 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("/my/action"));
     }
 
@@ -81,6 +87,8 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("/my/portletaction"));
     }
 
@@ -102,6 +110,8 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("/my/jspaction"));
     }
 
@@ -127,6 +137,8 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("/my/jspaction"));
     }
 
@@ -153,6 +165,8 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("/my/jspaction"));
     }
 
@@ -180,6 +194,8 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("/my/action"));
     }
 
@@ -207,6 +223,8 @@ public class LiferayTaglibActionCommandNameReferenceContributorTest extends Ligh
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("/my/action"));
     }
 }

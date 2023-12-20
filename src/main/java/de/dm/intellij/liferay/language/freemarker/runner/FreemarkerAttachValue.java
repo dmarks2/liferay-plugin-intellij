@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.freemarker.runner;
 
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.util.PlatformIcons;
 import com.intellij.xdebugger.frame.XCompositeNode;
 import com.intellij.xdebugger.frame.XValue;
@@ -16,7 +17,9 @@ import java.util.TreeMap;
 
 public class FreemarkerAttachValue extends XValue {
 
-    private DebugModel debugModel;
+    private final static Logger log = Logger.getInstance(FreemarkerAttachValue.class);
+
+    private final DebugModel debugModel;
 
     public FreemarkerAttachValue(DebugModel debugModel) {
         this.debugModel = debugModel;
@@ -43,7 +46,7 @@ public class FreemarkerAttachValue extends XValue {
                 return this.debugModel.size() > 0;
             }
         } catch (RemoteException | TemplateModelException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
         return false;
     }
@@ -88,7 +91,7 @@ public class FreemarkerAttachValue extends XValue {
 
             node.addChildren(xValueChildrenList, true);
         } catch (RemoteException | TemplateModelException | ClassCastException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -137,7 +140,7 @@ public class FreemarkerAttachValue extends XValue {
                 result = "Method";
             }
         } catch (TemplateModelException | RemoteException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
 
         if (result == null) {
@@ -192,7 +195,7 @@ public class FreemarkerAttachValue extends XValue {
                 result = "Method";
             }
         } catch (RemoteException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
 
         if (result == null) {
@@ -214,12 +217,12 @@ public class FreemarkerAttachValue extends XValue {
                 map.put(name, freemarkerAttachValue);
             }
         } catch (TemplateModelException | RemoteException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
     }
 
     protected void addVariable(Map<String, FreemarkerAttachValue> map, DebugModel value, String name, Class<? extends FreemarkerAttachValue> type) {
-        FreemarkerAttachValue freemarkerAttachValue = FreemarkerAttachValueFactory.createFreemarkerAttachValue(name, value, type);
+        FreemarkerAttachValue freemarkerAttachValue = FreemarkerAttachValueFactory.createFreemarkerAttachValue(value, type);
 
         if (freemarkerAttachValue != null) {
             map.put(name, freemarkerAttachValue);

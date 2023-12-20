@@ -257,9 +257,8 @@ public class ShowThemeDiffAction extends CompareFilesAction {
             VirtualFile[] files = library.getFiles(OrderRootType.CLASSES);
             for (VirtualFile file : files) {
                 VirtualFileSystem virtualFileSystem = file.getFileSystem();
-                if (virtualFileSystem instanceof JarFileSystem) {
-                    JarFileSystem jarFileSystem = (JarFileSystem)virtualFileSystem;
-                    for (String relativePath : sourceRootRelativePaths) {
+                if (virtualFileSystem instanceof JarFileSystem jarFileSystem) {
+					for (String relativePath : sourceRootRelativePaths) {
                         VirtualFile virtualFile = jarFileSystem.findFileByPath(file.getPath() + "META-INF/resources/_" +parentTheme + "/" + relativePath);
 
                         if (log.isDebugEnabled()) {

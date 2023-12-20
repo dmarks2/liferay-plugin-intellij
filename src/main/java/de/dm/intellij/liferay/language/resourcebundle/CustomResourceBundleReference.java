@@ -35,12 +35,10 @@ public class CustomResourceBundleReference extends ResourceBundleReference {
     public String evaluateBundleName(PsiFile psiFile) {
         String baseName = super.evaluateBundleName(psiFile);
 
-        if (psiFile instanceof PropertiesFile) {
-            PropertiesFile propertiesFile = (PropertiesFile) psiFile;
+        if (psiFile instanceof PropertiesFile propertiesFile) {
+			String suffix = PropertiesUtil.getSuffix(propertiesFile);
 
-            String suffix = PropertiesUtil.getSuffix(propertiesFile);
-
-            if (suffix.length() > 0) {
+            if (!suffix.isEmpty()) {
                 baseName = baseName + "_" + suffix;
             }
         }

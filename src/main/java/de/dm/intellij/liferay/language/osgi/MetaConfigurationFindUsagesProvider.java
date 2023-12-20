@@ -2,7 +2,6 @@ package de.dm.intellij.liferay.language.osgi;
 
 import com.intellij.lang.HelpID;
 import com.intellij.lang.findUsages.FindUsagesProvider;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLiteralExpression;
 import org.jetbrains.annotations.Nls;

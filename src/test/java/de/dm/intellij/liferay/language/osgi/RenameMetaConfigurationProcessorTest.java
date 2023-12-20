@@ -18,7 +18,11 @@ public class RenameMetaConfigurationProcessorTest extends LightJavaCodeInsightFi
                 "org/osgi/service/component/annotations/Component.java"
         );
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(caretElement);
+
+        PsiElement element = caretElement.getParent();
 
         myFixture.renameElement(element, "de.dm.configuration.UpdatedConfiguration");
 
@@ -38,7 +42,11 @@ public class RenameMetaConfigurationProcessorTest extends LightJavaCodeInsightFi
                 "org/osgi/service/component/annotations/Component.java"
         );
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(caretElement);
+
+        PsiElement element = caretElement.getParent();
 
         myFixture.renameElement(element, "de.dm.configuration.UpdatedConfiguration");
 

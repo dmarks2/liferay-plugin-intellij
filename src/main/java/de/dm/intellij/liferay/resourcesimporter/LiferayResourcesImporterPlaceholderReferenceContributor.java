@@ -28,8 +28,8 @@ public class LiferayResourcesImporterPlaceholderReferenceContributor extends Psi
     //TODO: JOURNAL_ARTICLE_PATTERN
     //TODO: LAYOUT_PATTERN inside fragment-composition-definition.json
     //TODO: FILE_ENTRY_PATTERN inside fragment-composition-definition.json
-    private static final Pattern FILE_ENTRY_PATTERN = Pattern.compile("\\[\\$FILE=([^\\$@]+)(@?)([^\\$]*)\\$\\]");
-    private static final Pattern LAYOUT_PATTERN = Pattern.compile("\\[\\$LAYOUT=([^\\$@]+)(@?)([^\\$]*)\\$\\]");
+    private static final Pattern FILE_ENTRY_PATTERN = Pattern.compile("\\[\\$FILE=([^$@]+)(@?)([^$]*)\\$]");
+    private static final Pattern LAYOUT_PATTERN = Pattern.compile("\\[\\$LAYOUT=([^$@]+)(@?)([^$]*)\\$]");
 
     @Override
     public void registerReferenceProviders(@NotNull PsiReferenceRegistrar registrar) {
@@ -63,7 +63,7 @@ public class LiferayResourcesImporterPlaceholderReferenceContributor extends Psi
         while (matcher.find()) {
             String fileName = matcher.group(1);
 
-            boolean groupPresent = (matcher.group(2) != null && matcher.group(2).trim().length() > 0);
+            boolean groupPresent = (matcher.group(2) != null && !matcher.group(2).trim().isEmpty());
 
             if (! groupPresent) {
                 int startInElement = matcher.start() + "[$FILE=".length();
@@ -104,7 +104,7 @@ public class LiferayResourcesImporterPlaceholderReferenceContributor extends Psi
         Matcher matcher = LAYOUT_PATTERN.matcher(valueString);
 
         while (matcher.find()) {
-            boolean groupPresent = (matcher.group(2) != null && matcher.group(2).trim().length() > 0);
+            boolean groupPresent = (matcher.group(2) != null && !matcher.group(2).trim().isEmpty());
 
             if (! groupPresent) {
                 int startInElement = matcher.start(1);

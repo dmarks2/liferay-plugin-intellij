@@ -36,10 +36,9 @@ public class BasePackageParser extends BndHeaderParser {
         boolean annotated = false;
 
         for (BndHeaderValue bndHeaderValue : bndHeader.getBndHeaderValues()) {
-            if (bndHeaderValue instanceof Clause) {
-                Clause clause = (Clause)bndHeaderValue;
+            if (bndHeaderValue instanceof Clause clause) {
 
-                BndHeaderValuePart bndHeaderValuePart = clause.getValue();
+				BndHeaderValuePart bndHeaderValuePart = clause.getValue();
 
                 if (bndHeaderValuePart != null) {
                     String packageName = bndHeaderValuePart.getUnwrappedText();
@@ -81,41 +80,6 @@ public class BasePackageParser extends BndHeaderParser {
         }
 
         return annotated;
-    }
-
-    @Nullable
-    @Override
-    public Object getConvertedValue(@NotNull BndHeader bndHeader) {
-        List<BndHeaderValue> bndHeaderValues = bndHeader.getBndHeaderValues();
-
-        if (! bndHeaderValues.isEmpty()) {
-            List<String> packages = new ArrayList<>();
-
-            for (BndHeaderValue bndHeaderValue : bndHeaderValues) {
-                if (bndHeaderValue instanceof Clause) {
-                    Clause clause = (Clause) bndHeaderValue;
-
-                    BndHeaderValuePart bndHeaderValuePart = clause.getValue();
-
-                    if (bndHeaderValuePart != null) {
-                        String packageName = bndHeaderValuePart.getText();
-
-                        packageName = packageName.replaceAll("\\s+", "");
-
-                        packageName = packageName.trim();
-                        if (packageName.charAt(0) == '!') {
-                            packageName = packageName.substring(1);
-                        }
-
-                        packages.add(packageName);
-                    }
-                }
-            }
-
-            return packages;
-        }
-
-        return null;
     }
 
 }

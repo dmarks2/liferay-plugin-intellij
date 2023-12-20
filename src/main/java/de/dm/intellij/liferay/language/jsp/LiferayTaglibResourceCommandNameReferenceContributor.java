@@ -22,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -39,13 +38,13 @@ public class LiferayTaglibResourceCommandNameReferenceContributor extends Abstra
     private static final Map<String, Collection<AbstractMap.SimpleEntry<String, String>>> TAGLIB_ATTRIBUTES = new HashMap<>();
 
     static {
-        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_JAVAX_PORTLET, Arrays.asList(
-            new AbstractMap.SimpleEntry<>("resourceURL", "id")
-        ));
+        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_JAVAX_PORTLET, List.of(
+				new AbstractMap.SimpleEntry<>("resourceURL", "id")
+		));
 
-        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET, Arrays.asList(
-            new AbstractMap.SimpleEntry<>("resourceURL", "id")
-        ));
+        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET, List.of(
+				new AbstractMap.SimpleEntry<>("resourceURL", "id")
+		));
     }
 
     @NotNull

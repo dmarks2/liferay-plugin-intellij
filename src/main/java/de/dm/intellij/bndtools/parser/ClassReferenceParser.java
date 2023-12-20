@@ -14,7 +14,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiType;
 import com.intellij.psi.PsiTypes;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.JavaClassReferenceProvider;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -42,7 +41,7 @@ public class ClassReferenceParser extends BndHeaderParser {
         if (module != null) {
             javaClassReferenceProvider = new JavaClassReferenceProvider() {
                 @Override
-                public GlobalSearchScope getScope(Project project) {
+                public GlobalSearchScope getScope(@NotNull Project project) {
                     return GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(module);
                 }
             };
@@ -60,9 +59,8 @@ public class ClassReferenceParser extends BndHeaderParser {
 
         if (value instanceof BndHeaderValuePart) {
             valuePart = (BndHeaderValuePart) value;
-        } else if (value instanceof Clause) {
-            Clause clause = (Clause)value;
-            valuePart = clause.getValue();
+        } else if (value instanceof Clause clause) {
+			valuePart = clause.getValue();
         }
 
         if (valuePart == null) {
@@ -102,10 +100,8 @@ public class ClassReferenceParser extends BndHeaderParser {
     protected boolean checkClass(@NotNull BndHeaderValuePart bndHeaderValuePart, @NotNull PsiClass psiClass, @NotNull AnnotationHolder annotationHolder) {
         PsiElement parent = bndHeaderValuePart.getParent();
 
-        if (parent instanceof BndHeader) {
-            BndHeader bndHeader = (BndHeader) parent;
-
-            String bndHeaderName = bndHeader.getName();
+        if (parent instanceof BndHeader bndHeader) {
+			String bndHeaderName = bndHeader.getName();
 
             if (LiferayBndConstants.MAIN_CLASS.equals(bndHeaderName) && !PsiMethodUtil.hasMainMethod(psiClass)) {
                 annotationHolder.newAnnotation(
@@ -117,7 +113,7 @@ public class ClassReferenceParser extends BndHeaderParser {
                 return true;
             }
 
-            if (LiferayBndConstants.PREMAIN_CLASS.equals(bndHeaderName) && !hasInstrumenterMethod(psiClass, "premain")) {
+            if (LiferayBndConstants.PREMAIN_CLASS.equals(bndHeaderName) && hasNoInstrumenterMethod(psiClass, "premain")) {
                 annotationHolder.newAnnotation(
                         HighlightSeverity.ERROR, ManifestBundle.message("header.pre-main.class.invalid")
                 ).range(
@@ -127,7 +123,7 @@ public class ClassReferenceParser extends BndHeaderParser {
                 return true;
             }
 
-            if ((LiferayBndConstants.AGENT_CLASS.equals(bndHeaderName) || LiferayBndConstants.LAUNCHER_AGENT_CLASS.equals(bndHeaderName)) && !hasInstrumenterMethod(psiClass, "agentmain")) {
+            if ((LiferayBndConstants.AGENT_CLASS.equals(bndHeaderName) || LiferayBndConstants.LAUNCHER_AGENT_CLASS.equals(bndHeaderName)) && hasNoInstrumenterMethod(psiClass, "agentmain")) {
                 annotationHolder.newAnnotation(
                         HighlightSeverity.ERROR, ManifestBundle.message("header.agent.class.invalid")
                 ).range(
@@ -141,15 +137,15 @@ public class ClassReferenceParser extends BndHeaderParser {
         return false;
     }
 
-    private static boolean hasInstrumenterMethod(PsiClass psiClass, String methodName) {
+    private static boolean hasNoInstrumenterMethod(PsiClass psiClass, String methodName) {
         for (PsiMethod method : psiClass.findMethodsByName(methodName, false)) {
             if (PsiTypes.voidType().equals(method.getReturnType()) &&
                 method.hasModifierProperty(PsiModifier.PUBLIC) &&
                 method.hasModifierProperty(PsiModifier.STATIC)) {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 }

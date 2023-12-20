@@ -2,15 +2,9 @@ package de.dm.intellij.liferay.action;
 
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.ex.EditorEx;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.testFramework.TestDataProvider;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
-import org.jetbrains.annotations.NotNull;
 
 public class ShowThemeDiffActionNodeModulesTest extends LightJavaCodeInsightFixtureTestCase {
 
@@ -28,10 +22,6 @@ public class ShowThemeDiffActionNodeModulesTest extends LightJavaCodeInsightFixt
                 "package.json",
                 "node_modules/liferay-frontend-theme-unstyled/templates/portlet.ftl"
         );
-
-        PsiFile psiFile = myFixture.getFile();
-
-        VirtualFile virtualFile = psiFile.getVirtualFile();
 
         ShowThemeDiffAction action = new ShowThemeDiffAction();
 
@@ -55,10 +45,6 @@ public class ShowThemeDiffActionNodeModulesTest extends LightJavaCodeInsightFixt
                 "node_modules/liferay-frontend-theme-styled/css/_taglib.scss"
         );
         myFixture.copyFileToProject("package_styled.json", "package.json");
-
-        PsiFile psiFile = myFixture.getFile();
-
-        VirtualFile virtualFile = psiFile.getVirtualFile();
 
         ShowThemeDiffAction action = new ShowThemeDiffAction();
 
@@ -84,10 +70,6 @@ public class ShowThemeDiffActionNodeModulesTest extends LightJavaCodeInsightFixt
         );
         myFixture.copyFileToProject("package_custom.json", "package.json");
 
-        PsiFile psiFile = myFixture.getFile();
-
-        VirtualFile virtualFile = psiFile.getVirtualFile();
-
         ShowThemeDiffAction action = new ShowThemeDiffAction();
 
         DataContext dataContext = ((EditorEx)myFixture.getEditor()).getDataContext();
@@ -104,22 +86,4 @@ public class ShowThemeDiffActionNodeModulesTest extends LightJavaCodeInsightFixt
         assertTrue("Diff action should be available for scss file from custom base theme", action.isAvailable(event));
     }
 
-    private static final class VirtualFilesDataProvider extends TestDataProvider {
-        private VirtualFile[] virtualFiles;
-
-        private VirtualFilesDataProvider(@NotNull Project project, VirtualFile... virtualFiles) {
-            super(project);
-
-            this.virtualFiles = virtualFiles;
-        }
-
-        @Override
-        public Object getData(String dataId) {
-            if (CommonDataKeys.VIRTUAL_FILE_ARRAY.is(dataId)) {
-                return virtualFiles;
-            }
-
-            return super.getData(dataId);
-        }
-    }
 }

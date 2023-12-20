@@ -45,8 +45,8 @@ public class LightProjectDescriptorBuilder {
 
     private String[] rootAccess;
     private String liferayVersion;
-    private Map<String, String> themeSettings = new HashMap<>();
-    private Collection<LibraryInfo> libraries = new ArrayList<>();
+    private final Map<String, String> themeSettings = new HashMap<>();
+    private final Collection<LibraryInfo> libraries = new ArrayList<>();
 
     private LanguageLevel languageLevel = LanguageLevel.JDK_11;
 
@@ -101,7 +101,10 @@ public class LightProjectDescriptorBuilder {
 
                     for (String rootAccessUrl : rootAccess) {
                         URL resource = LightProjectDescriptorBuilder.class.getResource(rootAccessUrl);
-                        resourcePaths.add(PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath()));
+
+                        if (resource != null) {
+                            resourcePaths.add(PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath()));
+                        }
                     }
 
                     VfsRootAccess.allowRootAccess( Disposer.newDisposable(), resourcePaths.toArray(new String[0]));

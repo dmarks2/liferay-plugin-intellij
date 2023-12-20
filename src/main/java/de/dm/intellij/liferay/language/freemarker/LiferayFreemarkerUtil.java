@@ -222,7 +222,7 @@ public class LiferayFreemarkerUtil {
         }
     }
 
-    public static void addClassPublicStaticFieldsLookup(@Nullable PsiClass psiClass, CompletionResultSet result, Module module) {
+    public static void addClassPublicStaticFieldsLookup(@Nullable PsiClass psiClass, CompletionResultSet result) {
         Collection<PsiField> publicStaticFields = ProjectUtils.getClassPublicStaticFields(psiClass);
 
         for (PsiField psiField : publicStaticFields) {

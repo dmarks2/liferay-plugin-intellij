@@ -96,7 +96,7 @@ public class ResourceCommandIndex extends FileBasedIndexExtension<CommandKey, Vo
         return AbstractCommandKeyIndexer.getPortletClasses(NAME, project, portletName, commandName, scope);
     }
 
-    private class ResourceCommandIndexer extends AbstractCommandKeyIndexer {
+    private static class ResourceCommandIndexer extends AbstractCommandKeyIndexer {
 
         @NotNull
         @Override

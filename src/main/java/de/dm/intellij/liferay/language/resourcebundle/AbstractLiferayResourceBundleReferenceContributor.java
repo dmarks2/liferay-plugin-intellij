@@ -30,14 +30,14 @@ public abstract class AbstractLiferayResourceBundleReferenceContributor<TagType 
     protected abstract void registerReferenceProvider(PsiReferenceRegistrar registrar, String[] attributeNames, ElementFilter elementFilter, PsiReferenceProvider psiReferenceProvider);
 
     protected String[] getAttributeNames() {
-        Set<String> attributeNames = new HashSet<String>();
+        Set<String> attributeNames = new HashSet<>();
         for (Map.Entry<String, Collection<AbstractMap.SimpleEntry<String, String>>> taglib : LiferayTaglibAttributes.TAGLIB_ATTRIBUTES_RESOURCEBUNDLE.entrySet()) {
             for (AbstractMap.SimpleEntry<String, String> entry : taglib.getValue()) {
                 attributeNames.add(entry.getValue());
             }
         }
 
-        return attributeNames.toArray(new String[attributeNames.size()]);
+        return attributeNames.toArray(new String[0]);
     }
 
     @Nullable

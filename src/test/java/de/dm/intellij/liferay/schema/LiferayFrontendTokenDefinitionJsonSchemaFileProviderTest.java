@@ -25,6 +25,8 @@ public class LiferayFrontendTokenDefinitionJsonSchemaFileProviderTest extends Ba
         myFixture.configureByFiles("frontend-token-definition.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("\"frontendTokenCategories\""));
     }
 

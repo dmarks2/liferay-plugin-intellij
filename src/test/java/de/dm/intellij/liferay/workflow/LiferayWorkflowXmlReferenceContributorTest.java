@@ -3,8 +3,6 @@ package de.dm.intellij.liferay.workflow;
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlText;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 import java.util.List;
@@ -22,6 +20,8 @@ public class LiferayWorkflowXmlReferenceContributorTest extends BasePlatformTest
         myFixture.configureByFiles("workflow-definition.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("review"));
     }
 
@@ -29,6 +29,8 @@ public class LiferayWorkflowXmlReferenceContributorTest extends BasePlatformTest
         myFixture.configureByFiles("workflow-definition-reference.xml");
 
         PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(element);
 
         PsiReference[] references = element.getReferences();
 

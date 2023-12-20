@@ -17,7 +17,11 @@ public class PoshiStringQuotedDoubleTest extends BasePlatformTestCase {
     public void testReference() {
         myFixture.configureByFile("testcases/Liferay.testcase");
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(caretElement);
+
+        PsiElement element = caretElement.getParent();
         PsiElement resolve = element.getReferences()[0].resolve();
 
         assertTrue("\"${myVar}\" should be resolvable", (resolve != null));
@@ -30,6 +34,7 @@ public class PoshiStringQuotedDoubleTest extends BasePlatformTestCase {
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue("myVar should be found, is declared at root level.", strings.contains("myVar"));
         assertTrue("myInsideVar should be found, is declared on method level.", strings.contains("myVarInside"));
         assertFalse("myOtherVar should not be found, because it is declared after the current instruction.", strings.contains("myOtherVar"));
@@ -38,7 +43,11 @@ public class PoshiStringQuotedDoubleTest extends BasePlatformTestCase {
     public void testPathClassReference() {
         myFixture.configureByFiles("testcases/PathReference.testcase", "paths/Homepage.path", "paths/HomepageOther.path");
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(caretElement);
+
+        PsiElement element = caretElement.getParent();
         PsiElement resolve = element.getReferences()[0].resolve();
 
         assertTrue("\"Homepage\" should be resolvable", (resolve != null));
@@ -52,13 +61,18 @@ public class PoshiStringQuotedDoubleTest extends BasePlatformTestCase {
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue(strings.contains("Homepage"));
     }
 
     public void testPathLocationReference() {
         myFixture.configureByFiles("testcases/PathLocationReference.testcase", "paths/Homepage.path", "paths/HomepageOther.path");
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(caretElement);
+
+        PsiElement element = caretElement.getParent();
         PsiElement resolve = element.getReferences()[0].resolve();
 
         assertTrue("\"Homepage#NO_RESULTS_MESSAGE\" should be resolvable", (resolve != null));
@@ -71,6 +85,7 @@ public class PoshiStringQuotedDoubleTest extends BasePlatformTestCase {
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue(strings.contains("SEARCH_BAR"));
     }
 }

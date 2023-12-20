@@ -31,7 +31,7 @@ public class LiferayModuleComponent implements PersistentStateComponent<LiferayM
     private final Module module;
 
     private String liferayVersion = "";
-    private Map<String, String> themeSettings = new HashMap<String, String>();
+    private Map<String, String> themeSettings = new HashMap<>();
     private String liferayLookAndFeelXml = "";
     private String liferayHookXml = "";
     private String osgiFragmentHost = "";
@@ -69,14 +69,14 @@ public class LiferayModuleComponent implements PersistentStateComponent<LiferayM
     }
 
     public String getLiferayVersion() {
-        if ( (liferayVersion != null ) && (! liferayVersion.equals("")) ) {
+        if ( (liferayVersion != null ) && (!liferayVersion.isEmpty()) ) {
             return liferayVersion;
         }
 
         Module parentModule = ProjectUtils.getParentModule(module);
         while (parentModule != null) {
             String parentLiferayVersion = getLiferayVersion(parentModule);
-            if ( (parentLiferayVersion != null) && (! parentLiferayVersion.equals(""))) {
+            if ( (parentLiferayVersion != null) && (!parentLiferayVersion.isEmpty())) {
                 return parentLiferayVersion;
             }
 
@@ -189,8 +189,7 @@ public class LiferayModuleComponent implements PersistentStateComponent<LiferayM
         if (fragmentHost != null) {
             int index = fragmentHost.indexOf(';');
             if (index > -1) {
-                String packageName = fragmentHost.substring(0, index);
-                fragmentHostPackageName = packageName;
+				fragmentHostPackageName = fragmentHost.substring(0, index);
             } else {
                 fragmentHostPackageName = null;
             }

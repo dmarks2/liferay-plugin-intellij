@@ -14,8 +14,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class ThemeSettingsPathFileReference extends FileReference {
 
-    private String placeholder;
-    private String themeSetting;
+    private final String placeholder;
+    private final String themeSetting;
 
     public ThemeSettingsPathFileReference(@NotNull FileReferenceSet fileReferenceSet, TextRange range, int index, String text, @NotNull String placeholder, @NotNull String themeSetting) {
         super(fileReferenceSet, range, index, text);
@@ -23,15 +23,13 @@ public class ThemeSettingsPathFileReference extends FileReference {
         this.themeSetting = themeSetting;
     }
 
-    @NotNull
     @Override
-    protected ResolveResult[] innerResolve(boolean caseSensitive, @NotNull PsiFile containingFile) {
+    protected ResolveResult @NotNull [] innerResolve(boolean caseSensitive, @NotNull PsiFile containingFile) {
         if (placeholder.equals(getText())) {
             PsiFile psiFile = containingFile;
-            if (psiFile.getOriginalFile() != null) {
-                psiFile = psiFile.getOriginalFile();
-            }
-            final Module module = ModuleUtil.findModuleForPsiElement(psiFile);
+			psiFile = psiFile.getOriginalFile()
+            ;
+			final Module module = ModuleUtil.findModuleForPsiElement(psiFile);
             if (module != null) {
                 VirtualFile virtualFile = LiferayFileUtil.getThemeSettingsDirectory(module, themeSetting);
                 if (virtualFile != null) {
@@ -43,12 +41,6 @@ public class ThemeSettingsPathFileReference extends FileReference {
             }
         }
         return super.innerResolve(caseSensitive, containingFile);
-    }
-
-    @NotNull
-    @Override
-    public Object[] getVariants() {
-        return super.getVariants();
     }
 
 }

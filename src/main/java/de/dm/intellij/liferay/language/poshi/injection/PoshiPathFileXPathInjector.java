@@ -27,10 +27,8 @@ public class PoshiPathFileXPathInjector implements MultiHostInjector {
         PsiFile psiFile = context.getContainingFile().getOriginalFile();
 
         if (psiFile.getName().endsWith(".path")) {
-            if (context instanceof XmlTag) {
-                XmlTag xmlTag = (XmlTag) context;
-
-                String tagName = xmlTag.getName();
+            if (context instanceof XmlTag xmlTag) {
+				String tagName = xmlTag.getName();
 
                 if ("td".equals(tagName)) {
                     XmlTag parent = xmlTag.getParentTag();

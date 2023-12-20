@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class LiferayTaglibJavaBeanReference extends PsiReferenceBase<XmlAttributeValue> {
 
-    private PsiClass targetClass;
+    private final PsiClass targetClass;
 
     public LiferayTaglibJavaBeanReference(XmlAttributeValue xmlAttributeValue, TextRange rangeInElement, PsiClass targetClass) {
         super(xmlAttributeValue, rangeInElement, true);
@@ -35,10 +35,9 @@ public class LiferayTaglibJavaBeanReference extends PsiReferenceBase<XmlAttribut
         return PropertyUtil.findPropertyGetter(targetClass, getValue(), false, true);
     }
 
-    @NotNull
     @Override
-    public Object[] getVariants() {
-        List<Object> result = new ArrayList<Object>();
+    public Object @NotNull [] getVariants() {
+        List<Object> result = new ArrayList<>();
 
         Map<String, PsiMethod> allProperties = PropertyUtil.getAllProperties(targetClass, false, true, true);
         for (PsiMethod psiMethod : allProperties.values()) {

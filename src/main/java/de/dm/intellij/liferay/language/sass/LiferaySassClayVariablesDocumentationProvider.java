@@ -12,7 +12,7 @@ import org.jetbrains.plugins.scss.psi.SCSSElementGenerator;
 import org.jetbrains.plugins.scss.psi.SassScssElement;
 import org.jetbrains.plugins.scss.psi.SassScssVariableDeclaration;
 
-/** see https://github.com/pat270/clay-paver/blob/v2-dev/views/partials/functions/printInputs.ejs **/
+/** see <a href="https://github.com/pat270/clay-paver/blob/v2-dev/views/partials/functions/printInputs.ejs">...</a> **/
 public class LiferaySassClayVariablesDocumentationProvider extends AbstractDocumentationProvider {
 
     @Nullable
@@ -56,10 +56,8 @@ public class LiferaySassClayVariablesDocumentationProvider extends AbstractDocum
 
     @Override
     public @Nullable PsiElement getDocumentationElementForLookupItem(PsiManager psiManager, Object object, PsiElement element) {
-        if (object instanceof String) {
-            String lookupString = (String) object;
-
-            SassScssVariableDeclaration variableDeclaration = SCSSElementGenerator.createVariableDeclaration(psiManager.getProject(), lookupString, "foo");
+        if (object instanceof String lookupString) {
+			SassScssVariableDeclaration variableDeclaration = SCSSElementGenerator.createVariableDeclaration(psiManager.getProject(), lookupString, "foo");
 
             return variableDeclaration.getNameIdentifier();
         }

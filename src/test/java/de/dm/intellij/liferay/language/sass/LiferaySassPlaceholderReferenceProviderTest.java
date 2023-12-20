@@ -25,6 +25,8 @@ public class LiferaySassPlaceholderReferenceProviderTest extends BasePlatformTes
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("liferay.png"));
     }
 
@@ -37,6 +39,8 @@ public class LiferaySassPlaceholderReferenceProviderTest extends BasePlatformTes
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("liferay.png"));
     }
 

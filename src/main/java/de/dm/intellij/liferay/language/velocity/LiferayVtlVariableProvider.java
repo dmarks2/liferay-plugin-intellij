@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.velocity;
 
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.velocity.VtlGlobalVariableProvider;
 import com.intellij.velocity.psi.VtlLightVariable;
@@ -23,6 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LiferayVtlVariableProvider extends VtlGlobalVariableProvider implements TemplateVariableProcessor<VtlFile, VtlVariable> {
+
+    private final static Logger log = Logger.getInstance(LiferayVtlVariableProvider.class);
 
     private static final Map<String, Class<? extends VtlLightVariable>> TYPE_MAPPING = new HashMap<>();
     static {
@@ -58,7 +61,7 @@ public class LiferayVtlVariableProvider extends VtlGlobalVariableProvider implem
 
                     return constructor.newInstance(parent);
                 } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e2) {
-                    e2.printStackTrace();
+                    log.error(e2.getMessage(), e2);
                 }
             }
         }

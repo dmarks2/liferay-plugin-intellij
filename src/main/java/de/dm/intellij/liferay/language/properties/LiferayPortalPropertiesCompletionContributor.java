@@ -40,7 +40,7 @@ public class LiferayPortalPropertiesCompletionContributor extends CompletionCont
                 new CompletionProvider<>() {
                     @Override
                     protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
-                        List<LookupElementBuilder> lookups = new ArrayList<LookupElementBuilder>();
+                        List<LookupElementBuilder> lookups = new ArrayList<>();
 
                         PsiFile containingFile = parameters.getOriginalFile();
 

@@ -45,6 +45,8 @@ public class LiferayVtlVariableProviderTest extends BasePlatformTestCase {
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/simple.vm", "WEB-INF/src/resources-importer/journal/structures/test.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("simple"));
     }
 
@@ -52,6 +54,8 @@ public class LiferayVtlVariableProviderTest extends BasePlatformTestCase {
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/parent.vm", "WEB-INF/src/resources-importer/journal/structures/test.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("child"));
     }
 
@@ -59,6 +63,8 @@ public class LiferayVtlVariableProviderTest extends BasePlatformTestCase {
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/simple.vm", "WEB-INF/src/resources-importer/journal/structures/test.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("simple"));
     }
 
@@ -66,6 +72,8 @@ public class LiferayVtlVariableProviderTest extends BasePlatformTestCase {
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/parent.vm", "WEB-INF/src/resources-importer/journal/structures/test.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("child"));
     }
 
@@ -75,6 +83,8 @@ public class LiferayVtlVariableProviderTest extends BasePlatformTestCase {
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/journal-reserved-variables.vm", "WEB-INF/src/resources-importer/journal/structures/test.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("reserved-article-id"));
     }
 
@@ -82,6 +92,8 @@ public class LiferayVtlVariableProviderTest extends BasePlatformTestCase {
         myFixture.configureByFiles("WEB-INF/src/resources-importer/templates/application_display/asset_entry/asset-entry-template.vm");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("assetPublisherHelper"));
     }
 
@@ -89,6 +101,8 @@ public class LiferayVtlVariableProviderTest extends BasePlatformTestCase {
         myFixture.configureByFiles("templates/portal_normal.vm");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("company_name"));
     }
 
@@ -96,6 +110,8 @@ public class LiferayVtlVariableProviderTest extends BasePlatformTestCase {
         myFixture.configureByFiles("layouttpl/custom/my_liferay_layout_template.tpl");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("processor"));
     }
 
@@ -103,6 +119,8 @@ public class LiferayVtlVariableProviderTest extends BasePlatformTestCase {
         myFixture.configureByFiles("layouttpl/custom/my_velocity_layout_template.vm");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("processor"));
     }
 
@@ -110,24 +128,30 @@ public class LiferayVtlVariableProviderTest extends BasePlatformTestCase {
         myFixture.configureByFiles("templates/theme_settings.vm", "WEB-INF/liferay-look-and-feel.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("mysetting"));
     }
 
     public void testThemeSettingsReferenceVariables() {
         myFixture.configureByFiles("templates/theme_reference.vm", "WEB-INF/liferay-look-and-feel.xml");
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(caretElement);
+
+        PsiElement element = caretElement.getParent();
         PsiElement resolve = element.getReferences()[0].resolve();
 
-        assertTrue(resolve != null);
+		assertNotNull(resolve);
 
         PsiElement navigationElement = resolve.getNavigationElement();
 
-        assertTrue(navigationElement != null);
+		assertNotNull(navigationElement);
         assertTrue(navigationElement instanceof PsiDirectory);
 
         VirtualFile virtualFile = ((PsiDirectory) resolve.getNavigationElement()).getVirtualFile();
-        assertTrue(virtualFile != null);
+		assertNotNull(virtualFile);
         assertTrue(virtualFile.exists());
     }
 

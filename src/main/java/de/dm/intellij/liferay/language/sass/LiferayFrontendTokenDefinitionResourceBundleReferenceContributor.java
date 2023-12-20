@@ -22,25 +22,20 @@ public class LiferayFrontendTokenDefinitionResourceBundleReferenceContributor ex
                 PlatformPatterns.psiElement(PsiElement.class).and(new FilterPattern(new ElementFilter() {
                             @Override
                             public boolean isAcceptable(Object element, @Nullable PsiElement context) {
-                                if (element instanceof PsiElement) {
-                                    PsiElement psiElement = (PsiElement) element;
+                                if (element instanceof PsiElement psiElement) {
 
-                                    PsiFile containingFile = psiElement.getContainingFile();
+									PsiFile containingFile = psiElement.getContainingFile();
 
                                     containingFile = containingFile.getOriginalFile();
 
                                     if ("frontend-token-definition.json".equals(containingFile.getName())) {
-                                        if (psiElement instanceof JsonValue) {
-                                            JsonValue jsonValue = (JsonValue) psiElement;
+                                        if (psiElement instanceof JsonValue jsonValue) {
 
-                                            if (jsonValue.getParent() instanceof JsonProperty) {
-                                                JsonProperty jsonProperty = (JsonProperty) jsonValue.getParent();
+											if (jsonValue.getParent() instanceof JsonProperty jsonProperty) {
 
-                                                String name = JsonPsiImplUtils.getName(jsonProperty);
+												String name = JsonPsiImplUtils.getName(jsonProperty);
 
-                                                if ("label".equals(StringUtil.unquoteString(name))) {
-                                                    return true;
-                                                }
+												return "label".equals(StringUtil.unquoteString(name));
                                             }
                                         }
                                     }

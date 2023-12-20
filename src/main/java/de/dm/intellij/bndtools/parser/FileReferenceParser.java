@@ -31,10 +31,8 @@ public class FileReferenceParser extends BndHeaderParser {
         if (bndHeaderValue instanceof BndHeaderValuePart) {
             bndHeaderValuePart = (BndHeaderValuePart)bndHeaderValue;
         }
-        else if (bndHeaderValue instanceof Clause) {
-            Clause clause = (Clause)bndHeaderValue;
-
-            bndHeaderValuePart = clause.getValue();
+        else if (bndHeaderValue instanceof Clause clause) {
+			bndHeaderValuePart = clause.getValue();
         }
 
         if (bndHeaderValuePart == null) {

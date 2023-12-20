@@ -47,6 +47,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/simple.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("simple"));
     }
 
@@ -54,6 +56,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test_2_0/simple.ftl", "WEB-INF/src/resources-importer/journal/structures/test_2_0.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue("Should provide fieldReference \"myReference\", because it is schema version 2.0", strings.contains("myReference"));
         assertFalse("Should not provide name \"simple\", because it is schema version 2.0",  strings.contains("simple"));
     }
@@ -62,6 +66,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test_data_definition/simple.ftl", "WEB-INF/src/resources-importer/journal/structures/test_data_definition.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue("Should provide fieldReference \"myReference\" for structure based on data definition format", strings.contains("myReference"));
         assertFalse("Should not provide name \"simple\" for structure based on data definition format",  strings.contains("simple"));
     }
@@ -70,6 +76,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/simple-data.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "com/liferay/portal/kernel/templateparser/TemplateNode.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue("Should offer 'simple.getData()' for structure field", strings.contains("data"));
     }
 
@@ -77,6 +85,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/repeatable.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("siblings"));
     }
 
@@ -84,6 +94,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/repeatable.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "com/liferay/portal/kernel/templateparser/TemplateNode.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("getSiblings"));
     }
 
@@ -91,6 +103,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/parent.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "com/liferay/portal/kernel/templateparser/TemplateNode.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue("Should offer nested field 'child'", strings.contains("child"));
         assertTrue("Should offer 'parent.getData()' for parent field", strings.contains("data"));
     }
@@ -99,6 +113,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/repeatableParent.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "com/liferay/portal/kernel/templateparser/TemplateNode.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue("Should offer nested field 'repeatableChild' while iterating over the siblings of the parent field", strings.contains("repeatableChild"));
         assertTrue("Should offer 'repeatableChild.getData() while iterating over the siblings of the parent field", strings.contains("data"));
     }
@@ -107,6 +123,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/nestedRepeatableParent.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "com/liferay/portal/kernel/templateparser/TemplateNode.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue("Should offer deeply nested field 'nested' while iterating over the siblings of the parent field", strings.contains("nested"));
         assertTrue("Should offer 'repeatableChild.nestedRepeatableChild.data' while iterating over the siblings of the parent field", strings.contains("data"));
     }
@@ -115,6 +133,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/simple.ftl", "WEB-INF/src/resources-importer/journal/structures/test.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("simple"));
     }
 
@@ -122,6 +142,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/repeatable.ftl", "WEB-INF/src/resources-importer/journal/structures/test.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("siblings"));
     }
 
@@ -129,6 +151,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/repeatable.ftl", "WEB-INF/src/resources-importer/journal/structures/test.xml", "com/liferay/portal/kernel/templateparser/TemplateNode.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("getSiblings"));
     }
 
@@ -136,6 +160,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/parent.ftl", "WEB-INF/src/resources-importer/journal/structures/test.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("child"));
     }
 
@@ -143,6 +169,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/repeatableParent.ftl", "WEB-INF/src/resources-importer/journal/structures/test.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("repeatableChild"));
     }
 
@@ -150,6 +178,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/nestedRepeatableParent.ftl", "WEB-INF/src/resources-importer/journal/structures/test.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("nested"));
     }
 
@@ -158,6 +188,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/journal-reserved-variables.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("reserved-article-id"));
     }
 
@@ -165,6 +197,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/templates/application_display/asset_entry/asset-entry-template.ftl");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("assetPublisherHelper"));
     }
 
@@ -172,6 +206,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("templates/portal_normal.ftl");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("company_name"));
     }
 
@@ -179,6 +215,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("layouttpl/custom/my_freemarker_layout_template.ftl");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("processor"));
     }
 
@@ -186,24 +224,30 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("templates/theme_settings.ftl", "WEB-INF/liferay-look-and-feel.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("mysetting"));
     }
 
     public void testThemeSettingsReferenceVariables() {
         myFixture.configureByFiles("templates/theme_reference.ftl", "WEB-INF/liferay-look-and-feel.xml");
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(caretElement);
+
+        PsiElement element = caretElement.getParent();
         PsiElement resolve = element.getReferences()[0].resolve();
 
-        assertTrue(resolve != null);
+		assertNotNull(resolve);
 
         PsiElement navigationElement = resolve.getNavigationElement();
 
-        assertTrue(navigationElement != null);
+		assertNotNull(navigationElement);
         assertTrue(navigationElement instanceof PsiDirectory);
 
         VirtualFile virtualFile = ((PsiDirectory) resolve.getNavigationElement()).getVirtualFile();
-        assertTrue(virtualFile != null);
+		assertNotNull(virtualFile);
         assertTrue(virtualFile.exists());
     }
 
@@ -211,6 +255,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/service-locator.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "com/liferay/portal/template/ServiceLocator.java", "de/dm/MyService.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("helloService"));
     }
 
@@ -222,6 +268,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         );
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("helloService"));
     }
 
@@ -235,6 +283,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         );
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("com.liferay.portal.kernel.service.MyCustomService"));
     }
 
@@ -261,6 +311,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/enum-util.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "de/dm/MyEnum.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("FOO"));
     }
 
@@ -268,6 +320,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/enum-util-lookup.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "de/dm/MyEnum.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("de.dm.MyEnum"));
     }
 
@@ -280,6 +334,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         );
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("de.dm.MyObject"));
     }
 
@@ -287,6 +343,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/static-util.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "de/dm/MyUtil.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue("Static method should be available", strings.contains("sayHello"));
    }
 
@@ -294,6 +352,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/static-util-lookup.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json", "de/dm/MyUtil.java");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("de.dm.MyUtil"));
     }
 
@@ -306,6 +366,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         );
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("length"));
     }
 
@@ -336,6 +398,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         );
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("com.liferay.portal.kernel.util.PortletKeys"));
     }
 
@@ -348,6 +412,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         );
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("ADMIN_PLUGINS"));
     }
 
@@ -355,6 +421,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("WEB-INF/src/resources-importer/journal/templates/test/include-servlet-context.ftl", "WEB-INF/src/resources-importer/journal/structures/test.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("/freemarker-other-common_SERVLET_CONTEXT_/foobar.ftl"));
     }
 
@@ -362,6 +430,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("templates/liferay_taglibs.ftl");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("liferay_aui"));
     }
 
@@ -369,6 +439,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("workflow-definition-freemarker.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("workflowContext"));
     }
 
@@ -376,6 +448,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("workflow-definition-freemarker-description.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue("<description>-Tag should provide Freemarker variables", strings.contains("workflowContext"));
     }
 
@@ -383,6 +457,8 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         myFixture.configureByFiles("fragment/index.html", "fragment/fragment.json");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("getterUtil"));
     }
 
@@ -391,15 +467,19 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
 
         PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
 
+        assertNotNull(element);
+
         PsiElement elementParent = element.getParent();
 
         PsiReference[] references = elementParent.getReferences();
 
         PsiElement resolve = references[0].resolve();
 
+        assertNotNull(resolve);
+
         PsiElement navigationElement = resolve.getNavigationElement();
 
-        assertTrue(navigationElement != null);
+		assertNotNull(navigationElement);
         assertTrue(navigationElement instanceof PsiClass);
     }
 

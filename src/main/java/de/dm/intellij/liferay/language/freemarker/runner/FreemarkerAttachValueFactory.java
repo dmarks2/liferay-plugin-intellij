@@ -1,11 +1,14 @@
 package de.dm.intellij.liferay.language.freemarker.runner;
 
+import com.intellij.openapi.diagnostic.Logger;
 import freemarker.debug.DebugModel;
 import freemarker.template.TemplateModelException;
 
 import java.rmi.RemoteException;
 
 public class FreemarkerAttachValueFactory {
+
+    private final static Logger log = Logger.getInstance(FreemarkerAttachValueFactory.class);
 
     private static final int VALID_VARIBLE_TYPES = DebugModel.TYPE_BOOLEAN | DebugModel.TYPE_COLLECTION |
         DebugModel.TYPE_CONFIGURATION | DebugModel.TYPE_DATE | DebugModel.TYPE_HASH | DebugModel.TYPE_HASH_EX |
@@ -14,10 +17,10 @@ public class FreemarkerAttachValueFactory {
     public static <T extends FreemarkerAttachValue> FreemarkerAttachValue createFreemarkerAttachValue(DebugModel debugModel, String name, Class<T> type) throws RemoteException, TemplateModelException {
         DebugModel value = debugModel.get(name);
 
-        return createFreemarkerAttachValue(name, value, type);
+        return createFreemarkerAttachValue(value, type);
     }
 
-    public static <T extends FreemarkerAttachValue> FreemarkerAttachValue createFreemarkerAttachValue(String name, DebugModel value, Class<T> type) {
+    public static <T extends FreemarkerAttachValue> FreemarkerAttachValue createFreemarkerAttachValue(DebugModel value, Class<T> type) {
         if (isValidVariable(value)) {
             if (FreemarkerAttachTemplateValue.class.equals(type)) {
                 return new FreemarkerAttachTemplateValue(value);
@@ -64,7 +67,7 @@ public class FreemarkerAttachValueFactory {
             }
             catch( RemoteException e )
             {
-                e.printStackTrace();
+                log.error(e.getMessage(), e);
             }
         }
 

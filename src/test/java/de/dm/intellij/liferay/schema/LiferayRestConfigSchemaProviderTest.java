@@ -41,6 +41,8 @@ public class LiferayRestConfigSchemaProviderTest extends BasePlatformTestCase {
 		myFixture.configureByFiles("completion/rest-config.yaml");
 		myFixture.complete(CompletionType.BASIC, 1);
 		List<String> strings = myFixture.getLookupElementStrings();
+
+		assertNotNull(strings);
 		assertTrue(strings.contains("apiDir"));
 	}
 

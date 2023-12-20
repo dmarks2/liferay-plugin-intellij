@@ -26,10 +26,8 @@ public class EnumUtilFtlVariable extends FtlLightVariable {
     private static FtlSpecialVariableType getVariableType(final PsiElement parent) {
         return new FtlSpecialVariableType() {
             public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull PsiElement place, ResolveState state) {
-                if (place instanceof FtlIndexExpression) {
-                    FtlIndexExpression ftlIndexExpression = (FtlIndexExpression) place;
-
-                    String referenceName = LiferayFreemarkerUtil.getIndexExpressionQualifiedReferenceName(ftlIndexExpression);
+                if (place instanceof FtlIndexExpression ftlIndexExpression) {
+					String referenceName = LiferayFreemarkerUtil.getIndexExpressionQualifiedReferenceName(ftlIndexExpression);
 
                     if (referenceName != null) {
                         try {

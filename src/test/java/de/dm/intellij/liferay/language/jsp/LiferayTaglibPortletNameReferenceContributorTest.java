@@ -35,6 +35,8 @@ public class LiferayTaglibPortletNameReferenceContributorTest extends LightJavaC
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("de_dm_portlet_MyPortlet"));
     }
 
@@ -48,6 +50,8 @@ public class LiferayTaglibPortletNameReferenceContributorTest extends LightJavaC
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("de_dm_portlet_MyConstantPortlet"));
     }
 

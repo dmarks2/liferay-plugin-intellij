@@ -66,14 +66,12 @@ public class ComponentPropertiesDocumentationProvider extends AbstractDocumentat
 
     @Override
     public @Nullable PsiElement getDocumentationElementForLookupItem(PsiManager psiManager, Object object, PsiElement element) {
-        if (object instanceof String) {
-            String lookupString = (String) object;
-
-            PsiAnnotationParameterList annotationParameterList = PsiTreeUtil.getParentOfType(element, PsiAnnotationParameterList.class);
+        if (object instanceof String lookupString) {
+			PsiAnnotationParameterList annotationParameterList = PsiTreeUtil.getParentOfType(element, PsiAnnotationParameterList.class);
 
             List<String> serviceClassNames = ComponentPropertiesCompletionContributor.getServiceClassNames(annotationParameterList);
 
-            if (serviceClassNames.size() > 0) {
+            if (!serviceClassNames.isEmpty()) {
 
                 String dummyClass = "@org.osgi.service.component.annotations.Component(\n" +
                         "   property=\"" + lookupString + "\",\n" +
@@ -128,7 +126,7 @@ public class ComponentPropertiesDocumentationProvider extends AbstractDocumentat
 
             builder.append("}");
 
-            return "service = " + builder.toString();
+            return "service = " + builder;
         } else {
             return "service = " + serviceClassNames.get(0) + ".class";
         }

@@ -30,10 +30,8 @@ public class LiferayCustomSQLLanguageInjector implements MultiHostInjector {
                 (psiFile.getParent() != null) &&
                 (psiFile.getParent().getName().equals("custom-sql"))
         ) {
-            if (context instanceof XmlTag) {
-                XmlTag xmlTag = (XmlTag) context;
-
-                String tagName = xmlTag.getName();
+            if (context instanceof XmlTag xmlTag) {
+				String tagName = xmlTag.getName();
 
                 if ("sql".equals(tagName)) {
                     InjectedLanguage sqlLanguage = InjectedLanguage.create(SqlLanguage.INSTANCE.getID(), "", "", true);

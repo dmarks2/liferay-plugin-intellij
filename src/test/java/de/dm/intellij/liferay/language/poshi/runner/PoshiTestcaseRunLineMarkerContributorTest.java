@@ -15,6 +15,8 @@ public class PoshiTestcaseRunLineMarkerContributorTest extends BasePlatformTestC
 
         PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
 
+        assertNotNull(element);
+
         assertNotNull(new PoshiTestcaseRunLineMarkerContributor().getInfo(element));
     }
 }

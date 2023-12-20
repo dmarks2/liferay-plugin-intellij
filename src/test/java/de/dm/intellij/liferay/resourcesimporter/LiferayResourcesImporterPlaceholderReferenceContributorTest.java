@@ -30,6 +30,8 @@ public class LiferayResourcesImporterPlaceholderReferenceContributorTest extends
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("footer.png"));
     }
 
@@ -40,6 +42,8 @@ public class LiferayResourcesImporterPlaceholderReferenceContributorTest extends
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("/home"));
     }
 

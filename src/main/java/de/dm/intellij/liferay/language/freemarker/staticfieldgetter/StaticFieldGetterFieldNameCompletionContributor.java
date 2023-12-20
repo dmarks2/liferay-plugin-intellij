@@ -8,12 +8,9 @@ import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.freemarker.psi.FtlArgumentList;
 import com.intellij.freemarker.psi.FtlExpression;
 import com.intellij.freemarker.psi.FtlMethodCallExpression;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.patterns.PsiElementPattern;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ProcessingContext;
 import de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerUtil;
@@ -33,21 +30,16 @@ public class StaticFieldGetterFieldNameCompletionContributor extends CompletionC
                 ELEMENT_FILTER,
                 new CompletionProvider<>() {
                     @Override
-                    protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result) {
+                    protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
                         PsiElement originalPosition = parameters.getOriginalPosition();
                         if (originalPosition != null) {
-                            PsiFile psiFile = originalPosition.getContainingFile();
-                            psiFile = psiFile.getOriginalFile();
-
-                            Module module = ModuleUtil.findModuleForFile(psiFile);
-
                             if (isStaticFieldGetterFieldNameCall(originalPosition)) {
                                 FtlArgumentList argumentList = PsiTreeUtil.getParentOfType(originalPosition, FtlArgumentList.class);
                                 String className = LiferayFreemarkerUtil.getArgumentListEntryValue(argumentList, 0);
                                 if (className != null) {
                                     PsiClass psiClass = ProjectUtils.getClassByName(originalPosition.getProject(), className, originalPosition);
                                     if (psiClass != null) {
-                                        LiferayFreemarkerUtil.addClassPublicStaticFieldsLookup(psiClass, result, module);
+                                        LiferayFreemarkerUtil.addClassPublicStaticFieldsLookup(psiClass, result);
 
                                         result.stopHere();
                                     }
@@ -69,9 +61,7 @@ public class StaticFieldGetterFieldNameCompletionContributor extends CompletionC
 
             String signature = LiferayFreemarkerUtil.getMethodSignature(ftlMethodCallExpression);
 
-            if ("com.liferay.portal.kernel.util.StaticFieldGetter.getFieldValue".equals(signature)) {
-                return true;
-            }
+			return "com.liferay.portal.kernel.util.StaticFieldGetter.getFieldValue".equals(signature);
         }
         return false;
     }

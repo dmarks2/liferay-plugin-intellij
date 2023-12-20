@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 
 public class LiferayServiceXMLNamespaceInspection extends XmlSuppressableInspectionTool {
 
-    private static final Pattern VALID_NAMESPACE_EXPRESSION = Pattern.compile("[A-Za-z_]{1}[A-Za-z0-9_]{0,62}");
+    private static final Pattern VALID_NAMESPACE_EXPRESSION = Pattern.compile("[A-Za-z_][A-Za-z0-9_]{0,62}");
 
     @Override
     public boolean isEnabledByDefault() {
@@ -37,9 +37,8 @@ public class LiferayServiceXMLNamespaceInspection extends XmlSuppressableInspect
         return LiferayInspectionsGroupNames.LIFERAY_GROUP_NAME;
     }
 
-    @NotNull
     @Override
-    public String[] getGroupPath() {
+    public String @NotNull [] getGroupPath() {
         return new String[]{
                 getGroupDisplayName(),
                 LiferayInspectionsGroupNames.SERVICE_XML_GROUP_NAME
@@ -57,7 +56,7 @@ public class LiferayServiceXMLNamespaceInspection extends XmlSuppressableInspect
     public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             @Override
-            public void visitXmlText(XmlText xmlText) {
+            public void visitXmlText(@NotNull XmlText xmlText) {
                if (LiferayServiceXMLUtil.isNamespaceTag(xmlText)) {
                     String text = xmlText.getText();
                     if (text != null) {

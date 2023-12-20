@@ -13,16 +13,14 @@ public class LiferayTaglibResourceBundleReferenceProvider extends PropertiesRefe
         super(defaultSoft);
     }
 
-    @NotNull
     @Override
-    public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+    public PsiReference @NotNull[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
         PsiReference[] referencesByElement = super.getReferencesByElement(element, context);
         if (referencesByElement.length == 1) {
             PsiReference psiReference = referencesByElement[0];
-            if (psiReference instanceof PropertyReference) {
-                PropertyReference propertyReference = (PropertyReference)psiReference;
+            if (psiReference instanceof PropertyReference propertyReference) {
 
-                return new PsiReference[]{
+				return new PsiReference[]{
                     new LiferayTaglibResourceBundlePropertyReference(
                         propertyReference.getCanonicalText(),
                         propertyReference.getElement(),

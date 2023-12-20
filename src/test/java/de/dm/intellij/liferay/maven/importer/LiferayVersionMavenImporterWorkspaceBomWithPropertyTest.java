@@ -7,29 +7,28 @@ public class LiferayVersionMavenImporterWorkspaceBomWithPropertyTest extends Mav
 
     private Module module;
 
-    private static final String XML = "<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n" +
-            "    <modelVersion>4.0.0</modelVersion>\n" +
-            "\n" +
-            "    <groupId>de.dm.liferay</groupId>\n" +
-            "    <artifactId>workspace-bom-properties</artifactId>\n" +
-            "    <version>1.0.0-SNAPSHOT</version>\n" +
-            "    <packaging>pom</packaging>\n" +
-            "\n" +
-            "    <properties>\n" +
-            "        <liferay.workspace.target.platform.version>7.3.0</liferay.workspace.target.platform.version>\n" +
-            "    </properties>\n" +
-            "    <dependencyManagement>\n" +
-            "        <dependencies>\n" +
-            "            <dependency>\n" +
-            "                <groupId>com.liferay.portal</groupId>\n" +
-            "                <artifactId>release.portal.bom</artifactId>\n" +
-            "                <version>${liferay.workspace.target.platform.version}</version>\n" +
-            "                <type>pom</type>\n" +
-            "                <scope>import</scope>\n" +
-            "            </dependency>" +
-            "       </dependencies>" +
-            "   </dependencyManagement>" +
-            "</project>\n";
+    private static final String XML = """
+			<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+			    <modelVersion>4.0.0</modelVersion>
+
+			    <groupId>de.dm.liferay</groupId>
+			    <artifactId>workspace-bom-properties</artifactId>
+			    <version>1.0.0-SNAPSHOT</version>
+			    <packaging>pom</packaging>
+
+			    <properties>
+			        <liferay.workspace.target.platform.version>7.3.0</liferay.workspace.target.platform.version>
+			    </properties>
+			    <dependencyManagement>
+			        <dependencies>
+			            <dependency>
+			                <groupId>com.liferay.portal</groupId>
+			                <artifactId>release.portal.bom</artifactId>
+			                <version>${liferay.workspace.target.platform.version}</version>
+			                <type>pom</type>
+			                <scope>import</scope>
+			            </dependency>       </dependencies>   </dependencyManagement></project>
+			""";
 
     @Override
     protected void setUp() throws Exception {

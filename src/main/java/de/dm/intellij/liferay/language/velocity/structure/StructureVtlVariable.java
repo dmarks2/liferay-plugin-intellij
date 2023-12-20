@@ -15,7 +15,7 @@ public class StructureVtlVariable extends VtlLightVariable {
 
     public static final String CLASS_NAME = "com.liferay.portal.kernel.templateparser.TemplateNode";
 
-    private TemplateVariable templateVariable;
+    private final TemplateVariable templateVariable;
 
     public StructureVtlVariable(TemplateVariable templateVariable) {
         super(templateVariable.getName(), (VtlFile) templateVariable.getParentFile(), CLASS_NAME);

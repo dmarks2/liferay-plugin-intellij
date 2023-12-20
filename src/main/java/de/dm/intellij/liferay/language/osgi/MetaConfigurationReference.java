@@ -80,7 +80,7 @@ public class MetaConfigurationReference extends PsiReferenceBase<PsiElement> imp
 
     @Override
     public Object @NotNull [] getVariants() {
-        List<Object> result = new ArrayList<Object>();
+        List<Object> result = new ArrayList<>();
 
         Query<PsiClass> annotatedClasses = findAnnotatedClasses(getElement().getProject(), getElement(), "aQute.bnd.annotation.metatype.Meta.OCD");
 
@@ -107,10 +107,9 @@ public class MetaConfigurationReference extends PsiReferenceBase<PsiElement> imp
 
     @Override
     public boolean isReferenceTo(@NotNull PsiElement element) {
-        if (element instanceof PsiLiteralExpression) {
-            PsiLiteralExpression literalExpression = (PsiLiteralExpression) element;
+        if (element instanceof PsiLiteralExpression literalExpression) {
 
-            if (isMetaConfigurationIdElement(literalExpression)) {
+			if (isMetaConfigurationIdElement(literalExpression)) {
                 return StringUtil.equals(literalExpression.getText(), getElement().getText());
             }
         }
@@ -118,10 +117,9 @@ public class MetaConfigurationReference extends PsiReferenceBase<PsiElement> imp
     }
 
     public static boolean isMetaConfigurationIdElement(PsiElement element) {
-        if (element instanceof PsiLiteralExpression) {
-            PsiLiteralExpression literalExpression = (PsiLiteralExpression) element;
+        if (element instanceof PsiLiteralExpression literalExpression) {
 
-            PsiNameValuePair nameValuePair = PsiTreeUtil.getParentOfType(literalExpression, PsiNameValuePair.class);
+			PsiNameValuePair nameValuePair = PsiTreeUtil.getParentOfType(literalExpression, PsiNameValuePair.class);
 
             if (nameValuePair != null) {
                 if ("id".equals(nameValuePair.getName())) {

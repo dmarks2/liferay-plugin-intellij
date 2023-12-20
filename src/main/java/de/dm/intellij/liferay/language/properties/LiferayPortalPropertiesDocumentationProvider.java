@@ -89,7 +89,7 @@ public class LiferayPortalPropertiesDocumentationProvider extends AbstractDocume
 
                     String docCommentText = entry.getValue();
 
-                    if (docCommentText != null && docCommentText.trim().length() > 0) {
+                    if (docCommentText != null && !docCommentText.trim().isEmpty()) {
 
                         StringBuilder stringBuilder = new StringBuilder();
 
@@ -114,18 +114,7 @@ public class LiferayPortalPropertiesDocumentationProvider extends AbstractDocume
                             }
                         }
 
-                        String description = stringBuilder.toString();
-
-                        if (description.startsWith("<br>")) {
-                            description = description.substring(4);
-                        }
-
-                        String result = DocumentationMarkup.DEFINITION_START +
-                                text +
-                                DocumentationMarkup.DEFINITION_END +
-                                DocumentationMarkup.CONTENT_START +
-                                description +
-                                DocumentationMarkup.CONTENT_END;
+                        String result = getMessage(stringBuilder, text);
 
                         result = result + DocumentationMarkup.SECTIONS_START + "<p>";
 
@@ -162,22 +151,34 @@ public class LiferayPortalPropertiesDocumentationProvider extends AbstractDocume
         return null;
     }
 
+    @NotNull
+    private static String getMessage(StringBuilder stringBuilder, String text) {
+        String description = stringBuilder.toString();
+
+        if (description.startsWith("<br>")) {
+            description = description.substring(4);
+        }
+
+		return DocumentationMarkup.DEFINITION_START +
+                text +
+                DocumentationMarkup.DEFINITION_END +
+                DocumentationMarkup.CONTENT_START +
+                description +
+                DocumentationMarkup.CONTENT_END;
+    }
+
     @Override
     public @Nullable PsiElement getDocumentationElementForLookupItem(PsiManager psiManager, Object object, PsiElement element) {
-        if (object instanceof String) {
-            String lookupString = (String) object;
-
-            PropertiesFile propertiesFile = (PropertiesFile) PsiFileFactory.getInstance(psiManager.getProject()).createFileFromText("portal.properties", PropertiesFileType.INSTANCE, lookupString);
+        if (object instanceof String lookupString) {
+			PropertiesFile propertiesFile = (PropertiesFile) PsiFileFactory.getInstance(psiManager.getProject()).createFileFromText("portal.properties", PropertiesFileType.INSTANCE, lookupString);
 
             List<IProperty> properties = propertiesFile.getProperties();
 
-            if (properties.size() > 0) {
+            if (!properties.isEmpty()) {
                 IProperty iProperty = properties.get(0);
 
-                if (iProperty instanceof Property) {
-                    Property property = (Property) iProperty;
-
-                    property.putUserData(ModuleUtilCore.KEY_MODULE, ModuleUtil.findModuleForPsiElement(element));
+                if (iProperty instanceof Property property) {
+					property.putUserData(ModuleUtilCore.KEY_MODULE, ModuleUtil.findModuleForPsiElement(element));
 
                     return property;
                 }

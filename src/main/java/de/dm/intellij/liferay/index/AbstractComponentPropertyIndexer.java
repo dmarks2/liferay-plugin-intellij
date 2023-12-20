@@ -104,10 +104,8 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
                                     if ("property".equals(psiNameValuePair.getName())) {
                                         PsiAnnotationMemberValue psiNameValuePairValue = psiNameValuePair.getValue();
 
-                                        if (psiNameValuePairValue instanceof PsiArrayInitializerMemberValue) {
-                                            PsiArrayInitializerMemberValue psiArrayInitializerMemberValue = (PsiArrayInitializerMemberValue) psiNameValuePairValue;
-
-                                            PsiAnnotationMemberValue[] initializers = psiArrayInitializerMemberValue.getInitializers();
+                                        if (psiNameValuePairValue instanceof PsiArrayInitializerMemberValue psiArrayInitializerMemberValue) {
+											PsiAnnotationMemberValue[] initializers = psiArrayInitializerMemberValue.getInitializers();
 
                                             for (PsiAnnotationMemberValue initializer : initializers) {
                                                 if (initializer instanceof PsiLiteralExpression) {

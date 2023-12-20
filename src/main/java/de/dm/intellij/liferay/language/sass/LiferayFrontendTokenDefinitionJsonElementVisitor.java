@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class LiferayFrontendTokenDefinitionJsonElementVisitor extends JsonRecursiveElementVisitor {
 
-    private Map<String, JsonProperty> cssVariableMap = new HashMap<>();
+    private final Map<String, JsonProperty> cssVariableMap = new HashMap<>();
 
     private boolean insideMapping;
     private String typeMapping;

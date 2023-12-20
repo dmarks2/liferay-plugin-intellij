@@ -240,7 +240,7 @@ public class LiferayJspTaglibDeprecationInspection extends AbstractLiferayDeprec
 	}
 
 	private static class RenameXmlAttributeQuickFix implements LocalQuickFix {
-		private String newName;
+		private final String newName;
 
 		public RenameXmlAttributeQuickFix(String newName) {
 			this.newName = newName;
@@ -280,7 +280,7 @@ public class LiferayJspTaglibDeprecationInspection extends AbstractLiferayDeprec
 		}
 	}
 	private static class RenameXmlTagQuickFix implements LocalQuickFix {
-		private String newName;
+		private final String newName;
 
 		public RenameXmlTagQuickFix(String newName) {
 			this.newName = newName;
@@ -332,8 +332,8 @@ public class LiferayJspTaglibDeprecationInspection extends AbstractLiferayDeprec
 		}
 	}
 	private static class RenameXmlNamespaceQuickFix implements LocalQuickFix {
-		private String newNamespace;
-		private String newPrefix;
+		private final String newNamespace;
+		private final String newPrefix;
 
 		public RenameXmlNamespaceQuickFix(String newNamespace, String newPrefix) {
 			this.newNamespace = newNamespace;

@@ -39,32 +39,36 @@ public class ThemeSettingsFtlVariable extends FtlLightVariable {
         return new FtlSpecialVariableType() {
             public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull PsiElement place, ResolveState state) {
                 final Module module = ModuleUtil.findModuleForPsiElement(parent);
-                String liferayLookAndFeelXml = LiferayModuleComponent.getLiferayLookAndFeelXml(module);
-                if ((liferayLookAndFeelXml != null) && (liferayLookAndFeelXml.trim().length() > 0)) {
-                    ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
-                    VirtualFile[] contentRoots = moduleRootManager.getContentRoots();
-                    for (VirtualFile contentRoot : contentRoots) {
-                        String relativeFileUrl = liferayLookAndFeelXml;
 
-                        String contentRootUrl = contentRoot.getUrl();
+                if (module != null) {
+                    String liferayLookAndFeelXml = LiferayModuleComponent.getLiferayLookAndFeelXml(module);
 
-                        if (relativeFileUrl.startsWith(contentRootUrl)) {
-                            relativeFileUrl = relativeFileUrl.substring(contentRootUrl.length());
-                        }
+                    if ((liferayLookAndFeelXml != null) && (!liferayLookAndFeelXml.trim().isEmpty())) {
+                        ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
+                        VirtualFile[] contentRoots = moduleRootManager.getContentRoots();
+                        for (VirtualFile contentRoot : contentRoots) {
+                            String relativeFileUrl = liferayLookAndFeelXml;
 
-                        VirtualFile virtualFile = VfsUtilCore.findRelativeFile(relativeFileUrl, contentRoot);
-                        if (virtualFile != null) {
+                            String contentRootUrl = contentRoot.getUrl();
 
-                            XmlFile xmlFile = (XmlFile) PsiManager.getInstance(module.getProject()).findFile(virtualFile);
-                            Collection<LiferayLookAndFeelXmlParser.Setting> settings = LiferayLookAndFeelXmlParser.parseSettings(xmlFile);
-                            for (LiferayLookAndFeelXmlParser.Setting setting : settings) {
-                                String type = ("checkbox".equals(setting.type) ? "java.lang.Boolean" : "java.lang.String");
-
-                                FtlVariable variable = new CustomFtlVariable(setting.key, place, type, setting.psiElement);
-                                processor.execute(variable, state);
+                            if (relativeFileUrl.startsWith(contentRootUrl)) {
+                                relativeFileUrl = relativeFileUrl.substring(contentRootUrl.length());
                             }
+
+                            VirtualFile virtualFile = VfsUtilCore.findRelativeFile(relativeFileUrl, contentRoot);
+                            if (virtualFile != null) {
+
+                                XmlFile xmlFile = (XmlFile) PsiManager.getInstance(module.getProject()).findFile(virtualFile);
+                                Collection<LiferayLookAndFeelXmlParser.Setting> settings = LiferayLookAndFeelXmlParser.parseSettings(xmlFile);
+                                for (LiferayLookAndFeelXmlParser.Setting setting : settings) {
+                                    String type = ("checkbox".equals(setting.type) ? "java.lang.Boolean" : "java.lang.String");
+
+                                    FtlVariable variable = new CustomFtlVariable(setting.key, place, type, setting.psiElement);
+                                    processor.execute(variable, state);
+                                }
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
 

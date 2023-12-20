@@ -43,13 +43,21 @@ public class LiferayThemeBuilderGradleProjectResolver extends AbstractProjectRes
             IdeaContentRoot contentRoot = gradleModule.getContentRoots().getAt(0);
             File rootDirectory = contentRoot.getRootDirectory();
             VirtualFile fileByIoFile = VfsUtil.findFileByIoFile(rootDirectory, false);
-            Project project = ProjectUtil.guessProjectForFile(fileByIoFile);
-            Module module = ModuleUtil.findModuleForFile(fileByIoFile, project);
 
-            //Save the parent theme information in the Liferay Module Component
-            LiferayModuleComponent liferayModuleComponent = module.getService(LiferayModuleComponent.class);
-            if (liferayModuleComponent != null) {
-                liferayModuleComponent.setParentTheme(liferayThemeBuilderGradleTaskModel.getParentName());
+            if (fileByIoFile != null) {
+                Project project = ProjectUtil.guessProjectForFile(fileByIoFile);
+
+                if (project != null) {
+                    Module module = ModuleUtil.findModuleForFile(fileByIoFile, project);
+
+                    if (module != null) {
+                        //Save the parent theme information in the Liferay Module Component
+                        LiferayModuleComponent liferayModuleComponent = module.getService(LiferayModuleComponent.class);
+                        if (liferayModuleComponent != null) {
+                            liferayModuleComponent.setParentTheme(liferayThemeBuilderGradleTaskModel.getParentName());
+                        }
+                    }
+                }
             }
         }
         super.populateModuleExtraModels(gradleModule, ideModule);

@@ -22,13 +22,13 @@ public class TemplateVariable {
 
     private String defaultLanguageId;
 
-    private Map<String, String> labels = new HashMap<>();
+    private final Map<String, String> labels = new HashMap<>();
 
-    private Map<String, String> tips = new HashMap<>();
+    private final Map<String, String> tips = new HashMap<>();
 
     private String type;
 
-    private List<TemplateVariable> nestedVariables = new ArrayList<>();
+    private final List<TemplateVariable> nestedVariables = new ArrayList<>();
 
     public String getName() {
         return name;

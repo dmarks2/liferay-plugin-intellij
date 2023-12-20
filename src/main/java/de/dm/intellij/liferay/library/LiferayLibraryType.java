@@ -45,7 +45,7 @@ public class LiferayLibraryType extends LibraryType<LibraryProperties> {
         return super.isSuitableModule(module, facetsProvider);
     }
 
-    @Nullable
+    @NotNull
     @Override
     public LibraryRootsComponentDescriptor createLibraryRootsComponentDescriptor() {
         return new LiferayLibraryRootsComponentDescriptor();

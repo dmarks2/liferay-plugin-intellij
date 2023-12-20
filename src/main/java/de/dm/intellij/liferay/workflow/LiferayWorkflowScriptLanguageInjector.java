@@ -39,10 +39,8 @@ public class LiferayWorkflowScriptLanguageInjector implements MultiHostInjector 
 
     @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement context) {
-        if (context instanceof XmlTag) {
-            XmlTag xmlTag = (XmlTag) context;
-
-            String namespace = xmlTag.getNamespace();
+        if (context instanceof XmlTag xmlTag) {
+			String namespace = xmlTag.getNamespace();
 
             if (LiferayWorkflowContextVariablesUtil.WORKFLOW_NAMESPACES.contains(namespace)) {
                 handleLanguageInjection(registrar, xmlTag, LiferayWorkflowContextVariablesUtil.WORKFLOW_SCRIPT_TAG, null,"script-language", SCRIPT_LANGUAGE_MAPPING);

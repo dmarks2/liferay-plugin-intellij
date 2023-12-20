@@ -1,10 +1,9 @@
 package de.dm.intellij.liferay.gradle;
 
-import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.plugins.gradle.tooling.ErrorMessageBuilder;
+import org.jetbrains.plugins.gradle.tooling.ModelBuilderContext;
 import org.jetbrains.plugins.gradle.tooling.ModelBuilderService;
 
 import java.lang.reflect.InvocationTargetException;
@@ -28,8 +27,7 @@ public class LiferayThemeBuilderGradleTaskModelBuilder implements ModelBuilderSe
         result.setEnabled(false);
 
         //try to find the com.liferay.portal.tools.theme.builder plugin
-        Plugin plugin = project.getPlugins().findPlugin("com.liferay.portal.tools.theme.builder");
-        if (plugin != null) {
+        if (project.getPlugins().hasPlugin("com.liferay.portal.tools.theme.builder")) {
             result.setEnabled(true);
 
             Map<Project, Set<Task>> allTasks = project.getAllTasks(false);
@@ -55,9 +53,8 @@ public class LiferayThemeBuilderGradleTaskModelBuilder implements ModelBuilderSe
         return result;
     }
 
-    @NotNull
     @Override
-    public ErrorMessageBuilder getErrorMessageBuilder(@NotNull Project project, @NotNull Exception e) {
-        return ErrorMessageBuilder.create(project, e, "Gradle import error").withDescription("Unable to import Liferay Theme Task configuration");
+    public void reportErrorMessage(@NotNull String modelName, @NotNull Project project, @NotNull ModelBuilderContext context, @NotNull Exception exception) {
+        context.getMessageReporter().createMessage().withGroup("Gradle import error").withText("Unable to import Liferay Theme Task configuration").withException(exception).reportMessage(project);
     }
 }

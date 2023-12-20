@@ -12,10 +12,9 @@ import java.util.Objects;
 public class MetaConfigurationComponentElementFilter implements ElementFilter {
     @Override
     public boolean isAcceptable(Object element, @Nullable PsiElement context) {
-        if (element instanceof PsiElement) {
-            PsiElement psiElement = (PsiElement) element;
+        if (element instanceof PsiElement psiElement) {
 
-            PsiAnnotation annotation = PsiTreeUtil.getParentOfType(psiElement, PsiAnnotation.class);
+			PsiAnnotation annotation = PsiTreeUtil.getParentOfType(psiElement, PsiAnnotation.class);
 
             if (annotation != null) {
                 if (annotation.hasQualifiedName("org.osgi.service.component.annotations.Component")) {

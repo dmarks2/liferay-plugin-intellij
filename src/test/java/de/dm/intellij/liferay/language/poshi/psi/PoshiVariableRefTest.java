@@ -16,7 +16,11 @@ public class PoshiVariableRefTest extends BasePlatformTestCase {
     public void testReference() {
         myFixture.configureByFile("testcases/VariableReference.testcase");
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(caretElement);
+
+        PsiElement element = caretElement.getParent();
         PsiElement resolve = element.getReferences()[0].resolve();
 
         assertTrue("\"${myVar}\" should be resolvable", (resolve != null));
@@ -29,6 +33,7 @@ public class PoshiVariableRefTest extends BasePlatformTestCase {
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue("myVar should be found, is declared at root level.", strings.contains("myVar"));
         assertTrue("myInsideVar should be found, is declared on method level.", strings.contains("myVarInside"));
         assertFalse("myOtherVar should not be found, because it is declared after the current instruction.", strings.contains("myOtherVar"));

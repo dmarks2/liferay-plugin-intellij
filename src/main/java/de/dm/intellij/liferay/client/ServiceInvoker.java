@@ -112,14 +112,6 @@ public class ServiceInvoker {
 
                             String attributeValueString = attributeValue.getAsString();
 
-                            /*
-                            if (attributeValue instanceof String[]) {
-                                attributeValueString = "[" + StringUtil.join((String[]) attributeValue) + "]";
-                            } else {
-                                attributeValueString = String.valueOf(attributeValue);
-                            }
-                            */
-
                             formDataBodyPart = new StringBody(attributeValueString, ContentType.MULTIPART_FORM_DATA);
                             builder.addPart("serviceContext.attributes." + attributeName, formDataBodyPart);
                         }

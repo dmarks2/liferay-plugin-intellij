@@ -95,49 +95,52 @@ public class ShowHookFragmentDiffAction extends CompareFilesAction {
     private static VirtualFile getOriginalFile(@NotNull AnActionEvent e) {
         Project project = e.getProject();
 
-        VirtualFile selectedFile = getSelectedFile(e);
-        if (selectedFile != null) {
-            Module module = ModuleUtil.findModuleForFile(selectedFile, project);
-            if ( (module != null) && (! (module.isDisposed())) ) {
+        if (project != null) {
+            VirtualFile selectedFile = getSelectedFile(e);
+            if (selectedFile != null) {
+                Module module = ModuleUtil.findModuleForFile(selectedFile, project);
+                if ((module != null) && (!(module.isDisposed()))) {
 
-                Collection<String> webRootsRelativePaths = LiferayFileUtil.getWebRootsRelativePaths(module, selectedFile);
+                    Collection<String> webRootsRelativePaths = LiferayFileUtil.getWebRootsRelativePaths(module, selectedFile);
 
-                String fragmentHostPackageName = LiferayModuleComponent.getOsgiFragmentHostPackageName(module);
+                    String fragmentHostPackageName = LiferayModuleComponent.getOsgiFragmentHostPackageName(module);
 
-                String customJspDir = LiferayFileUtil.getCustomJspDir(module);
-                if ( (customJspDir != null) && (customJspDir.startsWith("/")) && customJspDir.length() > 1 ) {
-                    customJspDir = customJspDir.substring(1);
-                }
+                    String customJspDir = LiferayFileUtil.getCustomJspDir(module);
+                    if ((customJspDir != null) && (customJspDir.startsWith("/")) && customJspDir.length() > 1) {
+                        customJspDir = customJspDir.substring(1);
+                    }
 
-                Collection<Library> libraries = new ArrayList<Library>();
-                libraries.addAll(ProjectUtils.findLibrariesByName("com.liferay.portal:portal-web", module));
-                if (fragmentHostPackageName != null) {
-                    libraries.addAll(ProjectUtils.findLibrariesByName(/*"com.liferay:" +*/ fragmentHostPackageName, module));
-                }
-                if (LiferayCustomJspBagUtil.hasCustomJspBags(module)) {
-                    libraries.addAll(ProjectUtils.findLibrariesByName("com.liferay.portal:com.liferay.portal.web", module));
-                }
-                for (Library library : libraries) {
-                    VirtualFile[] files = library.getFiles(OrderRootType.CLASSES);
-                    for (VirtualFile file : files) {
-                        VirtualFileSystem virtualFileSystem = file.getFileSystem();
-                        if (virtualFileSystem instanceof JarFileSystem) {
-                            JarFileSystem jarFileSystem = (JarFileSystem)virtualFileSystem;
-                            for (String relativePath : webRootsRelativePaths) {
-                                VirtualFile virtualFile;
-                                if (fragmentHostPackageName != null) {
-                                    virtualFile = jarFileSystem.findFileByPath(file.getPath() + "META-INF/resources/" + relativePath);
-                                } else {
-                                    if ( (customJspDir != null) && (customJspDir.length() > 0) ) {
-                                        if (relativePath.startsWith(customJspDir)) {
-                                            relativePath = relativePath.substring((customJspDir + "/").length());
+					Collection<Library> libraries = new ArrayList<>(ProjectUtils.findLibrariesByName("com.liferay.portal:portal-web", module));
+
+                    if (fragmentHostPackageName != null) {
+                        libraries.addAll(ProjectUtils.findLibrariesByName(/*"com.liferay:" +*/ fragmentHostPackageName, module));
+                    }
+
+                    if (LiferayCustomJspBagUtil.hasCustomJspBags(module)) {
+                        libraries.addAll(ProjectUtils.findLibrariesByName("com.liferay.portal:com.liferay.portal.web", module));
+                    }
+
+                    for (Library library : libraries) {
+                        VirtualFile[] files = library.getFiles(OrderRootType.CLASSES);
+                        for (VirtualFile file : files) {
+                            VirtualFileSystem virtualFileSystem = file.getFileSystem();
+                            if (virtualFileSystem instanceof JarFileSystem jarFileSystem) {
+								for (String relativePath : webRootsRelativePaths) {
+                                    VirtualFile virtualFile;
+                                    if (fragmentHostPackageName != null) {
+                                        virtualFile = jarFileSystem.findFileByPath(file.getPath() + "META-INF/resources/" + relativePath);
+                                    } else {
+                                        if ((customJspDir != null) && (!customJspDir.isEmpty())) {
+                                            if (relativePath.startsWith(customJspDir)) {
+                                                relativePath = relativePath.substring((customJspDir + "/").length());
+                                            }
                                         }
+                                        virtualFile = jarFileSystem.findFileByPath(file.getPath() + relativePath);
                                     }
-                                    virtualFile = jarFileSystem.findFileByPath(file.getPath() + relativePath);
-                                }
 
-                                if (virtualFile != null) {
-                                    return virtualFile;
+                                    if (virtualFile != null) {
+                                        return virtualFile;
+                                    }
                                 }
                             }
                         }

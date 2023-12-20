@@ -19,10 +19,9 @@ import java.util.List;
 
 public class BndFormatterBlock extends AbstractBlock {
 
-    private Indent indent;
-    private CodeStyleSettings codeStyleSettings;
-
-    private SpacingBuilder spacingBuilder;
+    private final Indent indent;
+    private final CodeStyleSettings codeStyleSettings;
+    private final SpacingBuilder spacingBuilder;
 
     public BndFormatterBlock(ASTNode astNode, Alignment alignment, Indent indent, Wrap wrap, CodeStyleSettings codeStyleSettings, SpacingBuilder spacingBuilder) {
         super(astNode, wrap, alignment);

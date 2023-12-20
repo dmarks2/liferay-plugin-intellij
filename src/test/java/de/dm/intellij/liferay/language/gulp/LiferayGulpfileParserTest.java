@@ -6,7 +6,6 @@ import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.ModifiableModelsProvider;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
-import com.intellij.openapi.roots.SourceFolder;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
@@ -41,28 +40,17 @@ public class LiferayGulpfileParserTest extends BasePlatformTestCase {
     protected void tearDown() throws Exception {
         Module module = myFixture.getModule();
 
-        ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
-
-        VirtualFile[] sourceRoots = moduleRootManager.getSourceRoots();
-
         final ModifiableModelsProvider modelsProvider = ModifiableModelsProvider.getInstance();
         final ModifiableRootModel model = modelsProvider.getModuleModifiableModel(module);
 
-        ApplicationManager.getApplication().runWriteAction(new Runnable() {
-
-            @Override
-            public void run() {
-                ContentEntry[] contentEntries = model.getContentEntries();
-                if (contentEntries.length > 0) {
-                    ContentEntry contentEntry = contentEntries[0];
-                    SourceFolder sourceFolder = Arrays.stream(contentEntry.getSourceFolders()).filter(folder -> folder.getFile().getName().endsWith("mysrc")).findFirst().orElse(null);
-                    if (sourceFolder != null) {
-                        contentEntry.removeSourceFolder(sourceFolder);
-                    }
-                }
-                modelsProvider.commitModuleModifiableModel(model);
-            }
-        });
+        ApplicationManager.getApplication().runWriteAction(() -> {
+			ContentEntry[] contentEntries = model.getContentEntries();
+			if (contentEntries.length > 0) {
+				ContentEntry contentEntry = contentEntries[0];
+				Arrays.stream(contentEntry.getSourceFolders()).filter(folder -> folder.getFile().getName().endsWith("mysrc")).findFirst().ifPresent(contentEntry::removeSourceFolder);
+			}
+			modelsProvider.commitModuleModifiableModel(model);
+		});
 
         super.tearDown();
     }

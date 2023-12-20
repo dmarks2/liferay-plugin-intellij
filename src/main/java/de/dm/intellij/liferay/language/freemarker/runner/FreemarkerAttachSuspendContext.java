@@ -10,10 +10,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class FreemarkerAttachSuspendContext extends XSuspendContext {
 
-    private DebuggedEnvironment debuggedEnvironment;
-    private XSourcePosition sourcePosition;
-
-    private FreemarkerAttachExecutionStack executionStack;
+    private final DebuggedEnvironment debuggedEnvironment;
+    private final XSourcePosition sourcePosition;
+    private final FreemarkerAttachExecutionStack executionStack;
 
     public FreemarkerAttachSuspendContext(@NotNull DebuggedEnvironment debuggedEnvironment, XLineBreakpoint<FreemarkerAttachBreakpointProperties> xLineBreakpoint) {
         this(debuggedEnvironment, xLineBreakpoint.getSourcePosition());

@@ -44,7 +44,7 @@ public class LiferayResourcesImporterPlaceholderLayoutReference extends PsiRefer
 
     @Override
     public Object @NotNull [] getVariants() {
-        List<Object> result = new ArrayList<Object>();
+        List<Object> result = new ArrayList<>();
 
         Map<String, JsonProperty> friendlyURLs = getFriendlyURLs();
 
@@ -82,10 +82,8 @@ public class LiferayResourcesImporterPlaceholderLayoutReference extends PsiRefer
             if (resourcesImporterBaseDirectory != null) {
                 PsiFileSystemItem sitemapJsonFile = LiferayFileUtil.getChild(resourcesImporterBaseDirectory, "sitemap.json");
 
-                if (sitemapJsonFile instanceof JsonFile) {
-                    JsonFile jsonFile = (JsonFile) sitemapJsonFile;
-
-                    JsonValue topLevelValue = jsonFile.getTopLevelValue();
+                if (sitemapJsonFile instanceof JsonFile jsonFile) {
+					JsonValue topLevelValue = jsonFile.getTopLevelValue();
 
                     if (topLevelValue != null) {
                         topLevelValue.accept(new JsonRecursiveElementVisitor() {

@@ -3,9 +3,7 @@ package de.dm.intellij.liferay.language.poshi.formatting;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
-import com.intellij.util.containers.ContainerUtil;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 public class PoshiFormattingTest extends BasePlatformTestCase {

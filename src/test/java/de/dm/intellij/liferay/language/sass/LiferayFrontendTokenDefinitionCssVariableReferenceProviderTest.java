@@ -45,14 +45,9 @@ public class LiferayFrontendTokenDefinitionCssVariableReferenceProviderTest exte
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("--primary"));
-
-        /*
-        myFixture.complete(CompletionType.BASIC);
-        myFixture.type("");
-
-        myFixture.checkResultByFile("completed.css");
-         */
     }
 
 }

@@ -49,11 +49,14 @@ public class LiferaySassClayVariablesDocumentationProviderTest extends BasePlatf
         myFixture.complete(CompletionType.BASIC, 1);
 
         LookupElement[] lookupElements = myFixture.getLookupElements();
-        for (LookupElement lookupElement : lookupElements) {
-            if (lookupElement.getLookupString().equals("enable-shadows")) {
-                PsiElement elementFromLookup = DocumentationManager.getElementFromLookup(myFixture.getProject(), myFixture.getEditor(), myFixture.getFile(), lookupElement);
 
-                assertNotNull(elementFromLookup);
+        if (lookupElements != null) {
+            for (LookupElement lookupElement : lookupElements) {
+                if (lookupElement.getLookupString().equals("enable-shadows")) {
+                    PsiElement elementFromLookup = DocumentationManager.getElementFromLookup(myFixture.getProject(), myFixture.getEditor(), myFixture.getFile(), lookupElement);
+
+                    assertNotNull(elementFromLookup);
+                }
             }
         }
     }

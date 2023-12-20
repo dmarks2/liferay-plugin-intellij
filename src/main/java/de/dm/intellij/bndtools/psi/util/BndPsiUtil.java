@@ -79,7 +79,7 @@ public class BndPsiUtil {
                 }
 
                 packageName = packageName.replaceAll("\\s+", "");
-                if (packageName.length() > 0) {
+                if (!packageName.isEmpty()) {
                     if (packageName.charAt(0) == '!') {
                         packageName = packageName.substring(1);
                     }

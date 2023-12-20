@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 public class LiferayGulpfileParser extends FileChangeListenerBase {
 
-    private static final Pattern DECLARE_LIFERAY_THEME_TASKS = Pattern.compile("(\\w+)[ ]*=[ ]*require\\(['\"]liferay-theme-tasks['\"]\\)");
+    private static final Pattern DECLARE_LIFERAY_THEME_TASKS = Pattern.compile("(\\w+) *= *require\\(['\"]liferay-theme-tasks['\"]\\)");
 
     public static void handleChange(Project project, VirtualFile virtualFile) {
         final Module module = ModuleUtil.findModuleForFile(virtualFile, project);
@@ -69,7 +69,7 @@ public class LiferayGulpfileParser extends FileChangeListenerBase {
                                     //content is probably not valid JSON, ignore for now.
                                 }
 
-                                if (pathSrc.length() > 0) {
+                                if (!pathSrc.isEmpty()) {
                                     if (pathSrc.startsWith("./")) {
                                         pathSrc = pathSrc.substring(2);
                                     }

@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class LiferayFreemarkerTaglibs {
 
-    public static final Map<String, String> FTL_MACRO_PREFIXES = new HashMap<String, String>();
+    public static final Map<String, String> FTL_MACRO_PREFIXES = new HashMap<>();
 
     public static final Map<String, String> FTL_TAGLIB_MAPPINGS = new HashMap<>();
 

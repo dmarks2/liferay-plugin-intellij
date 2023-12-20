@@ -55,10 +55,8 @@ public class ExportPackageParser extends BasePackageParser {
             ASTNode[] childNodes = headerValuePartNode.getChildren(TOKEN_SET);
 
             for (ASTNode childNode : childNodes) {
-                if (childNode instanceof BndToken) {
-                    BndToken bndToken = (BndToken) childNode;
-
-                    ContainerUtil.addAll(psiReferences, BndPsiUtil.getPackageReferences(bndToken));
+                if (childNode instanceof BndToken bndToken) {
+					ContainerUtil.addAll(psiReferences, BndPsiUtil.getPackageReferences(bndToken));
                 }
             }
 
@@ -77,10 +75,8 @@ public class ExportPackageParser extends BasePackageParser {
         boolean annotated = false;
 
         for (BndHeaderValue bndHeaderValue : bndHeader.getBndHeaderValues()) {
-            if (bndHeaderValue instanceof Clause) {
-                Clause clause = (Clause)bndHeaderValue;
-
-                Directive usesDirective = clause.getDirective(OsgiConstants.USES_DIRECTIVE);
+            if (bndHeaderValue instanceof Clause clause) {
+				Directive usesDirective = clause.getDirective(OsgiConstants.USES_DIRECTIVE);
 
                 if (usesDirective != null) {
                     BndHeaderValuePart valueElement = usesDirective.getValueElement();
@@ -156,15 +152,11 @@ public class ExportPackageParser extends BasePackageParser {
     }
 
     private boolean isUsesDirectiveAttributeOrDirective(PsiElement psiElement) {
-        if (psiElement instanceof Attribute) {
-            Attribute attribute = (Attribute)psiElement;
-
-            return (OsgiConstants.USES_DIRECTIVE.equals(attribute.getName()));
+        if (psiElement instanceof Attribute attribute) {
+			return (OsgiConstants.USES_DIRECTIVE.equals(attribute.getName()));
         }
-        if (psiElement instanceof Directive) {
-            Directive directive = (Directive)psiElement;
-
-            return (OsgiConstants.USES_DIRECTIVE.equals(directive.getName()));
+        if (psiElement instanceof Directive directive) {
+			return (OsgiConstants.USES_DIRECTIVE.equals(directive.getName()));
         }
 
         return false;

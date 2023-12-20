@@ -36,9 +36,9 @@ public class LiferayServiceXMLEntityUuidInspection extends XmlSuppressableInspec
         return LiferayInspectionsGroupNames.LIFERAY_GROUP_NAME;
     }
 
-    @NotNull
+
     @Override
-    public String[] getGroupPath() {
+    public String @NotNull [] getGroupPath() {
         return new String[]{
             getGroupDisplayName(),
             LiferayInspectionsGroupNames.SERVICE_XML_GROUP_NAME
@@ -56,7 +56,7 @@ public class LiferayServiceXMLEntityUuidInspection extends XmlSuppressableInspec
     public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             @Override
-            public void visitXmlAttributeValue(XmlAttributeValue value) {
+            public void visitXmlAttributeValue(@NotNull XmlAttributeValue value) {
                 if (LiferayServiceXMLUtil.isEntityUuidAttribute(value)) {
                     String text = value.getValue();
                     if ("true".equals(text)) {

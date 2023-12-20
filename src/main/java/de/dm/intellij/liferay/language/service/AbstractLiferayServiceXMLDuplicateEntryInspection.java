@@ -39,9 +39,8 @@ public abstract class AbstractLiferayServiceXMLDuplicateEntryInspection extends 
         return LiferayInspectionsGroupNames.LIFERAY_GROUP_NAME;
     }
 
-    @NotNull
     @Override
-    public String[] getGroupPath() {
+    public String @NotNull [] getGroupPath() {
         return new String[]{
             getGroupDisplayName(),
             LiferayInspectionsGroupNames.SERVICE_XML_GROUP_NAME
@@ -57,7 +56,7 @@ public abstract class AbstractLiferayServiceXMLDuplicateEntryInspection extends 
     public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
         return new XmlElementVisitor() {
             @Override
-            public void visitXmlText(XmlText xmlText) {
+            public void visitXmlText(@NotNull XmlText xmlText) {
                 if (isSuitableXmlText(xmlText)) {
                     String text = xmlText.getText();
 
@@ -79,7 +78,7 @@ public abstract class AbstractLiferayServiceXMLDuplicateEntryInspection extends 
             }
 
             @Override
-            public void visitXmlAttributeValue(XmlAttributeValue xmlAttributeValue) {
+            public void visitXmlAttributeValue(@NotNull XmlAttributeValue xmlAttributeValue) {
                 if (isSuitableXmlAttributeValue(xmlAttributeValue)) {
                     String text = xmlAttributeValue.getValue();
 

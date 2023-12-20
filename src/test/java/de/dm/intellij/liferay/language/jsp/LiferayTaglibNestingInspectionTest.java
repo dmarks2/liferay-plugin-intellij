@@ -33,16 +33,6 @@ public class LiferayTaglibNestingInspectionTest extends LightJavaCodeInsightFixt
         );
 
         myFixture.checkHighlighting();
-
-        /*
-        List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
-        for (IntentionAction quickFix : allQuickFixes) {
-            if ("Wrap in http://liferay.com/tld/ui <search-container> tag".equals(quickFix.getFamilyName())) {
-                myFixture.launchAction(quickFix);
-            }
-        }
-        myFixture.checkResultByFile("view_fixed.jsp");
-         */
     }
 
     public void testValidNestingInspection() {

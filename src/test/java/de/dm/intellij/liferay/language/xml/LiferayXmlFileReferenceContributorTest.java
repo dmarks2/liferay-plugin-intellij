@@ -28,6 +28,8 @@ public class LiferayXmlFileReferenceContributorTest extends BasePlatformTestCase
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("custom_jsps"));
     }
 
@@ -36,6 +38,8 @@ public class LiferayXmlFileReferenceContributorTest extends BasePlatformTestCase
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("my_resources.xml"));
     }
 
@@ -44,6 +48,8 @@ public class LiferayXmlFileReferenceContributorTest extends BasePlatformTestCase
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("custom.xml"));
     }
 
@@ -52,6 +58,8 @@ public class LiferayXmlFileReferenceContributorTest extends BasePlatformTestCase
 
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("files"));
     }
 }

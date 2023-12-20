@@ -31,17 +31,20 @@ public class BndParserDefinition implements ParserDefinition {
     }
 
     @Override
+    @NotNull
     public PsiParser createParser(Project project) {
         return new BndParser();
     }
 
     @Override
+    @NotNull
     public IFileElementType getFileNodeType() {
         return BND_FILE_ELEMENT_TYPE;
     }
 
     @Override
-    public PsiFile createFile(FileViewProvider viewProvider) {
+    @NotNull
+    public PsiFile createFile(@NotNull FileViewProvider viewProvider) {
         return new BndFileImpl(viewProvider);
     }
 
@@ -50,10 +53,8 @@ public class BndParserDefinition implements ParserDefinition {
     @Override
     public PsiElement createElement(ASTNode node) {
         IElementType elementType = node.getElementType();
-        if (elementType instanceof BndElementType) {
-            BndElementType bndElementType = (BndElementType)elementType;
-
-            return bndElementType.createPsi(node);
+        if (elementType instanceof BndElementType bndElementType) {
+			return bndElementType.createPsi(node);
         }
 
         return PsiUtilCore.NULL_PSI_ELEMENT;

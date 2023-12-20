@@ -6,13 +6,11 @@ import com.intellij.psi.PsiReference;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
+import de.dm.intellij.bndtools.psi.BndElementType;
 import de.dm.intellij.bndtools.psi.BndHeader;
-import de.dm.intellij.bndtools.psi.BndHeaderValue;
 import de.dm.intellij.bndtools.psi.BndHeaderValuePart;
 import de.dm.intellij.bndtools.psi.BndTokenType;
-import de.dm.intellij.bndtools.psi.BndElementType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import static com.intellij.lang.PsiBuilderUtil.expect;
 
@@ -41,12 +39,6 @@ public class BndHeaderParser {
 
     public boolean annotate(@NotNull BndHeader bndHeader, @NotNull AnnotationHolder annotationHolder) {
         return false;
-    }
-
-    @Nullable
-    public Object getConvertedValue(@NotNull BndHeader bndHeader) {
-        BndHeaderValue value = bndHeader.getBndHeaderValue();
-        return value != null ? value.getUnwrappedText() : null;
     }
 
     @NotNull

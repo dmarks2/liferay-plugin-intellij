@@ -14,9 +14,8 @@ public class BndHighlightingAnnotator implements Annotator {
 
     @Override
     public void annotate(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
-        if (psiElement instanceof BndHeader) {
-            BndHeader bndHeader = (BndHeader)psiElement;
-            String name = bndHeader.getName();
+        if (psiElement instanceof BndHeader bndHeader) {
+			String name = bndHeader.getName();
             BndHeaderParser bndHeaderParser = BndHeaderParsers.PARSERS_MAP.get(name);
             if (bndHeaderParser != null) {
                 bndHeaderParser.annotate(bndHeader, annotationHolder);
@@ -24,10 +23,9 @@ public class BndHighlightingAnnotator implements Annotator {
         } else if (psiElement instanceof BndHeaderValuePart) {
             PsiElement parentPsiElement = psiElement.getParent();
 
-            if (parentPsiElement instanceof AssignmentExpression) {
-                AssignmentExpression assignmentExpression = (AssignmentExpression)parentPsiElement;
+            if (parentPsiElement instanceof AssignmentExpression assignmentExpression) {
 
-                BndHeaderValuePart nameElement = assignmentExpression.getNameElement();
+				BndHeaderValuePart nameElement = assignmentExpression.getNameElement();
 
                 if (parentPsiElement instanceof Attribute) {
                     if (psiElement == nameElement) {
@@ -47,10 +45,8 @@ public class BndHighlightingAnnotator implements Annotator {
                 }
             }
         }
-        else if (psiElement instanceof BndToken) {
-            BndToken manifestToken = (BndToken)psiElement;
-
-            BndTokenType type = manifestToken.getTokenType();
+        else if (psiElement instanceof BndToken manifestToken) {
+			BndTokenType type = manifestToken.getTokenType();
 
             if ((psiElement.getParent() instanceof Attribute) && (type == BndTokenType.EQUALS)) {
                 _annotate(psiElement, OsgiManifestColorsAndFonts.ATTRIBUTE_ASSIGNMENT_KEY, annotationHolder);

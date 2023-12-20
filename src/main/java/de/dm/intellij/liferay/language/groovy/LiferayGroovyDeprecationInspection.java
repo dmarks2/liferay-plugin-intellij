@@ -2,7 +2,6 @@ package de.dm.intellij.liferay.language.groovy;
 
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.psi.PsiElementVisitor;
-import de.dm.intellij.liferay.language.java.LiferayJavaDeprecationInfoHolder;
 import de.dm.intellij.liferay.language.java.LiferayJavaDeprecations;
 import de.dm.intellij.liferay.language.jsp.AbstractLiferayDeprecationInspection;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;

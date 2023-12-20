@@ -8,6 +8,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -21,14 +22,16 @@ public class LiferayWorkflowDiagramVfsResolver implements DiagramVfsResolver<Xml
 
     @Nullable
     @Override
-    public XmlTag resolveElementByFQN(String path, Project project) {
+    public XmlTag resolveElementByFQN(@NotNull String path, @NotNull Project project) {
         VirtualFile file = LocalFileSystem.getInstance().findFileByIoFile(new File(path));
 
         if (file != null) {
             if (XmlFileType.INSTANCE.equals(file.getFileType())) {
                 XmlFile xmlFile = (XmlFile) PsiManager.getInstance(project).findFile(file);
 
-                return xmlFile.getRootTag(); //??
+                if (xmlFile != null) {
+                    return xmlFile.getRootTag(); //??
+                }
             }
         }
 

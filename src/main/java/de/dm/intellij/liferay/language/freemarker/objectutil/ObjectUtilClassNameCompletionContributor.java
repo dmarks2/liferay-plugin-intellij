@@ -31,7 +31,7 @@ public class ObjectUtilClassNameCompletionContributor extends CompletionContribu
             ELEMENT_FILTER,
                 new CompletionProvider<>() {
                     @Override
-                    protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result) {
+                    protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
                         PsiElement originalPosition = parameters.getOriginalPosition();
                         if (originalPosition != null) {
                             PsiFile psiFile = originalPosition.getContainingFile();

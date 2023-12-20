@@ -30,7 +30,7 @@ public class StaticFieldGetterFtlVariable extends FtlLightVariable {
 
     private static final String STATIC_FIELD_GETTER_LOCATOR_CLASS_NAME = "com.liferay.portal.kernel.util.StaticFieldGetter";
 
-    private PsiClass staticFieldGetterClass;
+    private final PsiClass staticFieldGetterClass;
 
     public StaticFieldGetterFtlVariable(@NotNull PsiElement parent) {
         super(VARIABLE_NAME, parent, STATIC_FIELD_GETTER_LOCATOR_CLASS_NAME);

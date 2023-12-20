@@ -12,6 +12,8 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class ComponentPropertiesPsiElementPatternCapture {
 
     public static PsiElementPattern.Capture<PsiElement> instance;
@@ -29,13 +31,8 @@ public class ComponentPropertiesPsiElementPatternCapture {
                         PsiArrayInitializerMemberValue psiArrayInitializerMemberValue = PsiTreeUtil.getParentOfType(
                                 psiElement, PsiArrayInitializerMemberValue.class);
 
-                        if (psiArrayInitializerMemberValue != null) {
-                            psiNameValuePair = PsiTreeUtil.getParentOfType(
-                                    psiArrayInitializerMemberValue, PsiNameValuePair.class);
-                        } else {
-                            psiNameValuePair = PsiTreeUtil.getParentOfType(
-                                    psiElement, PsiNameValuePair.class);
-                        }
+						psiNameValuePair = PsiTreeUtil.getParentOfType(
+								Objects.requireNonNullElse(psiArrayInitializerMemberValue, psiElement), PsiNameValuePair.class);
 
                         if (psiNameValuePair != null) {
                             String name = psiNameValuePair.getName();
@@ -47,9 +44,7 @@ public class ComponentPropertiesPsiElementPatternCapture {
                                 if (psiAnnotation != null) {
                                     String qualifiedName = psiAnnotation.getQualifiedName();
 
-                                    if ("org.osgi.service.component.annotations.Component".equals(qualifiedName)) {
-                                        return true;
-                                    }
+									return "org.osgi.service.component.annotations.Component".equals(qualifiedName);
                                 }
                             }
                         }

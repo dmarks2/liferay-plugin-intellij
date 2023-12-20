@@ -47,9 +47,8 @@ public class MetaConfigurationInvalidIdInspection extends LocalInspectionTool {
         return LiferayInspectionsGroupNames.LIFERAY_GROUP_NAME;
     }
 
-    @NotNull
     @Override
-    public String[] getGroupPath() {
+    public String @NotNull [] getGroupPath() {
         return new String[] {
                 getGroupDisplayName(),
                 LiferayInspectionsGroupNames.OSGI_GROUP_NAME

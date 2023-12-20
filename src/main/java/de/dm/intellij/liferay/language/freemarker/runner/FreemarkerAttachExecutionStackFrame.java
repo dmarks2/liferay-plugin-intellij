@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.freemarker.runner;
 
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.xdebugger.XSourcePosition;
 import com.intellij.xdebugger.frame.XCompositeNode;
 import com.intellij.xdebugger.frame.XStackFrame;
@@ -13,8 +14,9 @@ import java.rmi.RemoteException;
 
 public class FreemarkerAttachExecutionStackFrame extends XStackFrame {
 
-    private DebuggedEnvironment debuggedEnvironment;
-    private XSourcePosition xSourcePosition;
+    private final static Logger log = Logger.getInstance(FreemarkerAttachExecutionStackFrame.class);
+    private final DebuggedEnvironment debuggedEnvironment;
+    private final XSourcePosition xSourcePosition;
 
     public FreemarkerAttachExecutionStackFrame(DebuggedEnvironment debuggedEnvironment, XSourcePosition xSourcePosition) {
         this.debuggedEnvironment = debuggedEnvironment;
@@ -55,7 +57,7 @@ public class FreemarkerAttachExecutionStackFrame extends XStackFrame {
                 xValueChildrenList.add(name, freemarkerAttachValue);
             }
         } catch (TemplateModelException | RemoteException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
     }
 }

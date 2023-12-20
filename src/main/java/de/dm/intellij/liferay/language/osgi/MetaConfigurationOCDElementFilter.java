@@ -12,10 +12,8 @@ import java.util.Objects;
 public class MetaConfigurationOCDElementFilter implements ElementFilter {
     @Override
     public boolean isAcceptable(Object element, @Nullable PsiElement context) {
-        if (element instanceof PsiElement) {
-            PsiElement psiElement = (PsiElement) element;
-
-            PsiAnnotation annotation = PsiTreeUtil.getParentOfType(psiElement, PsiAnnotation.class);
+        if (element instanceof PsiElement psiElement) {
+			PsiAnnotation annotation = PsiTreeUtil.getParentOfType(psiElement, PsiAnnotation.class);
 
             if (annotation != null) {
                 if (annotation.hasQualifiedName("aQute.bnd.annotation.metatype.Meta.OCD")) {

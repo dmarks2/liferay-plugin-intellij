@@ -6,6 +6,7 @@ import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LiferayTaglibModelContextJavaBeanReferenceContributor extends AbstractLiferayTaglibReferenceContributor {
@@ -20,9 +21,9 @@ public class LiferayTaglibModelContextJavaBeanReferenceContributor extends Abstr
                 new AbstractMap.SimpleEntry<>("select", "name")
         ));
 
-        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, Arrays.asList(
-                new AbstractMap.SimpleEntry<>("input-field", "field")
-        ));
+        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_UI, List.of(
+				new AbstractMap.SimpleEntry<>("input-field", "field")
+		));
 
     }
 

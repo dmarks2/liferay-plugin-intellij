@@ -39,12 +39,12 @@ public abstract class AbstractCommandKeyIndexer extends AbstractComponentPropert
                 }
 
                 for (CommandKey commandKey : result) {
-                    String commandKeyPortletName = commandKey.getPortletName();
+                    String commandKeyPortletName = commandKey.portletName();
 
                     commandKeyPortletName = ProjectUtils.resolveReferencePlaceholder(commandKeyPortletName, project, scope);
 
                     if (portletName.equals(commandKeyPortletName)) {
-                        String commandName = commandKey.getCommandName();
+                        String commandName = commandKey.commandName();
                         commandName = ProjectUtils.resolveReferencePlaceholder(commandName, project, scope);
 
                         commands.add(commandName);
@@ -67,8 +67,8 @@ public abstract class AbstractCommandKeyIndexer extends AbstractComponentPropert
                         FileBasedIndex.getInstance().processAllKeys(
                                 name,
                                 commandKey -> {
-                                    if (commandKey.getCommandName().startsWith(ProjectUtils.REFERENCE_PLACEHOLDER)) {
-                                        result.add(commandKey.getCommandName());
+                                    if (commandKey.commandName().startsWith(ProjectUtils.REFERENCE_PLACEHOLDER)) {
+                                        result.add(commandKey.commandName());
                                     }
                                     return true;
                                 },
@@ -110,8 +110,8 @@ public abstract class AbstractCommandKeyIndexer extends AbstractComponentPropert
 
                     FileBasedIndex.getInstance().processAllKeys(name,
                             key -> {
-                                savedPortletNames.add(key.getPortletName());
-                                savedCommandNames.add(key.getCommandName());
+                                savedPortletNames.add(key.portletName());
+                                savedCommandNames.add(key.commandName());
 
                                 return true;
                             },

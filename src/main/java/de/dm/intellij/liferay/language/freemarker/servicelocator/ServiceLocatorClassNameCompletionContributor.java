@@ -30,7 +30,7 @@ public class ServiceLocatorClassNameCompletionContributor extends CompletionCont
                 ELEMENT_FILTER,
                 new CompletionProvider<>() {
                     @Override
-                    protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result) {
+                    protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
                         PsiElement originalPosition = parameters.getOriginalPosition();
                         if (originalPosition != null) {
                             PsiFile psiFile = originalPosition.getContainingFile();
@@ -58,9 +58,7 @@ public class ServiceLocatorClassNameCompletionContributor extends CompletionCont
         if (ftlMethodCallExpression != null) {
             String signature = LiferayFreemarkerUtil.getMethodSignature(ftlMethodCallExpression);
 
-            if ( (ServiceLocatorFtlVariable.SERVICE_LOCATOR_CLASS_NAME + ".findService").equals(signature)) {
-                return true;
-            }
+			return (ServiceLocatorFtlVariable.SERVICE_LOCATOR_CLASS_NAME + ".findService").equals(signature);
         }
         return false;
     }

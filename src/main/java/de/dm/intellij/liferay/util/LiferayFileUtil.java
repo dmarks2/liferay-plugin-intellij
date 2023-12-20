@@ -57,9 +57,7 @@ public class LiferayFileUtil {
                         VirtualFile grandGrandParent = parent.getParent();
                         if (grandGrandParent != null) {
                             String journalFolderName = grandGrandParent.getName();
-                            if (JOURNAL.equals(journalFolderName)) {
-                                return true;
-                            }
+							return JOURNAL.equals(journalFolderName);
                         }
                     }
                 }
@@ -79,9 +77,7 @@ public class LiferayFileUtil {
                         VirtualFile grandGrandParent = parent.getParent();
                         if (grandGrandParent != null) {
                             String journalFolderName = grandGrandParent.getName();
-                            if (JOURNAL.equals(journalFolderName)) {
-                                return true;
-                            }
+							return JOURNAL.equals(journalFolderName);
                         }
                     }
                 }
@@ -117,19 +113,15 @@ public class LiferayFileUtil {
 
     @Nullable
     public static String getJournalStructureJsonFileDefinitionSchemaVersion(PsiFile psiFile) {
-        if (psiFile instanceof JsonFile) {
-            JsonFile jsonFile = (JsonFile) psiFile;
-
-            JsonValue topLevelValue = jsonFile.getTopLevelValue();
+        if (psiFile instanceof JsonFile jsonFile) {
+			JsonValue topLevelValue = jsonFile.getTopLevelValue();
 
             if (topLevelValue != null) {
                 PsiElement[] children = topLevelValue.getChildren();
 
                 for (PsiElement psiElement : children) {
-                    if (psiElement instanceof JsonProperty) {
-                        JsonProperty jsonProperty = (JsonProperty) psiElement;
-
-                        if ("definitionSchemaVersion".equals(jsonProperty.getName())) {
+                    if (psiElement instanceof JsonProperty jsonProperty) {
+						if ("definitionSchemaVersion".equals(jsonProperty.getName())) {
                             JsonValue jsonValue = jsonProperty.getValue();
 
                             if (jsonValue != null) {
@@ -149,19 +141,15 @@ public class LiferayFileUtil {
     }
 
     public static boolean isJournalStructureDataDefinitionSchema(PsiFile psiFile) {
-        if (psiFile instanceof JsonFile) {
-            JsonFile jsonFile = (JsonFile) psiFile;
-
-            JsonValue topLevelValue = jsonFile.getTopLevelValue();
+        if (psiFile instanceof JsonFile jsonFile) {
+			JsonValue topLevelValue = jsonFile.getTopLevelValue();
 
             if (topLevelValue != null) {
                 PsiElement[] children = topLevelValue.getChildren();
 
                 for (PsiElement psiElement : children) {
-                    if (psiElement instanceof JsonProperty) {
-                        JsonProperty jsonProperty = (JsonProperty) psiElement;
-
-                        if ("contentType".equals(jsonProperty.getName())) {
+                    if (psiElement instanceof JsonProperty jsonProperty) {
+						if ("contentType".equals(jsonProperty.getName())) {
                             return true;
                         }
                     }
@@ -184,9 +172,7 @@ public class LiferayFileUtil {
                         VirtualFile grandGrandParent = grandParent.getParent();
                         if (grandGrandParent != null) {
                             String grandGrandParentName = grandGrandParent.getName();
-                            if (TEMPLATES.equals(grandGrandParentName)) {
-                                return true;
-                            }
+							return TEMPLATES.equals(grandGrandParentName);
                         }
                     }
 
@@ -209,11 +195,10 @@ public class LiferayFileUtil {
 
     /**
      * Check if the given file is a theme template file.
-     *
      * The file is a theme template file if it is in the directory hierarchy of the template-path folder which has been defined in liferay-look-and-feel.xml
      *
-     * @param psiFile
-     * @return
+     * @param psiFile The file to be checked
+     * @return true if the given file is a template file
      */
     public static boolean isThemeTemplateFile(PsiFile psiFile) {
         final Module module = ModuleUtil.findModuleForPsiElement(psiFile);
@@ -221,7 +206,7 @@ public class LiferayFileUtil {
             LiferayModuleComponent component = module.getService(LiferayModuleComponent.class);
             if (component != null) {
                 String templatesPath = component.getThemeSettings().get(LiferayLookAndFeelXmlParser.TEMPLATES_PATH);
-                if ((templatesPath != null) && (templatesPath.trim().length() > 0)) {
+                if ((templatesPath != null) && (!templatesPath.trim().isEmpty())) {
                     VirtualFile webRootFile = getFileInWebRoot(module, templatesPath);
                     VirtualFile sourceRootFile = getFileInSourceRoot(module, templatesPath);
                     return
@@ -238,11 +223,10 @@ public class LiferayFileUtil {
 
     /**
      * Check if given file is a layout template file.
-     *
      * A layout template file is detected by the extension ".tpl" or if the file is present in a subdirectory of "layouttpl"
      *
-     * @param psiFile
-     * @return
+     * @param psiFile The file to be checked
+     * @return true if the given file is a layout template file
      */
     public static boolean isLayoutTemplateFile(PsiFile psiFile) {
         VirtualFile virtualFile = psiFile.getVirtualFile();
@@ -253,9 +237,7 @@ public class LiferayFileUtil {
             }
 
             VirtualFile layouttplVirtualFile = getParent(virtualFile, LAYOUTTPL);
-            if (layouttplVirtualFile != null) {
-                return true;
-            }
+			return layouttplVirtualFile != null;
         }
 
         return false;
@@ -352,7 +334,7 @@ public class LiferayFileUtil {
     }
 
     public static Collection<String> getWebRootsRelativePaths(Module module, VirtualFile virtualFile) {
-        Collection<String> result = new ArrayList<String>();
+        Collection<String> result = new ArrayList<>();
 
         Collection<WebFacet> webFacets = WebFacet.getInstances(module);
         for (WebFacet webFacet : webFacets) {
@@ -464,10 +446,8 @@ public class LiferayFileUtil {
 
         if (parent != null) {
             for (PsiElement psiElement : parent.getChildren()) {
-                if (psiElement instanceof PsiFileSystemItem) {
-                    PsiFileSystemItem psiFileSystemItem = (PsiFileSystemItem)psiElement;
-
-                    if (pathElement.equals(psiFileSystemItem.getName())) {
+                if (psiElement instanceof PsiFileSystemItem psiFileSystemItem) {
+					if (pathElement.equals(psiFileSystemItem.getName())) {
                         if (index == -1) {
                             return psiFileSystemItem;
                         } else {
@@ -483,7 +463,7 @@ public class LiferayFileUtil {
 
     public static VirtualFile getThemeSettingsDirectory(Module module, String themeSetting) {
         String themeSettingValue = LiferayModuleComponent.getThemeSetting(module, themeSetting);
-        if ((themeSettingValue != null) && (themeSettingValue.trim().length() > 0)) {
+        if ((themeSettingValue != null) && (!themeSettingValue.trim().isEmpty())) {
             VirtualFile themeSettingsFile = LiferayFileUtil.getFileInSourceRoot(module, themeSettingValue);
             if (themeSettingsFile == null) {
                 themeSettingsFile = LiferayFileUtil.getFileInWebRoot(module, themeSettingValue);
@@ -506,7 +486,7 @@ public class LiferayFileUtil {
                         VirtualFile root = getJarRoot(file);
 
                         if (root != null) {
-                            if ((path == null) || (path.trim().length() == 0)) {
+                            if ((path == null) || (path.trim().isEmpty())) {
                                 result.add(fileReferenceHelper.getPsiFileSystemItem(module.getProject(), root));
                             } else {
                                 VirtualFile child = getChild(root, path);
@@ -529,10 +509,8 @@ public class LiferayFileUtil {
 
         VirtualFileSystem virtualFileSystem = file.getFileSystem();
 
-        if (virtualFileSystem instanceof JarFileSystem) {
-            JarFileSystem jarFileSystem = (JarFileSystem) virtualFileSystem;
-
-            root = jarFileSystem.getRootByEntry(file);
+        if (virtualFileSystem instanceof JarFileSystem jarFileSystem) {
+			root = jarFileSystem.getRootByEntry(file);
         } else {
             root = JarFileSystem.getInstance().getJarRootForLocalFile(file);
         }
@@ -542,15 +520,21 @@ public class LiferayFileUtil {
 
     public static String getCustomJspDir(Module module) {
         String liferayHookXml = LiferayModuleComponent.getLiferayHookXml(module);
-        if ( (liferayHookXml != null) && (liferayHookXml.trim().length() > 0) ) {
+        if ( (liferayHookXml != null) && (!liferayHookXml.trim().isEmpty()) ) {
             VirtualFile virtualFile = VfsUtilCore.findRelativeFile(liferayHookXml, null);
-            XmlFile xmlFile = (XmlFile) PsiManager.getInstance(module.getProject()).findFile(virtualFile);
-            if ( (xmlFile != null) && (xmlFile.isValid()) ) {
-                XmlTag rootTag = xmlFile.getRootTag();
-                if ("hook".equals(rootTag.getLocalName())) {
-                    XmlTag customJspDirTag = rootTag.findFirstSubTag("custom-jsp-dir");
-                    if ((customJspDirTag != null) && (customJspDirTag.getValue() != null)) {
-                        return customJspDirTag.getValue().getTrimmedText();
+
+            if (virtualFile != null) {
+                XmlFile xmlFile = (XmlFile) PsiManager.getInstance(module.getProject()).findFile(virtualFile);
+                if ((xmlFile != null) && (xmlFile.isValid())) {
+                    XmlTag rootTag = xmlFile.getRootTag();
+
+                    if (rootTag != null) {
+                        if ("hook".equals(rootTag.getLocalName())) {
+                            XmlTag customJspDirTag = rootTag.findFirstSubTag("custom-jsp-dir");
+                            if (customJspDirTag != null) {
+                                return customJspDirTag.getValue().getTrimmedText();
+                            }
+                        }
                     }
                 }
             }
@@ -608,7 +592,7 @@ public class LiferayFileUtil {
         if (bndVirtualFile != null) {
             CharSequence text = LoadTextUtil.loadText(bndVirtualFile);
 
-            Pattern webContextPathPattern = Pattern.compile("Web-ContextPath:( *)([\\w\\.-])");
+            Pattern webContextPathPattern = Pattern.compile("Web-ContextPath:( *)([\\w.-])");
             Matcher webContextPathMatcher = webContextPathPattern.matcher(text);
 
             if (webContextPathMatcher.find()) {

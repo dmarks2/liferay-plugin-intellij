@@ -14,6 +14,7 @@ import com.intellij.openapi.application.ApplicationNamesInfo;
 import com.intellij.openapi.application.ex.ApplicationInfoEx;
 import com.intellij.openapi.diagnostic.ErrorReportSubmitter;
 import com.intellij.openapi.diagnostic.IdeaLoggingEvent;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.diagnostic.SubmittedReportInfo;
 import com.intellij.openapi.extensions.PluginId;
 import com.intellij.openapi.progress.EmptyProgressIndicator;
@@ -35,12 +36,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Error Reporting in case of crashes.
  */
 public class PluginErrorReporter extends ErrorReportSubmitter {
+
+    private final static Logger log = Logger.getInstance(PluginErrorReporter.class);
 
     @NotNull
     @Override
@@ -94,8 +97,8 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
                     body.append("application.name: " + namesInfo.getProductName()).append("\n");
                     body.append("application.name.full: " + namesInfo.getFullProductName()).append("\n");
                     body.append("application.name.version: " + appInfo.getVersionName()).append("\n");
-                    body.append("application.eap: " + String.valueOf(appInfo.isEAP())).append("\n");
-                    body.append("application.internal " + String.valueOf(application.isInternal())).append("\n");
+                    body.append("application.eap: " + appInfo.isEAP()).append("\n");
+                    body.append("application.internal " + application.isInternal()).append("\n");
                     body.append("application.build.number: " + appInfo.getBuild().asString()).append("\n");
                     body.append("application.version.number: " + appInfo.getMajorVersion() + "." + appInfo.getMinorVersion()).append("\n");
 
@@ -103,7 +106,7 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
                         PluginId pluginId = PluginUtil.getInstance().findPluginId(event.getThrowable());
                         if (pluginId != null) {
                             IdeaPluginDescriptor plugin = PluginManagerCore.getPlugin(pluginId);
-                            if ( (plugin != null) && (plugin.isBundled() == false) ) {
+                            if ( (plugin != null) && (!plugin.isBundled()) ) {
                                 body.append("plugin.name: "  + plugin.getName()).append("\n");
                                 body.append("application.version: " + plugin.getVersion()).append("\n");
                             }
@@ -117,14 +120,11 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
                     jsonObject.addProperty("title", "Bug Report in Plugin [automatically created]");
                     jsonObject.addProperty("body", body.toString());
 
-                    byte[] bytes = jsonObject.toString().getBytes(Charset.forName("UTF-8"));
+                    byte[] bytes = jsonObject.toString().getBytes(StandardCharsets.UTF_8);
 
-                    OutputStream outputStream = httpURLConnection.getOutputStream();
-                    try {
-                        outputStream.write(bytes);
-                    } finally {
-                        outputStream.close();
-                    }
+					try (OutputStream outputStream = httpURLConnection.getOutputStream()) {
+						outputStream.write(bytes);
+					}
 
                     int responseCode = httpURLConnection.getResponseCode();
                     if (responseCode == 201) {
@@ -133,7 +133,7 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
                         //TODO error handling
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage(), e);
                 }
             }
         };
@@ -152,27 +152,21 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
         if (inputStream == null) {
             return null;
         }
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        try {
-            StringBuilder result = new StringBuilder();
+		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
+			StringBuilder result = new StringBuilder();
 
-            String line;
-            while ( (line = bufferedReader.readLine()) != null) {
-                result.append(line);
-            }
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				result.append(line);
+			}
 
-            return result.toString();
-        } catch (IOException e) {
-            //ignore
-        } finally {
-            try {
-                bufferedReader.close();
-            } catch (IOException e) {
-                //ignore
-            }
-        }
+			return result.toString();
+		} catch (IOException e) {
+			//ignore
+		}
+		//ignore
 
-        return null;
+		return null;
     }
 
 }

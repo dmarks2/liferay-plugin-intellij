@@ -9,17 +9,18 @@ import de.dm.intellij.liferay.module.LiferayModuleComponent;
 
 public class LiferayLookAndFeelXmlParserTest extends BasePlatformTestCase {
 
-    private static final String NEW_TEXT = "<?xml version=\"1.0\"?>\n" +
-            "<!DOCTYPE look-and-feel PUBLIC \"-//Liferay//DTD Look and Feel 7.0.0//EN\" \"http://www.liferay.com/dtd/liferay-look-and-feel_7_0_0.dtd\">\n" +
-            "\n" +
-            "<look-and-feel>\n" +
-            "    <compatibility>\n" +
-            "        <version>7.0.6+</version>\n" +
-            "    </compatibility>\n" +
-            "    <theme id=\"test-theme\" name=\"test-theme\">\n" +
-            "        <root-path>/my_root</root-path>\n" +
-            "    </theme>\n" +
-            "</look-and-feel>";
+    private static final String NEW_TEXT = """
+			<?xml version="1.0"?>
+			<!DOCTYPE look-and-feel PUBLIC "-//Liferay//DTD Look and Feel 7.0.0//EN" "http://www.liferay.com/dtd/liferay-look-and-feel_7_0_0.dtd">
+
+			<look-and-feel>
+			    <compatibility>
+			        <version>7.0.6+</version>
+			    </compatibility>
+			    <theme id="test-theme" name="test-theme">
+			        <root-path>/my_root</root-path>
+			    </theme>
+			</look-and-feel>""";
 
     @Override
     protected String getTestDataPath() {
@@ -59,9 +60,7 @@ public class LiferayLookAndFeelXmlParserTest extends BasePlatformTestCase {
 
         Document document = editor.getDocument();
 
-        WriteCommandAction.runWriteCommandAction(myFixture.getProject(), () -> {
-            document.replaceString(0, document.getTextLength(), NEW_TEXT);
-        });
+        WriteCommandAction.runWriteCommandAction(myFixture.getProject(), () -> document.replaceString(0, document.getTextLength(), NEW_TEXT));
 
         FileDocumentManager fileDocumentManager = FileDocumentManager.getInstance();
 

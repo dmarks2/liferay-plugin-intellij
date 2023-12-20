@@ -10,6 +10,7 @@ import com.intellij.openapi.vfs.newvfs.events.VFileEvent;
 import com.intellij.psi.*;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.util.ProjectUtils;
+import org.jetbrains.annotations.NotNull;
 
 public class LiferayAdvancedResourcesImporterServiceCallWatcher extends FileChangeListenerBase {
 
@@ -28,10 +29,8 @@ public class LiferayAdvancedResourcesImporterServiceCallWatcher extends FileChan
 
                         PsiFile psiFile = psiManager.findFile(virtualFile);
 
-                        if (psiFile instanceof PsiJavaFile) {
-                            PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
-
-                            if (psiJavaFile.isValid()) {
+                        if (psiFile instanceof PsiJavaFile psiJavaFile) {
+							if (psiJavaFile.isValid()) {
                                 PsiClass[] classes = psiJavaFile.getClasses();
 
                                 for (PsiClass psiClass : classes) {
@@ -40,7 +39,7 @@ public class LiferayAdvancedResourcesImporterServiceCallWatcher extends FileChan
                                     for (PsiMethod method : methods) {
                                         method.accept(new JavaRecursiveElementVisitor() {
                                             @Override
-                                            public void visitMethodCallExpression(PsiMethodCallExpression methodCallExpression) {
+                                            public void visitMethodCallExpression(@NotNull PsiMethodCallExpression methodCallExpression) {
                                                 PsiReferenceExpression methodExpression = methodCallExpression.getMethodExpression();
 
                                                 PsiExpression qualifierExpression = methodExpression.getQualifierExpression();
@@ -48,10 +47,9 @@ public class LiferayAdvancedResourcesImporterServiceCallWatcher extends FileChan
                                                 if (qualifierExpression != null) {
                                                     PsiType type = qualifierExpression.getType();
 
-                                                    if (type instanceof PsiClassType) {
-                                                        PsiClassType classType = (PsiClassType) type;
+                                                    if (type instanceof PsiClassType classType) {
 
-                                                        PsiClass clazz = classType.resolve();
+														PsiClass clazz = classType.resolve();
 
                                                         if (clazz != null) {
                                                             String qualifiedName = clazz.getQualifiedName();
@@ -70,10 +68,8 @@ public class LiferayAdvancedResourcesImporterServiceCallWatcher extends FileChan
 
                                                                     Object result = constantEvaluationHelper.computeConstantExpression(groupKeyExpression);
 
-                                                                    if (result instanceof String) {
-                                                                        String advancedResourcesImporterGroup = (String) result;
-
-                                                                        component.setResourcesImporterGroupName(advancedResourcesImporterGroup);
+                                                                    if (result instanceof String advancedResourcesImporterGroup) {
+																		component.setResourcesImporterGroupName(advancedResourcesImporterGroup);
                                                                     }
                                                                 }
                                                             }

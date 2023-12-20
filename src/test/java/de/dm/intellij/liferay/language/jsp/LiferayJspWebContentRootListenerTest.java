@@ -2,6 +2,7 @@ package de.dm.intellij.liferay.language.jsp;
 
 import com.intellij.javaee.web.WebRoot;
 import com.intellij.javaee.web.facet.WebFacet;
+import com.intellij.psi.PsiDirectory;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 import java.util.Collection;
@@ -18,16 +19,20 @@ public class LiferayJspWebContentRootListenerTest extends BasePlatformTestCase {
 
         Collection<WebFacet> webFacets = WebFacet.getInstances(myFixture.getModule());
 
-        assertTrue(webFacets.size() > 0);
+		assertFalse(webFacets.isEmpty());
 
         WebFacet webFacet = webFacets.iterator().next();
 
-        assertTrue(webFacet.getWebRoots().size() > 0);
+		assertFalse(webFacet.getWebRoots().isEmpty());
 
         WebRoot webRoot = webFacet.getWebRoots().iterator().next();
 
         assertEquals("/", webRoot.getRelativePath());
-        assertEquals(myFixture.getFile().getParent().getVirtualFile(), webRoot.getFile());
+        PsiDirectory parent = myFixture.getFile().getParent();
+
+        assertNotNull(parent);
+
+        assertEquals(parent.getVirtualFile(), webRoot.getFile());
     }
 
 }

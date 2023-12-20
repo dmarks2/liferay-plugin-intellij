@@ -19,6 +19,7 @@ public class PoshiCompletionContributorTest extends BasePlatformTestCase {
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue(strings.contains("definition"));
     }
 
@@ -29,6 +30,7 @@ public class PoshiCompletionContributorTest extends BasePlatformTestCase {
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue(strings.contains("setUp"));
     }
 }

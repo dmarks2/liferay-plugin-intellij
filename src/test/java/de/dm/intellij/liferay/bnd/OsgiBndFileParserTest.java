@@ -29,9 +29,7 @@ public class OsgiBndFileParserTest extends BasePlatformTestCase {
 
         Document document = editor.getDocument();
 
-        WriteCommandAction.runWriteCommandAction(myFixture.getProject(), () -> {
-            document.replaceString(0, document.getTextLength(), NEW_TEXT);
-        });
+        WriteCommandAction.runWriteCommandAction(myFixture.getProject(), () -> document.replaceString(0, document.getTextLength(), NEW_TEXT));
 
         FileDocumentManager fileDocumentManager = FileDocumentManager.getInstance();
 

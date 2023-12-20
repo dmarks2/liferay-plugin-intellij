@@ -7,6 +7,7 @@ import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
+import com.intellij.psi.PsiIdentifier;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.util.PsiUtil;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
@@ -44,8 +45,7 @@ public class ReferenceWithoutComponentInspection extends AbstractBaseJavaLocalIn
     }
 
     @NotNull
-    @Override
-    public String[] getGroupPath() {
+    public String @NotNull [] getGroupPath() {
         return new String[] {
                 getGroupDisplayName(),
                 LiferayInspectionsGroupNames.OSGI_GROUP_NAME
@@ -65,15 +65,19 @@ public class ReferenceWithoutComponentInspection extends AbstractBaseJavaLocalIn
                     PsiAnnotation classAnnotation = containingClass.getAnnotation("org.osgi.service.component.annotations.Component");
 
                     if (classAnnotation == null) {
-                        ProblemDescriptor problemDescriptor = manager.createProblemDescriptor(
-                                method.getNameIdentifier(),
-                                "Reference annotation on a method where the class " + containingClass.getQualifiedName() + " is not annotated with @Component does not work.",
-                                isOnTheFly,
-                                null,
-                                ProblemHighlightType.GENERIC_ERROR
-                        );
+                        PsiIdentifier nameIdentifier = method.getNameIdentifier();
 
-                        problemDescriptors.add(problemDescriptor);
+                        if (nameIdentifier != null) {
+                            ProblemDescriptor problemDescriptor = manager.createProblemDescriptor(
+                                    nameIdentifier,
+                                    "Reference annotation on a method where the class " + containingClass.getQualifiedName() + " is not annotated with @Component does not work.",
+                                    isOnTheFly,
+                                    null,
+                                    ProblemHighlightType.GENERIC_ERROR
+                            );
+
+                            problemDescriptors.add(problemDescriptor);
+                        }
                     }
                 }
             }

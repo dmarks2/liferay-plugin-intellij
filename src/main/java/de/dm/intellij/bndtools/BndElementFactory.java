@@ -9,7 +9,7 @@ import de.dm.intellij.bndtools.psi.BndSection;
 
 public class BndElementFactory {
 
-    private Project project;
+    private final Project project;
 
     public BndElementFactory(Project project) {
         this.project = project;

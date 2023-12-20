@@ -5,36 +5,14 @@ import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
-import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
-import com.intellij.openapi.roots.CompilerModuleExtension;
-import com.intellij.openapi.roots.ContentEntry;
-import com.intellij.openapi.roots.ContentFolder;
-import com.intellij.openapi.roots.DependencyScope;
-import com.intellij.openapi.roots.LibraryOrderEntry;
-import com.intellij.openapi.roots.ModuleOrderEntry;
-import com.intellij.openapi.roots.ModuleRootManager;
-import com.intellij.openapi.roots.OrderEntry;
-import com.intellij.openapi.roots.RootPolicy;
-import com.intellij.openapi.roots.SourceFolder;
-import com.intellij.openapi.roots.libraries.Library;
-import com.intellij.openapi.roots.libraries.LibraryTablesRegistrar;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VfsUtil;
-import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
-import com.intellij.testFramework.IdeaTestUtil;
 import com.intellij.testFramework.RunAll;
-import com.intellij.testFramework.builders.JavaModuleFixtureBuilder;
-import com.intellij.testFramework.fixtures.ModuleFixture;
-import com.intellij.util.PathUtil;
 import com.intellij.util.ui.UIUtil;
-import org.intellij.lang.annotations.Language;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.idea.maven.model.MavenExplicitProfiles;
 import org.jetbrains.idea.maven.project.MavenGeneralSettings;
 import org.jetbrains.idea.maven.project.MavenProject;
@@ -43,15 +21,9 @@ import org.jetbrains.idea.maven.project.MavenProjectsTree;
 import org.jetbrains.idea.maven.project.StaticResolvedMavenHomeType;
 import org.jetbrains.idea.maven.server.MavenServerManager;
 import org.jetbrains.idea.maven.utils.MavenWslUtil;
-import org.jetbrains.jps.model.java.JavaResourceRootType;
-import org.jetbrains.jps.model.java.JavaSourceRootProperties;
-import org.jetbrains.jps.model.java.JavaSourceRootType;
-import org.jetbrains.jps.model.module.JpsModuleSourceRootType;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class MavenImportingTestCase extends MavenTestCase {
@@ -73,14 +45,14 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
   }
 
   @Override
-  protected void tearDown() throws Exception {
+  protected void tearDown() {
     new RunAll(
-      () -> WriteAction.runAndWait(() -> JavaAwareProjectJdkTableImpl.removeInternalJdkInTests()),
-/*      () -> Messages.setTestDialog(TestDialog.DEFAULT), */
-      () -> removeFromLocalRepository("test"),
-      () -> myProjectsManager = null,
-      () -> myProjectsTree = null,
-      () -> super.tearDown()
+            () -> WriteAction.runAndWait(JavaAwareProjectJdkTableImpl::removeInternalJdkInTests),
+            /*      () -> Messages.setTestDialog(TestDialog.DEFAULT), */
+            () -> removeFromLocalRepository("test"),
+            () -> myProjectsManager = null,
+            () -> myProjectsTree = null,
+            super::tearDown
     ).run();
   }
 
@@ -91,198 +63,11 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     removeFromLocalRepository("test");
   }
 
-  protected void assertSources(String moduleName, String... expectedSources) {
-    doAssertContentFolders(moduleName, JavaSourceRootType.SOURCE, expectedSources);
-  }
-
-  protected void assertGeneratedSources(String moduleName, String... expectedSources) {
-    ContentEntry contentRoot = getContentRoot(moduleName);
-    List<ContentFolder> folders = new ArrayList<>();
-    for (SourceFolder folder : contentRoot.getSourceFolders(JavaSourceRootType.SOURCE)) {
-      JavaSourceRootProperties properties = folder.getJpsElement().getProperties(JavaSourceRootType.SOURCE);
-      assertNotNull(properties);
-      if (properties.isForGeneratedSources()) {
-        folders.add(folder);
-      }
-    }
-    doAssertContentFolders(contentRoot, folders, expectedSources);
-  }
-
-  protected void assertResources(String moduleName, String... expectedSources) {
-    doAssertContentFolders(moduleName, JavaResourceRootType.RESOURCE, expectedSources);
-  }
-
-  protected void assertTestSources(String moduleName, String... expectedSources) {
-    doAssertContentFolders(moduleName, JavaSourceRootType.TEST_SOURCE, expectedSources);
-  }
-
-  protected void assertTestResources(String moduleName, String... expectedSources) {
-    doAssertContentFolders(moduleName, JavaResourceRootType.TEST_RESOURCE, expectedSources);
-  }
-
-  protected void assertExcludes(String moduleName, String... expectedExcludes) {
-    ContentEntry contentRoot = getContentRoot(moduleName);
-    doAssertContentFolders(contentRoot, Arrays.asList(contentRoot.getExcludeFolders()), expectedExcludes);
-  }
-
-  protected void assertContentRootExcludes(String moduleName, String contentRoot, String... expectedExcudes) {
-    ContentEntry root = getContentRoot(moduleName, contentRoot);
-    doAssertContentFolders(root, Arrays.asList(root.getExcludeFolders()), expectedExcudes);
-  }
-
-  private void doAssertContentFolders(String moduleName, @NotNull JpsModuleSourceRootType<?> rootType, String... expected) {
-    ContentEntry contentRoot = getContentRoot(moduleName);
-    doAssertContentFolders(contentRoot, contentRoot.getSourceFolders(rootType), expected);
-  }
-
-  private static void doAssertContentFolders(ContentEntry e, final List<? extends ContentFolder> folders, String... expected) {
-    List<String> actual = new ArrayList<>();
-    for (ContentFolder f : folders) {
-      String rootUrl = e.getUrl();
-      String folderUrl = f.getUrl();
-
-      if (folderUrl.startsWith(rootUrl)) {
-        int length = rootUrl.length() + 1;
-        folderUrl = folderUrl.substring(Math.min(length, folderUrl.length()));
-      }
-
-      actual.add(folderUrl);
-    }
-
-    assertOrderedElementsAreEqual(actual, Arrays.asList(expected));
-  }
-
-  protected void assertModuleOutput(String moduleName, String output, String testOutput) {
-    CompilerModuleExtension e = getCompilerExtension(moduleName);
-
-    assertFalse(e.isCompilerOutputPathInherited());
-    assertEquals(output, getAbsolutePath(e.getCompilerOutputUrl()));
-    assertEquals(testOutput, getAbsolutePath(e.getCompilerOutputUrlForTests()));
-  }
-
-  private static String getAbsolutePath(String path) {
-    path = VfsUtil.urlToPath(path);
-    path = FileUtil.toCanonicalPath(path);
-    return FileUtil.toSystemIndependentName(path);
-  }
-
-  protected void assertProjectOutput(String module) {
-    assertTrue(getCompilerExtension(module).isCompilerOutputPathInherited());
-  }
-
-  protected CompilerModuleExtension getCompilerExtension(String module) {
-    ModuleRootManager m = getRootManager(module);
-    return CompilerModuleExtension.getInstance(m.getModule());
-  }
-
-  protected void assertModuleLibDepScope(String moduleName, String depName, DependencyScope scope) {
-    LibraryOrderEntry dep = getModuleLibDep(moduleName, depName);
-    assertEquals(scope, dep.getScope());
-  }
-
-  private LibraryOrderEntry getModuleLibDep(String moduleName, String depName) {
-    return getModuleDep(moduleName, depName, LibraryOrderEntry.class);
-  }
-
-  protected void assertModuleLibDeps(String moduleName, String... expectedDeps) {
-    assertModuleDeps(moduleName, LibraryOrderEntry.class, expectedDeps);
-  }
-
-  protected void assertModuleModuleDeps(String moduleName, String... expectedDeps) {
-    assertModuleDeps(moduleName, ModuleOrderEntry.class, expectedDeps);
-  }
-
-  private void assertModuleDeps(String moduleName, Class clazz, String... expectedDeps) {
-    assertOrderedElementsAreEqual(collectModuleDepsNames(moduleName, clazz), expectedDeps);
-  }
-
-  protected void assertModuleModuleDepScope(String moduleName, String depName, DependencyScope scope) {
-    ModuleOrderEntry dep = getModuleModuleDep(moduleName, depName);
-    assertEquals(scope, dep.getScope());
-  }
-
-  private ModuleOrderEntry getModuleModuleDep(String moduleName, String depName) {
-    return getModuleDep(moduleName, depName, ModuleOrderEntry.class);
-  }
-
-  private List<String> collectModuleDepsNames(String moduleName, Class clazz) {
-    List<String> actual = new ArrayList<>();
-
-    for (OrderEntry e : getRootManager(moduleName).getOrderEntries()) {
-      if (clazz.isInstance(e)) {
-        actual.add(e.getPresentableName());
-      }
-    }
-    return actual;
-  }
-
-
-  @SuppressWarnings("unchecked")
-  private <T> T getModuleDep(String moduleName, String depName, Class<T> clazz) {
-    T dep = null;
-
-    for (OrderEntry e : getRootManager(moduleName).getOrderEntries()) {
-      if (clazz.isInstance(e) && e.getPresentableName().equals(depName)) {
-        dep = (T)e;
-      }
-    }
-    assertNotNull("Dependency not found: " + depName
-                  + "\namong: " + collectModuleDepsNames(moduleName, clazz),
-                  dep);
-    return dep;
-  }
-
   protected Module getModule(final String name) {
     Module m = ReadAction.compute(() -> ModuleManager.getInstance(myProject).findModuleByName(name));
     assertNotNull("Module " + name + " not found", m);
     return m;
   }
-
-  private ContentEntry getContentRoot(String moduleName) {
-    ContentEntry[] ee = getContentRoots(moduleName);
-    List<String> roots = new ArrayList<>();
-    for (ContentEntry e : ee) {
-      roots.add(e.getUrl());
-    }
-
-    String message = "Several content roots found: [" + StringUtil.join(roots, ", ") + "]";
-    assertEquals(message, 1, ee.length);
-
-    return ee[0];
-  }
-
-  private ContentEntry getContentRoot(String moduleName, String path) {
-    for (ContentEntry e : getContentRoots(moduleName)) {
-      if (e.getUrl().equals(VfsUtilCore.pathToUrl(path))) return e;
-    }
-    throw new AssertionError("content root not found");
-  }
-
-  public ContentEntry[] getContentRoots(String moduleName) {
-    return getRootManager(moduleName).getContentEntries();
-  }
-
-  public ModuleRootManager getRootManager(String module) {
-    return ModuleRootManager.getInstance(getModule(module));
-  }
-
-  protected void importProject(@NotNull @Language(value = "XML", prefix = "<project>", suffix = "</project>") String xml) {
-    createProjectPom(xml);
-    importProject();
-  }
-
-  protected void importProject() {
-    importProjectWithProfiles();
-  }
-
-  protected void importProjectWithErrors() {
-    doImportProjects(Collections.singletonList(myProjectPom), false);
-  }
-
-  protected void importProjectWithProfiles(String... profiles) {
-    doImportProjects(Collections.singletonList(myProjectPom), true, profiles);
-  }
-
   protected void importProject(VirtualFile file) {
     importProjects(file);
   }
@@ -291,18 +76,12 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     doImportProjects(Arrays.asList(files), true);
   }
 
-  protected void importProjectsWithErrors(VirtualFile... files) {
-    doImportProjects(Arrays.asList(files), false);
-  }
-
   private void doImportProjects(final List<VirtualFile> files, boolean failOnReadingError, String... profiles) {
     initProjectsManager(false);
 
     readProjects(files, profiles);
 
-    UIUtil.invokeAndWaitIfNeeded((Runnable)() -> {
-      myProjectsManager.importProjects();
-    });
+    UIUtil.invokeAndWaitIfNeeded(() -> myProjectsManager.importProjects());
 
     if (failOnReadingError) {
       for (MavenProject each : myProjectsTree.getProjects()) {
@@ -325,7 +104,7 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
 
 
   protected void waitForReadingCompletion() {
-    UIUtil.invokeAndWaitIfNeeded((Runnable)() -> {
+    UIUtil.invokeAndWaitIfNeeded(() -> {
       try {
         myProjectsManager.waitForReadingCompletion();
       }
@@ -335,46 +114,11 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     });
   }
 
-  protected void readProjects() {
-    readProjects(myProjectsManager.getProjectsFiles());
-  }
-
-  protected void readProjects(VirtualFile... files) {
-    List<MavenProject> projects = new ArrayList<>();
-    for (VirtualFile each : files) {
-      projects.add(myProjectsManager.findProject(each));
-    }
-    myProjectsManager.forceUpdateProjects(projects);
-    waitForReadingCompletion();
-  }
-
-
   protected void removeFromLocalRepository(String relativePath) {
     if (SystemInfo.isWindows) {
       MavenServerManager.getInstance().shutdown(true);
     }
     FileUtil.delete(new File(getRepositoryPath(), relativePath));
-  }
-
-  protected static Sdk createJdk() {
-    return IdeaTestUtil.getMockJdk18();
-  }
-
-  protected Module createJavaModule(final String name) throws Exception {
-    /*try {
-      return WriteCommandAction.writeCommandAction(myTestFixture.getProject()).compute(() -> {
-        VirtualFile f = createProjectSubFile(name + "/" + name + ".iml");
-        Module module = ModuleManager.getInstance(myTestFixture.getProject()).newModule(f.getPath(), StdModuleTypes.JAVA.getId());
-        PsiTestUtil.addContentRoot(module, f.getParent());
-        return module;
-      });
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }*/
-    ModuleFixture moduleFixture = myProjectBuilder.addModule(JavaModuleFixtureBuilder.class).getFixture();
-    moduleFixture.setUp();
-    Module module = myProjectBuilder.addModule(JavaModuleFixtureBuilder.class).getFixture().getModule();
-    return module;
   }
 
   /**
@@ -384,7 +128,7 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
    * @param xml the project POM
    * @return the created module
    */
-  protected Module createMavenModule(String name, String xml) throws Exception {
+  protected Module createMavenModule(String name, String xml) {
     Module module = myTestFixture.getModule();
     File moduleDir = new File(module.getModuleFilePath()).getParentFile();
     VirtualFile pomFile = createPomFile(LocalFileSystem.getInstance().findFileByIoFile(moduleDir), xml);

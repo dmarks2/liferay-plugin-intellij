@@ -1,8 +1,20 @@
 package de.dm.intellij.liferay.language.osgi;
 
-import com.intellij.codeInsight.completion.*;
+import com.intellij.codeInsight.completion.CompletionContributor;
+import com.intellij.codeInsight.completion.CompletionParameters;
+import com.intellij.codeInsight.completion.CompletionProvider;
+import com.intellij.codeInsight.completion.CompletionResultSet;
+import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiAnnotationMemberValue;
+import com.intellij.psi.PsiAnnotationParameterList;
+import com.intellij.psi.PsiArrayInitializerMemberValue;
+import com.intellij.psi.PsiClassObjectAccessExpression;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiJavaCodeReferenceElement;
+import com.intellij.psi.PsiNameValuePair;
+import com.intellij.psi.PsiType;
+import com.intellij.psi.PsiTypeElement;
 import com.intellij.psi.impl.compiled.ClsElementImpl;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -11,7 +23,13 @@ import de.dm.intellij.liferay.util.Icons;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class ComponentPropertiesCompletionContributor extends CompletionContributor {
     /*
@@ -23,7 +41,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
      */
 
     //see https://dev.liferay.com/develop/reference/-/knowledge_base/7-0/portlet-descriptor-to-osgi-service-property-map
-    public static Map<String, String[][]> COMPONENT_PROPERTIES = new HashMap<String, String[][]>();
+    public static Map<String, String[][]> COMPONENT_PROPERTIES = new HashMap<>();
     static {
 
         COMPONENT_PROPERTIES.put("com.liferay.adaptive.media.content.transformer.ContentTransformer",
@@ -1539,15 +1557,15 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                 });
 
     }
-    private Map<String, List<LookupElementBuilder>> KEYWORD_LOOKUPS = new HashMap<String, List<LookupElementBuilder>>();
+    private final Map<String, List<LookupElementBuilder>> KEYWORD_LOOKUPS = new HashMap<>();
 
     public ComponentPropertiesCompletionContributor() {
         for (Map.Entry<String, String[][]> entry : COMPONENT_PROPERTIES.entrySet()) {
-            List<LookupElementBuilder> lookups = new ArrayList<LookupElementBuilder>();
+            List<LookupElementBuilder> lookups = new ArrayList<>();
 
             for (String[] keyword : entry.getValue()) {
                 lookups.add(LookupElementBuilder.create(keyword[0]).withTypeText(keyword[1]).withIcon(Icons.LIFERAY_ICON));
-            };
+            }
             KEYWORD_LOOKUPS.put(entry.getKey(), lookups);
         }
 
@@ -1556,7 +1574,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                 ComponentPropertiesPsiElementPatternCapture.instance,
                 new CompletionProvider<>() {
                     @Override
-                    protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result) {
+                    protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
                         List<String> serviceClassNames = getServiceClassNames(parameters.getOriginalPosition());
 
                         if (!(serviceClassNames.isEmpty())) {
@@ -1598,10 +1616,9 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                     if ("service".equals(name)) {
                         PsiAnnotationMemberValue value = psiNameValuePair.getValue();
 
-                        if (value instanceof PsiArrayInitializerMemberValue) {
-                            PsiArrayInitializerMemberValue psiArrayInitializerMemberValue = (PsiArrayInitializerMemberValue)value;
+                        if (value instanceof PsiArrayInitializerMemberValue psiArrayInitializerMemberValue) {
 
-                            PsiAnnotationMemberValue[] initializers = psiArrayInitializerMemberValue.getInitializers();
+							PsiAnnotationMemberValue[] initializers = psiArrayInitializerMemberValue.getInitializers();
 
                             for (PsiAnnotationMemberValue initializer : initializers) {
                                 processInitializer(result, initializer);
@@ -1618,10 +1635,8 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
     }
 
     private static void processInitializer(List<String> result, PsiAnnotationMemberValue initializer) {
-        if (initializer instanceof PsiClassObjectAccessExpression) {
-            PsiClassObjectAccessExpression psiClassObjectAccessExpression = (PsiClassObjectAccessExpression) initializer;
-
-            String serviceClassName = getServiceClassName(psiClassObjectAccessExpression);
+        if (initializer instanceof PsiClassObjectAccessExpression psiClassObjectAccessExpression) {
+			String serviceClassName = getServiceClassName(psiClassObjectAccessExpression);
             if (serviceClassName != null) {
                 result.add(serviceClassName);
             }
@@ -1635,10 +1650,8 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
 
         if (operand instanceof ClsElementImpl) {
             PsiType psiType = operand.getType();
-            if (psiType instanceof PsiClassReferenceType) {
-                PsiClassReferenceType psiClassReferenceType = (PsiClassReferenceType)psiType;
-
-                referenceElement = psiClassReferenceType.getReference();
+            if (psiType instanceof PsiClassReferenceType psiClassReferenceType) {
+				referenceElement = psiClassReferenceType.getReference();
             }
         } else {
             referenceElement = operand.getInnermostComponentReferenceElement();

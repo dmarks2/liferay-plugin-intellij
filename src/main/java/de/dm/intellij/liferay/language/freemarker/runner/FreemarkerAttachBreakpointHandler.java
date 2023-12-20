@@ -45,13 +45,13 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
 
     public static final String SERVLET_CONTEXT = "_SERVLET_CONTEXT_";
 
-    private Debugger debugger;
-    private FreemarkerAttachDebugProcess debugProcess;
+    private final Debugger debugger;
+    private final FreemarkerAttachDebugProcess debugProcess;
 
-    private LiferayServicesUtil liferayServicesUtil;
+    private final LiferayServicesUtil liferayServicesUtil;
 
-    private Map<AbstractMap.SimpleImmutableEntry<String, Integer>, Breakpoint> breakpoints = new HashMap<>();
-    private Map<AbstractMap.SimpleImmutableEntry<String, Integer>, XLineBreakpoint<FreemarkerAttachBreakpointProperties>> xlineBreakpoints = new HashMap<>();
+    private final Map<AbstractMap.SimpleImmutableEntry<String, Integer>, Breakpoint> breakpoints = new HashMap<>();
+    private final Map<AbstractMap.SimpleImmutableEntry<String, Integer>, XLineBreakpoint<FreemarkerAttachBreakpointProperties>> xlineBreakpoints = new HashMap<>();
 
     public FreemarkerAttachBreakpointHandler(Debugger debugger, FreemarkerAttachDebugProcess debugProcess) throws URISyntaxException, IOException {
         super(FreemarkerAttachBreakpointType.class);

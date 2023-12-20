@@ -22,8 +22,8 @@ public class CommandKeyDescriptor implements KeyDescriptor<CommandKey> {
 
     @Override
     public void save(@NotNull DataOutput out, CommandKey value) throws IOException {
-        EnumeratorStringDescriptor.INSTANCE.save(out, value.getPortletName());
-        EnumeratorStringDescriptor.INSTANCE.save(out, value.getCommandName());
+        EnumeratorStringDescriptor.INSTANCE.save(out, value.portletName());
+        EnumeratorStringDescriptor.INSTANCE.save(out, value.commandName());
     }
 
     @Override

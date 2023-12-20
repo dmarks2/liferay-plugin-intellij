@@ -18,6 +18,7 @@ public class LiferayTaglibSimpleAttributesCompletionContributorTest extends Base
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue("\"lexicon\" should have been suggested as code completion for <aui:icon markupView=\"\">", strings.contains("lexicon"));
     }
 
@@ -27,6 +28,7 @@ public class LiferayTaglibSimpleAttributesCompletionContributorTest extends Base
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue("\"left\" should have been suggested as code completion for <aui:input inlineLabel=\"\">", strings.contains("left"));
         assertTrue("\"right\" should have been suggested as code completion for <aui:input inlineLabel=\"\">", strings.contains("right"));
     }
@@ -37,6 +39,7 @@ public class LiferayTaglibSimpleAttributesCompletionContributorTest extends Base
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue("\"_blank\" should have been suggested as code completion for <aui:a target=\"\">", strings.contains("_blank"));
     }
 
@@ -46,6 +49,7 @@ public class LiferayTaglibSimpleAttributesCompletionContributorTest extends Base
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue("\"submit\" should have been suggested as code completion for <aui:button type=\"\">", strings.contains("submit"));
     }
 
@@ -55,6 +59,7 @@ public class LiferayTaglibSimpleAttributesCompletionContributorTest extends Base
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue("\"post\" should have been suggested as code completion for <aui:form method=\"\">", strings.contains("post"));
     }
 
@@ -64,6 +69,7 @@ public class LiferayTaglibSimpleAttributesCompletionContributorTest extends Base
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue("\"text\" should have been suggested as code completion for <aui:input type=\"\">", strings.contains("text"));
     }
 
@@ -73,6 +79,7 @@ public class LiferayTaglibSimpleAttributesCompletionContributorTest extends Base
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue("\"custom\" should have been suggested as code completion for <aui:validator name=\"\">", strings.contains("custom"));
     }
 }

@@ -3,7 +3,6 @@ package de.dm.intellij.liferay.language.properties;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.codeInspection.QuickFix;
 import com.intellij.lang.properties.psi.impl.PropertyImpl;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
@@ -358,7 +357,7 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 
 	private static class RenamePropertyQuickFix implements LocalQuickFix {
 
-		private String[][] propertiesList;
+		private final String[][] propertiesList;
 
 		public RenamePropertyQuickFix(String[][] propertiesList) {
 			this.propertiesList = propertiesList;
@@ -412,7 +411,7 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 
 	private static class UpdateValueQuickFix implements LocalQuickFix {
 
-		private String newValue;
+		private final String newValue;
 
 		public UpdateValueQuickFix(String newValue) {
 			this.newValue = newValue;

@@ -43,7 +43,7 @@ public class LiferayPortalPropertiesParser {
                     continue;
                 }
 
-                if (line.length() == 0) {
+                if (line.isEmpty()) {
                     currentComment.setLength(0);
 
                     joinedLines = new StringBuilder();
@@ -51,13 +51,13 @@ public class LiferayPortalPropertiesParser {
                     continue;
                 }
 
-                String property = "";
+                String property;
 
                 if (line.endsWith("\\")) {
                     joinedLines.append(line).append("\n");
                 } else {
                     String currentLine = line;
-                    if (joinedLines.length() > 0) {
+                    if (!joinedLines.isEmpty()) {
                         currentLine = joinedLines.toString();
                     }
 

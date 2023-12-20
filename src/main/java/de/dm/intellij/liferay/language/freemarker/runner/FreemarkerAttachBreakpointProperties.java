@@ -4,15 +4,15 @@ import com.intellij.xdebugger.breakpoints.XBreakpointProperties;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class FreemarkerAttachBreakpointProperties extends XBreakpointProperties {
+public class FreemarkerAttachBreakpointProperties extends XBreakpointProperties<FreemarkerAttachBreakpointProperties> {
 
     @Nullable
     @Override
-    public Object getState() {
+    public FreemarkerAttachBreakpointProperties getState() {
         return null;
     }
 
     @Override
-    public void loadState(@NotNull Object state) {
+    public void loadState(@NotNull FreemarkerAttachBreakpointProperties state) {
     }
 }

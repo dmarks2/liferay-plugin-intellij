@@ -22,6 +22,8 @@ public class LiferayTaglibResourceBundleReferenceContributorTest extends BasePla
         myFixture.configureByFiles("view.jsp", "liferay-ui.tld", "Language.properties", "foo.properties");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue("\"lang\" should have been resolved in Language.properties", strings.contains("lang"));
         assertFalse("\"foo\" should not be resolved, because it is in a non-Language file", strings.contains("foo"));
     }
@@ -29,7 +31,11 @@ public class LiferayTaglibResourceBundleReferenceContributorTest extends BasePla
     public void testReference() {
         myFixture.configureByFiles("edit.jsp", "liferay-ui.tld", "Language.properties", "foo.properties");
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(caretElement);
+
+        PsiElement element = caretElement.getParent();
         PsiElement resolve = element.getReferences()[0].resolve();
 
         assertTrue("\"lang\" should be resolvable, because it is in Language.properties", (resolve != null));
@@ -38,7 +44,11 @@ public class LiferayTaglibResourceBundleReferenceContributorTest extends BasePla
     public void testInvalidReference() {
         myFixture.configureByFiles("invalid.jsp", "liferay-ui.tld", "Language.properties", "foo.properties");
 
-        PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+        PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+        assertNotNull(caretElement);
+
+        PsiElement element = caretElement.getParent();
         PsiElement resolve = element.getReferences()[0].resolve();
 
         assertTrue("\"foo\" should not be resolvable, because it is in a non-Language file", (resolve == null));

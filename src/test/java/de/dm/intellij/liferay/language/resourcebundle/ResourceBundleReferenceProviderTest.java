@@ -29,6 +29,7 @@ public class ResourceBundleReferenceProviderTest extends LightJavaCodeInsightFix
 
         List<String> strings = myFixture.getLookupElementStrings();
 
+        assertNotNull(strings);
         assertTrue(strings.contains("content.Language"));
         assertTrue(strings.contains("content.Language_en"));
     }

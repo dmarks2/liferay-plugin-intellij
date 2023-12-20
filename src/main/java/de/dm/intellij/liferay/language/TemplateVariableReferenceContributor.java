@@ -47,9 +47,8 @@ public class TemplateVariableReferenceContributor extends PsiReferenceContributo
                 })),
                 new PsiReferenceProvider() {
 
-                    @NotNull
                     @Override
-                    public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+                    public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
                         String text = StringUtil.unquoteString(element.getText());
                         for (Map.Entry<String, String> entry : LiferayThemeTemplateVariables.THEME_TEMPLATE_VARIABLE_DIRECTORY_REFERENCES.entrySet()) {
                             final String variableText = "${" + entry.getKey() + "}";

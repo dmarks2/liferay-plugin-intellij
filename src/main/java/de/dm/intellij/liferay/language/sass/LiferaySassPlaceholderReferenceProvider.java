@@ -20,9 +20,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class LiferaySassPlaceholderReferenceProvider extends PsiReferenceProvider {
 
-    @NotNull
     @Override
-    public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+    public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
         if (
             (
                 //Parsed CSS file

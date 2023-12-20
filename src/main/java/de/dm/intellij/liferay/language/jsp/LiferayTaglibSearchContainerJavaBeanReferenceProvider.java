@@ -12,14 +12,11 @@ public class LiferayTaglibSearchContainerJavaBeanReferenceProvider extends Abstr
     @Override
     protected String getClassName(PsiElement element) {
         PsiElement classNameElement = PsiTreeUtil.findFirstParent(element, psiElement -> {
-            if (psiElement instanceof XmlTag) {
-                XmlTag xmlTag = (XmlTag)psiElement;
-                String namespace = xmlTag.getNamespace();
+            if (psiElement instanceof XmlTag xmlTag) {
+				String namespace = xmlTag.getNamespace();
                 String localName = xmlTag.getLocalName();
                 if (LiferayTaglibs.TAGLIB_URI_LIFERAY_UI.equals(namespace)) {
-                    if ("search-container-row".equals(localName)) {
-                        return true;
-                    }
+					return "search-container-row".equals(localName);
                 }
             }
             return false;

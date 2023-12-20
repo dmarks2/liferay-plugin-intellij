@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.resourcesimporter;
 
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.externalSystem.service.project.autoimport.FileChangeListenerBase;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -17,6 +18,7 @@ import java.util.Properties;
  */
 public class LiferayAdvancedResourcesImporterBndParser extends FileChangeListenerBase {
 
+    private final static Logger log = Logger.getInstance(LiferayAdvancedResourcesImporterBndParser.class);
     private static final String ADVANCED_RESOURCES_IMPORTER = "Advanced-Resources-Importer";
     private static final String ADVANCED_RESOURCES_IMPORTER_GROUP = "Advanced-Resources-Importer-Group";
 
@@ -36,7 +38,7 @@ public class LiferayAdvancedResourcesImporterBndParser extends FileChangeListene
                         component.setResourcesImporterGroupName(advancedResourcesImporterGroup);
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage(), e);
                 }
             }
         }

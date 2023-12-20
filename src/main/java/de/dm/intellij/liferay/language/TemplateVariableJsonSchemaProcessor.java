@@ -30,22 +30,22 @@ public interface TemplateVariableJsonSchemaProcessor {
 
         String defaultLanguageId = null;
 
-        for (PsiElement value : root.getChildren()) {
-            if (value instanceof JsonProperty) {
-                JsonProperty property = (JsonProperty) value;
-                if ("defaultLanguageId".equals(property.getName())) {
-                    JsonValue defaultLangaugeIdValue = property.getValue();
-                    if (defaultLangaugeIdValue != null) {
-                        defaultLanguageId = defaultLangaugeIdValue.getText();
+        if (root != null) {
+            for (PsiElement value : root.getChildren()) {
+                if (value instanceof JsonProperty property) {
+                    if ("defaultLanguageId".equals(property.getName())) {
+                        JsonValue defaultLangaugeIdValue = property.getValue();
+                        if (defaultLangaugeIdValue != null) {
+                            defaultLanguageId = defaultLangaugeIdValue.getText();
 
-                        if (defaultLanguageId != null) {
-                            defaultLanguageId = StringUtil.unquoteString(defaultLanguageId);
+                            if (defaultLanguageId != null) {
+                                defaultLanguageId = StringUtil.unquoteString(defaultLanguageId);
+                            }
                         }
                     }
                 }
             }
         }
-
 
         return defaultLanguageId;
     }
@@ -57,19 +57,19 @@ public interface TemplateVariableJsonSchemaProcessor {
 
         JsonValue root = jsonFile.getTopLevelValue();
 
-        for (PsiElement value : root.getChildren()) {
-            if (value instanceof JsonProperty) {
-                JsonProperty property = (JsonProperty) value;
-                if (getFieldsDefinitionPropertyName().equals(property.getName())) {
-                    JsonArray jsonArray = (JsonArray) property.getValue();
-                    if (jsonArray != null) {
-                        for (JsonValue jsonValue : jsonArray.getValueList()) {
-                            if (jsonValue instanceof JsonObject) {
-                                JsonObject jsonObject = (JsonObject) jsonValue;
+        if (root != null) {
+            for (PsiElement value : root.getChildren()) {
+                if (value instanceof JsonProperty property) {
+					if (getFieldsDefinitionPropertyName().equals(property.getName())) {
+                        JsonArray jsonArray = (JsonArray) property.getValue();
+                        if (jsonArray != null) {
+                            for (JsonValue jsonValue : jsonArray.getValueList()) {
+                                if (jsonValue instanceof JsonObject jsonObject) {
 
-                                TemplateVariable templateVariable = getTemplateVariable(templateFile, jsonFile, jsonObject, defaultLanguageId);
-                                if (templateVariable != null) {
-                                    result.add(templateVariable);
+									TemplateVariable templateVariable = getTemplateVariable(templateFile, jsonFile, jsonObject, defaultLanguageId);
+                                    if (templateVariable != null) {
+                                        result.add(templateVariable);
+                                    }
                                 }
                             }
                         }
@@ -85,109 +85,109 @@ public interface TemplateVariableJsonSchemaProcessor {
         JsonProperty fieldReferenceProperty = getFieldReferenceProperty(jsonObject);
 
         if (fieldReferenceProperty != null) {
-            String name = fieldReferenceProperty.getValue().getText();
-            if ((name != null) && (name.trim().length() > 0)) {
-                name = StringUtil.unquoteString(name);
+            JsonValue fieldValue = fieldReferenceProperty.getValue();
 
-                TemplateVariable templateVariable = new TemplateVariable();
-                templateVariable.setName(name);
+            if (fieldValue != null) {
+                String name = fieldValue.getText();
+                if ((name != null) && (!name.trim().isEmpty())) {
+                    name = StringUtil.unquoteString(name);
 
-                boolean repeatable = false;
-                if ( (jsonObject.findProperty("repeatable") != null) && (jsonObject.findProperty("repeatable").getValue() instanceof JsonBooleanLiteral) ) {
-                    repeatable = ((JsonBooleanLiteral) jsonObject.findProperty("repeatable").getValue()).getValue();
-                }
+                    TemplateVariable templateVariable = new TemplateVariable();
+                    templateVariable.setName(name);
 
-                JsonProperty typeJsonProperty = getTypeReferenceProperty(jsonObject);
+                    boolean repeatable = false;
+                    JsonProperty repeatableProperty = jsonObject.findProperty("repeatable");
 
-                if (typeJsonProperty != null) {
-                    JsonValue typeJsonPropertyValue = typeJsonProperty.getValue();
-                    if (typeJsonPropertyValue != null) {
-                        String type = typeJsonPropertyValue.getText();
-                        if ( (type != null) && (type.length() > 0) ) {
-                            type = StringUtil.unquoteString(type);
+                    if ((repeatableProperty != null) && (repeatableProperty.getValue() instanceof JsonBooleanLiteral)) {
+                        repeatable = ((JsonBooleanLiteral) repeatableProperty.getValue()).getValue();
+                    }
 
-                            templateVariable.setType(type);
+                    JsonProperty typeJsonProperty = getTypeReferenceProperty(jsonObject);
+
+                    if (typeJsonProperty != null) {
+                        JsonValue typeJsonPropertyValue = typeJsonProperty.getValue();
+                        if (typeJsonPropertyValue != null) {
+                            String type = typeJsonPropertyValue.getText();
+                            if ((type != null) && (!type.isEmpty())) {
+                                type = StringUtil.unquoteString(type);
+
+                                templateVariable.setType(type);
+                            }
                         }
                     }
-                }
 
-                JsonProperty labelJsonProperty = jsonObject.findProperty("label");
-                if (labelJsonProperty != null) {
-                    JsonValue value = labelJsonProperty.getValue();
-                    if (value instanceof JsonObject) {
-                        JsonObject labelJsonObject = (JsonObject) value;
+                    JsonProperty labelJsonProperty = jsonObject.findProperty("label");
+                    if (labelJsonProperty != null) {
+                        JsonValue value = labelJsonProperty.getValue();
+                        if (value instanceof JsonObject labelJsonObject) {
 
-                        for (PsiElement psiElement : labelJsonObject.getChildren()) {
-                            if (psiElement instanceof JsonProperty) {
-                                JsonProperty jsonProperty = (JsonProperty) psiElement;
-                                String locale = jsonProperty.getName();
-                                locale = StringUtil.unquoteString(locale);
+							for (PsiElement psiElement : labelJsonObject.getChildren()) {
+                                if (psiElement instanceof JsonProperty jsonProperty) {
+									String locale = jsonProperty.getName();
+                                    locale = StringUtil.unquoteString(locale);
 
-                                JsonValue jsonValue = jsonProperty.getValue();
-                                if (jsonValue != null) {
-                                    String text = jsonValue.getText();
-                                    if ((text != null) && (text.trim().length() > 0)) {
-                                        text = StringUtil.unquoteString(text);
+                                    JsonValue jsonValue = jsonProperty.getValue();
+                                    if (jsonValue != null) {
+                                        String text = jsonValue.getText();
+                                        if ((text != null) && (!text.trim().isEmpty())) {
+                                            text = StringUtil.unquoteString(text);
 
-                                        templateVariable.getLabels().put(locale, text);
+                                            templateVariable.getLabels().put(locale, text);
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
 
-                JsonProperty tipJsonProperty = jsonObject.findProperty("tip");
-                if (tipJsonProperty != null) {
-                    JsonValue value = tipJsonProperty.getValue();
-                    if (value instanceof JsonObject) {
-                        JsonObject tipJsonObject = (JsonObject) value;
+                    JsonProperty tipJsonProperty = jsonObject.findProperty("tip");
+                    if (tipJsonProperty != null) {
+                        JsonValue value = tipJsonProperty.getValue();
+                        if (value instanceof JsonObject tipJsonObject) {
 
-                        for (PsiElement psiElement : tipJsonObject.getChildren()) {
-                            if (psiElement instanceof JsonProperty) {
-                                JsonProperty jsonProperty = (JsonProperty) psiElement;
-                                String locale = jsonProperty.getName();
-                                locale = StringUtil.unquoteString(locale);
+							for (PsiElement psiElement : tipJsonObject.getChildren()) {
+                                if (psiElement instanceof JsonProperty jsonProperty) {
+									String locale = jsonProperty.getName();
+                                    locale = StringUtil.unquoteString(locale);
 
-                                JsonValue jsonValue = jsonProperty.getValue();
-                                if (jsonValue != null) {
-                                    String text = jsonValue.getText();
-                                    if ((text != null) && (text.trim().length() > 0)) {
-                                        text = StringUtil.unquoteString(text);
+                                    JsonValue jsonValue = jsonProperty.getValue();
+                                    if (jsonValue != null) {
+                                        String text = jsonValue.getText();
+                                        if ((text != null) && (!text.trim().isEmpty())) {
+                                            text = StringUtil.unquoteString(text);
 
-                                        templateVariable.getTips().put(locale, text);
+                                            templateVariable.getTips().put(locale, text);
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
 
-                templateVariable.setRepeatable(repeatable);
-                templateVariable.setNavigationalElement(fieldReferenceProperty.getValue());
-                templateVariable.setParentFile(templateFile);
-                templateVariable.setOriginalFile(originalFile);
-                templateVariable.setDefaultLanguageId(defaultLanguageId);
+                    templateVariable.setRepeatable(repeatable);
+                    templateVariable.setNavigationalElement(fieldValue);
+                    templateVariable.setParentFile(templateFile);
+                    templateVariable.setOriginalFile(originalFile);
+                    templateVariable.setDefaultLanguageId(defaultLanguageId);
 
-                JsonProperty subproperty = getNestedFieldsReferenceProperty(jsonObject);
+                    JsonProperty subproperty = getNestedFieldsReferenceProperty(jsonObject);
 
-                if ( (subproperty != null) ) {
-                    JsonArray subjsonArray = (JsonArray) subproperty.getValue();
-                    if (subjsonArray != null) {
-                        for (JsonValue subjsonValue : subjsonArray.getValueList()) {
-                            if (subjsonValue instanceof JsonObject) {
-                                JsonObject subjsonObject = (JsonObject) subjsonValue;
-
-                                TemplateVariable nestedVariable = getTemplateVariable(templateFile, originalFile, subjsonObject, defaultLanguageId);
-                                if (nestedVariable != null) {
-                                    templateVariable.addNestedVariable(nestedVariable);
+                    if ((subproperty != null)) {
+                        JsonArray subjsonArray = (JsonArray) subproperty.getValue();
+                        if (subjsonArray != null) {
+                            for (JsonValue subjsonValue : subjsonArray.getValueList()) {
+                                if (subjsonValue instanceof JsonObject subjsonObject) {
+									TemplateVariable nestedVariable = getTemplateVariable(templateFile, originalFile, subjsonObject, defaultLanguageId);
+                                    if (nestedVariable != null) {
+                                        templateVariable.addNestedVariable(nestedVariable);
+                                    }
                                 }
                             }
                         }
                     }
-                }
 
-                return templateVariable;
+                    return templateVariable;
+                }
             }
         }
 

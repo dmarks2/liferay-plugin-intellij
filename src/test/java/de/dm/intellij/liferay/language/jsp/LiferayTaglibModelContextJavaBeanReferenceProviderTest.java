@@ -35,6 +35,8 @@ public class LiferayTaglibModelContextJavaBeanReferenceProviderTest extends Ligh
         );
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("description"));
     }
 
@@ -46,6 +48,8 @@ public class LiferayTaglibModelContextJavaBeanReferenceProviderTest extends Ligh
         );
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("description"));
     }
 
@@ -58,6 +62,8 @@ public class LiferayTaglibModelContextJavaBeanReferenceProviderTest extends Ligh
         );
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue("model attribute should take precedence before model-context tag", strings.contains("secondaryDescription"));
     }
 

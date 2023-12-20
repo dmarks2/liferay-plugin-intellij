@@ -7,7 +7,6 @@ import com.intellij.execution.configurations.RunProfileState;
 import com.intellij.execution.filters.TextConsoleBuilder;
 import com.intellij.execution.filters.TextConsoleBuilderFactory;
 import com.intellij.execution.process.ProcessHandler;
-import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.execution.runners.ProgramRunner;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.project.Project;
@@ -17,12 +16,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class FreemarkerAttachRunProfileState implements RunProfileState {
 
-    private ExecutionEnvironment executionEnvironment;
-    private FreemarkerAttachDebugConfiguration freemarkerAttachDebugConfiguration;
-    private ConsoleView consoleView;
+    private final FreemarkerAttachDebugConfiguration freemarkerAttachDebugConfiguration;
 
-    public FreemarkerAttachRunProfileState(ExecutionEnvironment executionEnvironment, FreemarkerAttachDebugConfiguration freemarkerAttachDebugConfiguration) {
-        this.executionEnvironment = executionEnvironment;
+    public FreemarkerAttachRunProfileState(FreemarkerAttachDebugConfiguration freemarkerAttachDebugConfiguration) {
         this.freemarkerAttachDebugConfiguration = freemarkerAttachDebugConfiguration;
     }
 
@@ -34,7 +30,7 @@ public class FreemarkerAttachRunProfileState implements RunProfileState {
 
         Project project = freemarkerAttachDebugConfiguration.getProject();
         final TextConsoleBuilder builder = TextConsoleBuilderFactory.getInstance().createBuilder(project);
-        consoleView = builder.getConsole();
+        ConsoleView consoleView = builder.getConsole();
 
         return new FreemarkerAttachExecutionResult(consoleView, processHandler, freemarkerAttachDebugConfiguration);
     }

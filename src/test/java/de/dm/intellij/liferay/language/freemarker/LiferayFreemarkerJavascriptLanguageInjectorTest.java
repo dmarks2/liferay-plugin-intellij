@@ -35,6 +35,8 @@ public class LiferayFreemarkerJavascriptLanguageInjectorTest extends BasePlatfor
         myFixture.configureByFiles("attribute.ftl", "liferay-aui.tld");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("alert"));
     }
 
@@ -42,6 +44,8 @@ public class LiferayFreemarkerJavascriptLanguageInjectorTest extends BasePlatfor
         myFixture.configureByFiles("attribute_square_brackets.ftl", "liferay-aui.tld");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue("\"alert\" javascript command should be suggested inside <@liferay_aui[\"a\"] onClick=\"\">", strings.contains("alert"));
     }
 
@@ -49,6 +53,8 @@ public class LiferayFreemarkerJavascriptLanguageInjectorTest extends BasePlatfor
         myFixture.configureByFiles("body.ftl", "liferay-aui.tld");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("alert"));
     }
 
@@ -56,6 +62,8 @@ public class LiferayFreemarkerJavascriptLanguageInjectorTest extends BasePlatfor
         myFixture.configureByFiles("body_square_brackets.ftl", "liferay-aui.tld");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue("\"alert\" javascript command should be suggested inside <@liferay_aui[\"script\"]>", strings.contains("alert"));
     }
 

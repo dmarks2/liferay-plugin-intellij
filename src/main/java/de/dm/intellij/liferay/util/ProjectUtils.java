@@ -89,7 +89,7 @@ public class ProjectUtils {
     }
 
     public static Collection<Library> findLibrariesByName(final String name, Module module) {
-        final Collection<Library> result = new ArrayList<Library>();
+        final Collection<Library> result = new ArrayList<>();
 
         ModuleRootManager.getInstance(module).orderEntries().forEachLibrary(
                 library -> {
@@ -194,10 +194,8 @@ public class ProjectUtils {
     public static PsiClass getClassByName(Project project, String className, PsiElement context) {
         PsiType psiType = JavaPsiFacade.getInstance(project).getElementFactory().createTypeFromText(className, context);
 
-        if (psiType instanceof PsiClassType) {
-            PsiClassType psiClassType = (PsiClassType) psiType;
-
-            return psiClassType.resolve();
+        if (psiType instanceof PsiClassType psiClassType) {
+			return psiClassType.resolve();
         }
 
         return null;
@@ -245,10 +243,9 @@ public class ProjectUtils {
         for (PsiParameter psiParameter : parameterList.getParameters()) {
             PsiType psiType = psiParameter.getType();
 
-            if (psiType instanceof PsiClassReferenceType) {
-                PsiClassReferenceType psiClassReferenceType = (PsiClassReferenceType)psiType;
+            if (psiType instanceof PsiClassReferenceType psiClassReferenceType) {
 
-                PsiJavaCodeReferenceElement psiJavaCodeReferenceElement = psiClassReferenceType.getReference();
+				PsiJavaCodeReferenceElement psiJavaCodeReferenceElement = psiClassReferenceType.getReference();
 
                 String qualifiedName = getQualifiedNameWithoutResolve(psiJavaCodeReferenceElement, false);
 
@@ -461,8 +458,9 @@ public class ProjectUtils {
     public static boolean isParentDirectory(@NotNull String childDirectory, @NotNull String parentDirectory) {
         int index = childDirectory.lastIndexOf('/');
         if (index > -1) {
-            String calulatedParent = childDirectory.substring(0, childDirectory.lastIndexOf('/'));
-            return (calulatedParent.equals(parentDirectory));
+            String calculatedParent = childDirectory.substring(0, childDirectory.lastIndexOf('/'));
+
+            return (calculatedParent.equals(parentDirectory));
         }
         return false;
     }

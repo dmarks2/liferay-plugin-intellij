@@ -16,6 +16,8 @@ public class LiferayWorkflowScriptLanguageInjectorTest extends BasePlatformTestC
         myFixture.configureByFiles("workflow-definition-groovy.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("def"));
     }
 
@@ -23,6 +25,8 @@ public class LiferayWorkflowScriptLanguageInjectorTest extends BasePlatformTestC
         myFixture.configureByFiles("workflow-definition-freemarker.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue(strings.contains("assign"));
     }
 
@@ -30,6 +34,8 @@ public class LiferayWorkflowScriptLanguageInjectorTest extends BasePlatformTestC
         myFixture.configureByFiles("workflow-definition-freemarker-description.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
         assertTrue("<description>-Tag should provide Freemarker syntax", strings.contains("assign"));
     }
 

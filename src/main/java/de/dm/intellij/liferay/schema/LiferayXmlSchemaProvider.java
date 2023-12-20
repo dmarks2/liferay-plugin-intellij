@@ -87,9 +87,6 @@ public class LiferayXmlSchemaProvider extends XmlSchemaProvider {
         if (LiferayFileUtil.isJournalStructureFile(file)) {
             return true;
         }
-        if (psiFile.getName().equals("portlet-display-templates.xml")) {
-            return true;
-        }
-        return false;
-    }
+		return psiFile.getName().equals("portlet-display-templates.xml");
+	}
 }

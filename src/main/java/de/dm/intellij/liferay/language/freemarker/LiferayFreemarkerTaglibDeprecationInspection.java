@@ -4,7 +4,6 @@ import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.freemarker.psi.FtlElementTypes;
 import com.intellij.freemarker.psi.FtlNameValuePair;
 import com.intellij.freemarker.psi.directives.FtlMacro;
 import com.intellij.openapi.editor.Document;
@@ -15,9 +14,7 @@ import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlTag;
 import de.dm.intellij.liferay.language.jsp.AbstractLiferayDeprecationInspection;
-import de.dm.intellij.liferay.language.jsp.LiferayJspTaglibDeprecationInspection;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -305,7 +302,7 @@ public class LiferayFreemarkerTaglibDeprecationInspection extends AbstractLifera
 		}
 	}
 	private static class RenameFreemarkerAttributeQuickFix implements LocalQuickFix {
-		private String newName;
+		private final String newName;
 
 		public RenameFreemarkerAttributeQuickFix(String newName) {
 			this.newName = newName;
@@ -346,7 +343,7 @@ public class LiferayFreemarkerTaglibDeprecationInspection extends AbstractLifera
 	}
 
 	private static class RenameFreemarkerTagQuickFix implements LocalQuickFix {
-		private String newName;
+		private final String newName;
 
 		public RenameFreemarkerTagQuickFix(String newName) {
 			this.newName = newName;

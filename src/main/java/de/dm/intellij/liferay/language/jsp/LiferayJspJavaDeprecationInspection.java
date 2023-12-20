@@ -5,12 +5,9 @@ import com.intellij.jsp.psi.BaseJspUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiMethodCallExpression;
-import com.intellij.psi.PsiReferenceExpression;
-import com.intellij.psi.XmlElementVisitor;
 import com.intellij.psi.jsp.JspDirectiveKind;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
-import de.dm.intellij.liferay.language.java.LiferayJavaDeprecationInfoHolder;
 import de.dm.intellij.liferay.language.java.LiferayJavaDeprecations;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import org.jetbrains.annotations.Nls;
@@ -20,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static de.dm.intellij.liferay.language.jsp.LiferayJspJavaDeprecationInfoHolder.createMethodCalls;
 import static de.dm.intellij.liferay.language.jsp.LiferayJspJavaDeprecationInfoHolder.createImportStatements;
+import static de.dm.intellij.liferay.language.jsp.LiferayJspJavaDeprecationInfoHolder.createMethodCalls;
 
 public class LiferayJspJavaDeprecationInspection extends AbstractLiferayDeprecationInspection<LiferayJspJavaDeprecationInfoHolder> {
 

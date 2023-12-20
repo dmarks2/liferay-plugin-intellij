@@ -18,13 +18,19 @@ public class LiferayTaglibJavascriptFileReferenceContributorTest extends BasePla
 		myFixture.configureByFiles("view.jsp", "react.tld", "js/MyModule.js");
 		myFixture.complete(CompletionType.BASIC, 1);
 		List<String> strings = myFixture.getLookupElementStrings();
+
+		assertNotNull(strings);
 		assertTrue(strings.contains("MyModule"));
 	}
 
 	public void testReference() {
 		myFixture.configureByFiles("ref.jsp", "react.tld", "js/MyModule.js");
 
-		PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+		PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+		assertNotNull(caretElement);
+
+		PsiElement element = caretElement.getParent();
 
 		boolean referenceResolved = false;
 
@@ -50,7 +56,11 @@ public class LiferayTaglibJavascriptFileReferenceContributorTest extends BasePla
 	public void testReferenceInWebContextRoot() {
 		myFixture.configureByFiles("META-INF/resources/sample/view.jsp", "react.tld", "META-INF/resources/js/SampleModule.js");
 
-		PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset()).getParent();
+		PsiElement caretElement = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
+
+		assertNotNull(caretElement);
+
+		PsiElement element = caretElement.getParent();
 
 		boolean referenceResolved = false;
 

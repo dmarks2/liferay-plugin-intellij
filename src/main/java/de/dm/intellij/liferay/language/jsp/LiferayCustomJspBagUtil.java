@@ -59,10 +59,8 @@ public class LiferayCustomJspBagUtil {
 
                         Object constantExpression = constantEvaluationHelper.computeConstantExpression(returnValue);
 
-                        if (constantExpression instanceof String) {
-                            String text = (String)constantExpression;
-
-                            text = StringUtil.unquoteString(text);
+                        if (constantExpression instanceof String text) {
+							text = StringUtil.unquoteString(text);
 
                             return text;
                         }

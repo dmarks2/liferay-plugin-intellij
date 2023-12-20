@@ -12,8 +12,8 @@ import java.util.Objects;
 
 public class CustomVtlVariable extends VtlLightVariable implements Comparable<CustomVtlVariable>{
 
-    private PsiElement navigationElement;
-    private String typeText;
+    private final PsiElement navigationElement;
+    private final String typeText;
 
     public CustomVtlVariable(@NotNull String name, @NotNull VtlFile parent, @NotNull String typeText) {
         this(name, parent, typeText, null);

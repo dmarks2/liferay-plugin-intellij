@@ -48,25 +48,27 @@ public class GroovyScriptingImplicitMembersContributor extends NonCodeMembersCon
 
             XmlTag xmlTag = PsiTreeUtil.getParentOfType(containingFile.getContext(), XmlTag.class);
 
-            Map<String, String> scriptContextVariables = LiferayWorkflowContextVariablesUtil.getWorkflowScriptVariables(xmlTag);
+            if (xmlTag != null) {
+                Map<String, String> scriptContextVariables = LiferayWorkflowContextVariablesUtil.getWorkflowScriptVariables(xmlTag);
 
-            if (name == null) {
-                for (Map.Entry<String, String> scriptContextVariable : scriptContextVariables.entrySet()) {
-                    LightFieldBuilder lightField = new LightFieldBuilder(scriptContextVariable.getKey(), scriptContextVariable.getValue(), place);
+                if (name == null) {
+                    for (Map.Entry<String, String> scriptContextVariable : scriptContextVariables.entrySet()) {
+                        LightFieldBuilder lightField = new LightFieldBuilder(scriptContextVariable.getKey(), scriptContextVariable.getValue(), place);
 
-                    boolean continueProcessing = processor.execute(lightField, state);
+                        boolean continueProcessing = processor.execute(lightField, state);
 
-                    if (!continueProcessing) {
-                        return;
+                        if (!continueProcessing) {
+                            return;
+                        }
                     }
-                }
-            } else {
-                if (scriptContextVariables.containsKey(name)) {
-                    String type = scriptContextVariables.get(name);
+                } else {
+                    if (scriptContextVariables.containsKey(name)) {
+                        String type = scriptContextVariables.get(name);
 
-                    LightFieldBuilder lightField = new LightFieldBuilder(name, type, place);
+                        LightFieldBuilder lightField = new LightFieldBuilder(name, type, place);
 
-                    processor.execute(lightField, state);
+                        processor.execute(lightField, state);
+                    }
                 }
             }
         } else {

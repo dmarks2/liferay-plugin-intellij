@@ -22,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,13 +40,13 @@ public class LiferayTaglibRenderCommandNameReferenceContributor extends Abstract
     private static final String RENDER_COMMAND_NAME = "mvcRenderCommandName";
 
     static {
-        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_JAVAX_PORTLET, Arrays.asList(
-            new AbstractMap.SimpleEntry<>("param", "value")
-        ));
+        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_JAVAX_PORTLET, List.of(
+				new AbstractMap.SimpleEntry<>("param", "value")
+		));
 
-        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET, Arrays.asList(
-            new AbstractMap.SimpleEntry<>("param", "value")
-        ));
+        TAGLIB_ATTRIBUTES.put(LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET, List.of(
+				new AbstractMap.SimpleEntry<>("param", "value")
+		));
     }
 
     @NotNull
