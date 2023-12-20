@@ -1,1 +1,1 @@
-<#assign myObject = objectUtil("<caret>") />
+<#assign myObject = objectUtil("de<caret>") />

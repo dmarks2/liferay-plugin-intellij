@@ -1,1 +1,1 @@
-<@liferay_aui["input"] model="<caret>" />
+<@liferay_aui["input"] model="de<caret>" />
