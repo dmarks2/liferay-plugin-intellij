@@ -20,6 +20,8 @@ import com.intellij.testFramework.fixtures.TestFixtureBuilder;
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.idea.maven.project.MavenGeneralSettings;
+import org.jetbrains.idea.maven.project.MavenHomeKt;
+import org.jetbrains.idea.maven.project.MavenHomeType;
 import org.jetbrains.idea.maven.project.MavenProjectsManager;
 import org.jetbrains.idea.maven.project.MavenWorkspaceSettings;
 import org.jetbrains.idea.maven.project.MavenWorkspaceSettingsComponent;
@@ -66,7 +68,9 @@ public abstract class MavenTestCase extends UsefulTestCase {
 
     String home = getTestMavenHome();
     if (home != null) {
-      getMavenGeneralSettings().setMavenHome(home);
+      MavenHomeType mavenHomeType = MavenHomeKt.resolveMavenHomeType(home);
+
+      getMavenGeneralSettings().setMavenHomeType(mavenHomeType);
     }
 
     EdtTestUtil.runInEdtAndWait(() -> {
