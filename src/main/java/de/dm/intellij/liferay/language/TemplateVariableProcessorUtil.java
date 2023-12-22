@@ -336,14 +336,28 @@ public class TemplateVariableProcessorUtil {
             } else if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_6_2) {
                 variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/theme_template_62.vm"));
             } else if (
-                        (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_0) ||
-                        (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_1) ||
-                        (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_2) ||
-                        (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3) ||
-                        (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) ||
+                        (portalMajorVersion >= LiferayVersions.LIFERAY_VERSION_7_0)  ||
                         (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_UNKNOWN)
                     ) { //Liferay 7.0
+                //parts from init.ftl in unstyled theme, see https://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/foundation/frontend-theme/frontend-theme-unstyled/src/main/resources/META-INF/resources/_unstyled/templates/init.ftl
                 variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/theme_template_70.vm"));
+
+                if (portalMajorVersion >= LiferayVersions.LIFERAY_VERSION_7_1) {
+                    //https://github.com/liferay/liferay-portal/blob/7.1.x/modules/apps/frontend-theme/frontend-theme-unstyled/src/main/resources/META-INF/resources/_unstyled/templates/init.ftl
+                    variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/theme_template_71.vm"));
+                }
+                if (portalMajorVersion >= LiferayVersions.LIFERAY_VERSION_7_2) {
+                    //https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/frontend-theme/frontend-theme-unstyled/src/main/resources/META-INF/resources/_unstyled/templates/init.ftl
+                    variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/theme_template_72.vm"));
+                }
+                if (portalMajorVersion >= LiferayVersions.LIFERAY_VERSION_7_3) {
+                    //https://github.com/liferay/liferay-portal/blob/7.3.x/modules/apps/frontend-theme/frontend-theme-unstyled/src/main/resources/META-INF/resources/_unstyled/templates/init.ftl
+                    variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/theme_template_73.vm"));
+                }
+                if (portalMajorVersion >= LiferayVersions.LIFERAY_VERSION_7_4) {
+                    //https://github.com/liferay/liferay-portal/blob/master/modules/apps/frontend-theme/frontend-theme-unstyled/src/main/resources/META-INF/resources/_unstyled/templates/init.ftl
+                    variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/theme_template_74.vm"));
+                }
             }
         }
 

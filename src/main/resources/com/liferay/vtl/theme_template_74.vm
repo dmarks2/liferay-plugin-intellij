@@ -1,0 +1,2 @@
+#* @vtlvariable name="show_control_menu" type="java.lang.Boolean"  *#
+#* @vtlvariable name="is_guest_user" type="java.lang.Boolean"  *#

@@ -3,6 +3,7 @@
 #* @vtlvariable name="bottom_include" type="java.lang.String"  *#
 #* @vtlvariable name="bottom_ext_include" type="java.lang.String"  *#
 #* @vtlvariable name="company_id" type="java.lang.Long" *#
+#* @vtlvariable name="company_logo" type="java.lang.String" *#
 #* @vtlvariable name="company_logo_height" type="java.lang.Integer" *#
 #* @vtlvariable name="company_logo_width" type="java.lang.Integer" *#
 #* @vtlvariable name="company_name" type="java.lang.String" *#

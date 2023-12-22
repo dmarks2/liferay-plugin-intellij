@@ -6,6 +6,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
+import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
 import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 import org.jetbrains.annotations.NotNull;
@@ -209,6 +210,27 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
 
         assertNotNull(strings);
         assertTrue(strings.contains("company_name"));
+    }
+
+    public void testTheme74TemplateVariables() {
+        LiferayModuleComponent liferayModuleComponent = LiferayModuleComponent.getInstance(myFixture.getModule());
+        liferayModuleComponent.setLiferayVersion("7.4.3.55");
+
+        myFixture.configureByFiles("templates/portal_normal_74.ftl");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
+        assertTrue(strings.contains("show_control_menu"));
+    }
+
+    public void testThemeCompanyLogoVariables() {
+        myFixture.configureByFiles("templates/theme_company_logo.ftl");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
+        assertTrue(strings.contains("company_logo"));
     }
 
     public void testLayoutTemplateVariables() {
