@@ -37,15 +37,20 @@ public class PoshiExternalAnnotator extends ExternalAnnotator<PoshiValidatorRunn
 
 			VirtualFile virtualFile = file.getVirtualFile();
 			VirtualFile parent = virtualFile.getParent();
-			VirtualFile grandParent = parent.getParent();
 
-			params.workingDirectory = VfsUtilCore.virtualToIoFile(grandParent);
+			if (parent != null) {
+				VirtualFile grandParent = parent.getParent();
 
-			if (log.isDebugEnabled()) {
-				log.debug("Working Directory = " + params.workingDirectory);
+				if (grandParent != null) {
+					params.workingDirectory = VfsUtilCore.virtualToIoFile(grandParent);
+
+					if (log.isDebugEnabled()) {
+						log.debug("Working Directory = " + params.workingDirectory);
+					}
+				}
+
+				return params;
 			}
-
-			return params;
 		}
 
 		return null;
