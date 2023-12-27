@@ -17,6 +17,8 @@ configurations {
 
 repositories {
     maven { url "https://repository-cdn.liferay.com/nexus/content/groups/public/" }
+    maven { url "https://www.jetbrains.com/intellij-repository/releases" }
+    maven { url "https://cache-redirector.jetbrains.com/intellij-dependencies" }
 }
 
 import de.undercouch.gradle.tasks.download.Download
@@ -71,6 +73,11 @@ repositories {
 
 dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.11'
+    testImplementation('com.jetbrains.intellij.maven:maven-test-framework:233.11799.241') {
+        transitive = false
+    }
+    testImplementation 'org.apache.maven:maven-artifact:3.6.3'
+
     //compileOnly 'org.jetbrains.plugins:maven-server-api:2016.3'
     compileOnly 'com.github.adedayo.intellij.sdk:maven-server-api:142.1'
 
