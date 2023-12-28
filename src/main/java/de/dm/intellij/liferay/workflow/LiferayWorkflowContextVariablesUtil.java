@@ -130,7 +130,7 @@ public class LiferayWorkflowContextVariablesUtil {
                 new AbstractMap.SimpleEntry<>("user", "com.liferay.portal.kernel.model.User")
         ));
 
-        WORKFLOW_SCRIPT_OUTPUT_VARIABLES.put("scripted-receipient", Arrays.asList(
+        WORKFLOW_SCRIPT_OUTPUT_VARIABLES.put("scripted-recipient", Arrays.asList(
                 new AbstractMap.SimpleEntry<>("workflowContext", "java.util.Map<java.lang.String, java.lang.Serializable>"),
                 new AbstractMap.SimpleEntry<>("roles", "java.util.List<com.liferay.portal.kernel.model.Role>"),
                 new AbstractMap.SimpleEntry<>("user", "com.liferay.portal.kernel.model.User")

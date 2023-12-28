@@ -33,13 +33,22 @@ public class GroovyWorkflowDefinitionScriptTagImplicitMembersContributorTest ext
         assertTrue(strings.contains("taskName"));
     }
 
-    public void testGroovyOutputImplicitVariables() {
+    public void testGroovyOutputImplicitVariablesScriptedAssignment() {
         myFixture.configureByFiles("workflow-definition-scripted-assignment-groovy.xml");
         myFixture.complete(CompletionType.BASIC, 1);
         List<String> strings = myFixture.getLookupElementStrings();
 
         assertNotNull(strings);
         assertTrue("Workflow groovy script for <scripted-assignment> should offer output variable \"roles\"", strings.contains("roles"));
+    }
+
+    public void testGroovyOutputImplicitVariablesScriptedRecipient() {
+        myFixture.configureByFiles("workflow-definition-scripted-recipient-groovy.xml");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
+        assertTrue("Workflow groovy script for <scripted-recipient> should offer output variable \"roles\"", strings.contains("roles"));
     }
 
 }
