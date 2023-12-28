@@ -246,15 +246,20 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"ddm.form.field.type.name", "String"},
                 });
 
-        //see https://dev.liferay.com/de/develop/tutorials/-/knowledge_base/7-0/creating-form-field-types
+        //see https://learn.liferay.com/w/dxp/process-automation/forms/developer-guide/writing-a-custom-form-field-type
         COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType",
                 new String[][]{
+                        {"ddm.form.field.type.data.domain", "String"},
+                        {"ddm.form.field.type.description", "String"},
                         {"ddm.form.field.type.display.order", "Integer"},
+                        {"ddm.form.field.type.group", "String"},
                         {"ddm.form.field.type.icon", "String"},
                         {"ddm.form.field.type.js.class", "String"},
                         {"ddm.form.field.type.js.module", "String"},
                         {"ddm.form.field.type.label", "String"},
                         {"ddm.form.field.type.name", "String"},
+                        {"ddm.form.field.type.scope", "String"},
+                        {"ddm.form.field.type.system", "Boolean"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor",
@@ -1155,6 +1160,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.portal.workflow.definition.link.update.handler.WorkflowDefinitionLinkUpdateHandler",
                 new String[][]{
                         {"model.class.name", "String"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.workflow.kaleo.action.executor.ActionExecutor",
+                new String[][]{
+                        {"com.liferay.portal.workflow.kaleo.runtime.action.executor.language", "String"}
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator",
