@@ -32,7 +32,7 @@ public class LiferayJspWebContentRootListener extends FileChangeListenerBase {
 
         final Module module = ModuleUtil.findModuleForFile(virtualFile, project);
 
-        if (module != null) {
+        if ( (module != null) && (!module.isDisposed()) ) {
             VirtualFile resources;
 
             if ((virtualFile.isDirectory()) && ("resources".equals(virtualFile.getName()))) {
