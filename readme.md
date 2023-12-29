@@ -75,6 +75,7 @@ Known Issues
 * Indent does not work properly inside ``<aui:script>``-Tags containing other tags like ``<portlet:namespace/>``.
 * ``@theme_image_path@`` reference in CSS files work, but still shown in red (SCSS works properly)
 * This plugin cannot be installed together with the official plugin from Liferay.
+* Running groovy scripts on the Liferay server is not working with Liferay 7.4
 
 Licence
 -------

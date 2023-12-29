@@ -174,8 +174,10 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"content.type", "String"},
                 });
 
+        //see https://learn.liferay.com/w/dxp/building-applications/core-frameworks/job-scheduler-framework/creating-a-new-job-scheduler-task-executor
         COMPONENT_PROPERTIES.put("com.liferay.dispatch.executor.DispatchTaskExecutor",
                 new String[][]{
+                        {"dispatch.task.executor.name", "String"},
                         {"dispatch.task.executor.type", "String"},
                 });
 
@@ -361,6 +363,12 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"javax.portlet.name", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSender",
+                new String[][]{
+                        {"service.ranking", "Integer"},
+                });
+
+        //see https://help.liferay.com/hc/en-us/articles/360017882332-Developing-Data-Handlers
         COMPONENT_PROPERTIES.put("com.liferay.exportimport.kernel.lar.StagedModelDataHandler",
                 new String[][]{
                         {"javax.portlet.name", "String"},
@@ -382,6 +390,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"model.class.name", "String"},
                 });
 
+        //see https://learn.liferay.com/w/dxp/site-building/developer-guide/developing-page-fragments/creating-a-contributed-fragment-set
         COMPONENT_PROPERTIES.put("com.liferay.fragment.contributor.FragmentCollectionContributor",
                 new String[][] {
                         {"fragment.collection.key", "String"}
@@ -481,6 +490,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"screen.navigation.category.order", "Integer"},
                 });
 
+        //see https://help.liferay.com/hc/en-us/articles/360028726952-Using-Screen-Navigation-for-Your-Application
         COMPONENT_PROPERTIES.put("com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry",
                 new String[][]{
                         {"screen.navigation.entry.order", "Integer"},
@@ -594,10 +604,12 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"model.class.name", "String"},
                 });
 
+        //see https://help.liferay.com/hc/en-us/articles/360017886252-JSP-Overrides-Using-Custom-JSP-Bag
         COMPONENT_PROPERTIES.put("com.liferay.portal.deploy.hot.CustomJspBag",
                 new String[][]{
                         {"context.id", "String"},
                         {"context.name", "String"},
+                        {"service.ranking", "Integer"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.editor.configuration.EditorOptionsProvider",
@@ -663,6 +675,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"key", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.format.PhoneNumberFormat",
+                new String[][]{
+                        {"service.ranking", "Integer"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.messaging.Destination",
                 new String[][]{
                         {"destination.name", "String"},
@@ -676,6 +693,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.model.ModelListener",
                 new String[][]{
                         {"service.ranking", "Integer"},
+                });
+
+        COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.model.LayoutTypeAccessPolicy",
+                new String[][]{
+                        {"layout.type", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.model.LayoutTypeController",
@@ -959,6 +981,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"type", "String"},
                 });
 
+        //see https://help.liferay.com/hc/en-us/articles/360032264572-Implementing-Widget-Templates
         COMPONENT_PROPERTIES.put("com.liferay.portal.kernel.template.TemplateHandler",
                 new String[][]{
                         {"javax.portlet.name", "String"},
@@ -1287,6 +1310,11 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                         {"segments.entry.provider.source", "String"},
                 });
 
+        COMPONENT_PROPERTIES.put("com.liferay.site.initializer.SiteInitializer",
+                new String[][]{
+                        {"site.initializer.key", "String"},
+                });
+
         COMPONENT_PROPERTIES.put("com.liferay.sharing.interpreter.SharingEntryInterpreter",
                 new String[][]{
                         {"model.class.name", "String"},
@@ -1460,6 +1488,7 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
                 new String[][]{
                         {"javax.portlet.name", "String"},
                         {"preinitialized.filter", "boolean"},
+                        {"service.ranking", "Integer"},
                         {"service.id", "String"},
                 });
 

@@ -59,6 +59,7 @@ public class ScriptExecutor {
             client.send("$PrincipalThreadLocal setName ($adminUser userId)");
 
             client.send("groovyExecutor = service \"com.liferay.portal.kernel.scripting.ScriptingExecutor\" \"(scripting.language=groovy)\";");
+            client.send("groovyExecutor = ($groovyExecutor newInstance false)");
 
             client.send("System = ((bundle 0) loadclass java.lang.System);");
             client.send("inputObjects = [out=System.out];");
