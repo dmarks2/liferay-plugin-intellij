@@ -16,8 +16,8 @@ Note that there is an [official plugin for IntelliJ from Liferay](https://plugin
 considered experimental. Both plugins cannot be installed at the same time.
 
 This plugin mainly focuses on code completion features. It gives IntelliJ IDEA more information about typical Liferay files and project structures. 
-By this the existing code completion features of IntelliJ can be used for Liferay specific files, too. There is no user interface
-for the plugin. Just have a look at the following topics to see which areas have been improved:
+By this, the existing code completion features of IntelliJ can be used for Liferay specific files, too. There is no user interface
+for the plugin. Improvements have been made in the following areas:
 
 * [Editing Liferay XML files](documentation/xml_files.md) is improved, e.g. by providing the XML Schema files for mostly all Liferay specific XML files. 
 * For [JavaScript files](documentation/js_files.md) the plugin provides you with libraries for the Liferay barebone Javascript files and AlloyUI. 

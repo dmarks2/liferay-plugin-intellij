@@ -21,3 +21,5 @@ Support has been added for the following:
 * Source Formatter for Poshi files
 * Close bracket automatically
 * Run Testcases using a gutter icon or creating a run configuration
+
+*To be able to run testcases your project must use Java 11. Additionally, Google Chrome must be installed on your machine.*

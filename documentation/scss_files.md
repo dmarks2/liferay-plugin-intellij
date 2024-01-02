@@ -18,6 +18,9 @@ will check the ```images-path``` property in your ```liferay-look-and-feel.xml``
 
 ![Theme Image Path Variable](theme_image_path.png "Theme Image Path Variable")
 
+**Known Issue:** In CSS files (not SCSS) the ``@theme_image_path@`` reference works, but is shown as an error in IntelliJ IDEA.
+
+
 Bourbon library
 ---------------
 
@@ -66,7 +69,7 @@ Some Clay SCSS variable declarations are provided with a Quick Documentation (Ct
 Frontend Token Definition support
 ---------------------------------
 
-To customize your theme Liferay offers you to define style books using a `frontend-token-definition.json` file.
+To customize your theme, Liferay offers you to define style books using a `frontend-token-definition.json` file.
 
 This plugin provides a JSON schema for that file, so that code completion and validation is available. 
 
@@ -79,6 +82,7 @@ Compare Theme files with original files
 ---------------------------------------
 
 When you inherit from a parent theme (e.g. `styled` or `unstyled`) you can now 
-compare your files with the original files from the parent theme.
+compare your files with the original files from the parent theme. This works for inheritance of
+custom themes, too.
 
 ![Compare theme files](compare_theme.png "Compare theme files")

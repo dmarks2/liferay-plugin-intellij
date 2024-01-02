@@ -31,7 +31,7 @@ Running Groovy scripts on Liferay Server
 
 It is possible to run groovy scripts from IntelliJ directly on a running Liferay Server.
 
-To be able to run scripts the Gogo Shell must be available via telnet. For Liferay 7.1 and above
+To be able to run scripts the Gogo Shell must be available via telnet. For Liferay 7.1 and above,
 the developer properties must be enabled to expose the Gogo Shell on port 11311.
 
 In IntelliJ just open the groovy file and click on the run marker at the top of the file.
@@ -43,5 +43,8 @@ The results of the script executions are shown in the console.
 
 If an error occurs and your script prints a stacktrace you can also click on the
 error message in the console to directly open your script file at the erroneous location. 
+
+**Known Issue:** Running groovy scripts in Liferay 7.4 is currently not working properly.
+
 
 *This feature requires Java 11 or higher.*

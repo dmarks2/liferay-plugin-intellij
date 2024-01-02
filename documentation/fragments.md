@@ -62,7 +62,7 @@ Code completion is available for the square bracket notation of Freemarker.
 JSON Schemas
 ------------
 
-JSON Schemas are provides for several fragment json files. By this the files are checked if they are valid. Additionally,
+JSON Schemas are provides for several fragment json files. By this, the files are checked if they are valid. Additionally,
 code completion features are available.
 
 JSON Schemas are available for:
@@ -74,7 +74,7 @@ JSON Schemas are available for:
 File references in fragment.json
 -------------------------------
 
-Inside `fragment.json` you can refer to different files like `htmlFile` or `cssFile`. Those are modelled as 
+Inside `fragment.json` you can refer to different files like `htmlFile` or `cssFile`. Those are resolved as 
 file references, so that you can autocomplete available filenames. Additionally, you can rename the file and the renaming is
 reflected in the json file, too.
 

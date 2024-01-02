@@ -82,7 +82,7 @@ the corresponding `<script-language>` or `<template-language>` is present and a 
 the language is injected into the tags above. 
 
 So if the `<script-language>` defines that *groovy* is being used in `<script>` you can
-use code completion, syntax checking and other language features inside the `<script>`-Tag.
+use code completion, syntax checking and other groovy language features inside the `<script>`-Tag.
 
 If specific language features are available in IntelliJ depends on if you installed and activated
 the proper plugin for that language.
@@ -101,9 +101,9 @@ The following languages are supported for `<template-language>`:
 For `<script>`-Tags containing groovy scripts the available context variables like `workflowContext` are detected, so
 that code completion for those variables is available.
 
-For `<template>`-Tags proper context variables are injected, so they can be used in e.g. Freemarker templates.
+For `<template>`-Tags proper context variables are injected, so they can be used in Freemarker templates.
 
-Additionally `<target>`-Tags, e.g. inside `<transition>`-Tags are able to resolve possible targets within the
+Additionally `<target>`-Tags, e.g. inside `<transition>`-Tags, are able to resolve possible targets within the
 workflow definition files, like `<task>` or `<state>` elements.
 
 ![liferay workflow target](workflow_target.png "liferay workflow target")

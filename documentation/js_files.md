@@ -43,6 +43,9 @@ The following tag libraries are supported:
     <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 ```
 
+**Known issue:** Indents do not work properly inside ``<aui:script>``-Tags when using other tags like ``<portlet:namespace/>`` inside the javascript.
+
+
 JavaScript support for liferay-look-and-feel.xml
 ------------------------------------------------
 
