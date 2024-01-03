@@ -86,7 +86,8 @@ dependencies {
 
 //    implementation 'org.glassfish:javax.json:1.1'
 //    compile files(org.gradle.internal.jvm.Jvm.current().toolsJar)
-    implementation 'org.freemarker:freemarker:2.3.28'
+//    implementation 'org.freemarker:freemarker:2.3.29'
+    implementation 'com.liferay:org.freemarker:2.3.29.LIFERAY-PATCHED-5'
 
 //    implementation 'org.glassfish.jersey.core:jersey-client:2.26'
 //    implementation 'org.glassfish.jersey.media:jersey-media-multipart:2.26'
