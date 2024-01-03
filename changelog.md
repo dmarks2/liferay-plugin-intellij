@@ -3,6 +3,8 @@ Liferay Plugin for IntelliJ
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.19
+
 ## 0.0.18
 - Feature: add freemarker taglib deprecation inspections
 - Feature: add java, jsp, groovy code deprecation inspections
