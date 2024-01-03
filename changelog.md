@@ -4,6 +4,7 @@ Liferay Plugin for IntelliJ
 All notable changes to this project will be documented in this file.
 
 ## 0.0.19
+- Bugfix: File references were not working in XML files for Liferay 7.4
 
 ## 0.0.18
 - Feature: add freemarker taglib deprecation inspections

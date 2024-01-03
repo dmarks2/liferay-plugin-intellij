@@ -27,6 +27,7 @@
     <change-notes><![CDATA[
         <p>Version 0.0.19</p>
         <ul>
+            <li>Bugfix: File references were not working in XML files for Liferay 7.4</li>
         </ul>
 
         <p>Version 0.0.18</p>
