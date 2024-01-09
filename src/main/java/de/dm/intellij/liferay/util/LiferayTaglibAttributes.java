@@ -11,6 +11,7 @@ import java.util.Map;
 
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_CLAY;
+import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_COMMERCE;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_SOY;
@@ -177,6 +178,14 @@ public class LiferayTaglibAttributes {
 			"style");
 	public static TaglibDeprecationTags LPS_166546_AUI_CONTAINER = new TaglibDeprecationTags(7.4f, TAGLIB_URI_LIFERAY_AUI, "The tags <aui:container> is deprecated, use <clay:container> instead", "LPS-166546",
 			"container");
+
+	public static TaglibDeprecationTags LPS_199170_COMMERCE = new TaglibDeprecationTags(7.4f, TAGLIB_URI_LIFERAY_COMMERCE,
+			"liferay-commerce internal taglibs have been removed", "LPS-199170","search-input", "user-management-bar");
+	public static TaglibDeprecationTags LPS_199170_EXPORT_IMPORT_CHANGESET = new TaglibDeprecationTags(7.4f, TAGLIB_URI_LIFERAY_COMMERCE,
+			"liferay-export-import-changeset internal taglibs have been removed", "LPS-199170",
+			"add-entities", "add-entity", "create", "export-entity", "export-import-entity-management-bar-button", "export-import-entity-search-container-mapping",
+			"import-entity", "publish-changeset", "publish-model-menu-item");
+
 	/*
 		public static TaglibDeprecationTags LPS_ = new TaglibDeprecationTags();
 

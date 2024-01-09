@@ -75,6 +75,8 @@ import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_166546_AUI
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_166546_LIFERAY_AUI;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_168309_LIFERAY_AUI;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_168309_LIFERAY_FRONTEND;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_199170_COMMERCE;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_199170_EXPORT_IMPORT_CHANGESET;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_54620_PORTLET_ICON;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_55886_APP_VIEW_SEARCH_ENTRY;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_60328_NAVIGATION;
@@ -175,6 +177,8 @@ public class LiferayJspTaglibDeprecationInspection extends AbstractLiferayDeprec
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_158461_LIFERAY_FRONTEND).quickfix(removeXmlTag()));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_166546_AUI_CONTAINER).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_CLAY, "clay")));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_166546_LIFERAY_AUI).quickfix(removeXmlTag()));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_199170_COMMERCE).quickfix(removeXmlTag()).version("7.4.3.100"));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_199170_EXPORT_IMPORT_CHANGESET).quickfix(removeXmlTag()).version("7.4.3.100"));
 	}
 
 	@Nls

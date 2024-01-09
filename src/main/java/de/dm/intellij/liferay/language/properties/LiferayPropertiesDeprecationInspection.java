@@ -210,6 +210,8 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 				"redirect.url.domains.allowed", "redirect.url.ips.allowed", "redirect.url.security.mode").quickfix(removeProperty()));
 		PROPERTY_DEPRECATIONS.addAll(createProperties(7.4f, "The properties tika.config, text.extraction.fork.process.enabled and text.extraction.fork.process.mime.types have been moved to OSGi configurations.", "LPS-147938",
 				"tika.config", "text.extraction.fork.process.enabled", "text.extraction.fork.process.mime.types").quickfix(removeProperty()));
+		PROPERTY_DEPRECATIONS.addAll(createProperties(7.4f, "The property company.security.auth.requires.https encourages bad behaviour, and has been removed.", "LPS-190442",
+				"company.security.auth.requires.https").quickfix(removeProperty()).version("7.4.3.106"));
 		PROPERTY_DEPRECATIONS.addAll(createPropertyValues(7.0f, "The liferay-versions key should match the Liferay version", "", true,
 				"liferay-versions", "6.1.0+", "6.2.0+").quickfix(updateValue("7.0.0+")));
 		PROPERTY_DEPRECATIONS.addAll(createPropertyValues(7.1f, "The liferay-versions key should match the Liferay version", "", true,

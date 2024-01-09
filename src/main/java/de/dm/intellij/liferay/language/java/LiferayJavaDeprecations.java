@@ -225,7 +225,7 @@ public class LiferayJavaDeprecations {
 					"com.liferay.frontend.taglib.clay.servlet.taglib.soy.TableTag",
 					"com.liferay.frontend.taglib.clay.servlet.taglib.soy.UserCardTag",
 					"com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCardTag",
-					"com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseClayTag",
+					"com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseClayTag", //also https://liferay.atlassian.net/browse/LPS-198462
 					"com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag",
 					"com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag",
 					"com.liferay.portal.template.soy.TemplateResource",
@@ -611,7 +611,75 @@ public class LiferayJavaDeprecations {
 			},
 			new String[0] );
 
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_198809_MODEL_SEARCH_REGISTRAR_HELPER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The search registrar bootstrapping style has changed, and this class is no longer used.",
+			"LPS-198809",
+			new String[] {
+					"com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper",
+					"com.liferay.portal.search.spi.model.registrar.contributor.ModelSearchDefinitionContributor"
+			},
+			new String[0] );
 
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_173628_CHECK_COMPANY_ACCOUNT_ROLES = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The checkCompanyAccountRoles method is removed.",
+			"LPS-173628",
+			new String[] {"com.liferay.account.service.AccountRoleLocalService.checkCompanyAccountRoles()", "com.liferay.account.service.AccountRoleLocalServiceUtil.checkCompanyAccountRoles()"},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_197840_SCOPE_GROUP_TYPE = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The scopeGroupType methods are no longer used and have been removed.",
+			"LPS-197840",
+			new String[] {
+					"com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion.getScopeGroupType()",
+					"com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion.setScopeGroupType()"
+			},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_198877_OPEN_ID_UTIL = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The class OpenIdUtil is unused and has been removed.",
+			"LPS-198877",
+			new String[] {
+					"com.liferay.portal.util.OpenIdUtil",
+					"com.liferay.portal.util.OpenId"
+			},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_200501_STARTUP_FINISHED = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The flag startupFinished does not accurately reflect the startup status, so the methods are removed to avoid incorrect usage.",
+			"LPS-200501",
+			new String[] {"com.liferay.portal.events.StartupHelperUtil.isStartupFinished()", "com.liferay.portal.events.StartupHelperUtil.setStartupFinished()"},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_198653_FORM_NAVIGATOR_ENTRY_UTIL = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The FormNavigatorEntryUtil class is removed. Use the OSGi service provided in FormNavigatorEntryProvider instead.",
+			"LPS-198653",
+			new String[] {"com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryUtil"},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_198859_THREAD_LOCAL_DISTRIBUTOR = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"ThreadLocalDistributor has been removed",
+			"LPS-198859",
+			new String[] {"com.liferay.portal.kernel.util.ThreadLocalDistributor", "com.liferay.portal.kernel.util.ThreadLocalDistributorRegistry"},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_200072_TEMPLATE_MANAGER = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The life cycle management is moved into internal service logic, so these methods must not be used anymore.",
+			"LPS-200072",
+			new String[] {
+					"com.liferay.portal.kernel.template.TemplateManagerUtil.destroy()",
+					"com.liferay.portal.kernel.template.TemplateManagerUtil.getTemplateManagers()",
+					"com.liferay.portal.kernel.template.TemplateManager.init()",
+					"com.liferay.portal.kernel.template.TemplateManager.destroy()"
+			},
+			new String[0] );
 
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
