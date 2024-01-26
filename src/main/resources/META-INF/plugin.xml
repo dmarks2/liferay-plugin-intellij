@@ -29,6 +29,7 @@
         <ul>
             <li>Feature: add deprecation checks for Liferay 2023.Q4</li>
             <li>Bugfix: File references were not working in XML files for Liferay 7.4</li>
+            <li>Bugfix: NullPointerException when trying to validate plugin versions in a pom.xml which did not contain a plugins section</li>
         </ul>
 
         <p>Version 0.0.18</p>

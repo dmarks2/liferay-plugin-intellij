@@ -71,14 +71,16 @@ public class LiferayMavenDeprecationsExternalAnnotator extends ExternalAnnotator
 
 			MavenDomProjectModel mavenDomModel = MavenDomUtil.getMavenDomModel(file, MavenDomProjectModel.class);
 
-			LiferayMavenDeprecationsExternalAnnotator.MyHost host = new MyHost();
+			if ( (mavenDomModel != null) && (mavenDomModel.isValid()) ) {
+				LiferayMavenDeprecationsExternalAnnotator.MyHost host = new MyHost();
 
-			validatePluginVersion(host, mavenDomModel, liferayVersion, LIFERAY_GROUP_ID, SERVICE_BUILDER_ARTIFACT_ID, "Service Builder", LiferayMavenDeprecationsExternalAnnotator::getServiceBuilderVersion);
-			validatePluginVersion(host, mavenDomModel, liferayVersion, LIFERAY_GROUP_ID, REST_BUILDER_ARTIFACT_ID, "REST Builder", LiferayMavenDeprecationsExternalAnnotator::getRestBuilderVersion);
+				validatePluginVersion(host, mavenDomModel, liferayVersion, LIFERAY_GROUP_ID, SERVICE_BUILDER_ARTIFACT_ID, "Service Builder", LiferayMavenDeprecationsExternalAnnotator::getServiceBuilderVersion);
+				validatePluginVersion(host, mavenDomModel, liferayVersion, LIFERAY_GROUP_ID, REST_BUILDER_ARTIFACT_ID, "REST Builder", LiferayMavenDeprecationsExternalAnnotator::getRestBuilderVersion);
 
-			validateDependencyVersion(host, mavenDomModel, liferayVersion, LIFERAY_PORTAL_GROUP_ID, PORTAL_WEB_ARTIFACT_ID, "Portal Web", LiferayMavenDeprecationsExternalAnnotator::getPortalWebVersion);
+				validateDependencyVersion(host, mavenDomModel, liferayVersion, LIFERAY_PORTAL_GROUP_ID, PORTAL_WEB_ARTIFACT_ID, "Portal Web", LiferayMavenDeprecationsExternalAnnotator::getPortalWebVersion);
 
-			return host;
+				return host;
+			}
 		}
 
 		return null;
