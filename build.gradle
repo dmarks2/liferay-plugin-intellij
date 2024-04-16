@@ -107,7 +107,7 @@ dependencies {
         exclude group: 'io.netty', module: 'netty-all'
     }
     poshiImplementation 'org.seleniumhq.selenium:selenium-java:4.11.0'
-    poshiImplementation 'io.github.bonigarcia:webdrivermanager:5.4.1'
+    poshiImplementation 'io.github.bonigarcia:webdrivermanager:5.7.0'
     poshiImplementation 'org.slf4j:slf4j-simple:2.0.7'
 }
 

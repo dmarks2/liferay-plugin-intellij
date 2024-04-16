@@ -166,7 +166,7 @@ public class PoshiConstants {
             "sikuli-core-1.2.2.jar",
             "slf4j-api-2.0.7.jar",
             "slf4j-simple-2.0.7.jar",
-            "webdrivermanager-5.4.1.jar",
+            "webdrivermanager-5.7.0.jar",
             "xml-apis-1.4.01.jar"
     };
 }

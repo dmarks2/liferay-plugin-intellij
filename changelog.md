@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.19
 - Feature: add deprecation checks for Liferay 2023.Q4
+- Feature: update webdriver version to support Chrome 114+ when running Poshi tests
 - Bugfix: File references were not working in XML files for Liferay 7.4
 - Bugfix: NullPointerException when trying to validate plugin versions in a pom.xml which did not contain a <plugins> section
 
