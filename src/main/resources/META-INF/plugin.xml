@@ -6,7 +6,7 @@
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
-    <idea-version since-build="233" />
+    <idea-version since-build="233" until-build="233.*" />
 
     <description><![CDATA[
         <p>This plugin adds some features for developing Liferay modules. The following topics have been improved so far</p>
@@ -28,6 +28,7 @@
         <p>Version 0.0.19</p>
         <ul>
             <li>Feature: add deprecation checks for Liferay 2023.Q4</li>
+            <li>Feature: update webdriver version to support Chrome 114+ when running Poshi tests</li>
             <li>Bugfix: File references were not working in XML files for Liferay 7.4</li>
             <li>Bugfix: NullPointerException when trying to validate plugin versions in a pom.xml which did not contain a plugins section</li>
         </ul>
