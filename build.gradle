@@ -7,7 +7,7 @@ buildscript {
 }
 
 plugins {
-    id "org.jetbrains.intellij" version "1.16.1"
+    id "org.jetbrains.intellij" version "1.17.3"
     id 'de.undercouch.download' version '5.5.0'
 }
 
@@ -45,6 +45,8 @@ test {
     }
     scanForTestClasses false
     include "**/*Test.class"
+
+    systemProperty("idea.split.test.logs", "true")
 }
 
 sourceSets {
@@ -73,7 +75,7 @@ repositories {
 
 dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.11'
-    testImplementation('com.jetbrains.intellij.maven:maven-test-framework:233.11799.241') {
+    testImplementation('com.jetbrains.intellij.maven:maven-test-framework:241.14494.240') {
         transitive = false
     }
     testImplementation 'org.apache.maven:maven-artifact:3.6.3'
@@ -124,7 +126,8 @@ intellij {
 //    version.set("IU-2022.1.2")
 //    version.set("IU-2022.3")
 //    version.set("IU-2023.1")
-    version.set("IU-2023.3")
+//    version.set("IU-2023.3")
+    version.set("IU-2024.1")
     type.set('IU')
     pluginName.set('Liferay IntelliJ Plugin')
     plugins.set([
@@ -746,7 +749,7 @@ tasks.register('downloadPoshi', Copy) {
 }
 
 group 'de.dm.intellij.liferay'
-version '0.0.19'
+version '0.0.20'
 
 configurations.poshiImplementation.setCanBeResolved(true)
 

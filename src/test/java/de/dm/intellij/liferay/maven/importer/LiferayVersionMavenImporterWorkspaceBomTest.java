@@ -37,7 +37,7 @@ public class LiferayVersionMavenImporterWorkspaceBomTest extends MavenImportingT
 
 		importProject();
 
-		module = myTestFixture.getModule();
+		module = getTestFixture().getModule();
     }
 
     public void testMavenImporterWorkspaceBom() {

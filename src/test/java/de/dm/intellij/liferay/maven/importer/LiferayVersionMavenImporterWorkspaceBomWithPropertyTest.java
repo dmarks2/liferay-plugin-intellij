@@ -40,7 +40,7 @@ public class LiferayVersionMavenImporterWorkspaceBomWithPropertyTest extends Mav
 
 		importProject();
 
-		module = myTestFixture.getModule();
+		module = getTestFixture().getModule();
     }
 
     public void testMavenImporterWorkspaceBomWithProperty() {

@@ -29,7 +29,7 @@ public class LiferayVersionMavenImporterVersionPropertyTest extends MavenImporti
 
 		importProject();
 
-        module = myTestFixture.getModule();
+        module = getTestFixture().getModule();
     }
 
 
