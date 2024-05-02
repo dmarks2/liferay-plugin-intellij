@@ -27,7 +27,7 @@
     <change-notes><![CDATA[
         <p>Version 0.0.20</p>
         <ul>
-            <li>Change: Update support for IntelliJ 2024.1</li>
+            <li>Change: Update support for IntelliJ 2024.1, dropped support for earlier versions</li>
         </ul>
 
         <p>Version 0.0.19</p>
