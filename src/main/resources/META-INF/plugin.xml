@@ -28,6 +28,7 @@
         <p>Version 0.0.20</p>
         <ul>
             <li>Change: Update support for IntelliJ 2024.1, dropped support for earlier versions</li>
+            <li>Bugfix: Fixed ArrayIndexOutOfBoundsException when processing properties without a value</li>
         </ul>
 
         <p>Version 0.0.19</p>

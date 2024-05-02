@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.20
 - Change: Update support for IntelliJ 2024.1, dropped support for earlier versions
+- Bugfix: Fixed ArrayIndexOutOfBoundsException when processing properties without a value
 
 ## 0.0.19
 - Feature: add deprecation checks for Liferay 2023.Q4

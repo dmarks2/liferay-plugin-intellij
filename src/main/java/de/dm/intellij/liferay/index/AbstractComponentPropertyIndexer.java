@@ -145,8 +145,10 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
 
         if (text.contains("=")) {
             String[] parts = text.split("=");
-
-            return new AbstractMap.SimpleImmutableEntry<>(parts[0], parts[1]);
+            
+            if (parts.length > 1) {
+                return new AbstractMap.SimpleImmutableEntry<>(parts[0], parts[1]);
+            }
         }
 
         return null;
@@ -162,11 +164,11 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
             if (text.contains("=")) {
                 String[] parts = text.split("=");
 
-                PsiReferenceExpression psiReferenceExpression = PsiTreeUtil.getChildOfType(psiBinaryExpression, PsiReferenceExpression.class);
-                if (psiReferenceExpression != null) {
-                    String qualifiedName = ProjectUtils.getQualifiedNameWithoutResolve(psiReferenceExpression, true);
+                    PsiReferenceExpression psiReferenceExpression = PsiTreeUtil.getChildOfType(psiBinaryExpression, PsiReferenceExpression.class);
+                    if (psiReferenceExpression != null) {
+                        String qualifiedName = ProjectUtils.getQualifiedNameWithoutResolve(psiReferenceExpression, true);
 
-                    return new AbstractMap.SimpleImmutableEntry<>(parts[0], ProjectUtils.REFERENCE_PLACEHOLDER + qualifiedName);
+                        return new AbstractMap.SimpleImmutableEntry<>(parts[0], ProjectUtils.REFERENCE_PLACEHOLDER + qualifiedName);
                 }
             }
         }
