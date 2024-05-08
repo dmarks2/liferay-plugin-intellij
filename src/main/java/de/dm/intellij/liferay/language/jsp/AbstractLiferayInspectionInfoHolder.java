@@ -23,30 +23,35 @@ public abstract class AbstractLiferayInspectionInfoHolder<T> {
 
 	protected LocalQuickFix[] quickFixes;
 
+	@SuppressWarnings("unchecked")
 	public T majorLiferayVersion(float majorLiferayVersion) {
 		this.myMajorLiferayVersion = majorLiferayVersion;
 
 		return (T)this;
 	}
 
+	@SuppressWarnings("unchecked")
 	public T message(String message) {
 		this.myMessage = message;
 
 		return (T)this;
 	}
 
+	@SuppressWarnings("unchecked")
 	public T ticket(String ticket) {
 		this.myTicket = ticket;
 
 		return (T)this;
 	}
 
+	@SuppressWarnings("unchecked")
 	public T quickfix(LocalQuickFix... quickFixes) {
 		this.quickFixes = quickFixes;
 
 		return (T)this;
 	}
 
+	@SuppressWarnings("unchecked")
 	public T version(String version) {
 		this.myLiferayVersion = version;
 
@@ -90,11 +95,14 @@ public abstract class AbstractLiferayInspectionInfoHolder<T> {
 			super(list);
 		}
 
+		@SuppressWarnings("unchecked")
 		public AbstractLiferayInspectionInfoHolder.ListWrapper<E> quickfix(LocalQuickFix... quickFixes) {
 			this.replaceAll(liferayTaglibDeprecationInfoHolder -> ((AbstractLiferayInspectionInfoHolder<E>)liferayTaglibDeprecationInfoHolder).quickfix(quickFixes));
 
 			return this;
 		}
+
+		@SuppressWarnings("unchecked")
 		public AbstractLiferayInspectionInfoHolder.ListWrapper<E> version(String version) {
 			this.replaceAll(liferayTaglibDeprecationInfoHolder -> ((AbstractLiferayInspectionInfoHolder<E>)liferayTaglibDeprecationInfoHolder).version(version));
 
