@@ -38,8 +38,8 @@ for the plugin. Improvements have been made in the following areas:
 
 Supported IDEs
 --------------
-* IntelliJ 2023.3 and above (Community)
-* IntelliJ 2023.3 and above (Ultimate)
+* IntelliJ 2024.1 and above (Community)
+* IntelliJ 2024.1 and above (Ultimate)
 
 Supported Liferay Versions
 --------------------------
