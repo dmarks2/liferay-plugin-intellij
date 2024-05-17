@@ -681,6 +681,187 @@ public class LiferayJavaDeprecations {
 			},
 			new String[0] );
 
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_201086_AUDIT_MESSAGE_FACTORY = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"AuditMessageFactoryImpl and AuditMessageFactoryUtil have been consolidated into AuditMessageFactory",
+			"LPS-201086",
+			new String[] {"com.liferay.portal.security.audit.internal.AuditMessageFactoryImpl", "com.liferay.portal.kernel.audit.AuditMessageFactoryUtil"},
+			new String[] {"com.liferay.portal.kernel.audit.AuditMessageFactory", "com.liferay.portal.kernel.audit.AuditMessageFactory"});
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_199532_JS_AWARE_PORTAL_WEB_RESOURCE = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"JavaScriptAwarePortalWebResource has been removed",
+			"LPS-199532",
+			new String[] {"com.liferay.frontend.js.loader.modules.extender.npm.JavaScriptAwarePortalWebResource"},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_203260_SITEMAP = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The class has renamed and/or moved to make it more clear and consistent.",
+			"LPS-203260",
+			new String[] {
+					"com.liferay.site.util.Sitemap",
+					"com.liferay.site.util.RecentGroupManager",
+					"com.liferay.site.util.GroupSearchProvider",
+					"com.liferay.site.util.GroupURLProvider",
+					"com.liferay.site.util.SitemapURLProvider",
+					"com.liferay.site.util.SitemapURLProviderHelper"
+			},
+			new String[] {
+					"com.liferay.site.manager.SitemapManager",
+					"com.liferay.site.manager.RecentGroupManager",
+					"com.liferay.site.manager.GroupSearchProvider",
+					"com.liferay.site.manager.GroupURLProvider",
+					"com.liferay.site.manager.SitemapURLProvider",
+					"com.liferay.site.manager.SitemapURLProviderHelper"
+			} );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_203720_CATEGORY_FACET = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The class is now deleted.",
+			"LPS-203720",
+			new String[] {"com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration"},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_203214_SITEMAP_CONFIGURATION_MANAGER = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The method has been renamed for clarity.",
+			"LPS-203214",
+			new String[] {
+					"com.liferay.site.configuration.manager.SitemapConfigurationManager.includeCategories()",
+					"com.liferay.site.configuration.manager.SitemapConfigurationManager.includePages()",
+					"com.liferay.site.configuration.manager.SitemapConfigurationManager.includeWebContent()"
+			},
+			new String[] {
+					"includeCategoriesCompanyEnabled",
+					"includePagesCompanyEnabled",
+					"includeWebContentCompanyEnabled"
+			} );
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPD_15179_REFLECTION_UTIL_ARRAY_CLONE = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The arrayClone method is removed.",
+			"LPD-15179",
+			new String[] {
+					"com.liferay.petra.reflect.ReflectionUtil.arrayClone()"
+			},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPD_15179_OBJECT_GRAPH_UTIL = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The ObjectGraphUtil class is removed.",
+			"LPD-15179",
+			new String[] {"com.liferay.petra.reflect.ObjectGraphUtil"},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_199470_SITE_MEMBERSHIP = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The class is removed. Instead, use SiteMembershipPolicyUtil directly.",
+			"LPS-199470",
+			new String[] {"com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryImpl"},
+			new String[] {"com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil"});
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_201156_LAYOUT_PROTOTYPE = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The class is removed. Instead, use LayoutPrototypePermissionUtil directly.",
+			"LPS-201156",
+			new String[] {"com.liferay.portal.service.permission.LayoutPrototypePermissionImpl"},
+			new String[] {"com.liferay.portal.service.permission.LayoutPrototypePermissionUtil"});
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_203854_JSON_WEB_SERVICE = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The JSONWebServiceHotDeployListener class is removed.",
+			"LPS-203854",
+			new String[] {"com.liferay.portal.deploy.hot.JSONWebServiceHotDeployListener"},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_199958_INDEX_WRITER_HELPER = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The setIndexWriterHelper method is removed.",
+			"LPS-199958",
+			new String[] {
+					"com.liferay.portal.kernel.portlet.PortletContextFactory.setIndexWriterHelper()"
+			},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_200088_PORTLET_CONTEXT_FACTORY = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The interface is removed. Instead, add portal-impl as a build dependency and use PortletContextFactoryUtil directly.",
+			"LPS-200088",
+			new String[] {"com.liferay.portal.kernel.portlet.PortletContextFactory"},
+			new String[] {"com.liferay.portal.kernel.portlet.PortletContextFactoryUtil"} );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_200073_ASSET_ENTRIES_FACET = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The class is removed.",
+			"LPS-200073",
+			new String[] {"com.liferay.portal.kernel.search.facet.AssetEntriesFacet"},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_199470_SITE_MEMBERSHIP_POLICY = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The interface is removed. Instead, use SiteMembershipPolicyFactoryUtil directly.",
+			"LPS-199470",
+			new String[] {"com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactory"},
+			new String[] {"com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil"});
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_188565_FRIENDLY_URL_NORMALIZER = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The setFriendlyURLNormalizer method is removed.",
+			" LPS-188565",
+			new String[] {
+					"com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil.setFriendlyURLNormalizer()"
+			},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_200563_SITE_MEMBERSHIP_POLICY = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The interface is removed. Instead, use UserGroupMembershipPolicyFactoryUtil directly.",
+			"LPS-200563",
+			new String[] {"com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory"},
+			new String[] {"com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil"});
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_188559_PROCESSOR = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The Processor classes moved from the com.liferay.document.library.kernel.util package to the com.liferay.document.library.kernel.processor package.",
+			"LPS-188559",
+			new String[] {
+					"com.liferay.document.library.kernel.util.AudioProcessor",
+					"com.liferay.document.library.kernel.util.AudioProcessorUtil",
+					"com.liferay.document.library.kernel.util.DLProcessor",
+					"com.liferay.document.library.kernel.util.DLProcessorRegistry",
+					"com.liferay.document.library.kernel.util.DLProcessorRegistryUtil",
+					"com.liferay.document.library.kernel.util.DLProcessorThreadLocal",
+					"com.liferay.document.library.kernel.util.ImageProcessor",
+					"com.liferay.document.library.kernel.util.PDFProcessor",
+					"com.liferay.document.library.kernel.util.PDFProcessorUtil",
+					"com.liferay.document.library.kernel.util.RawMetadataProcessor",
+					"com.liferay.document.library.kernel.util.RawMetadataProcessorUtil",
+					"com.liferay.document.library.kernel.util.VideoProcessor",
+					"com.liferay.document.library.kernel.util.VideoProcessorUtil"
+			},
+			new String[] {
+					"com.liferay.document.library.kernel.processor.AudioProcessor",
+					"com.liferay.document.library.kernel.processor.AudioProcessorUtil",
+					"com.liferay.document.library.kernel.processor.DLProcessorHelper",
+					"com.liferay.document.library.kernel.processor.DLProcessorHelperUtil",
+					"com.liferay.document.library.kernel.processor.DLProcessorThreadLocal",
+					"com.liferay.document.library.kernel.processor.ImageProcessor",
+					"com.liferay.document.library.kernel.processor.PDFProcessor",
+					"com.liferay.document.library.kernel.processor.PDFProcessorUtil",
+					"com.liferay.document.library.kernel.processor.RawMetadataProcessor",
+					"com.liferay.document.library.kernel.processor.RawMetadataProcessorUtil",
+					"com.liferay.document.library.kernel.processor.VideoProcessor",
+					"com.liferay.document.library.kernel.processor.VideoProcessorUtil"
+			});
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_200537_DEFAULT_CONTROL_PANEL_ENTRY = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The class is removed.",
+			"LPS-200537",
+			new String[] {"com.liferay.portal.kernel.portlet.DefaultControlPanelEntry"},
+			new String[0] );
+
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
 		String[] newImportStatements = new String[0];

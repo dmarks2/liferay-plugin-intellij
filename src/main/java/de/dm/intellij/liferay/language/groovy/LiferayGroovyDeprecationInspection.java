@@ -5,6 +5,7 @@ import com.intellij.psi.PsiElementVisitor;
 import de.dm.intellij.liferay.language.java.LiferayJavaDeprecations;
 import de.dm.intellij.liferay.language.jsp.AbstractLiferayDeprecationInspection;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
+import de.dm.intellij.liferay.util.LiferayVersions;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.plugins.groovy.lang.psi.GroovyElementVisitor;
@@ -67,6 +68,20 @@ public class LiferayGroovyDeprecationInspection extends AbstractLiferayDeprecati
 		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_198653_FORM_NAVIGATOR_ENTRY_UTIL).version("7.4.3.100"));
 		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_198859_THREAD_LOCAL_DISTRIBUTOR).version("7.4.3.102"));
 		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_169777_SCRIPTING_EXECUTOR_EXTENDER).version("7.4.3.84"));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_201086_AUDIT_MESSAGE_FACTORY).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_199532_JS_AWARE_PORTAL_WEB_RESOURCE).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_203260_SITEMAP).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_203720_CATEGORY_FACET).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_15179_OBJECT_GRAPH_UTIL).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_199470_SITE_MEMBERSHIP).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_201156_LAYOUT_PROTOTYPE).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_203854_JSON_WEB_SERVICE).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_200088_PORTLET_CONTEXT_FACTORY).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_200073_ASSET_ENTRIES_FACET).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_199470_SITE_MEMBERSHIP_POLICY).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_200563_SITE_MEMBERSHIP_POLICY).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_188559_PROCESSOR).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_200537_DEFAULT_CONTROL_PANEL_ENTRY).version(LiferayVersions.LIFERAY_2024_Q1_CE));
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_150185_HTTP_COMPONENTS_UTIL).version("7.4.3.22"));
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_162450_PHONE).version("7.4.3.45"));
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_162437_ADDRESS).version("7.4.3.45"));
@@ -84,6 +99,10 @@ public class LiferayGroovyDeprecationInspection extends AbstractLiferayDeprecati
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_121733_THEME_DISPLAY_FLASH));
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_134188_SANITIZED_SERVLET_RESPONSE));
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_134188_SANITIZED_SERVLET_RESPONSE));
+		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_203214_SITEMAP_CONFIGURATION_MANAGER).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_15179_REFLECTION_UTIL_ARRAY_CLONE).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_199958_INDEX_WRITER_HELPER).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_188565_FRIENDLY_URL_NORMALIZER).version(LiferayVersions.LIFERAY_2024_Q1_CE));
 	}
 
 	@Nls

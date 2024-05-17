@@ -16,6 +16,7 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import de.dm.intellij.liferay.language.jsp.AbstractLiferayDeprecationInspection;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
+import de.dm.intellij.liferay.util.LiferayVersions;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
@@ -72,6 +73,8 @@ import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_168309_LIF
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_168309_LIFERAY_FRONTEND;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_199170_COMMERCE;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_199170_EXPORT_IMPORT_CHANGESET;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_202768_LOGO_SELECTOR;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_202768_UPLOAD_PROGRESS;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_54620_PORTLET_ICON;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_55886_APP_VIEW_SEARCH_ENTRY;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_60328_NAVIGATION;
@@ -90,8 +93,10 @@ import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_70442_AUI_
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_ASSET;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_CAPTCHA;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_CLAY;
+import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_DOCUMENT_LIBRARY;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_EXPANDO;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_FLAGS;
+import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_SITE_NAVIGATION;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_TRASH;
 
@@ -172,6 +177,8 @@ public class LiferayFreemarkerTaglibDeprecationInspection extends AbstractLifera
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_166546_LIFERAY_AUI).quickfix(removeTag()));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_199170_COMMERCE).quickfix(removeTag()).version("7.4.3.100"));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_199170_EXPORT_IMPORT_CHANGESET).quickfix(removeTag()).version("7.4.3.100"));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_202768_LOGO_SELECTOR).quickfix(renameNamespace(TAGLIB_URI_LIFERAY_FRONTEND)).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_202768_UPLOAD_PROGRESS).quickfix(renameNamespace(TAGLIB_URI_LIFERAY_DOCUMENT_LIBRARY)).version(LiferayVersions.LIFERAY_2024_Q1_CE));
 	}
 
 	@Nls

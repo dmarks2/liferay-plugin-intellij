@@ -186,6 +186,11 @@ public class LiferayTaglibAttributes {
 			"add-entities", "add-entity", "create", "export-entity", "export-import-entity-management-bar-button", "export-import-entity-search-container-mapping",
 			"import-entity", "publish-changeset", "publish-model-menu-item");
 
+	public static TaglibDeprecationTags LPS_202768_LOGO_SELECTOR = new TaglibDeprecationTags(7.4f, TAGLIB_URI_LIFERAY_UI,
+			"Use liferay-frontend:logo-selector instead.", "LPS-2027680", "logo-selector");
+	public static TaglibDeprecationTags LPS_202768_UPLOAD_PROGRESS = new TaglibDeprecationTags(7.4f, TAGLIB_URI_LIFERAY_UI,
+			"Use liferay-document-library:upload-progress instead.", "LPS-2027680", "upload-progress");
+
 	/*
 		public static TaglibDeprecationTags LPS_ = new TaglibDeprecationTags();
 

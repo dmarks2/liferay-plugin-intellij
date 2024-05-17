@@ -19,6 +19,7 @@ import com.intellij.velocity.psi.files.VtlFile;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.util.LiferayFileUtil;
 import de.dm.intellij.liferay.util.LiferayVersions;
+import de.dm.intellij.liferay.util.Version;
 import de.dm.intellij.liferay.workflow.LiferayWorkflowContextVariablesUtil;
 
 import java.net.URL;
@@ -94,6 +95,13 @@ public class TemplateVariableProcessorUtil {
                     ) { //Liferay 7.0
                 variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/journal_template_70.vm"));
             }
+
+            if (Version.compare(LiferayModuleComponent.getLiferayVersion(module), LiferayVersions.LIFERAY_2024_Q1_CE) >= 0) {
+                //https://liferay.atlassian.net/browse/LPS-203949
+
+                variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/journal_template_74_3_112.vm"));
+            }
+
             VirtualFile journalStructureFile = LiferayFileUtil.getJournalStructureFile(templateFile);
             if (journalStructureFile != null) {
                 variables.addAll(getStructureVariables(templateVariableProcessor, journalStructureFile, templateFile, module.getProject()));

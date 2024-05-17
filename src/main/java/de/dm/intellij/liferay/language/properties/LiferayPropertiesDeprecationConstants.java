@@ -14,7 +14,8 @@ public class LiferayPropertiesDeprecationConstants {
 	};
 
 	public static final String[] _OBSOLETE_SYSTEM_KEYS_7_4 = {
-			"com.liferay.util.axis.SimpleHTTPSender.regexp.pattern"
+			"com.liferay.util.axis.SimpleHTTPSender.regexp.pattern",
+			"com.liferay.portal.kernel.util.ServiceProxyFactory.timeout" //https://liferay.atlassian.net/browse/LPS-204548
 	};
 
 	public static final String[][] _MIGRATED_SYSTEM_KEYS_7_0 = {
@@ -589,6 +590,11 @@ public class LiferayPropertiesDeprecationConstants {
 			"wiki.email.page.updated.signature", "xss.allow", "ym.login",
 			"ym.password"
 	};
+
+	public static final String[] _OBSOLETE_PORTAL_KEYS_7_4 = {
+			"dl.file.entry.processors"
+	};
+
 
 	public static final String[][] _MODULARIZED_PORTAL_KEYS_7_0 = {
 
@@ -1975,7 +1981,7 @@ public class LiferayPropertiesDeprecationConstants {
 	};
 
 	public static final String[][] _MODULARIZED_PORTAL_KEYS_7_4 = {
-			// Session
+			// Session --> https://liferay.atlassian.net/browse/LPD-14031
 
 			{
 					"session.timeout.auto.extend", "auto-extend",

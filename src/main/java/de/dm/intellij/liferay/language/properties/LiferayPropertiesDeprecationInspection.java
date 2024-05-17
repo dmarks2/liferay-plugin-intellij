@@ -261,6 +261,8 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 
 		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.0f, "Portal property \"${propertyName}\" is obsolete", "", "portal",
 				LiferayPropertiesDeprecationConstants._OBSOLETE_PORTAL_KEYS_7_0).quickfix(removeProperty()));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.4f, "Portal property \"${propertyName}\" is obsolete", "", "portal",
+				LiferayPropertiesDeprecationConstants._OBSOLETE_PORTAL_KEYS_7_4).quickfix(removeProperty()));
 
 		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.0f, "Portal property \"${propertyName}\" was modularized to \"${newModuleName}\" as \"${newPropertyName}\"", "", "portal",
 				LiferayPropertiesDeprecationConstants._MODULARIZED_PORTAL_KEYS_7_0));

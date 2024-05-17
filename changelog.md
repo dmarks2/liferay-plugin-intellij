@@ -3,6 +3,9 @@ Liferay Plugin for IntelliJ
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.21
+- Feature: add deprecation checks for Liferay 2024.Q1
+
 ## 0.0.20
 - Change: Update support for IntelliJ 2024.1, dropped support for earlier versions
 - Bugfix: Fixed ArrayIndexOutOfBoundsException when processing properties without a value
