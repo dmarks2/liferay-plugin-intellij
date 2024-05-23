@@ -2,21 +2,31 @@ package de.dm.intellij.liferay.maven;
 
 import com.intellij.codeInsight.daemon.Validator;
 import com.intellij.codeInsight.intention.IntentionAction;
+import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo;
 import com.intellij.codeInspection.util.InspectionMessage;
+import com.intellij.codeInspection.util.IntentionFamilyName;
+import com.intellij.codeInspection.util.IntentionName;
+import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.lang.annotation.AnnotationBuilder;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.ExternalAnnotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
-import com.intellij.openapi.util.Trinity;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.XmlTagValue;
+import com.intellij.util.IncorrectOperationException;
+import com.intellij.util.xml.GenericDomValue;
 import com.intellij.xml.util.XmlTagUtil;
 import de.dm.intellij.liferay.client.LiferayGithubClient;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
@@ -24,9 +34,12 @@ import de.dm.intellij.liferay.util.LiferayVersions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.idea.maven.dom.MavenDomUtil;
+import org.jetbrains.idea.maven.dom.model.MavenDomArtifactCoordinates;
 import org.jetbrains.idea.maven.dom.model.MavenDomDependency;
 import org.jetbrains.idea.maven.dom.model.MavenDomPlugin;
 import org.jetbrains.idea.maven.dom.model.MavenDomProjectModel;
+import org.jetbrains.idea.maven.dom.model.MavenDomProperties;
+import org.jetbrains.idea.maven.project.MavenProjectsManager;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -143,7 +156,12 @@ public class LiferayMavenDeprecationsExternalAnnotator extends ExternalAnnotator
 				}
 
 				if (!StringUtil.equals(currentVersion, targetVersion)) {
-					host.addMessage(plugin.getXmlTag(), "Mismatched " + descriptiveName + " Plugin version (" + currentVersion + " does not match Liferay " + liferayVersion + ", should be " + targetVersion + ")", Validator.ValidationHost.ErrorType.WARNING);
+					host.addMessage(
+							plugin.getXmlTag(),
+							"Mismatched " + descriptiveName + " Plugin version (" + currentVersion + " does not match Liferay " + liferayVersion + ", should be " + targetVersion + ")",
+							Validator.ValidationHost.ErrorType.WARNING,
+							updateVersion(model, plugin, targetVersion)
+						);
 				}
 			}
 		}
@@ -171,7 +189,12 @@ public class LiferayMavenDeprecationsExternalAnnotator extends ExternalAnnotator
 				}
 
 				if (!StringUtil.equals(currentVersion, targetVersion)) {
-					host.addMessage(dependency.getXmlTag(), "Mismatched " + descriptiveName + " Dependency version (" + currentVersion + " does not match Liferay " + liferayVersion + ", should be " + targetVersion + ")", Validator.ValidationHost.ErrorType.WARNING);
+					host.addMessage(
+							dependency.getXmlTag(),
+							"Mismatched " + descriptiveName + " Dependency version (" + currentVersion + " does not match Liferay " + liferayVersion + ", should be " + targetVersion + ")",
+							Validator.ValidationHost.ErrorType.WARNING,
+							updateVersion(model, dependency, targetVersion)
+					);
 				}
 			}
 		}
@@ -299,19 +322,104 @@ public class LiferayMavenDeprecationsExternalAnnotator extends ExternalAnnotator
 		return result;
 	}
 
-	public static class MyHost implements Validator.ValidationHost {
+	private static IntentionAction updateVersion(MavenDomProjectModel mavenDomProjectModel, MavenDomArtifactCoordinates mavenDomArtifactCoordinates, String newVersion) {
+		return new UpdateVersion(mavenDomProjectModel, mavenDomArtifactCoordinates, newVersion);
+	}
 
-		private final List<Trinity<PsiElement, @InspectionMessage String, ErrorType>> messages = new ArrayList<>();
+	private static class UpdateVersion implements IntentionAction {
+		private final MavenDomProjectModel mavenDomProjectModel;
+		private final MavenDomArtifactCoordinates mavenDomArtifactCoordinates;
+		private final String newVersion;
+
+		public UpdateVersion(MavenDomProjectModel mavenDomProjectModel, MavenDomArtifactCoordinates mavenDomArtifactCoordinates, String newVersion) {
+			this.mavenDomProjectModel = mavenDomProjectModel;
+			this.mavenDomArtifactCoordinates = mavenDomArtifactCoordinates;
+			this.newVersion = newVersion;
+		}
 
 
 		@Override
-		public void addMessage(PsiElement context, @InspectionMessage String message, @NotNull Validator.ValidationHost.@NotNull ErrorType type) {
-			this.messages.add(Trinity.create(context, message, type));
+		public @IntentionName @NotNull String getText() {
+			return "Update version to " + newVersion;
+		}
+
+		@Override
+		public @NotNull IntentionPreviewInfo generatePreview(@NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file) {
+			return IntentionPreviewInfo.EMPTY;
+		}
+
+		@Override
+		public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
+			return true;
+		}
+
+		@Override
+		public void invoke(@NotNull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+			GenericDomValue<String> version = mavenDomArtifactCoordinates.getVersion();
+
+			String rawText = version.getRawText();
+
+			if (rawText != null) {
+				if (
+						(StringUtil.startsWith(rawText, "${")) &&
+						(StringUtil.endsWith(rawText, "}"))
+				) {
+					String propertyName = rawText.substring(2, rawText.length() - 1);
+
+					MavenDomProperties properties = mavenDomProjectModel.getProperties();
+
+					XmlTag propertiesTag = properties.ensureTagExists();
+
+					XmlTag propertyNameTag = propertiesTag.findFirstSubTag(propertyName);
+
+					if (propertyNameTag != null) {
+						XmlTagValue value = propertyNameTag.getValue();
+
+						value.setText(newVersion);
+					}
+				} else {
+					mavenDomArtifactCoordinates.getVersion().setStringValue(newVersion);
+				}
+			}
+
+			FileDocumentManager.getInstance().saveAllDocuments();
+
+			MavenProjectsManager.getInstance(project).forceUpdateAllProjectsOrFindAllAvailablePomFiles();
+		}
+
+		@Override
+		public boolean startInWriteAction() {
+			return true;
+		}
+
+		@Override
+		public @NotNull @IntentionFamilyName String getFamilyName() {
+			return "Update version";
+		}
+	}
+
+	private static XmlFile createDummyXmlFile(Project project, String text) {
+		return (XmlFile) PsiFileFactory.getInstance(project).createFileFromText("_Dummy_." + XmlFileType.INSTANCE.getDefaultExtension(), XmlFileType.INSTANCE, text);
+	}
+
+	public static class MyHost implements Validator.ValidationHost {
+
+		private record Message(PsiElement context, @InspectionMessage String inspectionMessage, ErrorType errorType, IntentionAction... fixes) {}
+
+		private final List<Message> messages = new ArrayList<>();
+
+		@Override
+		public void addMessage(PsiElement context, @InspectionMessage String inspectionMessage, @NotNull Validator.ValidationHost.@NotNull ErrorType errorType) {
+			addMessage(context, inspectionMessage, errorType, new IntentionAction[0]);
+		}
+
+		public void addMessage(PsiElement context, @InspectionMessage String inspectionMessage, @NotNull Validator.ValidationHost.@NotNull ErrorType errorType, IntentionAction... fixes) {
+			this.messages.add(new Message(context, inspectionMessage, errorType, fixes));
 		}
 
 		void apply(AnnotationHolder holder) {
-			for (Trinity<PsiElement, @InspectionMessage String, ErrorType> message : messages) {
-				LiferayMavenDeprecationsExternalAnnotator.addMessageWithFixes(message.first, message.second, message.third, holder);
+			for (Message message : messages) {
+				LiferayMavenDeprecationsExternalAnnotator.addMessageWithFixes(message.context, message.inspectionMessage, message.errorType, holder, message.fixes);
 			}
 		}
 
