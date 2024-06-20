@@ -27,7 +27,7 @@
     <change-notes><![CDATA[
         <p>Version 0.0.21</p>
         <ul>
-            <li>Feature: add deprecation checks for Liferay 2024.Q1</li>
+            <li>Feature: add deprecation checks for Liferay 2024.Q1 and Liferay 2024.Q2</li>
             <li>Feature: add quick fix for non-matching plugin or dependency versions in pom.xml (portal-web, service-builder, rest-builder)</li>
         </ul>
 

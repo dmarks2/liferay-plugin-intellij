@@ -82,6 +82,9 @@ public class LiferayGroovyDeprecationInspection extends AbstractLiferayDeprecati
 		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_200563_SITE_MEMBERSHIP_POLICY).version(LiferayVersions.LIFERAY_2024_Q1_CE));
 		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_188559_PROCESSOR).version(LiferayVersions.LIFERAY_2024_Q1_CE));
 		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_200537_DEFAULT_CONTROL_PANEL_ENTRY).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_20659_REMOTE_PREFERENCE).version(LiferayVersions.LIFERAY_2024_Q2_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_196226_REGISTRY_CLASSES).version(LiferayVersions.LIFERAY_2024_Q2_CE));
+		GROOVY_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_24699_PORTAL_LIFECYCLE).version(LiferayVersions.LIFERAY_2024_Q2_CE));
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_150185_HTTP_COMPONENTS_UTIL).version("7.4.3.22"));
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_162450_PHONE).version("7.4.3.45"));
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_162437_ADDRESS).version("7.4.3.45"));
@@ -103,6 +106,7 @@ public class LiferayGroovyDeprecationInspection extends AbstractLiferayDeprecati
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_15179_REFLECTION_UTIL_ARRAY_CLONE).version(LiferayVersions.LIFERAY_2024_Q1_CE));
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_199958_INDEX_WRITER_HELPER).version(LiferayVersions.LIFERAY_2024_Q1_CE));
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_188565_FRIENDLY_URL_NORMALIZER).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_2110_PORTAL_UTIL_LOCALIZED_FRIENDLY_URL).version(LiferayVersions.LIFERAY_2024_Q2_CE));
 	}
 
 	@Nls

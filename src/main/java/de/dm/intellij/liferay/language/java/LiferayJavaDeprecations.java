@@ -862,6 +862,49 @@ public class LiferayJavaDeprecations {
 			new String[] {"com.liferay.portal.kernel.portlet.DefaultControlPanelEntry"},
 			new String[0] );
 
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPD_20659_REMOTE_PREFERENCE = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The com.liferay.portal.kernel.util.RemotePreference API is removed. Any custom code using the User.getRemotePreference(String) or User.getRemotePreferences() methods is impacted. Instead, get the necessary cookies from the request to get remote preferences.",
+			"LPD-20659",
+			new String[] {"com.liferay.portal.kernel.util.RemotePreference"},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_196226_REGISTRY_CLASSES = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"PanelCategoryRegistry is renamed and moved to the util package.",
+			"LPS-196226",
+			new String[] {
+					"com.liferay.application.list.PanelCategoryRegistry",
+					"com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigRegistry",
+			},
+			new String[] {
+					"com.liferay.application.list.util.PanelCategoryRegistryUtil",
+					"com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigRegistryUtil",
+			});
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPD_24699_PORTAL_LIFECYCLE = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The PortalLifecycle API is no longer needed, so classes have been removed.",
+			"LPD-24699",
+			new String[] {
+					"com.liferay.portal.kernel.util.BasePortalLifecycle",
+					"com.liferay.portal.kernel.util.PortalLifecycle",
+					"com.liferay.portal.kernel.util.PortalLifecycleUtil",
+					"com.liferay.portal.kernel.log.LogContextRegistryUtil",
+					"com.liferay.taglib.servlet.JspFactoryServletContainerInitializer"
+			},
+			new String[0]);
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPD_2110_PORTAL_UTIL_LOCALIZED_FRIENDLY_URL = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The getLocalizedFriendlyURL method is removed.",
+			"LPD-2110",
+			new String[] {
+					"com.liferay.portal.kernel.util.PortalUtil.getLocalizedFriendlyURL()",
+					"com.liferay.portal.kernel.util.Portal.getLocalizedFriendlyURL()",
+			},
+			new String[0] );
+
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
 		String[] newImportStatements = new String[0];
