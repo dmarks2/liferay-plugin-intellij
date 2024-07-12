@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 ## 0.0.21
 - Feature: add deprecation checks for Liferay 2024.Q1 and Liferay 2024.Q2
 - Feature: add quick fix for non-matching plugin or dependency versions in pom.xml (portal-web, service-builder, rest-builder)
+- Feature: add support for ADTs for the Date Facet Portlet (available since Liferay 7.4.3.104)
 
 ## 0.0.20
 - Change: Update support for IntelliJ 2024.1, dropped support for earlier versions

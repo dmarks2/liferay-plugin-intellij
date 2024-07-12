@@ -67,6 +67,7 @@ The following Application Display Template types are supported:
     category_facet
     custom_facet
     custom_filter
+    date_facet
     document_library
     folder_facet
     language_entry

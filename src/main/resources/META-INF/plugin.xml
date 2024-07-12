@@ -29,6 +29,7 @@
         <ul>
             <li>Feature: add deprecation checks for Liferay 2024.Q1 and Liferay 2024.Q2</li>
             <li>Feature: add quick fix for non-matching plugin or dependency versions in pom.xml (portal-web, service-builder, rest-builder)</li>
+            <li>Feature: add support for ADTs for the Date Facet Portlet (available since Liferay 7.4.3.104)</li>
         </ul>
 
         <p>Version 0.0.20</p>

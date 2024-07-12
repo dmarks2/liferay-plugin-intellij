@@ -70,6 +70,9 @@ public class Constants {
         APPLICATION_DISPLAY_TEMPLATE_TYPES_7_3.put("custom_filter", new String[] {
                 "com.liferay.portal.search.web.internal.custom.filter.display.context.CustomFilterDisplayContext"
         });
+        APPLICATION_DISPLAY_TEMPLATE_TYPES_7_3.put("date_facet", new String[] {
+                "com.liferay.portal.search.web.internal.date.facet.portlet.DateFacetPortlet"
+        });
         APPLICATION_DISPLAY_TEMPLATE_TYPES_7_3.put("folder_facet", new String[] {
                 "com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetPortlet",
                 "com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetTermDisplayContext"
@@ -79,7 +82,9 @@ public class Constants {
                 "com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetTermDisplayContext"
         });
         APPLICATION_DISPLAY_TEMPLATE_TYPES_7_3.put("search_bar", new String[] {
-                "com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletDisplayContext"
+                "com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletDisplayContext",
+                "com.liferay.portal.search.web.internal.search.bar.portlet.display.context.SearchBarPortletDisplayContext", //since 7.4.3.13
+                "com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortlet" //since 7.4.3.67
         });
         APPLICATION_DISPLAY_TEMPLATE_TYPES_7_3.put("search_results", new String[] {
                 "com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext"

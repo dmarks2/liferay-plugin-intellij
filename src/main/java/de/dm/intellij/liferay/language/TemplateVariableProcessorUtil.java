@@ -298,6 +298,10 @@ public class TemplateVariableProcessorUtil {
                     if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3 || portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_custom_filter_73.vm"));
                     }
+                } else if ("date_facet".equals(applicationDisplayTemplateFileType)) {
+                    if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
+                        variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_date_facet_74.vm"));
+                    }
                 } else if ("folder_facet".equalsIgnoreCase(applicationDisplayTemplateFileType)) {
                     if (portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_3 || portalMajorVersion == LiferayVersions.LIFERAY_VERSION_7_4) {
                         variables.addAll(getImplicitVariables(templateVariableProcessor, templateFile, "/com/liferay/vtl/adt_folder_facet_73.vm"));

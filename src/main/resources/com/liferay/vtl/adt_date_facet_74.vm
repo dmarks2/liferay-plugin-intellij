@@ -1,0 +1,5 @@
+#* @vtlvariable name="dateFacetDisplayContext" type="com.liferay.portal.search.web.internal.date.facet.display.context.DateFacetDisplayContext" *#
+#* @vtlvariable name="terms" type="java.util.List<com.liferay.portal.search.web.internal.date.facet.display.context.DateFacetDisplayContext>" *#
+#* @vtlvariable name="template_id" type="java.lang.Long" *#
+#* @vtlvariable name="currentURL" type="java.lang.String" *#
+#* @vtlvariable name="request" type="javax.servlet.http.HttpServletRequest" *#
