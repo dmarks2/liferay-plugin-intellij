@@ -270,6 +270,7 @@
         </ul>
     ]]></change-notes>
 
+    <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.idea.maven</depends>
     <depends>com.intellij.gradle</depends>
     <depends>com.intellij.java</depends>
