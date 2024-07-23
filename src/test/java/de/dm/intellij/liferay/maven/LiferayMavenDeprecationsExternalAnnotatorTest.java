@@ -97,4 +97,34 @@ public class LiferayMavenDeprecationsExternalAnnotatorTest extends LightJavaCode
 		myFixture.checkResultByFile("portal-web/pom-expected.xml");
 	}
 
+	public void testBizaQuteBndVersion() {
+		myFixture.configureByFiles("biz-aqute-bnd/pom.xml");
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Update version")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("biz-aqute-bnd/pom-expected.xml");
+	}
+
+	public void testPluginDependencyVersion() {
+		myFixture.configureByFiles("plugin-dependency/pom.xml");
+
+		myFixture.checkHighlighting();
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().startsWith("Update version")) {
+				myFixture.launchAction(quickFix);
+			}
+		}
+
+		myFixture.checkResultByFile("plugin-dependency/pom-expected.xml");
+	}
+
 }

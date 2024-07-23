@@ -14,6 +14,7 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -92,6 +93,36 @@ public class LiferayGithubClient {
 		}
 
 		return null;
+	}
+
+	public String getProjectTemplateVersion(String liferayVersion, String key) throws URISyntaxException, IOException {
+		String gaVersion = LiferayVersions.getGAVersion(liferayVersion);
+
+		String buildFile = getGithubFileContent("/" + gaVersion + "/modules/build.gradle");
+
+		AtomicReference<String> version = new AtomicReference<>("");
+
+		buildFile.lines().forEach(
+				line -> {
+					if (version.get().isEmpty()) {
+						int idx = line.indexOf(key);
+
+						if (idx >= 0) {
+							int idx2 = line.indexOf("\"", idx + key.length() + 1);
+
+							if (idx2 >= 0) {
+								int idx3 = line.indexOf("\"", idx2 + 1);
+
+								if (idx3 >= 0) {
+									version.set(line.substring(idx2 + 1, idx3));
+								}
+							}
+						}
+					}
+				}
+		);
+
+		return version.get();
 	}
 
 }

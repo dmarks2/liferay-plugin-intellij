@@ -54,9 +54,12 @@ public class LiferayMavenDeprecationsExternalAnnotator extends ExternalAnnotator
 
 	private static final String LIFERAY_GROUP_ID = "com.liferay";
 	private static final String LIFERAY_PORTAL_GROUP_ID = "com.liferay.portal";
+	private static final String BIZ_AQUTE_BND_GROUP_ID = "biz.aQute.bnd";
 	private static final String SERVICE_BUILDER_ARTIFACT_ID = "com.liferay.portal.tools.service.builder";
 	private static final String REST_BUILDER_ARTIFACT_ID = "com.liferay.portal.tools.rest.builder";
 	private static final String PORTAL_WEB_ARTIFACT_ID = "com.liferay.portal.web";
+	private static final String BIZ_AQUTE_BNDLIB_ARTIFACT_ID = "biz.aQute.bndlib";
+	private static final String LIFERAY_ANT_BND_ARTIFACT_ID = "com.liferay.ant.bnd";
 
 
 	@Override
@@ -70,7 +73,9 @@ public class LiferayMavenDeprecationsExternalAnnotator extends ExternalAnnotator
 		}
 
 		if (log.isDebugEnabled()) {
-			log.debug("Examining " + file.getName());
+			if (file.getVirtualFile() != null) {
+				log.debug("Examining " + file.getVirtualFile().getCanonicalPath());
+			}
 		}
 
 		Module module = ModuleUtilCore.findModuleForPsiElement(file);
@@ -91,8 +96,14 @@ public class LiferayMavenDeprecationsExternalAnnotator extends ExternalAnnotator
 				validatePluginVersion(host, mavenDomModel, liferayVersion, LIFERAY_GROUP_ID, REST_BUILDER_ARTIFACT_ID, "REST Builder", LiferayMavenDeprecationsExternalAnnotator::getRestBuilderVersion);
 
 				validateDependencyVersion(host, mavenDomModel, liferayVersion, LIFERAY_PORTAL_GROUP_ID, PORTAL_WEB_ARTIFACT_ID, "Portal Web", LiferayMavenDeprecationsExternalAnnotator::getPortalWebVersion);
+				validateDependencyVersion(host, mavenDomModel, liferayVersion, BIZ_AQUTE_BND_GROUP_ID, BIZ_AQUTE_BNDLIB_ARTIFACT_ID, "Biz aQute bndlib", LiferayMavenDeprecationsExternalAnnotator::getBizaQuteBnd);
+				validateDependencyVersion(host, mavenDomModel, liferayVersion, LIFERAY_GROUP_ID, LIFERAY_ANT_BND_ARTIFACT_ID, "Liferay Ant bnd", LiferayMavenDeprecationsExternalAnnotator::getAntBndVersion);
 
 				return host;
+			} else {
+				if (log.isDebugEnabled()) {
+					log.debug("Maven Model is empty or invalid. Unable to examine...");
+				}
 			}
 		}
 
@@ -248,26 +259,38 @@ public class LiferayMavenDeprecationsExternalAnnotator extends ExternalAnnotator
 		return null;
 	}
 
-	private static String getServiceBuilderVersion(String liferayVersion) {
-		//service builder found in 7.4 on GitHub only?
-		if (
-				(liferayVersion.startsWith("7.4"))
-		) {
-			return getPluginVersionFromBndFile(liferayVersion, "/modules/util/portal-tools-service-builder/bnd.bnd");
+	private static String getProjectTemplateVersion(String liferayVersion, String key) {
+		if (ApplicationManager.getApplication().isUnitTestMode()) {
+			return "9.9.9";
+		}
+
+		try {
+			LiferayGithubClient githubClient = new LiferayGithubClient();
+
+			return githubClient.getProjectTemplateVersion(liferayVersion, key);
+		} catch (URISyntaxException | IOException e) {
+			if (log.isDebugEnabled()) {
+				log.debug("Unable to fetch plugin version from github: " + e.getMessage());
+			}
 		}
 
 		return null;
 	}
 
-	private static String getRestBuilderVersion(String liferayVersion) {
-		//rest builder found in 7.4 on GitHub only?
-		if (
-				(liferayVersion.startsWith("7.4"))
-		) {
-			return getPluginVersionFromBndFile(liferayVersion, "/modules/util/portal-tools-rest-builder/bnd.bnd");
-		}
+	private static String getServiceBuilderVersion(String liferayVersion) {
+		return getProjectTemplateVersion(liferayVersion, "com.liferay.portal.tools.service.builder.version");
+	}
 
-		return null;
+	private static String getRestBuilderVersion(String liferayVersion) {
+		return getProjectTemplateVersion(liferayVersion, "com.liferay.portal.tools.rest.builder.version");
+	}
+
+	private static String getBizaQuteBnd(String liferayVersion) {
+		return getProjectTemplateVersion(liferayVersion, "biz.aQute.bnd.version");
+	}
+
+	private static String getAntBndVersion(String liferayVersion) {
+		return getProjectTemplateVersion(liferayVersion, "com.liferay.ant.bnd.version");
 	}
 
 	private static String getPortalWebVersion(String liferayVersion) {
@@ -303,6 +326,18 @@ public class LiferayMavenDeprecationsExternalAnnotator extends ExternalAnnotator
 
 		result.addAll(findDependencies(model.getDependencies().getDependencies(), groupId, artifactId));
 		result.addAll(findDependencies(model.getDependencyManagement().getDependencies().getDependencies(), groupId, artifactId));
+
+		List<MavenDomDependency> dependenciesFromPlugins = new ArrayList<>();
+
+		for (MavenDomPlugin plugin : model.getBuild().getPlugins().getPlugins()) {
+			dependenciesFromPlugins.addAll(plugin.getDependencies().getDependencies());
+		}
+
+		for (MavenDomPlugin plugin : model.getBuild().getPluginManagement().getPlugins().getPlugins()) {
+			dependenciesFromPlugins.addAll(plugin.getDependencies().getDependencies());
+		}
+
+		result.addAll(findDependencies(dependenciesFromPlugins, groupId, artifactId));
 
 		return result;
 	}
