@@ -748,6 +748,16 @@ tasks.register('downloadPoshi', Copy) {
     into generatedResources + '/lib'
 }
 
+tasks {
+    runPluginVerifier {
+        freeArgs = ["-mute", "TemplateWordInPluginId"]
+
+        ideVersions = [
+                "IU-2024.1"
+        ]
+    }
+}
+
 group 'de.dm.intellij.liferay'
 version '0.0.21'
 
