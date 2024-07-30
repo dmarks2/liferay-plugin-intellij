@@ -171,6 +171,26 @@ public class LiferayJavaDeprecations {
 			"LPS-106167",
 			new String[] {"com.liferay.portal.kernel.util.StringPool", "com.liferay.portal.kernel.util.HashUtil", "com.liferay.portal.kernel.upload.UploadHandler", "com.liferay.portal.kernel.upload.BaseUploadHandler"},
 			new String[] {"com.liferay.petra.string.StringPool", "com.liferay.petra.lang.HashUtil"});
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_104241_REMOVED_DEPRECATIONS = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.3f,
+			"Deprecated portal-kernel classes have been removed.",
+			"LPS-104241",
+			new String[] {
+					"com.liferay.portal.kernel.struts.BaseStrutsAction",
+					"com.liferay.portal.kernel.search.FacetedSearcher",
+					"com.liferay.portal.kernel.search.SearchEngineUtil",
+					"com.liferay.portal.kernel.util.Randomizer",
+					"com.liferay.portal.kernel.util.Randomizer_IW",
+			},
+			new String[] {
+					"com.liferay.portal.kernel.struts.StrutsAction",
+					"",
+					"com.liferay.portal.kernel.search.IndexWriterHelperUtil",
+					"",
+					""
+			});
+
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_89065_ASSET_CATEGORIES_TABLE = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.4f,
 			"Removed the AssetEntries_AssetCategories Table and Corresponding Code.",
