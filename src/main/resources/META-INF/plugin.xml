@@ -27,7 +27,7 @@
     <change-notes><![CDATA[
         <p>Version 0.0.22</p>
         <ul>
-            <li>Feature: add deprecation check for LPS-104241</li>
+            <li>Feature: add deprecation check for LPS-104241, LPS-182671</li>
         </ul>
 
         <p>Version 0.0.21</p>

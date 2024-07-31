@@ -197,6 +197,12 @@ public class LiferayJavaDeprecations {
 			"LPS-89065",
 			new String[] {"com.liferay.asset.kernel.model.AssetEntries_AssetCategoriesTable"},
 			new String[0] );
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_182671_BASE_MODEL_PERMISSION_CHECKER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The interface BaseModelPermissionChecker is deprecated and has been removed. Use ModelResourcePermission instead.",
+			"LPS-182671",
+			new String[] {"com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker"},
+			new String[0] );
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_122955_SOY_PORTLET = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.4f,
 			"The `SoyPortlet` class has been removed. It used to implement a portlet whose views were backed by Closure Templates (Soy).",
