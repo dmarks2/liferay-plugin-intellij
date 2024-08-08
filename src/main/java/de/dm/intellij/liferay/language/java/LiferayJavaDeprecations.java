@@ -124,6 +124,12 @@ public class LiferayJavaDeprecations {
 			"",
 			"/com/liferay/java/Modularization_Imports_72.csv");
 
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_NONE_MODULARIZATION_73 = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.3f,
+			"Many classes from former portal-service.jar from Liferay Portal 6.x have been moved into application and framework API modules.",
+			"",
+			"/com/liferay/java/Modularization_Imports_73.csv");
+
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_95909_ELASTICSEARCH_7 = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.3f,
 			"Elasticsearch has been updates to Elasticsearch 7.x.",
