@@ -654,6 +654,20 @@ public class LiferayJavaDeprecations {
 			new String[] {"com.liferay.account.service.AccountRoleLocalService.checkCompanyAccountRoles()", "com.liferay.account.service.AccountRoleLocalServiceUtil.checkCompanyAccountRoles()"},
 			new String[0] );
 
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_175951_UPLOAD_REQUEST_HELPER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"UploadServletRequestConfigurationHelper has been moved to UploadServlerRequestConfigurationProvider",
+			"LPS-175951",
+			new String[] {
+					"com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil",
+					"com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper"
+			},
+			new String[] {
+					"com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProviderUtil",
+					"com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProvider",
+			});
+
+
 	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_197840_SCOPE_GROUP_TYPE = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
 			7.4f,
 			"The scopeGroupType methods are no longer used and have been removed.",
