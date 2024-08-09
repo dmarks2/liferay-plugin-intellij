@@ -1178,6 +1178,9 @@ public class ComponentPropertiesCompletionContributor extends CompletionContribu
         COMPONENT_PROPERTIES.put("com.liferay.portal.vulcan.dto.converter.DTOConverter",
                 new String[][]{
                         {"dto.class.name", "String"},
+                        {"external.dto.class.name", "String"},
+                        {"application.name", "String"},
+                        {"version", "String"},
                 });
 
         COMPONENT_PROPERTIES.put("com.liferay.portal.workflow.definition.link.update.handler.WorkflowDefinitionLinkUpdateHandler",
