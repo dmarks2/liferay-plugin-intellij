@@ -96,7 +96,7 @@ public class LiferayFileUtil {
 
     public static boolean isFragmentFile(VirtualFile virtualFile) {
         VirtualFile parent = virtualFile.getParent();
-        if (parent != null) {
+        if ( (parent != null) && (parent.isValid()) ) {
             return getChild(parent, "fragment.json") != null;
         }
 
