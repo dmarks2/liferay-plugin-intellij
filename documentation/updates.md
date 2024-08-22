@@ -36,5 +36,7 @@ The following areas are checked
   * Checks if `service-builder` and `rest-builder` plugins match the used liferay version
   * Checks if `portal-web` dependency matches the used liferay version
   * Checks if `biz.aqute.bnd` and `com.liferay.ant.bnd` dependencies match the used liferay version
+* package.json dependencies
+  * Checks if `liferay-frontend-css-common`, `liferay-frontend-theme-styled`, `liferay-frontend-theme-unstyled`, `liferay-theme-tasks` and `gulp` dependencies match the used liferay version
 
 *Checking for removals or deprecations works for Liferay 7.0 to Liferay 7.4*

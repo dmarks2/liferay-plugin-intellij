@@ -1,0 +1,7 @@
+{
+  "name": "my-module",
+  "devDependencies": {
+    "liferay-frontend-css-common": <warning descr="Mismatched liferay-frontend-css-common Dependency version (1.0.0 does not match Liferay 7.4.3.55, should be 9.9.9)">"1.0.0"</warning>,
+    "liferay-theme-tasks": <warning descr="Mismatched liferay-theme-tasks Dependency version (1.0.0 does not match Liferay 7.4.3.55, should be 9.9.9)">"1.0.0"</warning>
+  }
+}

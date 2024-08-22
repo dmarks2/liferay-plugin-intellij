@@ -1,0 +1,7 @@
+{
+  "name": "my-module",
+  "devDependencies": {
+    "liferay-frontend-css-common": "9.9.9",
+    "liferay-theme-tasks": "9.9.9"
+  }
+}

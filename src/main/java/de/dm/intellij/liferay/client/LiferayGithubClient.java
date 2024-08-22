@@ -125,4 +125,26 @@ public class LiferayGithubClient {
 		return version.get();
 	}
 
+	public String getYarnLockVersion(String liferayVersion, String githubPath, String dependencyName) throws URISyntaxException, IOException {
+		String gaVersion = LiferayVersions.getGAVersion(liferayVersion);
+
+		String githubFile = getGithubFileContent("/" + gaVersion + githubPath);
+
+		AtomicReference<String> yarnLockVersion = new AtomicReference<>("");
+
+		githubFile.lines().forEach(
+				line -> {
+					int index = line.indexOf(dependencyName + "@");
+
+					if (index >= 0) {
+						String version = line.substring(index + dependencyName.length() + 1);
+
+						yarnLockVersion.set(version.substring(0, version.length() - 1));
+					}
+				}
+		);
+
+		return yarnLockVersion.get();
+	}
+
 }

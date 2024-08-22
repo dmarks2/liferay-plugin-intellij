@@ -235,30 +235,6 @@ public class LiferayMavenDeprecationsExternalAnnotator extends ExternalAnnotator
 		return null;
 	}
 
-	private static String getPluginVersionFromBndFile(String liferayVersion, String path) {
-		if (ApplicationManager.getApplication().isUnitTestMode()) {
-			return "9.9.9";
-		}
-
-		try {
-			LiferayGithubClient githubClient = new LiferayGithubClient();
-
-			String bundleVersion = githubClient.getBundleVersion(liferayVersion, path);
-
-			if (bundleVersion != null) {
-				bundleVersion = LiferayVersions.minusOne(bundleVersion);
-
-				return bundleVersion;
-			}
-		} catch (URISyntaxException | IOException e) {
-			if (log.isDebugEnabled()) {
-				log.debug("Unable to fetch plugin version from github: " + e.getMessage());
-			}
-		}
-
-		return null;
-	}
-
 	private static String getProjectTemplateVersion(String liferayVersion, String key) {
 		if (ApplicationManager.getApplication().isUnitTestMode()) {
 			return "9.9.9";

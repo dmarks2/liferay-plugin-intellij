@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.22
 - Feature: add deprecation check for LPS-104241, LPS-175951, LPS-182671
+- Feature: deprecation checks for devDependencies in package.json
 - Bugfix: Exception occurred after deleting a fragment.json file
 
 ## 0.0.21

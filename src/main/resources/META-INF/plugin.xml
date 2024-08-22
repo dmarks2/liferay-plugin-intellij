@@ -28,6 +28,8 @@
         <p>Version 0.0.22</p>
         <ul>
             <li>Feature: add deprecation check for LPS-104241, LPS-175951, LPS-182671</li>
+            <li>Feature: deprecation checks for devDependencies in package.json</li>
+            <li>Bugfix: Exception occurred after deleting a fragment.json file</li>
         </ul>
 
         <p>Version 0.0.21</p>
