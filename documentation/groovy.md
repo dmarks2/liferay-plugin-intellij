@@ -44,7 +44,7 @@ The results of the script executions are shown in the console.
 If an error occurs and your script prints a stacktrace you can also click on the
 error message in the console to directly open your script file at the erroneous location. 
 
-**Known Issue:** Running groovy scripts in Liferay 7.4 is currently not working properly.
+**Known Issue:** Running groovy scripts in Liferay 7.4 (between 7.4.3.46 and 7.4.3.97) is currently not working properly (see https://liferay.atlassian.net/browse/LPS-106390).
 
 
 *This feature requires Java 11 or higher.*
