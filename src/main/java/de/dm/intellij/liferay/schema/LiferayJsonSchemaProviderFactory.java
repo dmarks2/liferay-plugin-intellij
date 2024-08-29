@@ -4,8 +4,10 @@ import com.intellij.openapi.project.Project;
 import com.jetbrains.jsonSchema.extension.JsonSchemaFileProvider;
 import com.jetbrains.jsonSchema.extension.JsonSchemaProviderFactory;
 import de.dm.intellij.liferay.language.clientextension.ClientExtensionYamlSchemaFileProvider;
+import de.dm.intellij.liferay.site.initializer.SiteInitializerSchemaProviderFactory;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,19 +16,24 @@ public class LiferayJsonSchemaProviderFactory implements JsonSchemaProviderFacto
     @NotNull
     @Override
     public List<JsonSchemaFileProvider> getProviders(@NotNull Project project) {
-        return Arrays.asList(
-            new LiferayJournalStructureJsonSchemaFileProvider(project),
-            new LiferayJournalStructureJsonSchema_2_0_FileProvider(project),
-            new LiferayJournalStructureJsonSchemaDataDefinitionFileProvider(project),
-            new LiferayAssetsJsonSchemaFileProvider(),
-            new LiferaySitemapJsonSchemaFileProvider(),
-            new LiferaySettingsJsonSchemaFileProvider(),
-            new LiferayFrontendTokenDefinitionJsonSchemaFileProvider(project),
-            new LiferayFragmentCollectionSchemaFileProvider(),
-            new LiferayFragmentConfigurationSchemaFileProvider(),
-            new LiferayFragmentFragmentSchemaFileProvider(),
-            new ClientExtensionYamlSchemaFileProvider(),
-            new LiferayRestConfigSchemaProvider()
-        );
+
+		List<JsonSchemaFileProvider> providers = new ArrayList<>(Arrays.asList(
+				new LiferayJournalStructureJsonSchemaFileProvider(project),
+				new LiferayJournalStructureJsonSchema_2_0_FileProvider(project),
+				new LiferayJournalStructureJsonSchemaDataDefinitionFileProvider(project),
+				new LiferayAssetsJsonSchemaFileProvider(),
+				new LiferaySitemapJsonSchemaFileProvider(),
+				new LiferaySettingsJsonSchemaFileProvider(),
+				new LiferayFrontendTokenDefinitionJsonSchemaFileProvider(project),
+				new LiferayFragmentCollectionSchemaFileProvider(),
+				new LiferayFragmentConfigurationSchemaFileProvider(),
+				new LiferayFragmentFragmentSchemaFileProvider(),
+				new ClientExtensionYamlSchemaFileProvider(),
+				new LiferayRestConfigSchemaProvider()
+		));
+
+        providers.addAll(SiteInitializerSchemaProviderFactory.getSiteInitializerProviders());
+
+        return providers;
     }
 }

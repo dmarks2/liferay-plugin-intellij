@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:complexType name="structure">
+		<xs:all>
+			<xs:element name="dynamic-element" minOccurs="0" maxOccurs="1" type="xs:boolean" />
+			<xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+			<xs:element name="description" minOccurs="0" maxOccurs="1" type="xs:string" />
+			<xs:element name="definition" minOccurs="0" maxOccurs="1" type="xs:string" />
+			<xs:element name="layout" minOccurs="0" maxOccurs="1" type="xs:string" />
+			<xs:element name="root" minOccurs="0" maxOccurs="1" type="xs:anyType" />
+			<xs:element name="template" minOccurs="0" maxOccurs="1" type="template" />
+		</xs:all>
+	</xs:complexType>
+
+
+	<xs:complexType name="template">
+		<xs:all>
+			<xs:element name="file-name" minOccurs="0" maxOccurs="1" type="xs:string" />
+			<xs:element name="cacheable" minOccurs="0" maxOccurs="1" type="xs:boolean" />
+		</xs:all>
+	</xs:complexType>
+
+	<xs:element name="root">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="structure" minOccurs="0" maxOccurs="unbounded" type="structure"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

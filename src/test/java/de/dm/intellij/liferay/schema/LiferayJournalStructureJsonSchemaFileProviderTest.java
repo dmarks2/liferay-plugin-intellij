@@ -31,4 +31,15 @@ public class LiferayJournalStructureJsonSchemaFileProviderTest extends BasePlatf
 
         assertFalse("\"type\" should not contain \"rich_text\", because it is not schema 2.0", strings.contains("rich_text"));
     }
+
+    public void testSiteInitializerCompletion() {
+        myFixture.configureByFiles("site-initializer/ddm-structures/sample-structure.xml");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
+        assertTrue(strings.contains("text"));
+
+        assertFalse("\"type\" should not contain \"rich_text\", because it is not schema 2.0", strings.contains("rich_text"));
+    }
 }

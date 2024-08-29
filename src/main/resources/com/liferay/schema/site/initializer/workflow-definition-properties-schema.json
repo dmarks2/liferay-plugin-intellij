@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/workflow-definition-properties-schema.json",
+  "title": "Site Initializer Workflow Definition Properties",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "scope": {
+        "type": "string"
+      },
+      "className": {
+        "type": "string"
+      },
+      "assetName": {
+        "type": "string"
+      },
+      "typePK": {
+        "type": "integer"
+      }
+    }
+  },
+  "examples": [
+    [
+      {
+        "assetName": "C_RaylifeApplication",
+        "className": "com.liferay.object.model.ObjectDefinition",
+        "scope": "company",
+        "typePK": 1
+      }
+    ]
+  ]
+}

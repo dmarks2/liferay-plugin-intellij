@@ -1,0 +1,198 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/user-accounts-schema.json",
+  "title": "Site Initializer User Accounts",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "accountBriefs": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/accountBrief"
+        }
+      },
+      "organizationBriefs": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/organizationBrief"
+        }
+      },
+      "userGroupBriefs": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/userGroupBrief"
+        }
+      },
+      "imageId": {
+        "type": "integer"
+      },
+      "emailAddress": {
+        "type": "string"
+      },
+      "additionalName": {
+        "description": "The user's additional name (e.g., middle name).",
+        "type": "string"
+      },
+      "alternateName": {
+        "description": "The user's alias or screen name.",
+        "type": "string"
+      },
+      "birthDate": {
+        "description": "The user's date of birth, in ISO 8601 format.",
+        "type": "string"
+      },
+      "customFields": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/customField"
+        }
+      },
+      "dashboardURL": {
+        "description": "A relative URL to the user's dashboard.",
+        "type": "string"
+      },
+      "externalReferenceCode": {
+        "description": "The optional external key of this user account.",
+        "type": "string"
+      },
+      "familyName": {
+        "description": "The user's surname (last name).",
+        "type": "string"
+      },
+      "givenName": {
+        "description": "The user's first name.",
+        "type": "string"
+      },
+      "honorificPrefix": {
+        "description": "The user's title (e.g., Dr., Mr., Mrs, Ms., etc.).",
+        "type": "string"
+      },
+      "honorificSuffix": {
+        "description": "The user's suffix (e.g., II, Jr., PhD, etc.).",
+        "type": "string"
+      },
+      "jobTitle": {
+        "description": "The user's job title.",
+        "type": "string"
+      },
+      "keywords": {
+        "description": "A list of keywords describing the user.",
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "languageDisplayName": {
+        "description": "The user's preferred language.",
+        "type": "string"
+      },
+      "languageId": {
+        "description": "The user's preferred language id.",
+        "type": "string"
+      }
+    }
+  },
+  "definitions": {
+    "accountBrief": {
+      "type": "object",
+      "properties": {
+        "externalReferenceCode": {
+          "type": "string"
+        },
+        "roleBriefs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "organizationBrief": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "userGroupBrief": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "customField": {
+      "type": "object",
+      "properties": {
+        "customValue": {
+          "$ref": "#/definitions/customValue"
+        },
+        "dataType": {
+          "description": "The field type (e.g., image, text, etc.).",
+          "type": "string"
+        },
+        "name": {
+          "description": "The field's internal name. This is valid for comparisons and unique in the structured content.",
+          "type": "string"
+        }
+      }
+    },
+    "customValue": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "The field's content for simple types.",
+          "type": "object"
+        },
+        "data_i18n": {
+          "$ref": "#/definitions/i18n_map"
+        },
+        "geo": {
+          "$ref": "#/definitions/geo"
+        }
+      }
+    },
+    "geo": {
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number"
+        },
+        "longitude": {
+          "type": "number"
+        }
+      }
+    },
+    "i18n_map": {
+      "type": "object",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "examples": [
+    [
+      {
+        "accountBriefs": [
+          {
+            "externalReferenceCode": "RAYACCOUNT-001"
+          }
+        ],
+        "alternateName": "scott.producer",
+        "birthDate": "1949-12-18T00:00:00.000+00:00",
+        "emailAddress": "scott.producer@mailinator.com",
+        "externalReferenceCode": "RAYUSER-001",
+        "familyName": "Producer",
+        "givenName": "Scott",
+        "jobTitle": "Raylife Agent",
+        "name": "Scott Producer"
+      }
+    ]
+  ]
+}

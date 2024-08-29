@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/layout-schema.json",
+  "title": "Site Initializer Layout",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "name_i18n": {
+      "$ref": "#/definitions/i18n_map"
+    },
+    "type": {
+      "type": "string",
+      "x-intellij-html-description": "See <a href='https://github.com/liferay/liferay-portal/blob/master/portal-kernel/src/com/liferay/portal/kernel/model/LayoutConstants.java'>LayoutConstants</a> class for possible values",
+      "enum": [
+        "asset_display", "collection", "content", "control_panel", "embedded", "full_page_application", "link_to_layout", "node", "panel", "portlet", "url", "utility"
+      ]
+    },
+    "friendlyURL_i18n": {
+      "$ref": "#/definitions/i18n_map"
+    },
+    "friendlyURL": {
+      "type": "string"
+    },
+    "typeSettings": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "private": {
+      "type": "boolean"
+    },
+    "description_i18n": {
+      "$ref": "#/definitions/i18n_map"
+    },
+    "keywords_i18n": {
+      "$ref": "#/definitions/i18n_map"
+    },
+    "robots_i18n": {
+      "$ref": "#/definitions/i18n_map"
+    },
+    "hidden": {
+      "type": "boolean"
+    },
+    "faviconFileEntryId": {
+      "type": "integer"
+    },
+    "system": {
+      "type": "boolean"
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/permission"
+      }
+    },
+    "priority": {
+      "type": "integer"
+    },
+    "layoutTemplateId": {
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "i18n_map": {
+      "type": "object",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "permission": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "type": "integer"
+        },
+        "roleName": {
+          "type": "string"
+        },
+       "actionIds": {
+         "type": "array",
+         "items": {
+           "type": "string"
+         }
+       }
+      }
+    }
+  },
+  "examples": [
+    {
+      "hidden": false,
+      "private": false,
+      "name_i18n": {
+        "en_US": "Welcome"
+      },
+      "friendlyURL_i18n": {
+        "en_US": "/welcome"
+      },
+      "system": false,
+      "type": "Content",
+      "typeSettings": [
+        {
+          "key": "collectionType",
+          "value": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+        }
+      ]
+    }
+  ]
+}

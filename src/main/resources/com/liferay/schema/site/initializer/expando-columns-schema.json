@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/expando-columns-schema.json",
+  "title": "Site Initializer Expando Columns",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "modelResource": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "dataType": {
+        "type": "integer",
+        "x-intellij-html-description": "constants for dataType field can be found in <a href=\"https://github.com/liferay/liferay-portal/blob/master/portal-kernel/src/com/liferay/expando/kernel/model/ExpandoColumnConstants.java\">ExpandoColumnsConstants</a> class."
+      },
+      "properties": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "modelResource",
+      "name",
+      "dataType"
+    ]
+  },
+  "examples": [
+    [
+      {
+        "dataType": 15,
+        "modelResource": "com.liferay.portal.kernel.model.Layout",
+        "name": "Icon URL"
+      }
+    ]
+  ]
+}

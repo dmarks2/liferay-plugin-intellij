@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/roles-schema.json",
+  "title": "Site Initializer Roles",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "type": {
+        "type": "integer"
+      },
+      "name_i18n": {
+        "$ref": "#/definitions/i18n_map"
+      },
+      "description":{
+        "$ref": "#/definitions/i18n_map"
+      },
+      "subtype": {
+        "type": "string"
+      },
+      "actions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "resource": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "integer"
+            },
+            "actionId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "scope",
+            "resource",
+            "actionId"
+          ]
+        }
+      }
+    },
+    "required": [
+      "name"
+    ]
+  },
+  "definitions": {
+    "i18n_map": {
+      "type": "object",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "examples": [
+    [
+      {
+        "actions": [
+        ],
+        "name": "Learning Center Publisher",
+        "scope": 1,
+        "type": 1
+      }
+    ]
+  ]
+}

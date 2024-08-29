@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/client-extension-entries-schema.json",
+  "title": "Site Initializer Client Extension Entries",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "properties": {
+        "type": "object"
+      },
+      "externalReferenceCode": {
+        "type": "string"
+      },
+      "name_i18n": {
+        "$ref": "#/definitions/i18n_map"
+      },
+      "cssURLs": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "htmlElementName": {
+        "type": "string"
+      },
+      "instanceable": {
+        "type": "boolean"
+      },
+      "portletCategoryName": {
+        "type": "string"
+      },
+      "elementURLs": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "useESM": {
+        "type": "boolean"
+      }
+    }
+  },
+  "definitions": {
+    "i18n_map": {
+      "type": "object",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "examples": [
+    [
+      {
+        "cssURLs": [
+          "[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/site-initializer-raylife-ap/main.css$]"
+        ],
+        "elementURLs": [
+          "[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/site-initializer-raylife-ap/2.js$]",
+          "[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/site-initializer-raylife-ap/main.js$]",
+          "[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/site-initializer-raylife-ap/runtime-main.js$]"
+        ],
+        "externalReferenceCode": "RAYLIFE-AGENT-PORTAL",
+        "htmlElementName": "liferay-remote-app-raylife-ap",
+        "instanceable": "true",
+        "name_i18n": {
+          "en_US": "Raylife Agent Portal"
+        },
+        "portletCategoryName": "category.client-extensions"
+      }
+    ]
+  ]
+}

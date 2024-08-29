@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/expando-values-schema.json",
+  "title": "Site Initializer Expando Values",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "object",
+        "items": {
+          "type": "array"
+        }
+      },
+      "className": {
+        "type": "string"
+      },
+      "columnName": {
+        "type": "string"
+      },
+      "classPk": {
+        "type": "integer"
+      }
+    }
+  },
+  "examples": [
+    [
+      {
+        "className": "com.liferay.commerce.product.model.CPDefinition",
+        "classPk": "[#CP_DEFINITION_ID:RAY001#]",
+        "columnName": "Commission Rate",
+        "data": 0.02
+      }
+    ]
+  ]
+}

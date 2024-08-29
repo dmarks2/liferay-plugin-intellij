@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/asset-list-entries.json",
+  "title": "Site Initializer Asset List Entries",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "unicodeProperties": {
+        "type": "object",
+        "properties": {
+          "classNameIds": {
+            "type": "string"
+          },
+          "filterBy": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/keyValuePair"
+            }
+          },
+          "orderBy": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/keyValuePair"
+            }
+          },
+          "query": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/keyValuePair"
+            }
+          }
+        },
+        "additionalProperties": true
+      },
+      "assetEntrySubtypeId": {
+        "type": "string"
+      },
+      "assetTagNames": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "externalReferenceCode": {
+        "type": "string"
+      }
+    }
+  },
+  "definitions": {
+    "keyValuePair": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "examples": [
+    [
+      {
+        "assetEntrySubtypeId": "[$DDM_STRUCTURE_ID:BLOG$]",
+        "title": "Blog Entries",
+        "unicodeProperties": {
+          "anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",
+          "classNameIds": "com.liferay.journal.model.JournalArticle",
+          "classTypeIds": "classTypeIdsJournalArticleAssetRendererFactory",
+          "orderBy": [
+            {
+              "key": "orderByColumn1",
+              "value": "modifiedDate"
+            },
+            {
+              "key": "orderByColumn2",
+              "value": "title"
+            },
+            {
+              "key": "orderByType1",
+              "value": "ASC"
+            },
+            {
+              "key": "orderByType2",
+              "value": "ASC"
+            }
+          ],
+          "query": [
+            {
+              "key": "queryAndOperator",
+              "value": "true"
+            },
+            {
+              "key": "queryContains",
+              "value": "true"
+            },
+            {
+              "key": "queryName",
+              "value": "assetTags"
+            }
+          ]
+        }
+      }
+    ]
+  ]
+}

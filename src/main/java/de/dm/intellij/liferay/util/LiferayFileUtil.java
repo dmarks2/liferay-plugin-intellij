@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.util;
 
+import com.intellij.injected.editor.VirtualFileWindow;
 import com.intellij.javaee.web.WebRoot;
 import com.intellij.javaee.web.facet.WebFacet;
 import com.intellij.json.psi.JsonFile;
@@ -23,6 +24,7 @@ import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferen
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
+import de.dm.intellij.liferay.site.initializer.SiteInitializerUtil;
 import de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -81,8 +83,14 @@ public class LiferayFileUtil {
                         }
                     }
                 }
+            } else if (psiFile.getVirtualFile() instanceof VirtualFileWindow virtualFileWindow) {
+                VirtualFile delegate = virtualFileWindow.getDelegate();
+
+				return (SiteInitializerUtil.isSiteInitializerFile(delegate)) &&
+					   (LiferayFileUtil.getParent(delegate, "ddm-structures") != null);
             }
         }
+
         return false;
     }
 

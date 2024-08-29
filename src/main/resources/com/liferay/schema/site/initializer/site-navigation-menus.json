@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/site-navigation-menus-schema.json",
+  "title": "Site Initializer Site Navigation Menus",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "typeSite": {
+        "type": "integer"
+      },
+      "auto": {
+        "type": "boolean"
+      },
+      "menuItems": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/menuItem"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "menuItem": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "asset_vocabulary", "layout", "node", "url"
+          ],
+          "type": "string",
+          "x-intellij-html-description": "See <a href='https://github.com/liferay/liferay-portal/blob/master/modules/apps/site-navigation/site-navigation-menu-item-api/src/main/java/com/liferay/site/navigation/menu/item/layout/constants/SiteNavigationMenuItemTypeConstants.java'>SiteNavigationMenuItemTypeConstants</a> class for available values."
+        },
+        "privateLayout": {
+          "type": "boolean"
+        },
+        "friendlyURL": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "useNewTab": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "externalReferenceCode": {
+          "type": "string"
+        },
+        "name_i18n": {
+          "$ref": "#/definitions/i18n_map"
+        },
+        "menuItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/menuItem"
+          }
+        }
+      }
+    },
+    "i18n_map": {
+      "type": "object",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "examples": [
+    [
+      {
+        "menuItems": [
+          {
+            "menuItems": [
+              {
+                "key": "/site-initializer/journal-articles/courses/course_design.json",
+                "type": "display-page"
+              },
+              {
+                "key": "/site-initializer/journal-articles/courses/course_management.json",
+                "type": "display-page"
+              },
+              {
+                "key": "/site-initializer/journal-articles/courses/course_marketing.json",
+                "type": "display-page"
+              }
+            ],
+            "name_i18n": {
+              "en_US": "Courses"
+            },
+            "title": "Courses",
+            "type": "node"
+          },
+          {
+            "friendlyURL": "/blog",
+            "privateLayout": false,
+            "type": "layout"
+          },
+          {
+            "friendlyURL": "/apply",
+            "privateLayout": false,
+            "type": "layout"
+          }
+        ],
+        "name": "Main Navigation"
+      },
+      {
+        "menuItems": [
+          {
+            "friendlyURL": "/my-learning",
+            "privateLayout": false,
+            "type": "layout"
+          },
+          {
+            "friendlyURL": "/notifications",
+            "privateLayout": false,
+            "type": "layout"
+          },
+          {
+            "friendlyURL": "/account-settings",
+            "privateLayout": false,
+            "type": "layout"
+          }
+        ],
+        "name": "Private Area Navigation"
+      }
+    ]
+  ]
+}

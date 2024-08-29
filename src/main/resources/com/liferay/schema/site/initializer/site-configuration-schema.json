@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/site-configuration-schema.json",
+  "title": "Site Initializer Site Configuration",
+  "type": "object",
+  "properties": {
+    "typeSite": {
+      "type": "integer"
+    },
+    "manualMembership": {
+      "type": "boolean"
+    },
+    "membershipRestriction": {
+      "type": "integer"
+    }
+  }
+}

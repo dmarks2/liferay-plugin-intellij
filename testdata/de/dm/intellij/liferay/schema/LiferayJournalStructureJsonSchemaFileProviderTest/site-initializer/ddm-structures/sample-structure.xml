@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<definition>
+			<![CDATA[
+				{
+				  "availableLanguageIds": [
+					"de_DE"
+				  ],
+				  "defaultLanguageId": "de_DE",
+				  "fields": [
+					{
+					  "name": "simple",
+					  "dataType": "string",
+					  "type": "<caret>"
+					}
+				  ]
+				}
+			]]>
+		</definition>
+	</structure>
+</root>
+

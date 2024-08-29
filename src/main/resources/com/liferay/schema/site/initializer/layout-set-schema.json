@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/layout-set-schema.json",
+  "title": "Site Initializer Layout Set",
+  "type": "object",
+  "properties": {
+    "themeName": {
+      "type": "string"
+    },
+    "settings": {
+      "type": "object"
+    }
+  },
+  "examples": [
+    {
+      "settings": {
+        "lfr-theme:regular:show-footer": false,
+        "lfr-theme:regular:show-header": false,
+        "lfr-theme:regular:show-header-search": false,
+        "lfr-theme:regular:show-maximize-minimize-application-links": false,
+        "lfr-theme:regular:wrap-widget-page-content": false
+      },
+      "themeName": "Classic"
+    }
+  ]
+}

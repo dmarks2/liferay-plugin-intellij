@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/resource-permissions-schema.json",
+  "title": "Site Initializer Resource Permissions",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "actionIds": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "resourceName": {
+        "type": "string"
+      },
+      "roleName": {
+        "type": "string"
+      },
+      "scope": {
+        "type": "integer",
+        "x-intellij-html-description": "See <a href='https://github.com/liferay/liferay-portal/blob/master/portal-kernel/src/com/liferay/portal/kernel/model/ResourceConstants.java'>ResourceConstants</a> class for available values."
+      },
+      "primKey": {
+        "type": "string"
+      }
+    }
+  },
+  "examples": [
+    [
+      {
+        "actionIds": [
+          "VIEW_CONTROL_PANEL"
+        ],
+        "primKey": "0",
+        "resourceName": "90",
+        "roleName": "Category Manager",
+        "scope": "1"
+      }
+    ]
+  ]
+}

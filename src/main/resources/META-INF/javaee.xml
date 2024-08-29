@@ -24,5 +24,8 @@
         <javaee.web.customServletReferenceProvider implementation="de.dm.intellij.liferay.theme.LiferayThemeServletReferenceProvider" />
 
         <inspectionToolProvider implementation="de.dm.intellij.liferay.language.xml.LiferayXmlInspectionToolProvider"/>
+
+        <xml.schemaProvider implementation="de.dm.intellij.liferay.site.initializer.SiteInitializerXmlSchemaProvider" />
+        <multiHostInjector implementation="de.dm.intellij.liferay.site.initializer.SiteInitializerDDMStructureJSONLanguageInjector" />
     </extensions>
 </idea-plugin>

@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/ddm-template-schema.json",
+  "title": "Site Initializer DDM Template",
+  "type": "object",
+  "properties": {
+    "resourceClassName": {
+      "type": "string",
+      "default": "com.liferay.journal.model.JournalArticle"
+    },
+    "ddmStructureKey": {
+      "type": "string"
+    },
+    "className": {
+      "type": "string"
+    },
+    "ddmTemplateKey": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "infoItemClassName": {
+      "type": "string"
+    },
+    "infoItemKey": {
+      "type": "string"
+    }
+  },
+  "items": {
+    "type": "object",
+    "properties": {
+      "properties": {
+        "type": "object"
+      },
+      "pid": {
+        "type": "string"
+      }
+    }
+  },
+  "examples": [
+    {
+      "className": "com.liferay.portal.kernel.theme.NavItem",
+      "ddmTemplateKey": "CHAPTER_NAV",
+      "name": "Chapters Navigation",
+      "resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+    }
+  ]
+}

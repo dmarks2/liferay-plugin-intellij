@@ -1,0 +1,154 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/page-definition-schema.json",
+  "title": "Site Initializer Page Definition",
+  "type": "object",
+  "properties": {
+    "settings": {
+      "type": "object"
+    },
+    "pageElement": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "default": "Root"
+        },
+        "pageElements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/pageElement"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "pageElement": {
+      "type": "object",
+      "properties": {
+        "definition": {
+          "description": "The page element's definition.",
+          "type": "object"
+        },
+        "pageElements": {
+          "description": "A list of the page elements this page element has.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/pageElement"
+          }
+        },
+        "type": {
+          "description": "The page element's type.",
+          "type": "string",
+          "enum": [
+            "collection", "collection item", "column", "drop zone", "form", "fragment", "fragment drop zone", "root", "row", "section", "widget"
+          ]
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "pageElement": {
+        "pageElements": [
+          {
+            "definition": {
+              "indexed": true,
+              "layout": {
+                "borderWidth": 0,
+                "marginBottom": 0,
+                "marginLeft": 0,
+                "marginRight": 0,
+                "marginTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0,
+                "paddingTop": 0,
+                "widthType": "Fluid"
+              }
+            },
+            "pageElements": [
+              {
+                "definition": {
+                  "fragment": {
+                    "key": "BASIC_COMPONENT-heading"
+                  },
+                  "fragmentConfig": {
+                    "headingLevel": "h1"
+                  },
+                  "fragmentFields": [
+                    {
+                      "id": "element-text",
+                      "value": {
+                        "fragmentLink": {},
+                        "text": {
+                          "value_i18n": {
+                            "en_US": "Liferay 7.4"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "indexed": true
+                },
+                "type": "Fragment"
+              },
+              {
+                "definition": {
+                  "fragment": {
+                    "key": "BASIC_COMPONENT-paragraph"
+                  },
+                  "fragmentConfig": {},
+                  "fragmentFields": [
+                    {
+                      "id": "element-text",
+                      "value": {
+                        "fragmentLink": {},
+                        "text": {
+                          "value_i18n": {
+                            "en_US": "<p>In sollicitudin turpis a odio scelerisque, non cursus ipsum sodales. Ut mattis, arcu at tristique finibus, lorem dui aliquet mi, nec sagittis metus diam sed nibh. In nec tortor dolor. Nullam in posuere ex, in posuere metus. Nulla sit amet luctus sem, sit amet bibendum massa. Vestibulum hendrerit nisi leo, quis rhoncus risus sagittis sed. Nullam elementum dui eu iaculis finibus. Sed viverra risus lorem, non hendrerit odio semper at. Sed sed congue purus. Donec egestas aliquam erat, at tristique felis consectetur eu. Vestibulum et erat libero. Duis scelerisque, nibh a rutrum consequat, felis tortor dictum nunc, et posuere tortor est sed arcu. Maecenas placerat vel nunc sit amet porta. Suspendisse in est eleifend felis tincidunt hendrerit semper a felis. Maecenas non suscipit metus, a ullamcorper erat. Fusce est enim, sodales a elementum ut, scelerisque non eros.</p>\n"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "fragmentStyle": {
+                    "marginBottom": "3",
+                    "marginTop": "3"
+                  },
+                  "indexed": true
+                },
+                "type": "Fragment"
+              },
+              {
+                "definition": {
+                  "widgetInstance": {
+                    "widgetConfig": {
+                      "siteNavigationMenuId": "0",
+                      "displayStyle": "ddmTemplate_CHAPTER_NAV",
+                      "displayDepth": "0",
+                      "siteNavigationMenuType": "-1",
+                      "rootMenuItemType": "absolute",
+                      "expandedLevels": "auto",
+                      "rootMenuItemLevel": "0"
+                    },
+                    "widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
+                  }
+                },
+                "type": "Widget"
+              }
+            ],
+            "type": "Section"
+          }
+        ],
+        "type": "Root"
+      },
+      "settings": {
+        "masterPage": {
+          "key": "LC_LEFT_NAV"
+        }
+      }
+    }
+  ]
+}

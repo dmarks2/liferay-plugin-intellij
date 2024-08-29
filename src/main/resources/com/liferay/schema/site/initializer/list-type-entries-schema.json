@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/list-type-entries-schema.json",
+  "title": "Site Initializer List Type Entries",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "externalReferenceCode": {
+        "type": "string"
+      },
+      "key": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "name_i18n": {
+        "$ref": "#/definitions/i18n_map"
+      },
+      "system": {
+        "type": "boolean"
+      }
+    }
+  },
+  "definitions": {
+    "i18n_map": {
+      "type": "object",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "examples": [
+    [
+      {
+        "key": "bound",
+        "name": "Bound",
+        "name_i18n": {
+          "en-US": "Bound"
+        }
+      }
+    ]
+  ]
+}
