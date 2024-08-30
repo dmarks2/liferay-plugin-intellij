@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/journal-article-schema.json",
+  "title": "Site Initializer Journal Article",
+  "type": "object",
+  "properties": {
+    "articleId": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "assetCategoryERCs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "assetTagNames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ddmStructureKey": {
+      "type": "string"
+    },
+    "ddmTemplateKey": {
+      "type": "string"
+    }
+  },
+  "examples": [
+    {
+      "articleId": "BLOG-01",
+      "assetCategoryERCs": [
+        "MASCAT0002"
+      ],
+      "ddmStructureKey": "BLOG",
+      "ddmTemplateKey": "BLOG",
+      "folder": "Blog Entries",
+      "name": "Think you're cut out for doing management?"
+    }
+  ]
+}

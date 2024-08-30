@@ -505,4 +505,16 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
         assertTrue(navigationElement instanceof PsiClass);
     }
 
+    public void testSiteInitializerStructureVariablesSimpleJson() {
+        myFixture.configureByFiles(
+                "site-initializer/ddm-templates/test/ddm-template.ftl",
+                "site-initializer/ddm-structures/test.xml",
+                "site-initializer/ddm-templates/test/ddm-template.json");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
+        assertTrue(strings.contains("simple"));
+    }
+
 }

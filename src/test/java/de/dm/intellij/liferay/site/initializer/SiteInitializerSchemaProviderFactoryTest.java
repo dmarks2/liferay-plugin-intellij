@@ -107,4 +107,31 @@ public class SiteInitializerSchemaProviderFactoryTest extends BasePlatformTestCa
 		assertTrue(strings.contains("\"key\""));
 	}
 
+	public void testTaxonomyVocabularyCompletion() {
+		myFixture.configureByFiles("site-initializer/taxonomy-vocabularies/group/sample.json");
+		myFixture.complete(CompletionType.BASIC, 1);
+		List<String> strings = myFixture.getLookupElementStrings();
+
+		assertNotNull(strings);
+		assertTrue(strings.contains("\"description_i18n\""));
+	}
+
+	public void testTaxonomyCategoryCompletion() {
+		myFixture.configureByFiles("site-initializer/taxonomy-vocabularies/group/sample/category1.json");
+		myFixture.complete(CompletionType.BASIC, 1);
+		List<String> strings = myFixture.getLookupElementStrings();
+
+		assertNotNull(strings);
+		assertTrue(strings.contains("\"taxonomyCategoryProperties\""));
+	}
+
+	public void testSubTaxonomyCategoryCompletion() {
+		myFixture.configureByFiles("site-initializer/taxonomy-vocabularies/group/sample/category1/subcategory1.json");
+		myFixture.complete(CompletionType.BASIC, 1);
+		List<String> strings = myFixture.getLookupElementStrings();
+
+		assertNotNull(strings);
+		assertTrue(strings.contains("\"taxonomyCategoryProperties\""));
+	}
+
 }

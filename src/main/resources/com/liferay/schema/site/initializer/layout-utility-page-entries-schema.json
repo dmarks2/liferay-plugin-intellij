@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/layout-utility-page-entries-schema.json",
+  "title": "Site Initializer Layout Utility Page Entries",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "settings": {
+      "type": "object"
+    }
+  },
+  "examples": [
+    {
+      "ErrorCode404": "404"
+    }
+  ]
+}

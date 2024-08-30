@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/taxonomy-vocabulary-schema.json",
+  "title": "Site Initializer Taxonomy Vocabulary",
+  "type": "object",
+  "properties": {
+    "assetLibraryKey": {
+      "type": "string"
+    },
+    "assetType": {
+      "description": "A list of asset types that can be associated with this vocabulary.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/assetType"
+      }
+    },
+    "availableLanguages": {
+      "description": "A list of languages the vocabulary has a translation for.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "description": {
+      "description": "The vocabulary's text description.",
+      "type": "string"
+    },
+    "description_i18n": {
+      "$ref": "#/definitions/i18n_map"
+    },
+    "externalReferenceCode": {
+      "description": "The vocabulary's external reference code.",
+      "type": "string"
+    },
+    "name": {
+      "description": "The vocabulary's name.",
+      "type": "string"
+    },
+    "name_i18n": {
+      "$ref": "#/definitions/i18n_map"
+    },
+    "viewableBy": {
+      "description": "A write-only property that specifies the vocabulary's default permissions.",
+      "type": "string",
+      "enum": ["Anyone", "Members", "Owner"]
+    }
+  },
+  "definitions": {
+    "i18n_map": {
+      "type": "object",
+      "patternProperties": {
+        "^([a-z]{2})([_-]{1}[A-Z]{2})?$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "assetType": {
+      "type": "object",
+      "properties": {
+        "required": {
+          "description": "A flag that marks if this type is required.",
+          "type": "boolean"
+        },
+        "subType": {
+          "description": "The asset's subtype.",
+          "type": "string"
+        },
+        "type": {
+          "description": "The asset's type (e.g., `BlogPosting`, `Document`, etc.).",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "description": "Insurance Line code",
+      "description_i18n": {
+        "en_US": "Insurance Line code"
+      },
+      "externalReferenceCode": "RAYAPVOC0001",
+      "name": "Raylife Insurance Line",
+      "name_i18n": {
+        "en_US": "Raylife Insurance Line"
+      },
+      "viewableBy": "Anyone"
+    }
+  ]
+}

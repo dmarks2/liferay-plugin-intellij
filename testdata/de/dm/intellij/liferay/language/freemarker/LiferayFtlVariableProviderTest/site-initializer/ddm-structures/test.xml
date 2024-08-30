@@ -1,0 +1,73 @@
+<root>
+	<structure>
+		<name>test</name>
+		<definition>
+			<![CDATA[
+			{
+				"availableLanguageIds": [
+					"de_DE"
+				],
+				"defaultLanguageId": "de_DE",
+				"fields": [
+					{
+						"name": "simple",
+						"dataType": "string",
+						"type": "text"
+					},
+					{
+						"name": "repeatable",
+						"dataType": "string",
+						"type": "text",
+						"repeatable": true
+					},
+					{
+						"name": "parent",
+						"dataType": "string",
+						"type": "text",
+						"nestedFields": [
+							{
+								"name": "child",
+								"dataType": "string",
+								"type": "text"
+							}
+						]
+					},
+					{
+						"name": "repeatableParent",
+						"dataType": "string",
+						"type": "text",
+						"repeatable": true,
+						"nestedFields": [
+							{
+								"name": "repeatableChild",
+								"dataType": "string",
+								"type": "text"
+							}
+						]
+					},
+					{
+						"name": "nestedRepeatableParent",
+						"dataType": "string",
+						"type": "text",
+						"repeatable": true,
+						"nestedFields": [
+							{
+								"name": "nestedRepeatableChild",
+								"dataType": "string",
+								"type": "text",
+								"nestedFields": [
+									{
+										"name": "nested",
+										"dataType": "string",
+										"type": "text"
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+			]]>
+		</definition>
+	</structure>
+</root>

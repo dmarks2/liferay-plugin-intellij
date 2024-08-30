@@ -9,6 +9,7 @@ import com.intellij.json.psi.JsonValue;
 import com.intellij.openapi.fileEditor.impl.LoadTextUtil;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.util.text.StringUtil;
@@ -63,6 +64,12 @@ public class LiferayFileUtil {
                         }
                     }
                 }
+            }
+
+            if (psiFile.getVirtualFile() != null) {
+                VirtualFile virtualFile = psiFile.getVirtualFile();
+
+                return SiteInitializerUtil.isSiteInitializerFile(virtualFile) && (LiferayFileUtil.getParent(virtualFile, "ddm-templates") != null) && (StringUtil.equals(virtualFile.getName(), "ddm-template.ftl"));
             }
         }
         return false;
@@ -263,35 +270,52 @@ public class LiferayFileUtil {
     }
 
     public static VirtualFile getJournalStructureFile(PsiFile journalTemplateFile) {
+        //TODO: add site initializer folder structure
         if (isJournalTemplateFile(journalTemplateFile)) {
-            VirtualFile parent = journalTemplateFile.getVirtualFile().getParent();
+            VirtualFile virtualFile = journalTemplateFile.getVirtualFile();
 
-            String templateName = journalTemplateFile.getVirtualFile().getNameWithoutExtension();
+            if (SiteInitializerUtil.isSiteInitializerFile(virtualFile)) {
+                VirtualFile templateJSONFile = LiferayFileUtil.getChild(virtualFile.getParent(), "ddm-template.json");
 
-            //Structure file in same directory
-            VirtualFile structureFile = getChild(parent, templateName + ".xml");
-            if (structureFile != null) {
-                return structureFile;
-            }
-            structureFile = getChild(parent, templateName + ".json");
-            if (structureFile != null) {
-                return structureFile;
-            }
+                Project project = journalTemplateFile.getProject();
 
-            //Template with a parent folder for the Structure
-            if (! (TEMPLATES.equals(parent.getName())) ) {
-                templateName = parent.getName();
+                String ddmStructureKey = SiteInitializerUtil.getDDMTemplateStructureKey(project, templateJSONFile);
 
-                parent = parent.getParent();
-            }
-            VirtualFile grandParent = parent.getParent();
-            VirtualFile structures = getChild(grandParent, STRUCTURES);
-            if (structures != null) {
-                VirtualFile result = getChild(structures, templateName + ".xml");
-                if (result == null) {
-                    result = getChild(structures, templateName + ".json"); //JSON-Format for Liferay 7
+                VirtualFile siteInitializerDirectory = LiferayFileUtil.getParent(virtualFile, "site-initializer");
+
+                if (siteInitializerDirectory != null) {
+                    return SiteInitializerUtil.getDDMStructureFile(project, ddmStructureKey, siteInitializerDirectory);
                 }
-                return result;
+            } else {
+                VirtualFile parent = virtualFile.getParent();
+
+                String templateName = virtualFile.getNameWithoutExtension();
+
+                //Structure file in same directory
+                VirtualFile structureFile = getChild(parent, templateName + ".xml");
+                if (structureFile != null) {
+                    return structureFile;
+                }
+                structureFile = getChild(parent, templateName + ".json");
+                if (structureFile != null) {
+                    return structureFile;
+                }
+
+                //Template with a parent folder for the Structure
+                if (!(TEMPLATES.equals(parent.getName()))) {
+                    templateName = parent.getName();
+
+                    parent = parent.getParent();
+                }
+                VirtualFile grandParent = parent.getParent();
+                VirtualFile structures = getChild(grandParent, STRUCTURES);
+                if (structures != null) {
+                    VirtualFile result = getChild(structures, templateName + ".xml");
+                    if (result == null) {
+                        result = getChild(structures, templateName + ".json"); //JSON-Format for Liferay 7
+                    }
+                    return result;
+                }
             }
         }
         return null;

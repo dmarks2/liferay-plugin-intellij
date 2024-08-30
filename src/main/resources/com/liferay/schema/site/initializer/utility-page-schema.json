@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/utility-page-schema.json",
+  "title": "Site Initializer Utility Page",
+  "additionalProperties": false,
+  "properties": {
+    "defaultTemplate": {
+      "title": "The default template",
+      "type": "boolean"
+    },
+    "externalReferenceCode": {
+      "title": "The external reference code",
+      "type": "string"
+    },
+    "name": {
+      "title": "The name",
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "CookiePolicy",
+        "CreateAccount",
+        "Error",
+        "ErrorCode404",
+        "ErrorCode500",
+        "ForgotPassword",
+        "Login",
+        "TermsOfUse"
+      ],
+      "title": "The type",
+      "type": "string"
+    }
+  },
+  "required": [
+    "externalReferenceCode",
+    "name",
+    "type"
+  ],
+  "type": "object",
+  "examples": [
+    {
+      "defaultTemplate": false,
+      "externalReferenceCode": "LFR-404-ERROR",
+      "name": "404",
+      "type": "ErrorCode404"
+    }
+  ]
+}
