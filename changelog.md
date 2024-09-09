@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Feature: add deprecation check for LPS-104241, LPS-175951, LPS-182671
 - Feature: deprecation checks for devDependencies in package.json
 - Feature: add support for BundleSiteInitializer directory structures
+- Feature: add documentation lookup for Liferay specific properties in `gradle.properties`
 - Bugfix: Exception occurred after deleting a fragment.json file
 
 ## 0.0.21
