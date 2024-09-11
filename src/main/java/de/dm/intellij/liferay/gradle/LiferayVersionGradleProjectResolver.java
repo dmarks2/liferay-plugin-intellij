@@ -8,12 +8,12 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectUtil;
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import de.dm.intellij.liferay.gradle.jps.LiferayVersionGradleTaskModel;
 import de.dm.intellij.liferay.gradle.jps.LiferayVersionGradleTaskModelBuilder;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
+import de.dm.intellij.liferay.workspace.LiferayWorkspaceUtil;
 import org.gradle.tooling.model.idea.IdeaContentRoot;
 import org.gradle.tooling.model.idea.IdeaModule;
 import org.gradle.tooling.model.idea.IdeaProject;
@@ -75,7 +75,7 @@ public class LiferayVersionGradleProjectResolver extends AbstractProjectResolver
 							log.debug("Found liferay.workspace.product: " + liferayWorkspaceProductValue);
 						}
 
-						String liferayVersion = getLiferayVersion(liferayWorkspaceProductValue);
+						String liferayVersion = LiferayWorkspaceUtil.getLiferayVersion(liferayWorkspaceProductValue);
 
 						if (log.isDebugEnabled()) {
 							log.debug("Found liferay version: " + liferayVersion);
@@ -90,32 +90,6 @@ public class LiferayVersionGradleProjectResolver extends AbstractProjectResolver
 		}
 
 		super.populateModuleExtraModels(gradleModule, ideModule);
-	}
-
-	private String getLiferayVersion(String liferayWorkspaceProduct) {
-		if (StringUtil.startsWith(liferayWorkspaceProduct, "portal")) {
-			String versionPart = liferayWorkspaceProduct.substring(7);
-			String majorVersion = versionPart.substring(0, versionPart.indexOf("-"));
-			String gaVersion = versionPart.substring(versionPart.indexOf("-"));
-
-			if (StringUtil.equals(majorVersion, "7.4")) {
-				return majorVersion + ".3." + gaVersion.substring(3);
-			} else {
-				return majorVersion + "." + (Integer.parseInt(gaVersion.substring(3)) - 1);
-			}
-		} else if (StringUtil.startsWith(liferayWorkspaceProduct, "dxp")) {
-			String versionPart = liferayWorkspaceProduct.substring(4);
-			String majorVersion = versionPart.substring(0, versionPart.indexOf("-"));
-			String updateVersion = versionPart.substring(versionPart.indexOf("-"));
-
-			if (StringUtil.equals(updateVersion, "7.4")) {
-				return majorVersion + ".13." + updateVersion;
-			} else {
-				return majorVersion + ".10." + updateVersion;
-			}
-		}
-
-		return null;
 	}
 
 }
