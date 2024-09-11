@@ -1,10 +1,19 @@
 package de.dm.intellij.liferay.language.groovy;
 
 import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiReference;
+import com.intellij.psi.PsiType;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.plugins.groovy.lang.psi.api.GroovyReference;
+import org.jetbrains.plugins.groovy.lang.psi.api.statements.expressions.GrExpression;
+import org.jetbrains.plugins.groovy.lang.psi.api.statements.expressions.GrReferenceExpression;
+import org.jetbrains.plugins.groovy.lang.psi.api.statements.expressions.path.GrMethodCallExpression;
 import org.jetbrains.plugins.groovy.lang.psi.api.toplevel.imports.GrImportStatement;
+import org.jetbrains.plugins.groovy.lang.resolve.api.GroovyMethodCallReference;
 
 public class GroovyUtil {
 
@@ -31,4 +40,37 @@ public class GroovyUtil {
 		return className;
 	}
 
+	public static String getMethodCallSignature(GrMethodCallExpression methodCallExpression) {
+		GrExpression invokedExpression = methodCallExpression.getInvokedExpression();
+
+		PsiReference reference = invokedExpression.getReference();
+
+		if (reference instanceof GrReferenceExpression referenceExpression) {
+			GrExpression qualifierExpression = referenceExpression.getQualifierExpression();
+
+			if (qualifierExpression instanceof GrReferenceExpression qualifierReferenceExpression) {
+				GroovyReference staticReference = qualifierReferenceExpression.getStaticReference();
+
+				PsiElement resolve = staticReference.resolve();
+
+				GroovyMethodCallReference callReference = methodCallExpression.getCallReference();
+
+				if (callReference != null) {
+					if (resolve instanceof PsiClass psiClass) {
+						return psiClass.getQualifiedName() + "." + callReference.getMethodName() + "()";
+					} else {
+						PsiType type = qualifierReferenceExpression.getType();
+
+						if (type != null) {
+							return type.getCanonicalText() + "." + callReference.getMethodName() + "()";
+						}
+
+						return getMatchFromImports(methodCallExpression.getContainingFile(), staticReference.getCanonicalText()) + "." + callReference.getMethodName() + "()";
+					}
+				}
+			}
+		}
+
+		return null;
+	}
 }

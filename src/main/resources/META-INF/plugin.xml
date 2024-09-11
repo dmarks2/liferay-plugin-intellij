@@ -31,6 +31,7 @@
             <li>Feature: deprecation checks for devDependencies in package.json</li>
             <li>Feature: add support for BundleSiteInitializer directory structures</li>
             <li>Feature: add documentation lookup for Liferay specific properties in gradle.properties</li>
+            <li>Feature: add XPath expression support for Liferay specific helper classes like SAXReaderUtil</li>
             <li>Bugfix: Exception occurred after deleting a fragment.json file</li>
         </ul>
 
@@ -501,6 +502,8 @@
         <!--
         <projectResolve implementation="de.dm.intellij.liferay.gradle.LiferayBundleSupportGradleProjectResolver" />
         -->
+
+        <projectResolve implementation="de.dm.intellij.liferay.gradle.LiferayVersionGradleProjectResolver" />
     </extensions>
 
     <projectListeners>

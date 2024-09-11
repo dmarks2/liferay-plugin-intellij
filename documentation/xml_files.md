@@ -5,6 +5,7 @@ Liferay XML files
 2. [File References](#file-references) 
 3. [Liferay Workflow Definitions](#liferay-workflow-definitions) 
 4. [Deprecations](#deprecations)
+5. [XPath Expressions](#xpath-expressions)
 
 XML-Schemas and DTD files
 -------------------------
@@ -117,3 +118,30 @@ The following issues are detected and can be fixed automatically:
 
 * Wrong DTD definition which do not match the Liferay version
 * Wrong XML Schema references which do not match the Liferay version
+
+XPath Expressions
+-----------------
+
+To process XML data Liferay provides some helper classes like `SAXReaderUtil`. Some of the methods support XPath expressions. In those methods 
+an XPath Language injection takes places, so autocompletion and syntax checking works here. The following method signatures are supported:
+
+    com.liferay.portal.kernel.xml.Node.matches()
+    com.liferay.portal.kernel.xml.Node.numberValueOf()
+    com.liferay.portal.kernel.xml.Node.selectNodes()
+    com.liferay.portal.kernel.xml.Node.selectObject()
+    com.liferay.portal.kernel.xml.Node.selectSingleNode()
+    com.liferay.portal.kernel.xml.Node.valueOf()
+    com.liferay.portal.kernel.xml.Document.matches()
+    com.liferay.portal.kernel.xml.Document.numberValueOf()
+    com.liferay.portal.kernel.xml.Document.selectNodes()
+    com.liferay.portal.kernel.xml.Document.selectObject()
+    com.liferay.portal.kernel.xml.Document.selectSingleNode()
+    com.liferay.portal.kernel.xml.Document.valueOf()
+    com.liferay.portal.kernel.xml.SAXReader.createXPath()
+    com.liferay.portal.kernel.xml.SAXReader.selectNodes()
+    com.liferay.portal.kernel.xml.SAXReader.sort()
+    com.liferay.portal.kernel.xml.SAXReaderUtil.createXPath()
+    com.liferay.portal.kernel.xml.SAXReaderUtil.selectNodes()
+    com.liferay.portal.kernel.xml.SAXReaderUtil.sort()
+
+The injection works for Java, Freemarker and Groovy scripts.

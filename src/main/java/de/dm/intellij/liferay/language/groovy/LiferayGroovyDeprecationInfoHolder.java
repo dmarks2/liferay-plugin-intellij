@@ -5,11 +5,9 @@ import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiType;
 import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
 import de.dm.intellij.liferay.language.java.LiferayJavaDeprecations;
@@ -19,12 +17,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.plugins.groovy.GroovyFileType;
 import org.jetbrains.plugins.groovy.lang.psi.GroovyFile;
 import org.jetbrains.plugins.groovy.lang.psi.GroovyPsiElementFactory;
-import org.jetbrains.plugins.groovy.lang.psi.api.GroovyReference;
 import org.jetbrains.plugins.groovy.lang.psi.api.statements.expressions.GrExpression;
 import org.jetbrains.plugins.groovy.lang.psi.api.statements.expressions.GrReferenceExpression;
 import org.jetbrains.plugins.groovy.lang.psi.api.statements.expressions.path.GrMethodCallExpression;
 import org.jetbrains.plugins.groovy.lang.psi.api.toplevel.imports.GrImportStatement;
-import org.jetbrains.plugins.groovy.lang.resolve.api.GroovyMethodCallReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,44 +118,10 @@ public class LiferayGroovyDeprecationInfoHolder extends AbstractLiferayInspectio
 		if (
 				(isApplicableLiferayVersion(methodCallExpression)) &&
 				(StringUtil.isNotEmpty(myMethodName)) &&
-				(Objects.equals(myMethodName, getMethodCallSignature(methodCallExpression)))
+				(Objects.equals(myMethodName, GroovyUtil.getMethodCallSignature(methodCallExpression)))
 		) {
 			holder.registerProblem(methodCallExpression, getDeprecationMessage(), quickFixes);
 		}
-	}
-
-	private static String getMethodCallSignature(GrMethodCallExpression methodCallExpression) {
-		GrExpression invokedExpression = methodCallExpression.getInvokedExpression();
-
-		PsiReference reference = invokedExpression.getReference();
-
-		if (reference instanceof GrReferenceExpression referenceExpression) {
-			GrExpression qualifierExpression = referenceExpression.getQualifierExpression();
-
-			if (qualifierExpression instanceof GrReferenceExpression qualifierReferenceExpression) {
-				GroovyReference staticReference = qualifierReferenceExpression.getStaticReference();
-
-				PsiElement resolve = staticReference.resolve();
-
-				GroovyMethodCallReference callReference = methodCallExpression.getCallReference();
-
-				if (callReference != null) {
-					if (resolve instanceof PsiClass psiClass) {
-						return psiClass.getQualifiedName() + "." + callReference.getMethodName() + "()";
-					} else {
-						PsiType type = qualifierReferenceExpression.getType();
-
-						if (type != null) {
-							return type.getCanonicalText() + "." + callReference.getMethodName() + "()";
-						}
-
-						return GroovyUtil.getMatchFromImports(methodCallExpression.getContainingFile(), staticReference.getCanonicalText()) + "." + callReference.getMethodName() + "()";
-					}
-				}
-			}
-		}
-
-		return null;
 	}
 
 
