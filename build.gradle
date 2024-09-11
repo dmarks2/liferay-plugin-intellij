@@ -27,7 +27,10 @@ apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
 
-sourceCompatibility = 1.17
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 tasks.withType(JavaCompile).configureEach {
     options.compilerArgs << "-Xlint:unchecked"
@@ -79,9 +82,14 @@ dependencies {
         transitive = false
     }
     testImplementation 'org.apache.maven:maven-artifact:3.6.3'
+    testImplementation('com.jetbrains.intellij.platform:external-system-test-framework:242.21829.142') {
+        transitive = false
+    }
 
     //compileOnly 'org.jetbrains.plugins:maven-server-api:2016.3'
     compileOnly 'com.github.adedayo.intellij.sdk:maven-server-api:142.1'
+
+    implementation project(':liferay-plugin-intellij-jps')
 
 //    compileOnly 'org.apache.httpcomponents:httpclient:4.5.13'
 //    compileOnly 'com.google.code.gson:gson:2.10'

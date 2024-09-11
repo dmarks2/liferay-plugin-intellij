@@ -1,2 +1,3 @@
 rootProject.name = 'liferay-plugin-intellj'
 
+include 'liferay-plugin-intellij-jps'
