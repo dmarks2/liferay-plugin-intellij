@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.gradle;
 
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.externalSystem.model.DataNode;
 import com.intellij.openapi.externalSystem.model.project.ModuleData;
 import com.intellij.openapi.module.Module;
@@ -11,6 +12,8 @@ import com.intellij.openapi.roots.ModuleRootModificationUtil;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
+import de.dm.intellij.liferay.gradle.jps.LiferayBundleSupportGradleTaskModel;
+import de.dm.intellij.liferay.gradle.jps.LiferayBundleSupportGradleTaskModelBuilder;
 import org.gradle.tooling.model.idea.IdeaContentRoot;
 import org.gradle.tooling.model.idea.IdeaModule;
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +26,8 @@ import java.util.Collections;
 import java.util.Set;
 
 public class LiferayBundleSupportGradleProjectResolver extends AbstractProjectResolverExtension {
+
+    private final static Logger log = Logger.getInstance(LiferayBundleSupportGradleProjectResolver.class);
 
     @NotNull
     @Override
@@ -39,22 +44,33 @@ public class LiferayBundleSupportGradleProjectResolver extends AbstractProjectRe
     @Override
     public void populateModuleExtraModels(@NotNull IdeaModule gradleModule, @NotNull DataNode<ModuleData> ideModule) {
         LiferayBundleSupportGradleTaskModel liferayBundleSupportGradleTaskModel = resolverCtx.getExtraProject(gradleModule, LiferayBundleSupportGradleTaskModel.class);
+
         if (liferayBundleSupportGradleTaskModel != null) {
             // try to find the corresponding IDEA module for the Gradle Module
             IdeaContentRoot contentRoot = gradleModule.getContentRoots().getAt(0);
+
             File rootDirectory = contentRoot.getRootDirectory();
+
             VirtualFile fileByIoFile = VfsUtil.findFileByIoFile(rootDirectory, false);
+
             if (fileByIoFile != null) {
                 Project project = ProjectUtil.guessProjectForFile(fileByIoFile);
+
                 if (project != null) {
                     Module module = ModuleUtil.findModuleForFile(fileByIoFile, project);
 
                     if (module != null) {
                         String liferayHome = liferayBundleSupportGradleTaskModel.getLiferayHome();
+
                         if (liferayHome != null) {
                             VirtualFile virtualFile = LocalFileSystem.getInstance().findFileByPath(liferayHome);
+
                             if (virtualFile != null) {
                                 String url = virtualFile.getUrl();
+
+                                if (log.isDebugEnabled()) {
+                                    log.debug("Adding " + url + " to the list of excluded folders...");
+                                }
 
                                 Collection<String> excludeFolders = new ArrayList<>();
                                 excludeFolders.add(url);
@@ -76,6 +92,7 @@ public class LiferayBundleSupportGradleProjectResolver extends AbstractProjectRe
 
             }
         }
+
         super.populateModuleExtraModels(gradleModule, ideModule);
     }
 }

@@ -8,6 +8,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
+import de.dm.intellij.liferay.gradle.jps.LiferayThemeBuilderGradleTaskModel;
+import de.dm.intellij.liferay.gradle.jps.LiferayThemeBuilderGradleTaskModelBuilder;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import org.gradle.tooling.model.idea.IdeaContentRoot;
 import org.gradle.tooling.model.idea.IdeaModule;
@@ -38,10 +40,13 @@ public class LiferayThemeBuilderGradleProjectResolver extends AbstractProjectRes
     @Override
     public void populateModuleExtraModels(@NotNull IdeaModule gradleModule, @NotNull DataNode<ModuleData> ideModule) {
         LiferayThemeBuilderGradleTaskModel liferayThemeBuilderGradleTaskModel = resolverCtx.getExtraProject(gradleModule, LiferayThemeBuilderGradleTaskModel.class);
+
         if ( (liferayThemeBuilderGradleTaskModel != null) && (liferayThemeBuilderGradleTaskModel.isEnabled()) ) {
             // try to find the corresponding IDEA module for the Gradle Module
             IdeaContentRoot contentRoot = gradleModule.getContentRoots().getAt(0);
+
             File rootDirectory = contentRoot.getRootDirectory();
+
             VirtualFile fileByIoFile = VfsUtil.findFileByIoFile(rootDirectory, false);
 
             if (fileByIoFile != null) {
@@ -53,6 +58,7 @@ public class LiferayThemeBuilderGradleProjectResolver extends AbstractProjectRes
                     if (module != null) {
                         //Save the parent theme information in the Liferay Module Component
                         LiferayModuleComponent liferayModuleComponent = module.getService(LiferayModuleComponent.class);
+
                         if (liferayModuleComponent != null) {
                             liferayModuleComponent.setParentTheme(liferayThemeBuilderGradleTaskModel.getParentName());
                         }
@@ -60,6 +66,7 @@ public class LiferayThemeBuilderGradleProjectResolver extends AbstractProjectRes
                 }
             }
         }
+
         super.populateModuleExtraModels(gradleModule, ideModule);
     }
 

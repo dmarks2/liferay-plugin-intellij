@@ -2,6 +2,8 @@ package de.dm.intellij.liferay.gradle.jps;
 
 import com.intellij.openapi.diagnostic.Logger;
 import org.gradle.api.Project;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.plugins.gradle.tooling.ModelBuilderContext;
 import org.jetbrains.plugins.gradle.tooling.ModelBuilderService;
 
 public class LiferayVersionGradleTaskModelBuilder implements ModelBuilderService {
@@ -32,5 +34,9 @@ public class LiferayVersionGradleTaskModelBuilder implements ModelBuilderService
 		}
 
 		return result;
+	}
+
+	public void reportErrorMessage(@NotNull String modelName, @NotNull Project project, @NotNull ModelBuilderContext context, @NotNull Exception exception) {
+		context.getMessageReporter().createMessage().withGroup("Gradle import error").withText("Unable to import Liferay Version configuration").withException(exception).reportMessage(project);
 	}
 }

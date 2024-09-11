@@ -81,9 +81,11 @@ public class LiferayVersionGradleProjectResolver extends AbstractProjectResolver
 							log.debug("Found liferay version: " + liferayVersion);
 						}
 
-						LiferayModuleComponent liferayModuleComponent = module.getService(LiferayModuleComponent.class);
+						if (liferayVersion != null) {
+							LiferayModuleComponent liferayModuleComponent = module.getService(LiferayModuleComponent.class);
 
-						liferayModuleComponent.setLiferayVersion(liferayVersion);
+							liferayModuleComponent.setLiferayVersion(liferayVersion);
+						}
 					}
 				}
 			}

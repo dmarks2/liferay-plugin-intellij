@@ -1,4 +1,4 @@
-package de.dm.intellij.liferay.gradle;
+package de.dm.intellij.liferay.gradle.jps;
 
 public class LiferayBundleSupportGradleTaskModelImpl implements LiferayBundleSupportGradleTaskModel {
 

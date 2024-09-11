@@ -33,6 +33,7 @@
             <li>Feature: add documentation lookup for Liferay specific properties in gradle.properties</li>
             <li>Feature: add XPath expression support for Liferay specific helper classes like SAXReaderUtil</li>
             <li>Bugfix: Exception occurred after deleting a fragment.json file</li>
+            <li>Bugfix: Finally fixed gradle support for projects using Java 16 or below</li>
         </ul>
 
         <p>Version 0.0.21</p>
@@ -492,16 +493,10 @@
 
     <extensions defaultExtensionNs="org.jetbrains.plugins.gradle">
         <!-- Extract parent Theme information from a gradle based project (based on the com.liferay.gradle.plugins.theme.builder configuration) -->
-        <!-- TODO not working for projects using Java below 17 ? -->
-        <!--
         <projectResolve implementation="de.dm.intellij.liferay.gradle.LiferayThemeBuilderGradleProjectResolver" />
-        -->
 
         <!-- A gradle project resolver which resolves the Liferay Home directory if the bundle-support plugin is present and will "exclude" the bundles folder from indexing in IntelliJ IDEA -->
-        <!-- TODO not working for projects using Java below 17 ? -->
-        <!--
         <projectResolve implementation="de.dm.intellij.liferay.gradle.LiferayBundleSupportGradleProjectResolver" />
-        -->
 
         <projectResolve implementation="de.dm.intellij.liferay.gradle.LiferayVersionGradleProjectResolver" />
     </extensions>

@@ -1,4 +1,4 @@
-package de.dm.intellij.liferay.gradle;
+package de.dm.intellij.liferay.gradle.jps;
 
 import com.intellij.openapi.diagnostic.Logger;
 import org.gradle.api.Project;
@@ -10,7 +10,6 @@ import org.jetbrains.plugins.gradle.tooling.ModelBuilderService;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Map;
-import java.util.ServiceLoader;
 import java.util.Set;
 
 /**
@@ -19,14 +18,6 @@ import java.util.Set;
 public class LiferayBundleSupportGradleTaskModelBuilder implements ModelBuilderService {
 
     private static final Logger log = Logger.getInstance(LiferayBundleSupportGradleTaskModelBuilder.class);
-
-    static {
-        ServiceLoader.load(ModelBuilderService.class, LiferayBundleSupportGradleTaskModelBuilder.class.getClassLoader());
-    }
-
-
-    public LiferayBundleSupportGradleTaskModelBuilder() {
-    }
 
     @Override
     public boolean canBuild(String modelName) {
@@ -37,18 +28,12 @@ public class LiferayBundleSupportGradleTaskModelBuilder implements ModelBuilderS
     public Object buildAll(String modelName, Project project) {
         final LiferayBundleSupportGradleTaskModelImpl result = new LiferayBundleSupportGradleTaskModelImpl();
 
-        Map<String, ?> properties = project.getProperties();
-        for (Map.Entry<String, ?> entry : properties.entrySet()) {
-            if ("liferay.workspace.target.platform.version".equals(entry.getKey())) {
-                String liferayVersion = (String) entry.getValue();
-                //TODO save Version to .iml
-            }
-        }
-
         Map<Project, Set<Task>> allTasks = project.getAllTasks(false);
+
         for (Map.Entry<Project, Set<Task>> tasks : allTasks.entrySet()) {
             for (Task task : tasks.getValue()) {
                 if (task.getName().equals("initBundle")) {
+
                     try {
                         //org.gradle.api.tasks.Copy copyTask = (org.gradle.api.tasks.Copy)task;
                         //get parentName via reflection
@@ -58,6 +43,9 @@ public class LiferayBundleSupportGradleTaskModelBuilder implements ModelBuilderS
                         String path = "bundles";
 
                         if (dest != null) {
+                            if (log.isDebugEnabled()) {
+                                log.debug("Got \"" + dest.getPath() + "\" from initBundle.getDestinationDir().");
+                            }
                             path = dest.getPath();
                         }
 

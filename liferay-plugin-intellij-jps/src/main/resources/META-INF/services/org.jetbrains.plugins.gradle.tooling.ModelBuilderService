@@ -1,1 +1,3 @@
+de.dm.intellij.liferay.gradle.jps.LiferayBundleSupportGradleTaskModelBuilder
+de.dm.intellij.liferay.gradle.jps.LiferayThemeBuilderGradleTaskModelBuilder
 de.dm.intellij.liferay.gradle.jps.LiferayVersionGradleTaskModelBuilder
