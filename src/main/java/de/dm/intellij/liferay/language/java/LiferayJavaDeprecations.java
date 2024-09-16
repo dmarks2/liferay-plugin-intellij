@@ -951,6 +951,69 @@ public class LiferayJavaDeprecations {
 			},
 			new String[0] );
 
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPD_7822_SEARCH_PERMISSION_FILTER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"Class has been moved to appropriate package or have been removed, because it is no longer used",
+			"LPD-7822",
+			new String[] {
+					"com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor",
+					"com.liferay.portal.search.spi.model.permission.SearchPermissionFieldContributor",
+					"com.liferay.portal.search.spi.model.index.contributor.IndexContributor",
+					"com.liferay.portal.search.spi.settings.TypeMappingsHelper",
+					"com.liferay.portal.search.spi.settings.IndexSettingsHelper ",
+					"com.liferay.portal.search.elasticsearch7.settings.ClientSettingsHelper",
+					"com.liferay.portal.search.elasticsearch7.settings.IndexSettingsHelper",
+					"com.liferay.portal.search.elasticsearch7.settings.TypeMappingsHelper",
+					"com.liferay.portal.search.elasticsearch7.settings.XPackSecuritySettings",
+			},
+			new String[] {
+					"com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionFilterContributor",
+					"com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionFieldContributor",
+					"com.liferay.portal.search.spi.index.listener.CompanyIndexListener",
+					"com.liferay.portal.search.spi.index.configuration.contributor.helper.MappingsHelper",
+					"com.liferay.portal.search.spi.index.configuration.contributor.helper.SettingsHelper",
+			});
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPD_28051_PORTAL_UTIL_INIT_CUSTOM_SQL = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The initCustomSQL method is removed.",
+			"LPD-28051",
+			new String[] {
+					"com.liferay.portal.kernel.util.PortalUtil.initCustomSQL()",
+					"com.liferay.portal.kernel.util.Portal.initCustomSQL()",
+			},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPD_28526_DESTINATION_WRAPPER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The class is removed because MPI/SPI is no longer supported.",
+			"LPD-28526",
+			new String[] {
+					"com.liferay.portal.kernel.messaging.DestinationWrapper",
+			},
+			new String[0]);
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPD_1909_USER_LOCAL_SERVICE_DECRYPT_USER_ID = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The decryptUserId() method is removed for security reasons.",
+			"LPD-1909",
+			new String[] {
+					"com.liferay.portal.kernel.service.UserLocalService.decryptUserId()",
+					"com.liferay.portal.kernel.service.UserLocalServiceUtil.decryptUserId()",
+			},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPD_1536_DL_STORE_UTIL_SET_STORE = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The setStore() method has been renamed to setDLStore().",
+			"LPD-1536",
+			new String[] {
+					"com.liferay.document.library.kernel.store.DLStoreUtil.setStore()",
+			},
+			new String[] {
+					"com.liferay.document.library.kernel.store.DLStoreUtil.setDLStore()",
+			});
+
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
 		String[] newImportStatements = new String[0];

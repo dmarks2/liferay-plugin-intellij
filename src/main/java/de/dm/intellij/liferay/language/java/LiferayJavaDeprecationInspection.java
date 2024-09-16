@@ -87,6 +87,8 @@ public class LiferayJavaDeprecationInspection extends AbstractLiferayDeprecation
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_20659_REMOTE_PREFERENCE).version(LiferayVersions.LIFERAY_2024_Q2_CE));
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_196226_REGISTRY_CLASSES).version(LiferayVersions.LIFERAY_2024_Q2_CE));
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_24699_PORTAL_LIFECYCLE).version(LiferayVersions.LIFERAY_2024_Q2_CE));
+		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_7822_SEARCH_PERMISSION_FILTER).version(LiferayVersions.LIFERAY_2024_Q3_CE));
+		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_28526_DESTINATION_WRAPPER).version(LiferayVersions.LIFERAY_2024_Q3_CE));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_162450_PHONE).version("7.4.3.45"));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_162437_ADDRESS).version("7.4.3.45"));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_163821_EMAIL_ADDRESS).version("7.4.3.48"));
@@ -107,6 +109,9 @@ public class LiferayJavaDeprecationInspection extends AbstractLiferayDeprecation
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_199958_INDEX_WRITER_HELPER).version(LiferayVersions.LIFERAY_2024_Q1_CE));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_188565_FRIENDLY_URL_NORMALIZER).version(LiferayVersions.LIFERAY_2024_Q1_CE));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_2110_PORTAL_UTIL_LOCALIZED_FRIENDLY_URL).version(LiferayVersions.LIFERAY_2024_Q2_CE));
+		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_28051_PORTAL_UTIL_INIT_CUSTOM_SQL).version(LiferayVersions.LIFERAY_2024_Q3_CE));
+		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_1909_USER_LOCAL_SERVICE_DECRYPT_USER_ID).version(LiferayVersions.LIFERAY_2024_Q3_CE));
+		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_1536_DL_STORE_UTIL_SET_STORE).version(LiferayVersions.LIFERAY_2024_Q3_CE));
 	}
 
 	@Nls

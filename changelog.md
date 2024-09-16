@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Feature: add support for BundleSiteInitializer directory structures
 - Feature: add documentation lookup and code completion for Liferay specific properties in `gradle.properties`
 - Feature: add XPath expression support for Liferay specific helper classes like `SAXReaderUtil`
+- Feature: add deprecation checks for Liferay 2024.Q3
 - Bugfix: Finally fixed gradle support for projects using Java 16 or below
 - Bugfix: Exception occurred after deleting a fragment.json file
 
