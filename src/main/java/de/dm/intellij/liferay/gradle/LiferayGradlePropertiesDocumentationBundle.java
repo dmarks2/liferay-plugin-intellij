@@ -5,6 +5,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.PropertyKey;
 
+import java.util.ResourceBundle;
+import java.util.Set;
+
 public class LiferayGradlePropertiesDocumentationBundle extends AbstractBundle {
 
     private static final String PATH_TO_BUNDLE = "LiferayGradlePropertiesDocumentationBundle";
@@ -17,6 +20,12 @@ public class LiferayGradlePropertiesDocumentationBundle extends AbstractBundle {
     @Nullable
     public static String message(@NotNull @PropertyKey(resourceBundle = PATH_TO_BUNDLE) String key, @NotNull Object... params) {
         return ourInstance.messageOrNull(key, params);
+    }
+
+    public static Set<String> keys() {
+        ResourceBundle resourceBundle = ourInstance.getResourceBundle();
+
+        return resourceBundle.keySet();
     }
 
 }

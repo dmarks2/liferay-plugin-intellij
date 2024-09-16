@@ -11,5 +11,7 @@
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.resourcebundle.ResourceBundleReferenceContributor"/>
 
         <inspectionToolProvider implementation="de.dm.intellij.liferay.language.properties.LiferayPropertiesInspectionToolProvider"/>
+
+        <completion.contributor language="Properties" implementationClass="de.dm.intellij.liferay.gradle.LiferayGradlePropertiesCompletionContributor" />
     </extensions>
 </idea-plugin>

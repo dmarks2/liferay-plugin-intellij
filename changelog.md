@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 - Feature: add deprecation check for LPS-104241, LPS-175951, LPS-182671
 - Feature: deprecation checks for devDependencies in package.json
 - Feature: add support for BundleSiteInitializer directory structures
-- Feature: add documentation lookup for Liferay specific properties in `gradle.properties`
+- Feature: add documentation lookup and code completion for Liferay specific properties in `gradle.properties`
 - Feature: add XPath expression support for Liferay specific helper classes like `SAXReaderUtil`
 - Bugfix: Finally fixed gradle support for projects using Java 16 or below
 - Bugfix: Exception occurred after deleting a fragment.json file
