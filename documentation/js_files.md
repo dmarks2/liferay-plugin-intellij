@@ -3,7 +3,7 @@ JavaScript
 
 1. [Predefined JavaScript Libraries](#predefined-javascript-libraries)
 2. [JavaScript injection for taglibs](#javascript-injection-for-taglibs)
-3. [JavaScript support for liferay-look-and-feel.xml](#javascript-support-for-liferay-look-and-feel.xml)
+3. [JavaScript support for liferay-look-and-feel.xml](#javascript-support-for-liferay-look-and-feelxml)
 
 Predefined JavaScript Libraries
 -------------------------------

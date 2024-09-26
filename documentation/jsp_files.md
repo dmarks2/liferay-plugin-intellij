@@ -7,8 +7,8 @@ JSP files
 4. [Code completions for Liferay taglibs](#code-completions-for-liferay-taglibs)
 5. [JSP inspections](#jsp-inspections)
 6. [Debugger support for JSPs](#debugger-support-for-jsps) 
-7. [Suggested Parents](#suggested-parent)
-7. [Deprecations](#deprecations)
+7. [Suggested Parents](#suggested-parents)
+8. [Deprecations](#deprecations)
 
 Resolve includes to JSPs inside JSP Hooks
 -----------------------------------------
