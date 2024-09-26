@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.util;
 
+import com.intellij.openapi.util.text.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 public class Version implements Comparable<Version> {
@@ -32,6 +33,10 @@ public class Version implements Comparable<Version> {
 	}
 
 	public static int compare(String version1, String version2) {
+		if (StringUtil.isEmpty(version1)) {
+			version1 = String.valueOf(LiferayVersions.LIFERAY_VERSION_UNKNOWN);
+		}
+
 		return new Version(version1).compareTo(new Version(version2));
 	}
 }
