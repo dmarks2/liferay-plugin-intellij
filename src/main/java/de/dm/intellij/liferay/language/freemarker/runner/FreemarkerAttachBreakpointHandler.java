@@ -218,8 +218,10 @@ public class FreemarkerAttachBreakpointHandler extends XBreakpointHandler<XLineB
                     final Module module = ModuleUtil.findModuleForFile(virtualFile, debugProcess.getSession().getProject());
 
                     if (module != null) {
-                        if (LiferayModuleComponent.getResourcesImporterGroupName(module) != null) {
-                            groupName = LiferayModuleComponent.getResourcesImporterGroupName(module);
+                        String resourcesImporterGroupName = LiferayModuleComponent.getResourcesImporterGroupName(module);
+
+                        if (resourcesImporterGroupName != null) {
+                            groupName = resourcesImporterGroupName;
                         }
                     }
 

@@ -5,6 +5,9 @@ import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.components.StoragePathMacros;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleManager;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.text.StringUtil;
 import de.dm.intellij.liferay.util.LiferayVersions;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
@@ -241,10 +244,32 @@ public class LiferayModuleComponent implements PersistentStateComponent<LiferayM
     }
 
     public static String getResourcesImporterGroupName(Module module) {
+        String result = null;
+
         LiferayModuleComponent component = getInstance(module);
+
         if (component != null) {
-            return component.getResourcesImporterGroupName();
+            result =  component.getResourcesImporterGroupName();
+
+            if (StringUtil.isEmpty(result) && StringUtil.endsWith(module.getName(), ".main")) {
+                String bridgedModuleName = module.getName().substring(0, module.getName().lastIndexOf(".main"));
+
+                Project project = module.getProject();
+
+                ModuleManager moduleManager = ModuleManager.getInstance(project);
+
+                for (Module projectModule : moduleManager.getModules()) {
+                    if (StringUtil.equals(projectModule.getName(), bridgedModuleName)) {
+                        component = getInstance(projectModule);
+
+                        result =  component.getResourcesImporterGroupName();
+
+                        break;
+                    }
+                }
+            }
         }
-        return null;
+
+        return result;
     }
 }
