@@ -9,11 +9,17 @@ import com.intellij.freemarker.psi.variables.FtlTemplateType;
 import com.intellij.freemarker.psi.variables.FtlVariable;
 import com.intellij.javaee.web.WebRoot;
 import com.intellij.javaee.web.facet.WebFacet;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.*;
+import com.intellij.openapi.roots.LibraryOrderEntry;
+import com.intellij.openapi.roots.ModuleOrderEntry;
+import com.intellij.openapi.roots.ModuleRootManager;
+import com.intellij.openapi.roots.ModuleSourceOrderEntry;
+import com.intellij.openapi.roots.OrderEnumerator;
+import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VfsUtilCore;
@@ -24,7 +30,11 @@ import com.intellij.psi.PsiManager;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.xml.XmlNSDescriptor;
-import de.dm.intellij.liferay.language.*;
+import de.dm.intellij.liferay.language.TemplateMacroProcessor;
+import de.dm.intellij.liferay.language.TemplateMacroProcessorUtil;
+import de.dm.intellij.liferay.language.TemplateVariable;
+import de.dm.intellij.liferay.language.TemplateVariableProcessor;
+import de.dm.intellij.liferay.language.TemplateVariableProcessorUtil;
 import de.dm.intellij.liferay.language.freemarker.custom.CustomFtlVariable;
 import de.dm.intellij.liferay.language.freemarker.enumutil.EnumUtilFtlVariable;
 import de.dm.intellij.liferay.language.freemarker.servicelocator.ServiceLocatorFtlVariable;
@@ -44,7 +54,13 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.jar.Manifest;
 
 public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implements TemplateVariableProcessor<FtlFile, FtlVariable>, TemplateMacroProcessor<FtlFile, FtlFile> {
@@ -60,6 +76,8 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
             TYPE_MAPPING.put(key, ThemeReferenceFtlVariable.class);
         }
     }
+
+    private final static Logger log = Logger.getInstance(LiferayFtlVariableProvider.class);
 
     @NotNull
     public List<? extends FtlVariable> getGlobalVariables(FtlFile file) {
@@ -292,6 +310,10 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
     private void handleModule(@NotNull Module module, @NotNull Map<String, FtlFile> result) {
         String servletContextName = LiferayFileUtil.getWebContextPath(module, module.getName()) + "_SERVLET_CONTEXT_";
 
+        if (log.isDebugEnabled()) {
+            log.debug("Examining Module " + module.getName() + " with calculated servletContextName = " + servletContextName);
+        }
+
         Collection<WebFacet> webFacets = WebFacet.getInstances(module);
 
         for (WebFacet webFacet : webFacets) {
@@ -299,6 +321,10 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
             List<WebRoot> webRoots = webFacet.getWebRoots();
 
             for (WebRoot webRoot : webRoots) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Examining Web Root " + webRoot.getRelativePath() + " of Module " + module.getName());
+                }
+
                 if ("/".equals(webRoot.getRelativePath())) {
 
                     if (webRoot.getFile() != null) {
@@ -312,6 +338,10 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
                                 String relativePath = VfsUtilCore.getRelativePath(virtualFile, webRootFile);
 
                                 String filePath = "/" + servletContextName + "/" + relativePath;
+
+                                if (log.isDebugEnabled()) {
+                                    log.debug("Adding " + filePath + " mapped to " + webContextFtlFile);
+                                }
 
                                 result.put(filePath, webContextFtlFile);
                             }

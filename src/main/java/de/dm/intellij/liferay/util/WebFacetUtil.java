@@ -25,6 +25,10 @@ public class WebFacetUtil {
 
         //Add web facet only if at <source-root>/<dir>
         for (VirtualFile sourceRoot : moduleRootManager.getSourceRoots()) {
+            if (log.isDebugEnabled()) {
+                log.debug("About to add " + facetName + " to " + sourceRoot.getPath() + " comparing to " + parent.getPath());
+            }
+
             if (sourceRoot.equals(parent)) {
                 boolean facetPresent = false;
                 Collection<WebFacet> webFacets = WebFacet.getInstances(module);

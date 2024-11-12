@@ -335,10 +335,27 @@ public class LiferayFileUtil {
 
     public static VirtualFile getFileInContentRoot(Module module, String path) {
         ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
+
         for (VirtualFile sourceRoot : moduleRootManager.getContentRoots()) {
             VirtualFile pathFile = sourceRoot.findFileByRelativePath(path);
             if (pathFile != null) {
                 return pathFile;
+            }
+
+            if (StringUtil.equals(sourceRoot.getName(), "main")) {
+                VirtualFile parent = sourceRoot.getParent();
+
+                if (parent != null && StringUtil.equals(parent.getName(), "src")) {
+                    VirtualFile grandParent = parent.getParent();
+
+                    if (grandParent != null) {
+                        pathFile = grandParent.findFileByRelativePath(path);
+
+                        if (pathFile != null) {
+                            return pathFile;
+                        }
+                    }
+                }
             }
         }
 
@@ -624,7 +641,7 @@ public class LiferayFileUtil {
         if (bndVirtualFile != null) {
             CharSequence text = LoadTextUtil.loadText(bndVirtualFile);
 
-            Pattern webContextPathPattern = Pattern.compile("Web-ContextPath:( *)([\\w.-])");
+            Pattern webContextPathPattern = Pattern.compile("Web-ContextPath:( *)\\/([\\w.-]+)");
             Matcher webContextPathMatcher = webContextPathPattern.matcher(text);
 
             if (webContextPathMatcher.find()) {

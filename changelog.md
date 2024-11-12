@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Feature: add deprecation checks for Liferay 2024.Q3
 - Bugfix: Finally fixed gradle support for projects using Java 16 or below
 - Bugfix: Exception occurred after deleting a fragment.json file
+- Bugfix: Detecting servlet context imports in Freemarker files did not work for gradle projects (code completion, freemarker debugger)
 
 ## 0.0.21
 - Feature: add deprecation checks for Liferay 2024.Q1 and Liferay 2024.Q2
