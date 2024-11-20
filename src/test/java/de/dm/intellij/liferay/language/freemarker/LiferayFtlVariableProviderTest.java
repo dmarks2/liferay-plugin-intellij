@@ -30,6 +30,7 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
                 .themeSettings(LiferayLookAndFeelXmlParser.TEMPLATES_PATH, "/templates")
                 .themeSettings(LiferayLookAndFeelXmlParser.TEMPLATE_EXTENSION, "ftl")
                 .library("freemarker-other", TEST_DATA_PATH, "freemarker-other.jar")
+                .library("my-taglib", TEST_DATA_PATH, "my-taglib.jar")
                 .build();
     }
 
@@ -455,6 +456,24 @@ public class LiferayFtlVariableProviderTest extends LightJavaCodeInsightFixtureT
 
         assertNotNull(strings);
         assertTrue(strings.contains("liferay_aui"));
+    }
+
+    public void testCustomTaglibFromDependencies() {
+        myFixture.configureByFiles("templates/custom_taglib.ftl");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
+        assertTrue(strings.contains("my_taglib"));
+    }
+
+    public void testCustomTaglibFromModule() {
+        myFixture.configureByFiles("templates/custom_taglib.ftl", "META-INF/taglib-mappings.properties", "META-INF/module-taglib.tld");
+        myFixture.complete(CompletionType.BASIC, 1);
+        List<String> strings = myFixture.getLookupElementStrings();
+
+        assertNotNull(strings);
+        assertTrue(strings.contains("module_taglib"));
     }
 
     public void testWorkflowDefinitionTemplateContextVariables() {

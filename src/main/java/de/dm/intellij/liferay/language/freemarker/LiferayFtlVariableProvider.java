@@ -110,8 +110,22 @@ public class LiferayFtlVariableProvider extends FtlGlobalVariableProvider implem
                 }
 
                 //Provide Liferay Taglibs as predefined variables in their corresponding Freemarker namespaces
+                Map<String, List<? extends FtlVariable>> customTaglibMappings = new HashMap<>();
+
+                LiferayFreemarkerTaglibsUtil.getCustomTaglibMappings(module, customTaglibMappings);
+
                 for (Map.Entry<String, String> taglibMapping : LiferayFreemarkerTaglibs.FTL_TAGLIB_MAPPINGS.entrySet()) {
-                    result.addAll(getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/" + taglibMapping.getKey(), module, taglibMapping.getValue()));
+                    if (! customTaglibMappings.containsKey(taglibMapping.getValue())) {
+                        if (log.isDebugEnabled()) {
+                            log.debug("Adding /com/liferay/tld/" + liferayVersionPrefix + "/" + taglibMapping.getKey() + " with taglib prefix " + taglibMapping.getValue());
+                        }
+
+                        customTaglibMappings.put(taglibMapping.getValue(), getTaglibSupportVariables("/com/liferay/tld/" + liferayVersionPrefix + "/" + taglibMapping.getKey(), module, taglibMapping.getValue()));
+                    }
+                }
+
+                for (Map.Entry<String, List<? extends FtlVariable>> entry : customTaglibMappings.entrySet()) {
+                    result.addAll(entry.getValue());
                 }
             }
 

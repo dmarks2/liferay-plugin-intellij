@@ -90,6 +90,8 @@ The following taglibs are available:
     <@liferay_social_bookmarks />
     <@liferay_trash />
     
+Custom taglibs from third-party dependencies are included, too. The dependencies must have a `META-INF/taglib-mappings.properties` file.
+
 *This feature works in IntelliJ Ultimate Edition only.*
 
 Implicit Theme Settings variables
