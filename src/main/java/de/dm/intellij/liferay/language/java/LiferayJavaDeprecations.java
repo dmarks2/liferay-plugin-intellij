@@ -1014,6 +1014,19 @@ public class LiferayJavaDeprecations {
 					"com.liferay.document.library.kernel.store.DLStoreUtil.setDLStore()",
 			});
 
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_188270_CONFIGURATION_PROVIDER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"ConfigurationProvider classes have been moved to a separate module.",
+			"LPS-188270",
+			new String[] {
+					"com.liferay.portal.kernel.module.configuration.ConfigurationProvider",
+					"com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil"
+			},
+			new String[] {
+					"com.liferay.portal.configuration.module.configuration.ConfigurationProvider",
+					"com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil",
+			});
+
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
 		String[] newImportStatements = new String[0];

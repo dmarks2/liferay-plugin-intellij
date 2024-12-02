@@ -2,7 +2,7 @@
     <id>de.dm.intellij.liferay</id>
     <name>Liferay</name>
     <category>Framework integration</category>
-    <version>0.0.22</version>
+    <version>0.0.23</version>
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
@@ -25,6 +25,10 @@
       ]]></description>
 
     <change-notes><![CDATA[
+        <p>Version 0.0.23</p>
+        <ul>
+          <li>Feature: add deprecation check for LPS-188270</li>
+        </ul>
         <p>Version 0.0.22</p>
         <ul>
             <li>Feature: add deprecation check for LPS-104241, LPS-175951, LPS-182671</li>

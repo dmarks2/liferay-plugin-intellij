@@ -3,6 +3,9 @@ Liferay Plugin for IntelliJ
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.23
+- Feature: add deprecation check for LPS-188270
+
 ## 0.0.22
 - Feature: add deprecation check for LPS-104241, LPS-175951, LPS-182671
 - Feature: deprecation checks for devDependencies in package.json
