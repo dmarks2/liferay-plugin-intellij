@@ -662,7 +662,7 @@ public class LiferayJavaDeprecations {
 
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_175951_UPLOAD_REQUEST_HELPER = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.4f,
-			"UploadServletRequestConfigurationHelper has been moved to UploadServlerRequestConfigurationProvider",
+			"UploadServletRequestConfigurationHelper has been moved to UploadServletRequestConfigurationProvider",
 			"LPS-175951",
 			new String[] {
 					"com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil",
