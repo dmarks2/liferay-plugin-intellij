@@ -67,25 +67,27 @@ public class SiteInitializerUtil {
 	}
 
 	public static VirtualFile getDDMStructureFile(Project project, String ddmStructureKey, VirtualFile siteInitializerDirectory) {
-		String structureKey = getKey(ddmStructureKey);
+		if (StringUtil.isNotEmpty(ddmStructureKey)) {
+			String structureKey = getKey(ddmStructureKey);
 
-		VirtualFile ddmStructuresDirectory = LiferayFileUtil.getChild(siteInitializerDirectory, "ddm-structures");
+			VirtualFile ddmStructuresDirectory = LiferayFileUtil.getChild(siteInitializerDirectory, "ddm-structures");
 
-		PsiManager psiManager = PsiManager.getInstance(project);
+			PsiManager psiManager = PsiManager.getInstance(project);
 
-		if (ddmStructuresDirectory != null) {
-			VirtualFile[] children = ddmStructuresDirectory.getChildren();
+			if (ddmStructuresDirectory != null) {
+				VirtualFile[] children = ddmStructuresDirectory.getChildren();
 
-			for (VirtualFile child : children) {
-				if (StringUtil.equals(child.getExtension(), "xml")) {
-					PsiFile psiFile = psiManager.findFile(child);
+				for (VirtualFile child : children) {
+					if (StringUtil.equals(child.getExtension(), "xml")) {
+						PsiFile psiFile = psiManager.findFile(child);
 
-					if (psiFile instanceof XmlFile xmlFile) {
-						String structureName = getDDMStructureName(xmlFile);
+						if (psiFile instanceof XmlFile xmlFile) {
+							String structureName = getDDMStructureName(xmlFile);
 
-						if (structureName != null) {
-							if (StringUtil.equals(structureKey, getKey(structureName))) {
-								return getDDMStructureDefinitionJSONFile(xmlFile);
+							if (structureName != null) {
+								if (StringUtil.equals(structureKey, getKey(structureName))) {
+									return getDDMStructureDefinitionJSONFile(xmlFile);
+								}
 							}
 						}
 					}
