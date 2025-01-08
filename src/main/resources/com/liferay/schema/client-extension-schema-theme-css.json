@@ -15,7 +15,8 @@
     },
     "ThemeCSS": {
       "title": "Theme CSS Client Extension",
-      "description": "Theme CSS defines CSS resources to override those provided by the theme.",
+      "description": "With a theme CSS client extension, you can override the current theme’s CSS files (main.css and clay.css) to change the look and feel of a page.",
+      "x-intellij-html-description": "With a theme CSS client extension, you can override the current theme’s CSS files (main.css and clay.css) to change the look and feel of a page. See <a href='https://learn.liferay.com/w/dxp/liferay-development/customizing-liferays-look-and-feel/using-a-theme-css-client-extension'>Using a Theme CSS Client Extension</a> for more information...",
       "properties": {
         "type": {
           "type": "string",

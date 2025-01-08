@@ -28,6 +28,7 @@
         <p>Version 0.0.23</p>
         <ul>
           <li>Feature: add deprecation check for LPS-188270</li>
+          <li>Feature: add support for additional client extensions (Editor Config Contributor)</li>
         </ul>
         <p>Version 0.0.22</p>
         <ul>

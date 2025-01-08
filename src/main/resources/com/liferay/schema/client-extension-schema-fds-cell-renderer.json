@@ -15,7 +15,8 @@
     },
     "FdsCellRenderer": {
       "title": "Frontend data set cell renderer Client Extension",
-      "description": "Frontend data set cell renderer defines a JavaScript function that can render a frontend data set cell content.",
+      "description": "You can use Frontend Data Set (FDS) cell renderer client extensions to customize the display for your data set. Use this type to process information in your data sets with a separately deployed function for the display.",
+      "x-intellij-html-description": "You can use Frontend Data Set (FDS) cell renderer client extensions to customize the display for your data set. Use this type to process information in your data sets with a separately deployed function for the display. See <a href='https://learn.liferay.com/w/dxp/liferay-development/customizing-liferays-look-and-feel/using-a-frontend-data-set-cell-renderer-client-extension'>Using a Frontend Data Set Cell Renderer Client Extension</a> for more information...",
       "properties": {
         "type": {
           "type": "string",

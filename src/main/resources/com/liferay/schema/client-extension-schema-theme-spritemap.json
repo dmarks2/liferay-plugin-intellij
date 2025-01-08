@@ -15,7 +15,8 @@
     },
     "ThemeSpritemap": {
       "title": "Theme Sprite Map Client Extension",
-      "description": "Theme SVG defines a spritemap resource containing icons to override those provided by the theme.",
+      "description": "With a theme sprite map client extension, you can override the default Clay sprite map used for icons on a page.",
+      "x-intellij-html-description": "With a theme sprite map client extension, you can override the default Clay sprite map used for icons on a page. See <a href='https://learn.liferay.com/w/dxp/liferay-development/customizing-liferays-look-and-feel/using-a-theme-spritemap-client-extension'>Using a Theme Sprite Map Client Extension</a> for more information...",
       "properties": {
         "type": {
           "type": "string",

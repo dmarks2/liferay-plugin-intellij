@@ -14,7 +14,9 @@
       }
     },
     "JSImportMapsEntry": {
-      "description": "JS Importmaps Entry defines a JavaScript module to be exported through the import maps as a bare identifier. Please make sure to reload the page to update your current browser's import maps after publishing this client extension.",
+      "title": "Javascript Import Map Entry",
+      "description": "JavaScript import map entry client extensions make JavaScript code or resources available to any page rendered in a Liferay instance. When you must include JavaScript code or resources from multiple locations, you can bundle them in one client extension in your Liferay workspace.\n\nDefine and export code in the client extension with a specifier that the import map in Liferay provides to anything that imports it. For example, you can bundle a library like jQuery into the client extension, and then import it into a fragment’s code to use it.",
+      "x-intellij-html-description": "JavaScript import map entry client extensions make JavaScript code or resources available to any page rendered in a Liferay instance. When you must include JavaScript code or resources from multiple locations, you can bundle them in one client extension in your Liferay workspace.\n\nDefine and export code in the client extension with a specifier that the <a href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap'>import map</a> in Liferay provides to anything that imports it. For example, you can bundle a library like <a href='https://jquery.com/'>jQuery</a> into the client extension, and then import it into a fragment’s code to use it. See <a href='https://learn.liferay.com/w/dxp/liferay-development/customizing-liferays-look-and-feel/bundling-resources-in-a-javascript-import-map-entry-client-extension#bundling-resources-in-a-javascript-import-map-entry-client-extension'>Bundling Resources in a JavaScript Import Map Entry Client Extension</a> for more information...",
       "properties": {
         "type": {
           "type": "string",

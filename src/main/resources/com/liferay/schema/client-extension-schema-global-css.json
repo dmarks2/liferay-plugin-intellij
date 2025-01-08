@@ -15,7 +15,8 @@
     },
     "GlobalCSS": {
       "title": "CSS Client Extension",
-      "description": "CSS defines a CSS resource that will be included after theme CSS resources.",
+      "description": "CSS client extensions introduce new CSS styling to pages. A deployed CSS client extension on a page adds to the page’s existing styling, including theme and style book settings.",
+      "x-intellij-html-description": "CSS client extensions introduce new CSS styling to pages. A deployed CSS client extension on a page adds to the page’s existing styling, including theme and style book settings. See <a href='https://learn.liferay.com/w/dxp/liferay-development/customizing-liferays-look-and-feel/using-a-css-client-extension'>Using a CSS Client Extension</a> for more information...",
       "properties": {
         "type": {
           "type": "string",

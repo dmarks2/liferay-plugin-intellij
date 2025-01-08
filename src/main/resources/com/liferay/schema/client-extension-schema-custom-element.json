@@ -15,8 +15,8 @@
     },
     "CustomElement": {
       "title": "Custom Element Client Extension",
-      "description": "Custom element defines CSS and JavaScript resources that will be rendered into a provided HTML <custom-element>. This provides full integration with the Liferay host page. Each custom element client extension is made available as a widget.",
-      "x-intellij-html-description": "Custom element defines CSS and JavaScript resources that will be rendered into a provided HTML &lt;custom-element&gt;. This provides full integration with the Liferay host page. Each custom element client extension is made available as a widget. <a href='https://learn.liferay.com/dxp/latest/en/building-applications/client-extensions/front-end-client-extensions/understanding-custom-element-and-iframe-client-extensions.html#using-the-custom-element-type'>Learn more about custom element client extensions.</a>",
+      "description": "Custom element client extensions use Liferay’s frontend infrastructure to register external, remote applications with the Liferay platform and render them as widgets.",
+      "x-intellij-html-description": "Custom element client extensions use Liferay’s frontend infrastructure to register external, remote applications with the Liferay platform and render them as widgets. See <a href='https://learn.liferay.com/w/dxp/liferay-development/integrating-external-applications/creating-a-basic-custom-element'>Creating a Basic Custom Element</a> for more information...",
       "properties": {
         "type": {
           "type": "string",

@@ -15,7 +15,8 @@
     },
     "GlobalJS": {
       "title": "JavaScript Client Extension",
-      "description": "JS defines a JavaScript resource that will be included after theme JavaScript resources.",
+      "description": "With a JavaScript (JS) client extension, you can run your own JavaScript on any page in Liferay without worrying about dependencies on Liferay code or developing a theme.",
+      "x-intellij-html-description": "With a JavaScript (JS) client extension, you can run your own JavaScript on any page in Liferay without worrying about dependencies on Liferay code or developing a theme. See <a href='https://learn.liferay.com/w/dxp/liferay-development/customizing-liferays-look-and-feel/using-a-javascript-client-extension'>Using a JavaScript Client Extension</a> for more information...",
       "properties": {
         "type": {
           "type": "string",

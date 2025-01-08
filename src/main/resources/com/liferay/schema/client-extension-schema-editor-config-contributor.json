@@ -16,6 +16,7 @@
     "EditorConfigContributor": {
       "title": "Editor Config Contributor Client Extension",
       "description": "Editor Config Contributor client extensions override existing CKEditor configuration in a ConfigContributor.java file.",
+      "x-intellij-html-description": "Editor Config Contributor client extensions override existing CKEditor configuration in a <code>ConfigContributor.java</code> file. See <a href='https://learn.liferay.com/w/dxp/liferay-development/customizing-liferays-look-and-feel/using-an-editor-config-contributor-client-extension'>Using an Editor Config Contributor Client Extension</a> for more information...",
       "properties": {
         "type": {
           "type": "string",

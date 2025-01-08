@@ -15,8 +15,8 @@
     },
     "IFrame": {
       "title": "IFrame Client Extension",
-      "description": "IFrame defines an application URL that will be rendered into an <iframe> element. This provides limited integration with the host page using Liferay's optional client SDK API. Each IFrame client extension is made available as a widget.",
-      "x-intellij-html-description": "IFrame defines an application URL that will be rendered into an &lt;iframe&gt; element. This provides limited integration with the host page using Liferay's optional client SDK API. Each IFrame client extension is made available as a widget. <a href='https://learn.liferay.com/en/w/dxp/building-applications/client-extensions/front-end-client-extensions/understanding-custom-element-and-iframe-client-extensions#using-the-iframe-type'>Learn more about IFrame client extensions.</a>",
+      "description": "IFrame client extensions use Liferay’s frontend infrastructure to register external applications as <iframe> HTML elements. They’re added to Liferay pages as widgets. Unlike other frontend client extensions, IFrames do not provide a static resource.",
+      "x-intellij-html-description": "IFrame client extensions use Liferay’s frontend infrastructure to register external applications as <code>iframe</code> HTML elements. They’re added to Liferay pages as widgets. Unlike other frontend client extensions, IFrames do not provide a static resource. See <a href='https://learn.liferay.com/w/dxp/liferay-development/integrating-external-applications/using-an-iframe-client-extension'>Using an IFrame Client Extension</a> for more information...",
       "properties": {
         "type": {
           "type": "string",
