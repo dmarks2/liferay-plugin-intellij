@@ -16,6 +16,7 @@
     "ThemeFavicon": {
       "title": "Theme Favicon Client Extension",
       "description": "Favicon defines an icon resource to override the favicon provided by the theme.",
+      "x-intellij-html-description": "Favicon defines an icon resource to override the favicon provided by the theme. See <a href='https://learn.liferay.com/w/dxp/liferay-development/customizing-liferays-look-and-feel/using-a-theme-favicon-client-extension'>Using a Theme Favicon Client Extension</a> for more information...",
       "properties": {
         "type": {
           "type": "string",
@@ -23,6 +24,7 @@
           "description": "Defines the type of the client extension",
           "enum": [
             "customElement",
+            "editorConfigContributor",
             "fdsCellRenderer",
             "globalCSS",
             "globalJS",
@@ -43,6 +45,9 @@
           "x-intellij-enum-metadata": {
             "customElement": {
               "description": "Custom Element"
+            },
+            "editorConfigContributor": {
+              "description": "Editor Config Contributor"
             },
             "fdsCellRenderer": {
               "description": "Frontend data set cell renderer"

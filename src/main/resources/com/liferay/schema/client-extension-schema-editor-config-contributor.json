@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://liferay.com/liferay-extension-types.json",
-  "title": "Static content Client Extension",
+  "title": "Editor Config Contributor Client Extension",
   "definitions": {
     "AssembleItem": {
       "properties": {
@@ -13,9 +13,9 @@
         }
       }
     },
-    "StaticContent": {
-      "title": "Static content",
-      "description": "Static content defines a URL containing static content.",
+    "EditorConfigContributor": {
+      "title": "Editor Config Contributor Client Extension",
+      "description": "Editor Config Contributor client extensions override existing CKEditor configuration in a ConfigContributor.java file.",
       "properties": {
         "type": {
           "type": "string",
@@ -114,18 +114,28 @@
         },
         "sourceCodeURL": {
           "type": "string",
-          "default": "https://www.liferay.com",
+          "default": "\"https://www.liferay.com\"",
           "title": "Source Code URL",
           "description": "The address to the client extension’s source repository."
         },
+        "editorConfigKeys": {
+          "title": "Editor Config Keys",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Specifies the keys related to the editor configurations that this client extension will override or contribute to."
+        },
         "url": {
           "type": "string",
-          "title": "URL"
+          "title": "URL",
+          "description": "The path to the JavaScript snippet that implements the functionality of the Editor Config Contributor client extension."
         }
       },
       "required": [
         "type",
-        "name"
+        "name",
+        "url"
       ],
       "additionalProperties": true
     }
@@ -142,6 +152,6 @@
   "additionalProperties": {
     "pattern": "(\\w|\\-)+",
     "type": "object",
-    "$ref": "#/definitions/StaticContent"
+    "$ref": "#/definitions/EditorConfigContributor"
   }
 }

@@ -12,6 +12,7 @@ public class ClientExtensionYamlSchemaFileProviderFactory {
 
 	private static final String BATCH = "batch";
 	private static final String CUSTOM_ELEMENT = "customElement";
+	private static final String EDITOR_CONFIG_CONTRIBUTOR = "editorConfigContributor";
 	private static final String FDS_CELL_RENDERER = "fdsCellRenderer";
 	private static final String GLOBAL_CSS = "globalCSS";
 	private static final String GLOBAL_JS = "globalJS";
@@ -42,6 +43,9 @@ public class ClientExtensionYamlSchemaFileProviderFactory {
 				),
 				new GenericClientExtensionYamlSchemaFileProvider(
 						"Custom Element Client Extension", project, "client-extension-schema-custom-element.json", type -> StringUtil.equals(type, CUSTOM_ELEMENT)
+				),
+				new GenericClientExtensionYamlSchemaFileProvider(
+						"Editor Config Contributor Client Extension", project, "client-extension-schema-editor-config-contributor.json", type -> StringUtil.equals(type, EDITOR_CONFIG_CONTRIBUTOR)
 				),
 				new GenericClientExtensionYamlSchemaFileProvider(
 						"Frontend data set cell renderer Client Extension", project, "client-extension-schema-fds-cell-renderer.json", type -> StringUtil.equals(type, FDS_CELL_RENDERER)

@@ -24,6 +24,7 @@
           "description": "Defines the type of the client extension",
           "enum": [
             "customElement",
+            "editorConfigContributor",
             "fdsCellRenderer",
             "globalCSS",
             "globalJS",
@@ -44,6 +45,9 @@
           "x-intellij-enum-metadata": {
             "customElement": {
               "description": "Custom Element"
+            },
+            "editorConfigContributor": {
+              "description": "Editor Config Contributor"
             },
             "fdsCellRenderer": {
               "description": "Frontend data set cell renderer"
