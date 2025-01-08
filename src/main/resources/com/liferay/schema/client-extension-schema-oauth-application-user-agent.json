@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://liferay.com/liferay-extension-types.json",
-  "title": "Unknown Liferay Client Extension",
+  "title": "OAuth User Agent Client Extension",
   "definitions": {
     "AssembleItem": {
       "properties": {
@@ -13,9 +13,8 @@
         }
       }
     },
-    "BaseElement": {
-      "title": "(unknown) Client Extension",
-      "description": "A custom Client Extension",
+    "OAuthApplicationUserAgent": {
+      "title": "OAuth User Agent Client Extension",
       "properties": {
         "type": {
           "type": "string",
@@ -107,12 +106,35 @@
           "type": "string",
           "title": "Description",
           "description": "The client extension’s description."
+        },
+        "sourceCodeURL": {
+          "type": "string",
+          "default": "https://www.liferay.com",
+          "title": "Source Code URL",
+          "description": "The address to the client extension’s source repository."
+        },
+        "homePageURL": {
+          "type": "string",
+          "default": "https://$[conf:ext.lxc.liferay.com.mainDomain]",
+          "description": "The base address of the OAuth2 application profile’s resource server."
+        },
+        "privacyPolicyURL": {
+          "type": "string",
+          "description": "The URL for the OAuth2 application profile’s privacy policy."
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "An array of scopes that are associated with the OAuth2 application profile."
         }
       },
       "required": [
         "type",
         "name"
-      ]
+      ],
+      "additionalProperties": true
     }
   },
   "type": "object",
@@ -127,6 +149,6 @@
   "additionalProperties": {
     "pattern": "(\\w|\\-)+",
     "type": "object",
-    "$ref": "#/definitions/BaseElement"
+    "$ref": "#/definitions/OAuthApplicationUserAgent"
   }
 }

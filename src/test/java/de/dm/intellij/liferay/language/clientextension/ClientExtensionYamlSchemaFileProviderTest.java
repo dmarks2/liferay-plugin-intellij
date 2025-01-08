@@ -55,4 +55,13 @@ public class ClientExtensionYamlSchemaFileProviderTest extends BasePlatformTestC
 		assertTrue(strings.contains("customElement"));
 	}
 
+	public void testCompletionCustomElement() {
+		myFixture.configureByFiles("customElement/client-extension-complete-custom-element.yaml");
+		myFixture.complete(CompletionType.BASIC, 1);
+		List<String> strings = myFixture.getLookupElementStrings();
+
+		assertNotNull(strings);
+		assertTrue(strings.contains("useESM"));
+	}
+
 }

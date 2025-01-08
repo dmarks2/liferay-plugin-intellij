@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://liferay.com/liferay-extension-types.json",
-  "title": "Unknown Liferay Client Extension",
+  "title": "Workflow Action Client Extension",
   "definitions": {
     "AssembleItem": {
       "properties": {
@@ -13,9 +13,8 @@
         }
       }
     },
-    "BaseElement": {
-      "title": "(unknown) Client Extension",
-      "description": "A custom Client Extension",
+    "WorkflowAction": {
+      "title": "Workflow Action Client Extension",
       "properties": {
         "type": {
           "type": "string",
@@ -107,12 +106,29 @@
           "type": "string",
           "title": "Description",
           "description": "The client extension’s description."
+        },
+        "sourceCodeURL": {
+          "type": "string",
+          "default": "https://www.liferay.com",
+          "title": "Source Code URL",
+          "description": "The address to the client extension’s source repository."
+        },
+        "resourcePath": {
+          "type": "string",
+          "description": "The path to the workflow action handler. This value is combined with the OAauth2 application profile’s homePageURL value for a complete URL."
+        },
+        "oAuth2ApplicationExternalReferenceCode": {
+          "type": "string",
+          "description": "The external reference code for an OAuth2 application profile, needed for securing requests."
         }
       },
       "required": [
         "type",
-        "name"
-      ]
+        "name",
+        "resourcePath",
+        "oAuth2ApplicationExternalReferenceCode"
+      ],
+      "additionalProperties": true
     }
   },
   "type": "object",
@@ -127,6 +143,6 @@
   "additionalProperties": {
     "pattern": "(\\w|\\-)+",
     "type": "object",
-    "$ref": "#/definitions/BaseElement"
+    "$ref": "#/definitions/WorkflowAction"
   }
 }

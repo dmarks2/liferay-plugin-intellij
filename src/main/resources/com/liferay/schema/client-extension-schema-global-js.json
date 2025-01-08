@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://liferay.com/liferay-extension-types.json",
-  "title": "Unknown Liferay Client Extension",
+  "title": "JavaScript Client Extension",
   "definitions": {
     "AssembleItem": {
       "properties": {
@@ -13,9 +13,9 @@
         }
       }
     },
-    "BaseElement": {
-      "title": "(unknown) Client Extension",
-      "description": "A custom Client Extension",
+    "GlobalJS": {
+      "title": "JavaScript Client Extension",
+      "description": "JS defines a JavaScript resource that will be included after theme JavaScript resources.",
       "properties": {
         "type": {
           "type": "string",
@@ -107,12 +107,25 @@
           "type": "string",
           "title": "Description",
           "description": "The client extension’s description."
+        },
+        "sourceCodeURL": {
+          "type": "string",
+          "default": "https://www.liferay.com",
+          "title": "Source Code URL",
+          "description": "The address to the client extension’s source repository."
+        },
+        "url": {
+          "type": "string",
+          "title": "JavaScript URL",
+          "description": "The path to the JavaScript file added to the HEAD of the page when the client extension is enabled. The complete URI is prefixed by the baseURL value."
         }
       },
       "required": [
         "type",
-        "name"
-      ]
+        "name",
+        "url"
+      ],
+      "additionalProperties": true
     }
   },
   "type": "object",
@@ -127,6 +140,6 @@
   "additionalProperties": {
     "pattern": "(\\w|\\-)+",
     "type": "object",
-    "$ref": "#/definitions/BaseElement"
+    "$ref": "#/definitions/GlobalJS"
   }
 }

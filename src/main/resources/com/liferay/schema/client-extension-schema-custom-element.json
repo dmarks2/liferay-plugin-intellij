@@ -1,0 +1,194 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/liferay-extension-types.json",
+  "title": "Custom Element Client Extension",
+  "definitions": {
+    "AssembleItem": {
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "into": {
+          "type": "string"
+        }
+      }
+    },
+    "CustomElement": {
+      "title": "Custom Element Client Extension",
+      "description": "Custom element defines CSS and JavaScript resources that will be rendered into a provided HTML <custom-element>. This provides full integration with the Liferay host page. Each custom element client extension is made available as a widget.",
+      "x-intellij-html-description": "Custom element defines CSS and JavaScript resources that will be rendered into a provided HTML &lt;custom-element&gt;. This provides full integration with the Liferay host page. Each custom element client extension is made available as a widget. <a href='https://learn.liferay.com/dxp/latest/en/building-applications/client-extensions/front-end-client-extensions/understanding-custom-element-and-iframe-client-extensions.html#using-the-custom-element-type'>Learn more about custom element client extensions.</a>",
+      "properties": {
+        "type": {
+          "type": "string",
+          "title": "Type",
+          "description": "Defines the type of the client extension",
+          "enum": [
+            "customElement",
+            "fdsCellRenderer",
+            "globalCSS",
+            "globalJS",
+            "iframe",
+            "jsImportMapsEntry",
+            "staticContent",
+            "themeCSS",
+            "themeFavicon",
+            "themeJS",
+            "themeSpritemap",
+            "objectAction",
+            "workflowAction",
+            "notificationType",
+            "oAuthApplicationUserAgent",
+            "oAuthApplicationHeadlessServer",
+            "batch"
+          ],
+          "x-intellij-enum-metadata": {
+            "customElement": {
+              "description": "Custom Element"
+            },
+            "fdsCellRenderer": {
+              "description": "Frontend data set cell renderer"
+            },
+            "globalCSS": {
+              "description": "Global CSS"
+            },
+            "globalJS": {
+              "description": "Global JS"
+            },
+            "iframe": {
+              "description": "IFrame"
+            },
+            "jsImportMapsEntry": {
+              "description": "JS Importmaps Entry"
+            },
+            "staticContent": {
+              "description": "Static content"
+            },
+            "themeCSS": {
+              "description": "Theme CSS"
+            },
+            "themeFavicon": {
+              "description": "Theme Favicon"
+            },
+            "themeJS": {
+              "description": "Theme JS"
+            },
+            "themeSpritemap": {
+              "description": "Theme Sprite Map"
+            },
+            "objectAction": {
+              "description": "Object Action"
+            },
+            "workflowAction": {
+              "description": "Workflow Action"
+            },
+            "notificationType": {
+              "description": "Notification Type"
+            },
+            "oAuthApplicationUserAgent": {
+              "description": "OAuth User Agent"
+            },
+            "oAuthApplicationHeadlessServer": {
+              "description": "OAuth Headless Server"
+            },
+            "batch": {
+              "description": "Batch"
+            }
+          }
+        },
+        "baseURL": {
+          "type": "string",
+          "description": "The base path from which all of the client extension’s defined resources are served."
+        },
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "description": "The client extension’s name (as it appears in the UI). A name is required for front-end client extensions."
+        },
+        "description": {
+          "type": "string",
+          "title": "Description",
+          "description": "The client extension’s description."
+        },
+        "sourceCodeURL": {
+          "type": "string",
+          "default": "\"https://www.liferay.com\"",
+          "title": "Source Code URL",
+          "description": "The address to the client extension’s source repository."
+        },
+        "htmlElementName": {
+          "type": "string",
+          "title": "HTML Element Name",
+          "description": "The HTML element name that refers to the custom element, which is rendered in the page markup."
+        },
+        "useESM": {
+          "type": "boolean",
+          "default": false,
+          "title": "Use ES Modules",
+          "description": "Whether the JavaScript code uses ESM format. When true, the JavaScript is added to the page with the type=\"module\" property."
+        },
+        "urls": {
+          "type": "array",
+          "title": "JavaScript URL",
+          "description": "List of paths to JavaScript resources that are added to the HTML head when the widget is used on a page. One of these resources must contain the custom element initialization code. This combines with baseURL to form a complete URL.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cssURLs": {
+          "type": "array",
+          "title": "CSS URL",
+          "description": "List of CSS paths added to the HTML head when the custom element is used on a page.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "instanceable": {
+          "type": "boolean",
+          "default": false,
+          "title": "Instanceable",
+          "description": "Whether the custom element widget can appear multiple times on a page."
+        },
+        "portletCategoryName": {
+          "type": "string",
+          "default": "category.client-extensions",
+          "title": "Portlet Category Name",
+          "description": "The menu category of the custom element widget."
+        },
+        "friendlyURLMapping": {
+          "type": "string",
+          "title": "Friendly URL Mapping",
+          "description": "Mapping of a friendly URL prefix to the specific custom element widget."
+        },
+        "properties": {
+          "type": "array",
+          "title": "Properties",
+          "description": "Properties to append as attributes to the custom HTML element. They use a newline as a separator and are processed as Java properties.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "type",
+        "name",
+        "htmlElementName",
+        "urls"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "type": "object",
+  "properties": {
+    "assemble": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/AssembleItem"
+      }
+    }
+  },
+  "additionalProperties": {
+    "pattern": "(\\w|\\-)+",
+    "type": "object",
+    "$ref": "#/definitions/CustomElement"
+  }
+}

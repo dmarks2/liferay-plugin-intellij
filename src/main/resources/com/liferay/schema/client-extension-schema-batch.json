@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://liferay.com/liferay-extension-types.json",
-  "title": "Unknown Liferay Client Extension",
+  "title": "Batch Client Extension",
   "definitions": {
     "AssembleItem": {
       "properties": {
@@ -13,9 +13,8 @@
         }
       }
     },
-    "BaseElement": {
-      "title": "(unknown) Client Extension",
-      "description": "A custom Client Extension",
+    "Batch": {
+      "title": "Batch Client Extension",
       "properties": {
         "type": {
           "type": "string",
@@ -107,12 +106,24 @@
           "type": "string",
           "title": "Description",
           "description": "The client extension’s description."
+        },
+        "sourceCodeURL": {
+          "type": "string",
+          "default": "https://www.liferay.com",
+          "title": "Source Code URL",
+          "description": "The address to the client extension’s source repository."
+        },
+        "oAuthApplicationHeadlessServer": {
+          "type": "string",
+          "description": "The identity (externalReferenceCode) of an OAuth2 application headless server profile."
         }
       },
       "required": [
         "type",
-        "name"
-      ]
+        "name",
+        "oAuthApplicationHeadlessServer"
+      ],
+      "additionalProperties": true
     }
   },
   "type": "object",
@@ -127,6 +138,6 @@
   "additionalProperties": {
     "pattern": "(\\w|\\-)+",
     "type": "object",
-    "$ref": "#/definitions/BaseElement"
+    "$ref": "#/definitions/Batch"
   }
 }

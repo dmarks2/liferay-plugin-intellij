@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://liferay.com/liferay-extension-types.json",
-  "title": "Unknown Liferay Client Extension",
+  "title": "JS Import Maps Entry Client Extension",
   "definitions": {
     "AssembleItem": {
       "properties": {
@@ -13,9 +13,8 @@
         }
       }
     },
-    "BaseElement": {
-      "title": "(unknown) Client Extension",
-      "description": "A custom Client Extension",
+    "JSImportMapsEntry": {
+      "description": "JS Importmaps Entry defines a JavaScript module to be exported through the import maps as a bare identifier. Please make sure to reload the page to update your current browser's import maps after publishing this client extension.",
       "properties": {
         "type": {
           "type": "string",
@@ -107,12 +106,26 @@
           "type": "string",
           "title": "Description",
           "description": "The client extension’s description."
+        },
+        "sourceCodeURL": {
+          "type": "string",
+          "default": "https://www.liferay.com",
+          "title": "Source Code URL",
+          "description": "The address to the client extension’s source repository."
+        },
+        "bareSpecifier": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "title": "URL"
         }
       },
       "required": [
         "type",
         "name"
-      ]
+      ],
+      "additionalProperties": true
     }
   },
   "type": "object",
@@ -127,6 +140,6 @@
   "additionalProperties": {
     "pattern": "(\\w|\\-)+",
     "type": "object",
-    "$ref": "#/definitions/BaseElement"
+    "$ref": "#/definitions/JSImportMapsEntry"
   }
 }

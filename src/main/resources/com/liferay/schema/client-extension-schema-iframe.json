@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://liferay.com/liferay-extension-types.json",
-  "title": "Unknown Liferay Client Extension",
+  "title": "IFrame Client Extension",
   "definitions": {
     "AssembleItem": {
       "properties": {
@@ -13,9 +13,10 @@
         }
       }
     },
-    "BaseElement": {
-      "title": "(unknown) Client Extension",
-      "description": "A custom Client Extension",
+    "IFrame": {
+      "title": "IFrame Client Extension",
+      "description": "IFrame defines an application URL that will be rendered into an <iframe> element. This provides limited integration with the host page using Liferay's optional client SDK API. Each IFrame client extension is made available as a widget.",
+      "x-intellij-html-description": "IFrame defines an application URL that will be rendered into an &lt;iframe&gt; element. This provides limited integration with the host page using Liferay's optional client SDK API. Each IFrame client extension is made available as a widget. <a href='https://learn.liferay.com/en/w/dxp/building-applications/client-extensions/front-end-client-extensions/understanding-custom-element-and-iframe-client-extensions#using-the-iframe-type'>Learn more about IFrame client extensions.</a>",
       "properties": {
         "type": {
           "type": "string",
@@ -107,12 +108,45 @@
           "type": "string",
           "title": "Description",
           "description": "The client extension’s description."
+        },
+        "sourceCodeURL": {
+          "type": "string",
+          "default": "https://www.liferay.com",
+          "title": "Source Code URL",
+          "description": "The address to the client extension’s source repository."
+        },
+        "friendlyURLMapping": {
+          "type": "string",
+          "title": "Friendly URL Mapping",
+          "description": "The mapping of a friendly URL prefix to the specific IFrame widget."
+        },
+        "htmlElementName": {
+          "type": "string",
+          "title": "HTML Element Name"
+        },
+        "portletCategoryName": {
+          "type": "string",
+          "title": "Widget Category Name",
+          "description": "The menu category of the IFrame widget."
+        },
+        "url": {
+          "type": "string",
+          "title": "URL",
+          "description": "The complete URL to the HTML page to embed within the IFrame widget."
+        },
+        "instanceable": {
+          "type": "boolean",
+          "default": false,
+          "title": "Instanceable",
+          "description": "Whether the IFrame widget can appear multiple times on a page."
         }
       },
       "required": [
         "type",
-        "name"
-      ]
+        "name",
+        "url"
+      ],
+      "additionalProperties": true
     }
   },
   "type": "object",
@@ -127,6 +161,6 @@
   "additionalProperties": {
     "pattern": "(\\w|\\-)+",
     "type": "object",
-    "$ref": "#/definitions/BaseElement"
+    "$ref": "#/definitions/IFrame"
   }
 }

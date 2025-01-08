@@ -1,0 +1,6 @@
+assemble:
+  - from: assets
+    into: static
+liferay-sample-custom-element-1:
+  type: customElement
+  <caret>
