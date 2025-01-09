@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://liferay.com/liferay-extension-types.json",
-  "title": "Editor Config Contributor Client Extension",
+  "title": "Object Validation Rule Client Extension",
   "definitions": {
     "AssembleItem": {
       "properties": {
@@ -13,10 +13,10 @@
         }
       }
     },
-    "EditorConfigContributor": {
-      "title": "Editor Config Contributor Client Extension",
-      "description": "Editor Config Contributor client extensions override existing CKEditor configuration in a ConfigContributor.java file.",
-      "x-intellij-html-description": "Editor Config Contributor client extensions override existing CKEditor configuration in a <code>ConfigContributor.java</code> file. See <a href='https://learn.liferay.com/w/dxp/liferay-development/customizing-liferays-look-and-feel/using-an-editor-config-contributor-client-extension'>Using an Editor Config Contributor Client Extension</a> for more information...",
+    "ObjectValidationRule": {
+      "title": "Object Validation Rule Client Extension",
+      "description": "An Object Validation Rule.",
+      "x-intellij-html-description": "An Object Validation Rule. See <a href='https://learn.liferay.com/w/dxp/liferay-development/integrating-microservices/object-validation-rule-yaml-configuration-reference'>Object Validation Rule YAML Configuration Reference</a> for more information...",
       "properties": {
         "type": {
           "type": "string",
@@ -135,24 +135,38 @@
           "title": "Source Code URL",
           "description": "The address to the client extension’s source repository."
         },
-        "editorConfigKeys": {
-          "title": "Editor Config Keys",
+        "allowedObjectDefinitionNames": {
           "type": "array",
+          "title": "Allowed Object Definition Names",
+          "description": "Scope the client extension to specified object definitions (e.g., C_EasyObject, User)",
+          "x-intellij-html-description": "Scope the client extension to specified object definitions (e.g., <code>C_EasyObject</code>, <code>User</code>)",
           "items": {
             "type": "string"
-          },
-          "description": "Specifies the keys related to the editor configurations that this client extension will override or contribute to."
+          }
         },
-        "url": {
+        "dxp.lxc.liferay.com.virtualInstanceId": {
           "type": "string",
-          "title": "URL",
-          "description": "The path to the JavaScript snippet that implements the functionality of the Editor Config Contributor client extension."
+          "title": "Virtual Instance ID",
+          "description": "Scope the client extension to a specified virtual instance using its ID (e.g., easy-virtual-host-1.com).",
+          "x-intellij-html-description": "Scope the client extension to a specified virtual instance using its ID (e.g., <code>easy-virtual-host-1.com</code>)."
+        },
+        "resourcePath": {
+          "type": "string",
+          "title": "Resource Path",
+          "description": "The path to the Object Validation Rule handler. This value is combined with the OAauth2 application profile’s homePageURL value for a complete URL.",
+          "x-intellij-html-description": "The path to the Object Validation Rule handler. This value is combined with the OAauth2 application profile’s <code>homePageURL</code> value for a complete URL."
+        },
+        "oAuth2ApplicationExternalReferenceCode": {
+          "type": "string",
+          "title": "OAuth2 Application External Reference Code",
+          "description": "The external reference code for an OAuth2 application profile, needed for securing requests."
         }
       },
       "required": [
         "type",
         "name",
-        "url"
+        "resourcePath",
+        "oAuth2ApplicationExternalReferenceCode"
       ],
       "additionalProperties": true
     }
@@ -169,6 +183,6 @@
   "additionalProperties": {
     "pattern": "(\\w|\\-)+",
     "type": "object",
-    "$ref": "#/definitions/EditorConfigContributor"
+    "$ref": "#/definitions/ObjectValidationRule"
   }
 }

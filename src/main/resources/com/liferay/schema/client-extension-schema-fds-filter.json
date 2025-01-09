@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://liferay.com/liferay-extension-types.json",
-  "title": "Editor Config Contributor Client Extension",
+  "title": "Frontend Data Set Filter Client Extension",
   "definitions": {
     "AssembleItem": {
       "properties": {
@@ -13,10 +13,10 @@
         }
       }
     },
-    "EditorConfigContributor": {
-      "title": "Editor Config Contributor Client Extension",
-      "description": "Editor Config Contributor client extensions override existing CKEditor configuration in a ConfigContributor.java file.",
-      "x-intellij-html-description": "Editor Config Contributor client extensions override existing CKEditor configuration in a <code>ConfigContributor.java</code> file. See <a href='https://learn.liferay.com/w/dxp/liferay-development/customizing-liferays-look-and-feel/using-an-editor-config-contributor-client-extension'>Using an Editor Config Contributor Client Extension</a> for more information...",
+    "FdsFilter": {
+      "title": "Frontend Data Set Filter Client Extension",
+      "description": "Frontend data set filter client extensions define JavaScript functions for creating customizable filter interfaces. Add these extensions to your data set to enhance the user experience by providing tailored filtering capabilities.",
+      "x-intellij-html-description": "Frontend data set filter client extensions define JavaScript functions for creating customizable filter interfaces. Add these extensions to <a href='https://learn.liferay.com/w/dxp/liferay-development/data-sets/managing-data-sets'>your data set</a> to enhance the user experience by providing tailored filtering capabilities. See <a href='https://learn.liferay.com/w/dxp/liferay-development/customizing-liferays-look-and-feel/using-a-frontend-data-set-filter-client-extension'>Using a Frontend Data Set Filter Client Extension</a> for more information...",
       "properties": {
         "type": {
           "type": "string",
@@ -135,18 +135,10 @@
           "title": "Source Code URL",
           "description": "The address to the client extension’s source repository."
         },
-        "editorConfigKeys": {
-          "title": "Editor Config Keys",
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Specifies the keys related to the editor configurations that this client extension will override or contribute to."
-        },
         "url": {
           "type": "string",
           "title": "URL",
-          "description": "The path to the JavaScript snippet that implements the functionality of the Editor Config Contributor client extension."
+          "description": "The JavaScript resource file’s location."
         }
       },
       "required": [
@@ -169,6 +161,6 @@
   "additionalProperties": {
     "pattern": "(\\w|\\-)+",
     "type": "object",
-    "$ref": "#/definitions/EditorConfigContributor"
+    "$ref": "#/definitions/FdsFilter"
   }
 }

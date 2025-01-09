@@ -22,26 +22,33 @@
           "title": "Type",
           "description": "Defines the type of the client extension",
           "enum": [
+            "batch",
             "customElement",
             "editorConfigContributor",
             "fdsCellRenderer",
+            "fdsFilter",
             "globalCSS",
             "globalJS",
             "iframe",
+            "instanceSettings",
             "jsImportMapsEntry",
+            "notificationType",
+            "oAuthApplicationHeadlessServer",
+            "oAuthApplicationUserAgent",
+            "objectAction",
+            "objectValidationRule",
+            "siteInitializer",
             "staticContent",
             "themeCSS",
             "themeFavicon",
             "themeJS",
             "themeSpritemap",
-            "objectAction",
-            "workflowAction",
-            "notificationType",
-            "oAuthApplicationUserAgent",
-            "oAuthApplicationHeadlessServer",
-            "batch"
+            "workflowAction"
           ],
           "x-intellij-enum-metadata": {
+            "batch": {
+              "description": "Batch"
+            },
             "customElement": {
               "description": "Custom Element"
             },
@@ -50,6 +57,9 @@
             },
             "fdsCellRenderer": {
               "description": "Frontend data set cell renderer"
+            },
+            "fdsFilter": {
+              "description": "Frontend Data Set Filter"
             },
             "globalCSS": {
               "description": "Global CSS"
@@ -60,8 +70,29 @@
             "iframe": {
               "description": "IFrame"
             },
+            "instanceSettings": {
+              "description": "Instance Settings"
+            },
             "jsImportMapsEntry": {
               "description": "JS Importmaps Entry"
+            },
+            "notificationType": {
+              "description": "Notification Type"
+            },
+            "oAuthApplicationHeadlessServer": {
+              "description": "OAuth Headless Server"
+            },
+            "oAuthApplicationUserAgent": {
+              "description": "OAuth User Agent"
+            },
+            "objectAction": {
+              "description": "Object Action"
+            },
+            "objectValidationRule": {
+              "description": "Object Validation Rule"
+            },
+            "siteInitializer": {
+              "description": "Site Initializer"
             },
             "staticContent": {
               "description": "Static content"
@@ -78,23 +109,8 @@
             "themeSpritemap": {
               "description": "Theme Sprite Map"
             },
-            "objectAction": {
-              "description": "Object Action"
-            },
             "workflowAction": {
               "description": "Workflow Action"
-            },
-            "notificationType": {
-              "description": "Notification Type"
-            },
-            "oAuthApplicationUserAgent": {
-              "description": "OAuth User Agent"
-            },
-            "oAuthApplicationHeadlessServer": {
-              "description": "OAuth Headless Server"
-            },
-            "batch": {
-              "description": "Batch"
             }
           }
         },

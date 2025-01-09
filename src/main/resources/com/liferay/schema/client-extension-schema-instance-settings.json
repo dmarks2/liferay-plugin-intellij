@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://liferay.com/liferay-extension-types.json",
-  "title": "Editor Config Contributor Client Extension",
+  "title": "Instance Settings Client Extension",
   "definitions": {
     "AssembleItem": {
       "properties": {
@@ -13,10 +13,10 @@
         }
       }
     },
-    "EditorConfigContributor": {
-      "title": "Editor Config Contributor Client Extension",
-      "description": "Editor Config Contributor client extensions override existing CKEditor configuration in a ConfigContributor.java file.",
-      "x-intellij-html-description": "Editor Config Contributor client extensions override existing CKEditor configuration in a <code>ConfigContributor.java</code> file. See <a href='https://learn.liferay.com/w/dxp/liferay-development/customizing-liferays-look-and-feel/using-an-editor-config-contributor-client-extension'>Using an Editor Config Contributor Client Extension</a> for more information...",
+    "InstanceSettings": {
+      "title": "Instance Settings Client Extension",
+      "description": "You can use an instance settings client extension to configure a wide variety of Liferay configurations. Each configuration is referenced by its PID (Persistent IDentity).",
+      "x-intellij-html-description": "You can use an instance settings client extension to configure a <a href='https://learn.liferay.com/w/dxp/liferay-development/configuration-as-code/instance-settings-yaml-configuration-reference#currently-supported-instance-settings-pids'>wide variety of Liferay configurations</a>. Each configuration is referenced by its PID (Persistent IDentity). See <a href='https://learn.liferay.com/w/dxp/liferay-development/configuration-as-code/instance-settings-yaml-configuration-reference'>Instance Settings YAML Configuration Reference</a> for more information...",
       "properties": {
         "type": {
           "type": "string",
@@ -135,24 +135,17 @@
           "title": "Source Code URL",
           "description": "The address to the client extension’s source repository."
         },
-        "editorConfigKeys": {
-          "title": "Editor Config Keys",
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Specifies the keys related to the editor configurations that this client extension will override or contribute to."
-        },
-        "url": {
+        "pid": {
           "type": "string",
-          "title": "URL",
-          "description": "The path to the JavaScript snippet that implements the functionality of the Editor Config Contributor client extension."
+          "title": "PID",
+          "description": "The PID (Persistent IDentity) of the configured instance setting (from the currently supported instance settings PIDs.)",
+          "x-intellij-html-description": "The PID (Persistent IDentity) of the configured instance setting (from the <a href='https://learn.liferay.com/w/dxp/liferay-development/configuration-as-code/instance-settings-yaml-configuration-reference#currently-supported-instance-settings-pids'>currently supported instance settings PIDs.</a>)"
         }
       },
       "required": [
         "type",
         "name",
-        "url"
+        "pid"
       ],
       "additionalProperties": true
     }
@@ -169,6 +162,6 @@
   "additionalProperties": {
     "pattern": "(\\w|\\-)+",
     "type": "object",
-    "$ref": "#/definitions/EditorConfigContributor"
+    "$ref": "#/definitions/InstanceSettings"
   }
 }

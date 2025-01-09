@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.23
 - Feature: add deprecation check for LPS-188270
-- Feature: add support for additional client extensions (Editor Config Contributor)
+- Feature: add support for additional client extensions (Editor Config Contributor, FDS Filter, Instance Settings, Object Validation Rule, Site Initializer)
 
 ## 0.0.22
 - Feature: add deprecation check for LPS-104241, LPS-175951, LPS-182671

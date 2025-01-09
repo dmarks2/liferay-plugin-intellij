@@ -10,21 +10,25 @@ Validations and basic code completion features have been added for `client-exten
 
 The following types of client extensions are supported:
 
+* batch
 * customElement
 * editorConfigContributor
 * fdsCellRenderer
+* fdsFilter
 * globalCSS
 * globalJS
 * iframe
+* instanceSettings
 * jsImportMapsEntry
+* notificationType
+* oAuthApplicationHeadlessServer
+* oAuthApplicationUserAgent
+* objectAction
+* objectValidationRule
+* siteInitializer
 * staticContent
 * themeCSS
 * themeFavicon
 * themeJS
 * themeSpritemap
-* objectAction
 * workflowAction
-* notificationType
-* oAuthApplicationUserAgent
-* oAuthApplicationHeadlessServer
-* batch

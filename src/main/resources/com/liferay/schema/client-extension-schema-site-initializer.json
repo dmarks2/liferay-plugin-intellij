@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://liferay.com/liferay-extension-types.json",
-  "title": "Editor Config Contributor Client Extension",
+  "title": "Site Initializer Client Extension",
   "definitions": {
     "AssembleItem": {
       "properties": {
@@ -13,10 +13,10 @@
         }
       }
     },
-    "EditorConfigContributor": {
-      "title": "Editor Config Contributor Client Extension",
-      "description": "Editor Config Contributor client extensions override existing CKEditor configuration in a ConfigContributor.java file.",
-      "x-intellij-html-description": "Editor Config Contributor client extensions override existing CKEditor configuration in a <code>ConfigContributor.java</code> file. See <a href='https://learn.liferay.com/w/dxp/liferay-development/customizing-liferays-look-and-feel/using-an-editor-config-contributor-client-extension'>Using an Editor Config Contributor Client Extension</a> for more information...",
+    "SiteInitializer": {
+      "title": "Site Initializer Client Extension",
+      "description": "Site Initializer client extensions can quickly create a site, complete with configurations and content.",
+      "x-intellij-html-description": "Site Initializer client extensions can quickly create a site, complete with configurations and content. See <a href='https://learn.liferay.com/w/dxp/liferay-development/importing-exporting-data/using-a-site-initializer-client-extension'>Using a Site Initializer Client Extension</a> for more information...",
       "properties": {
         "type": {
           "type": "string",
@@ -135,24 +135,25 @@
           "title": "Source Code URL",
           "description": "The address to the client extension’s source repository."
         },
-        "editorConfigKeys": {
-          "title": "Editor Config Keys",
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Specifies the keys related to the editor configurations that this client extension will override or contribute to."
-        },
-        "url": {
+        "siteExternalReferenceCode": {
           "type": "string",
-          "title": "URL",
-          "description": "The path to the JavaScript snippet that implements the functionality of the Editor Config Contributor client extension."
+          "title": "Site External Reference Code",
+          "description": "An external reference code used to identify the site uniquely."
+        },
+        "siteName": {
+          "type": "string",
+          "title": "Site Name",
+          "description": "The site’s name when it’s deployed to a Liferay instance."
+        },
+        "oAuthApplicationHeadlessServer": {
+          "type": "string",
+          "title": "OAuth Application Headless Server",
+          "description": "Extension to authenticate against the server."
         }
       },
       "required": [
         "type",
-        "name",
-        "url"
+        "name"
       ],
       "additionalProperties": true
     }
@@ -169,6 +170,6 @@
   "additionalProperties": {
     "pattern": "(\\w|\\-)+",
     "type": "object",
-    "$ref": "#/definitions/EditorConfigContributor"
+    "$ref": "#/definitions/SiteInitializer"
   }
 }
