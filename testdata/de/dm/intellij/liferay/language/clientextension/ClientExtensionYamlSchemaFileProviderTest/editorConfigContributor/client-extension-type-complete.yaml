@@ -1,0 +1,8 @@
+assemble:
+  - from: build
+    into: static
+
+my-editor-config-contributor:
+  name: My Editor Config Contributor
+  type: editorConfigContributor
+  <caret>

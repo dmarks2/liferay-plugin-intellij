@@ -1,0 +1,8 @@
+assemble:
+  - from: build
+    into: static
+
+my-client-extension:
+  name: My Client Extension
+  type: unknownClientExtension
+  <caret>

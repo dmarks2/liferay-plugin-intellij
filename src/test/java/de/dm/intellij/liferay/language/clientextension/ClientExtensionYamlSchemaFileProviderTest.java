@@ -64,4 +64,22 @@ public class ClientExtensionYamlSchemaFileProviderTest extends BasePlatformTestC
 		assertTrue(strings.contains("useESM"));
 	}
 
+	public void testEditorConfigContributorTypeCompletion() {
+		myFixture.configureByFiles("editorConfigContributor/client-extension-type-complete.yaml");
+		myFixture.complete(CompletionType.BASIC, 1);
+		List<String> strings = myFixture.getLookupElementStrings();
+
+		assertNotNull(strings);
+		assertTrue(strings.contains("editorConfigKeys"));
+	}
+
+	public void testUnknownExtensionTypeCompletion() {
+		myFixture.configureByFiles("unknownExtension/client-extension-type-complete.yaml");
+		myFixture.complete(CompletionType.BASIC, 1);
+		List<String> strings = myFixture.getLookupElementStrings();
+
+		assertNotNull(strings);
+		assertTrue(strings.contains("description"));
+	}
+
 }
