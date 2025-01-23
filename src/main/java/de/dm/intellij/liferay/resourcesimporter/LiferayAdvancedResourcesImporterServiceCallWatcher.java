@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.resourcesimporter;
 
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.externalSystem.service.project.autoimport.FileChangeListenerBase;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -7,12 +8,27 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.newvfs.events.VFileEvent;
-import com.intellij.psi.*;
+import com.intellij.psi.JavaPsiFacade;
+import com.intellij.psi.JavaRecursiveElementVisitor;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiClassType;
+import com.intellij.psi.PsiConstantEvaluationHelper;
+import com.intellij.psi.PsiExpression;
+import com.intellij.psi.PsiExpressionList;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiJavaFile;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiMethodCallExpression;
+import com.intellij.psi.PsiReferenceExpression;
+import com.intellij.psi.PsiType;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class LiferayAdvancedResourcesImporterServiceCallWatcher extends FileChangeListenerBase {
+
+    private final static Logger log = Logger.getInstance(LiferayAdvancedResourcesImporterServiceCallWatcher.class);
 
     private static final String ADVANCED_RESOURCES_IMPORTER_CLASS_NAME = "de.dm.toolbox.liferay.resources.importer.service.AdvancedResourcesImporterService";
 
@@ -20,71 +36,79 @@ public class LiferayAdvancedResourcesImporterServiceCallWatcher extends FileChan
         final Module module = ModuleUtil.findModuleForFile(virtualFile, project);
 
         if (module != null) {
-            final LiferayModuleComponent component = module.getService(LiferayModuleComponent.class);
+            handleChange(project, module, virtualFile);
+        }
+    }
 
-            if (component != null) {
-                ProjectUtils.runDumbAwareLater(project, () -> {
-                    if (virtualFile.exists() && virtualFile.isValid()) {
-                        PsiManager psiManager = PsiManager.getInstance(project);
+    public static void handleChange(Project project, Module module, VirtualFile virtualFile) {
+        final LiferayModuleComponent component = module.getService(LiferayModuleComponent.class);
 
-                        PsiFile psiFile = psiManager.findFile(virtualFile);
+        if (component != null) {
+            ProjectUtils.runDumbAwareLater(project, () -> {
+                if (virtualFile.exists() && virtualFile.isValid()) {
+                    PsiManager psiManager = PsiManager.getInstance(project);
 
-                        if (psiFile instanceof PsiJavaFile psiJavaFile) {
-							if (psiJavaFile.isValid()) {
-                                PsiClass[] classes = psiJavaFile.getClasses();
+                    PsiFile psiFile = psiManager.findFile(virtualFile);
 
-                                for (PsiClass psiClass : classes) {
-                                    PsiMethod[] methods = psiClass.getMethods();
+                    if (psiFile instanceof PsiJavaFile psiJavaFile) {
+                        if (psiJavaFile.isValid()) {
+                            PsiClass[] classes = psiJavaFile.getClasses();
 
-                                    for (PsiMethod method : methods) {
-                                        method.accept(new JavaRecursiveElementVisitor() {
-                                            @Override
-                                            public void visitMethodCallExpression(@NotNull PsiMethodCallExpression methodCallExpression) {
-                                                PsiReferenceExpression methodExpression = methodCallExpression.getMethodExpression();
+                            for (PsiClass psiClass : classes) {
+                                PsiMethod[] methods = psiClass.getMethods();
 
-                                                PsiExpression qualifierExpression = methodExpression.getQualifierExpression();
+                                for (PsiMethod method : methods) {
+                                    method.accept(new JavaRecursiveElementVisitor() {
+                                        @Override
+                                        public void visitMethodCallExpression(@NotNull PsiMethodCallExpression methodCallExpression) {
+                                            PsiReferenceExpression methodExpression = methodCallExpression.getMethodExpression();
 
-                                                if (qualifierExpression != null) {
-                                                    PsiType type = qualifierExpression.getType();
+                                            PsiExpression qualifierExpression = methodExpression.getQualifierExpression();
 
-                                                    if (type instanceof PsiClassType classType) {
+                                            if (qualifierExpression != null) {
+                                                PsiType type = qualifierExpression.getType();
 
-														PsiClass clazz = classType.resolve();
+                                                if (type instanceof PsiClassType classType) {
 
-                                                        if (clazz != null) {
-                                                            String qualifiedName = clazz.getQualifiedName();
+                                                    PsiClass clazz = classType.resolve();
 
-                                                            if (ADVANCED_RESOURCES_IMPORTER_CLASS_NAME.equals(qualifiedName)) {
-                                                                PsiExpressionList argumentList = methodCallExpression.getArgumentList();
+                                                    if (clazz != null) {
+                                                        String qualifiedName = clazz.getQualifiedName();
 
-                                                                PsiExpression[] expressions = argumentList.getExpressions();
+                                                        if (ADVANCED_RESOURCES_IMPORTER_CLASS_NAME.equals(qualifiedName)) {
+                                                            PsiExpressionList argumentList = methodCallExpression.getArgumentList();
 
-                                                                if (expressions.length > 2) {
-                                                                    PsiExpression groupKeyExpression = expressions[2];
+                                                            PsiExpression[] expressions = argumentList.getExpressions();
 
-                                                                    JavaPsiFacade javaPsiFacade = JavaPsiFacade.getInstance(psiClass.getProject());
+                                                            if (expressions.length > 2) {
+                                                                PsiExpression groupKeyExpression = expressions[2];
 
-                                                                    PsiConstantEvaluationHelper constantEvaluationHelper = javaPsiFacade.getConstantEvaluationHelper();
+                                                                JavaPsiFacade javaPsiFacade = JavaPsiFacade.getInstance(psiClass.getProject());
 
-                                                                    Object result = constantEvaluationHelper.computeConstantExpression(groupKeyExpression);
+                                                                PsiConstantEvaluationHelper constantEvaluationHelper = javaPsiFacade.getConstantEvaluationHelper();
 
-                                                                    if (result instanceof String advancedResourcesImporterGroup) {
-																		component.setResourcesImporterGroupName(advancedResourcesImporterGroup);
+                                                                Object result = constantEvaluationHelper.computeConstantExpression(groupKeyExpression);
+
+                                                                if (result instanceof String advancedResourcesImporterGroup) {
+                                                                    if (log.isDebugEnabled()) {
+                                                                        log.debug("Found Advanced Resources Importer Group \"" + advancedResourcesImporterGroup + "\" in " + virtualFile.getPath());
                                                                     }
+
+                                                                    component.setResourcesImporterGroupName(advancedResourcesImporterGroup);
                                                                 }
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
-                                        });
-                                    }
+                                        }
+                                    });
                                 }
                             }
                         }
                     }
-                });
-            }
+                }
+            });
         }
     }
 
