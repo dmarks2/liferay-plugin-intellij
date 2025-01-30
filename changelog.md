@@ -3,6 +3,9 @@ Liferay Plugin for IntelliJ
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.24
+- Feature: add deprecation checks for Liferay 2024.Q4
+
 ## 0.0.23
 - Feature: add deprecation check for LPS-188270
 - Feature: add support for additional client extensions (Editor Config Contributor, FDS Filter, Instance Settings, Object Validation Rule, Site Initializer)

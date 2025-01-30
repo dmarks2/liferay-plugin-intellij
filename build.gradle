@@ -767,7 +767,7 @@ tasks {
 }
 
 group 'de.dm.intellij.liferay'
-version '0.0.23'
+version '0.0.24'
 
 configurations.poshiImplementation.setCanBeResolved(true)
 

@@ -1027,6 +1027,59 @@ public class LiferayJavaDeprecations {
 					"com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil",
 			});
 
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_198887_OPEN_ID_UTIL = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"OpenId and OpenIdUtil.java are removed. Use OpenIdConnect instead.",
+			"LPS-198887",
+			new String[] {
+					"com.liferay.portal.kernel.openid.OpenId",
+					"com.liferay.portal.util.OpenIdUtil"
+			},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_200501_IS_STARTUP_FINISHED = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The isStartupFinished and setStartupFinished(boolean) methods are removed (The flag does not accurately reflect the startup status, so the methods are removed to avoid incorrect usage).",
+			"LPS-200501",
+			new String[] {
+					"com.liferay.portal.events.StartupHelperUtil.isStartupFinished()",
+					"com.liferay.portal.events.StartupHelperUtil.setStartupFinished()"
+			},
+			new String[0]);
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_197267_PERMISSION_CONVERTER_UTIL = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The PermissionConverterUtil class is removed. Instead, use an OSGi service to reference PermissionConverter.",
+			"LPS-197267",
+			new String[] {
+					"com.liferay.portal.kernel.security.permission.PermissionConverterUtil"
+			},
+			new String[0] );
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_196101_PORTLET_PERMISSION = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The PortletPermission class is removed. Use PortletPermissionUtil instead.",
+			"LPS-196101",
+			new String[] {
+					"com.liferay.portal.kernel.service.permission.PortletPermission"
+			},
+			new String[] {
+					"com.liferay.portal.kernel.service.permission.PortletPermissionUtil"
+			});
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_196539_GET_PORTLET_SETUP = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The getPortletSetup method is renamed to getPortletPreferences, and the setPortletSetup method is renamed to setPortletPreferences. Update any references to use the new method names.",
+			"LPS-196539",
+			new String[] {
+					"com.liferay.portal.kernel.theme.PortletDisplay.getPortletSetup()",
+					"com.liferay.portal.kernel.theme.PortletDisplay.setPortletSetup()"
+			},
+			new String[] {
+					"com.liferay.portal.kernel.theme.PortletDisplay.getPortletPreferences()",
+					"com.liferay.portal.kernel.theme.PortletDisplay.setPortletPreferences()"
+			});
+
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
 		String[] newImportStatements = new String[0];

@@ -14,6 +14,7 @@ public class LiferayVersions {
     public static final String LIFERAY_2024_Q1_CE = "7.4.3.112";
     public static final String LIFERAY_2024_Q2_CE = "7.4.3.120";
     public static final String LIFERAY_2024_Q3_CE = "7.4.3.125";
+    public static final String LIFERAY_2024_Q4_CE = "7.4.3.129";
 
     public static String getGAVersion(String liferayVersion) {
         int gaVersionIndex = liferayVersion.lastIndexOf('.') + 1;
