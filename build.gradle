@@ -72,8 +72,8 @@ dependencies {
 
         bundledPlugins(
                 "JavaScript", "Tomcat", "com.intellij.velocity", "com.intellij.freemarker", "org.jetbrains.idea.maven", /*"Properties",*/
-                /*"java-i18n",*/ "com.intellij.css", /*"sass",*/ /*"JavaEE",*/ "com.intellij.javaee.web", "com.intellij.jsp",
-                "com.intellij.gradle", "org.intellij.intelliLang", /*"uml",*/ "com.intellij.java", "XPathView",
+                /*"java-i18n",*/ "com.intellij.css", "org.jetbrains.plugins.sass", /*"JavaEE",*/ "com.intellij.javaee.web", "com.intellij.jsp",
+                "com.intellij.gradle", "org.intellij.intelliLang", "com.intellij.diagram", "com.intellij.java", "XPathView",
                 //test only?
                 "org.intellij.groovy", /*"junit",*/ "com.intellij.persistence", "com.intellij.database", "org.jetbrains.plugins.yaml"
         )
