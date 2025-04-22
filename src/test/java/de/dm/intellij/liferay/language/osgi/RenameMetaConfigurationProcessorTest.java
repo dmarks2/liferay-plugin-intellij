@@ -1,9 +1,24 @@
 package de.dm.intellij.liferay.language.osgi;
 
+import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
 import com.intellij.psi.PsiElement;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
+import com.intellij.util.PathUtil;
+
+import java.io.File;
 
 public class RenameMetaConfigurationProcessorTest extends LightJavaCodeInsightFixtureTestCase {
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+
+        File testDataDir = new File(myFixture.getTestDataPath());
+
+        final String testDataPath = PathUtil.toSystemIndependentName(testDataDir.getAbsolutePath());
+
+        VfsRootAccess.allowRootAccess(myFixture.getTestRootDisposable(), testDataPath);
+    }
 
     @Override
     protected String getTestDataPath() {

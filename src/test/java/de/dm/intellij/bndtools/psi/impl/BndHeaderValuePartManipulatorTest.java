@@ -21,6 +21,17 @@ import java.io.File;
  */
 public class BndHeaderValuePartManipulatorTest extends LightJavaCodeInsightFixtureTestCase {
 
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+
+        File testDataDir = new File(myFixture.getTestDataPath());
+
+        final String testDataPath = PathUtil.toSystemIndependentName(testDataDir.getAbsolutePath());
+
+        VfsRootAccess.allowRootAccess(myFixture.getTestRootDisposable(), testDataPath);
+    }
+
     public void testRenamePackageInsideBnd() {
         myFixture.configureByFiles("testRenamePackageInsideBnd/bnd.bnd", "com/liferay/test/Foo.java");
 

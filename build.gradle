@@ -81,12 +81,10 @@ dependencies {
 
         testFramework TestFrameworkType.Platform.INSTANCE
         testFramework TestFrameworkType.Plugin.Java.INSTANCE
+        testFramework TestFrameworkType.Plugin.Maven.INSTANCE
     }
 
     testImplementation 'junit:junit:4.13.1'
-    testImplementation('com.jetbrains.intellij.maven:maven-test-framework:241.14494.240') {
-        transitive = false
-    }
     testImplementation 'org.apache.maven:maven-artifact:3.6.3'
     testImplementation('com.jetbrains.intellij.platform:external-system-test-framework:242.21829.142') {
         transitive = false

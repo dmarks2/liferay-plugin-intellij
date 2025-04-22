@@ -1,8 +1,11 @@
 package de.dm.intellij.liferay.language.osgi;
 
 import com.intellij.codeInsight.intention.IntentionAction;
+import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
+import com.intellij.util.PathUtil;
 
+import java.io.File;
 import java.util.List;
 
 public class MetaConfigurationInvalidIdInspectionTest extends LightJavaCodeInsightFixtureTestCase {
@@ -15,6 +18,12 @@ public class MetaConfigurationInvalidIdInspectionTest extends LightJavaCodeInsig
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+
+        File testDataDir = new File(myFixture.getTestDataPath());
+
+        final String testDataPath = PathUtil.toSystemIndependentName(testDataDir.getAbsolutePath());
+
+        VfsRootAccess.allowRootAccess(myFixture.getTestRootDisposable(), testDataPath);
 
         myFixture.enableInspections(new MetaConfigurationInvalidIdInspection());
     }
