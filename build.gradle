@@ -86,9 +86,6 @@ dependencies {
 
     testImplementation 'junit:junit:4.13.1'
     testImplementation 'org.apache.maven:maven-artifact:3.6.3'
-    testImplementation('com.jetbrains.intellij.platform:external-system-test-framework:242.21829.142') {
-        transitive = false
-    }
 
     //compileOnly 'org.jetbrains.plugins:maven-server-api:2016.3'
     compileOnly 'com.github.adedayo.intellij.sdk:maven-server-api:142.1'
