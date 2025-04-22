@@ -34,7 +34,7 @@ public class GradleWrapperUtil {
 			}
 		}
 
-		GradleUtil.writeWrapperConfiguration(propertiesFile, configuration);
+		GradleUtil.writeWrapperConfiguration(configuration, propertiesFile);
 
 		AssetsProcessor.getInstance().generateSources(root, standardAssetsProvider.getGradlewAssets(), new HashMap<>());
 	}

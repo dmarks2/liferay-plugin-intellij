@@ -22,6 +22,7 @@ repositories {
 }
 
 import de.undercouch.gradle.tasks.download.Download
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -77,9 +78,12 @@ dependencies {
                 //test only?
                 "org.intellij.groovy", /*"junit",*/ "com.intellij.persistence", "com.intellij.database", "org.jetbrains.plugins.yaml"
         )
+
+        testFramework TestFrameworkType.Platform.INSTANCE
+        testFramework TestFrameworkType.Plugin.Java.INSTANCE
     }
 
-    testImplementation group: 'junit', name: 'junit', version: '4.11'
+    testImplementation 'junit:junit:4.13.1'
     testImplementation('com.jetbrains.intellij.maven:maven-test-framework:241.14494.240') {
         transitive = false
     }
