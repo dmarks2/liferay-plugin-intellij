@@ -72,8 +72,8 @@ dependencies {
         intellijIdeaUltimate '2025.1'
 
         bundledPlugins(
-                "JavaScript", "Tomcat", "com.intellij.velocity", "com.intellij.freemarker", "org.jetbrains.idea.maven", /*"Properties",*/
-                /*"java-i18n",*/ "com.intellij.css", "org.jetbrains.plugins.sass", /*"JavaEE",*/ "com.intellij.javaee.web", "com.intellij.jsp",
+                "JavaScript", "Tomcat", "com.intellij.velocity", "com.intellij.freemarker", "org.jetbrains.idea.maven", "com.intellij.properties",
+                "com.intellij.java-i18n", "com.intellij.css", "org.jetbrains.plugins.sass", "com.intellij.java", "com.intellij.javaee.web", "com.intellij.jsp",
                 "com.intellij.gradle", "org.intellij.intelliLang", "com.intellij.diagram", "com.intellij.java", "XPathView",
                 //test only?
                 "org.intellij.groovy", /*"junit",*/ "com.intellij.persistence", "com.intellij.database", "org.jetbrains.plugins.yaml"
@@ -125,6 +125,13 @@ dependencies {
 intellijPlatform {
     pluginConfiguration {
         name = 'Liferay IntelliJ Plugin'
+        projectName = 'Liferay IntelliJ Plugin'
+    }
+
+    pluginVerification {
+        ides {
+            recommended()
+        }
     }
 }
 
@@ -737,19 +744,12 @@ tasks.register('downloadPoshi', Copy) {
     into generatedResources + '/lib'
 }
 
-tasks {
-    runPluginVerifier {
-        freeArgs = ["-mute", "TemplateWordInPluginId"]
-
-        ideVersions = [
-                "IU-2024.1"
-        ]
-    }
-}
-
 group 'de.dm.intellij.liferay'
 version '0.0.24'
 
 configurations.poshiImplementation.setCanBeResolved(true)
+
+compileTestJava.dependsOn compilePoshi
+instrumentCode.dependsOn compilePoshi
 
 build.dependsOn compilePoshi
