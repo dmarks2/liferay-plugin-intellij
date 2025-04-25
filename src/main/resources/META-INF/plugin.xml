@@ -28,6 +28,7 @@
         <p>Version 0.0.24</p>
         <ul>
           <li>Feature: add deprecation checks for Liferay 2024.Q4</li>
+          <li>Feature: add support for IntelliJ IDEA 2025.1</li>
         </ul>
 
         <p>Version 0.0.23</p>
@@ -36,6 +37,7 @@
           <li>Feature: add support for additional client extensions (Editor Config Contributor, FDS Filter, Instance Settings, Object Validation Rule, Site Initializer)</li>
           <li>Bugfix: improved startup time</li>
         </ul>
+
         <p>Version 0.0.22</p>
         <ul>
             <li>Feature: add deprecation check for LPS-104241, LPS-175951, LPS-182671</li>
