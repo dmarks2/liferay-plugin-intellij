@@ -1,5 +1,6 @@
 package de.dm.intellij.liferay.language.resourcebundle;
 
+import com.intellij.openapi.project.DumbService;
 import com.intellij.psi.*;
 import com.intellij.psi.filters.ElementFilter;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -24,6 +25,10 @@ public class ResourceBundleReferenceElementFilter implements ElementFilter {
     @Override
     public boolean isAcceptable(Object element, @Nullable PsiElement context) {
         if (element instanceof PsiLiteralExpression literalExpression) {
+            if (DumbService.isDumb(literalExpression.getProject())) {
+                return false;
+            }
+
 			PsiExpressionList expressionList = PsiTreeUtil.getParentOfType(literalExpression, PsiExpressionList.class);
 
             if (expressionList != null) {
