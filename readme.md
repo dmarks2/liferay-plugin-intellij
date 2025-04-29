@@ -38,8 +38,8 @@ for the plugin. Improvements have been made in the following areas:
 
 Supported IDEs
 --------------
-* IntelliJ 2024.1 and above (Community)
-* IntelliJ 2024.1 and above (Ultimate)
+* IntelliJ 2025.1 and above (Community)
+* IntelliJ 2025.1 and above (Ultimate)
 
 Supported Liferay Versions
 --------------------------
@@ -58,7 +58,7 @@ Releases
 
 See [Releases](https://github.com/dmarks2/liferay-plugin-intellij/releases) to download binary release versions.
 
-For automatic updates configure the following URL as custom repository in IntelliJ IDEA:
+For automatic updates configure the following URL as a custom repository in IntelliJ IDEA:
 
     https://raw.githubusercontent.com/dmarks2/liferay-plugin-intellij/master/updatePlugins.xml
 

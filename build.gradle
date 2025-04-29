@@ -125,6 +125,10 @@ intellijPlatform {
     pluginConfiguration {
         name = 'Liferay IntelliJ Plugin'
         projectName = 'Liferay IntelliJ Plugin'
+
+        ideaVersion {
+            sinceBuild = "251"
+        }
     }
 
     pluginVerification {
