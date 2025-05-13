@@ -1118,4 +1118,5 @@ public class LiferayJavaDeprecations {
 		return new AbstractMap.SimpleImmutableEntry<>(importStatements, newImportStatements);
 	}
 
+	//TODO: Add LPS-178619? ddmstructurekey has been replaced by ddmstructureid in many api calls
 }
