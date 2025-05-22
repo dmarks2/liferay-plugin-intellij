@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 ## 0.0.24
 - Feature: add deprecation checks for Liferay 2024.Q4
 - Feature: add support for IntelliJ IDEA 2025.1, dropped support for older versions
+- Feature: add deprecation check for LPS-178619
 
 ## 0.0.23
 - Feature: add deprecation check for LPS-188270

@@ -29,6 +29,7 @@
         <ul>
           <li>Feature: add deprecation checks for Liferay 2024.Q4</li>
           <li>Feature: add support for IntelliJ IDEA 2025.1, dropped support for older versions</li>
+          <li>Feature: add deprecation check for LPS-178619</li>
         </ul>
 
         <p>Version 0.0.23</p>

@@ -122,6 +122,7 @@ public class LiferayGroovyDeprecationInspection extends AbstractLiferayDeprecati
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_1536_DL_STORE_UTIL_SET_STORE).version(LiferayVersions.LIFERAY_2024_Q3_CE));
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_200501_IS_STARTUP_FINISHED).version(LiferayVersions.LIFERAY_2024_Q4_CE));
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_196539_GET_PORTLET_SETUP).version(LiferayVersions.LIFERAY_2024_Q4_CE));
+		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_178619_JOURNAL_ARTICLE_STRUCTURE_KEY_REMOVAL).version("7.4.3.72"));
 	}
 
 	@Nls

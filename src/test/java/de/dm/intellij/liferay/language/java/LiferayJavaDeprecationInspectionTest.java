@@ -17,7 +17,7 @@ public class LiferayJavaDeprecationInspectionTest extends LightJavaCodeInsightFi
 	@Override
 	protected LightProjectDescriptor getProjectDescriptor() {
 		return new LightProjectDescriptorBuilder()
-				.liferayVersion("7.4.3.55")
+				.liferayVersion("7.4.3.120")
 				.build();
 	}
 
@@ -178,6 +178,15 @@ public class LiferayJavaDeprecationInspectionTest extends LightJavaCodeInsightFi
 		}
 
 		myFixture.checkResultByFile("MyPortalFlashDeprecation_expected.java");
+	}
+
+	public void testLPS178619Deprecation() {
+		myFixture.configureByFiles(
+				"MyStructureKeyDeprecation.java",
+				"com/liferay/journal/model/JournalArticle.java"
+		);
+
+		myFixture.checkHighlighting();
 	}
 
 }

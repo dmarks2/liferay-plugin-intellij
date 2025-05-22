@@ -1080,6 +1080,20 @@ public class LiferayJavaDeprecations {
 					"com.liferay.portal.kernel.theme.PortletDisplay.setPortletPreferences()"
 			});
 
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_178619_JOURNAL_ARTICLE_STRUCTURE_KEY_REMOVAL = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"For JournalArticle, ddmStructureKey support has been removed. Use ddmStructureId instead.",
+			"LPS-178619",
+			new String[] {
+					"com.liferay.journal.model.JournalArticle.getDDMStructureKey()",
+					"com.liferay.journal.model.JournalArticle.setDDMStructureKey()",
+					"com.liferay.journal.service.JournalArticleLocalService.getIndexableArticlesByDDMStructureKey()",
+					"com.liferay.journal.service.JournalArticleLocalServiceUtil.getIndexableArticlesByDDMStructureKey()",
+					"com.liferay.journal.service.JournalArticleLocalService.getIndexableArticlesByResourcePrimKey()",
+					"com.liferay.journal.service.JournalArticleLocalServiceUtil.getIndexableArticlesByResourcePrimKey()",
+			},
+			new String[0] );
+
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
 		String[] newImportStatements = new String[0];
