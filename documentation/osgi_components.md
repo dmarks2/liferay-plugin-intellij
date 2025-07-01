@@ -7,6 +7,7 @@ OSGi components
 4. [Inspections of service class inheritance](#inspections-of-service-class-inheritance)
 5. [Resolve configurationPid properties to configuration interfaces](#resolve-configurationpid-properties-to-configuration-interfaces)
 6. [Inspection for Meta Configuration ID](#inspection-for-meta-configuration-id)
+7. [Reference unbind lookup](#reference-unbind-lookup)
 
 Syntax Highlighting for BND files
 ----------------------------------
@@ -224,3 +225,26 @@ Inspection for Meta Configuration ID
 According to the Liferay documentation the ID of a Meta Configuration must match
 the full qualified classname of the Interface class. An Inspection checks if this is the
 case and offers a Quick Fix to rename the ID.
+
+Reference unbind lookup
+-----------------------
+
+When using `@Reference` annotations for a method, you can specify which method to call
+when the reference is being removed by using the `unbind` property.
+
+The plugin offers code completion for the `unbind` property to look up method names
+in the current class.
+
+```java
+@Reference(
+  target = "(javax.portlet.name=" + NotificationsPortletKeys.NOTIFICATIONS + ")",
+  unbind = "unsetPanelApp"
+)
+protected void setPanelApp(PanelApp panelApp) {
+  _panelApp = panelApp;
+}
+
+protected void unsetPanelApp(PanelApp panelApp) {
+	_panelApp = null;
+}
+```
