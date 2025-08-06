@@ -116,7 +116,7 @@ public class ResourceCommandIndex extends FileBasedIndexExtension<CommandKey, Vo
             }
 
 			ProjectUtils.runDumbAware(psiJavaFile.getProject(), () -> {
-				PsiClass[] psiClasses = PsiTreeUtil.getChildrenOfType(psiJavaFile, PsiClass.class);
+				PsiClass[] psiClasses = psiJavaFile.getClasses();
 
 				if (psiClasses != null) {
 

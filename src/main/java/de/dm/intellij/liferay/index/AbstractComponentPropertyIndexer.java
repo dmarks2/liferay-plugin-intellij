@@ -45,7 +45,7 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
         }
 
 		ProjectUtils.runDumbAware(psiJavaFile.getProject(), () -> {
-			PsiClass[] psiClasses = PsiTreeUtil.getChildrenOfType(psiJavaFile, PsiClass.class);
+			PsiClass[] psiClasses = psiJavaFile.getClasses();
 
 			if (psiClasses != null) {
 				for (PsiClass psiClass : psiClasses) {

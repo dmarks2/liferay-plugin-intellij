@@ -19,7 +19,6 @@ import com.intellij.psi.PsiModifierList;
 import com.intellij.psi.PsiNameValuePair;
 import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtil;
 import com.intellij.util.indexing.DataIndexer;
 import com.intellij.util.indexing.DefaultFileTypeSpecificInputFilter;
@@ -125,7 +124,7 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
 			}
 
 			ProjectUtils.runDumbAware(psiJavaFile.getProject(), () -> {
-				PsiClass[] psiClasses = PsiTreeUtil.getChildrenOfType(psiJavaFile, PsiClass.class);
+				PsiClass[] psiClasses = psiJavaFile.getClasses();
 
 				if (psiClasses != null) {
 
