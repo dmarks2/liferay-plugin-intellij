@@ -40,7 +40,7 @@ public class MetaConfigurationInvalidIdInspectionTest extends LightJavaCodeInsig
 
         List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
         for (IntentionAction quickFix : allQuickFixes) {
-            if (quickFixName.equals(quickFix.getFamilyName())) {
+            if (quickFixName.equals(quickFix.getText())) {
                 myFixture.launchAction(quickFix);
             }
         }

@@ -408,7 +408,7 @@ public class LiferayFreemarkerTaglibDeprecationInspection extends AbstractLifera
 		@NotNull
 		@Override
 		public String getFamilyName() {
-			return "Rename Namespace";
+			return "Change Namespace";
 		}
 
 		@Nls
@@ -455,7 +455,7 @@ public class LiferayFreemarkerTaglibDeprecationInspection extends AbstractLifera
 		@NotNull
 		@Override
 		public String getFamilyName() {
-			return "Replace With Tags";
+			return "Replace with Tags";
 		}
 
 		@Nls

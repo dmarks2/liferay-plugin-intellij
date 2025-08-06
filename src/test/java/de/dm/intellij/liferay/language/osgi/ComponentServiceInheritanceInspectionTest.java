@@ -53,7 +53,7 @@ public class ComponentServiceInheritanceInspectionTest extends LightJavaCodeInsi
 
         List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
         for (IntentionAction quickFix : allQuickFixes) {
-            if (quickFixName.equals(quickFix.getFamilyName())) {
+            if (quickFixName.equals(quickFix.getText())) {
                 myFixture.launchAction(quickFix);
             }
         }

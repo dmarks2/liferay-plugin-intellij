@@ -356,7 +356,7 @@ public class LiferayJspTaglibDeprecationInspection extends AbstractLiferayDeprec
 		@NotNull
 		@Override
 		public String getFamilyName() {
-			return "Rename Namespace";
+			return "Change Namespace";
 		}
 
 		@Nls
@@ -506,7 +506,7 @@ public class LiferayJspTaglibDeprecationInspection extends AbstractLiferayDeprec
 		@NotNull
 		@Override
 		public String getFamilyName() {
-			return "Replace With Tags";
+			return "Replace with Tags";
 		}
 
 		@Nls
