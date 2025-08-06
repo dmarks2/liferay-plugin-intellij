@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.25
 - Feature: code completion for the `unbind` attribute in a `@Reference` annotation
+- Change: Update support for IntelliJ 2025.2
 
 ## 0.0.24
 - Feature: add deprecation checks for Liferay 2024.Q4

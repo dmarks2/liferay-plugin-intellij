@@ -47,7 +47,9 @@ public class ShowHookFragmentDiffAction extends CompareFilesAction {
         Presentation presentation = e.getPresentation();
         boolean isAvailable = isAvailable(e);
         presentation.setEnabled(isAvailable);
-        if (ActionPlaces.isPopupPlace(e.getPlace())) {
+		String place = e.getPlace();
+
+		if (place.equals(ActionPlaces.POPUP)) {
             presentation.setVisible(isAvailable);
         }
     }

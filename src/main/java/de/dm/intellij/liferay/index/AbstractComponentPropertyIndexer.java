@@ -1,6 +1,6 @@
 package de.dm.intellij.liferay.index;
 
-import com.intellij.lang.java.JavaParserDefinition;
+import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiAnnotation;
@@ -26,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
     @NotNull
     @Override
     public Map<Key, Void> map(@NotNull FileContent fileContent) {
-        Map<Key, Void> map = new HashMap<>();
+        Map<Key, Void> map = Collections.synchronizedMap(new HashMap<>());
 
         PsiJavaFile psiJavaFile = getPsiJavaFileForPsiDependentIndex(fileContent);
 
@@ -43,42 +44,47 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
             return map;
         }
 
-        PsiClass[] psiClasses = PsiTreeUtil.getChildrenOfType(psiJavaFile, PsiClass.class);
+		ProjectUtils.runDumbAware(psiJavaFile.getProject(), () -> {
+			PsiClass[] psiClasses = PsiTreeUtil.getChildrenOfType(psiJavaFile, PsiClass.class);
 
-        if (psiClasses != null) {
-            for (PsiClass psiClass : psiClasses) {
-                for (String serviceClassName : getServiceClassNames()) {
-                    Map<String, Collection<String>> componentProperties = getComponentProperties(psiClass, serviceClassName);
+			if (psiClasses != null) {
+				for (PsiClass psiClass : psiClasses) {
+					for (String serviceClassName : getServiceClassNames()) {
+						Map<String, Collection<String>> componentProperties = getComponentProperties(psiClass, serviceClassName);
 
-                    if (componentProperties != null) {
-                        processProperties(map, componentProperties, psiClass, serviceClassName);
-                    }
-                }
-            }
-        }
+						if (componentProperties != null) {
+							processProperties(map, componentProperties, psiClass, serviceClassName);
+						}
+					}
+				}
+			}
+		});
 
         return map;
     }
 
-    @Nullable
-    protected PsiJavaFile getPsiJavaFileForPsiDependentIndex(@NotNull FileContent fileContent) {
-        VirtualFile virtualFile = fileContent.getFile();
+	@Nullable
+	protected PsiJavaFile getPsiJavaFileForPsiDependentIndex(@NotNull FileContent fileContent) {
+		VirtualFile virtualFile = fileContent.getFile();
 
-        boolean shouldBuildStubFor = JavaParserDefinition.JAVA_FILE.shouldBuildStubFor(virtualFile);
-        if (! shouldBuildStubFor) {
-            return null;
-        }
+		if (!virtualFile.isValid()) {
+			return null;
+		}
 
-        PsiFile psiFile = fileContent.getPsiFile();
+		if (!JavaFileType.INSTANCE.equals(virtualFile.getFileType())) {
+			return null;
+		}
 
-        if (! (psiFile instanceof PsiJavaFile)) {
-            return null;
-        }
+		PsiFile psiFile = fileContent.getPsiFile();
 
-        return (PsiJavaFile) psiFile;
-    }
+		if (!(psiFile instanceof PsiJavaFile)) {
+			return null;
+		}
 
-    @NotNull
+		return (PsiJavaFile) psiFile;
+	}
+
+	@NotNull
     protected abstract String[] getServiceClassNames();
 
     protected abstract void processProperties(@NotNull Map<Key, Void> map, @NotNull Map<String, Collection<String>> properties, @NotNull PsiClass psiClass, String serviceClassName);

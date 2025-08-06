@@ -149,7 +149,7 @@ public class ComponentServiceInheritanceInspection extends AbstractBaseJavaLocal
 
         AtomicBoolean result = new AtomicBoolean();
 
-        query.forEach(psiClass -> {
+        query.findAll().forEach(psiClass -> {
             if (psiClass.equals(currentClass)) {
                 result.set(true);
             }

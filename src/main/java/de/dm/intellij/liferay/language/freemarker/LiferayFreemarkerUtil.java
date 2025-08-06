@@ -211,7 +211,7 @@ public class LiferayFreemarkerUtil {
             SearchScope scope = GlobalSearchScope.allScope(module.getProject());
             Query<PsiClass> query = ClassInheritorsSearch.search(baseClass, scope, false);
 
-            query.forEach(psiClass -> {
+            query.findAll().forEach(psiClass -> {
                 String qualifiedName = psiClass.getQualifiedName();
                 if (qualifiedName != null) {
                     if (qualifiedNameFilter.test(qualifiedName)) {

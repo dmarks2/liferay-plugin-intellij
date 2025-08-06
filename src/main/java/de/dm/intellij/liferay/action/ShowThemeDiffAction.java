@@ -51,8 +51,10 @@ public class ShowThemeDiffAction extends CompareFilesAction {
         Presentation presentation = actionEvent.getPresentation();
         boolean isAvailable = isAvailable(actionEvent);
         presentation.setEnabled(isAvailable);
-        if (ActionPlaces.isPopupPlace(actionEvent.getPlace())) {
-            presentation.setVisible(isAvailable);
+		String place = actionEvent.getPlace();
+
+		if (place.equals(ActionPlaces.POPUP)) {
+			presentation.setVisible(isAvailable);
         }
     }
 

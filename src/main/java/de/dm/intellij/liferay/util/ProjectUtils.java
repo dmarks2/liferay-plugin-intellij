@@ -56,6 +56,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ProjectUtils {
@@ -235,29 +236,28 @@ public class ProjectUtils {
         return null;
     }
 
-    public static List<String> getMethodParameterQualifiedNames(@NotNull PsiMethod psiMethod) {
-        List<String> result = new ArrayList<>();
+	public static List<String> getMethodParameterQualifiedNames(@NotNull PsiMethod psiMethod) {
+		List<String> result = Collections.synchronizedList(new ArrayList<>());
 
-        PsiParameterList parameterList = psiMethod.getParameterList();
+		PsiParameterList parameterList = psiMethod.getParameterList();
 
-        for (PsiParameter psiParameter : parameterList.getParameters()) {
-            PsiType psiType = psiParameter.getType();
+		for (PsiParameter psiParameter : parameterList.getParameters()) {
+			ProjectUtils.runDumbAware(psiParameter.getProject(), () -> {
+				PsiType psiType = psiParameter.getType();
+				if (psiType instanceof PsiClassReferenceType psiClassReferenceType) {
+					PsiJavaCodeReferenceElement psiJavaCodeReferenceElement = psiClassReferenceType.getReference();
+					String qualifiedName = getQualifiedNameWithoutResolve(psiJavaCodeReferenceElement, false);
+					result.add(qualifiedName);
+				}
+			});
+		}
 
-            if (psiType instanceof PsiClassReferenceType psiClassReferenceType) {
-
-				PsiJavaCodeReferenceElement psiJavaCodeReferenceElement = psiClassReferenceType.getReference();
-
-                String qualifiedName = getQualifiedNameWithoutResolve(psiJavaCodeReferenceElement, false);
-
-                result.add(qualifiedName);
-            }
-        }
-
-        return result;
-    }
+		return result;
+	}
 
 
-    @NotNull
+
+	@NotNull
     public static String getMatchFromPackageStatementOrImports(@NotNull PsiFile psiFile, @NotNull String className) {
         PsiPackageStatement packageStatement = PsiTreeUtil.getChildOfType(psiFile, PsiPackageStatement.class);
         if (packageStatement != null) {
