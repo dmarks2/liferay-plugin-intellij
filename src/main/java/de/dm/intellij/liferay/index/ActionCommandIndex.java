@@ -47,92 +47,92 @@ import java.util.Map;
  */
 public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void> {
 
-    @NonNls
-    public static final ID<CommandKey, Void> NAME = ID.create("ActionCommandIndex");
+	@NonNls
+	public static final ID<CommandKey, Void> NAME = ID.create("ActionCommandIndex");
 
-    private final ActionCommandIndexer actionCommandIndexer = new ActionCommandIndexer();
+	private final ActionCommandIndexer actionCommandIndexer = new ActionCommandIndexer();
 
-    private static final Collection<String> ACTION_NAME_EXCEPTIONS = Arrays.asList(
-        "callActionMethod",
-        "processAction"
-    );
+	private static final Collection<String> ACTION_NAME_EXCEPTIONS = Arrays.asList(
+			"callActionMethod",
+			"processAction"
+	);
 
-    @NotNull
-    @Override
-    public ID<CommandKey, Void> getName() {
-        return NAME;
-    }
+	@NotNull
+	@Override
+	public ID<CommandKey, Void> getName() {
+		return NAME;
+	}
 
-    @NotNull
-    @Override
-    public DataIndexer<CommandKey, Void, FileContent> getIndexer() {
-        return actionCommandIndexer;
-    }
+	@NotNull
+	@Override
+	public DataIndexer<CommandKey, Void, FileContent> getIndexer() {
+		return actionCommandIndexer;
+	}
 
-    @NotNull
-    @Override
-    public KeyDescriptor<CommandKey> getKeyDescriptor() {
-        return new CommandKeyDescriptor();
-    }
+	@NotNull
+	@Override
+	public KeyDescriptor<CommandKey> getKeyDescriptor() {
+		return new CommandKeyDescriptor();
+	}
 
-    @NotNull
-    @Override
-    public DataExternalizer<Void> getValueExternalizer() {
-        return VoidDataExternalizer.INSTANCE;
-    }
+	@NotNull
+	@Override
+	public DataExternalizer<Void> getValueExternalizer() {
+		return VoidDataExternalizer.INSTANCE;
+	}
 
-    @Override
-    public int getVersion() {
-        return 0;
-    }
+	@Override
+	public int getVersion() {
+		return 0;
+	}
 
-    @NotNull
-    @Override
-    public FileBasedIndex.InputFilter getInputFilter() {
-        return new DefaultFileTypeSpecificInputFilter(JavaFileType.INSTANCE, JavaClassFileType.INSTANCE);
-    }
+	@NotNull
+	@Override
+	public FileBasedIndex.InputFilter getInputFilter() {
+		return new DefaultFileTypeSpecificInputFilter(JavaFileType.INSTANCE, JavaClassFileType.INSTANCE);
+	}
 
-    @Override
-    public boolean dependsOnFileContent() {
-        return true;
-    }
+	@Override
+	public boolean dependsOnFileContent() {
+		return true;
+	}
 
-    public static List<String> getActionCommands(@NotNull String portletName, Project project, GlobalSearchScope scope) {
-        return AbstractCommandKeyIndexer.getCommands(NAME, portletName, project, scope);
-    }
+	public static List<String> getActionCommands(@NotNull String portletName, Project project, GlobalSearchScope scope) {
+		return AbstractCommandKeyIndexer.getCommands(NAME, portletName, project, scope);
+	}
 
-    public static List<PsiFile> getPortletClasses(Project project, String portletName, String commandName, GlobalSearchScope scope) {
-        return AbstractCommandKeyIndexer.getPortletClasses(NAME, project, portletName, commandName, scope);
-    }
+	public static List<PsiFile> getPortletClasses(Project project, String portletName, String commandName, GlobalSearchScope scope) {
+		return AbstractCommandKeyIndexer.getPortletClasses(NAME, project, portletName, commandName, scope);
+	}
 
-    private static class ActionCommandIndexer extends AbstractCommandKeyIndexer {
+	private static class ActionCommandIndexer extends AbstractCommandKeyIndexer {
 
-        @NotNull
-        @Override
-        protected String[] getServiceClassNames() {
-            return new String[] {"com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand"};
-        }
+		@NotNull
+		@Override
+		protected String[] getServiceClassNames() {
+			return new String[] {"com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand"};
+		}
 
-        @NotNull
-        @Override
-        public Map<CommandKey, Void> map(@NotNull FileContent fileContent) {
-            Map<CommandKey, Void> map = Collections.synchronizedMap(super.map(fileContent));
+		@NotNull
+		@Override
+		public Map<CommandKey, Void> map(@NotNull FileContent fileContent) {
+			Map<CommandKey, Void> map = Collections.synchronizedMap(super.map(fileContent));
 
-            PsiJavaFile psiJavaFile = getPsiJavaFileForPsiDependentIndex(fileContent);
+			PsiJavaFile psiJavaFile = getPsiJavaFileForPsiDependentIndex(fileContent);
 
-            if (psiJavaFile == null) {
-                return map;
-            }
+			if (psiJavaFile == null) {
+				return map;
+			}
 
-            PsiClass[] psiClasses = PsiTreeUtil.getChildrenOfType(psiJavaFile, PsiClass.class);
+			ProjectUtils.runDumbAware(psiJavaFile.getProject(), () -> {
+				PsiClass[] psiClasses = PsiTreeUtil.getChildrenOfType(psiJavaFile, PsiClass.class);
 
-			if (psiClasses != null) {
+				if (psiClasses != null) {
 
-				for (PsiClass psiClass : psiClasses) {
+					for (PsiClass psiClass : psiClasses) {
 
-					for (PsiMethod psiMethod : psiClass.getMethods()) {
+						for (PsiMethod psiMethod : psiClass.getMethods()) {
 
-						ProjectUtils.runDumbAware(psiMethod.getProject(), () -> {
 							for (PsiAnnotation psiAnnotation : psiMethod.getAnnotations()) {
 								PsiJavaCodeReferenceElement nameReferenceElement = psiAnnotation.getNameReferenceElement();
 
@@ -194,36 +194,36 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
 								}
 							}
 
-						});
+						}
 					}
 
 				}
+			});
+
+			return map;
+		}
+
+		private Collection<String> getPortletNames(PsiClass psiClass) {
+			Collection<String> result = new ArrayList<>();
+
+			Map<String, Collection<String>> componentProperties = getComponentProperties(psiClass, "javax.portlet.Portlet");
+
+			if (componentProperties != null) {
+
+				Collection<String> portletNames = componentProperties.get("javax.portlet.name");
+				if (portletNames == null) {
+					portletNames = Collections.singletonList(psiClass.getQualifiedName());
+				}
+
+				for (String portletName : portletNames) {
+					String portletId = LiferayFileUtil.getPortletId(portletName);
+
+					result.add(portletId);
+				}
 			}
 
-            return map;
-        }
-
-        private Collection<String> getPortletNames(PsiClass psiClass) {
-            Collection<String> result = new ArrayList<>();
-
-            Map<String, Collection<String>> componentProperties = getComponentProperties(psiClass, "javax.portlet.Portlet");
-
-            if (componentProperties != null) {
-
-                Collection<String> portletNames = componentProperties.get("javax.portlet.name");
-                if (portletNames == null) {
-                    portletNames = Collections.singletonList(psiClass.getQualifiedName());
-                }
-
-                for (String portletName : portletNames) {
-                    String portletId = LiferayFileUtil.getPortletId(portletName);
-
-                    result.add(portletId);
-                }
-            }
-
-            return result;
-        }
-    }
+			return result;
+		}
+	}
 
 }

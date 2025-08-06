@@ -45,7 +45,7 @@ public class MetaConfigurationReference extends PsiReferenceBase<PsiElement> imp
         Query<PsiClass> annotatedClasses = findAnnotatedClasses(getElement().getProject(), getElement(), "aQute.bnd.annotation.metatype.Meta.OCD");
 
         if (annotatedClasses != null) {
-            annotatedClasses.forEach(
+            annotatedClasses.findAll().forEach(
                     annotatedClass -> {
                         PsiAnnotation annotation = annotatedClass.getAnnotation("aQute.bnd.annotation.metatype.Meta.OCD");
 
@@ -85,7 +85,7 @@ public class MetaConfigurationReference extends PsiReferenceBase<PsiElement> imp
         Query<PsiClass> annotatedClasses = findAnnotatedClasses(getElement().getProject(), getElement(), "aQute.bnd.annotation.metatype.Meta.OCD");
 
         if (annotatedClasses != null) {
-            annotatedClasses.forEach(
+            annotatedClasses.findAll().forEach(
                     annotatedClass -> {
                         PsiAnnotation annotation = annotatedClass.getAnnotation("aQute.bnd.annotation.metatype.Meta.OCD");
 

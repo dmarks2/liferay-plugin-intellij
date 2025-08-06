@@ -162,7 +162,7 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> {
     }
 
 
-    private class PortletJspIndexer extends AbstractComponentPropertyIndexer<JspKey> {
+    private static class PortletJspIndexer extends AbstractComponentPropertyIndexer<JspKey> {
 
         @NotNull
         @Override

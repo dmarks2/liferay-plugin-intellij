@@ -28,6 +28,7 @@
         <p>Version 0.0.25</p>
         <ul>
           <li>Feature: code completion for the <code>unbind</code> attribute in a <code>@Reference</code> annotation</li>
+          <li>Change: Update support for IntelliJ 2025.2</li>
         </ul>
 
         <p>Version 0.0.24</p>

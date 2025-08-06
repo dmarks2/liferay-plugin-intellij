@@ -107,7 +107,7 @@ public class ResourceCommandIndex extends FileBasedIndexExtension<CommandKey, Vo
         @NotNull
         @Override
         public Map<CommandKey, Void> map(@NotNull FileContent fileContent) {
-            Map<CommandKey, Void> map = super.map(fileContent);
+            Map<CommandKey, Void> map = Collections.synchronizedMap(super.map(fileContent));
 
             PsiJavaFile psiJavaFile = getPsiJavaFileForPsiDependentIndex(fileContent);
 
@@ -115,37 +115,39 @@ public class ResourceCommandIndex extends FileBasedIndexExtension<CommandKey, Vo
                 return map;
             }
 
-            PsiClass[] psiClasses = PsiTreeUtil.getChildrenOfType(psiJavaFile, PsiClass.class);
+			ProjectUtils.runDumbAware(psiJavaFile.getProject(), () -> {
+				PsiClass[] psiClasses = PsiTreeUtil.getChildrenOfType(psiJavaFile, PsiClass.class);
 
-            if (psiClasses != null) {
+				if (psiClasses != null) {
 
-                for (PsiClass psiClass : psiClasses) {
+					for (PsiClass psiClass : psiClasses) {
 
-                    for (PsiMethod psiMethod : psiClass.getMethods()) {
+						for (PsiMethod psiMethod : psiClass.getMethods()) {
 
-                        PsiModifierList modifierList = psiMethod.getModifierList();
-                        if (PsiUtil.getAccessLevel(modifierList) == PsiUtil.ACCESS_LEVEL_PUBLIC) {
-                            List<String> methodParameterQualifiedNames = ProjectUtils.getMethodParameterQualifiedNames(psiMethod);
-                            if (methodParameterQualifiedNames.size() == 2) {
-                                String methodName = psiMethod.getName();
-                                if (! RESOURCE_NAME_EXCEPTIONS.contains(methodName)) {
-                                    String firstParameterQualifiedName = methodParameterQualifiedNames.get(0);
-                                    String secondParameterQualifiedName = methodParameterQualifiedNames.get(1);
+							PsiModifierList modifierList = psiMethod.getModifierList();
+							if (PsiUtil.getAccessLevel(modifierList) == PsiUtil.ACCESS_LEVEL_PUBLIC) {
+								List<String> methodParameterQualifiedNames = ProjectUtils.getMethodParameterQualifiedNames(psiMethod);
+								if (methodParameterQualifiedNames.size() == 2) {
+									String methodName = psiMethod.getName();
+									if (!RESOURCE_NAME_EXCEPTIONS.contains(methodName)) {
+										String firstParameterQualifiedName = methodParameterQualifiedNames.get(0);
+										String secondParameterQualifiedName = methodParameterQualifiedNames.get(1);
 
-                                    if ( ("javax.portlet.ResourceRequest".equals(firstParameterQualifiedName)) && ("javax.portlet.ResourceResponse".equals(secondParameterQualifiedName)) ) {
-                                        Collection<String> portletNames = getPortletNames(psiClass);
+										if (("javax.portlet.ResourceRequest".equals(firstParameterQualifiedName)) && ("javax.portlet.ResourceResponse".equals(secondParameterQualifiedName))) {
+											Collection<String> portletNames = getPortletNames(psiClass);
 
-                                        for (String portletName : portletNames) {
-                                            map.put(new CommandKey(portletName, methodName), null);
-                                        }
-                                    }
-                                }
+											for (String portletName : portletNames) {
+												map.put(new CommandKey(portletName, methodName), null);
+											}
+										}
+									}
 
-                            }
-                        }
-                    }
-                }
-            }
+								}
+							}
+						}
+					}
+				}
+			});
 
             return map;
         }
