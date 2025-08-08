@@ -40,7 +40,7 @@ public class LiferayLookAndFeelXmlParser extends FileChangeListenerBase  {
             if (component != null) {
                 component.setLiferayLookAndFeelXml(virtualFile.getUrl());
 
-                if (virtualFile.getLength() > 0) {
+                if (virtualFile.exists() && virtualFile.getLength() > 0) {
                     try {
                         //set defaults
                         component.getThemeSettings().put(TEMPLATE_EXTENSION, "ftl");
