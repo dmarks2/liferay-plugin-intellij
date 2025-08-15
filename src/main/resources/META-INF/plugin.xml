@@ -2,7 +2,7 @@
     <id>de.dm.intellij.liferay</id>
     <name>Liferay</name>
     <category>Framework integration</category>
-    <version>0.0.25</version>
+    <version>0.0.26</version>
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
@@ -25,6 +25,11 @@
       ]]></description>
 
     <change-notes><![CDATA[
+    	<p>Version 0.0.26</p>
+    	<ul>
+    	  <li>Feature: add inspection for <code>setUserId()</code> should not be used in <code>update</code> methods in <code>LocalServiceImpl</code> classes (avoid unexpected permission expansions)</li>
+    	</ul>
+
         <p>Version 0.0.25</p>
         <ul>
           <li>Feature: code completion for the <code>unbind</code> attribute in a <code>@Reference</code> annotation</li>

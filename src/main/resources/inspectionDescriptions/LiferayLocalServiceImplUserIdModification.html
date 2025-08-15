@@ -1,0 +1,43 @@
+<html>
+<body>
+<h2>Liferay userId modification in update methods</h2>
+
+<p>This inspection detects potentially dangerous modifications of the <code>userId</code> property in Liferay LocalServiceImpl update methods.</p>
+
+<h3>Why is this problematic?</h3>
+<p>In Liferay, the <code>userId</code> field determines the <strong>owner</strong> of an entity. Changing the userId in an update method can:</p>
+<ul>
+    <li>Transfer ownership of the entity to a different user</li>
+    <li>Grant unexpected permissions to users</li>
+    <li>Create security vulnerabilities</li>
+    <li>Bypass intended access controls</li>
+</ul>
+
+<h3>Examples</h3>
+
+<p><span class="warning">Problematic code:</span></p>
+
+<pre><code>
+    @Indexable(type = IndexableType.REINDEX)
+    public Entity updateEntity(long entityId, String name, String description, ServiceContext serviceContext) throws PortalException {
+        Entity entity = getEntity(entityId);
+        User user = userLocalService.getUser(serviceContext.getUserId());
+
+        entity.setName(name);
+        entity.setDescription(description);
+        entity.setUserId(user.getUserId());  // ⚠️ Problematic!
+        entity.setUserName(user.getFullName());
+
+        return entityPersistence.update(entity, serviceContext);
+    }
+</code></pre>
+
+<h3>When might userId modification be legitimate?</h3>
+<ul>
+    <li>Administrative operations that explicitly transfer ownership</li>
+    <li>Data migration or cleanup scripts</li>
+    <li>Special business logic that requires ownership transfer</li>
+</ul>
+<!-- tooltip end -->
+</body>
+</html>

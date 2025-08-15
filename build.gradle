@@ -748,7 +748,7 @@ tasks.register('downloadPoshi', Copy) {
 }
 
 group 'de.dm.intellij.liferay'
-version '0.0.25'
+version '0.0.26'
 
 configurations.poshiImplementation.setCanBeResolved(true)
 

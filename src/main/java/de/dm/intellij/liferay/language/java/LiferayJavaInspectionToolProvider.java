@@ -9,7 +9,8 @@ public class LiferayJavaInspectionToolProvider implements InspectionToolProvider
 	@SuppressWarnings("unchecked")
 	public Class<? extends LocalInspectionTool> @NotNull [] getInspectionClasses() {
 		return new Class[] {
-				LiferayJavaDeprecationInspection.class
+				LiferayJavaDeprecationInspection.class,
+				LiferayLocalServiceImplUserIdModificationInspection.class
 		};
 	}
 }

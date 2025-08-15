@@ -8,6 +8,7 @@ OSGi components
 5. [Resolve configurationPid properties to configuration interfaces](#resolve-configurationpid-properties-to-configuration-interfaces)
 6. [Inspection for Meta Configuration ID](#inspection-for-meta-configuration-id)
 7. [Reference unbind lookup](#reference-unbind-lookup)
+8. [Service Implementation inspections](service-implementation-inspections)
 
 Syntax Highlighting for BND files
 ----------------------------------
@@ -248,3 +249,10 @@ protected void unsetPanelApp(PanelApp panelApp) {
 	_panelApp = null;
 }
 ```
+
+Service Implementation inspections
+----------------------------------
+
+For Service Builder Implementations the following inspections are provided:
+
+* `setUserId()` should not be used in `update` methods in `LocalServiceImpl` classes (avoid unexpected permission expansions)
