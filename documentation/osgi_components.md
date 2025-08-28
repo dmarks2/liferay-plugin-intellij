@@ -9,6 +9,7 @@ OSGi components
 6. [Inspection for Meta Configuration ID](#inspection-for-meta-configuration-id)
 7. [Reference unbind lookup](#reference-unbind-lookup)
 8. [Service Implementation inspections](service-implementation-inspections)
+9. [Syntax Highlighting for config files](#syntax-highlighting-for-config-files)
 
 Syntax Highlighting for BND files
 ----------------------------------
@@ -256,3 +257,25 @@ Service Implementation inspections
 For Service Builder Implementations the following inspections are provided:
 
 * `setUserId()` should not be used in `update` methods in `LocalServiceImpl` classes (avoid unexpected permission expansions)
+
+Syntax Highlighting for config files
+------------------------------------
+
+OSGi configurations can be exported into `.config` files. 
+
+This plugin offers syntax highlighting for those files. OSGi `.config` files are detected automatically if they
+are placed in a `osgi/configs` folder or if the folder is referenced by `Liferay-Configuration-Path`
+in a `bnd.bnd` file. For `.config` files located elsewhere you can assign the file type manually.
+
+If arrays are used in the `.config` files you will get bracket matching and folding support, too.
+
+```LiferayConfig
+logLevel="warn"
+checkInterval=I"1"
+addDefaultStructures=B"false"
+childrenTypes=[ \
+"Foo", \
+"Bar", \
+"Baz" \
+]
+```

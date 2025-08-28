@@ -28,6 +28,7 @@
     	<p>Version 0.0.26</p>
     	<ul>
     	  <li>Feature: add inspection for <code>setUserId()</code> should not be used in <code>update</code> methods in <code>LocalServiceImpl</code> classes (avoid unexpected permission expansions)</li>
+    	  <li>Feature: add syntax highlighting, bracket matching and folding for OSGi <code>.config</code> files</li>
     	</ul>
 
         <p>Version 0.0.25</p>
@@ -509,6 +510,37 @@
                 language="XML"
                 implementationClass="de.dm.intellij.liferay.maven.LiferayMavenDeprecationsExternalAnnotator"
         />
+
+		<!-- Liferay Config Files -->
+		<fileType
+				name="Liferay Config"
+				implementationClass="de.dm.intellij.liferay.language.osgi.config.LiferayConfigFileType"
+				fieldName="INSTANCE"
+				language="LiferayConfig"
+		/>
+
+		<fileTypeDetector
+				implementation="de.dm.intellij.liferay.language.osgi.config.LiferayConfigFileTypeDetector"
+				order="first"
+		/>
+
+		<lang.parserDefinition
+				language="LiferayConfig"
+				implementationClass="de.dm.intellij.liferay.language.osgi.config.LiferayConfigParserDefinition" />
+
+		<lang.syntaxHighlighterFactory
+				language="LiferayConfig"
+				implementationClass="de.dm.intellij.liferay.language.osgi.config.LiferayConfigSyntaxHighlighterFactory" />
+
+		<lang.braceMatcher
+				language="LiferayConfig"
+				implementationClass="de.dm.intellij.liferay.language.osgi.config.LiferayConfigBraceMatcher"
+		/>
+
+		<lang.foldingBuilder
+				language="LiferayConfig"
+				implementationClass="de.dm.intellij.liferay.language.osgi.config.LiferayConfigFoldingBuilder"
+		/>
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.idea.maven">
