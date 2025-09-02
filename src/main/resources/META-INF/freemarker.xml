@@ -41,6 +41,8 @@
         <lang.substitutor language="FTL" implementationClass="de.dm.intellij.liferay.language.fragment.FragmentFreemarkerHtmlLanguageSubstitutor" />
 
         <inspectionToolProvider implementation="de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerInspectionToolProvider"/>
-    </extensions>
+
+		<multiHostInjector implementation="de.dm.intellij.liferay.language.freemarker.FreemarkerXPathInjector" />
+	</extensions>
 
 </idea-plugin>

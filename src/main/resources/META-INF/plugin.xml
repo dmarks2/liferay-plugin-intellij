@@ -29,6 +29,7 @@
     	<ul>
     	  <li>Feature: add inspection for <code>setUserId()</code> should not be used in <code>update</code> methods in <code>LocalServiceImpl</code> classes (avoid unexpected permission expansions)</li>
     	  <li>Feature: add syntax highlighting, bracket matching and folding for OSGi <code>.config</code> files</li>
+    	  <li>Bugfix: improve compatibility with IntelliJ Community Edition</li>
     	</ul>
 
         <p>Version 0.0.25</p>
