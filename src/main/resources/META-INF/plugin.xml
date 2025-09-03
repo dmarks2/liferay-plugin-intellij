@@ -418,6 +418,9 @@
         <psi.referenceContributor implementation="de.dm.intellij.liferay.language.osgi.ReferenceUnbindReferenceContributor"
                                   language="JAVA"/>
 
+		<psi.referenceContributor implementation="de.dm.intellij.liferay.language.osgi.OsgiCommandReferenceContributor"
+                                  language="JAVA"/>
+
         <!-- POSHI -->
         <fileType
                 name="Poshi File"
@@ -574,7 +577,6 @@
         <listener class="de.dm.intellij.liferay.theme.LiferayLookAndFeelXmlParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
         <listener class="de.dm.intellij.liferay.hook.LiferayHookXmlParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
         <listener class="de.dm.intellij.liferay.bnd.OsgiBndFileParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
-        <listener class="de.dm.intellij.liferay.language.jsp.LiferayJspWebContentRootListener" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
         <listener class="de.dm.intellij.liferay.resourcesimporter.LiferayPluginPackagePropertiesParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
         <listener class="de.dm.intellij.liferay.resourcesimporter.LiferayAdvancedResourcesImporterBndParser" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
         <listener class="de.dm.intellij.liferay.resourcesimporter.LiferayAdvancedResourcesImporterServiceCallWatcher" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener" />
