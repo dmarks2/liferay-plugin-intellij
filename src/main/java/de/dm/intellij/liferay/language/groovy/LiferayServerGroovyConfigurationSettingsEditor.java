@@ -21,10 +21,12 @@ public class LiferayServerGroovyConfigurationSettingsEditor extends SettingsEdit
     public LiferayServerGroovyConfigurationSettingsEditor(Project project) {
         this.scriptNameField = new TextFieldWithBrowseButton();
 
-        this.scriptNameField.addBrowseFolderListener(
-                "Script File", "Choose the script file location (*.groovy)", project,
-                FileChooserDescriptorFactory.createSingleFileDescriptor("groovy")
-        );
+		this.scriptNameField.addBrowseFolderListener(
+				project,
+				FileChooserDescriptorFactory.createSingleFileDescriptor("groovy")
+						.withTitle("Script File")
+						.withDescription("Choose the script file location (*.groovy)")
+		);
 
         this.hostField = GuiUtils.createUndoableTextField();
         this.portField = new PortField(11311, 1024);

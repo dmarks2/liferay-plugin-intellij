@@ -19,10 +19,12 @@ public class PoshiTestcaseConfigurationSettingsEditor extends SettingsEditor<Pos
     public PoshiTestcaseConfigurationSettingsEditor(Project project) {
         this.scriptNameField = new TextFieldWithBrowseButton();
 
-        this.scriptNameField.addBrowseFolderListener(
-                "Script File", "Choose the script file location (*.testcase)", project,
-                FileChooserDescriptorFactory.createSingleFileDescriptor("testcase")
-        );
+		this.scriptNameField.addBrowseFolderListener(
+				project,
+				FileChooserDescriptorFactory.createSingleFileDescriptor("testcase")
+						.withTitle("Script File")
+						.withDescription("Choose the script file location (*.testcase)")
+		);
 
         this.testNameField = GuiUtils.createUndoableTextField();
     }
