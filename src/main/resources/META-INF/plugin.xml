@@ -29,6 +29,7 @@
     	<ul>
     	  <li>Feature: add inspection for <code>setUserId()</code> should not be used in <code>update</code> methods in <code>LocalServiceImpl</code> classes (avoid unexpected permission expansions)</li>
     	  <li>Feature: add syntax highlighting, bracket matching and folding for OSGi <code>.config</code> files</li>
+    	  <li>Feature: add references for <code>osgi.command.function</code> property used for Gogo Shell commands</li>
     	  <li>Bugfix: improve compatibility with IntelliJ Community Edition</li>
     	</ul>
 

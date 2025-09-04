@@ -279,3 +279,9 @@ childrenTypes=[ \
 "Baz" \
 ]
 ```
+
+Gogo Shell Commands
+-------------------
+
+For custom Gogo Shell commands a reference is added to the property `osgi.command.function`. The property refers
+to the public methods of the class, so you can go the declaration. Renaming support is added, too.
