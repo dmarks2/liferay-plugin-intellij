@@ -10,6 +10,7 @@ OSGi components
 7. [Reference unbind lookup](#reference-unbind-lookup)
 8. [Service Implementation inspections](service-implementation-inspections)
 9. [Syntax Highlighting for config files](#syntax-highlighting-for-config-files)
+10. [Gogo Shell Commands](#gogo-shell-commands)
 
 Syntax Highlighting for BND files
 ----------------------------------
@@ -285,3 +286,6 @@ Gogo Shell Commands
 
 For custom Gogo Shell commands a reference is added to the property `osgi.command.function`. The property refers
 to the public methods of the class, so you can go the declaration. Renaming support is added, too.
+
+A run configuration can be added, so that you can execute gogo shell commands directly from your workspace. For custom
+OSGi commands a run marker is added to the method to execute the command directly.

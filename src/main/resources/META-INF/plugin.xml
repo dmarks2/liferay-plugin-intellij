@@ -30,6 +30,7 @@
     	  <li>Feature: add inspection for <code>setUserId()</code> should not be used in <code>update</code> methods in <code>LocalServiceImpl</code> classes (avoid unexpected permission expansions)</li>
     	  <li>Feature: add syntax highlighting, bracket matching and folding for OSGi <code>.config</code> files</li>
     	  <li>Feature: add references for <code>osgi.command.function</code> property used for Gogo Shell commands</li>
+    	  <li>Feature: Run Configuration for gogo shell commands</li>
     	  <li>Bugfix: improve compatibility with IntelliJ Community Edition</li>
     	</ul>
 
@@ -421,6 +422,14 @@
 
 		<psi.referenceContributor implementation="de.dm.intellij.liferay.language.osgi.OsgiCommandReferenceContributor"
                                   language="JAVA"/>
+
+		<!-- Run Configuration Type -->
+		<configurationType implementation="de.dm.intellij.liferay.language.osgi.run.GogoShellConfigurationType"/>
+
+		<!-- Line Marker Provider -->
+		<codeInsight.lineMarkerProvider
+				language="JAVA"
+				implementationClass="de.dm.intellij.liferay.language.osgi.run.GogoShellLineMarkerProvider"/>
 
         <!-- POSHI -->
         <fileType
