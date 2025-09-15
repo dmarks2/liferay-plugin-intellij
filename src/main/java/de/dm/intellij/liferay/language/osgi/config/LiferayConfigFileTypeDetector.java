@@ -87,9 +87,11 @@ public class LiferayConfigFileTypeDetector implements FileTypeRegistry.FileTypeD
 
 			Path configDir = bndParent.resolve(configPath);
 
+			Path resourcesConfigDir = bndParent.resolve(Paths.get("src", "main", "resources")).resolve(configPath);
+
 			Path filePath = Paths.get(file.getParent().getPath());
 
-			return filePath.startsWith(configDir);
+			return filePath.startsWith(configDir) || filePath.startsWith(resourcesConfigDir);
 		} catch (IOException ioException) {
 			return false;
 		}
