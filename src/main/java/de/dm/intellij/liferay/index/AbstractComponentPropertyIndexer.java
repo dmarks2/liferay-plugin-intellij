@@ -15,6 +15,8 @@ import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.PsiNameValuePair;
 import com.intellij.psi.PsiReferenceExpression;
+import com.intellij.psi.util.CachedValueProvider;
+import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.indexing.DataIndexer;
 import com.intellij.util.indexing.FileContent;
@@ -45,16 +47,19 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
         }
 
 		ProjectUtils.runDumbAware(psiJavaFile.getProject(), () -> {
-			PsiClass[] psiClasses = psiJavaFile.getClasses();
+			PsiClass[] psiClasses = CachedValuesManager.getCachedValue(
+					psiJavaFile,
+					() -> CachedValueProvider.Result.create(
+							psiJavaFile.getClasses(),
+							psiJavaFile
+					)
+			);
 
-			if (psiClasses != null) {
-				for (PsiClass psiClass : psiClasses) {
-					for (String serviceClassName : getServiceClassNames()) {
-						Map<String, Collection<String>> componentProperties = getComponentProperties(psiClass, serviceClassName);
-
-						if (componentProperties != null) {
-							processProperties(map, componentProperties, psiClass, serviceClassName);
-						}
+			for (PsiClass psiClass : psiClasses) {
+				for (String serviceClassName : getServiceClassNames()) {
+					Map<String, Collection<String>> componentProperties = getComponentProperties(psiClass, serviceClassName);
+					if (componentProperties != null) {
+						processProperties(map, componentProperties, psiClass, serviceClassName);
 					}
 				}
 			}
