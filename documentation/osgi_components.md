@@ -20,7 +20,7 @@ This plugin adds syntax highlighting and code completions for ```bnd.bnd``` file
 ![bnd.bnd file](bnd.png "bnd.bnd file")
 
 For the following situations an additional validation is provided:
-* Bundle Versions are validated if they are valid versions (i.e. correct format, no invalid characters etc.)
+* Bundle Versions are validated if they are valid versions (i.e., correct format, no invalid characters, etc.)
 * `Bundle-Activator` is being checked if it is a valid class and if the class inherits from `org.osgi.framework.BundleActivator`
 * `Private-Package`, `Import-Package`, `Ignore-Package`, `Conditional-Package` and `Export-Package` are being validated if they point to a valid java package.
 * `-plugin.bundle`, `-plugin.jsp`, `-plugin.npm`, `-plugin.resourcebundle`, `-plugin.sass`, `-plugin.service` and `-plugin.spring` are being validated if they point to a valid java class.
@@ -31,7 +31,7 @@ Additionally, to the standard bnd headers the following Liferay keywords are det
     -jsp, -sass, -liferay-service-xml, Liferay-Releng-Module-Group-Description, Liferay-Releng-Module-Group-Title,
     Liferay-Require-SchemaVersion, Liferay-Service, DynamicImport-Package, Liferay-Modules-Compat-Adapters
         
-For several `bnd.bnd` instructions a basic documentation has been added, so that you can look up the meaning of the instructions.
+For several `bnd.bnd` instructions basic documentation has been added, so that you can look up the meaning of the instructions.
 
 ![documentation lookup in bnd.bnd file](bnd_documentation.png "documentation lookup in bnd.bnd file")
 
@@ -49,7 +49,7 @@ Component annotation code completion
 ------------------------------------
 
 This plugin adds basic code completions for the ```@Component``` annotations, so that known properties for Portlets and many other
-Liferay components are provided. For several properties a quick documentation is provided (Ctrl-Q), so that
+Liferay components are provided. For several properties quick documentation is provided (Ctrl-Q), so that
 you can look up the meaning of those properties.
 
 ![Component annotation](component.png "Component annotation")
@@ -207,7 +207,7 @@ List of supported annotations:
 Inspections of service class inheritance
 ----------------------------------------
 
-To implement an OSGi service the class should inherit from the given service class.
+To implement an OSGi service, the class should inherit from the given service class.
 
 An inspection checks if these conditions are given and offers a quick fix.
 
@@ -285,7 +285,9 @@ Gogo Shell Commands
 -------------------
 
 For custom Gogo Shell commands a reference is added to the property `osgi.command.function`. The property refers
-to the public methods of the class, so you can go the declaration. Renaming support is added, too.
+to the public methods of the class, so you can go to the declaration. Renaming support is added, too.
 
-A run configuration can be added, so that you can execute gogo shell commands directly from your workspace. For custom
+A run configuration can be added so that you can execute gogo shell commands directly from your workspace. For custom
 OSGi commands a run marker is added to the method to execute the command directly.
+
+![Gogo Shell Run Configuration](system_check.png "Gogo Shell Run Configuration")
