@@ -67,38 +67,50 @@ public class LiferayAdvancedResourcesImporterServiceCallWatcher extends FileChan
 												PsiExpression qualifierExpression = methodExpression.getQualifierExpression();
 
 												if (qualifierExpression != null) {
-													PsiType type = qualifierExpression.getType();
+													try {
+														if (!qualifierExpression.isValid()) {
+															if (log.isDebugEnabled()) {
+																log.debug("Qualifier expression is invalid; skipping type resolution.");
+															}
+															return;
+														}
+														PsiType type = qualifierExpression.getType();
 
-													if (type instanceof PsiClassType classType) {
+														if (type instanceof PsiClassType classType) {
 
-														PsiClass clazz = classType.resolve();
+															PsiClass clazz = classType.resolve();
 
-														if (clazz != null) {
-															String qualifiedName = clazz.getQualifiedName();
+															if (clazz != null) {
+																String qualifiedName = clazz.getQualifiedName();
 
-															if (ADVANCED_RESOURCES_IMPORTER_CLASS_NAME.equals(qualifiedName)) {
-																PsiExpressionList argumentList = methodCallExpression.getArgumentList();
+																if (ADVANCED_RESOURCES_IMPORTER_CLASS_NAME.equals(qualifiedName)) {
+																	PsiExpressionList argumentList = methodCallExpression.getArgumentList();
 
-																PsiExpression[] expressions = argumentList.getExpressions();
+																	PsiExpression[] expressions = argumentList.getExpressions();
 
-																if (expressions.length > 2) {
-																	PsiExpression groupKeyExpression = expressions[2];
+																	if (expressions.length > 2) {
+																		PsiExpression groupKeyExpression = expressions[2];
 
-																	JavaPsiFacade javaPsiFacade = JavaPsiFacade.getInstance(psiClass.getProject());
+																		JavaPsiFacade javaPsiFacade = JavaPsiFacade.getInstance(psiClass.getProject());
 
-																	PsiConstantEvaluationHelper constantEvaluationHelper = javaPsiFacade.getConstantEvaluationHelper();
+																		PsiConstantEvaluationHelper constantEvaluationHelper = javaPsiFacade.getConstantEvaluationHelper();
 
-																	Object result = constantEvaluationHelper.computeConstantExpression(groupKeyExpression);
+																		Object result = constantEvaluationHelper.computeConstantExpression(groupKeyExpression);
 
-																	if (result instanceof String advancedResourcesImporterGroup) {
-																		if (log.isDebugEnabled()) {
-																			log.debug("Found Advanced Resources Importer Group \"" + advancedResourcesImporterGroup + "\" in " + virtualFile.getPath());
+																		if (result instanceof String advancedResourcesImporterGroup) {
+																			if (log.isDebugEnabled()) {
+																				log.debug("Found Advanced Resources Importer Group \"" + advancedResourcesImporterGroup + "\" in " + virtualFile.getPath());
+																			}
+
+																			component.setResourcesImporterGroupName(advancedResourcesImporterGroup);
 																		}
-
-																		component.setResourcesImporterGroupName(advancedResourcesImporterGroup);
 																	}
 																}
 															}
+														}
+													} catch (com.intellij.psi.PsiInvalidElementAccessException e) {
+														if (log.isDebugEnabled()) {
+															log.debug("Qualifier expression became invalid while resolving type.", e);
 														}
 													}
 												}
