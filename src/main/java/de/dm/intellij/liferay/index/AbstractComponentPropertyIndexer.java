@@ -1,6 +1,7 @@
 package de.dm.intellij.liferay.index;
 
 import com.intellij.ide.highlighter.JavaFileType;
+import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiAnnotation;
@@ -36,7 +37,19 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
 	@NotNull
 	@Override
 	public Map<Key, Void> map(@NotNull FileContent fileContent) {
-		Map<Key, Void> map = Collections.synchronizedMap(new HashMap<>());
+		FileType fileType = fileContent.getFileType();
+
+		if (fileType.isBinary()) {
+			return Collections.emptyMap();
+		}
+
+		CharSequence text = fileContent.getContentAsText();
+
+		if (! _isCandidateForIndexing(text)) {
+			return Collections.emptyMap();
+		}
+
+		Map<Key, Void> map = new HashMap<>();
 
 		PsiJavaFile psiJavaFile = getPsiJavaFileForPsiDependentIndex(fileContent);
 
@@ -46,9 +59,12 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
 
 		PsiClass[] psiClasses = psiJavaFile.getClasses();
 
+		String[] serviceClassNames = getServiceClassNames();
+
 		for (PsiClass psiClass : psiClasses) {
-			for (String serviceClassName : getServiceClassNames()) {
+			for (String serviceClassName : serviceClassNames) {
 				Map<String, Collection<String>> componentProperties = getComponentProperties(psiClass, serviceClassName);
+
 				if (componentProperties != null) {
 					processProperties(map, componentProperties, psiClass, serviceClassName);
 				}
@@ -144,12 +160,10 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
 		String text = psiLiteralExpression.getText();
 		text = StringUtil.unquoteString(text);
 
-		if (text.contains("=")) {
-			String[] parts = text.split("=");
+		int eqIndex = text.indexOf('=');
 
-			if (parts.length > 1) {
-				return new AbstractMap.SimpleImmutableEntry<>(parts[0], parts[1]);
-			}
+		if (eqIndex > 0 && eqIndex < text.length() - 1) {
+			return new AbstractMap.SimpleImmutableEntry<>(text.substring(0, eqIndex), text.substring(eqIndex + 1));
 		}
 
 		return null;
@@ -162,14 +176,17 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
 			String text = psiLiteralExpression.getText();
 			text = StringUtil.unquoteString(text);
 
-			if (text.contains("=")) {
-				String[] parts = text.split("=");
+			int eqIndex = text.indexOf('=');
+
+			if (eqIndex > 0) {
+				String firstPart = text.substring(0, eqIndex);
 
 				PsiReferenceExpression psiReferenceExpression = PsiTreeUtil.getChildOfType(psiBinaryExpression, PsiReferenceExpression.class);
+
 				if (psiReferenceExpression != null) {
 					String qualifiedName = ProjectUtils.getQualifiedNameWithoutResolve(psiReferenceExpression, true);
 
-					return new AbstractMap.SimpleImmutableEntry<>(parts[0], ProjectUtils.REFERENCE_PLACEHOLDER + qualifiedName);
+					return new AbstractMap.SimpleImmutableEntry<>(firstPart, ProjectUtils.REFERENCE_PLACEHOLDER + qualifiedName);
 				}
 			}
 		}
@@ -177,5 +194,8 @@ public abstract class AbstractComponentPropertyIndexer<Key> implements DataIndex
 		return null;
 	}
 
+	private boolean _isCandidateForIndexing(CharSequence text) {
+		return StringUtil.indexOf(text, "@Component") >= 0;
+	}
 
 }
