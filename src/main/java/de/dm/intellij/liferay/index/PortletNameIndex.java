@@ -76,7 +76,7 @@ public class PortletNameIndex extends FileBasedIndexExtension<String, Void> {
     @NotNull
     @Override
     public FileBasedIndex.InputFilter getInputFilter() {
-        return new DefaultFileTypeSpecificInputFilter(JavaFileType.INSTANCE, JavaClassFileType.INSTANCE);
+        return new DefaultFileTypeSpecificInputFilter(JavaFileType.INSTANCE);
     }
 
     @NotNull

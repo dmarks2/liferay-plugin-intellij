@@ -1,16 +1,14 @@
 package de.dm.intellij.liferay.index;
 
-import com.intellij.ide.highlighter.JavaClassFileType;
 import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.util.PsiUtil;
 import com.intellij.util.indexing.DataIndexer;
 import com.intellij.util.indexing.DefaultFileTypeSpecificInputFilter;
 import com.intellij.util.indexing.FileBasedIndex;
@@ -29,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -80,7 +79,7 @@ public class ResourceCommandIndex extends FileBasedIndexExtension<CommandKey, Vo
     @NotNull
     @Override
     public FileBasedIndex.InputFilter getInputFilter() {
-        return new DefaultFileTypeSpecificInputFilter(JavaFileType.INSTANCE, JavaClassFileType.INSTANCE);
+        return new DefaultFileTypeSpecificInputFilter(JavaFileType.INSTANCE);
     }
 
     @Override
@@ -107,7 +106,7 @@ public class ResourceCommandIndex extends FileBasedIndexExtension<CommandKey, Vo
         @NotNull
         @Override
         public Map<CommandKey, Void> map(@NotNull FileContent fileContent) {
-            Map<CommandKey, Void> map = Collections.synchronizedMap(super.map(fileContent));
+            Map<CommandKey, Void> map = new HashMap<>(super.map(fileContent));
 
             PsiJavaFile psiJavaFile = getPsiJavaFileForPsiDependentIndex(fileContent);
 
@@ -125,7 +124,7 @@ public class ResourceCommandIndex extends FileBasedIndexExtension<CommandKey, Vo
 						for (PsiMethod psiMethod : psiClass.getMethods()) {
 
 							PsiModifierList modifierList = psiMethod.getModifierList();
-							if (PsiUtil.getAccessLevel(modifierList) == PsiUtil.ACCESS_LEVEL_PUBLIC) {
+							if (modifierList.hasModifierProperty(PsiModifier.PUBLIC)) {
 								List<String> methodParameterQualifiedNames = ProjectUtils.getMethodParameterQualifiedNames(psiMethod);
 								if (methodParameterQualifiedNames.size() == 2) {
 									String methodName = psiMethod.getName();

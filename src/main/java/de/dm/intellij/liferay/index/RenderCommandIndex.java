@@ -61,7 +61,7 @@ public class RenderCommandIndex extends FileBasedIndexExtension<CommandKey, Void
     @NotNull
     @Override
     public FileBasedIndex.InputFilter getInputFilter() {
-        return new DefaultFileTypeSpecificInputFilter(JavaFileType.INSTANCE, JavaClassFileType.INSTANCE);
+        return new DefaultFileTypeSpecificInputFilter(JavaFileType.INSTANCE);
     }
 
     @Override

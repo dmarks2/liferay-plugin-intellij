@@ -1,6 +1,5 @@
 package de.dm.intellij.liferay.index;
 
-import com.intellij.ide.highlighter.JavaClassFileType;
 import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
@@ -15,6 +14,7 @@ import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
 import com.intellij.psi.PsiNameValuePair;
 import com.intellij.psi.PsiReferenceExpression;
@@ -35,11 +35,12 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * FileBasedIndexer to quickly find all action commands names
@@ -51,7 +52,7 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
 
 	private final ActionCommandIndexer actionCommandIndexer = new ActionCommandIndexer();
 
-	private static final Collection<String> ACTION_NAME_EXCEPTIONS = Arrays.asList(
+	private static final Collection<String> ACTION_NAME_EXCEPTIONS = Set.of(
 			"callActionMethod",
 			"processAction"
 	);
@@ -88,7 +89,7 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
 	@NotNull
 	@Override
 	public FileBasedIndex.InputFilter getInputFilter() {
-		return new DefaultFileTypeSpecificInputFilter(JavaFileType.INSTANCE, JavaClassFileType.INSTANCE);
+		return new DefaultFileTypeSpecificInputFilter(JavaFileType.INSTANCE);
 	}
 
 	@Override
@@ -115,7 +116,7 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
 		@NotNull
 		@Override
 		public Map<CommandKey, Void> map(@NotNull FileContent fileContent) {
-			Map<CommandKey, Void> map = Collections.synchronizedMap(super.map(fileContent));
+			Map<CommandKey, Void> map = new HashMap<>(super.map(fileContent));
 
 			PsiJavaFile psiJavaFile = getPsiJavaFileForPsiDependentIndex(fileContent);
 
@@ -173,7 +174,7 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
 
 
 							PsiModifierList modifierList = psiMethod.getModifierList();
-							if (PsiUtil.getAccessLevel(modifierList) == PsiUtil.ACCESS_LEVEL_PUBLIC) {
+							if (modifierList.hasModifierProperty(PsiModifier.PUBLIC)) {
 								List<String> methodParameterQualifiedNames = ProjectUtils.getMethodParameterQualifiedNames(psiMethod);
 								if (methodParameterQualifiedNames.size() == 2) {
 									String methodName = psiMethod.getName();

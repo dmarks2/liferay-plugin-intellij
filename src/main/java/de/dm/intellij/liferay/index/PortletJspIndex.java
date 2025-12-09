@@ -10,6 +10,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
 import com.intellij.psi.PsiReturnStatement;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -117,7 +118,7 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> {
     @NotNull
     @Override
     public FileBasedIndex.InputFilter getInputFilter() {
-        return new DefaultFileTypeSpecificInputFilter(JavaFileType.INSTANCE, JavaClassFileType.INSTANCE);
+        return new DefaultFileTypeSpecificInputFilter(JavaFileType.INSTANCE);
     }
 
     @Override
@@ -198,7 +199,7 @@ public class PortletJspIndex extends FileBasedIndexExtension<JspKey, Void> {
                 for (PsiMethod psiMethod : psiClass.getMethods()) {
                     if ("render".equals(psiMethod.getName())) {
                         PsiModifierList modifierList = psiMethod.getModifierList();
-                        if (PsiUtil.getAccessLevel(modifierList) == PsiUtil.ACCESS_LEVEL_PUBLIC) {
+                        if (modifierList.hasModifierProperty(PsiModifier.PUBLIC)) {
                             List<String> methodParameterQualifiedNames = getMethodParameterQualifiedNames(psiMethod);
                             if (methodParameterQualifiedNames.size() == 2) {
                                 String firstParameterQualifiedName = methodParameterQualifiedNames.get(0);
