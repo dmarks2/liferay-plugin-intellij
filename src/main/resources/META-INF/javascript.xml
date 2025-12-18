@@ -7,6 +7,18 @@
                 language="JSON"
                 implementationClass="de.dm.intellij.liferay.packagejson.LiferayPackageJSONDeprecationsExternalAnnotator"
         />
+
+		<fileType
+				name=".npmbundlerrc"
+				implementationClass="de.dm.intellij.liferay.schema.LiferayNpmBundlerRcFileType"
+				fieldName="INSTANCE"
+				language="JSON"
+		/>
+
+		<fileTypeDetector
+				implementation="de.dm.intellij.liferay.schema.LiferayNpmBundlerRcFileTypeDetector"
+				order="first"
+		/>
     </extensions>
 
     <extensions defaultExtensionNs="JavaScript">

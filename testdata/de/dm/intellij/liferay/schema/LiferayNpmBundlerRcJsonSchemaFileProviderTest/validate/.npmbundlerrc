@@ -1,0 +1,33 @@
+{
+    "sources": ["src/main/resources/META-INF/resources"],
+    "output": "build/resources/main/META-INF/resources",
+	"config": {
+		"imports": {
+			"@liferay/frontend-js-react-web": {
+			    "classnames": "*",
+                "prop-types": "*",
+				"react": "*",
+				"react-dom": "*",
+				"/": "*"
+			},
+			"frontend-taglib-clay": {
+                "/": "*",
+                "@clayui/button": "*",
+                "@clayui/core": "*",
+                "@clayui/drop-down": "*",
+                "@clayui/icon": "*",
+                "@clayui/layout": "*",
+                "@clayui/loading-indicator": "*",
+                "@clayui/link": "*",
+                "@clayui/list": "*",
+                "@clayui/modal": "*",
+                "@clayui/pagination": "*",
+                "@clayui/shared": "*"
+            },
+			"frontend-js-web": {
+				"/": "*"
+			}
+		}
+	},
+	"verbose": true
+}

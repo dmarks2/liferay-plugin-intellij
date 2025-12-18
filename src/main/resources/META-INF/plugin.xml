@@ -31,6 +31,7 @@
     	  <li>Feature: add syntax highlighting, bracket matching and folding for OSGi <code>.config</code> files</li>
     	  <li>Feature: add references for <code>osgi.command.function</code> property used for Gogo Shell commands</li>
     	  <li>Feature: Run Configuration for gogo shell commands</li>
+    	  <li>Feature: add syntax highlighting for `.npmbundlerrc`</li>
     	  <li>Bugfix: improve compatibility with IntelliJ Community Edition</li>
     	</ul>
 

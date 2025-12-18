@@ -4,6 +4,7 @@ JavaScript
 1. [Predefined JavaScript Libraries](#predefined-javascript-libraries)
 2. [JavaScript injection for taglibs](#javascript-injection-for-taglibs)
 3. [JavaScript support for liferay-look-and-feel.xml](#javascript-support-for-liferay-look-and-feelxml)
+4. [.npmbundlerrc support](#npmbundlerrc-support)
 
 Predefined JavaScript Libraries
 -------------------------------
@@ -55,3 +56,10 @@ add custom logic or validation rules.
 This plugin injects JavaScript language into those tags, so code completion is available.
 
 See https://liferay.dev/blogs/-/blogs/theme-settings-and-new-advanced-controls for more info about that feature.
+
+.npmbundlerrc support
+---------------------
+
+For building javascript modules, Liferay makes use of `liferay-npm-bundler` which uses `.npmbundlerrc` files to configure the build. 
+
+The plugin provides syntax highlighting for `.npmbundlerrc` files.

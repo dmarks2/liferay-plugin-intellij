@@ -1,0 +1,309 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Liferay NPM Bundler Configuration",
+  "description": "Configuration file for liferay-npm-bundler",
+  "type": "object",
+  "properties": {
+    "preset": {
+      "type": "string",
+      "description": "Preset configuration to use (e.g., 'liferay-npm-bundler-preset-liferay-dev')",
+      "examples": [
+        "liferay-npm-bundler-preset-liferay-dev",
+        "liferay-npm-bundler-preset-liferay-prod"
+      ]
+    },
+    "create-jar": {
+      "type": "object",
+      "description": "Configuration for JAR file creation",
+      "properties": {
+        "auto-deploy-portlet": {
+          "type": "boolean",
+          "description": "Whether to auto-deploy the portlet",
+          "default": true
+        },
+        "features": {
+          "type": "object",
+          "description": "Features configuration",
+          "properties": {
+            "js-extender": {
+              "type": "boolean",
+              "description": "Enable JS extender feature"
+            },
+            "web-context": {
+              "type": "string",
+              "description": "Web context path"
+            },
+            "localization": {
+              "type": "string",
+              "description": "Localization bundle name"
+            }
+          }
+        },
+        "output-dir": {
+          "type": "string",
+          "description": "Output directory for the JAR file",
+          "default": "dist"
+        },
+        "output-filename": {
+          "type": "string",
+          "description": "Name of the output JAR file"
+        }
+      }
+    },
+    "output": {
+      "type": "string",
+      "description": "Output directory for bundled modules",
+      "default": "build"
+    },
+    "dump-report": {
+      "type": "boolean",
+      "description": "Generate a detailed report of the bundling process",
+      "default": false
+    },
+    "exclude": {
+      "type": "object",
+      "description": "Packages to exclude from bundling",
+      "additionalProperties": {
+        "type": "boolean"
+      },
+      "examples": [
+        {
+          "react": true,
+          "react-dom": true
+        }
+      ]
+    },
+    "include-dependencies": {
+      "type": "boolean",
+      "description": "Include dependencies in the bundle",
+      "default": true
+    },
+    "process-serially": {
+      "type": "boolean",
+      "description": "Process packages serially instead of in parallel",
+      "default": false
+    },
+    "verbose": {
+      "type": "boolean",
+      "description": "Enable verbose logging",
+      "default": false
+    },
+    "config": {
+      "type": "object",
+      "description": "Bundler configuration options",
+      "properties": {
+        "imports": {
+          "type": "object",
+          "description": "Import configuration for external dependencies",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "string",
+                    "description": "Version of the imported package"
+                  }
+                }
+              }
+            ]
+          },
+          "examples": [
+            {
+              "react": "16.8.6",
+              "react-dom": {
+                "version": "16.8.6"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "description": "Custom transformation rules for packages",
+      "items": {
+        "type": "object",
+        "properties": {
+          "test": {
+            "type": "string",
+            "description": "Regular expression to match package names"
+          },
+          "exclude": {
+            "type": "string",
+            "description": "Regular expression to exclude package names"
+          },
+          "use": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Plugin name to use"
+              },
+              {
+                "type": "array",
+                "description": "Array of plugins to use",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "loader": {
+                          "type": "string",
+                          "description": "Loader/plugin name"
+                        },
+                        "options": {
+                          "type": "object",
+                          "description": "Options for the loader/plugin"
+                        }
+                      },
+                      "required": ["loader"]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "required": ["test"]
+      }
+    },
+    "post-plugins": {
+      "type": "array",
+      "description": "Post-processing plugins to run after bundling",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "Plugin name"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "plugin": {
+                "type": "string",
+                "description": "Plugin name"
+              },
+              "options": {
+                "type": "object",
+                "description": "Plugin options"
+              }
+            },
+            "required": ["plugin"]
+          }
+        ]
+      },
+      "examples": [
+        [
+          "replace-browser-modules"
+        ]
+      ]
+    },
+    "packages": {
+      "type": "object",
+      "description": "Package-specific configuration",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          ".babelrc": {
+            "type": "object",
+            "description": "Babel configuration for this package"
+          },
+          "copy-plugins": {
+            "type": "array",
+            "description": "Copy plugins for this package",
+            "items": {
+              "type": "string"
+            }
+          },
+          "plugins": {
+            "type": "array",
+            "description": "Plugins to apply to this package",
+            "items": {
+              "type": "string"
+            }
+          },
+          "post-plugins": {
+            "type": "array",
+            "description": "Post-processing plugins for this package",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "copy-plugins": {
+      "type": "array",
+      "description": "Global copy plugins",
+      "items": {
+        "type": "string"
+      },
+      "examples": [
+        [
+          "copy-assets"
+        ]
+      ]
+    },
+    "plugins": {
+      "type": "array",
+      "description": "Global processing plugins",
+      "items": {
+        "type": "string"
+      }
+    },
+    "*": {
+      "type": "object",
+      "description": "Wildcard configuration applied to all packages",
+      "properties": {
+        ".babelrc": {
+          "type": "object",
+          "description": "Babel configuration"
+        },
+        "copy-plugins": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "plugins": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ignore": {
+      "type": "array",
+      "description": "Files or directories to ignore during bundling",
+      "items": {
+        "type": "string"
+      },
+      "examples": [
+        [
+          "**/*.test.js",
+          "**/__tests__/**"
+        ]
+      ]
+    },
+    "sources": {
+      "type": "array",
+      "description": "Source directories to include",
+      "items": {
+        "type": "string"
+      },
+      "default": ["src"]
+    },
+    "webpack": {
+      "type": "object",
+      "description": "Webpack-specific configuration for bundler integration"
+    }
+  },
+  "additionalProperties": false
+}

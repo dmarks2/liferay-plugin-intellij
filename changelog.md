@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Feature: add syntax highlighting, bracket matching and folding for OSGi `.config` files
 - Feature: add references for `osgi.command.function` property used for Gogo Shell commands
 - Feature: Run Configuration for gogo shell commands
+- Feature: add syntax highlighting for `.npmbundlerrc`
 - Bugfix: improve compatibility with IntelliJ Community Edition
 
 ## 0.0.25
