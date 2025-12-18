@@ -139,7 +139,7 @@ intellijPlatform {
 }
 
 runIde {
-    jvmArgs '-Xmx2048m'
+    jvmArgs '-Xmx6144m'
 }
 
 tasks.register('generateLiferayPortalPropertiesFiles') {
