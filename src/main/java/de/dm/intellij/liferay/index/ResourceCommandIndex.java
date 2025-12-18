@@ -114,39 +114,38 @@ public class ResourceCommandIndex extends FileBasedIndexExtension<CommandKey, Vo
                 return map;
             }
 
-			ProjectUtils.runDumbAware(psiJavaFile.getProject(), () -> {
-				PsiClass[] psiClasses = psiJavaFile.getClasses();
+            PsiClass[] psiClasses = psiJavaFile.getClasses();
 
-				if (psiClasses != null) {
+            if (psiClasses != null) {
 
-					for (PsiClass psiClass : psiClasses) {
+                for (PsiClass psiClass : psiClasses) {
 
-						for (PsiMethod psiMethod : psiClass.getMethods()) {
+                    for (PsiMethod psiMethod : psiClass.getMethods()) {
 
-							PsiModifierList modifierList = psiMethod.getModifierList();
-							if (modifierList.hasModifierProperty(PsiModifier.PUBLIC)) {
-								List<String> methodParameterQualifiedNames = ProjectUtils.getMethodParameterQualifiedNames(psiMethod);
-								if (methodParameterQualifiedNames.size() == 2) {
-									String methodName = psiMethod.getName();
-									if (!RESOURCE_NAME_EXCEPTIONS.contains(methodName)) {
-										String firstParameterQualifiedName = methodParameterQualifiedNames.get(0);
-										String secondParameterQualifiedName = methodParameterQualifiedNames.get(1);
+                        PsiModifierList modifierList = psiMethod.getModifierList();
 
-										if (("javax.portlet.ResourceRequest".equals(firstParameterQualifiedName)) && ("javax.portlet.ResourceResponse".equals(secondParameterQualifiedName))) {
-											Collection<String> portletNames = getPortletNames(psiClass);
+                        if (modifierList.hasModifierProperty(PsiModifier.PUBLIC)) {
+                            List<String> methodParameterQualifiedNames = ProjectUtils.getMethodParameterQualifiedNames(psiMethod);
+                            if (methodParameterQualifiedNames.size() == 2) {
+                                String methodName = psiMethod.getName();
+                                if (!RESOURCE_NAME_EXCEPTIONS.contains(methodName)) {
+                                    String firstParameterQualifiedName = methodParameterQualifiedNames.get(0);
+                                    String secondParameterQualifiedName = methodParameterQualifiedNames.get(1);
 
-											for (String portletName : portletNames) {
-												map.put(new CommandKey(portletName, methodName), null);
-											}
-										}
-									}
+                                    if (("javax.portlet.ResourceRequest".equals(firstParameterQualifiedName)) && ("javax.portlet.ResourceResponse".equals(secondParameterQualifiedName))) {
+                                        Collection<String> portletNames = getPortletNames(psiClass);
 
-								}
-							}
-						}
-					}
-				}
-			});
+                                        for (String portletName : portletNames) {
+                                            map.put(new CommandKey(portletName, methodName), null);
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
 
             return map;
         }

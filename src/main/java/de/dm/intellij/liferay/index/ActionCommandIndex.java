@@ -124,81 +124,80 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
 				return map;
 			}
 
-			ProjectUtils.runDumbAware(psiJavaFile.getProject(), () -> {
-				PsiClass[] psiClasses = psiJavaFile.getClasses();
+			PsiClass[] psiClasses = psiJavaFile.getClasses();
 
-				if (psiClasses != null) {
+			if (psiClasses != null) {
 
-					for (PsiClass psiClass : psiClasses) {
+				for (PsiClass psiClass : psiClasses) {
 
-						for (PsiMethod psiMethod : psiClass.getMethods()) {
+					for (PsiMethod psiMethod : psiClass.getMethods()) {
 
-							for (PsiAnnotation psiAnnotation : psiMethod.getAnnotations()) {
-								PsiJavaCodeReferenceElement nameReferenceElement = psiAnnotation.getNameReferenceElement();
+						for (PsiAnnotation psiAnnotation : psiMethod.getAnnotations()) {
+							PsiJavaCodeReferenceElement nameReferenceElement = psiAnnotation.getNameReferenceElement();
 
-								if (nameReferenceElement != null) {
-									String qualifiedName = ProjectUtils.getQualifiedNameWithoutResolve(nameReferenceElement, false);
+							if (nameReferenceElement != null) {
+								String qualifiedName = ProjectUtils.getQualifiedNameWithoutResolve(nameReferenceElement, false);
 
-									if ("javax.portlet.ProcessAction".equals(qualifiedName)) {
-										PsiAnnotationParameterList psiAnnotationParameterList = psiAnnotation.getParameterList();
+								if ("javax.portlet.ProcessAction".equals(qualifiedName)) {
+									PsiAnnotationParameterList psiAnnotationParameterList = psiAnnotation.getParameterList();
 
-										for (PsiNameValuePair psiNameValuePair : psiAnnotationParameterList.getAttributes()) {
-											if ("name".equals(psiNameValuePair.getName())) {
-												PsiAnnotationMemberValue psiNameValuePairValue = psiNameValuePair.getValue();
+									for (PsiNameValuePair psiNameValuePair : psiAnnotationParameterList.getAttributes()) {
+										if ("name".equals(psiNameValuePair.getName())) {
+											PsiAnnotationMemberValue psiNameValuePairValue = psiNameValuePair.getValue();
 
-												String actionCommand = null;
-												if (psiNameValuePairValue instanceof PsiLiteralExpression) {
-													actionCommand = psiNameValuePairValue.getText();
-
-													if (actionCommand != null) {
-														actionCommand = StringUtil.unquoteString(actionCommand);
-													}
-												} else if (psiNameValuePairValue instanceof PsiReferenceExpression psiReferenceExpression) {
-													PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(psiReferenceExpression.getProject()).getConstantEvaluationHelper();
-
-													actionCommand = (String) constantEvaluationHelper.computeConstantExpression(psiReferenceExpression);
-												}
+											String actionCommand = null;
+											if (psiNameValuePairValue instanceof PsiLiteralExpression) {
+												actionCommand = psiNameValuePairValue.getText();
 
 												if (actionCommand != null) {
-													Collection<String> portletNames = getPortletNames(psiClass);
+													actionCommand = StringUtil.unquoteString(actionCommand);
+												}
+											} else if (psiNameValuePairValue instanceof PsiReferenceExpression psiReferenceExpression) {
+												PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(psiReferenceExpression.getProject()).getConstantEvaluationHelper();
 
-													for (String portletName : portletNames) {
-														map.put(new CommandKey(portletName, actionCommand), null);
-													}
+												actionCommand = (String) constantEvaluationHelper.computeConstantExpression(psiReferenceExpression);
+											}
+
+											if (actionCommand != null) {
+												Collection<String> portletNames = getPortletNames(psiClass);
+
+												for (String portletName : portletNames) {
+													map.put(new CommandKey(portletName, actionCommand), null);
 												}
 											}
 										}
 									}
 								}
 							}
+						}
 
 
-							PsiModifierList modifierList = psiMethod.getModifierList();
-							if (modifierList.hasModifierProperty(PsiModifier.PUBLIC)) {
-								List<String> methodParameterQualifiedNames = ProjectUtils.getMethodParameterQualifiedNames(psiMethod);
-								if (methodParameterQualifiedNames.size() == 2) {
-									String methodName = psiMethod.getName();
-									if (! ACTION_NAME_EXCEPTIONS.contains(methodName)) {
-										String firstParameterQualifiedName = methodParameterQualifiedNames.get(0);
-										String secondParameterQualifiedName = methodParameterQualifiedNames.get(1);
+						PsiModifierList modifierList = psiMethod.getModifierList();
 
-										if ( ("javax.portlet.ActionRequest".equals(firstParameterQualifiedName)) && ("javax.portlet.ActionResponse".equals(secondParameterQualifiedName)) ) {
-											Collection<String> portletNames = getPortletNames(psiClass);
+						if (modifierList.hasModifierProperty(PsiModifier.PUBLIC)) {
+							List<String> methodParameterQualifiedNames = ProjectUtils.getMethodParameterQualifiedNames(psiMethod);
+							if (methodParameterQualifiedNames.size() == 2) {
+								String methodName = psiMethod.getName();
+								if (! ACTION_NAME_EXCEPTIONS.contains(methodName)) {
+									String firstParameterQualifiedName = methodParameterQualifiedNames.get(0);
+									String secondParameterQualifiedName = methodParameterQualifiedNames.get(1);
 
-											for (String portletName : portletNames) {
-												map.put(new CommandKey(portletName, methodName), null);
-											}
+									if ( ("javax.portlet.ActionRequest".equals(firstParameterQualifiedName)) && ("javax.portlet.ActionResponse".equals(secondParameterQualifiedName)) ) {
+										Collection<String> portletNames = getPortletNames(psiClass);
+
+										for (String portletName : portletNames) {
+											map.put(new CommandKey(portletName, methodName), null);
 										}
 									}
-
 								}
+
 							}
-
 						}
-					}
 
+					}
 				}
-			});
+
+			}
 
 			return map;
 		}
