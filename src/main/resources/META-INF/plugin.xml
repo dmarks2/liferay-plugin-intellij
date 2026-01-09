@@ -424,6 +424,15 @@
 		<psi.referenceContributor implementation="de.dm.intellij.liferay.language.osgi.OsgiCommandReferenceContributor"
                                   language="JAVA"/>
 
+		<psi.referenceContributor implementation="de.dm.intellij.liferay.language.html.LiferayHtmlReferenceContributor"
+								  language="HTML"/>
+		<psi.referenceContributor implementation="de.dm.intellij.liferay.language.html.LiferayJavaReferenceContributor"
+								  language="JAVA"/>
+
+		<completion.contributor implementationClass="de.dm.intellij.liferay.language.html.LiferayWebContextPathCompletionContributor"
+								language="HTML"
+		/>
+
 		<!-- Run Configuration Type -->
 		<configurationType implementation="de.dm.intellij.liferay.language.osgi.run.GogoShellConfigurationType"/>
 

@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -687,6 +688,24 @@ public class LiferayFileUtil {
 
         return false;
     }
+
+	public static VirtualFile getLiferayResourcesWebRoot(Module module) {
+		Collection<WebFacet> webFacets = WebFacet.getInstances(module);
+
+		for (WebFacet webFacet : webFacets) {
+			if (Objects.equals(webFacet.getName(), WebFacetUtil.LIFERAY_RESOURCES_WEB_FACET)) {
+				List<WebRoot> webRoots = webFacet.getWebRoots();
+
+				for (WebRoot webRoot : webRoots) {
+					if ("/".equals(webRoot.getRelativePath())) {
+						return webRoot.getFile();
+					}
+				}
+			}
+		}
+
+		return null;
+	}
 
     public static VirtualFile getWebContextForFile(PsiFile psiFile) {
         final Module module = ModuleUtil.findModuleForPsiElement(psiFile);
