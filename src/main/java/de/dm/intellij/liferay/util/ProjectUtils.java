@@ -53,6 +53,8 @@ import com.intellij.util.DisposeAwareRunnable;
 import com.intellij.util.PathUtilRt;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.idea.maven.project.MavenProjectsManager;
+import org.jetbrains.plugins.gradle.settings.GradleSettings;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -506,5 +508,15 @@ public class ProjectUtils {
 
         return null;
     }
+
+	public static boolean isMavenProject(Project project, VirtualFile virtualFile) {
+		MavenProjectsManager mavenProjectsManager = MavenProjectsManager.getInstance(project);
+
+		return mavenProjectsManager.isMavenizedProject() && mavenProjectsManager.findProject(virtualFile) != null;
+	}
+
+	public static boolean isGradleProject(Project project) {
+		return !GradleSettings.getInstance(project).getLinkedProjectsSettings().isEmpty();
+	}
 
 }

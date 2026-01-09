@@ -594,6 +594,19 @@
     </applicationListeners>
 
     <actions>
+		<!-- Liferay Source Formatter -->
+
+		<action id="LiferayFormatFile"
+				class="de.dm.intellij.liferay.action.RunSourceFormatterAction"
+				text="Format with Liferay Source Formatter"
+				description="Formats the current file using Liferay Source Formatter"
+		>
+			<add-to-group
+					group-id="EditorPopupMenu"
+					anchor="last"
+			/>
+		</action>
+
         <!-- POSHI -->
 
         <action id="NewPoshiScriptFile" class="de.dm.intellij.liferay.language.poshi.actions.CreatePoshiScriptFileAction">
