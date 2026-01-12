@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Feature: Run Configuration for gogo shell commands
 - Feature: add syntax highlighting for `.npmbundlerrc`
 - Bugfix: improve compatibility with IntelliJ Community Edition
+- Bugfix: Avoid a possible freeze when opening a project with many `package.json` files
 
 ## 0.0.25
 - Feature: code completion for the `unbind` attribute in a `@Reference` annotation

@@ -6,6 +6,7 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectUtil;
+import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.ModuleRootModificationUtil;
 import com.intellij.openapi.util.io.FileUtil;
@@ -17,9 +18,6 @@ import de.dm.intellij.liferay.util.ProjectUtils;
 import org.jetbrains.io.JsonReaderEx;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 /**
  * Extracts parent Theme name from package.json.
@@ -49,35 +47,46 @@ public class LiferayPackageJSONParser extends FileChangeListenerBase {
 
                         ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
 
-                        for (VirtualFile sourceRoot : moduleRootManager.getContentRoots()) {
-                            Collection<String> excludeFolders = new ArrayList<>();
+                        ProjectUtils.runDumbAwareLater(project, () -> {
+                            if (!module.isDisposed()) {
+                                ModuleRootModificationUtil.updateModel(module, model -> {
+                                    for (VirtualFile sourceRoot : moduleRootManager.getContentRoots()) {
+                                        VirtualFile pathBuildFile = sourceRoot.findFileByRelativePath(packageJSONInfo.pathBuild);
+                                        VirtualFile pathDistFile = sourceRoot.findFileByRelativePath(packageJSONInfo.pathDist);
 
-                            VirtualFile pathBuildFile = sourceRoot.findFileByRelativePath(packageJSONInfo.pathBuild);
-                            VirtualFile pathDistFile = sourceRoot.findFileByRelativePath(packageJSONInfo.pathDist);
-                            if (pathBuildFile != null) {
-                                excludeFolders.add(pathBuildFile.getUrl());
+                                        for (ContentEntry contentEntry : model.getContentEntries()) {
+                                            if (sourceRoot.equals(contentEntry.getFile())) {
+                                                if (pathBuildFile != null) {
+                                                    if (!isExcluded(contentEntry, pathBuildFile)) {
+                                                        contentEntry.addExcludeFolder(pathBuildFile);
+                                                    }
+                                                }
+                                                if (pathDistFile != null) {
+                                                    if (!isExcluded(contentEntry, pathDistFile)) {
+                                                        contentEntry.addExcludeFolder(pathDistFile);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
                             }
-                            if (pathDistFile != null) {
-                                excludeFolders.add(pathDistFile.getUrl());
-                            }
-
-							ProjectUtils.runDumbAwareLater(project, () -> {
-								if (! module.isDisposed()) {
-									ModuleRootModificationUtil.updateExcludedFolders(
-											module,
-											sourceRoot,
-											Collections.<String>emptyList(),
-											excludeFolders
-									);
-								}
-							});
-                        }
+                        });
                     }
                 } catch (Exception e) {
                     //unparseable json?
                 }
             }
         }
+    }
+
+    private static boolean isExcluded(ContentEntry contentEntry, VirtualFile file) {
+        for (String url : contentEntry.getExcludeFolderUrls()) {
+            if (url.equals(file.getUrl())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static boolean isRelevantFile(String path) {
