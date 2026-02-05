@@ -591,6 +591,10 @@ public class LiferayPropertiesDeprecationConstants {
 			"ym.password"
 	};
 
+	public static final String[] _OBSOLETE_PORTAL_KEYS_7_2 = {
+			"module.framework.properties.lpkg.index.validator.enabled"
+	};
+
 	public static final String[] _OBSOLETE_PORTAL_KEYS_7_4 = {
 			"dl.file.entry.processors"
 	};
