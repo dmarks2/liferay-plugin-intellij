@@ -14,7 +14,6 @@ public class LiferayPortalPropertiesDocumentationProviderTest extends BasePlatfo
 
     private static final String EXPECTED_DOCUMENTATION_LIFERAY_HOME = "<div class='definition'><pre>liferay.home</pre></div><div class='content'>Specify the Liferay home directory.<br></div>" +
             "<table class='sections'><p>" +
-            "<tr><td valign='top' class='section'><p>Env: </td><td valign='top'>LIFERAY_LIFERAY_PERIOD_HOME</td>" +
             "<tr><td valign='top' class='section'><p>Default: </td><td valign='top'>${resource.repositories.root}</td>" +
             "</table>";
 

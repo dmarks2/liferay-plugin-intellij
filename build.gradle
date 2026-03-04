@@ -156,7 +156,7 @@ tasks.register('generateLiferayPortalPropertiesFiles') {
         target74.mkdirs();
 
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/portal-impl/src/portal.properties'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/portal-impl/src/portal.properties'
             dest new File(target70, "portal.properties")
             acceptAnyCertificate true
             overwrite false
@@ -164,7 +164,7 @@ tasks.register('generateLiferayPortalPropertiesFiles') {
             useETag "all"
         }
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/portal-impl/src/portal.properties'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/portal-impl/src/portal.properties'
             dest new File(target71, "portal.properties")
             acceptAnyCertificate true
             overwrite false
@@ -172,7 +172,7 @@ tasks.register('generateLiferayPortalPropertiesFiles') {
             useETag "all"
         }
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/portal-impl/src/portal.properties'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/portal-impl/src/portal.properties'
             dest new File(target72, "portal.properties")
             acceptAnyCertificate true
             overwrite false
@@ -180,7 +180,7 @@ tasks.register('generateLiferayPortalPropertiesFiles') {
             useETag "all"
         }
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/portal-impl/src/portal.properties'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/portal-impl/src/portal.properties'
             dest new File(target73, "portal.properties")
             acceptAnyCertificate true
             overwrite false
@@ -206,7 +206,7 @@ tasks.register('generateLiferayTemplateHelperFiles') {
         targetFtl.mkdirs();
 
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-impl/src/VM_liferay.vm'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.2-ga3/portal-impl/src/VM_liferay.vm'
             dest new File(targetVtl, "VM_liferay_61.vm")
             acceptAnyCertificate true
             overwrite false
@@ -214,7 +214,7 @@ tasks.register('generateLiferayTemplateHelperFiles') {
             useETag "all"
         }
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-impl/src/VM_liferay.vm'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.5-ga6/portal-impl/src/VM_liferay.vm'
             dest new File(targetVtl, "VM_liferay_62.vm")
             acceptAnyCertificate true
             overwrite false
@@ -222,7 +222,7 @@ tasks.register('generateLiferayTemplateHelperFiles') {
             useETag "all"
         }
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/foundation/portal-template/portal-template-velocity/src/main/resources/VM_liferay.vm'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/modules/apps/foundation/portal-template/portal-template-velocity/src/main/resources/VM_liferay.vm'
             dest new File(targetVtl, "VM_liferay_70.vm")
             acceptAnyCertificate true
             overwrite false
@@ -230,7 +230,7 @@ tasks.register('generateLiferayTemplateHelperFiles') {
             useETag "all"
         }
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.x/portal-impl/src/FTL_liferay.ftl'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.1.2-ga3/portal-impl/src/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_61.ftl")
             acceptAnyCertificate true
             overwrite false
@@ -238,7 +238,7 @@ tasks.register('generateLiferayTemplateHelperFiles') {
             useETag "all"
         }
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.x/portal-impl/src/FTL_liferay.ftl'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/6.2.5-ga6/portal-impl/src/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_62.ftl")
             acceptAnyCertificate true
             overwrite false
@@ -246,7 +246,7 @@ tasks.register('generateLiferayTemplateHelperFiles') {
             useETag "all"
         }
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/foundation/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/modules/apps/foundation/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_70.ftl")
             acceptAnyCertificate true
             overwrite false
@@ -254,7 +254,7 @@ tasks.register('generateLiferayTemplateHelperFiles') {
             useETag "all"
         }
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_71.ftl")
             acceptAnyCertificate true
             overwrite false
@@ -262,7 +262,7 @@ tasks.register('generateLiferayTemplateHelperFiles') {
             useETag "all"
         }
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_72.ftl")
             acceptAnyCertificate true
             overwrite false
@@ -270,7 +270,7 @@ tasks.register('generateLiferayTemplateHelperFiles') {
             useETag "all"
         }
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/portal-template/portal-template-freemarker/src/main/resources/FTL_liferay.ftl'
             dest new File(targetFtl, "FTL_liferay_73.ftl")
             acceptAnyCertificate true
             overwrite false
@@ -419,25 +419,25 @@ tasks.register('generateTaglibDefinitions') {
 
         download.run {
             src([
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/util-taglib/src/META-INF/liferay-aui.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/util-taglib/src/META-INF/liferay-portlet-ext.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/util-taglib/src/META-INF/liferay-portlet.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/util-taglib/src/META-INF/liferay-security.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/util-taglib/src/META-INF/liferay-theme.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/util-taglib/src/META-INF/liferay-ui.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/util-taglib/src/META-INF/liferay-util.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/adaptive-media/adaptive-media-image-taglib/src/main/resources/META-INF/liferay-adaptive-media.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/asset/asset-taglib/src/main/resources/META-INF/liferay-asset.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/foundation/expando/expando-taglib/src/main/resources/META-INF/liferay-expando.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/collaboration/flags/flags-taglib/src/main/resources/META-INF/liferay-flags.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/foundation/frontend-taglib/frontend-taglib/src/main/resources/META-INF/liferay-frontend.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/collaboration/item-selector/item-selector-taglib/src/main/resources/META-INF/liferay-item-selector.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/journal/journal-taglib/src/main/resources/META-INF/liferay-journal.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/layout/layout-taglib/src/main/resources/META-INF/liferay-layout.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/foundation/map/map-taglib/src/main/resources/META-INF/liferay-map.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/product-navigation/product-navigation-taglib/src/main/resources/META-INF/liferay-product-navigation.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/site-navigation/site-navigation-taglib/src/main/resources/META-INF/liferay-site-navigation.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.x/modules/apps/web-experience/trash/trash-taglib/src/main/resources/META-INF/liferay-trash.tld'
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/util-taglib/src/META-INF/liferay-aui.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/util-taglib/src/META-INF/liferay-portlet-ext.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/util-taglib/src/META-INF/liferay-portlet.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/util-taglib/src/META-INF/liferay-security.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/util-taglib/src/META-INF/liferay-theme.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/util-taglib/src/META-INF/liferay-ui.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/util-taglib/src/META-INF/liferay-util.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/modules/apps/adaptive-media/adaptive-media-image-taglib/src/main/resources/META-INF/liferay-adaptive-media.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/modules/apps/web-experience/asset/asset-taglib/src/main/resources/META-INF/liferay-asset.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/modules/apps/foundation/expando/expando-taglib/src/main/resources/META-INF/liferay-expando.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/modules/apps/collaboration/flags/flags-taglib/src/main/resources/META-INF/liferay-flags.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/modules/apps/foundation/frontend-taglib/frontend-taglib/src/main/resources/META-INF/liferay-frontend.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/modules/apps/collaboration/item-selector/item-selector-taglib/src/main/resources/META-INF/liferay-item-selector.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/modules/apps/web-experience/journal/journal-taglib/src/main/resources/META-INF/liferay-journal.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/modules/apps/web-experience/layout/layout-taglib/src/main/resources/META-INF/liferay-layout.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/modules/apps/foundation/map/map-taglib/src/main/resources/META-INF/liferay-map.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/modules/apps/web-experience/product-navigation/product-navigation-taglib/src/main/resources/META-INF/liferay-product-navigation.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/modules/apps/web-experience/site-navigation/site-navigation-taglib/src/main/resources/META-INF/liferay-site-navigation.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.0.6-ga7/modules/apps/web-experience/trash/trash-taglib/src/main/resources/META-INF/liferay-trash.tld'
             ])
             dest target70
             acceptAnyCertificate true
@@ -448,35 +448,35 @@ tasks.register('generateTaglibDefinitions') {
 
         download.run {
             src([
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/util-taglib/src/META-INF/liferay-aui.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/util-taglib/src/META-INF/liferay-portlet-ext.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/util-taglib/src/META-INF/liferay-portlet.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/util-taglib/src/META-INF/liferay-security.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/util-taglib/src/META-INF/liferay-theme.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/util-taglib/src/META-INF/liferay-ui.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/util-taglib/src/META-INF/liferay-util.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/adaptive-media/adaptive-media-image-taglib/src/main/resources/META-INF/liferay-adaptive-media.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/asset/asset-taglib/src/main/resources/META-INF/liferay-asset.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/frontend-taglib/frontend-taglib-chart/src/main/resources/META-INF/liferay-chart.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/frontend-taglib/frontend-taglib-clay/src/main/resources/META-INF/liferay-clay.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/comment/comment-taglib/src/main/resources/META-INF/liferay-comment.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/frontend-editor/frontend-editor-taglib/src/main/resources/META-INF/liferay-editor.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/expando/expando-taglib/src/main/resources/META-INF/liferay-expando.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/flags/flags-taglib/src/main/resources/META-INF/liferay-flags.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/fragment/fragment-taglib/src/main/resources/META-INF/liferay-fragment.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/frontend-taglib/frontend-taglib/src/main/resources/META-INF/liferay-frontend.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/item-selector/item-selector-taglib/src/main/resources/META-INF/liferay-item-selector.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/journal/journal-taglib/src/main/resources/META-INF/liferay-journal.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/layout/layout-taglib/src/main/resources/META-INF/liferay-layout.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/map/map-taglib/src/main/resources/META-INF/liferay-map.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/product-navigation/product-navigation-taglib/src/main/resources/META-INF/liferay-product-navigation.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/reading-time/reading-time-taglib/src/main/resources/META-INF/liferay-reading-time.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/rss/rss-taglib/src/main/resources/META-INF/liferay-rss.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/site/site-taglib/src/main/resources/META-INF/liferay-site.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/site-navigation/site-navigation-taglib/src/main/resources/META-INF/liferay-site-navigation.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/social/social-activities-taglib/src/main/resources/META-INF/liferay-social-activities.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/social/social-bookmarks-taglib/src/main/resources/META-INF/liferay-social-bookmarks.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.x/modules/apps/trash/trash-taglib/src/main/resources/META-INF/liferay-trash.tld'
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/util-taglib/src/META-INF/liferay-aui.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/util-taglib/src/META-INF/liferay-portlet-ext.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/util-taglib/src/META-INF/liferay-portlet.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/util-taglib/src/META-INF/liferay-security.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/util-taglib/src/META-INF/liferay-theme.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/util-taglib/src/META-INF/liferay-ui.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/util-taglib/src/META-INF/liferay-util.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/adaptive-media/adaptive-media-image-taglib/src/main/resources/META-INF/liferay-adaptive-media.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/asset/asset-taglib/src/main/resources/META-INF/liferay-asset.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/frontend-taglib/frontend-taglib-chart/src/main/resources/META-INF/liferay-chart.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/frontend-taglib/frontend-taglib-clay/src/main/resources/META-INF/liferay-clay.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/comment/comment-taglib/src/main/resources/META-INF/liferay-comment.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/frontend-editor/frontend-editor-taglib/src/main/resources/META-INF/liferay-editor.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/expando/expando-taglib/src/main/resources/META-INF/liferay-expando.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/flags/flags-taglib/src/main/resources/META-INF/liferay-flags.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/fragment/fragment-taglib/src/main/resources/META-INF/liferay-fragment.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/frontend-taglib/frontend-taglib/src/main/resources/META-INF/liferay-frontend.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/item-selector/item-selector-taglib/src/main/resources/META-INF/liferay-item-selector.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/journal/journal-taglib/src/main/resources/META-INF/liferay-journal.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/layout/layout-taglib/src/main/resources/META-INF/liferay-layout.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/map/map-taglib/src/main/resources/META-INF/liferay-map.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/product-navigation/product-navigation-taglib/src/main/resources/META-INF/liferay-product-navigation.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/reading-time/reading-time-taglib/src/main/resources/META-INF/liferay-reading-time.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/rss/rss-taglib/src/main/resources/META-INF/liferay-rss.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/site/site-taglib/src/main/resources/META-INF/liferay-site.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/site-navigation/site-navigation-taglib/src/main/resources/META-INF/liferay-site-navigation.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/social/social-activities-taglib/src/main/resources/META-INF/liferay-social-activities.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/social/social-bookmarks-taglib/src/main/resources/META-INF/liferay-social-bookmarks.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.1.2-ga3/modules/apps/trash/trash-taglib/src/main/resources/META-INF/liferay-trash.tld'
             ])
             dest target71
             acceptAnyCertificate true
@@ -487,37 +487,37 @@ tasks.register('generateTaglibDefinitions') {
 
         download.run {
             src([
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/util-taglib/src/META-INF/liferay-aui.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/util-taglib/src/META-INF/liferay-portlet-ext.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/util-taglib/src/META-INF/liferay-portlet.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/util-taglib/src/META-INF/liferay-security.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/util-taglib/src/META-INF/liferay-theme.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/util-taglib/src/META-INF/liferay-ui.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/util-taglib/src/META-INF/liferay-util.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/adaptive-media/adaptive-media-image-taglib/src/main/resources/META-INF/liferay-adaptive-media.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/asset/asset-taglib/src/main/resources/META-INF/liferay-asset.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/frontend-taglib/frontend-taglib-chart/src/main/resources/META-INF/liferay-chart.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/frontend-taglib/frontend-taglib-clay/src/main/resources/META-INF/liferay-clay.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/comment/comment-taglib/src/main/resources/META-INF/liferay-comment.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/document-library/document-library-taglib/src/main/resources/META-INF/liferay-document-library.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/frontend-editor/frontend-editor-taglib/src/main/resources/META-INF/liferay-editor.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/expando/expando-taglib/src/main/resources/META-INF/liferay-expando.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/flags/flags-taglib/src/main/resources/META-INF/liferay-flags.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/fragment/fragment-taglib/src/main/resources/META-INF/liferay-fragment.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/frontend-taglib/frontend-taglib/src/main/resources/META-INF/liferay-frontend.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/item-selector/item-selector-taglib/src/main/resources/META-INF/liferay-item-selector.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/journal/journal-taglib/src/main/resources/META-INF/liferay-journal.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/layout/layout-taglib/src/main/resources/META-INF/liferay-layout.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/map/map-taglib/src/main/resources/META-INF/liferay-map.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/product-navigation/product-navigation-taglib/src/main/resources/META-INF/liferay-product-navigation.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/reading-time/reading-time-taglib/src/main/resources/META-INF/liferay-reading-time.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/rss/rss-taglib/src/main/resources/META-INF/liferay-rss.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/sharing/sharing-taglib/src/main/resources/META-INF/liferay-sharing.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/site/site-taglib/src/main/resources/META-INF/liferay-site.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/site-navigation/site-navigation-taglib/src/main/resources/META-INF/liferay-site-navigation.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/social/social-activities-taglib/src/main/resources/META-INF/liferay-social-activities.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/social/social-bookmarks-taglib/src/main/resources/META-INF/liferay-social-bookmarks.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.x/modules/apps/trash/trash-taglib/src/main/resources/META-INF/liferay-trash.tld'
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/util-taglib/src/META-INF/liferay-aui.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/util-taglib/src/META-INF/liferay-portlet-ext.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/util-taglib/src/META-INF/liferay-portlet.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/util-taglib/src/META-INF/liferay-security.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/util-taglib/src/META-INF/liferay-theme.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/util-taglib/src/META-INF/liferay-ui.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/util-taglib/src/META-INF/liferay-util.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/adaptive-media/adaptive-media-image-taglib/src/main/resources/META-INF/liferay-adaptive-media.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/asset/asset-taglib/src/main/resources/META-INF/liferay-asset.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/frontend-taglib/frontend-taglib-chart/src/main/resources/META-INF/liferay-chart.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/frontend-taglib/frontend-taglib-clay/src/main/resources/META-INF/liferay-clay.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/comment/comment-taglib/src/main/resources/META-INF/liferay-comment.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/document-library/document-library-taglib/src/main/resources/META-INF/liferay-document-library.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/frontend-editor/frontend-editor-taglib/src/main/resources/META-INF/liferay-editor.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/expando/expando-taglib/src/main/resources/META-INF/liferay-expando.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/flags/flags-taglib/src/main/resources/META-INF/liferay-flags.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/fragment/fragment-taglib/src/main/resources/META-INF/liferay-fragment.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/frontend-taglib/frontend-taglib/src/main/resources/META-INF/liferay-frontend.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/item-selector/item-selector-taglib/src/main/resources/META-INF/liferay-item-selector.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/journal/journal-taglib/src/main/resources/META-INF/liferay-journal.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/layout/layout-taglib/src/main/resources/META-INF/liferay-layout.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/map/map-taglib/src/main/resources/META-INF/liferay-map.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/product-navigation/product-navigation-taglib/src/main/resources/META-INF/liferay-product-navigation.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/reading-time/reading-time-taglib/src/main/resources/META-INF/liferay-reading-time.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/rss/rss-taglib/src/main/resources/META-INF/liferay-rss.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/sharing/sharing-taglib/src/main/resources/META-INF/liferay-sharing.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/site/site-taglib/src/main/resources/META-INF/liferay-site.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/site-navigation/site-navigation-taglib/src/main/resources/META-INF/liferay-site-navigation.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/social/social-activities-taglib/src/main/resources/META-INF/liferay-social-activities.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/social/social-bookmarks-taglib/src/main/resources/META-INF/liferay-social-bookmarks.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.2.1-ga2/modules/apps/trash/trash-taglib/src/main/resources/META-INF/liferay-trash.tld'
             ])
             dest target72
             acceptAnyCertificate true
@@ -528,37 +528,37 @@ tasks.register('generateTaglibDefinitions') {
 
         download.run {
             src([
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/util-taglib/src/META-INF/liferay-aui.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/util-taglib/src/META-INF/liferay-portlet-ext.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/util-taglib/src/META-INF/liferay-portlet.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/util-taglib/src/META-INF/liferay-security.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/util-taglib/src/META-INF/liferay-theme.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/util-taglib/src/META-INF/liferay-ui.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/util-taglib/src/META-INF/liferay-util.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/adaptive-media/adaptive-media-image-taglib/src/main/resources/META-INF/liferay-adaptive-media.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/asset/asset-taglib/src/main/resources/META-INF/liferay-asset.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/frontend-taglib/frontend-taglib-chart/src/main/resources/META-INF/liferay-chart.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/frontend-taglib/frontend-taglib-clay/src/main/resources/META-INF/liferay-clay.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/comment/comment-taglib/src/main/resources/META-INF/liferay-comment.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/document-library/document-library-taglib/src/main/resources/META-INF/liferay-document-library.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/frontend-editor/frontend-editor-taglib/src/main/resources/META-INF/liferay-editor.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/expando/expando-taglib/src/main/resources/META-INF/liferay-expando.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/flags/flags-taglib/src/main/resources/META-INF/liferay-flags.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/fragment/fragment-taglib/src/main/resources/META-INF/liferay-fragment.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/frontend-taglib/frontend-taglib/src/main/resources/META-INF/liferay-frontend.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/item-selector/item-selector-taglib/src/main/resources/META-INF/liferay-item-selector.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/journal/journal-taglib/src/main/resources/META-INF/liferay-journal.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/layout/layout-taglib/src/main/resources/META-INF/liferay-layout.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/map/map-taglib/src/main/resources/META-INF/liferay-map.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/product-navigation/product-navigation-taglib/src/main/resources/META-INF/liferay-product-navigation.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/reading-time/reading-time-taglib/src/main/resources/META-INF/liferay-reading-time.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/rss/rss-taglib/src/main/resources/META-INF/liferay-rss.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/sharing/sharing-taglib/src/main/resources/META-INF/liferay-sharing.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/site/site-taglib/src/main/resources/META-INF/liferay-site.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/site-navigation/site-navigation-taglib/src/main/resources/META-INF/liferay-site-navigation.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/social/social-activities-taglib/src/main/resources/META-INF/liferay-social-activities.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/social/social-bookmarks-taglib/src/main/resources/META-INF/liferay-social-bookmarks.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/trash/trash-taglib/src/main/resources/META-INF/liferay-trash.tld'
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/util-taglib/src/META-INF/liferay-aui.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/util-taglib/src/META-INF/liferay-portlet-ext.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/util-taglib/src/META-INF/liferay-portlet.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/util-taglib/src/META-INF/liferay-security.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/util-taglib/src/META-INF/liferay-theme.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/util-taglib/src/META-INF/liferay-ui.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/util-taglib/src/META-INF/liferay-util.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/adaptive-media/adaptive-media-image-taglib/src/main/resources/META-INF/liferay-adaptive-media.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/asset/asset-taglib/src/main/resources/META-INF/liferay-asset.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/frontend-taglib/frontend-taglib-chart/src/main/resources/META-INF/liferay-chart.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/frontend-taglib/frontend-taglib-clay/src/main/resources/META-INF/liferay-clay.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/comment/comment-taglib/src/main/resources/META-INF/liferay-comment.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/document-library/document-library-taglib/src/main/resources/META-INF/liferay-document-library.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/frontend-editor/frontend-editor-taglib/src/main/resources/META-INF/liferay-editor.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/expando/expando-taglib/src/main/resources/META-INF/liferay-expando.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/flags/flags-taglib/src/main/resources/META-INF/liferay-flags.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/fragment/fragment-taglib/src/main/resources/META-INF/liferay-fragment.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/frontend-taglib/frontend-taglib/src/main/resources/META-INF/liferay-frontend.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/item-selector/item-selector-taglib/src/main/resources/META-INF/liferay-item-selector.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/journal/journal-taglib/src/main/resources/META-INF/liferay-journal.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/layout/layout-taglib/src/main/resources/META-INF/liferay-layout.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/map/map-taglib/src/main/resources/META-INF/liferay-map.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/product-navigation/product-navigation-taglib/src/main/resources/META-INF/liferay-product-navigation.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/reading-time/reading-time-taglib/src/main/resources/META-INF/liferay-reading-time.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/rss/rss-taglib/src/main/resources/META-INF/liferay-rss.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/sharing/sharing-taglib/src/main/resources/META-INF/liferay-sharing.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/site/site-taglib/src/main/resources/META-INF/liferay-site.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/site-navigation/site-navigation-taglib/src/main/resources/META-INF/liferay-site-navigation.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/social/social-activities-taglib/src/main/resources/META-INF/liferay-social-activities.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/social/social-bookmarks-taglib/src/main/resources/META-INF/liferay-social-bookmarks.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/trash/trash-taglib/src/main/resources/META-INF/liferay-trash.tld'
             ])
             dest target73
             acceptAnyCertificate true
@@ -577,8 +577,8 @@ tasks.register('generateTaglibDefinitions') {
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/util-taglib/src/META-INF/liferay-ui.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/util-taglib/src/META-INF/liferay-util.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/adaptive-media/adaptive-media-image-taglib/src/main/resources/META-INF/liferay-adaptive-media.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/alloy/alloy-mvc/src/main/resources/META-INF/alloy-util.tld',
-                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.x/modules/apps/alloy/alloy-mvc/src/main/resources/META-INF/alloy-permission.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/alloy/alloy-mvc/src/main/resources/META-INF/alloy-util.tld',
+                    'https://raw.githubusercontent.com/liferay/liferay-portal/7.3.7-ga8/modules/apps/alloy/alloy-mvc/src/main/resources/META-INF/alloy-permission.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/application-list/application-list-taglib/src/main/resources/META-INF/resources/liferay-application-list.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/asset/asset-taglib/src/main/resources/META-INF/liferay-asset.tld',
                     'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/apps/captcha/captcha-taglib/src/main/resources/META-INF/liferay-captcha.tld',
