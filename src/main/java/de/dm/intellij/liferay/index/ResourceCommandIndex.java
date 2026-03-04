@@ -15,6 +15,7 @@ import com.intellij.util.indexing.FileBasedIndex;
 import com.intellij.util.indexing.FileBasedIndexExtension;
 import com.intellij.util.indexing.FileContent;
 import com.intellij.util.indexing.ID;
+import com.intellij.util.indexing.PsiDependentFileContent;
 import com.intellij.util.io.DataExternalizer;
 import com.intellij.util.io.KeyDescriptor;
 import com.intellij.util.io.VoidDataExternalizer;
@@ -107,6 +108,10 @@ public class ResourceCommandIndex extends FileBasedIndexExtension<CommandKey, Vo
         @Override
         public Map<CommandKey, Void> map(@NotNull FileContent fileContent) {
             Map<CommandKey, Void> map = new HashMap<>(super.map(fileContent));
+
+			if (! (fileContent instanceof PsiDependentFileContent)) {
+				return map;
+			}
 
             PsiJavaFile psiJavaFile = getPsiJavaFileForPsiDependentIndex(fileContent);
 
