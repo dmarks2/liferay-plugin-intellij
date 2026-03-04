@@ -1,6 +1,8 @@
 package de.dm.intellij.liferay.index;
 
 import com.intellij.ide.highlighter.JavaFileType;
+import com.intellij.openapi.project.DumbService;
+import com.intellij.openapi.project.IndexNotReadyException;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.JavaPsiFacade;
@@ -19,13 +21,13 @@ import com.intellij.psi.PsiModifierList;
 import com.intellij.psi.PsiNameValuePair;
 import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.util.PsiUtil;
 import com.intellij.util.indexing.DataIndexer;
 import com.intellij.util.indexing.DefaultFileTypeSpecificInputFilter;
 import com.intellij.util.indexing.FileBasedIndex;
 import com.intellij.util.indexing.FileBasedIndexExtension;
 import com.intellij.util.indexing.FileContent;
 import com.intellij.util.indexing.ID;
+import com.intellij.util.indexing.PsiDependentFileContent;
 import com.intellij.util.io.DataExternalizer;
 import com.intellij.util.io.KeyDescriptor;
 import com.intellij.util.io.VoidDataExternalizer;
@@ -118,6 +120,10 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
 		public Map<CommandKey, Void> map(@NotNull FileContent fileContent) {
 			Map<CommandKey, Void> map = new HashMap<>(super.map(fileContent));
 
+			if (! (fileContent instanceof PsiDependentFileContent)) {
+				return map;
+			}
+
 			PsiJavaFile psiJavaFile = getPsiJavaFileForPsiDependentIndex(fileContent);
 
 			if (psiJavaFile == null) {
@@ -153,9 +159,21 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
 													actionCommand = StringUtil.unquoteString(actionCommand);
 												}
 											} else if (psiNameValuePairValue instanceof PsiReferenceExpression psiReferenceExpression) {
-												PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(psiReferenceExpression.getProject()).getConstantEvaluationHelper();
+												Project project = psiReferenceExpression.getProject();
 
-												actionCommand = (String) constantEvaluationHelper.computeConstantExpression(psiReferenceExpression);
+												if (!DumbService.isDumb(project)) {
+													try {
+														PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(project).getConstantEvaluationHelper();
+
+														Object value = constantEvaluationHelper.computeConstantExpression(psiReferenceExpression);
+
+														if (value instanceof String) {
+															actionCommand = (String) value;
+														}
+													} catch (IndexNotReadyException indexNotReadyException) {
+														//ignore exception
+													}
+												}
 											}
 
 											if (actionCommand != null) {
