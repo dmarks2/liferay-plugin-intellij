@@ -3,6 +3,8 @@ Liferay Plugin for IntelliJ
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.27
+
 ## 0.0.26
 - Feature: add inspection for  `setUserId()` should not be used in `update` methods in `LocalServiceImpl` classes (avoid unexpected permission expansions)
 - Feature: add syntax highlighting, bracket matching and folding for OSGi `.config` files
