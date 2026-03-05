@@ -2,6 +2,7 @@ package de.dm.intellij.liferay.index;
 
 import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
@@ -107,17 +108,27 @@ public class ResourceCommandIndex extends FileBasedIndexExtension<CommandKey, Vo
         @NotNull
         @Override
         public Map<CommandKey, Void> map(@NotNull FileContent fileContent) {
-            Map<CommandKey, Void> map = new HashMap<>(super.map(fileContent));
+            Map<CommandKey, Void> baseMap = super.map(fileContent);
 
 			if (! (fileContent instanceof PsiDependentFileContent)) {
-				return map;
+				return baseMap;
 			}
+
+            CharSequence text = fileContent.getContentAsText();
+
+            boolean mightContainResourceMethod = (StringUtil.indexOf(text, "ResourceRequest") >= 0) && (StringUtil.indexOf(text, "ResourceResponse") >= 0);
+
+            if (! mightContainResourceMethod) {
+                return baseMap;
+            }
 
             PsiJavaFile psiJavaFile = getPsiJavaFileForPsiDependentIndex(fileContent);
 
             if (psiJavaFile == null) {
-                return map;
+                return baseMap;
             }
+
+            Map<CommandKey, Void> map = new HashMap<>(baseMap);
 
             PsiClass[] psiClasses = psiJavaFile.getClasses();
 

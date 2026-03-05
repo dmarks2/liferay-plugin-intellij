@@ -118,17 +118,28 @@ public class ActionCommandIndex extends FileBasedIndexExtension<CommandKey, Void
 		@NotNull
 		@Override
 		public Map<CommandKey, Void> map(@NotNull FileContent fileContent) {
-			Map<CommandKey, Void> map = new HashMap<>(super.map(fileContent));
+			Map<CommandKey, Void> baseMap = super.map(fileContent);
 
 			if (! (fileContent instanceof PsiDependentFileContent)) {
-				return map;
+				return baseMap;
+			}
+
+			CharSequence text = fileContent.getContentAsText();
+
+			boolean mightContainProcessAction = StringUtil.indexOf(text, "@ProcessAction") >= 0;
+			boolean mightContainActionMethod = (StringUtil.indexOf(text, "ActionRequest") >= 0) && (StringUtil.indexOf(text, "ActionResponse") >= 0);
+
+			if (!mightContainProcessAction && !mightContainActionMethod) {
+				return baseMap;
 			}
 
 			PsiJavaFile psiJavaFile = getPsiJavaFileForPsiDependentIndex(fileContent);
 
 			if (psiJavaFile == null) {
-				return map;
+				return baseMap;
 			}
+
+			Map<CommandKey, Void> map = new HashMap<>(baseMap);
 
 			PsiClass[] psiClasses = psiJavaFile.getClasses();
 
