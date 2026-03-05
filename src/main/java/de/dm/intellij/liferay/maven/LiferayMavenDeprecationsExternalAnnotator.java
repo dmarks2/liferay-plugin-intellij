@@ -395,7 +395,9 @@ public class LiferayMavenDeprecationsExternalAnnotator extends ExternalAnnotator
 
 			FileDocumentManager.getInstance().saveAllDocuments();
 
-			MavenProjectsManager.getInstance(project).forceUpdateAllProjectsOrFindAllAvailablePomFiles();
+			if (! ApplicationManager.getApplication().isUnitTestMode()) {
+				MavenProjectsManager.getInstance(project).forceUpdateAllProjectsOrFindAllAvailablePomFiles();
+			}
 		}
 
 		@Override

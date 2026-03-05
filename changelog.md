@@ -4,6 +4,7 @@ Liferay Plugin for IntelliJ
 All notable changes to this project will be documented in this file.
 
 ## 0.0.27
+- Feature: add support for IntelliJ IDEA 2025.3, dropped support for older versions
 
 ## 0.0.26
 - Feature: add inspection for  `setUserId()` should not be used in `update` methods in `LocalServiceImpl` classes (avoid unexpected permission expansions)
