@@ -1,8 +1,8 @@
 buildscript {
     repositories {
-        maven { url "https://cache-redirector.jetbrains.com/intellij-dependencies" }
-        maven { url "https://cache-redirector.jetbrains.com/repo1.maven.org/maven2" }
-        maven { url "https://plugins.gradle.org/m2" }
+        maven { url = "https://cache-redirector.jetbrains.com/intellij-dependencies" }
+        maven { url = "https://cache-redirector.jetbrains.com/repo1.maven.org/maven2" }
+        maven { url = "https://plugins.gradle.org/m2" }
     }
 }
 
@@ -11,9 +11,9 @@ plugins {
 }
 
 repositories {
-    maven { url "https://repository-cdn.liferay.com/nexus/content/groups/public/" }
-    maven { url "https://www.jetbrains.com/intellij-repository/releases" }
-    maven { url "https://cache-redirector.jetbrains.com/intellij-dependencies" }
+    maven { url = "https://repository-cdn.liferay.com/nexus/content/groups/public/" }
+    maven { url = "https://www.jetbrains.com/intellij-repository/releases" }
+    maven { url = "https://cache-redirector.jetbrains.com/intellij-dependencies" }
 }
 
 apply plugin: 'idea'

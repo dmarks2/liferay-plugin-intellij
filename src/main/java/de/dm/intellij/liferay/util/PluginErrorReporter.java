@@ -35,7 +35,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -72,7 +72,7 @@ public class PluginErrorReporter extends ErrorReportSubmitter {
                     String url = "https://api.github.com/repos/dmarks2/liferay-plugin-intellij/issues";
 
                     //see https://developer.github.com/v3/issues/
-                    HttpURLConnection httpURLConnection = (HttpURLConnection)new URL(url).openConnection();
+                    HttpURLConnection httpURLConnection = (HttpURLConnection)new URI(url).toURL().openConnection();
                     httpURLConnection.setDoOutput(true);
                     httpURLConnection.setRequestMethod("POST");
                     httpURLConnection.setRequestProperty("Content-Type", "application/vnd.github.v3+json");

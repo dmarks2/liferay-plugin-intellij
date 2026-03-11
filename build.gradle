@@ -13,7 +13,9 @@ configurations {
 
 repositories {
     mavenCentral()
-    maven { url "https://repository-cdn.liferay.com/nexus/content/groups/public/" }
+    maven {
+        url = "https://repository-cdn.liferay.com/nexus/content/groups/public/"
+    }
 
     intellijPlatform {
         defaultRepositories()
@@ -34,15 +36,15 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-def generatedResources = "$buildDir/generated-resources"
-def tempDir = "$buildDir/tmp"
+def generatedResources = "$layout.buildDirectory/generated-resources"
+def tempDir = "$layout.buildDirectory/tmp"
 
 test {
     testLogging {
         exceptionFormat = 'full'
         showStandardStreams = true
     }
-    scanForTestClasses false
+    scanForTestClasses = false
     include "**/*Test.class"
 
     systemProperty("idea.split.test.logs", "true")
@@ -650,7 +652,7 @@ tasks.register('unzipCompass0122Stylesheets', Copy) {
     eachFile { fcp ->
         fcp.path = fcp.path.replaceFirst("^compass-0.12.2/frameworks/compass/stylesheets", '')
     }
-    includeEmptyDirs false
+    includeEmptyDirs = false
 }
 
 tasks.register('unzipCompass0122SassExtensions', Copy) {
@@ -661,7 +663,7 @@ tasks.register('unzipCompass0122SassExtensions', Copy) {
     eachFile { fcp ->
         fcp.path = fcp.path.replaceFirst("^compass-0.12.2/lib/compass/sass_extensions", '')
     }
-    includeEmptyDirs false
+    includeEmptyDirs = false
 }
 
 tasks.register('downloadSchemaDefinitions') {
@@ -749,8 +751,8 @@ tasks.register('downloadPoshi', Copy) {
     into generatedResources + '/lib'
 }
 
-group 'de.dm.intellij.liferay'
-version '0.0.27'
+group = 'de.dm.intellij.liferay'
+version = '0.0.27'
 
 configurations.poshiImplementation.setCanBeResolved(true)
 
