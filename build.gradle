@@ -36,8 +36,8 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-def generatedResources = "$layout.buildDirectory/generated-resources"
-def tempDir = "$layout.buildDirectory/tmp"
+def generatedResources = layout.buildDirectory.asFile.get().path + "/generated-resources"
+def tempDir = layout.buildDirectory.asFile.get().path + "/tmp"
 
 test {
     testLogging {
