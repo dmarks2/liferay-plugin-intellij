@@ -1129,6 +1129,19 @@ public class LiferayJavaDeprecations {
 					"com.liferay.portal.vulcan.fields.NestedFieldsSupplier.addNestedField()"
 			} );
 
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPS_193319_WORKFLOW_DEFINITION_MANAGER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"WorkflowDefinitionManager classes have been moved to a new package.",
+			"LPS-193319",
+			new String[] {
+					"com.liferay.portal.kernel.workflow.WorkflowDefinitionManager",
+					"com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil"
+			},
+			new String[] {
+					"com.liferay.portal.workflow.manager.WorkflowDefinitionManager",
+					"com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil",
+			});
+
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
 		String[] newImportStatements = new String[0];

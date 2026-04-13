@@ -73,6 +73,7 @@ public class LiferayJspJavaDeprecationInspection extends AbstractLiferayDeprecat
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_198653_FORM_NAVIGATOR_ENTRY_UTIL).version("7.4.3.100"));
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_198859_THREAD_LOCAL_DISTRIBUTOR).version("7.4.3.102"));
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_169777_SCRIPTING_EXECUTOR_EXTENDER).version("7.4.3.84"));
+		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_193319_WORKFLOW_DEFINITION_MANAGER).version("7.4.3.92"));
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_201086_AUDIT_MESSAGE_FACTORY).version(LiferayVersions.LIFERAY_2024_Q1_CE));
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_199532_JS_AWARE_PORTAL_WEB_RESOURCE).version(LiferayVersions.LIFERAY_2024_Q1_CE));
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPS_203260_SITEMAP).version(LiferayVersions.LIFERAY_2024_Q1_CE));
