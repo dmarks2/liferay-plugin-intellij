@@ -596,7 +596,9 @@ public class LiferayPropertiesDeprecationConstants {
 	};
 
 	public static final String[] _OBSOLETE_PORTAL_KEYS_7_4 = {
-			"dl.file.entry.processors"
+			"dl.file.entry.processors",
+			"redirect.url.protocols.allowed",
+			"work.dir.override.enabled"
 	};
 
 

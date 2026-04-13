@@ -2,7 +2,7 @@
     <id>de.dm.intellij.liferay</id>
     <name>Liferay</name>
     <category>Framework integration</category>
-    <version>0.0.27</version>
+    <version>0.0.28</version>
 
     <vendor email="Dominik.Marks@gmx.de" url="https://github.com/dmarks2">Dominik Marks</vendor>
 
@@ -25,7 +25,12 @@
       ]]></description>
 
     <change-notes><![CDATA[
-    	<p>Version 0.0.27</p>
+    	<p>Version 0.0.28</p>
+    	<ul>
+		    <li>Feature: add deprecation checks for Liferay 2025.Q1</li>
+    	</ul>
+
+        <p>Version 0.0.27</p>
     	<ul>
 		    <li>Feature: add support for IntelliJ IDEA 2025.3, dropped support for older versions</li>
     	</ul>

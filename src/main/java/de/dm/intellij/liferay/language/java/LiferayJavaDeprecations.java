@@ -1094,6 +1094,41 @@ public class LiferayJavaDeprecations {
 			},
 			new String[0] );
 
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPD_39461_FRAGMENT_JAVASCRIPT_CONFIGURATION = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The FragmentJavascriptConfiguration class is renamed to FragmentJavaScriptConfiguration.",
+			"LPD-39461",
+			new String[] {
+					"src.main.java.com.liferay.fragment.configuration.FragmentJavascriptConfiguration",
+			},
+			new String[] {
+					"src.main.java.com.liferay.fragment.configuration.FragmentJavaScriptConfiguration"
+			});
+
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPD_36036_JSP_TAGLIB_HELPER = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The JSPTaglibHelper interface is removed.",
+			"LPD-36036",
+			new String[] {
+					"com.liferay.portal.osgi.web.servlet.JSPTaglibHelper",
+			},
+			new String[0]);
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPD_40102_NESTED_FIELDS_CONTEXT = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The addFieldName and getFieldNames methods have been renamed to addNestedField and getNestedFields",
+			"LPD-40102",
+			new String[] {
+					"com.liferay.portal.vulcan.fields.NestedFieldsContext.addFieldName()",
+					"com.liferay.portal.vulcan.fields.NestedFieldsContext.getFieldNames()",
+					"com.liferay.portal.vulcan.fields.NestedFieldsSupplier.addFieldName()"
+			},
+			new String[] {
+					"com.liferay.portal.vulcan.fields.NestedFieldsContext.addNestedFieldName()",
+					"com.liferay.portal.vulcan.fields.NestedFieldsContext.getNestedFields()",
+					"com.liferay.portal.vulcan.fields.NestedFieldsSupplier.addNestedField()"
+			} );
+
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
 		String[] newImportStatements = new String[0];

@@ -96,6 +96,8 @@ public class LiferayJspJavaDeprecationInspection extends AbstractLiferayDeprecat
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_24699_PORTAL_LIFECYCLE).version(LiferayVersions.LIFERAY_2024_Q2_CE));
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_7822_SEARCH_PERMISSION_FILTER).version(LiferayVersions.LIFERAY_2024_Q3_CE));
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_28526_DESTINATION_WRAPPER).version(LiferayVersions.LIFERAY_2024_Q3_CE));
+		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_39461_FRAGMENT_JAVASCRIPT_CONFIGURATION).version(LiferayVersions.LIFERAY_2025_Q1_CE));
+		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_36036_JSP_TAGLIB_HELPER).version(LiferayVersions.LIFERAY_2025_Q1_CE));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_150185_HTTP_COMPONENTS_UTIL).version("7.4.3.22"));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_162450_PHONE).version("7.4.3.45"));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_162437_ADDRESS).version("7.4.3.45"));
@@ -123,6 +125,7 @@ public class LiferayJspJavaDeprecationInspection extends AbstractLiferayDeprecat
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_200501_IS_STARTUP_FINISHED).version(LiferayVersions.LIFERAY_2024_Q4_CE));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_196539_GET_PORTLET_SETUP).version(LiferayVersions.LIFERAY_2024_Q4_CE));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_178619_JOURNAL_ARTICLE_STRUCTURE_KEY_REMOVAL).version("7.4.3.72"));
+		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_40102_NESTED_FIELDS_CONTEXT).version(LiferayVersions.LIFERAY_2025_Q1_CE));
 	}
 	@Nls
 	@NotNull
