@@ -39,7 +39,7 @@ for the plugin. Improvements have been made in the following areas:
 Supported IDEs
 --------------
 * IntelliJ 2025.3 and above
-* 
+
 Supported Liferay Versions
 --------------------------
 * Liferay 6.1 CE / EE

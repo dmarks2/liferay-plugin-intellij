@@ -73,7 +73,7 @@ public class LiferayModuleComponent implements PersistentStateComponent<LiferayM
 
     public String getLiferayVersion() {
         if ( (liferayVersion != null ) && (!liferayVersion.isEmpty()) ) {
-            return liferayVersion;
+            return LiferayVersions.getInternalVersion(liferayVersion);
         }
 
         Module parentModule = ProjectUtils.getParentModule(module);

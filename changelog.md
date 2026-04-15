@@ -4,7 +4,8 @@ Liferay Plugin for IntelliJ
 All notable changes to this project will be documented in this file.
 
 ## 0.0.28
-- Feature: add deprecation checks for Liferay 2025.Q1
+- Feature: add deprecation checks for Liferay 2025.Q1 (7.4.3.132)
+- Feature: add basic support for Liferay 2026.Q1
 
 ## 0.0.27
 - Feature: add support for IntelliJ IDEA 2025.3, dropped support for older versions
