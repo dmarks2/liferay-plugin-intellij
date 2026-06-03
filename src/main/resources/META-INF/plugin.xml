@@ -30,6 +30,7 @@
 		    <li>Feature: add deprecation checks for Liferay 2025.Q1</li>
 		    <li>Feature: add deprecation check for LPD-8352</li>
 		    <li>Feature: add basic support for Liferay 2026.Q1</li>
+		    <li>Feature: Code completion features for Liferay Batch Engine Data files</li>
     	</ul>
 
         <p>Version 0.0.27</p>

@@ -29,7 +29,8 @@ public class LiferayJsonSchemaProviderFactory implements JsonSchemaProviderFacto
 				new LiferayFragmentConfigurationSchemaFileProvider(),
 				new LiferayFragmentFragmentSchemaFileProvider(),
 				new LiferayRestConfigSchemaProvider(),
-				new LiferayNpmBundlerRcJsonSchemaFileProvider()
+				new LiferayNpmBundlerRcJsonSchemaFileProvider(),
+				new LiferayBatchEngineDataSchemaFileProvider()
 		));
 
 		providers.addAll(ClientExtensionYamlSchemaFileProviderFactory.getClientExtensionYamlSchemaFileProviders(project));

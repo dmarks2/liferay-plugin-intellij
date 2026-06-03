@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://liferay.com/batch-engine-data.json",
+  "title": "Liferay Batch Engine Data",
+  "type": "object",
+  "properties": {
+    "configuration": {
+      "description": "The configuration of the batch task.",
+      "type": "object",
+      "properties": {
+        "className": {
+          "type": "string",
+          "description": "Full qualified name of the target entity (e.g. 'com.liferay.account.dto.v1_0.Account').",
+          "examples": ["com.liferay.account.dto.v1_0.Account"]
+        },
+        "companyId": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The company ID of the virtual Liferay instance."
+        },
+        "userId": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The user ID that is being used to run the batch task."
+        },
+        "callbackURL": {
+          "type": "string",
+          "format": "uri",
+          "description": "Optional callback URL. The batch engine will send the status of the batch import to this URL."
+        },
+        "fieldNameMappingMap": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Mapping table for the import."
+        },
+        "multiCompany": {
+          "type": "boolean",
+          "default": false
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              { "type": "string" },
+              { "type": "number" },
+              { "type": "boolean" },
+              { "type": "array" },
+              { "type": "object" },
+              { "type": "null" }
+            ]
+          },
+          "description": "Additional parameters passed to the batch execution. Can be used to define import strategies etc.",
+        },
+        "taskItemDelegateName": {
+          "type": "string",
+          "description": "Name of a custom task delegate component."
+        },
+        "version": {
+          "type": "string",
+          "description": "The API-version of the Headless REST API."
+        }
+      },
+      "required": [
+        "className"
+      ]
+    },
+    "items": {
+      "description": "Array of items to be imported. Each item is an object of the type defined in the 'className' property of the 'configuration' property.",
+      "type": "array",
+      "items": {
+        "description": "A single item to be imported.",
+        "type": "object",
+        "properties": {
+          "externalReferenceCode": {
+            "type": "string",
+            "description": "External reference code of the item."
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Feature: add deprecation checks for Liferay 2025.Q1 (7.4.3.132)
 - Feature: add deprecation check for LPD-8352
 - Feature: add basic support for Liferay 2026.Q1
+- Feature: Code completion features for Liferay Batch Engine Data files
 
 ## 0.0.27
 - Feature: add support for IntelliJ IDEA 2025.3, dropped support for older versions
