@@ -1142,6 +1142,21 @@ public class LiferayJavaDeprecations {
 					"com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil",
 			});
 
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPD_8352_INDEX_SETTINGS_CLASSES = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"IndexSettings classes were renamed and moved to new packages.",
+			"LPD-8352",
+			new String[] {
+					"com.liferay.portal.search.spi.settings.IndexSettingsContributor",
+					"com.liferay.portal.search.spi.settings.IndexSettingsHelper",
+					"com.liferay.portal.search.spi.settings.TypeMappingsHelper"
+			},
+			new String[] {
+					"com.liferay.portal.search.spi.index.configuration.contributor.IndexConfigurationContributor",
+					"com.liferay.portal.search.spi.index.configuration.contributor.helper.IndexSettingsHelper",
+					"com.liferay.portal.search.spi.index.configuration.contributor.helper.TypeMappingsHelper"
+			} );
+
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
 		String[] newImportStatements = new String[0];

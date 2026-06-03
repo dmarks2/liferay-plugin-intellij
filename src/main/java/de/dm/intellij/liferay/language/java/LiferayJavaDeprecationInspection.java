@@ -94,6 +94,7 @@ public class LiferayJavaDeprecationInspection extends AbstractLiferayDeprecation
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_24699_PORTAL_LIFECYCLE).version(LiferayVersions.LIFERAY_2024_Q2_CE));
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_7822_SEARCH_PERMISSION_FILTER).version(LiferayVersions.LIFERAY_2024_Q3_CE));
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_28526_DESTINATION_WRAPPER).version(LiferayVersions.LIFERAY_2024_Q3_CE));
+		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_8352_INDEX_SETTINGS_CLASSES).version(LiferayVersions.LIFERAY_2024_Q3_CE));
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_39461_FRAGMENT_JAVASCRIPT_CONFIGURATION).version(LiferayVersions.LIFERAY_2025_Q1_CE));
 		JAVA_DEPRECATIONS.addAll(createImportStatements(LiferayJavaDeprecations.LPD_36036_JSP_TAGLIB_HELPER).version(LiferayVersions.LIFERAY_2025_Q1_CE));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_162450_PHONE).version("7.4.3.45"));
