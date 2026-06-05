@@ -191,6 +191,13 @@ public class LiferayTaglibAttributes {
 	public static TaglibDeprecationTags LPS_202768_UPLOAD_PROGRESS = new TaglibDeprecationTags(7.4f, TAGLIB_URI_LIFERAY_UI,
 			"Use liferay-document-library:upload-progress instead.", "LPS-2027680", "upload-progress");
 
+	public static TaglibDeprecationTags LPD_53353_AUI_NAV = new TaglibDeprecationTags(
+			7.4f, TAGLIB_URI_LIFERAY_AUI,
+			"The `liferay-aui:nav` and related tags were removed.",
+			"LPD-53353",
+			"nav-bar-search", "nav-bar", "nav-item", "nav"
+	);
+
 	/*
 		public static TaglibDeprecationTags LPS_ = new TaglibDeprecationTags();
 

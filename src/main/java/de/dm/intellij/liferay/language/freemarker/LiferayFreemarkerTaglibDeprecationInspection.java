@@ -25,6 +25,7 @@ import java.util.List;
 
 import static de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerTaglibDeprecationInfoHolder.createAttributes;
 import static de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerTaglibDeprecationInfoHolder.createTags;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPD_53353_AUI_NAV;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_100146_CONTEXTUAL_SIDEBAR;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_106899_CARDS_TREEVIEW;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_112464_CLAY_BADGE_CSS_CLASS;
@@ -179,6 +180,7 @@ public class LiferayFreemarkerTaglibDeprecationInspection extends AbstractLifera
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_199170_EXPORT_IMPORT_CHANGESET).quickfix(removeTag()).version("7.4.3.100"));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_202768_LOGO_SELECTOR).quickfix(renameNamespace(TAGLIB_URI_LIFERAY_FRONTEND)).version(LiferayVersions.LIFERAY_2024_Q1_CE));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_202768_UPLOAD_PROGRESS).quickfix(renameNamespace(TAGLIB_URI_LIFERAY_DOCUMENT_LIBRARY)).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPD_53353_AUI_NAV).quickfix(removeTag()).version(LiferayVersions.LIFERAY_2025_Q2));
 	}
 
 	@Nls

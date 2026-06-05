@@ -30,6 +30,7 @@ import java.util.List;
 
 import static de.dm.intellij.liferay.language.jsp.LiferayJspTaglibDeprecationInfoHolder.createAttributes;
 import static de.dm.intellij.liferay.language.jsp.LiferayJspTaglibDeprecationInfoHolder.createTags;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPD_53353_AUI_NAV;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_100146_CONTEXTUAL_SIDEBAR;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_106899_CARDS_TREEVIEW;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_112464_CLAY_BADGE_CSS_CLASS;
@@ -186,6 +187,7 @@ public class LiferayJspTaglibDeprecationInspection extends AbstractLiferayDeprec
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_199170_EXPORT_IMPORT_CHANGESET).quickfix(removeXmlTag()).version("7.4.3.100"));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_202768_LOGO_SELECTOR).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_FRONTEND, "liferay-frontend")).version(LiferayVersions.LIFERAY_2024_Q1_CE));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_202768_UPLOAD_PROGRESS).quickfix(renameXmlNamespace(TAGLIB_URI_LIFERAY_DOCUMENT_LIBRARY, "liferay-document-library")).version(LiferayVersions.LIFERAY_2024_Q1_CE));
+		TAGLIB_DEPRECATIONS.addAll(createTags(LPD_53353_AUI_NAV).quickfix(removeXmlTag()).version(LiferayVersions.LIFERAY_2025_Q2));
 	}
 
 	@Nls
