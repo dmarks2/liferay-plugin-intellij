@@ -27,7 +27,7 @@
     <change-notes><![CDATA[
     	<p>Version 0.0.28</p>
     	<ul>
-		    <li>Feature: add deprecation checks for Liferay 2025.Q1 and 2025.Q2</li>
+		    <li>Feature: add deprecation checks for Liferay 2025.Q1, 2025.Q2 and 2025.Q3</li>
 		    <li>Feature: add deprecation check for LPD-8352</li>
 		    <li>Feature: add basic support for Liferay 2026.Q1</li>
 		    <li>Feature: Code completion features for Liferay Batch Engine Data files</li>

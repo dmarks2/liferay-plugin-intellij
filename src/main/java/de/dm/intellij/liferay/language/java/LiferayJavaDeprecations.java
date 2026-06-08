@@ -1227,6 +1227,19 @@ public class LiferayJavaDeprecations {
 					"com.liferay.layout.page.template.item.selector.LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion",
 			});
 
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPD_50859_ITEM_SELECTOR_CRITERION_2025_Q3 = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"The .criterion package has been removed from several ItemSelectorCriterion classes",
+			"LPD-50859",
+			new String[] {
+					"com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion",
+					"com.liferay.layout.theme.item.selector.criterion.LayoutThemeItemSelectorCriterion",
+			},
+			new String[] {
+					"com.liferay.layout.item.selector.LayoutItemSelectorCriterion",
+					"com.liferay.layout.theme.item.selector.LayoutThemeItemSelectorCriterion",
+			});
+
 	//see https://github.com/liferay/liferay-portal/blob/master/modules/liferay-jakarta-renames.properties
 	public static LiferayJavaDeprecations.JavaImportDeprecation LPD_46462_JAKARTA_MIGRATION = new LiferayJavaDeprecations.JavaImportDeprecation(
 			7.4f,

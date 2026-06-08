@@ -4,7 +4,7 @@ Liferay Plugin for IntelliJ
 All notable changes to this project will be documented in this file.
 
 ## 0.0.28
-- Feature: add deprecation checks for Liferay 2025.Q1 (7.4.3.132) and 2025.Q2
+- Feature: add deprecation checks for Liferay 2025.Q1 (7.4.3.132), 2025.Q2 and 2025.Q3
 - Feature: add deprecation check for LPD-8352
 - Feature: add basic support for Liferay 2026.Q1
 - Feature: Code completion features for Liferay Batch Engine Data files
