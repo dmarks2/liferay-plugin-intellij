@@ -1,0 +1,1 @@
+<warning descr="Java EE libraries are no longer compatible and must be replaced with updated Jakarta EE versions. (see LPD-46462)"><warning descr="Unused import">import <error descr="Cannot resolve symbol 'javax'">javax</error>.<error descr="Cannot resolve symbol 'servlet'">servlet</error>.<error descr="Cannot resolve symbol 'Servlet'">Servlet</error></warning></warning>

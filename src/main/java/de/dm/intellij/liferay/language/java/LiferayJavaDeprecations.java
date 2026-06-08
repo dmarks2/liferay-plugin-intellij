@@ -1227,6 +1227,13 @@ public class LiferayJavaDeprecations {
 					"com.liferay.layout.page.template.item.selector.LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion",
 			});
 
+	//see https://github.com/liferay/liferay-portal/blob/master/modules/liferay-jakarta-renames.properties
+	public static LiferayJavaDeprecations.JavaImportDeprecation LPD_46462_JAKARTA_MIGRATION = new LiferayJavaDeprecations.JavaImportDeprecation(
+			7.4f,
+			"Java EE libraries are no longer compatible and must be replaced with updated Jakarta EE versions.",
+			"LPD-46462",
+			"/com/liferay/java/Jakarta_Imports.csv");
+
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
 		String[] newImportStatements = new String[0];

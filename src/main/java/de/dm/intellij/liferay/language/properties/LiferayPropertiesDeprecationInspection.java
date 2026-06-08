@@ -11,6 +11,7 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import de.dm.intellij.liferay.language.jsp.AbstractLiferayDeprecationInspection;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
+import de.dm.intellij.liferay.util.LiferayVersions;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
@@ -276,6 +277,8 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 				LiferayPropertiesDeprecationConstants._MODULARIZED_PORTAL_KEYS_7_3));
 		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.4f, "Portal property \"${propertyName}\" was modularized to \"${newModuleName}\" as \"${newPropertyName}\"", "", "portal",
 				LiferayPropertiesDeprecationConstants._MODULARIZED_PORTAL_KEYS_7_4));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.4f, "Portal property \"${propertyName}\" was modularized to \"${newModuleName}\" as \"${newPropertyName}\"", "", "portal",
+				LiferayPropertiesDeprecationConstants._MODULARIZED_PORTAL_KEYS_2025_Q3).version(LiferayVersions.LIFERAY_2025_Q3));
 
 	}
 

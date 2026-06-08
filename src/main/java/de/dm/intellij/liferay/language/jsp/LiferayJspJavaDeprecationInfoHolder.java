@@ -109,7 +109,10 @@ public class LiferayJspJavaDeprecationInfoHolder extends AbstractLiferayInspecti
 				(StringUtil.isNotEmpty(myImportStatement)) &&
 				(importDirective.getValue() != null) &&
 				(importDirective.getValueElement() != null) &&
-				(Objects.equals(myImportStatement, StringUtil.unquoteString(importDirective.getValue())))
+				(
+					(Objects.equals(myImportStatement, StringUtil.unquoteString(importDirective.getValue()))) ||
+					(myImportStatement.endsWith(".*") && Objects.equals(com.intellij.openapi.util.text.StringUtil.getPackageName(myImportStatement), com.intellij.openapi.util.text.StringUtil.getPackageName(StringUtil.unquoteString(importDirective.getValue()))))
+				)
 		) {
 			holder.registerProblem(importDirective.getValueElement(), getDeprecationMessage(), quickFixes);
 		}
@@ -169,7 +172,13 @@ public class LiferayJspJavaDeprecationInfoHolder extends AbstractLiferayInspecti
 			XmlAttribute xmlAttribute = PsiTreeUtil.getParentOfType(value, XmlAttribute.class);
 
 			if (xmlAttribute != null) {
-				xmlAttribute.setValue(newName);
+				String newImportStatement = newName;
+
+				if (newName.endsWith(".*")) {
+					newImportStatement = com.intellij.openapi.util.text.StringUtil.getPackageName(newName) + "." + com.intellij.openapi.util.text.StringUtil.getShortName(xmlAttribute.getValue());
+				}
+
+				xmlAttribute.setValue(newImportStatement);
 			}
 		}
 	}

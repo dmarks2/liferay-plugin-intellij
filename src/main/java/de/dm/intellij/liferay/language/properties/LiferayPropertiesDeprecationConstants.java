@@ -2010,4 +2010,14 @@ public class LiferayPropertiesDeprecationConstants {
 					"com.liferay.portal.tika"
 			},
 	};
+
+	public static final String[][] _MODULARIZED_PORTAL_KEYS_2025_Q3 = {
+			// Metadata Processor Excluded Mime Types --> https://liferay.atlassian.net/browse/LPD-42305
+
+			{
+					"dl.file.entry.raw.metadata.processor.excluded.mime.types",
+					"excluded-mime-types",
+					"com.liferay.document.library.api"
+			}
+	};
 }

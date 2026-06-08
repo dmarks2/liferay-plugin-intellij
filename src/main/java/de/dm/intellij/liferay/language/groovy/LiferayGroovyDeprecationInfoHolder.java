@@ -108,7 +108,10 @@ public class LiferayGroovyDeprecationInfoHolder extends AbstractLiferayInspectio
 		if (
 				(isApplicableLiferayVersion(statement)) &&
 				(StringUtil.isNotEmpty(myImportStatement)) &&
-				(Objects.equals(myImportStatement, statement.getImportFqn()))
+				(
+					(Objects.equals(myImportStatement, statement.getImportFqn())) ||
+					(myImportStatement.endsWith(".*") && Objects.equals(com.intellij.openapi.util.text.StringUtil.getPackageName(myImportStatement), com.intellij.openapi.util.text.StringUtil.getPackageName(statement.getImportFqn())))
+				)
 		) {
 			holder.registerProblem(statement, getDeprecationMessage(), quickFixes);
 		}
@@ -166,7 +169,13 @@ public class LiferayGroovyDeprecationInfoHolder extends AbstractLiferayInspectio
 				return;
 			}
 
-			GroovyFile aFile = createDummyGroovyFile(project, "import " + newName + ";");
+			String newImportStatement = newName;
+
+			if (newName.endsWith(".*")) {
+				newImportStatement = com.intellij.openapi.util.text.StringUtil.getPackageName(newName) + "." + com.intellij.openapi.util.text.StringUtil.getShortName(statement.getImportFqn());
+			}
+
+			GroovyFile aFile = createDummyGroovyFile(project, "import " + newImportStatement + ";");
 
 			GrImportStatement newStatement = extractImport(aFile);
 

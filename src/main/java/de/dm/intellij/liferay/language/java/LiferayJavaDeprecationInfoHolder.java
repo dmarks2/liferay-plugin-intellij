@@ -111,7 +111,10 @@ public class LiferayJavaDeprecationInfoHolder extends AbstractLiferayInspectionI
 		if (
 				(isApplicableLiferayVersion(statement)) &&
 				(StringUtil.isNotEmpty(myImportStatement)) &&
-				(Objects.equals(myImportStatement, statement.getQualifiedName()))
+				(
+					(Objects.equals(myImportStatement, statement.getQualifiedName())) ||
+					(myImportStatement.endsWith(".*") && Objects.equals(com.intellij.openapi.util.text.StringUtil.getPackageName(myImportStatement), com.intellij.openapi.util.text.StringUtil.getPackageName(statement.getQualifiedName())))
+				)
 		) {
 			holder.registerProblem(problemElement, getDeprecationMessage(), quickFixes);
 		}
@@ -168,7 +171,13 @@ public class LiferayJavaDeprecationInfoHolder extends AbstractLiferayInspectionI
 				return;
 			}
 
-			PsiJavaFile aFile = createDummyJavaFile(project, "import " + newName + ";");
+			String newImportStatement = newName;
+
+			if (newName.endsWith(".*")) {
+				newImportStatement = com.intellij.openapi.util.text.StringUtil.getPackageName(newName) + "." + com.intellij.openapi.util.text.StringUtil.getShortName(statement.getQualifiedName());
+			}
+
+			PsiJavaFile aFile = createDummyJavaFile(project, "import " + newImportStatement + ";");
 
 			PsiImportStatementBase newStatement = extractImport(aFile);
 
