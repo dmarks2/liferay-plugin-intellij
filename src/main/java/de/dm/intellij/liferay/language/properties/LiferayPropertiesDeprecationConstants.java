@@ -420,6 +420,13 @@ public class LiferayPropertiesDeprecationConstants {
 			{"sql.data.max.parameters", "database.max.parameters"}
 	};
 
+	public static final String[][] _RENAMED_PORTAL_KEYS_2025_Q4 = {
+			{
+					"mail.mx.update",
+					"company.mx.update"
+			},
+	};
+
 	public static final String[] _OBSOLETE_PORTAL_KEYS_7_0 = {
 			"aim.login", "amazon.access.key.id",
 			"amazon.associate.tag", "amazon.secret.access.key",
@@ -599,6 +606,10 @@ public class LiferayPropertiesDeprecationConstants {
 			"dl.file.entry.processors",
 			"redirect.url.protocols.allowed",
 			"work.dir.override.enabled"
+	};
+
+	public static final String[] _OBSOLETE_PORTAL_KEYS_2025_Q4 = {
+			"permissions.checker",
 	};
 
 
@@ -2019,5 +2030,105 @@ public class LiferayPropertiesDeprecationConstants {
 					"excluded-mime-types",
 					"com.liferay.document.library.api"
 			}
+	};
+
+	public static final String[][] _MODULARIZED_PORTAL_KEYS_2025_Q4 = {
+			// Mail Server System Settings --> https://liferay.atlassian.net/browse/LPD-25567
+
+			{
+					"mail.audit.trail",
+					"audit-trail",
+					"com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config"
+			},
+			{
+					"mail.batch.size",
+					"batch-size",
+					"com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config"
+			},
+			{
+					"mail.session.jndi.name",
+					"jndi-name",
+					"com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config"
+			},
+			{
+					"pop.server.subdomain",
+					"pop-server-subdomain",
+					"com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config"
+			},
+			{
+					"mail.send.blacklist",
+					"send-blacklist",
+					"com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config"
+			},
+			{
+					"mail.throws.exception.on.failure",
+					"throwsExceptionOnFailure",
+					"com.liferay.mail.settings.configuration.MailSettingSystemConfiguration.config"
+			},
+			{
+					"mail.session.mail.advanced.properties",
+					"additional-java-mail-properties",
+					"com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"
+			},
+			{
+					"mail.session.mail.pop3.host",
+					"incoming-pop-server",
+					"com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"
+			},
+			{
+					"mail.session.mail.pop3.password",
+					"pop-password",
+					"com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"
+			},
+			{
+					"mail.session.mail.pop3.port",
+					"incoming-port",
+					"com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"
+			},
+			{
+					"mail.session.mail.pop3.user",
+					"pop-user-name",
+					"com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"
+			},
+			{
+					"mail.session.mail.smtp.host",
+					"outgoing-smtp-server",
+					"com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"
+			},
+			{
+					"mail.session.mail.smtp.password",
+					"smtp-password",
+					"com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"
+			},
+			{
+					"mail.session.mail.smtp.port",
+					"outgoing-port",
+					"com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"
+			},
+			{
+					"mail.session.mail.smtp.starttls.enable",
+					"enable-starttls",
+					"com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"
+			},
+			{
+					"mail.session.mail.smtp.user",
+					"smtp-user-name",
+					"com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"
+			},
+			{
+					"mail.session.mail.store.protocol",
+					"store-protocol",
+					"com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"
+			},
+			{
+					"mail.session.mail.transport.protocol",
+					"transport-protocol",
+					"com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"
+			},
+			{
+					"pop.server.notifications.enabled",
+					"enable-pop-server-notifications",
+					"com.liferay.mail.settings.configuration.MailSettingCompanyConfiguration.config"
+			},
 	};
 }

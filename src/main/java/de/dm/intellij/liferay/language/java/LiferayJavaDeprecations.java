@@ -1266,6 +1266,27 @@ public class LiferayJavaDeprecations {
 			new String[0]
 	);
 
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPD_65748_BATCH_ENGINE_EXPORT = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The isPersistContent method is renamed to isPersist.",
+			"LPD-65748",
+			new String[] {
+					"com.liferay.batch.engine.BatchEngineExportTaskExecutor.isPersistContent()"
+			},
+			new String[] {
+					"isPersist"
+			} );
+
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPD_58844_PORTAL_MAIL_ID = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"The getMailId method is removed.",
+			"LPD-58844",
+			new String[] {
+					"com.liferay.portal.kernel.util.PortalUtil.getMailId()"
+			},
+			new String[0]
+	);
+
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
 		String[] newImportStatements = new String[0];

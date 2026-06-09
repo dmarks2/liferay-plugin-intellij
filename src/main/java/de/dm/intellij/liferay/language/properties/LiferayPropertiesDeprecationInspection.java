@@ -252,6 +252,7 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 		LocalQuickFix renamedPortalKeys70 = renameProperty(LiferayPropertiesDeprecationConstants._RENAMED_PORTAL_KEYS_7_0);
 		LocalQuickFix renamedPortalKeys73 = renameProperty(LiferayPropertiesDeprecationConstants._RENAMED_PORTAL_KEYS_7_3);
 		LocalQuickFix renamedPortalKeys74 = renameProperty(LiferayPropertiesDeprecationConstants._RENAMED_PORTAL_KEYS_7_4);
+		LocalQuickFix renamedPortalKeys2025Q4 = renameProperty(LiferayPropertiesDeprecationConstants._RENAMED_PORTAL_KEYS_2025_Q4);
 
 		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.0f, "Portal property \"${propertyName}\" was renamed to \"${newPropertyName}\"", "", "portal",
 				LiferayPropertiesDeprecationConstants._RENAMED_PORTAL_KEYS_7_0).quickfix(renamedPortalKeys70));
@@ -259,6 +260,8 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 				LiferayPropertiesDeprecationConstants._RENAMED_PORTAL_KEYS_7_3).quickfix(renamedPortalKeys73));
 		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.4f, "Portal property \"${propertyName}\" was renamed to \"${newPropertyName}\"", "", "portal",
 				LiferayPropertiesDeprecationConstants._RENAMED_PORTAL_KEYS_7_4).quickfix(renamedPortalKeys74));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.4f, "Portal property \"${propertyName}\" was renamed to \"${newPropertyName}\"", "", "portal",
+				LiferayPropertiesDeprecationConstants._RENAMED_PORTAL_KEYS_2025_Q4).version(LiferayVersions.LIFERAY_2025_Q4).quickfix(renamedPortalKeys2025Q4));
 
 		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.0f, "Portal property \"${propertyName}\" is obsolete", "", "portal",
 				LiferayPropertiesDeprecationConstants._OBSOLETE_PORTAL_KEYS_7_0).quickfix(removeProperty()));
@@ -266,6 +269,8 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 				LiferayPropertiesDeprecationConstants._OBSOLETE_PORTAL_KEYS_7_2).quickfix(removeProperty()));
 		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.4f, "Portal property \"${propertyName}\" is obsolete", "", "portal",
 				LiferayPropertiesDeprecationConstants._OBSOLETE_PORTAL_KEYS_7_4).quickfix(removeProperty()));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.4f, "Portal property \"${propertyName}\" is obsolete", "", "portal",
+				LiferayPropertiesDeprecationConstants._OBSOLETE_PORTAL_KEYS_2025_Q4).version(LiferayVersions.LIFERAY_2025_Q4).quickfix(removeProperty()));
 
 		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.0f, "Portal property \"${propertyName}\" was modularized to \"${newModuleName}\" as \"${newPropertyName}\"", "", "portal",
 				LiferayPropertiesDeprecationConstants._MODULARIZED_PORTAL_KEYS_7_0));
@@ -279,6 +284,8 @@ public class LiferayPropertiesDeprecationInspection extends AbstractLiferayDepre
 				LiferayPropertiesDeprecationConstants._MODULARIZED_PORTAL_KEYS_7_4));
 		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.4f, "Portal property \"${propertyName}\" was modularized to \"${newModuleName}\" as \"${newPropertyName}\"", "", "portal",
 				LiferayPropertiesDeprecationConstants._MODULARIZED_PORTAL_KEYS_2025_Q3).version(LiferayVersions.LIFERAY_2025_Q3));
+		PROPERTY_DEPRECATIONS.addAll(createPropertiesWithFilenamePrefix(7.4f, "Portal property \"${propertyName}\" was modularized to \"${newModuleName}\" as \"${newPropertyName}\"", "", "portal",
+				LiferayPropertiesDeprecationConstants._MODULARIZED_PORTAL_KEYS_2025_Q4).version(LiferayVersions.LIFERAY_2025_Q4));
 
 	}
 

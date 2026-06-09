@@ -127,6 +127,8 @@ public class LiferayJavaDeprecationInspection extends AbstractLiferayDeprecation
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_178619_JOURNAL_ARTICLE_STRUCTURE_KEY_REMOVAL).version("7.4.3.72"));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_40102_NESTED_FIELDS_CONTEXT).version(LiferayVersions.LIFERAY_2025_Q1_CE));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_58995_CONFIGURATION_PROPERTIES).version(LiferayVersions.LIFERAY_2025_Q3));
+		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_65748_BATCH_ENGINE_EXPORT).version(LiferayVersions.LIFERAY_2025_Q4));
+		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_58844_PORTAL_MAIL_ID).version(LiferayVersions.LIFERAY_2025_Q4));
 	}
 
 	@Nls
