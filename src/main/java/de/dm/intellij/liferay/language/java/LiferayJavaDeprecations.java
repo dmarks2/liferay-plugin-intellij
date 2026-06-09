@@ -1247,6 +1247,25 @@ public class LiferayJavaDeprecations {
 			"LPD-46462",
 			"/com/liferay/java/Jakarta_Imports.csv");
 
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPD_58995_CONFIGURATION_PROPERTIES = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"addProperties and removeProperties methods are removed. Set individual keys and values instead",
+			" LPD-58995",
+			new String[] {
+					"com.liferay.util.service.ServiceProps.addProperties()",
+					"com.liferay.util.service.ServiceProps.removeProperties()",
+					"com.liferay.util.portlet.PortletProps.addProperties()",
+					"com.liferay.util.portlet.PortletProps.removeProperties()",
+					"com.liferay.portal.configuration.ConfigurationImpl.addProperties()",
+					"com.liferay.portal.configuration.ConfigurationImpl.removeProperties()",
+					"com.liferay.portal.util.PropsUtil.addProperties()",
+					"com.liferay.portal.util.PropsUtil.removeProperties()",
+					"com.liferay.portal.kernel.configuration.Configuration.addProperties()",
+					"com.liferay.portal.kernel.configuration.Configuration.removeProperties()",
+			},
+			new String[0]
+	);
+
 	private static AbstractMap.SimpleImmutableEntry<String[], String[]> getImportStatements(String filename) {
 		String[] importStatements = new String[0];
 		String[] newImportStatements = new String[0];

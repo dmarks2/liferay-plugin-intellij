@@ -131,6 +131,7 @@ public class LiferayGroovyDeprecationInspection extends AbstractLiferayDeprecati
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_196539_GET_PORTLET_SETUP).version(LiferayVersions.LIFERAY_2024_Q4_CE));
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_178619_JOURNAL_ARTICLE_STRUCTURE_KEY_REMOVAL).version("7.4.3.72"));
 		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_40102_NESTED_FIELDS_CONTEXT).version(LiferayVersions.LIFERAY_2025_Q1_CE));
+		GROOVY_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_58995_CONFIGURATION_PROPERTIES).version(LiferayVersions.LIFERAY_2025_Q3));
 	}
 
 	@Nls
