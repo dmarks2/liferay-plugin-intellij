@@ -13,6 +13,7 @@ import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_AUI;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_CLAY;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_COMMERCE;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND;
+import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_FRONTEND_DATA_SET;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_PORTLET;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_SOY;
 import static de.dm.intellij.liferay.util.LiferayTaglibs.TAGLIB_URI_LIFERAY_THEME;
@@ -197,6 +198,15 @@ public class LiferayTaglibAttributes {
 			"LPD-53353",
 			"nav-bar-search", "nav-bar", "nav-item", "nav"
 	);
+
+	public static TaglibDeprecationAttributes LPD_9465_FRONTEND_DATA_SET_CUSTOM_VIEWS_ENABLED = new TaglibDeprecationAttributes(
+			7.4f, TAGLIB_URI_LIFERAY_FRONTEND_DATA_SET,
+			"headless-display",
+			"The customViewsEnabled attribute is replaced by the snapshotsEnabled attribute.",
+			"LPD-9465",
+			"customViewsEnabled"
+	);
+
 
 	/*
 		public static TaglibDeprecationTags LPS_ = new TaglibDeprecationTags();

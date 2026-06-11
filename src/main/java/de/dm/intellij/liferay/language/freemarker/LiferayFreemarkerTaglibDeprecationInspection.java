@@ -15,6 +15,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import de.dm.intellij.liferay.language.jsp.AbstractLiferayDeprecationInspection;
+import de.dm.intellij.liferay.language.jsp.LiferayJspTaglibDeprecationInfoHolder;
 import de.dm.intellij.liferay.util.LiferayInspectionsGroupNames;
 import de.dm.intellij.liferay.util.LiferayVersions;
 import org.jetbrains.annotations.Nls;
@@ -26,6 +27,7 @@ import java.util.List;
 import static de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerTaglibDeprecationInfoHolder.createAttributes;
 import static de.dm.intellij.liferay.language.freemarker.LiferayFreemarkerTaglibDeprecationInfoHolder.createTags;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPD_53353_AUI_NAV;
+import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPD_9465_FRONTEND_DATA_SET_CUSTOM_VIEWS_ENABLED;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_100146_CONTEXTUAL_SIDEBAR;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_106899_CARDS_TREEVIEW;
 import static de.dm.intellij.liferay.util.LiferayTaglibAttributes.LPS_112464_CLAY_BADGE_CSS_CLASS;
@@ -181,6 +183,8 @@ public class LiferayFreemarkerTaglibDeprecationInspection extends AbstractLifera
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_202768_LOGO_SELECTOR).quickfix(renameNamespace(TAGLIB_URI_LIFERAY_FRONTEND)).version(LiferayVersions.LIFERAY_2024_Q1_CE));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPS_202768_UPLOAD_PROGRESS).quickfix(renameNamespace(TAGLIB_URI_LIFERAY_DOCUMENT_LIBRARY)).version(LiferayVersions.LIFERAY_2024_Q1_CE));
 		TAGLIB_DEPRECATIONS.addAll(createTags(LPD_53353_AUI_NAV).quickfix(removeTag()).version(LiferayVersions.LIFERAY_2025_Q2));
+		TAGLIB_DEPRECATIONS.addAll(createAttributes(LPD_9465_FRONTEND_DATA_SET_CUSTOM_VIEWS_ENABLED).version(LiferayVersions.LIFERAY_2026_Q1).quickfix(renameAttribute("snapshotsEnabled")));
+
 	}
 
 	@Nls
