@@ -2,6 +2,7 @@ package de.dm.intellij.liferay.util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class LiferayVersions {
 
@@ -50,6 +51,12 @@ public class LiferayVersions {
     public static String getGAVersion(String liferayVersion) {
         if (liferayVersion.startsWith("202")) {
             return liferayVersion;
+        }
+
+        for (Map.Entry<String, String> internalVersions : LIFERAY_DXP_INTERNAL_MAPPING.entrySet()) {
+            if (Objects.equals(liferayVersion, internalVersions.getValue())) {
+                return internalVersions.getKey() + ".0";
+            }
         }
 
         int gaVersionIndex = liferayVersion.lastIndexOf('.') + 1;
