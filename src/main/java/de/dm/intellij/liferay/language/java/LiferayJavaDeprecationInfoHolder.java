@@ -270,6 +270,61 @@ public class LiferayJavaDeprecationInfoHolder extends AbstractLiferayInspectionI
 	}
 
 
+	public static LocalQuickFix replaceWithConfigurationProviderUtil() {
+		return new ReplaceWithConfigurationProviderUtilQuickFix();
+	}
+
+	private static class ReplaceWithConfigurationProviderUtilQuickFix implements LocalQuickFix {
+
+		private static final String CONFIGURATION_PROVIDER_UTIL_FQN =
+				"com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil";
+
+		@Nls
+		@NotNull
+		@Override
+		public String getFamilyName() {
+			return "Replace with ConfigurationProviderUtil.getPortletInstanceConfiguration";
+		}
+
+		@Override
+		public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+			PsiElement psiElement = descriptor.getPsiElement();
+
+			PsiMethodCallExpression methodCallExpression;
+
+			if (psiElement instanceof PsiMethodCallExpression) {
+				methodCallExpression = (PsiMethodCallExpression) psiElement;
+			} else {
+				methodCallExpression = PsiTreeUtil.getParentOfType(psiElement, PsiMethodCallExpression.class);
+			}
+
+			if (methodCallExpression == null) {
+				return;
+			}
+
+			PsiReferenceExpression methodExpression = methodCallExpression.getMethodExpression();
+			PsiExpression qualifierExpression = methodExpression.getQualifierExpression();
+			String qualifierText = qualifierExpression != null ? qualifierExpression.getText() : "portletDisplay";
+
+			String originalArgsText = methodCallExpression.getArgumentList().getText();
+			String innerArgs = originalArgsText.substring(1, originalArgsText.length() - 1).trim();
+
+			String newCallText;
+
+			if (innerArgs.isEmpty()) {
+				newCallText = CONFIGURATION_PROVIDER_UTIL_FQN +
+						".getPortletInstanceConfiguration(" + qualifierText + ".getThemeDisplay())";
+			} else {
+				newCallText = CONFIGURATION_PROVIDER_UTIL_FQN +
+						".getPortletInstanceConfiguration(" + innerArgs + ", " + qualifierText + ".getThemeDisplay())";
+			}
+
+			PsiElementFactory factory = JavaPsiFacade.getInstance(project).getElementFactory();
+			PsiExpression newExpression = factory.createExpressionFromText(newCallText, methodCallExpression.getContext());
+			methodCallExpression.replace(newExpression);
+		}
+	}
+
 	private static LocalQuickFix renameMethodCall(String newName) {
 		return new RenameMethodCallQuickFix(newName);
 	}

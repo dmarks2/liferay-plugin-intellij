@@ -189,4 +189,32 @@ public class LiferayJavaDeprecationInspectionTest extends LightJavaCodeInsightFi
 		myFixture.checkHighlighting();
 	}
 
+	public void testLPS198379Deprecation() {
+		myFixture.configureByFiles(
+				"MyPortletInstanceConfiguration.java",
+				"MyConfiguration.java",
+				"com/liferay/portal/kernel/theme/ThemeDisplay.java",
+				"com/liferay/portal/kernel/theme/PortletDisplay.java"
+		);
+
+		myFixture.checkHighlighting();
+
+		boolean quickFixFound = false;
+
+		List<IntentionAction> allQuickFixes = myFixture.getAllQuickFixes();
+		for (IntentionAction quickFix : allQuickFixes) {
+			if (quickFix.getFamilyName().equals("Replace with ConfigurationProviderUtil.getPortletInstanceConfiguration")) {
+				myFixture.launchAction(quickFix);
+
+				quickFixFound = true;
+
+				break;
+			}
+		}
+
+		assertTrue(quickFixFound);
+
+		myFixture.checkResultByFile("MyPortletInstanceConfiguration_expected.java");
+	}
+
 }

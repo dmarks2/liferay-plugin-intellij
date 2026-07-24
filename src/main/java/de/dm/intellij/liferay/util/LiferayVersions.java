@@ -15,6 +15,7 @@ public class LiferayVersions {
     public static final float LIFERAY_VERSION_7_3 = 7.3f;
     public static final float LIFERAY_VERSION_7_4 = 7.4f;
 
+    public static final String LIFERAY_2023_Q3_CE = "7.4.3.100";
     public static final String LIFERAY_2024_Q1_CE = "7.4.3.112";
     public static final String LIFERAY_2024_Q2_CE = "7.4.3.120";
     public static final String LIFERAY_2024_Q3_CE = "7.4.3.125";

@@ -16,6 +16,7 @@ import java.util.List;
 
 import static de.dm.intellij.liferay.language.java.LiferayJavaDeprecationInfoHolder.createImportStatements;
 import static de.dm.intellij.liferay.language.java.LiferayJavaDeprecationInfoHolder.createMethodCalls;
+import static de.dm.intellij.liferay.language.java.LiferayJavaDeprecationInfoHolder.replaceWithConfigurationProviderUtil;
 
 public class LiferayJavaDeprecationInspection extends AbstractLiferayDeprecationInspection<LiferayJavaDeprecationInfoHolder> {
 
@@ -124,6 +125,10 @@ public class LiferayJavaDeprecationInspection extends AbstractLiferayDeprecation
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_1909_USER_LOCAL_SERVICE_DECRYPT_USER_ID).version(LiferayVersions.LIFERAY_2024_Q3_CE));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_200501_IS_STARTUP_FINISHED).version(LiferayVersions.LIFERAY_2024_Q4_CE));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_196539_GET_PORTLET_SETUP).version(LiferayVersions.LIFERAY_2024_Q4_CE));
+		JAVA_DEPRECATIONS.addAll(
+				createMethodCalls(LiferayJavaDeprecations.LPS_198379_PORTLET_DISPLAY_GET_PORTLET_INSTANCE_CONFIGURATION)
+						.quickfix(replaceWithConfigurationProviderUtil())
+						.version(LiferayVersions.LIFERAY_2023_Q3_CE));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPS_178619_JOURNAL_ARTICLE_STRUCTURE_KEY_REMOVAL).version("7.4.3.72"));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_40102_NESTED_FIELDS_CONTEXT).version(LiferayVersions.LIFERAY_2025_Q1_CE));
 		JAVA_DEPRECATIONS.addAll(createMethodCalls(LiferayJavaDeprecations.LPD_58995_CONFIGURATION_PROPERTIES).version(LiferayVersions.LIFERAY_2025_Q3));

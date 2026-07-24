@@ -1080,6 +1080,15 @@ public class LiferayJavaDeprecations {
 					"com.liferay.portal.kernel.theme.PortletDisplay.setPortletPreferences()"
 			});
 
+	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_198379_PORTLET_DISPLAY_GET_PORTLET_INSTANCE_CONFIGURATION = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
+			7.4f,
+			"PortletDisplay.getPortletInstanceConfiguration() has been removed. Use ConfigurationProviderUtil.getPortletInstanceConfiguration(configClass, themeDisplay) instead.",
+			"LPS-198379",
+			new String[] {
+					"com.liferay.portal.kernel.theme.PortletDisplay.getPortletInstanceConfiguration()"
+			},
+			new String[0]);
+
 	public static LiferayJavaDeprecations.JavaMethodCallDeprecation LPS_178619_JOURNAL_ARTICLE_STRUCTURE_KEY_REMOVAL = new LiferayJavaDeprecations.JavaMethodCallDeprecation(
 			7.4f,
 			"For JournalArticle, ddmStructureKey support has been removed. Use ddmStructureId instead.",
