@@ -32,6 +32,7 @@
 		    <li>Feature: add deprecation check for LPS-198379</li>
 		    <li>Feature: add basic support for Liferay 2026.Q1</li>
 		    <li>Feature: Code completion features for Liferay Batch Engine Data files</li>
+		    <li>Bugfix: Fixed a conflict with the TextMate plugin (Liferay .config files could have been detected as TextMate files)</li>
     	</ul>
 
         <p>Version 0.0.27</p>
@@ -549,9 +550,8 @@
 				language="LiferayConfig"
 		/>
 
-		<fileTypeDetector
-				implementation="de.dm.intellij.liferay.language.osgi.config.LiferayConfigFileTypeDetector"
-				order="first"
+		<fileTypeOverrider
+				implementation="de.dm.intellij.liferay.language.osgi.config.LiferayConfigFileTypeOverrider"
 		/>
 
 		<lang.parserDefinition

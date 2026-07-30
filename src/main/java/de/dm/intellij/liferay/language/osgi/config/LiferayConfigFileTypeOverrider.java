@@ -1,8 +1,7 @@
 package de.dm.intellij.liferay.language.osgi.config;
 
 import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.fileTypes.FileTypeRegistry;
-import com.intellij.openapi.util.io.ByteSequence;
+import com.intellij.openapi.fileTypes.impl.FileTypeOverrider;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
@@ -16,10 +15,10 @@ import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Properties;
 
-public class LiferayConfigFileTypeDetector implements FileTypeRegistry.FileTypeDetector {
+public class LiferayConfigFileTypeOverrider implements FileTypeOverrider {
 
 	@Override
-	public @Nullable FileType detect(@NotNull VirtualFile virtualFile, @NotNull ByteSequence byteSequence, @Nullable CharSequence charSequence) {
+	public @Nullable FileType getOverriddenFileType(@NotNull VirtualFile virtualFile) {
 		if (!Objects.equals("config", virtualFile.getExtension())) {
 			return null;
 		}
