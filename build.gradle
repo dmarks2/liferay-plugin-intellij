@@ -1,6 +1,6 @@
 plugins {
-    id "org.jetbrains.intellij.platform" version "2.11.0"
-    id 'de.undercouch.download' version '5.6.0'
+    id "org.jetbrains.intellij.platform" version "2.18.1"
+    id 'de.undercouch.download' version '5.7.0'
 }
 
 apply plugin: 'idea'
@@ -145,6 +145,15 @@ intellijPlatform {
 
 runIde {
     jvmArgs '-Xmx6144m'
+}
+
+tasks.named('prepareTestSandbox') {
+    // Vue.js support is bundled as a content module of the "JavaScript" plugin since 2025.3.
+    // Its LSP integration hits a known upstream bug when the sandbox reconstructs the
+    // plugin's "lib/modules" layout (https://github.com/JetBrains/intellij-platform-gradle-plugin/issues/2070),
+    // which makes unrelated tests fail with "Cannot create extension ... [Plugin: org.jetbrains.plugins.vue]".
+    // We don't use Vue.js support, so it's disabled for the test sandbox.
+    disabledPlugins.add('org.jetbrains.plugins.vue')
 }
 
 tasks.register('generateLiferayPortalPropertiesFiles') {
@@ -748,14 +757,12 @@ tasks.register('compilePoshi', JavaCompile) {
 }
 
 tasks.register('downloadPoshi', Copy) {
-    from configurations.poshiImplementation
+    from configurations.poshiRuntimeClasspath
     into generatedResources + '/lib'
 }
 
 group = 'de.dm.intellij.liferay'
 version = '0.0.28'
-
-configurations.poshiImplementation.setCanBeResolved(true)
 
 compileTestJava.dependsOn compilePoshi
 instrumentCode.dependsOn compilePoshi

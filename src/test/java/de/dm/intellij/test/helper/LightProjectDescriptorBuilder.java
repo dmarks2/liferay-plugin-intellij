@@ -6,6 +6,7 @@ import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.LanguageLevelModuleExtension;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.util.Disposer;
+import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
 import com.intellij.pom.java.LanguageLevel;
 import com.intellij.testFramework.IdeaTestUtil;
@@ -13,10 +14,12 @@ import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.PsiTestUtil;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
 import com.intellij.util.PathUtil;
+import com.intellij.util.io.URLUtil;
 import de.dm.intellij.liferay.module.LiferayModuleComponent;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,6 +27,39 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LightProjectDescriptorBuilder {
+
+    /**
+     * Resolves the local filesystem path that needs to be passed to {@link VfsRootAccess#allowRootAccess} in order
+     * to access the given classpath resource. If the resource lives inside a jar (e.g. because the plugin's own
+     * classes/resources are packaged as a jar in the test sandbox), the path of that jar itself is returned, since
+     * that is what needs to be an allowed root, not the "jar://...!/" entry path.
+     * <p>
+     * This deliberately avoids resolving the resource through {@code VfsUtil}/the VFS: doing so would itself try to
+     * access the (not yet allowed) jar and fail with the very same {@link VfsRootAccess} error we're trying to avoid.
+     */
+    public static String resolveRootAccessPath(String classpathResource) {
+        return resolveRootAccessPath(LightProjectDescriptorBuilder.class, classpathResource);
+    }
+
+    public static String resolveRootAccessPath(Class<?> resourceLoader, String classpathResource) {
+        URL resource = resourceLoader.getResource(classpathResource);
+
+        if (resource == null) {
+            return null;
+        }
+
+        Pair<String, String> jarUrl = URLUtil.splitJarUrl(resource.toExternalForm());
+
+        if (jarUrl != null) {
+            return PathUtil.toSystemIndependentName(jarUrl.first);
+        }
+
+        try {
+            return PathUtil.toSystemIndependentName(new File(resource.toURI()).getAbsolutePath());
+        } catch (URISyntaxException e) {
+            return PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath());
+        }
+    }
 
     public static final LightProjectDescriptor DEFAULT_PROJECT_DESCRIPTOR = new LightProjectDescriptorBuilder().build();
 
@@ -100,10 +136,10 @@ public class LightProjectDescriptorBuilder {
                     Collection<String> resourcePaths = new ArrayList<>();
 
                     for (String rootAccessUrl : rootAccess) {
-                        URL resource = LightProjectDescriptorBuilder.class.getResource(rootAccessUrl);
+                        String resourcePath = resolveRootAccessPath(rootAccessUrl);
 
-                        if (resource != null) {
-                            resourcePaths.add(PathUtil.toSystemIndependentName(new File(resource.getFile()).getAbsolutePath()));
+                        if (resourcePath != null) {
+                            resourcePaths.add(resourcePath);
                         }
                     }
 

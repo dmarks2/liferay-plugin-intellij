@@ -5,13 +5,15 @@ import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiReference;
-import com.intellij.testFramework.fixtures.BasePlatformTestCase;
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import com.intellij.util.PathUtil;
+import de.dm.intellij.liferay.language.poshi.constants.PoshiConstants;
+import de.dm.intellij.test.helper.LightProjectDescriptorBuilder;
 
 import java.io.File;
 import java.util.List;
 
-public class PoshiMethodCallTest extends BasePlatformTestCase {
+public class PoshiMethodCallTest extends LightJavaCodeInsightFixtureTestCase {
 
     @Override
     protected String getTestDataPath() {
@@ -27,6 +29,20 @@ public class PoshiMethodCallTest extends BasePlatformTestCase {
         final String testDataPath = PathUtil.toSystemIndependentName(testDataDir.getAbsolutePath());
 
         VfsRootAccess.allowRootAccess(myFixture.getTestRootDisposable(), testDataPath);
+
+        // PoshiUtilsReference/PoshiSeleniumReference/PoshiNamespaceReference resolve bundled Poshi sources (e.g.
+        // PropsUtil.java, LiferaySelenium.java) and resources from jars in the test sandbox's plugin "lib" folder
+        // (the plugin's own jar as well as the com.liferay.poshi.* dependency jars). Allow access to that whole
+        // directory instead of chasing down which resource lives in which of those jars.
+        String poshiUtilsJarPath = LightProjectDescriptorBuilder.resolveRootAccessPath(PoshiUtilsReference.class, PoshiConstants.POSHI_UTILS_PATH);
+
+        if (poshiUtilsJarPath != null) {
+            File libDir = new File(poshiUtilsJarPath).getParentFile();
+
+            if (libDir != null) {
+                VfsRootAccess.allowRootAccess(myFixture.getTestRootDisposable(), PathUtil.toSystemIndependentName(libDir.getAbsolutePath()));
+            }
+        }
     }
 
     public void testClassReference() {
