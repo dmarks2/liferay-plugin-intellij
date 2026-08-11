@@ -6,6 +6,7 @@ import com.intellij.openapi.module.ModifiableModuleModel;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleUtilCore;
+import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.LibraryOrderEntry;
@@ -491,7 +492,15 @@ public class ProjectUtils {
         PsiExpression qualifierExpression = methodExpression.getQualifierExpression();
 
         if (qualifierExpression != null) {
-            PsiType type = qualifierExpression.getType();
+            PsiType type;
+
+            try {
+                type = qualifierExpression.getType();
+            } catch (ProcessCanceledException processCanceledException) {
+                throw processCanceledException;
+            } catch (RuntimeException runtimeException) {
+                type = null;
+            }
 
             if (type != null) {
                 return getMatchFromPackageStatementOrImports(methodCallExpression.getContainingFile(), type.getCanonicalText()) + "." + methodExpression.getReferenceName() + "()";

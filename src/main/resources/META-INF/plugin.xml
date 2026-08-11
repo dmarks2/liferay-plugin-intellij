@@ -33,6 +33,7 @@
 		    <li>Feature: add basic support for Liferay 2026.Q1</li>
 		    <li>Feature: Code completion features for Liferay Batch Engine Data files</li>
 		    <li>Bugfix: Fixed a conflict with the TextMate plugin (Liferay .config files could have been detected as TextMate files)</li>
+		    <li>Bugfix: Handle invalid caching references after switching branches in a Liferay project</li>
     	</ul>
 
         <p>Version 0.0.27</p>

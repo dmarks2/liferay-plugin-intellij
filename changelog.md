@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Feature: add basic support for Liferay 2026.Q1
 - Feature: Code completion features for Liferay Batch Engine Data files
 - Bugfix: Fixed a conflict with the TextMate plugin (Liferay .config files could have been detected as TextMate files)
+- Bugfix: Handle invalid caching references after switching branches in a Liferay project
 
 ## 0.0.27
 - Feature: add support for IntelliJ IDEA 2025.3, dropped support for older versions
