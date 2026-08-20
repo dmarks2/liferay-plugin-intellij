@@ -57,8 +57,14 @@ public class WebFacetUtil {
                         }
                     }
 
-                    final WebFacet webFacet = FacetUtil.addFacet(module, WebFacetType.getInstance(), facetName);
-                    webFacet.addWebRoot(resources, "/");
+                    try {
+                        final WebFacet webFacet = FacetUtil.addFacet(module, WebFacetType.getInstance(), facetName);
+
+                        webFacet.addWebRoot(resources, "/");
+                    } catch (RuntimeException runtimeException) {
+                        log.warn("Could not add " + facetName + " facet to module " + module.getName() +
+                                ", it may have already been added concurrently", runtimeException);
+                    }
                 }
 
                 break;
