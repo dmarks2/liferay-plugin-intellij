@@ -762,7 +762,7 @@ tasks.register('downloadPoshi', Copy) {
 }
 
 group = 'de.dm.intellij.liferay'
-version = '0.0.28'
+version = '0.0.29'
 
 compileTestJava.dependsOn compilePoshi
 instrumentCode.dependsOn compilePoshi

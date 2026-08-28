@@ -3,6 +3,9 @@ Liferay Plugin for IntelliJ
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.29
+- Bugfix: Error when opening a Gradle project with a Java version below 17
+
 ## 0.0.28
 - Feature: add deprecation checks for Liferay 2025.Q1 (7.4.3.132), 2025.Q2, 2025.Q3, 2025.Q4 and 2026.Q1
 - Feature: add deprecation check for LPD-8352

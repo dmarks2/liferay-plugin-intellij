@@ -25,6 +25,11 @@
       ]]></description>
 
     <change-notes><![CDATA[
+    	<p>Version 0.0.29</p>
+    	<ul>
+    	    <li>Bugfix: Error when opening a Gradle project with a Java version below 17</li>
+    	</ul>
+
     	<p>Version 0.0.28</p>
     	<ul>
 		    <li>Feature: add deprecation checks for Liferay 2025.Q1, 2025.Q2, 2025.Q3, 2025.Q4 and 2026.Q1</li>
