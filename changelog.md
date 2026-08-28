@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.29
 - Bugfix: Error when opening a Gradle project with a Java version below 17
+- Bugfix: NoClassDefFoundError (org.jetbrains.yaml.psi.YAMLFile) when editing client extension YAML files in IntelliJ IDEA 2026.2 and later
 
 ## 0.0.28
 - Feature: add deprecation checks for Liferay 2025.Q1 (7.4.3.132), 2025.Q2, 2025.Q3, 2025.Q4 and 2026.Q1
