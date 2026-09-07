@@ -970,7 +970,7 @@ public class LiferayJavaDeprecations {
 					"com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionFilterContributor",
 					"com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionFieldContributor",
 					"com.liferay.portal.search.spi.index.listener.CompanyIndexListener",
-					"com.liferay.portal.search.spi.index.configuration.contributor.helper.MappingsHelper",
+					"com.liferay.portal.search.spi.index.configuration.contributor.helper.TypeMappingsHelper",
 					"com.liferay.portal.search.spi.index.configuration.contributor.helper.SettingsHelper",
 			});
 
