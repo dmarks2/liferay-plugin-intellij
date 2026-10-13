@@ -718,7 +718,7 @@ tasks.register('downloadPoshiGrammar') {
         target.mkdirs();
 
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/test/poshi/poshi-vscode/package.json'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/refs/tags/2026.q3.0/modules/test/poshi/poshi-vscode/package.json'
             dest new File(target, "package.json")
             acceptAnyCertificate true
             overwrite false
@@ -727,7 +727,7 @@ tasks.register('downloadPoshiGrammar') {
         }
 
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/test/poshi/poshi-vscode/language-configuration.json'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/refs/tags/2026.q3.0/modules/test/poshi/poshi-vscode/language-configuration.json'
             dest new File(target, "language-configuration.json")
             acceptAnyCertificate true
             overwrite false
@@ -736,7 +736,7 @@ tasks.register('downloadPoshiGrammar') {
         }
 
         download.run {
-            src 'https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/test/poshi/poshi-vscode/syntaxes/poshi.tmLanguage.json'
+            src 'https://raw.githubusercontent.com/liferay/liferay-portal/refs/tags/2026.q3.0/modules/test/poshi/poshi-vscode/syntaxes/poshi.tmLanguage.json'
             dest new File(syntaxes, "poshi.tmLanguage.json")
             acceptAnyCertificate true
             overwrite false
