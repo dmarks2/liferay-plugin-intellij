@@ -9,7 +9,8 @@ public class LiferayFreemarkerInspectionToolProvider implements InspectionToolPr
 	@SuppressWarnings("unchecked")
 	public Class<? extends LocalInspectionTool> @NotNull [] getInspectionClasses() {
 		return new Class[] {
-				LiferayFreemarkerTaglibDeprecationInspection.class
+				LiferayFreemarkerTaglibDeprecationInspection.class,
+				LiferayFreemarkerLayoutTemplateTaglibInspection.class
 		};
 	}
 }

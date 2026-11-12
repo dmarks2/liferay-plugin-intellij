@@ -11,6 +11,7 @@ Velocity and Freemarker
 8. [Freemarker Imports](#freemarker-imports)
 9. [Gulpfile](#gulpfile)
 10. [Deprecations](#deprecations)
+11. [Taglibs in Layout Templates](#taglibs-in-layout-templates)
 
 Liferay Layout Templates
 ------------------------
@@ -184,3 +185,25 @@ Freemarker files. Depending on the type of deprecation or removal quickfixes are
 
 * Remove the attribute or tag
 * Rename the attribute, tag or namespace to a replacement for the deprecation
+
+Taglibs in Layout Templates
+---------------------------
+
+When a layout template is deployed, Liferay processes the Freemarker template once in advance to determine its columns
+(and by this the contained portlets, e.g. to add their header CSS files to the page). In this phase no request is
+available, so no taglibs are available either. An unguarded taglib usage breaks the template processing and Liferay
+cannot determine the columns of the layout.
+
+An inspection shows a warning if a taglib like ```<@liferay_portlet["runtime"] />``` is used in a Freemarker layout template
+without being surrounded by an existence check. This also applies to macros of the Liferay macro library which use taglibs
+internally, like ```<@liferay.breadcrumbs />``` or ```<@liferay.control_menu />```.
+
+A quickfix is offered to surround the usage with an existence check for the required taglib:
+
+```ftl
+    <#if liferay_portlet??>
+        <@liferay_portlet["runtime"] portletName="..." />
+    </#if>
+```
+
+*This feature works in IntelliJ Ultimate Edition only.*

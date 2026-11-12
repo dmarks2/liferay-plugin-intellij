@@ -3,6 +3,9 @@ Liferay Plugin for IntelliJ
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.30
+- Feature: add inspection for unguarded taglib usages in Freemarker layout templates (taglibs are not available while Liferay determines the columns of a layout template), with a quickfix to surround them with `<#if taglib??>`
+
 ## 0.0.29
 - Bugfix: Error when opening a Gradle project with a Java version below 17
 - Bugfix: NoClassDefFoundError (org.jetbrains.yaml.psi.YAMLFile) when editing client extension YAML files in IntelliJ IDEA 2026.2 and later
